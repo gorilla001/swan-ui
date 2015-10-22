@@ -1,0 +1,10 @@
+<div ng-repeat="event in events">
+    <div class="main-container-body">
+        <ul class="event-list">
+            <li>
+				<h1><span class="glyphicon glyphicon-time"></span> {/event.timestamp/} </h1>
+				<p><span>{/event.idOrApp/}</span><span>{/event.taskId/}</span><span>{/event.currentType/}</span><span>{/event.eventType/}</span></p>
+			</li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+function LogLoader($filter, $rootScope, glanceHttp, $sce) {
+    var LogLoader = function () {
+        this.logs = [];
+        this.curLogNum = 0;
+        this.isLoadingLogs = false;
+        this.tryTimes = 3;
+        this.isComplete = true;
+    };
+
+    LogLoader.prototype.getlogs = function () {
+        if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete) return;
+        this.isLoadingLogs = true;
+        this.data.from = this.curLogNum;
+        glanceHttp.ajaxBase("post",
+            ["log.search", {"userId": $rootScope.userId}],
+            this.data,
+            {"pretty": true},
+            function (data) {
+                for (var i = 0; i < data.hits.hits.length; i++) {
+                    var msg;
+                    (data.hits.hits[i].highlight) ? msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].highlight.msg[0]) :
+                       msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].fields.msg[0]);
+                    this.logs.push(msg);
+                }
+                if (data.hits.hits.length == 0) {
+                    this.isComplete = true;
+                }
+
+                this.curLogNum += data.hits.hits.length;
+                this.isLoadingLogs = false;
+            }.bind(this),
+            function (data, status) {
+                if (status == 502) {
+                    alert("服务未激活");
+                    this.tryTimes = 0;
+                }
+                this.isLoadingLogs = false;
+                this.tryTimes--;
+            }.bind(this)
+        );
+    };
+
+    LogLoader.prototype.searchLogs = function (searchData) {
+        this.nodeId = searchData.nodeId;
+        this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss');
+        this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss');
+        this.clusterId = searchData.clusterId;
+        this.data = {
+            "query": {
+                "bool": {
+                    "must": [
+                        {
+                            "term": {
+                                "clusterid": this.clusterId
+                            }
+                        },
+                        {
+                            "range": {
+                                "timestamp": {
+                                    "gte": this.gte,
+                                    "lte": this.lte
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "sort": {
+                "timestamp": "asc"
+            },
+            "from": this.curLogNum,
+            "size": 20,
+            "fields": [
+                "timestamp",
+                "msg",
+                "ip"
+            ],
+            "highlight": {
+                "fields": {
+                    "msg": {
+                        "pre_tags": [
+                            "<em style=\"color:red;\">"
+                        ],
+                        "post_tags": [
+                            "</em>"
+                        ]
+                    }
+                },
+                "fragment_size": -1
+            }
+        };
+
+        if (searchData.logSearchKey) {
+            this.query_json = {
+                "query_string": {
+                    "query": searchData.logSearchKey,
+                    "default_field": "msg"
+                }
+            };
+            this.data.query.bool.must.push(this.query_json);
+        }
+        if (searchData.instanceName) {
+            this.taskid_json = {
+                "term": {
+                    "taskid": searchData.instanceName
+                }
+            };
+            this.data.query.bool.must.push(this.taskid_json);
+        }
+        if (searchData.appName) {
+            this.typename_json = {
+                "term": {
+                    "typename": searchData.appName
+                }
+            };
+            this.data.query.bool.must.push(this.typename_json);
+        }
+        if (searchData.nodeId.length) {
+            this.nodeid_json = {
+                "terms": {
+                    "ip": function () {
+                        var nodesIp = [];
+                        for (var i = 0; i < searchData.nodeId.length; i++) {
+                            nodesIp.push(searchData.nodeId[i].maker)
+                        }
+                        return nodesIp;
+                    }(),
+                    "minimum_match": 1
+                }
+            };
+            this.data.query.bool.must.push(this.nodeid_json);
+        }
+        this.logs = [];
+        this.curLogNum = 0;
+        this.isLoadingLogs = false;
+        this.tryTimes = 3;
+        this.isComplete = false;
+        this.getlogs();
+
+    };
+
+    return LogLoader;
+}
+
+LogLoader.$inject = ["$filter", "$rootScope", "glanceHttp", "$sce"];
+glanceApp.factory('LogLoader', LogLoader);

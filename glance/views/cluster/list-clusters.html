@@ -1,0 +1,133 @@
+<div class="page-header">
+  <h1 class="pull-left" >集群管理</h1>
+  <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">创建群组</button></a>
+</div>
+<a data-ui-sref="cluster.createcluster" data-ng-show="pageData.length === 0">
+  <div class="btn btn-xxl">
+        <p>
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </br>
+            创建群组
+        </p>
+  </div>
+</a>
+
+<section data-ng-show="pageData.length !== 0" data-ng-repeat="cluster in pageData" class="cluster-manage">
+    <div class="server-ico-list main-container">
+        <header class="clearfix main-container-header">
+            <h2>
+                <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">
+                    {/ cluster.basicInfos.name /}
+                </a>
+                <small data-ng-show="cluster.amounts.total">
+                    主机数量：{/cluster.amounts.total/}
+                </small>
+            </h2>
+        </header>
+        <div class="main-container-body">
+            <div data-ng-show="cluster.amounts.total">
+                <ul class="cluster-service-status-number">
+                    <li class="normal {/cluster.classes.normal/}">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'normal')" href="#">
+                            正常主机 <span>{/cluster.amounts.normal/}</span>
+                        </a>
+                    </li>
+                    <li class="disconnect {/cluster.classes.disconnect/}">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'disconnect')" href="#">    失联主机 <span>{/cluster.amounts.disconnect/}</span>
+                        </a>
+                    </li>
+                    <li class="warning {/cluster.classes.warning/}">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'warning')" href="#">
+                            报警主机 <span>{/cluster.amounts.warning/}</span>
+                        </a>
+                    </li>
+                    <li class="reset {/cluster.classes.reset/}">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'reset')" href="#">
+                            初始化主机 <span>{/cluster.amounts.reset/}</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="cluster-service-ico-list clearfix">
+                    <li data-ng-repeat="master in cluster.allMasters">
+                        <a data-toggle="tooltip" title="{/master.name/} [{/master.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
+                            <img data-ng-src="/pics/service-master-status-{/master.showState/}.png"/>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="cluster-service-ico-list clearfix">
+                    <li data-ng-repeat="node in cluster.firstNon">
+                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
+                            <img data-ng-src="/pics/service-status-{/node.showState/}.png"/>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.basicInfos.showMore" data-ng-repeat="nonMasters in cluster.followingNon">
+                    <li data-ng-repeat="node in nonMasters"> 
+                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
+                            <img data-ng-src="/pics/service-status-{/node.showState/}.png"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div data-ng-show="cluster.followingNon.length">
+                共{/cluster.amounts.total/}台主机
+                <span data-ng-click="toggleShowMoreNonMasters(cluster.basicInfos.id)">
+                    {/cluster.basicInfos.clickWords/}
+                </span>
+            </div>
+
+            <div data-ng-show="!cluster.amounts.total">
+                <h4>
+                    集群中没有主机，
+                    <a data-ui-sref="cluster.addnode({clusterId:cluster.basicInfos.id})">
+                        添加主机
+                    </a>
+                </h4>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li>
+                        <a data-ui-sref="cluster.addnode({clusterId:cluster.basicInfos.id})">添加主机</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">查看集群</a>
+                    </li>
+                    <li>
+                        <a data-ng-click="delCluster(cluster.basicInfos.id)" >删除集群</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <footer class="main-container-footer">
+            创建时间: {/ cluster.basicInfos.created_at /} &nbsp;&nbsp;&nbsp;&nbsp;更新时间: {/ cluster.basicInfos.updated_at /}
+        </footer>
+    </div>
+    <div class="cluster-status-disconnect" data-ng-show="cluster.clusterState && cluster.amounts.total">
+        <div class="disconnect-content">
+            <h3>集群无法正常工作</h3>
+            <h4>以下主机[Master]出现问题，致使集群无法正常工作。</h4>
+            <ul>
+                <li data-ng-repeat="master in cluster.masters.disconnect">
+                    <a href="#" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
+                        主机名 [{/master.status/}] {/master.ip/}
+                    </a>
+                </li>
+                <li data-ng-repeat="master in cluster.masters.warning">
+                    <a href="#" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
+                        主机名 [{/master.status/}] {/master.ip/}
+                    </a>
+                </li>
+            </ul>
+            <footer>
+                <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id)">解决完毕</button>
+                <button class="btn btn-default" data-ng-click="close(cluster.basicInfos.id)">忽略问题</button>
+            </footer>
+        </div>
+    </div>
+</section>

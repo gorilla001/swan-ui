@@ -1,0 +1,46 @@
+<div class="main-container-body server-detail ">
+    <div class="form-horizontal">
+		<div class="form-group">
+			<label class="col-md-3 control-label">镜像地址</label>
+			<div class="col-md-5">
+				<p class="form-control-static">{/config.imageURI/}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">镜像版本</label>
+			<div class="col-md-5">
+				<p class="form-control-static">{/config.imageversion/}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">容器规格</label>
+			<div class="col-md-5">
+				<p class="form-control-static">CPU: {/config.containerCpuSize/} 内存: {/config.containerMemSize/}MB</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">容器个数</label>
+			<div class="col-md-5">
+				<p class="form-control-static">{/config.containerNum/}</p>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-md-3 control-label">应用地址</label>
+			<div class="col-md-4">
+				<p data-ng-repeat="port in config.containerPortsInfo">{/port/}</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label">
+				环境变量
+				<small>自定义环境变量</small>
+			</label>
+			<div class="col-md-3">
+				<p data-ng-repeat="(key, value) in config.envs">{/key/}={/value/}</p>
+			</div>
+		</div>
+	</div>
+
+    </div>
+</div>

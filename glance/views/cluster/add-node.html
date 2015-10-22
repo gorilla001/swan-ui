@@ -1,0 +1,58 @@
+<div class="page-header">
+  <h1 class="pull-left" >添加主机</h1>
+</div>
+
+<section>
+<div class="main-container container-size-m add-node">
+  <div class="main-container-body">
+    <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
+
+      <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
+        (message_error_info.name && staticForm.name.$pristine)}">
+        <label class="col-md-3 control-label">主机名称</label>
+        <div class="col-md-8">
+          <input type="text" name="name" class="form-control" data-ng-model="form.name">
+          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/message_error_info["name"]/}</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label">连接主机</label>
+        <div class="col-md-8" data-ng-show="nodeInstallScript">
+          <p class="form-control-static">1. 安装 Docker <small>（主机已安装 Docker，请跳过）</small></p>
+          <div class="copy-code-agent">
+            <code>curl -sSL https://get.docker.com/ | sh</code>
+          </div>
+          <p class="form-control-static">2. 安装 Agent</p>
+          <div class="copy-code-agent">
+            <code id="code" data-ng-bind="nodeInstallScript"></code>
+            <button type="button" class="btn btn-default copy" title="点击复制代码" data-clipboard-target="code" data-ng-click="isHintHide=false">
+              <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+              <br>
+              点击复制
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-3 control-label"></label>
+        <div class="col-md-8 form-control-static" data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
+          {/msgstate/}
+        </div>
+      </div>
+
+      <div class="form-group form-btnbar-b">
+        <div class="col-md-offset-5">
+          <button class="btn btn-default" data-ng-disabled="staticForm.$invalid" data-ng-click="addNode()">
+            完成
+          </button>
+          <button class="btn btn-default" data-ng-disabled="staticForm.$invalid" data-ng-click="addNode(true)">
+            完成并继续添加主机
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</section>

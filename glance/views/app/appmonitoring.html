@@ -1,0 +1,27 @@
+<div class="main-container">
+    <div class="main-container-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="appCpuStat" data-dimension="300" data-info="CPU占用资源" data-width="5"
+                     data-fontsize="38"
+                     data-fgcolor="#61a9dc" data-bgcolor="#eee"
+                     data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
+            </div>
+
+            <div class="col-md-6">
+                <div id="appMemStat" data-dimension="300" data-info="内存占用资源" data-width="5"
+                     data-fontsize="38"
+                     data-fgcolor="#00ff00" data-bgcolor="#eee"
+                     data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
+            </div>
+
+            <div class="col-md-4" ng-repeat="instance in appStat">
+                <p>实例: {/instance.app.appId/}</p>
+                <p>实例CPU用量:</p>
+                <progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuTotal" value="instance.cpuUsed"><span style="color:black; white-space:nowrap;">{/instance.cpuUsed/} / {/instance.cpuTotal/}</span></progressbar>
+                <p>实例内存用量:</p>
+                <progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span style="color:black; white-space:nowrap;">{/instance.memoryUsed/} / {/instance.memoryTotal/}</span></progressbar>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">新建应用</h1>
+    </div>
+</div>
+<section>
+    <div class="main-container new-app">
+        <div class="main-container-body">
+            <form class="form-horizontal" name="staticForm" data-ng-submit="deployApp()">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">应用名称</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="deployinfo.appName" data-required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">镜像地址</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="deployinfo.imageURI" data-required="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">容器规格</label>
+
+                    <div class="col-md-2">
+                        <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}" min="cpuOptions.min" step="cpuOptions.step" max="cpuOptions.max"></slider>
+                        <p>CPU最大个数: 2 个  现为:{/cpuSize/} 个</p>
+                    </div>
+
+
+
+                    <div class="col-md-2">
+                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic" handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step" max="memOptions.max"></slider>
+                        <p>内存最大值: 4096MB 现为:{/memSize/}MB</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">容器个数</label>
+
+                    <div class="col-md-1" data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
+                        <input type="number" class="form-control" name="containerNum" data-ng-model="containerNum" min="1" data-required="required">
+                        <p data-ng-show="staticForm.containerNum.$error.min && !staticForm.containerNum.$pristine" class="help-block">容器个数必须大于 1 </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">选择集群</label>
+
+                    <div class="col-md-5">
+                        <select class="form-control"
+                                data-ng-options=" cluster.id as cluster.name for cluster in clusters"
+                                data-ng-model="clusterid" data-required="required"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">镜像版本</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="deployinfo.imageversion" data-required="required">
+                    </div>
+                </div>
+
+                <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="col-md-offset-3 ad-set">高级设置 <span class="caret"></span></a>
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
+                            <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
+                            <div class="col-md-4" data-ng-class="{'col-md-offset-3': !$first}">
+                                <input type="number" data-ng-model="choice.value" name="" class="form-control" placeholder="端口">
+                            </div>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.removeChoice('createPort')">-</button>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.addNewChoice('createPort')">+</button>
+                        </div>
+                        <div class="form-group" data-ng-repeat="choice in dynamicData.createEnv">
+                            <label class="col-md-3 control-label" data-ng-show="$first">
+                                环境变量
+                                <small>自定义环境变量</small>
+                            </label>
+                            <div class="col-md-3" data-ng-class="{'col-md-offset-3': !$first}">
+                                <input type="text" data-ng-model="choice.key" name="key" class="form-control" placeholder="Key --- PATH">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" data-ng-model="choice.value" name="value" class="form-control" placeholder="Value">
+                            </div>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.removeChoice('createEnv')">-</button>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.addNewChoice('createEnv')">+</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">CMD</label>
+                            <div class="col-md-4">
+                                <input type="text" data-ng-model="cmdInput" name="" class="form-control" placeholder="输入需要的命令行">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn btn-primary" data-ng-disabled="staticForm.$invalid"> 创 建</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

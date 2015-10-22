@@ -1,0 +1,44 @@
+<div class="page-header">
+    <h1 class="pull-left" >应用管理</h1>
+    <div class="introduce">
+    </div>
+    <a data-ui-sref="app.createapp"><button class="btn btn-success">创建新应用</button></a>
+</div>
+<section>
+    <div class="main-container">
+        <div class="main-container-body">
+		<table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>应用名称</th>
+                    <th>当前状态</th>
+                    <th>最后更新时间</th>
+                    <th>所属集群</th>
+                    <th>容器个数</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="app in contentCurPage">
+                    <td><a href="#" data-ui-sref="app.appdetail.instance({appId:app.appId})">{/app.appName/}</a></td>
+                    <td>{/appstate[app.appStatus]/}</td>
+                    <td>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+                    <td><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a></td>
+                    <td>{/app.containerNum/}</td>
+                    <td>
+                        <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"  data-ng-click="upContainNum(app.appId, app.containerNum)" class="btn btn-default btn-xs">扩展</button>
+                        <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 
+                            data-ng-click="stopApp(app.appId)" data-ng-show="app.appStatus!='3'">停止</button>
+                        <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='2' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 
+                            data-ng-click="startApp(app.appId)" data-ng-show="app.appStatus == '3'">启动</button>
+                        <button type="button" data-ng-disabled="app.appStatus == '5' || !app.appStatus" data-ng-click="deleteApp(app.appId)" class="btn btn-default btn-xs">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+
+        <pagination total-items="totalItems" items-per-page="10" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination"></pagination>
+
+    </div>
+</section>

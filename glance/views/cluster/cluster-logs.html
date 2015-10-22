@@ -1,0 +1,18 @@
+<div id="log" role="tabpanel" class="tab-pane">
+    <div class="main-container-body">
+        <form  class="form-inline" role="search">
+            <div class="form-group col-md">
+                <input type="text" class="form-control" placeholder="Search" data-ng-model="logSearchKey">
+            </div>
+            <button type="submit" class="btn btn-info" data-ng-click="clusterlogs.searchLogs(logSearchKey)">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </form>
+        <div class="log-screen">
+            <ul class="list-unstyled" data-infinite-scroll='clusterlogs.getlogs(logSearchKey)' data-infinite-scroll-distance='0' data-infinite-scroll-disabled='clusterlogs.isLoadingLogs' data-infinite-scroll-parent='true'>
+                <li data-ng-repeat='log in clusterlogs.logs' data-ng-bind-html="log.highlight.msg[0]"></li>
+            </ul>
+            <code data-ng-show='clusterlogs.isLoadingLogs'>数据加载中...</code>
+        </div>
+    </div>
+</div>

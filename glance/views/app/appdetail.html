@@ -1,0 +1,44 @@
+<div class="page-header">
+    <h1 class="pull-left" >应用详情</h1>
+</div>
+<section>
+	<div class="server-detail">
+		<div class="server-info server-info-instance">
+			<div class="main-container">
+				<div class="main-container-body">
+					<h3 class="ng-binding">{/appInfo.name/}</h3>
+					<dl>
+						<dt>最近更新时间：</dt>
+						<dd>{/appInfo.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
+						<dt>应用状态：</dt>
+						<dd>{/appstate[appInfo.status]/}</dd>
+					</dl>
+					<div class="btn-group">
+						<button data-ng-disabled="!appInfo.status" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+							<span class="glyphicon glyphicon-menu-hamburger"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li data-ng-show="appInfo.status == '3'"><a href="#" data-ng-click="startApp(appInfo.appId)">启动</a></li>
+							<li data-ng-show="appInfo.status!='3'"><a href="#" data-ng-click="stopApp(appInfo.appId)">停止</a></li>
+							<li data-ng-disabled="appInfo.status == '5'"><a data-ng-click="deleteApp(appInfo.appId)" href="#">删除</a></li>
+							<li data-ng-show="appInfo.status == '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum)" href="#">扩展</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+        <div class="main-container"> <!-- Only required for left/right tabs -->
+			<header class="clearfix main-container-header">
+				<ul class="nav nav-tabs">
+					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance">实例</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring">监控</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config">配置</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event">事件</a></li>
+				</ul>
+			</header>
+
+			<div data-ui-view="tabdetail" class="tab-content">
+		</div>
+	</div>
+</section>

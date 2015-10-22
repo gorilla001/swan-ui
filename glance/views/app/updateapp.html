@@ -1,0 +1,48 @@
+<div class="page-header">
+    <h1 class="pull-left" >配置新版本</h1>
+    <div class="introduce">
+    </div>
+</div>
+<div>
+    <form class="form-horizontal" name="staticForm" role="form" data-ng-submit="deployUpdateApp()">
+        <p>应用部署</p>
+
+        <div>
+            <p class="text-left">应用名称：{/app.appname/}</p>
+
+            <p class="text-left">集群名称：{/app.clusterName/}</p>
+        </div>
+
+        <div>
+            <label class="col-md-2 control-label">镜像地址</label>
+
+            <div class="col-md-10">
+                <input type="text" class="form-control" data-ng-model="deployupdateinfo.imageURI" data-required="required"/>
+            </div>
+
+            <div class="col-md-12">
+                <fieldset data-ng-repeat="choice in updatePort.choices">
+                    <label class="col-md-2 control-label">容器端口</label>
+                    <input type="number" ng-model="choice.name" name="" min="1" placeholder="输入端口号" data-required="required">
+                    <button class="remove" ng-show="$last" ng-click="updatePort.removeChoice()">-</button>
+                </fieldset>
+                <button type="button" class="addfields col-md-2 col-md-offset-2" ng-click="updatePort.addNewChoice()">
+                    添加端口
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <nav>
+                <ul class="pager">
+                    <li class="next disabled" data-ng-hide="step=='steptwo'"><a href="#">下一步 <span
+                            aria-hidden="true">&rarr;</span></a></li>
+                    <li>
+                        <button type="submit" class="btn btn-primary" data-ng-disabled="staticForm.$invalid">立即部署 <span
+                                aria-hidden="true"></span></button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </form>
+</div>

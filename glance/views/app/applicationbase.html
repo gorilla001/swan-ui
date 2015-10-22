@@ -1,0 +1,27 @@
+<div>
+    <div data-ui-view="first"></div>
+    <div class="modal fade" id="expandConNumModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button"></button>
+					<h4 class="modal-title">更改容器数量</h4>
+				</div>
+                <div class="modal-body">
+					<form class="form-horizontal">
+					  <div class="form-group">
+						<label class="col-sm-3 control-label">容器数量</label>
+						<div class="col-sm-6">
+						  <input type="number" min="1" data-ng-model="_expandConNum">
+						</div>
+					  </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-ng-disabled="!_expandConNum" data-ng-click="ensureExpandConNumCallback()" data-dismiss="modal">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

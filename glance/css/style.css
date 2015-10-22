@@ -1,0 +1,878 @@
+/*
+ * Base structure
+ */
+body,html {
+	font-size: 12px;
+	font-family: Helvetica, Arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑",STHeiti, "华文细黑", sans-serif;
+	font-weight: 100;
+	background-color: #F1F1F1;
+	color: #3D3D3D;
+	letter-spacing: 0.2px;
+}
+section {
+	margin: 40px 0;
+}
+.btn {
+	border-radius: 2px;
+}
+.btn-default {
+	background-color: #FFF;
+	border: 1px solid #CCCCCC;
+	color: #666;
+}
+.control-label {
+	font-size: 14px;
+}
+.form-btnbar-b {
+	margin-top: 50px;
+}
+.form-btnbar-b .btn {
+	margin-right: 18px;
+}
+a.remove {
+	cursor: pointer;
+	color: #000000;
+}
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+.sidebar {
+	position: fixed;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #3D3D3D;
+    border-right: 1px solid #eee;
+  }
+.sidebar .sidebar-logo {
+	position: absolute;
+	bottom: 10px;
+	width: 50%;
+	height: 30px;
+	left: 25%;
+	background: url(../pics/dataman-logo.svg) no-repeat top center;
+}
+.sidebar .sidebar-logo {
+	opacity:0.6;
+	filter:alpha(opacity=60);
+	transition: all 0.25s ease-out 0s;
+}
+.sidebar .sidebar-logo:hover {
+	opacity:1;
+	filter:alpha(opacity=100);
+}
+.sidebar .user {
+	text-align: center;
+	padding: 20px 0 50px 0;
+}
+.sidebar .user img {
+	width: 90px;
+	height: 90px;
+	border-radius: 45px;
+}
+.sidebar .user h5 {
+	color: #9B9B9B;
+	font-weight: normal;
+	font-size: 12px;
+}
+.sidebar .super-user {
+    display: none;
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+  text-align: center;
+  font-size: 14px;
+  transition: all 0.3s ease-out 0s;
+  color: #9b9b9b;
+}
+.nav-sidebar > li > a:focus, .nav-sidebar > li > a:hover {
+  background: rgba(241,241,241,0.5);
+  color: #F1F1F1;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #3D3D3D;
+  background-color: #F1F1F1;
+}
+.nav-sidebar > li > a span.glyphicon {
+  margin-right: 6px;
+}	
+/*
+ * Main content
+ */
+
+.main .page-header {
+  margin-top: 0;
+  height: 100px;
+  background-color: #FFF;
+  border-bottom: 3px solid #DCDCDC;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.main .page-header h1 {
+	margin: 0 0 0 20px;
+	line-height: 90px;
+	font-weight: 400;
+}
+.main .page-header .btn {
+	margin-top: 30px;
+	margin-right: 40px;
+	float: right;
+}
+
+
+
+/**/
+.main-container {
+	margin: 0 auto 20px auto;
+}
+.main-container header {
+	vertical-align: bottom;
+}
+.main-container header h2 {
+	float: left;
+	height: 20px;
+	font-size: 18px;
+	font-weight: 400	;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+.main-container header .nav-tabs {
+	float: right;
+	margin-top: 0px;
+	margin-right: 40px;
+	border-bottom: 0;
+	font-size: 14px;
+}
+.main-container header .nav-tabs > li > a {
+	height: 30px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.main-container header .nav-tabs > li > a:hover {
+	border-bottom: 0;
+}
+.main-container header .nav-tabs > li.active > a, .main-container header .nav-tabs > li.active > a:focus, .main-container header .nav-tabs > li.active > a:hover {
+	background-color: transparent;
+	border: 0;
+	border-bottom: 3px solid #EF831E;
+}
+.main-container .main-container-body {
+	position: relative;
+	background-color: #FFF;
+	padding: 30px;
+}
+.main-container .main-container-body > .btn-group {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.main-container footer {
+	line-height: 24px;
+	color: #9B9B9B;
+}
+
+.container-size-m {
+	max-width: 75%;
+}
+.container-size-m form {
+	margin: 30px 0;
+}
+
+.server-ico-list .main-body-content {
+	padding-right: 40px;
+}
+.btn-xxl {
+	display: block; 
+	width: 200px; 
+	height: 200px; 
+	text-align: center; 
+	color: #FFF; 
+	background-color: #70BBE9; 
+	text-decoration: none; 
+	font-size: 20px; 
+	padding-top: 70px; 
+	margin: 10% auto;
+}
+
+/* 集群详情 */
+.cluster-detail .cluster-title {
+	height: 45px;
+}
+.cluster-detail .cluster-title h3 {
+	margin: 0;
+}
+.cluster-detail .cluster-title .btn {
+	height: 45px;
+	width: 45px;
+	font-size: 18px;
+	border: 0;
+}
+
+/* 主机详情 */
+.server-detail .server-info h3 {
+	margin-top: 0;
+}
+.server-detail .server-info dl {
+	margin-bottom: 0;
+}
+
+.server-detail .server-info dt {
+	display: inline-block;
+	color: #9B9B9B;
+	font-weight: normal;
+}
+.server-detail .server-info dd {
+	display: inline-block;
+	font-size: 14px;
+	margin-right: 24px;
+}
+.server-detail .server-model dt {
+	color: #9B9B9B;
+	font-weight: normal;
+}
+.server-detail .server-model dt a {
+	margin-right: 6px;
+}
+.server-detail .server-model dd {
+	padding-left: 18px;
+	font-size: 14px;
+}
+
+/* 日志显示 */
+.log-screen {
+	padding: 9px;
+	background-color: #000;
+	color: #FFF;
+	min-height: 300px;
+	max-height: 400px;
+	overflow-y: auto;
+}
+.log-screen code {
+	background-color: transparent;
+	color: #FFF;
+}
+
+span.multiSelect > button {
+    width: 100%;
+}
+span.caret {
+    right: 0px;
+}
+
+
+/* 复制添加主机代码 */
+.copy-code-agent {
+	background-color: #F3F3F3;
+	padding: 10px 20px 10px 90px;
+	vertical-align: middle;
+	position: relative;
+}
+.copy-code-agent code {
+	background-color: transparent;
+}
+.copy-code-agent button {
+	height: 60px;
+	width: 75px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-size: 14px;
+}
+.copy-code-agent button span {
+	font-size: 20px;
+}
+
+
+/* 创建集群 */
+.create-cluster form {
+	margin: 30px 0;
+}
+.create-cluster .form-control-static {
+	font-size: 14px;
+}
+
+
+/* 闪烁提示 */
+.alert-process {
+	margin: 20px auto 0 auto;
+	text-align: center;
+	background-color: rgba(170,206,54,0.2);
+	font-size: 14px;
+	padding: 10px;
+	-moz-animation: bg 5s infinite ease-in-out;
+	-webkit-animation: bg 5s infinite ease-in-out;
+}
+
+/* 完成提示 */
+.connected-bar {
+	margin: 20px auto 0 auto;
+	text-align: center;
+	background-color: rgba(0,191,255,0.2);
+	font-size: 14px;
+	padding: 10px;
+}
+
+@-moz-keyframes bg {
+  0%{background: rgba(170,206,54,0.2);}
+  25%{background: rgba(170,206,54,0.5);}
+  50%{background: rgba(170,206,54,0.1);}
+  75%{background: rgba(170,206,54,0.3);}
+  100%{background: rgba(170,206,54,0.2);}
+} 
+@-webkit-keyframes bg {
+  0%  {background: rgba(170,206,54,0.2);}
+  25% {background: rgba(170,206,54,0.5);}
+  50%{background: rgba(170,206,54,0.1);}
+  75%{background: rgba(170,206,54,0.3);}
+  100%{background: rgba(170,206,54,0.2);}
+} 
+
+
+/* 响应式布局 */
+@media screen and (max-width: 992px) {
+	.sidebar {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.nav-sidebar > li > a .text {
+		display: none;
+	}
+	.nav-sidebar > li > a .glyphicon {
+		font-size: 18px;
+	}
+	.sidebar .user {
+		padding-top: 0;
+	}
+	.sidebar .user img {
+		border-radius: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.sidebar .sidebar-logo {
+		background: url(../pics/dataman-logo-icon.svg) no-repeat top center;
+	}
+}
+
+.welcome {
+	text-align: center;
+	margin-top: 150px;
+}
+.welcome div {
+	position: relative;
+}
+.welcome div:after {
+	content:"url(../pics/arrow.svg)";
+	position: absolute;
+	top: 40px;
+	right: -15px;
+}
+.welcome div.last-step:after {
+	content:"";
+}
+.welcome div h1 {
+	font-size: 36px;
+	color:#B8B8B8;
+	margin-bottom: 0;
+}
+.welcome div h2 {
+	font-size: 24px;
+	color:#333;
+	margin-top: 0;
+}
+.welcome div a {
+	text-decoration: none;
+}
+
+
+
+/* 集群主机图标列表展示 */
+.cluster-manage {
+	position: relative;
+}
+.cluster-manage .cluster-status-disconnect {
+	height: 340px;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+}
+.cluster-manage .cluster-status-disconnect .disconnect-content {
+	width: 560px;
+	height: 245px;
+	padding: 15px 25px;
+	background-color: #FFF;
+	border-radius: 4px;
+	margin: 48px auto 0 auto;
+}
+.cluster-manage .disconnect-content h3 {
+	color: #D0021B;
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0 0 5px 0;
+}
+.cluster-manage .disconnect-content h4 {
+	color: #000;
+	font-size: 12px;
+	margin: 0 0 15px 0;
+}
+.cluster-manage .disconnect-content ul {
+	margin-left: 24px;
+	margin-bottom: 20px;
+	padding-left: 0;
+}
+.cluster-manage .disconnect-content li {
+	list-style: none;
+	line-height: 20px;
+}
+.cluster-manage footer {
+	text-align: right;
+}
+
+.cluster-service-status-number, .cluster-service-ico-list {
+	font-size: 0;
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+.cluster-service-status-number {
+	margin-bottom: 50px;
+}
+.cluster-service-status-number li {
+	display: inline-block;
+	list-style: none;
+	font-size: 12px;
+}
+.cluster-service-status-number li span {
+	font-size: 24px;
+}
+.cluster-service-status-number li a {
+	display: block;
+	height: 28px;
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	background-size: 22px;
+	padding-left: 30px;
+	margin-right: 34px;
+	color: #4A4A4A;
+}
+.cluster-service-status-number li.normal a {
+	background-image: url(../pics/ico-service-status-normal.png);
+}
+.cluster-service-status-number li.disconnect a {
+	background-image: url(../pics/ico-service-status-disconnect.png);
+}
+.cluster-service-status-number li.warning a {
+	background-image: url(../pics/ico-service-status-warning.png);
+}
+.cluster-service-status-number li.reset a {
+	background-image: url(../pics/ico-service-status-reset.png);
+}
+.cluster-service-status-number li.unselected {
+	filter: alpha(opacity=40);
+	opacity: 0.4;
+}
+.cluster-service-ico-list li {
+	float: left;
+	list-style: none;
+	margin-right: 20px;
+	max-height: 16px;
+}
+.cluster-service-ico-list li:nth-child(10n) {
+	float: none;
+}
+.cluster-service-ico-list .tooltip.top {
+  margin-top: -9px;
+}
+.cluster-service-ico-list .tooltip.in {
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+.cluster-service-ico-list .tooltip-inner {
+  background-color: #DFDFDF;
+  color: #000;
+  border: 1px solid #FFF;
+}
+.cluster-service-ico-list .tooltip.top .tooltip-arrow {
+  border-top-color: #DFDFDF;
+}
+.cluster-service-ico-list footer {
+	padding-left: 300px;
+}
+.box-hide {
+	height: 100px;
+	overflow: hidden;
+}
+.switch-show-hidden {
+	margin-left: 280px;
+	color: #9B9B9B;
+}
+
+/* 集群详情 */
+.cluster-detail .cluster-title {
+	height: 45px;
+}
+.cluster-detail .cluster-title h3 {
+	margin: 0;
+}
+.cluster-detail .cluster-title .btn {
+	height: 45px;
+	width: 45px;
+	font-size: 18px;
+	border: 0;
+	border-radius: 0;
+	background: #70bbe9;
+	color: #FFF;
+}
+.cluster-detail .cluster-title .btn:hover, .cluster-detail .cluster-title .btn:active {
+	background: #5bb1e8;
+}
+.cluster-detail .cluster-title .main-container-body {
+	height: 45px;
+	padding-top: 12px;
+	padding-bottom: 0;
+}
+#cluster-cpu-chart {
+    height: 300px;
+}
+
+#cluster-memory-chart {
+    height: 300px;
+}
+
+#cluster-disk-chart {
+    height: 300px;
+}
+
+/* 主机详情 */
+.server-detail .main-container-body {
+	padding: 20px;
+}
+.server-detail .server-detail-title {
+	margin-bottom: 0;
+}
+.server-detail em {
+	font-style: normal;
+	font-size: 16px;
+}
+.server-detail em sub {
+	bottom: 0;
+	font-size: 60%;
+}
+.server-detail .server-info {
+	margin: 0;
+	padding: 0;
+}
+.server-detail .server-info li {
+	display: inline-block;
+	margin-right: 24px;
+	font-size: 12px;
+	color: #AAA;
+}
+.server-detail .server-info em {
+	margin-left: 6px;
+	color: #333;
+}
+.server-detail .server-status {
+	font-size: 16px;
+	color: #AAA;
+	background-size: 100px;
+	background-repeat: no-repeat;
+	background-position: right;
+}
+.server-detail .server-status-normal {
+	background-image: url(../pics/ico-service-status-normal.png);
+}
+.server-detail .server-status-disconnect {
+	background-image: url(../pics/ico-service-status-disconnect.png);
+}
+.server-detail .server-status-warning {
+	background-image: url(../pics/ico-service-status-warning.png);
+}
+.server-detail .server-status-reset {
+	background-image: url(../pics/ico-service-status-reset.png);
+}
+.server-detail .server-status em {
+	font-weight: bold;
+}
+.server-info {
+	position: relative;
+	background-color: #fff;
+}
+
+/* 添加主机 */
+.add-node {
+	font-size: 14px;
+}
+.add-node li {
+	list-style: none;
+	margin-bottom: 40px;
+}
+.add-node li span {
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.add-node li span pre{
+	display: inline;
+	padding: 0 6px;
+	margin: 0 6px;
+}
+
+/* 主机详情 */
+.server-detail .main-container-body {
+	padding: 20px;
+}
+.server-detail .server-detail-title {
+	margin-bottom: 0;
+}
+.server-detail em {
+	font-style: normal;
+	font-size: 16px;
+}
+.server-detail em sub {
+	bottom: 0;
+	font-size: 60%;
+}
+.server-detail .server-info {
+	margin: 0;
+	padding: 0;
+}
+.server-detail .server-info li {
+	display: inline-block;
+	margin-bottom: 2px;
+	font-size: 12px;
+	color: #AAA;
+}
+.server-detail .server-info em {
+	margin-left: 6px;
+	color: #333;
+}
+.server-detail .server-status {
+	font-size: 12px;
+	color: #AAA;
+	background-size: 100px;
+	background-repeat: no-repeat;
+	background-position: right -10px center;
+	height: 57px;
+	padding-top: 10px;
+	overflow: hidden;
+}
+.server-detail .server-status-normal {
+	background-image: url(../pics/ico-service-status-normal.png);
+}
+.server-detail .server-status-disconnect {
+	background-image: url(../pics/ico-service-status-disconnect.png);
+}
+.server-detail .server-status-warning {
+	background-image: url(../pics/ico-service-status-warning.png);
+}
+.server-detail .server-status-reset {
+	background-image: url(../pics/ico-service-status-reset.png);
+}
+.server-detail .server-status em {
+	font-size: 20px;
+	font-weight: normal;
+	display: block;
+	margin-top: -4px;
+}
+.search-log label {
+	margin-bottom: 2px;
+}
+.search-log .form-group {
+	margin-bottom: 10px;
+}
+.cluster-nodes table span.bg-primary {
+	padding: 0 3px;
+}
+#node-cpu-chart {
+    height: 300px;
+}
+
+#node-memory-chart {
+    height: 300px;
+}
+
+#node-disk-chart {
+    height: 300px;
+}
+/*loading*/
+#main {
+	position: relative;
+}
+.loading-style {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+}
+.loader-inner > div {
+    background-color: #337ab7;
+}
+/*集群状态遮罩层*/
+.cluster-manage {
+	position: relative;
+}
+.cluster-manage .cluster-status-disconnect {
+	height: 340px;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1001;
+}
+.cluster-manage .cluster-status-disconnect .disconnect-content {
+	width: 560px;
+	height: 245px;
+	padding: 15px 25px;
+	background-color: #FFF;
+	border-radius: 4px;
+	margin: 48px auto 0 auto;
+}
+.cluster-manage .disconnect-content h3 {
+	color: #D0021B;
+	font-size: 24px;
+	font-weight: 600;
+	margin: 0 0 5px 0;
+}
+.cluster-manage .disconnect-content h4 {
+	color: #000;
+	font-size: 12px;
+	margin: 0 0 15px 0;
+}
+.cluster-manage .disconnect-content ul {
+	margin-left: 24px;
+	margin-bottom: 20px;
+	padding-left: 0;
+}
+.cluster-manage .disconnect-content li {
+	list-style: none;
+	line-height: 20px;
+}
+.cluster-manage footer {
+	text-align: right;
+}
+
+/* 工单入口 */
+.tab-rb-feedback {
+    background-color: #f0ad4e;
+    border-radius: 3px 0 0 3px;
+    cursor: pointer;
+    height: 35px;
+    position: fixed;
+    bottom: 40px;
+    right: 0px;
+    width: 35px;
+}
+.tab-rb-feedback a {
+    color: #FFF;
+}
+.tab-rb-feedback i {
+    background-color: #f0ad4e;
+    height: 35px;
+    position: relative;
+    width: 35px;
+    z-index: 2;
+    font-size: 20px;
+    line-height: 35px;
+    text-align: center;
+    left: 0;
+    top: 0;
+}
+.tab-rb-feedback em {
+    background-color: #f0ad4e;
+    border-radius: 3px 0 0 3px;
+    color: #fff;
+    height: 35px;
+    left: 35px;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transition: left 0.3s ease-in-out 0.1s;
+    width: 50px;
+    z-index: 1;
+    font-style: normal;
+}
+.tab-rb-feedback a:hover em {
+    left: -50px;
+}
+
+/* 新建应用 */
+.new-app label small {
+    font-weight: normal;
+    color: #CCC;
+    display: block;
+}
+.new-app .well {
+    padding: 19px 0;
+}
+.new-app .ad-set {
+    margin-bottom: 15px;
+    display: inline-block;
+    padding-left: 8px;
+}
+
+/* 应用事件 */
+.event-list {
+	margin-left: 0;
+	padding-left: 0;
+}
+.event-list li {
+	list-style: none;
+	margin-bottom: 30px;
+}
+.event-list h1 {
+	font-size: 24px;
+	color: #AAA;
+	margin-bottom: 3px;
+}
+.event-list h1 span {
+	font-size: 18px;
+	margin-right: 12px;
+}
+.event-list p {
+	font-size: 14px;
+	padding-left: 30px;
+}
+.event-list p span {
+	margin-right: 18px;
+}
+
+/*应用实例*/
+.server-detail .server-info-instance li {
+    display: block;
+    margin-right: 0px;
+}

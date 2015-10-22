@@ -1,0 +1,62 @@
+<div class="tab-content">
+    <div id="servers" role="tabpanel" class="tab-pane active cluster-nodes">
+        <div class="main-container-body">
+            <div data-ng-show="cluster.nodes.length">
+                <div>
+                    <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
+                    <a href="/cluster/{/cluster.id /}/addnode">
+                        <button type="button" class="btn btn-default btn-sm">添加主机</button>
+                    </a>
+                    <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
+                            data-ng-disabled="!checkedNodes.value.length">删除主机
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" data-ckb-batch-all="checkedNodes"></th>
+                            <th>名称</th>
+                            <th>IP地址</th>
+                            <th>运行状态</th>
+                            <th>创建时间</th>
+                            <th>更新时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="node in contentCurPage">
+                            <td>
+                                <input type="checkbox" data-ckb-batch="checkedNodes" data-ng-value="node">
+                            </td>
+                            <td>
+                                <span class="bg-primary" data-ng-show="getIsMaster(node)">[MASTER]</span> <a data-ui-sref="cluster.nodedetails({nodeId:node.id})">{/ node.name /}</a>
+                            </td>
+                            <td>
+                                {/ node.ip/}
+                            </td>
+                            <td>
+                                <img data-ng-src="../pics/ico-service-status-{/ node.showState /}.png" width="16"> {/statName[node.showState]/}</td>
+                            </td>
+                            <td>
+                                {/ node.created_at /}
+                            </td>
+                            <td>
+                                {/ node.updated_at /}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <pagination total-items="totalItems" items-per-page="20" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination"></pagination>
+            </div>
+            <div data-ng-show="!cluster.nodes.length">
+                <h4>
+                    集群中没有主机，
+                    <a data-ui-sref="cluster.addnode({clusterId:cluster.id})">添加主机</a>
+                </h4>
+            </div>
+        </div>
+        
+    </div>
+</div>

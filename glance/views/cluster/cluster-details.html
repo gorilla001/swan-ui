@@ -1,0 +1,48 @@
+<div class="page-header">
+  <div>
+    <h1 class="pull-left">集群详情</h1>
+  </div>
+</div>
+
+<section class="cluster-detail">
+<div class="main-container cluster-title">
+  <div class="main-container-body">
+    <h3>{/cluster.name/} <small>主机数量: {/cluster.nodes.length/}</small></h3>
+    <div class="btn-group">
+      <button type="button"
+        class="btn btn-default dropdown-toggle"
+        data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <span class="glyphicon glyphicon-menu-hamburger"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li>
+        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})">编辑集群</a>
+        </li>
+        <li>
+        <a href="#" data-ng-click="delCluster(cluster.id)">删除集群</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="main-container">
+  <header class="clearfix main-container-header" data-ng-show="cluster.nodes.length">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" data-ng-class="{'active': clusterClass==='clusterNode'}">
+        <a data-ui-sref="cluster.clusterdetails.nodes" aria-controls="home" role="tab">
+          主机列表
+        </a>
+      </li>
+      <li role="presentation" data-ng-class="{'active': clusterClass==='clusterMonitor'}">
+        <a data-ui-sref="cluster.clusterdetails.monitoring" aria-controls="configuration" role="tab">
+          集群监控
+        </a>
+      </li>
+    </ul>
+  </header>
+  <div data-ui-view="cluster"></div>
+</div>
+
+</section>
