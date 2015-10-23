@@ -4,6 +4,8 @@ CONFIG = {
     redirectUrl: "DASHBOARD/",
     loginInUrl: 'auth/sign_in',
     registerUrl: 'auth/registration',
-    domainUrl: "BODY_DOMAIN"
+    domainUrl: "BODY_DOMAIN",
+    resetPasswordUrl: "auth/password/resetrequest",
+    verifyMailAddress: "auth/password/reset/$reset_code"
   }
 };

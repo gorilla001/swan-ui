@@ -1,16 +1,17 @@
 $(document).ready(function(){
-    function ajaxPost(postData, url) {
+    var verifyCode;
+    function ajaxReq(url, type, data) {
         return $.ajax({
             url: url,
-            type: 'post',
-            data: JSON.stringify(postData),
+            type: type,
+            data: JSON.stringify(data),
             dataType: 'json',
             headers: {'Content-Type': 'application/json; charset=UTF-8'}
         });
-    }
+    };
 
-    function loginIn(postData, url) {
-        ajaxPost(postData, url).success(function(data) {
+    function loginIn(url, postData) {
+        ajaxReq(url, 'post', postData).success(function(data) {
             if (data && data.code === 0) {
                 docCookies.setItem('token', '\"' + data.data.token + '\"', undefined, '/', CONFIG.urls.domainUrl, undefined);
                 window.location.href = CONFIG.urls.redirectUrl;
@@ -60,7 +61,7 @@ $(document).ready(function(){
             $('#login-error').text(errorText);
         } else {
              e.preventDefault();
-             loginIn(loginInPostData, url);
+             loginIn(url, loginInPostData);
         }
     });
 
@@ -81,15 +82,12 @@ $(document).ready(function(){
             $('#register-error').text('请填写完整信息');
         } else {
             e.preventDefault();
-            ajaxPost(registerPostData, regitsterUrl).success(function(data) {
-                if (data.code === 0) {
-                    loginIn(registerPostData, loginInUrl);
-                } else if (data.code === 1) {
-                    var error;
-                    for (error in data.errors) {
-                        $('#register-error').text(data.errors[error]);
-                        break;
-                    }
+            ajaxReq(regitsterUrl, 'post', registerPostData).success(function(data) {
+                if (data && data.code === 0) {
+                    loginIn(loginInUrl, registerPostData);
+                } else if (data && data.code === 1) {
+                    var error = dataError(data.errors);
+                    $('#register-error').text(error);
                 }
             }).error(function(data) {
                 alert('注册失败，请稍后再试');
@@ -99,30 +97,53 @@ $(document).ready(function(){
 
     $('.resetMailForm').validator(options).on('submit', function(e) {
         var resetMail = $('#reset-mail-address').val();
-        
+        var data = {
+            email: resetMail
+        };
+        var url = CONFIG.urls.baseUrl + CONFIG.urls.resetPasswordUrl;
+
         if(e.isDefaultPrevented()) {
             if(resetMail === '') {
                 $('#reset-mail-error').text('请填写邮箱地址');
             }
         } else {
             e.preventDefault();
-            $('#reset-mail').modal('hide');
-            $('#reset-tips').modal('show');
-            $('.jump-mail').text(resetMail);
+            ajaxReq(url, 'post', data).success(function(data) {
+                if (data && data.code === 0) {
+                    $('#reset-mail').modal('hide');
+                    $('#reset-tips').modal('show');
+                    $('.jump-mail').text(resetMail);    
+                } else if(data && data.code === 1) {
+                    var error = dataError(data.errors);
+                    $('#reset-mail-error').text(error);
+                }
+            }).error(function(data) {
+                alert('请稍候再试');
+            });
         }
     });
 
     $('.resetTipsForm').on('submit', function(e) {
         e.preventDefault();
-        $('#reset-tips').modal('hide');
-        $('#reset-password').modal('show');
-        // 跳转至邮箱
+        var mailAddress = $('#reset-mail-address').val();
+        var location = getMailServiceLink(mailAddress);
+        if(location) {
+            window.location.href = location;
+        } else {
+            $('#reset-tips').modal('hide');
+        }
     });
 
     $('.resetPasswordForm').validator().on('submit', function(e) {
         var newPassword = $('#new-password').val();
-        var postData;
-        var url;
+        var newPasswordCompare = $('#new-password-compare').val();
+        var postData = {
+            "new_password": newPassword,
+            "new_password_compare": newPasswordCompare
+        };
+        var url = CONFIG.urls.baseUrl + CONFIG.urls.verifyMailAddress;
+        var resetCode = '$reset_code';
+        url = url.replace(resetCode, verifyCode);
 
         if(e.isDefaultPrevented()) {
             if(newPassword === '') {
@@ -130,29 +151,73 @@ $(document).ready(function(){
             }
         } else {
             e.preventDefault();
-            $('#reset-password').modal('hide');
-            $('#reset-success').modal('show');
-            // ajaxPost(postData, url).success(function(data) {
-            //     if (data && data.code === 0) {
-            //         $('#reset-password').modal('hide');
-            //         $('#reset-success').modal('show');
-            //     } else {
-            //         tips
-            //     }
-            // }.errors(function(data) {
-            //     tips
-            // }));
+            ajaxReq(url, 'post', postData).success(function(data) {
+                if (data && data.code === 0) {
+                    $('#reset-password').modal('hide');
+                    $('#reset-success').modal('show');
+                } else if(data && data.code === 1){
+                    var error = dataError(data.errors);
+                    $('#reset-password-error').text(error);
+                }
+            }).error(function(data) {
+                //tips
+            });
         }
     });
 
-    $('.resetSuccessForm').validator(options).on('submit', function(e) {
+    $('.resetSuccessForm').on('submit', function(e) {
         e.preventDefault();
-        var loginInPostData;
-        var url = CONFIG.urls.baseUrl + CONFIG.urls.loginInUrl;
-        loginIn(loginInPostData, url);
+        $('#login-in').modal('show');
     });
     
     $("a[data-toggle=popover]").popover().click(function(e) {
-      e.preventDefault();
+        e.preventDefault();
     });
+
+    function getMailServiceLink(address) {
+        var mailHash = {
+            'gmail.com': 'https://mail.google.com', 
+            'qq.com': 'https://mail.qq.com/'
+        };
+        var service = address.split('@')[1];
+        return mailHash[service];
+    }
+
+    function getResetCode(url, key) {
+        var code;
+        if(url.indexOf(key) > -1 && url.indexOf('=') > -1) {
+            code = url.split('=')[1];
+            code = code.substr(0, code.length-1);
+        }
+        return code;
+    }
+
+    function dataError(errors) {
+        var error;
+        for (error in errors) {
+            error = data.errors[error];
+            return error;
+        }
+    }
+
+    (function getVerifyCode() {
+        var search = location.search;
+        var code = 'code';
+        var resetCode = '$reset_code';
+        var getUrl = CONFIG.urls.baseUrl + CONFIG.urls.verifyMailAddress;
+        verifyCode = getResetCode(search, code);
+        if (verifyCode) {
+            getUrl = getUrl.replace(resetCode, verifyCode);
+            ajaxReq(getUrl, 'get').success(function(data) {
+                if(data && data.code === 0) {
+                    $('#reset-password').modal('show');
+                } else if ( data && data.code === 1){
+                    var error = dataError(data.errors);
+                    $('#reset-password-error').text(error);
+                }
+            }).error(function(data) {
+                //tips
+            });
+        }
+    })();
 });
