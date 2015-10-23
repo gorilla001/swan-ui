@@ -1,58 +1,86 @@
 <div class="page-header">
-  <h1 class="pull-left" >添加主机</h1>
+    <h1 class="pull-left">添加主机</h1>
 </div>
 
 <section>
-<div class="main-container container-size-m add-node">
-  <div class="main-container-body">
-    <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
+    <div class="main-container container-size-m add-node">
+        <div class="main-container-body">
 
-      <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <strong>在您安装主机之前，请确保您的环境满足下述条件</strong>
+                <ol>
+                    <li>每台运行docker的主机必须能够ping通数人云。 ping www.shurenyun.com 响应。</li>
+                    <li>同一集群内的主机相互都可以连通。</li>
+                    <li>安装docker版本必须在1.7.1以上(但强烈建议1.8.2)，并开启docker运行。</li>
+                    <li>使用64位Linux系统,已测试操作系统：<em>CentOS 7+</em> 和 <em>Ubuntu 14.04+</em></li>
+                    <li>推荐 Ubuntu 使用 AUFS 或 CentOS 使用 devicemapper 作为 docker 文件系统。(生产环境使用devicemapper 请参考用户手册)</li>
+                    <li>安装 nc 命令使用程序。</li>
+                    <li>CentOS 关闭 selinux</li>
+                    <li>开启 iptables-nat</li>
+                </ol>
+            </div>
+            <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
+
+                <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
         (message_error_info.name && staticForm.name.$pristine)}">
-        <label class="col-md-3 control-label">主机名称</label>
-        <div class="col-md-8">
-          <input type="text" name="name" class="form-control" data-ng-model="form.name">
-          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/message_error_info["name"]/}</p>
-        </div>
-      </div>
+                    <label class="col-md-3 control-label">主机名称</label>
 
-      <div class="form-group">
-        <label class="col-md-3 control-label">连接主机</label>
-        <div class="col-md-8" data-ng-show="nodeInstallScript">
-          <p class="form-control-static">1. 安装 Docker <small>（主机已安装 Docker，请跳过）</small></p>
-          <div class="copy-code-agent">
-            <code>curl -sSL https://get.docker.com/ | sh</code>
-          </div>
-          <p class="form-control-static">2. 安装 Agent</p>
-          <div class="copy-code-agent">
-            <code id="code" data-ng-bind="nodeInstallScript"></code>
-            <button type="button" class="btn btn-default copy" title="点击复制代码" data-clipboard-target="code" data-ng-click="isHintHide=false">
-              <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
-              <br>
-              点击复制
-            </button>
-          </div>
-        </div>
-      </div>
+                    <div class="col-md-8">
+                        <input type="text" name="name" class="form-control" data-ng-model="form.name">
 
-      <div class="form-group">
-        <label class="col-md-3 control-label"></label>
-        <div class="col-md-8 form-control-static" data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
-          {/msgstate/}
-        </div>
-      </div>
+                        <p data-ng-show="staticForm.name.$pristine" class="help-block">
+                            {/message_error_info["name"]/}</p>
+                    </div>
+                </div>
 
-      <div class="form-group form-btnbar-b">
-        <div class="col-md-offset-5">
-          <button class="btn btn-default" data-ng-disabled="staticForm.$invalid" data-ng-click="addNode()">
-            完成
-          </button>
-          <button class="btn btn-default" data-ng-disabled="staticForm.$invalid" data-ng-click="addNode(true)">
-            完成并继续添加主机
-          </button>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">连接主机</label>
+
+                    <div class="col-md-8" data-ng-show="nodeInstallScript">
+                        <p class="form-control-static">1. 安装 Docker
+                            <small>（主机已安装 Docker，请跳过）</small>
+                        </p>
+                        <div class="copy-code-agent">
+                            <code>curl -sSL https://get.docker.com/ | sh</code>
+                        </div>
+                        <p class="form-control-static">2. 安装 Agent</p>
+
+                        <div class="copy-code-agent">
+                            <code id="code" data-ng-bind="nodeInstallScript"></code>
+                            <button type="button" class="btn btn-default copy" title="点击复制代码"
+                                    data-clipboard-target="code" data-ng-click="isHintHide=false">
+                                <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+                                <br>
+                                点击复制
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+
+                    <div class="col-md-8 form-control-static"
+                         data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
+                        {/msgstate/}
+                    </div>
+                </div>
+
+                <div class="form-group form-btnbar-b">
+                    <div class="col-md-offset-5">
+                        <button class="btn btn-primary" data-ng-disabled="staticForm.$invalid"
+                                data-ng-click="addNode()">
+                            完成
+                        </button>
+                        <button class="btn btn-default" data-ng-disabled="staticForm.$invalid"
+                                data-ng-click="addNode(true)">
+                            完成并继续添加主机
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
 </section>

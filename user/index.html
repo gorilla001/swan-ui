@@ -88,7 +88,7 @@
 							<h2>请登录数人云账户</h2>
 							<div class="notification help-block with-errors custom-errors" id="login-error"></div>
                             <div class="form-group">
-                                <input type="email" class="form-control" id="login-in-email" name="login-in-email" data-format="true" required="required" placeholder="邮件地址" />
+                                <input type="email" class="form-control" id="login-in-email" name="login-in-mail" data-format="true" required="required" placeholder="邮件地址" />
                             </div>
 
                             <div class="form-group">
@@ -99,7 +99,11 @@
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
                             </div>
                         </form>
-						<div class="switch">还没有账号？<a data-dismiss="modal" data-toggle="modal" data-target="#register">立即注册</a></div>
+						<div class="switch">
+                            还没有账号？<a data-dismiss="modal" data-toggle="modal" data-target="#register">立即注册</a>
+                            </br>
+                            忘记密码？<a data-dismiss="modal" data-toggle="modal" data-target="#reset-mail">点击重置</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,7 +123,7 @@
 							<h2>请填写注册信息</h2>
 							<div class="notification help-block with-errors custom-errors" id="register-error"></div>
                             <div class="form-group has-feedback">
-                                <input type="email" class="form-control" id="register-email" data-format="true" name="register-email" required="required" placeholder="邮件地址" />
+                                <input type="email" class="form-control" id="register-email" data-format="true" name="register-mail" required="required" placeholder="邮件地址" />
                             </div>
                             
                             <div class="form-group has-feedback">
@@ -131,7 +135,7 @@
                             </div>
 
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" id="register-password-confirm" data-match="#register-password" data-match-error="密码不匹配" required="required" placeholder="请重复密码" />
+                                <input type="password" class="form-control" id="register-password-confirm" data-match="#register-password" data-match-error="两次密码不相同" required="required" placeholder="请重复密码" />
                             </div>
 
                             <div class="form-group">
@@ -144,6 +148,115 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="reset-mail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form role="form" class="resetMailForm">
+                            <h2>请输入您注册的邮箱地址，</br>我们将发送重置邮件。</h2>
+                            <div class="notification help-block with-errors custom-errors" id="reset-mail-error"></div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="reset-mail-address" name="reset-mail" data-format="true" required="required" placeholder="邮箱地址" />
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">发送重置邮件</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reset-tips" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form role="form" class="resetTipsForm">
+                            <h2>
+                                密码重置链接已发送至邮箱
+                                </br>
+                                <span class="jump-mail color-text"></span>
+                                </br>
+                                请尽快更新密码。
+                            </h2>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">登录邮箱</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reset-password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form role="form" class="resetPasswordForm">
+                            <h2>请输入密码</h2>
+                            <div class="notification help-block with-errors custom-errors" id="reset-password-error"></div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="new-password" name="reset-password" data-minlength="6" data-maxlength="22" required="required" placeholder="新密码" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control" data-match="#new-password" data-match-error="两次密码不相同" required="required" placeholder="请重复密码" />
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">重置密码</button>
+                            </div>
+                        </form>
+                        <div class="switch">
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#login-in">返回登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reset-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form role="form" class="resetSuccessForm">
+                            <h2 class="color-text">密码重置成功！</h2>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">立即登录数人云</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="browserType" class="alert alert-warning alert-dismissible browser-alert" role="alert" hidden="hidden">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>

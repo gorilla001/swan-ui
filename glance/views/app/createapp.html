@@ -49,7 +49,7 @@
 
                     <div class="col-md-5">
                         <select class="form-control"
-                                data-ng-options=" cluster.id as cluster.name for cluster in clusters"
+                                data-ng-options=" cluster.id as cluster.name disable when cluster.status != 'running' for cluster in clusters"
                                 data-ng-model="clusterid" data-required="required"></select>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                     <label class="col-md-3 control-label">镜像版本</label>
 
                     <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="deployinfo.imageversion" data-required="required">
+                        <input type="text" class="form-control" data-ng-model="imageversion" data-required="required">
                     </div>
                 </div>
 

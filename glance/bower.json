@@ -36,7 +36,8 @@
     "angular-bootstrap-datetimepicker": "latest",
     "moment": "latest",
     "zrender": "~2.1.1",
-    "circliful": "0.1.5"
+    "circliful": "0.1.5",
+    "angular-ui-notification": "0.0.12"
   },
   "resolutions": {
     "angular": ">= 1.0.8"

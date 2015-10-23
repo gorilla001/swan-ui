@@ -230,3 +230,11 @@ a:hover {
 	border-top: 0;
 	text-align: center;
 }
+
+#reset-error, #reset-mail-error {
+	top: 120px;
+}
+
+.color-text {
+	color: #85d07f;
+}

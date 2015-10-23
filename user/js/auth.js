@@ -28,9 +28,14 @@ $(document).ready(function(){
         },
         custom: {
             'format' : function($el) {
-                var format = '@';
-                var rule = Boolean($el.val().indexOf(format) > -1)
-                return rule;
+                var content = $el.val();
+                if (content === '') {
+                    return true;
+                } else {
+                    var format = '@';
+                    var rule = Boolean($el.val().indexOf(format) > -1)
+                    return rule;
+                }
             }
         }
     }
@@ -46,7 +51,12 @@ $(document).ready(function(){
         var url = CONFIG.urls.baseUrl + CONFIG.urls.loginInUrl;
 
         if(e.isDefaultPrevented()) {
-            var errorText = loginErrors(loginInEmail, loginInPassword);
+            var errorText;
+            if (loginInEmail==='' || loginInPassword==='') {
+                errorText = '请填写登录信息';
+            } else {
+                errorText = '请输入正确信息';
+            }
             $('#login-error').text(errorText);
         } else {
              e.preventDefault();
@@ -75,8 +85,9 @@ $(document).ready(function(){
                 if (data.code === 0) {
                     loginIn(registerPostData, loginInUrl);
                 } else if (data.code === 1) {
-                    for (var error in data.errors) {
-                         $('#register-error').text(data.errors[error]);
+                    var error;
+                    for (error in data.errors) {
+                        $('#register-error').text(data.errors[error]);
                         break;
                     }
                 }
@@ -85,16 +96,63 @@ $(document).ready(function(){
             });
         }
     });
+
+    $('.resetMailForm').validator(options).on('submit', function(e) {
+        var resetMail = $('#reset-mail-address').val();
+        
+        if(e.isDefaultPrevented()) {
+            if(resetMail === '') {
+                $('#reset-mail-error').text('请填写邮箱地址');
+            }
+        } else {
+            e.preventDefault();
+            $('#reset-mail').modal('hide');
+            $('#reset-tips').modal('show');
+            $('.jump-mail').text(resetMail);
+        }
+    });
+
+    $('.resetTipsForm').on('submit', function(e) {
+        e.preventDefault();
+        $('#reset-tips').modal('hide');
+        $('#reset-password').modal('show');
+        // 跳转至邮箱
+    });
+
+    $('.resetPasswordForm').validator().on('submit', function(e) {
+        var newPassword = $('#new-password').val();
+        var postData;
+        var url;
+
+        if(e.isDefaultPrevented()) {
+            if(newPassword === '') {
+                $('#reset-password-error').text('请输入密码');
+            }
+        } else {
+            e.preventDefault();
+            $('#reset-password').modal('hide');
+            $('#reset-success').modal('show');
+            // ajaxPost(postData, url).success(function(data) {
+            //     if (data && data.code === 0) {
+            //         $('#reset-password').modal('hide');
+            //         $('#reset-success').modal('show');
+            //     } else {
+            //         tips
+            //     }
+            // }.errors(function(data) {
+            //     tips
+            // }));
+        }
+    });
+
+    $('.resetSuccessForm').validator(options).on('submit', function(e) {
+        e.preventDefault();
+        var loginInPostData;
+        var url = CONFIG.urls.baseUrl + CONFIG.urls.loginInUrl;
+        loginIn(loginInPostData, url);
+    });
     
     $("a[data-toggle=popover]").popover().click(function(e) {
       e.preventDefault();
     });
-
-    function loginErrors(loginInEmail, loginInPassword) {
-        if(loginInEmail==='' || loginInPassword==='') {
-            return '请填写登录信息';
-        } else {
-            return '请输入正确信息';
-        }
-    }
 });

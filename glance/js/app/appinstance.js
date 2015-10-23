@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appInstanceCtrl", appInstanceCtrl);
 
-appInstanceCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout'];
+appInstanceCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout','Notification'];
 
-function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout) {
+function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification) {
     $rootScope.appTabFlag = "appInstance";
     $scope.appstate = {
         '1': "运行中",
@@ -19,8 +19,9 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout)
             if(!data.data.length) {
                 promise = $timeout(appInstances, 2000);
             }
+            $scope.getAppInfo($stateParams.appId);
         }, undefined, null, function(data) {
-            alert("获取实例失败" + data.errors);
+            Notification.error('获取实例失败: ' + data.errors);
         })
     })();
 

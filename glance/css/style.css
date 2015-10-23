@@ -876,3 +876,13 @@ span.caret {
     display: block;
     margin-right: 0px;
 }
+
+.add-node .alert-info strong {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+.add-node .alert-info li {
+	margin: 0;
+	padding: 0;
+	list-style: decimal;
+}

@@ -1,8 +1,8 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
 
-function createappCtrl($scope, $state, glanceHttp) {
+function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.step = "stepone";
 
     $scope.cpuOptions = {
@@ -40,6 +40,7 @@ function createappCtrl($scope, $state, glanceHttp) {
     $scope.cpuSize = 0.1;
     $scope.memSize = 16;
     $scope.containerNum = 1;
+    $scope.imageversion = "latest";
 
 
     $scope.dynamicData = {
@@ -57,14 +58,14 @@ function createappCtrl($scope, $state, glanceHttp) {
                     newItemNo = creatLength + 1;
                     creatData.push({'id': 'choice' + newItemNo});
                 } else {
-                    alert("输入框有空值,不能继续添加");
+                    Notification.warning('输入框有空值,不能继续添加');
                 }
             }else if(conditions === 'createPort'){
                 if (creatData[creatLength - 1].value) {
                     newItemNo = creatLength + 1;
                     creatData.push({'id': 'choice' + newItemNo});
                 } else {
-                    alert("输入框有空值,不能继续添加");
+                    Notification.warning('输入框有空值,不能继续添加');
                 }
             }
 
@@ -76,7 +77,7 @@ function createappCtrl($scope, $state, glanceHttp) {
             if (creatLength >= 2) {
                 creatData.pop();
             } else {
-                alert("不能删除");
+                Notification.warning('不能删除');
             }
         },
 
@@ -127,10 +128,12 @@ function createappCtrl($scope, $state, glanceHttp) {
         $scope.deployinfo.containerNum = $scope.containerNum.toString();
         $scope.deployinfo.containerCpuSize = $scope.cpuSize;
         $scope.deployinfo.containerMemSize = $scope.memSize;
+        $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
+            Notification.success('应用创建成功');
             $state.go('app.appdetail.instance', {appId: data.data});
         }, undefined, null, function (data) {
-            alert("创建应用失败: " + data.errors);
+            Notification.error('创建应用失败: ' + data.errors);
         });
     };
 }

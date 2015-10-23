@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification'];
 
-function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp) {
+function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification) {
     $rootScope.show = "application";
 
     $scope.clusterNameMap = {};
@@ -31,20 +31,22 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp) {
     $scope.stopApp = function (appId){
         glanceHttp.ajaxGet(['app.stop',{app_id: parseInt(appId)}], function (data) {
             if(data.data.stopState == 0){
+                Notification.success('应用停止成功');
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
-            alert("停止失败: " + data.errors);
+            Notification.error('停止失败:' + data.errors);
         });
     };
 
     $scope.startApp = function (appId){
         glanceHttp.ajaxGet(['app.start',{app_id: parseInt(appId)}], function (data) {
             if(data.data.startState == 0){
+                Notification.success('应用启动成功');
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
-            alert("启动应用失败: " + data.errors);
+            Notification.error('启动应用失败: ' + data.errors);
         });
     };
 
@@ -52,10 +54,11 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp) {
         $scope.myConfirm("您确定要删除应用吗？", function () {
             glanceHttp.ajaxGet(['app.deleteApp',{app_id: parseInt(appId)}], function (data) {
                 if(data.data.deletState == 0){
+                    Notification.success('应用删除成功');
                     $state.go('app.applist',undefined,{reload : true});
                 }
             },undefined, null, function(data){
-                alert("删除应用失败: " + data.errors);
+                Notification.error('删除应用失败: ' + data.errors);
             });
         });
     };
@@ -73,10 +76,11 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp) {
         };
         glanceHttp.ajaxPost(['app.upContainerNum'],$scope.containDate,function(data){
                 $timeout(function () {
+                    Notification.success('应用扩容成功');
                     $state.go('app.applist',undefined,{reload : true})
                 }, 200, true);
         },undefined, null, function(data){
-            alert("扩容失败: " + data.errors);
+            Notification.error('扩容失败: ' + data.errors);
         });
     };
 
