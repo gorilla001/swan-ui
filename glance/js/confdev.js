@@ -25,7 +25,8 @@ BACKEND_URL = {
     metrics: {
         base: 'https://DASHBOARD/api/v1/',
         getClusterMonitor: "metrics/cluster/$cluster_id",
-        event:"event/$clusterID/$appName"
+        event:"event/$clusterID/$appName"，
+        appmonit:"appmetrics/cluster/$clusterID/app/$appName"
     },
     ws: {
         base: "wss://DASHBOARD/streaming/",
