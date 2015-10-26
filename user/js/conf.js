@@ -6,6 +6,7 @@ CONFIG = {
     registerUrl: 'auth/registration',
     domainUrl: "BODY_DOMAIN",
     resetPasswordUrl: "auth/password/resetrequest",
-    verifyMailAddress: "auth/password/reset/$reset_code"
+    verifyMailAddress: "auth/password/reset/$reset_code",
+    activeUrl: "auth/active/$active_code"
   }
 };
