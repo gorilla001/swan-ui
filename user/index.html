@@ -89,7 +89,7 @@
 							<h2>请登录数人云账户</h2>
 							<div class="notification help-block with-errors custom-errors" id="login-error"></div>
                             <div class="form-group">
-                                <input type="email" class="form-control" id="login-in-email" name="login-in-mail" data-format="true" required="required" placeholder="邮件地址" />
+                                <input type="email" class="form-control" id="login-in-email" name="login-in-mail" data-username="true" required="required" placeholder="邮箱地址" />
                             </div>
 
                             <div class="form-group">
@@ -124,7 +124,7 @@
 							<h2>请填写注册信息</h2>
 							<div class="notification help-block with-errors custom-errors" id="register-error"></div>
                             <div class="form-group has-feedback">
-                                <input type="email" class="form-control" id="register-email" data-format="true" name="register-mail" required="required" placeholder="邮件地址" />
+                                <input type="email" class="form-control" id="register-email" data-username="true" name="register-mail" required="required" placeholder="邮箱地址" />
                             </div>
                             
                             <div class="form-group has-feedback">
@@ -132,11 +132,11 @@
                             </div>
 
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" data-minlength="6" id="register-password" data-maxlength="22" name="register-password" required="required" placeholder="输入密码" />
+                                <input type="password" class="form-control" data-minlength="8" id="register-password" data-maxlength="16" data-password="true" name="register-password" required="required" placeholder="输入密码" />
                             </div>
 
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" id="register-password-confirm" data-match="#register-password" data-match-error="两次密码不相同" required="required" placeholder="请重复密码" />
+                                <input type="password" class="form-control" id="register-password-confirm" data-match="#register-password" data-match-error="两次输入密码不一致" required="required" placeholder="请重复密码" />
                             </div>
 
                             <div class="form-group">
@@ -164,7 +164,7 @@
                             <h2>请输入您注册的邮箱地址，</br>我们将发送重置邮件。</h2>
                             <div class="notification help-block with-errors custom-errors" id="reset-mail-error"></div>
                             <div class="form-group">
-                                <input type="email" class="form-control" id="reset-mail-address" name="reset-mail" data-format="true" required="required" placeholder="邮箱地址" />
+                                <input type="email" class="form-control" id="reset-mail-address" name="reset-mail" data-username="true" required="required" placeholder="邮箱地址" />
                             </div>
 
                             <div class="form-group">
@@ -218,11 +218,11 @@
                             <h2>请输入密码</h2>
                             <div class="notification help-block with-errors custom-errors" id="reset-password-error"></div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="new-password" name="reset-password" data-minlength="6" data-maxlength="22" required="required" placeholder="新密码" />
+                                <input type="password" class="form-control" id="new-password" name="reset-password" data-minlength="8" data-maxlength="16" data-password="true" required="required" placeholder="新密码" />
                             </div>
 
                             <div class="form-group">
-                                <input type="password" class="form-control" id="new-password-compare" data-match="#new-password" data-match-error="两次密码不相同" required="required" placeholder="请重复密码" />
+                                <input type="password" class="form-control" id="new-password-compare" data-match="#new-password" data-match-error="两次输入密码不一致" required="required" placeholder="请重复密码" />
                             </div>
 
                             <div class="form-group">

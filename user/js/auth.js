@@ -25,10 +25,11 @@ $(document).ready(function(){
 
     var options = {
         errors: {
-            format: '用户名格式错误'
+            username: '用户名格式错误',
+            password: '密码格式错误'
         },
         custom: {
-            'format' : function($el) {
+            'username' : function($el) {
                 var content = $el.val();
                 if (content === '') {
                     return true;
@@ -37,6 +38,11 @@ $(document).ready(function(){
                     var rule = Boolean($el.val().indexOf(format) > -1)
                     return rule;
                 }
+            },
+            'password': function($el) {
+                var content = $el.val();
+                var re = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/g;
+                return re.test(content);
             }
         }
     }
@@ -134,7 +140,7 @@ $(document).ready(function(){
         }
     });
 
-    $('.resetPasswordForm').validator().on('submit', function(e) {
+    $('.resetPasswordForm').validator(options).on('submit', function(e) {
         var newPassword = $('#new-password').val();
         var newPasswordCompare = $('#new-password-compare').val();
         var postData = {
