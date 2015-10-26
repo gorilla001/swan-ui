@@ -104,7 +104,7 @@ $(document).ready(function(){
 
         if(e.isDefaultPrevented()) {
             if(resetMail === '') {
-                $('#reset-mail-error').text('请填写邮箱地址');
+                $('#reset-mail-error').text('请填写注册用户邮箱地址');
             }
         } else {
             e.preventDefault();
