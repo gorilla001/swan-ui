@@ -170,11 +170,6 @@ $(document).ready(function(){
             });
         }
     });
-
-    $('.resetSuccessForm').on('submit', function(e) {
-        e.preventDefault();
-        $('#login-in').modal('show');
-    });
     
     $("a[data-toggle=popover]").popover().click(function(e) {
         e.preventDefault();
@@ -189,15 +184,6 @@ $(document).ready(function(){
         return mailHash[service];
     }
 
-    function getResetCode(url, key) {
-        var code;
-        if(url.indexOf(key) > -1 && url.indexOf('=') > -1) {
-            code = url.split('=')[1];
-            code = code.substr(0, code.length-1);
-        }
-        return code;
-    }
-
     function dataError(errors) {
         var error;
         for (error in errors) {
@@ -206,20 +192,52 @@ $(document).ready(function(){
         }
     }
 
-    (function getVerifyCode() {
-        var search = location.search;
-        var code = 'code';
-        var resetCode = '$reset_code';
-        var getUrl = CONFIG.urls.baseUrl + CONFIG.urls.verifyMailAddress;
-        verifyCode = getResetCode(search, code);
-        if (verifyCode) {
-            getUrl = getUrl.replace(resetCode, verifyCode);
-            ajaxReq(getUrl, 'get').success(function(data) {
+    function getQueryResult(url) {
+        var details = {
+            verify: {
+                key: 'code',
+                replaceWord: '$reset_code',
+                url: 'verifyMailAddress',
+                dom: '#reset-password',
+                errorDom: '#reset-password-error'
+            },
+            active: {
+                key: 'active',
+                replaceWord: '$active_code',
+                url: 'activeUrl',
+                dom: 'active-success',
+                errorDom: '#active-success-error'
+            }
+        };
+        if(url.indexOf('=') > -1) {
+            var code;
+            var objKey;
+            var key;
+            for (objKey in details) {
+                key = details[objKey].key;
+                if (url.indexOf(key) > -1) {
+                    code = url.split('=')[1];
+                    details[objKey].code = code.substr(0, code.length-1);
+                    return details[objKey];
+                }
+            }
+        }
+    }
+
+    (function confirm(){
+        var result = getQueryResult(location.search);
+
+        if(result) {
+            var url = CONFIG.urls.baseUrl + CONFIG.urls[result.url];
+            url = url.replace(result.replaceWord, result.code);
+
+            ajaxReq(url, 'get').success(function(data) {
                 if(data && data.code === 0) {
-                    $('#reset-password').modal('show');
-                } else if ( data && data.code === 1){
-                    var error = dataError(data.errors);
-                    $('#reset-password-error').text(error);
+                    $(result.dom).modal('show');
+                } else if (data && data.code === 1){
+                    // 密码重置失败或者激活失败如何处理？
+                    // var error = dataError(data.errors);
+                    // $(result.errorDom).text(error);
                 }
             }).error(function(data) {
                 //tips
