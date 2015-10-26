@@ -19,7 +19,7 @@ $(document).ready(function(){
                 $('#login-error').text('用户名或密码错误');
             }
         }).error(function(data, status) {
-            alert('请稍候再试');
+            interfaceError('#login-error');
         });
     }
 
@@ -96,7 +96,7 @@ $(document).ready(function(){
                     $('#register-error').text(error);
                 }
             }).error(function(data) {
-                alert('注册失败，请稍后再试');
+                interfaceError('#register-error');
             });
         }
     });
@@ -124,7 +124,7 @@ $(document).ready(function(){
                     $('#reset-mail-error').text(error);
                 }
             }).error(function(data) {
-                alert('请稍候再试');
+                interfaceError('#reset-mail-error');
             });
         }
     });
@@ -166,7 +166,7 @@ $(document).ready(function(){
                     $('#reset-password-error').text(error);
                 }
             }).error(function(data) {
-                //tips
+                interfaceError('#reset-password-error');
             });
         }
     });
@@ -190,6 +190,10 @@ $(document).ready(function(){
             error = data.errors[error];
             return error;
         }
+    }
+
+    function interfaceError(dom) {
+        $(dom).text('服务器忙，请稍后再试。');
     }
 
     function getQueryResult(url) {
