@@ -32,7 +32,7 @@ $(document).ready(function(){
             'username' : function($el) {
                 var content = $el.val();
                 if (content === '') {
-                    return true;
+                    return false;
                 } else {
                     var format = '@';
                     var rule = Boolean($el.val().indexOf(format) > -1)
@@ -245,12 +245,14 @@ $(document).ready(function(){
                 if(data && data.code === 0) {
                     $(result.dom).modal('show');
                 } else if (data && data.code === 1){
+                    alert('请稍后再试。');
                     // 密码重置失败或者激活失败如何处理？
                     // var error = dataError(data.errors);
                     // $(result.errorDom).text(error);
                 }
             }).error(function(data) {
                 //tips
+                alert('请稍后再试。');
             });
         }
     })();
