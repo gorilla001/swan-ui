@@ -54,9 +54,7 @@ BACKEND_URL = {
         options:"applications/$cluster_id/options"
     },
 
-    userUrl: "https://MARKET",
-
-    fileUrl: "https://FILE_SCRIPTS/"
+    userUrl: "https://MARKET"
 
 };
 
