@@ -49,8 +49,8 @@
     custom: {},
     errors: {
       match: 'Does not match',
-      minlength: '密码长度不少于6位',
-      maxlength: '密码长度不多于22位'
+      minlength: '密码长度不少于8位',
+      maxlength: '密码长度不多于16位'
     },
     feedback: {
       success: 'glyphicon-ok',

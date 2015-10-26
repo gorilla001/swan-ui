@@ -41,8 +41,14 @@ $(document).ready(function(){
             },
             'password': function($el) {
                 var content = $el.val();
-                var re = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/g;
-                return re.test(content);
+                var minLength = $el.data('minlength');
+                var maxLength = $el.data('maxlength');
+                if(content.length < minLength || content.length > maxLength) {
+                    return true;
+                } else {
+                    var re = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/g;
+                    return re.test(content);
+                }
             }
         }
     }
