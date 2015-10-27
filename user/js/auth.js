@@ -234,8 +234,7 @@ $(document).ready(function(){
             for (objKey in details) {
                 key = details[objKey].key;
                 if (url.indexOf(key) > -1) {
-                    code = url.split('=')[1];
-                    details[objKey].code = code.substr(0, code.length-1);
+                    details[objKey].code = url.split('=')[1];
                     return details[objKey];
                 }
             }
