@@ -32,7 +32,7 @@ $(document).ready(function(){
             'username' : function($el) {
                 var content = $el.val();
                 if (content === '') {
-                    return false;
+                    return true;
                 } else {
                     var format = '@';
                     var rule = Boolean($el.val().indexOf(format) > -1)
@@ -183,8 +183,16 @@ $(document).ready(function(){
 
     function getMailServiceLink(address) {
         var mailHash = {
-            'gmail.com': 'https://mail.google.com', 
-            'qq.com': 'https://mail.qq.com/'
+            'gmail.com': 'https://mail.google.com',
+            'yahoo.com': 'https://login.yahoo.com/',
+            'qq.com': 'https://mail.qq.com/',
+            'sina.com': 'http://mail.sina.com.cn/',
+            '21cn.com': 'http://mail.21cn.com/',
+            'sohu.com': 'http://mail.sohu.com/',
+            'aol.com': 'http://mail.aol.com/',
+            '163.com': 'http://mail.163.com/',
+            '126.com': 'http://mail.126.com/',
+            'yeah.net': 'http://www.yeah.net/'
         };
         var service = address.split('@')[1];
         return mailHash[service];
