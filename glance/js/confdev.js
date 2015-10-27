@@ -58,8 +58,8 @@ BACKEND_URL = {
 
     agentConfig: {
       installScript: "curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh | sudo -H",
-      dmHost: "",
-      filesUrl: ""
+      dmHost: "DM_HOST",
+      filesUrl: "FILES_URL"
     }
 };
 
