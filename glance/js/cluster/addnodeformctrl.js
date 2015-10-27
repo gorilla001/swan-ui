@@ -19,9 +19,9 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
             $scope.nodeId = data.data.identifier;
             $scope.form.id = $scope.nodeId;
             var cmdArray = new Array(
-                "curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh | sudo -H",
-                BACKEND_URL.agentConfig.dm_host,
-                BACKEND_URL.agentConfig.files_url,
+                BACKEND_URL.agentConfig.installScript,
+                BACKEND_URL.agentConfig.dmHost,
+                BACKEND_URL.agentConfig.filesUrl,
                "sh -s",
                data.data.identifier
             );
