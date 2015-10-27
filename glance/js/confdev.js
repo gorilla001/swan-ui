@@ -54,8 +54,12 @@ BACKEND_URL = {
         options:"applications/$cluster_id/options"
     },
 
-    userUrl: "https://MARKET"
+    userUrl: "https://MARKET",
 
+    agentConfig: {
+      dm_host: "",
+      files_url: ""
+    }
 };
 
 MESSAGE_CODE = {

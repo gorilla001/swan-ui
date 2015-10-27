@@ -18,7 +18,14 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
         glanceHttp.ajaxGet(["cluster.getNodeID", {cluster_id: $stateParams.clusterId}], function(data){
             $scope.nodeId = data.data.identifier;
             $scope.form.id = $scope.nodeId;
-            $scope.nodeInstallScript = "curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh | sudo -H sh -s " + data.data.identifier;
+            var cmdArray = new Array(
+                "curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh | sudo -H",
+                BACKEND_URL.agentConfig.dm_host,
+                BACKEND_URL.agentConfig.files_url,
+               "sh -s",
+               data.data.identifier
+            );
+            $scope.nodeInstallScript = cmdArray.join(' ');
             $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
                 if (data["status"] == "running") {
                     $scope.isConected = true;
