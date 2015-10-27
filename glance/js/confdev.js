@@ -1,6 +1,6 @@
 BACKEND_URL = {
     auth: {
-        base: "https://DASHBOARD/api/v1/",
+        base: "DASHBOARD/api/v1/",
         logout: "auth/sign_out",
         getMe: "auth/getme",
         getCSUrl: "auth/getcsurl",
@@ -9,7 +9,7 @@ BACKEND_URL = {
         },
         
     cluster:  {
-        base: "https://DASHBOARD/api/v1/",
+        base: "DASHBOARD/api/v1/",
         getNodeID: "cluster/$cluster_id/new_node_id",
         updateNode: "cluster/node/update",
         getNode: "cluster/node/$node_id",
@@ -23,25 +23,25 @@ BACKEND_URL = {
         getNodeMonitor: "cluster/node/$node_id/metrics"
     },
     metrics: {
-        base: 'https://DASHBOARD/api/v1/',
+        base: 'DASHBOARD/api/v1/',
         getClusterMonitor: "metrics/cluster/$cluster_id",
         event:"event/$clusterID/$appName",
         appmonit:"appmetrics/cluster/$clusterID/app/$appName"
     },
     ws: {
-        base: "wss://DASHBOARD/streaming/",
+        base: "STREAMING/streaming/",
         subscribe: "glance/$token"
     },
     log: {
-        base: "https://DASHBOARD/",
+        base: "DASHBOARD/",
         search: "logstash-$userId-*/_search"
     },
     service: {
-        base: "https://DASHBOARD/api/v1/",
+        base: "DASHBOARD/api/v1/",
         createServiceInstance: "services/create"
     },
     app: {
-        base: "https://DASHBOARD/api/v1/",
+        base: "DASHBOARD/api/v1/",
         list: "applications/",
         deploy: "applications/deploy",
         instances: "applications/$app_id/instances",
@@ -54,7 +54,7 @@ BACKEND_URL = {
         options:"applications/$cluster_id/options"
     },
 
-    userUrl: "https://MARKET",
+    userUrl: "MARKET",
 
     agentConfig: {
       installScript: "curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh | sudo -H",
