@@ -94,6 +94,7 @@ $(document).ready(function(){
             e.preventDefault();
             ajaxReq(regitsterUrl, 'post', registerPostData).success(function(data) {
                 if (data && data.code === 0) {
+                    $('#register').modal('hide');
                     $('#register-success').modal('show');
                 } else if (data && data.code === 1) {
                     var error = dataError(data);
@@ -221,7 +222,7 @@ $(document).ready(function(){
                 key: 'active',
                 replaceWord: '$active_code',
                 url: 'activeUrl',
-                dom: 'active-success',
+                dom: '#active-success',
                 errorDom: '#active-success-error'
             }
         };
