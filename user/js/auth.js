@@ -98,7 +98,7 @@ $(document).ready(function(){
                 if (data && data.code === 0) {
                     loginIn(loginInUrl, registerPostData);
                 } else if (data && data.code === 1) {
-                    var error = dataError(data.errors);
+                    var error = dataError(data);
                     $('#register-error').text(error);
                 }
             }).error(function(data) {
@@ -126,7 +126,7 @@ $(document).ready(function(){
                     $('#reset-tips').modal('show');
                     $('.jump-mail').text(resetMail);    
                 } else if(data && data.code === 1) {
-                    var error = dataError(data.errors);
+                    var error = dataError(data);
                     $('#reset-mail-error').text(error);
                 }
             }).error(function(data) {
@@ -168,7 +168,7 @@ $(document).ready(function(){
                     $('#reset-password').modal('hide');
                     $('#reset-success').modal('show');
                 } else if(data && data.code === 1){
-                    var error = dataError(data.errors);
+                    var error = dataError(data);
                     $('#reset-password-error').text(error);
                 }
             }).error(function(data) {
@@ -198,11 +198,11 @@ $(document).ready(function(){
         return mailHash[service];
     }
 
-    function dataError(errors) {
-        var error;
-        for (error in errors) {
-            error = data.errors[error];
-            return error;
+    function dataError(data) {
+        if (data && data.errors) {
+            for (error in data.errors) {
+                return data.errors[error];
+            }
         }
     }
 
@@ -254,7 +254,7 @@ $(document).ready(function(){
                 } else if (data && data.code === 1){
                     alert('请稍后再试。');
                     // 密码重置失败或者激活失败如何处理？
-                    // var error = dataError(data.errors);
+                    // var error = dataError(data);
                     // $(result.errorDom).text(error);
                 }
             }).error(function(data) {
