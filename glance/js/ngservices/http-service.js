@@ -23,9 +23,9 @@ function glanceHttp($http, $state, $rootScope, utils) {
         };
 
         $http(req).success(function (data) {
-            if(data && data.code === MESSAGE_CODE.success && callback) {
+            if (data && callback && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
                 callback(data);
-            } else if(warningCallback) {
+            } else if (warningCallback) {
                 warningCallback(data);
             } else {
                 alert("服务未激活");
