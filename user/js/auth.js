@@ -78,7 +78,6 @@ $(document).ready(function(){
     });
 
     $('.registerForm').validator(options).on('submit', function(e){
-
         var registerEmail = $("#register-email").val();
         var registerPassword = $('#register-password').val();
         var invitationcode = $('#register-inviation-code').val();
@@ -89,14 +88,13 @@ $(document).ready(function(){
         };
 
         var regitsterUrl = CONFIG.urls.baseUrl + CONFIG.urls.registerUrl;
-        var loginInUrl = CONFIG.urls.baseUrl + CONFIG.urls.loginInUrl;
         if(e.isDefaultPrevented()) {
-            $('#register-error').text('请填写完整信息');
+            $('#register-error').text('请填写注册信息');
         } else {
             e.preventDefault();
             ajaxReq(regitsterUrl, 'post', registerPostData).success(function(data) {
                 if (data && data.code === 0) {
-                    loginIn(loginInUrl, registerPostData);
+                    $('#register-success').modal('show');
                 } else if (data && data.code === 1) {
                     var error = dataError(data);
                     $('#register-error').text(error);
@@ -158,12 +156,12 @@ $(document).ready(function(){
         url = url.replace(resetCode, verifyCode);
 
         if(e.isDefaultPrevented()) {
-            if(newPassword === '') {
+            if(newPassword === '' || newPasswordCompare === '') {
                 $('#reset-password-error').text('请输入密码');
             }
         } else {
             e.preventDefault();
-            ajaxReq(url, 'post', postData).success(function(data) {
+            ajaxReq(url, 'put', postData).success(function(data) {
                 if (data && data.code === 0) {
                     $('#reset-password').modal('hide');
                     $('#reset-success').modal('show');
@@ -247,15 +245,15 @@ $(document).ready(function(){
         if(result) {
             var url = CONFIG.urls.baseUrl + CONFIG.urls[result.url];
             url = url.replace(result.replaceWord, result.code);
+            verifyCode = result.code;
 
             ajaxReq(url, 'get').success(function(data) {
                 if(data && data.code === 0) {
                     $(result.dom).modal('show');
                 } else if (data && data.code === 1){
-                    alert('请稍后再试。');
-                    // 密码重置失败或者激活失败如何处理？
-                    // var error = dataError(data);
-                    // $(result.errorDom).text(error);
+                    var error = dataError(data);
+                    $('#relative-error').modal('show');
+                    $('.color-text').text(error);
                 }
             }).error(function(data) {
                 //tips
