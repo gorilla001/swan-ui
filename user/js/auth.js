@@ -26,7 +26,7 @@ $(document).ready(function(){
     var options = {
         errors: {
             username: '用户名格式错误',
-            password: '密码格式错误'
+            password: '密码只能包含英文字母、数字、标点符号且必须包含大写字母。'
         },
         custom: {
             'username' : function($el) {
