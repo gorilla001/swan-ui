@@ -34,9 +34,8 @@ $(document).ready(function(){
                 if (content === '') {
                     return true;
                 } else {
-                    var format = '@';
-                    var rule = Boolean($el.val().indexOf(format) > -1)
-                    return rule;
+                    var re = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                    return re.test(content);
                 }
             },
             'password': function($el) {
@@ -191,7 +190,8 @@ $(document).ready(function(){
             'aol.com': 'http://mail.aol.com/',
             '163.com': 'http://mail.163.com/',
             '126.com': 'http://mail.126.com/',
-            'yeah.net': 'http://www.yeah.net/'
+            'yeah.net': 'http://www.yeah.net/',
+            'dataman-inc.com': 'http://exmail.qq.com/'
         };
         var service = address.split('@')[1];
         return mailHash[service];
@@ -258,7 +258,7 @@ $(document).ready(function(){
                 }
             }).error(function(data) {
                 //tips
-                alert('请稍后再试。');
+                alert('服务器忙，请稍后再试。');
             });
         }
     })();
