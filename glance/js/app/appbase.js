@@ -31,7 +31,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.stopApp = function (appId){
         glanceHttp.ajaxGet(['app.stop',{app_id: parseInt(appId)}], function (data) {
             if(data.data.stopState == 0){
-                Notification.success('应用停止成功');
+                Notification.success('应用停止中...');
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
@@ -42,7 +42,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.startApp = function (appId){
         glanceHttp.ajaxGet(['app.start',{app_id: parseInt(appId)}], function (data) {
             if(data.data.startState == 0){
-                Notification.success('应用启动成功');
+                Notification.success('应用启动中...');
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
@@ -54,7 +54,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         $scope.myConfirm("您确定要删除应用吗？", function () {
             glanceHttp.ajaxGet(['app.deleteApp',{app_id: parseInt(appId)}], function (data) {
                 if(data.data.deletState == 0){
-                    Notification.success('应用删除成功');
+                    Notification.success('应用删除中...');
                     $state.go('app.applist',undefined,{reload : true});
                 }
             },undefined, null, function(data){
@@ -76,7 +76,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         };
         glanceHttp.ajaxPost(['app.upContainerNum'],$scope.containDate,function(data){
                 $timeout(function () {
-                    Notification.success('应用扩容成功');
+                    Notification.success('应用扩容中...');
                     $state.go('app.applist',undefined,{reload : true})
                 }, 200, true);
         },undefined, null, function(data){
