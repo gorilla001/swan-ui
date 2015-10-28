@@ -109,6 +109,7 @@ function buildCharts(monitor) {
                 }
             });
             option.series[0] = {
+                name: indicator.descriptions.seriesName,
                 type: 'line',
                 data: yAxis
             };
