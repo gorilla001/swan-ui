@@ -23,7 +23,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                 var cpuUseds = 0, cpuTotals = 0, memUseds = 0, memTotals = 0;
                 var cpuPercent, cpuText, memPercent, memText;
                 $scope.appStat = data.data;
-                if ($scope.appStat.length === 0) {
+                if ($scope.appStat) {
                     for (var i = 0; i < $scope.appStat.length; i++) {
                         if ($scope.appStat[i].cpuUsed && $scope.appStat[i].cpuTotal) {
                             cpuUseds += $scope.appStat[i].cpuUsed;
