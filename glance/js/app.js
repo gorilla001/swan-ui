@@ -205,6 +205,15 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                         controller: 'adminCtrl'
                     }
                 }
+            })
+            .state('modifyPassword', {
+                url: '/modifypassword',
+                views: {
+                    '': {
+                        templateUrl: '/views/admin/modify-password.html',
+                        controller: 'modifyPasswordCtrl'
+                    }
+                }
             });
 
         $locationProvider.html5Mode(true);
@@ -308,3 +317,44 @@ glanceApp.directive('dateFormat', ['$filter',function($filter) {
         }
     };
 }]);
+
+glanceApp.directive('regexValidate', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, ele, attrs, ctrl) {
+            var regex = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/i;
+            function valueLength(value) {
+                var length = value.length;
+                if (length > 0 && (length < 8 || length > 22)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            };
+            
+            ctrl.$parsers.unshift(function(value) {
+                var valid = true;
+                if (value) {
+                    var len = valueLength(value);
+                    var reg = regex.test(value);
+                    valid = Boolean(reg && len);
+                }
+                ctrl.$setValidity('regexValidate', valid);
+                return valid ? value : undefined;
+            });
+
+            ctrl.$formatters.unshift(function(value) {
+                var valid = true;
+                if (value) {
+                    var reg = regex.test(value);
+                    var len = valueLength(value);
+                    valid = Boolean(reg && len);
+                }
+
+                ctrl.$setValidity('regexValidate', valid);
+                return value;
+            });
+        }
+    };
+});
