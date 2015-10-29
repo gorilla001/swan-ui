@@ -358,3 +358,22 @@ glanceApp.directive('regexValidate', function() {
         }
     };
 });
+
+glanceApp.directive('valueMatch', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            var firstValue = attrs.valueMatch;
+            elem.add(firstValue).on('keyup', function() {
+                scope.$apply(function() {
+                    var valid = true;
+                    if (elem.val()) {
+                        valid = Boolean((elem.val() === $(firstValue).val()));
+                    }
+                    ctrl.$setValidity('valueMatch', valid);
+                    return valid ? elem.val() : undefined;
+                });
+            });
+        }
+    };
+});
