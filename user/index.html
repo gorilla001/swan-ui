@@ -92,8 +92,9 @@
                                 <input type="email" class="form-control" id="login-in-email" name="login-in-mail" data-username="true" required="required" placeholder="邮箱地址" />
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group password-input">
                                 <input type="password" class="form-control" id="login-in-password" name="login-in-password" required="required" placeholder="密码" />
+                                <a href="#" title="忘记密码" data-dismiss="modal" data-toggle="modal" data-target="#reset-mail"><span class="glyphicon glyphicon-question-sign"></span></a>
                             </div>
 
                             <div class="form-group">
@@ -102,8 +103,6 @@
                         </form>
 						<div class="switch">
                             还没有账号？<a data-dismiss="modal" data-toggle="modal" data-target="#register">立即注册</a>
-                            </br>
-                            忘记密码？<a data-dismiss="modal" data-toggle="modal" data-target="#reset-mail">点击重置</a>
                         </div>
                     </div>
                 </div>
@@ -271,7 +270,7 @@
                         <form role="form" class="resetSuccessForm">
                             <h2 class="color-text">密码重置成功！</h2>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
+                                <button class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
                             </div>
                         </form>
                     </div>
@@ -289,10 +288,10 @@
                     </div>
 
                     <div class="modal-body">
-                        <form role="form" class="activeSuccessForm">
+                        <form role="form">
                             <h2 class="color-text">激活成功！</h2>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
+                                <button class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
                             </div>
                         </form>
                     </div>
