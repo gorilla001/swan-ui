@@ -1,11 +1,10 @@
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $q) {
     $scope.node = {};
     $scope.getCurNode = function () {
         var showStates = ['normal', 'disconnect', 'warning', 'reset'];
         glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
             $scope.node.state = $scope.getNodeState($scope.node, showStates);
-
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.getSeriveState($scope.node.services);
         });
@@ -18,38 +17,42 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         disk: 'node-disk-chart'
     };
 
+    $scope.unitConversion = unitConversion;
+
     $scope.getNodeMetricData = function (nodeId) {
+        var deferred = $q.defer();
         glanceHttp.ajaxGet(["cluster.getNodeMonitor", {node_id: nodeId}], function(data) {
             if(data.data.length) {
                 setNodeInfos(data.data[0]);
             }
-            $scope.nodeMonitorData = data.data;
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+            deferred.resolve(data);
         });
+        return deferred.promise;
     };
-    $scope.getNodeMetricData($stateParams.nodeId);
 
-    $scope.unitConversion = unitConversion;
-
-    $scope.$on('newNodeMetric-'+ $stateParams.nodeId, function(event, data){
-        var nodesData = $scope.nodeMonitorData;
-        var maxNodesNumber = 180;
-        if(nodesData.length) {
-            var wsTime = monitor.calHourMin(data.timestamp);
-            var chartsTime = monitor.calHourMin(nodesData[0].timestamp);
-            if (wsTime < chartsTime) {
-                return;
+    var promise = $scope.getNodeMetricData($stateParams.nodeId);
+    promise.then(function(data) {
+        var nodesData = data.data;
+        $scope.$on('newNodeMetric-'+ $stateParams.nodeId, function(event, data){
+            var maxNodesNumber = 180;
+            if(nodesData.length) {
+                var wsTime = monitor.calHourMin(data.timestamp);
+                var chartsTime = monitor.calHourMin(nodesData[0].timestamp);
+                if (wsTime < chartsTime) {
+                    return;
+                }
+            } else {
+                setNodeInfos(data);
             }
-        } else {
-            setNodeInfos(data);
-        }
-        nodesData.splice(0, 0, data);
-        if(nodesData.length > maxNodesNumber) {
-            nodesData.pop();
-        }
-        var chartsData = monitor.httpMonitor.getChartsData(nodesData);
-        buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+            nodesData.splice(0, 0, data);
+            if(nodesData.length > maxNodesNumber) {
+                nodesData.pop();
+            }
+            var chartsData = monitor.httpMonitor.getChartsData(nodesData);
+            buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+        });
     });
 
     function setNodeInfos(data) {
@@ -59,8 +62,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         $scope.node.memTotal = data.memTotal;
         $scope.node.dockerVersion = data.dockerVersion;
     }
-    
 }
 
-nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor"];
+nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$q"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);
