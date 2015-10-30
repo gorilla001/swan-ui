@@ -52,7 +52,20 @@ function buildCharts(monitor) {
                 subtext: indicator.descriptions.subtitle
             },
             tooltip: {
-                trigger: 'axis'
+                trigger: 'axis',
+                formatter: function(params){
+                    var res = '';
+                    for (var i = 0, l = params.length; i < l; i++) {
+                        if(params[i].seriesName === 'CPU使用率'){
+                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
+                        }else if(params[i].seriesName === '内存使用率'){
+                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
+                        }else if(params[i].seriesName === '磁盘使用率'){
+                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
+                        }
+                    }
+                    return res;
+                }
             },
             xAxis: [{
                 type: 'category',
