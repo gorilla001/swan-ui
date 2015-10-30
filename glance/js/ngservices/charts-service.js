@@ -96,7 +96,7 @@ function buildCharts(monitor) {
 
                 for(var j = 0; j < yAxis.length; j++) {
                     if(yAxis[j] && yAxis[j][i]) {
-                        option.series[i].data.push(yAxis[j][i]);
+                        option.series[i].data.push(Number(yAxis[j][i]).toFixed(2));
                     } else {
                         option.series[i].data.push("0.00");
                     }
