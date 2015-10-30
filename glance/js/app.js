@@ -326,7 +326,7 @@ glanceApp.directive('regexValidate', function() {
             var regex = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/i;
             function valueLength(value) {
                 var length = value.length;
-                if (length > 0 && (length < 8 || length > 22)) {
+                if (length > 0 && (length < 8 || length > 16)) {
                     return false;
                 } else {
                     return true;
