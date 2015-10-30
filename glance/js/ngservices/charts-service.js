@@ -7,18 +7,13 @@ function buildCharts(monitor) {
             itemStyle: {
                 normal: {
                     lineStyle: {
-                        color: 'white',
-                        type: 'solid',
-                        width: 0
+                        color: '#bc9ad4',
+                        type: 'dashed',
+                        width: 1
                     }
                 }
             },
-            symbolSize: '<2|4>',
-            markLine:  {
-                data: [
-                    {type: 'min', name: '警戒线'}
-                ]
-            }
+            symbolSize: '<2|4>'
         };
         return data;
     }
@@ -104,7 +99,8 @@ function buildCharts(monitor) {
                 option.series[i] = {
                     name: indicator.descriptions.seriesName,
                     type: 'line',
-                    data: []
+                    data: [],
+                    symbolSize: '<2|4>'
                 };
 
                 for(var j = 0; j < yAxis.length; j++) {
@@ -124,7 +120,8 @@ function buildCharts(monitor) {
             option.series[0] = {
                 name: indicator.descriptions.seriesName,
                 type: 'line',
-                data: yAxis
+                data: yAxis,
+                symbolSize: '<2|4>'
             };
             seriesLength = option.series.length;
         }
