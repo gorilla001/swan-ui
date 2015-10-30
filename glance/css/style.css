@@ -304,7 +304,7 @@ span.caret {
 	background-color: transparent;
 }
 .copy-code-agent button {
-	height: 60px;
+	height: 100%;
 	width: 75px;
 	position: absolute;
 	left: 0;

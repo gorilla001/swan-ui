@@ -29,7 +29,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
             $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
                 if (data["status"] == "running") {
                     $scope.isConected = true;
-                    $scope.msgstate = "您的主机链接成功!";
+                    $scope.msgstate = "您的主机连接成功!";
 
                 }
             });
