@@ -191,7 +191,7 @@ $(document).ready(function(){
             '163.com': 'http://mail.163.com/',
             '126.com': 'http://mail.126.com/',
             'yeah.net': 'http://www.yeah.net/',
-            'dataman-inc.com': 'http://exmail.qq.com/'
+            'dataman-inc.com': 'http://exmail.qq.com/login'
         };
         var service = address.split('@')[1];
         return mailHash[service];
