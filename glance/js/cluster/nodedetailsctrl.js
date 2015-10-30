@@ -1,4 +1,4 @@
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $q) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor) {
     $scope.node = {};
     $scope.getCurNode = function () {
         var showStates = ['normal', 'disconnect', 'warning', 'reset'];
@@ -20,20 +20,19 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        var deferred = $q.defer();
         glanceHttp.ajaxGet(["cluster.getNodeMonitor", {node_id: nodeId}], function(data) {
             if(data.data.length) {
                 setNodeInfos(data.data[0]);
             }
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
-            deferred.resolve(data);
+            addMetricData(data);
         });
-        return deferred.promise;
     };
 
-    var promise = $scope.getNodeMetricData($stateParams.nodeId);
-    promise.then(function(data) {
+    $scope.getNodeMetricData($stateParams.nodeId);
+
+    function addMetricData(data) {
         var nodesData = data.data;
         $scope.$on('newNodeMetric-'+ $stateParams.nodeId, function(event, data){
             var maxNodesNumber = 180;
@@ -53,7 +52,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             var chartsData = monitor.httpMonitor.getChartsData(nodesData);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
         });
-    });
+    }
 
     function setNodeInfos(data) {
         $scope.node.cpuNumber = data.cpuPercent.length;
@@ -64,5 +63,5 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     }
 }
 
-nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$q"];
+nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);
