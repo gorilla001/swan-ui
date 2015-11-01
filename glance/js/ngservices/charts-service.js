@@ -81,6 +81,7 @@ function buildCharts(monitor) {
                 min: 0,
                 max: 100
             }],
+            animation:false,
             series: []
         };
         var seriesLength;
