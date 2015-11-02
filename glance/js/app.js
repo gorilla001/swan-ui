@@ -323,14 +323,10 @@ glanceApp.directive('regexValidator', function() {
         restrict: 'A',
         require: 'ngModel',
         link: function(scope, ele, attrs, ctrl) {
-            var regex = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/i;
+            var regex = /([A-z\d\?\,\.\:\;\'\"\!\(\)])*[A-Z]/g;
             function valueLength(value) {
                 var length = value.length;
-                if (length > 0 && (length < 8 || length > 16)) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return Boolean(length <= 0 || (length >= 8 && length <= 16));
             };
             
             ctrl.$parsers.unshift(function(value) {
