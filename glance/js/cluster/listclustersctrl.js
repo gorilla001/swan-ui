@@ -1,7 +1,8 @@
-function listClustersCtrl($scope, glanceHttp) {
+function listClustersCtrl($scope, $rootScope, glanceHttp) {
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data) {
+                $rootScope.clusterNames = getClusterNames(data.data);
                 $scope.clusters = data.data;
                 $scope.pageData = [];
                 $scope.getPageData();
@@ -9,6 +10,16 @@ function listClustersCtrl($scope, glanceHttp) {
         });
     };
     $scope.listCluster();
+
+    function getClusterNames(clusters) {
+        var names = [];
+        if (clusters && clusters.length) {
+            $.each(clusters, function(index, cluster) {
+                names.push(cluster.name);
+            });
+        }
+        return names;
+    }
 
     $scope.toggleShowMoreNonMasters = function(clusterId) {
         $.each($scope.pageData, function(index, cluster) {
@@ -183,5 +194,5 @@ function listClustersCtrl($scope, glanceHttp) {
     }
 }
 
-listClustersCtrl.$inject = ["$scope", "glanceHttp"];
+listClustersCtrl.$inject = ["$scope", "$rootScope", "glanceHttp"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);
