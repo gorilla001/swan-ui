@@ -373,3 +373,17 @@ glanceApp.directive('valueMatch', function() {
         }
     };
 });
+
+glanceApp.directive('nameRepaetValidator', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elem, attrs, ctrl) {
+            ctrl.$parsers.unshift(function(value) {
+                var valid = Boolean(scope.clusterNames.indexOf(value.toString()) === -1);
+                ctrl.$setValidity('nameRepaetValidator', valid);
+                return valid ? value : undefined;
+            });
+        }
+    };
+});
