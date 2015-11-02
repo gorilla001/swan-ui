@@ -16,9 +16,7 @@
     <div class="server-ico-list main-container">
         <header class="clearfix main-container-header">
             <h2>
-                <a data-ng-show="!cluster.amounts.total">
-                    {/ cluster.basicInfos.name /}
-                </a>
+            <span data-ng-show="!cluster.amounts.total">{/ cluster.basicInfos.name /}</span>
                 <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">
                     {/ cluster.basicInfos.name /}
                 </a>
