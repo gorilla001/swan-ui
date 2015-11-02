@@ -1,10 +1,14 @@
-<div ng-repeat="event in events">
-    <div class="main-container-body">
+<div class="main-container-body">
+    <div ng-repeat="event in events">
+
         <ul class="event-list">
             <li>
-				<h1><span class="glyphicon glyphicon-time"></span> {/event.timestamp/} </h1>
-				<p><span>{/event.app.appName/}</span><span>{/event.taskId/}</span><span>{/event.currentType/}</span><span>{/event.eventType/}</span></p>
-			</li>
+                <h1><span class="glyphicon glyphicon-time"></span> {/event.timestamp/} </h1>
+
+                <p><span ng-show="event.app.appName">应用名称: {/event.app.appName/}</span><span ng-show="event.taskId">实例名称: {/event.taskId/}</span><span
+                        ng-show="event.currentType">事件类型: {/event.currentType/}</span><span ng-show="event.eventType">事件结果: {/event.eventType/}</span>
+                </p>
+            </li>
         </ul>
     </div>
 </div>
