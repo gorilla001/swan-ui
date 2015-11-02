@@ -1,6 +1,8 @@
 function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     $rootScope.show = "cluster";
 
+    $scope.clusterNames = [];
+    
     $scope.statName = {
         "normal": "正常",
         "disconnect": "失联",
@@ -180,6 +182,14 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
         return groupsWithState;
     }
 
+    $scope.getClusterNames = function(clusters) {
+        $scope.clusterNames = [];
+        if (clusters && clusters.length) {
+            $.each(clusters, function(index, cluster) {
+                $scope.clusterNames.push(cluster.name);
+            });
+        }
+    }
 }
 
 clusterCtrl.$inject = ["$scope", "$state", "$rootScope", "glanceHttp"];

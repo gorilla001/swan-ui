@@ -1,4 +1,4 @@
-function createClusterFormCtrl($scope, $rootScope, $state, glanceHttp) {
+function createClusterFormCtrl($scope, $state, glanceHttp) {
     $scope.form = {
         clusterType: '1_master'
     };
@@ -12,8 +12,7 @@ function createClusterFormCtrl($scope, $rootScope, $state, glanceHttp) {
             }
         });
     };
-    $scope.clusterNames = $rootScope.clusterNames;
 }
 
-createClusterFormCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceHttp"];
+createClusterFormCtrl.$inject = ["$scope", "$state", "glanceHttp"];
 glanceApp.controller("createClusterFormCtrl", createClusterFormCtrl);
