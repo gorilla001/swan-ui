@@ -1,6 +1,6 @@
 function addNodeCtrl(utils,$scope) {
     utils.clickToCopy();
-    $scope.isCollapsed = true;
+    $scope.isCollapsed = false;
 }
 
 addNodeCtrl.$inject = ['utils','$scope'];
