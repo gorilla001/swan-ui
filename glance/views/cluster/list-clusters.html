@@ -30,21 +30,21 @@
         <div class="main-container-body">
             <div data-ng-show="cluster.amounts.total">
                 <ul class="cluster-service-status-number">
-                    <li class="normal {/cluster.classes.normal/}">
+                    <li class="normal {/cluster.classes.normal/}" data-ng-show="cluster.amounts.normal">
                         <a data-ng-click="getPageData(cluster.basicInfos.id, 'normal')" href="#">
                             正常主机 <span>{/cluster.amounts.normal/}</span>
                         </a>
                     </li>
-                    <li class="disconnect {/cluster.classes.disconnect/}">
+                    <li class="disconnect {/cluster.classes.disconnect/}" data-ng-show="cluster.amounts.disconnect">
                         <a data-ng-click="getPageData(cluster.basicInfos.id, 'disconnect')" href="#">    失联主机 <span>{/cluster.amounts.disconnect/}</span>
                         </a>
                     </li>
-                    <li class="warning {/cluster.classes.warning/}">
+                    <li class="warning {/cluster.classes.warning/}" data-ng-show="cluster.amounts.warning">
                         <a data-ng-click="getPageData(cluster.basicInfos.id, 'warning')" href="#">
                             报警主机 <span>{/cluster.amounts.warning/}</span>
                         </a>
                     </li>
-                    <li class="reset {/cluster.classes.reset/}">
+                    <li class="reset {/cluster.classes.reset/}" data-ng-show="cluster.amounts.reset">
                         <a data-ng-click="getPageData(cluster.basicInfos.id, 'reset')" href="#">
                             初始化主机 <span>{/cluster.amounts.reset/}</span>
                         </a>
