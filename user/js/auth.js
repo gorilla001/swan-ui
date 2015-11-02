@@ -254,7 +254,9 @@ $(document).ready(function(){
                 } else if (data && data.code === 1){
                     var error = dataError(data);
                     $('#relative-error').modal('show');
-                    $('.color-text').text(error);
+                    $('.text-tips').text(error);
+                    $('.text-tips').addClass('text-danger');
+                    
                 }
             }).error(function(data) {
                 //tips
