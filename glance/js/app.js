@@ -318,7 +318,7 @@ glanceApp.directive('dateFormat', ['$filter',function($filter) {
     };
 }]);
 
-glanceApp.directive('regexValidate', function() {
+glanceApp.directive('regexValidator', function() {
     return {
         restrict: 'A',
         require: 'ngModel',
@@ -340,7 +340,7 @@ glanceApp.directive('regexValidate', function() {
                     var reg = regex.test(value);
                     valid = Boolean(reg && len);
                 }
-                ctrl.$setValidity('regexValidate', valid);
+                ctrl.$setValidity('regexValidator', valid);
                 return valid ? value : undefined;
             });
 
@@ -352,7 +352,7 @@ glanceApp.directive('regexValidate', function() {
                     valid = Boolean(reg && len);
                 }
 
-                ctrl.$setValidity('regexValidate', valid);
+                ctrl.$setValidity('regexValidator', valid);
                 return value;
             });
         }
