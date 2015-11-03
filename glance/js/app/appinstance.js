@@ -16,14 +16,29 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
     (function appInstances() {
         glanceHttp.ajaxGet(['app.instances',{app_id: $stateParams.appId}], function (data) {
             $scope.instances = data.data;
-            if(!data.data.length) {
-                promise = $timeout(appInstances, 2000);
+            if (isDeploying(data)) {
+                promise = $timeout(appInstances, 3000);
             }
             $scope.getAppInfo($stateParams.appId);
         }, undefined, null, function(data) {
             Notification.error('获取实例失败: ' + data.errors);
         })
     })();
+
+    function isDeploying(data){
+        var result = false;
+        if (!data.data.length) {
+            result = true;
+        } else {
+            for (var i = 0; i < data.data.length; i++) {
+                if(data.data[i].instancdStatus === 2) {
+                    result = true;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 
     $scope.$on('$destroy', function(){
         $timeout.cancel(promise);
