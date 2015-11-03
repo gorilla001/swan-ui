@@ -51,7 +51,10 @@ BACKEND_URL = {
         deleteApp:"applications/$app_id/delete",
         stop:"applications/$app_id/stop",
         start:"applications/$app_id/start",
-        options:"applications/$cluster_id/options"
+        options:"applications/$cluster_id/options",
+        imageVersions:"applications/$app_id/image-versions",
+        versionDeploy:"applications/$app_versionId/version-deploy",
+        updateVersion:"applications/update-version"
     },
 
     userUrl: "MARKET",
