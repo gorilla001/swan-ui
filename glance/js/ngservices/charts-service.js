@@ -156,7 +156,7 @@ function buildCharts(monitor) {
         });
 
         var seriesStyle = setSeriesStyles(indicator);
-        var seriesData = (indicator.key === 'cpu') ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
+        var seriesData = ($.isArray(yAxis[0])) ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
         var lineNumber = 1;
         if ($.isArray(seriesData[0])) {
             lineNumber = seriesData.length;
@@ -224,6 +224,9 @@ function buildCharts(monitor) {
                 axiesFontsize: '11px'
             }
         };
+        if (kind === 'cluster') {
+            cpu.styles.lineColor = '#39C7C8';
+        }
         var xAxis;
         var yAxis;
         if (chartsData) {
