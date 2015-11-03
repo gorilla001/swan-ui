@@ -21,7 +21,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog) {
     $scope.openDialog = function () {
         ngDialog.open({
             template: '../../views/app/updateVersionDialog.html',
-            controller: 'versionDialogCtr',
+            controller: 'versionDialogCtrl',
             scope: $scope});
     };
 
