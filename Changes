@@ -1,0 +1,20 @@
+Release Note
+=============
+
+这个文件将会记录:
+
+- 下次release运维需要更新的配置
+- 重大的bug fix
+- 重大的feature
+
+##v0.1.110201
+
+### bug fix
+
+1. watch on web sokcet message when axaj request resolved and charts build finished
+2. wrong password max length
+3. wrong password validator
+
+### feature
+
+1. Modify confdev.js for 'installScript'
