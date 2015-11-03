@@ -33,7 +33,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         glanceHttp.ajaxGet(['app.stop',{app_id: parseInt(appId)}], function (data) {
             if(data.data.stopState == 0){
                 Notification.success('应用停止中...');
-                $state.go('app.imageVersions',undefined,{reload : true});
+                $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
             Notification.error('停止失败:' + data.errors);
