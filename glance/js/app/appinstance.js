@@ -19,10 +19,12 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
             if (isDeploying(data)) {
                 promise = $timeout(appInstances, 3000);
             }
+            $scope.instances = hideStartTime(data.data);
             $scope.getAppInfo($stateParams.appId);
         }, undefined, null, function(data) {
             Notification.error('获取实例失败: ' + data.errors);
         })
+
     })();
 
     function isDeploying(data){
@@ -39,6 +41,18 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
         }
         return result;
     }
+
+    function hideStartTime(instances) {
+        var hideTime = "0001-01-01T00:00:00Z";
+        var startTime;
+        for (var i = 0; i < instances.length; i++) {
+            startTime = instances[i].startTime;
+            instances[i].hideStartTime = (startTime === hideTime) ? true : false;
+        }
+        return instances;
+    }
+
+
 
     $scope.$on('$destroy', function(){
         $timeout.cancel(promise);

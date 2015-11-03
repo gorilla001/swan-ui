@@ -11,7 +11,8 @@
         <tr ng-repeat="instance in instances">
             <td>{/instance.instancdId/}</td>
             <td>{/appstate[instance.instancdStatus]/}</td>
-            <td>{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td data-ng-hide="instance.hideStartTime">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td data-ng-show="instance.hideStartTime"></td>
         </tr>
         </tbody>
     </table>
