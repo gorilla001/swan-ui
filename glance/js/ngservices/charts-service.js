@@ -1,5 +1,5 @@
 function buildCharts(monitor) {
-    function initMarkline() {
+    function initMarkline(color) {
         var data = {};
         data = {
             type: 'line',
@@ -7,7 +7,7 @@ function buildCharts(monitor) {
             itemStyle: {
                 normal: {
                     lineStyle: {
-                        color: '#bc9ad4',
+                        color: color,
                         type: 'dashed',
                         width: 1
                     }
@@ -27,24 +27,56 @@ function buildCharts(monitor) {
         return data;
     }
 
-    function createMarkline(frequency, alarmingRate) {
-        var markLine = initMarkline();
+    function createMarkline(frequency, alarmingRate, color) {
+        var markLine = initMarkline(color);
         markLine.data = initMarklineData(frequency, alarmingRate);
         return markLine;
     }
 
-    function initCharts(indicator, xAxis, yAxis, alarmingLines) {
-        if((!yAxis) || yAxis.length === 0) {
-            return;
-        }
-        var chart = echarts.init(document.getElementById(indicator.domId));
+    function setBasicStyle(color) {
         var option = {
-            grid: {
-                borderWidth: 0
+            grid: {},
+            xAxis: [],
+            yAxis: [],
+            animation: false
+        };
+        option.grid.borderWidth = 0;
+        option.xAxis[0] = {
+            type: 'category',
+            boundaryGap: false,
+            splitLine: {
+                show: false
             },
+            axisLine: {
+                lineStyle: {
+                    color: color
+                }
+            }
+        };
+        option.yAxis[0] = {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} %'
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                lineStyle: {
+                    color: color
+                }
+            },
+            min: 0,
+            max: 100
+        };
+        return option;
+    }
+
+    function setBasicInfo(descriptions) {
+        var option = {
             title: {
-                text: indicator.descriptions.title,
-                subtext: indicator.descriptions.subtitle
+                text: descriptions.title,
+                subtext: descriptions.subtitle
             },
             tooltip: {
                 trigger: 'axis',
@@ -61,102 +93,135 @@ function buildCharts(monitor) {
                     }
                     return res;
                 }
-            },
-            xAxis: [{
-                type: 'category',
-                boundaryGap: false,
-                splitLine: {
-                    show: false
-                },
-                data: xAxis
-            }],
-            yAxis: [{
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value} %'
-                },
-                splitLine: {
-                    show: false
-                },
-                min: 0,
-                max: 100
-            }],
-            animation:false,
-            series: []
-        };
-        var seriesLength;
-        var isArray;
-        for (var m = 0; m < yAxis.length; m++) {
-            if($.isArray(yAxis[m])) {
-                isArray = true;
-                break;
             }
-        }
+        };
+        return option;
+    }
 
-        if (isArray) {
-            var cpuNumber = yAxis[m].length;
-            seriesLength = cpuNumber;
-            for(var i = 0; i < cpuNumber; i++) {
-                option.series[i] = {
-                    name: indicator.descriptions.seriesName,
-                    type: 'line',
-                    data: [],
-                    symbolSize: '<2|4>'
-                };
-
-                for(var j = 0; j < yAxis.length; j++) {
-                    if(yAxis[j] && yAxis[j][i]) {
-                        option.series[i].data.push(Number(yAxis[j][i]).toFixed(2));
-                    } else {
-                        option.series[i].data.push("0.00");
+    function setSeriesStyles(indicator) {
+        var seriesStyle = {
+            name: indicator.descriptions.seriesName,
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    lineStyle: {
+                        width: indicator.styles.lineWidth
                     }
                 }
+            },
+            symbolSize: '<2|4>'
+        };
+        if (indicator.styles.lineColor) {
+            seriesStyle.itemStyle.normal.lineStyle.color = indicator.styles.lineColor;
+        }
+        return seriesStyle;
+    }
+
+    function getCpuSeriesData(data) {
+        var cpuSeriesData = [];
+        var cpuNumber = data[0].length;
+        for (var i = 0; i < cpuNumber; i++) {
+            cpuSeriesData[i] = [];
+            for (var j = 0; j < data.length; j++) {
+                if (data[j] && data[j][i]) {
+                    cpuSeriesData[i][j] = Number(data[j][i]).toFixed(2);
+                } else {
+                    cpuSeriesData[i][j] = '0.00';
+                }
+            }
+        }
+        return cpuSeriesData;
+    }
+
+    function getMemoryDiskSeriesData(data) {
+        var seriesData = [];
+        $.each(data, function(index, val) {
+            seriesData[index] = val? val : '0.00';
+        });
+        return seriesData;
+    }
+
+    function getChatrsOption(indicator, xAxis, yAxis, alarmingLines) {
+        var option = {};
+        option.series = [];
+        var basicStyle = setBasicStyle(indicator.styles.axesColor);
+        basicStyle.xAxis[0].data = xAxis;
+        var basicInfo = setBasicInfo(indicator.descriptions);
+        
+        var keys = [basicStyle, basicInfo];
+        $.each(keys, function(index, obj) {
+            $.each(obj, function(key, value) {
+                option[key] = value;
+            });
+        });
+
+        var seriesStyle = setSeriesStyles(indicator);
+        var seriesData = (indicator.key === 'cpu') ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
+        var lineNumber = 1;
+        if ($.isArray(seriesData[0])) {
+            lineNumber = seriesData.length;
+            for (var i = 0; i < lineNumber; i++) {
+                option.series[i] = seriesStyle;
+                option.series[i].data = seriesData[i];
             }
         } else {
-            $.each(yAxis, function(index, val) {
-                if (!val) {
-                    yAxis[index] = '0.00';
-                }
-            });
-            option.series[0] = {
-                name: indicator.descriptions.seriesName,
-                type: 'line',
-                data: yAxis,
-                symbolSize: '<2|4>'
-            };
-            seriesLength = option.series.length;
+            option.series[0] = seriesStyle;
+            option.series[0].data = seriesData
         }
-        option.series[seriesLength] = createMarkline(alarmingLines.frequency, alarmingLines[indicator.key].high);
-        option.series[seriesLength+1] = createMarkline(alarmingLines.frequency, alarmingLines[indicator.key].low);
+        option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
+        option.series[lineNumber+1] = createMarkline(alarmingLines.frequency, alarmingLines.low.rate, alarmingLines.low.color);
+        return option;
+    }
+
+    function initCharts(indicator, xAxis, yAxis, alarmingLines) {
+        var option = getChatrsOption(indicator, xAxis, yAxis, alarmingLines);
+        var chart = echarts.init(document.getElementById(indicator.domId));
         chart.setOption(option);
     }
 
     var lineCharts = function(chartsData, DOMs, kind) {
         var cpu = {
-            key: "cpu",
+            key: 'cpu',
             domId: DOMs.cpu,
             descriptions: {
                 title: 'CPU监控',
                 subtitle: '一小时内变化',
                 seriesName: 'CPU使用率'
+            },
+            styles: {
+                lineWidth: 2,
+                axesColor: '#9B9B9B',
+                axiesFontsize: '11px'
             }
         };
         var memory = {
-            key: "memory",
+            key: 'memory',
             domId: DOMs.memory,
             descriptions: {
                 title: '内存监控',
                 subtitle: '一小时内变化',
                 seriesName: '内存使用率'
+            },
+            styles: {
+                lineColor: '#B6A2DC',
+                lineWidth: 2,
+                axesColor: '#9B9B9B',
+                axiesFontsize: '11px'
             }
         };
         var disk = {
-            key: "disk",
+            key: 'disk',
             domId: DOMs.disk,
             descriptions: {
                 title: '磁盘监控',
                 subtitle: '一小时内变化',
                 seriesName: '磁盘使用率'
+            },
+            styles: {
+                lineColor: '#B6A2DC',
+                lineWidth: 2,
+                axesColor: '#9B9B9B',
+                axiesFontsize: '11px'
             }
         };
         var xAxis;
@@ -170,42 +235,26 @@ function buildCharts(monitor) {
             xAxis = defaultData.xAxis;
         }
 
+        var cpuNumber = 1;
+        if ($.isArray(yAxis.cpu[0])) {
+            cpuNumber = yAxis.cpu[0].length;
+        }
+
         var alarmingLines = {
-            node: {
-                frequency: 60,
-                cpu: {
-                    high: 80,
-                    low: 40
-                },
-                memory: {
-                    high: 80,
-                    low: 40
-                },
-                disk: {
-                    high: 80,
-                    low: 40
-                }
+            frequency: 60,
+            high: {
+                rate: 80,
+                color: 'rgba(208, 2, 27, 0.5)'
             },
-            cluster: {
-                frequency: 60,
-                cpu: {
-                    high: 80,
-                    low: 40
-                },
-                memory: {
-                    high: 80,
-                    low: 40
-                },
-                disk: {
-                    high: 80,
-                    low: 40
-                }
+            low: {
+                rate: 40,
+                color: 'rgba(245, 166, 35, 0.5)'
             }
         };
 
-        initCharts(memory, xAxis, yAxis.memory, alarmingLines[kind]);
-        initCharts(disk, xAxis, yAxis.disk, alarmingLines[kind]);
-        initCharts(cpu, xAxis, yAxis.cpu, alarmingLines[kind]);
+        initCharts(memory, xAxis, yAxis.memory, alarmingLines);
+        initCharts(disk, xAxis, yAxis.disk, alarmingLines);
+        initCharts(cpu, xAxis, yAxis.cpu, alarmingLines);
     };
 
     return {
