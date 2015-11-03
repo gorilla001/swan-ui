@@ -1,0 +1,21 @@
+<div class="main-container-body">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>镜像地址</th>
+            <th>最新更新时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="appversion in contentCurPage">
+            <td>{/appversion.imageVersion/} <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span></td>
+            <td>{/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td>
+                <button data-ng-show="!appversion.currentDeploy" type="button" data-ng-click="verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs">部署</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination total-items="totalItems" items-per-page="10" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination" previous-text="上一页" next-text="下一页"></pagination>
+</div>

@@ -10,38 +10,65 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">应用名称</label>
 
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="deployinfo.appName" data-required="required">
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
+                        <input type="text" class="form-control" name="appName" ng-model="deployinfo.appName"
+                               data-required="required" ng-pattern="/^[\u4E00-\u9FA5A-Za-z0-9]+$/" samename>
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
+                        <p data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine"
+                           class="help-block">应用名不能为空</p>
+
+                        <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
+                           class="help-block">应用名称不能含有特殊字符</p>
+
+                        <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
+                           class="help-block">应用名已存在</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">镜像地址</label>
 
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="deployinfo.imageURI" data-required="required">
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
+                        <input type="text" class="form-control" name="imageurl" data-ng-model="deployinfo.imageURI"
+                               data-required="required">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
+                        <p data-ng-show="staticForm.imageurl.$error.required && !staticForm.imageurl.$pristine"
+                           class="help-block">镜像地址不能为空</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">容器规格</label>
 
                     <div class="col-md-2">
-                        <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}" min="cpuOptions.min" step="cpuOptions.step" max="cpuOptions.max"></slider>
-                        <p>CPU最大个数: 2 个  现为:{/cpuSize/} 个</p>
+                        <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}"
+                                min="cpuOptions.min" step="cpuOptions.step" max="cpuOptions.max"></slider>
+                        <p>CPU 共享: 1.0 现为:{/cpuSize/}</p>
                     </div>
 
 
-
                     <div class="col-md-2">
-                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic" handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step" max="memOptions.max"></slider>
+                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic"
+                                handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step"
+                                max="memOptions.max"></slider>
                         <p>内存最大值: 4096MB 现为:{/memSize/}MB</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">容器个数</label>
 
-                    <div class="col-md-1" data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
-                        <input type="number" class="form-control" name="containerNum" data-ng-model="containerNum" min="1" data-required="required">
-                        <p data-ng-show="staticForm.containerNum.$error.min && !staticForm.containerNum.$pristine" class="help-block">容器个数必须大于 1 </p>
+                    <div class="col-md-2"
+                         data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
+                        <input type="number" class="form-control" name="containerNum" data-ng-model="containerNum"
+                               min="1" data-required="required">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
+                        <p data-ng-show="staticForm.containerNum.$error.min && !staticForm.containerNum.$pristine"
+                           class="help-block">容器个数必须大于 1 </p>
+                        <p data-ng-show="staticForm.containerNum.$error.required && !staticForm.containerNum.$pristine"
+                           class="help-block">容器个数不能为空 </p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -61,36 +88,59 @@
                     </div>
                 </div>
 
-                <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="col-md-offset-3 ad-set">高级设置 <span class="caret"></span></a>
+                <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+                   aria-controls="collapseExample" class="col-md-offset-3 ad-set">高级设置 <span class="caret"></span></a>
 
                 <div class="collapse" id="collapseExample">
                     <div class="well">
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
                             <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
+
                             <div class="col-md-4" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="number" data-ng-model="choice.value" name="" class="form-control" placeholder="端口">
+                                <input type="number" data-ng-model="choice.value" name="" class="form-control"
+                                       placeholder="端口" min="1" max="65535">
                             </div>
-                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.removeChoice('createPort')">-</button>
-                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.addNewChoice('createPort')">+</button>
+                            <div class="col-md-2">
+                                <select class="form-control" data-ng-model="choice.key">
+                                    <option value="">选择类型</option>
+                                    <option value="inner">　对内</option>
+                                    <option value="outer">　对外</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
+                                    data-ng-click="dynamicData.removeChoice('createPort')">-
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
+                                    data-ng-click="dynamicData.addNewChoice('createPort')">+
+                            </button>
                         </div>
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createEnv">
                             <label class="col-md-3 control-label" data-ng-show="$first">
                                 环境变量
                                 <small>自定义环境变量</small>
                             </label>
+
                             <div class="col-md-3" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="text" data-ng-model="choice.key" name="key" class="form-control" placeholder="Key --- PATH">
+                                <input type="text" data-ng-model="choice.key" name="key" class="form-control"
+                                       placeholder="Key --- PATH">
                             </div>
                             <div class="col-md-3">
-                                <input type="text" data-ng-model="choice.value" name="value" class="form-control" placeholder="Value">
+                                <input type="text" data-ng-model="choice.value" name="value" class="form-control"
+                                       placeholder="Value">
                             </div>
-                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.removeChoice('createEnv')">-</button>
-                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last" data-ng-click="dynamicData.addNewChoice('createEnv')">+</button>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
+                                    data-ng-click="dynamicData.removeChoice('createEnv')">-
+                            </button>
+                            <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
+                                    data-ng-click="dynamicData.addNewChoice('createEnv')">+
+                            </button>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">CMD</label>
+
                             <div class="col-md-4">
-                                <input type="text" data-ng-model="cmdInput" name="" class="form-control" placeholder="输入需要的命令行">
+                                <input type="text" data-ng-model="cmdInput" name="" class="form-control"
+                                       placeholder="输入需要的命令行">
                             </div>
                         </div>
                     </div>
@@ -99,7 +149,8 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn btn-primary" data-ng-disabled="staticForm.$invalid"> 创 建</button>
+                        <button type="submit" class="btn btn-primary" data-ng-disabled="staticForm.$invalid"> 创 建
+                        </button>
                     </div>
                 </div>
             </form>

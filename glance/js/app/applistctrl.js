@@ -11,6 +11,7 @@ function appListCtrl($scope, glanceHttp) {
             $scope.applist = [];
             if (data && data.data && data.data.length !== 0) {
                 $scope.applist = data.data;
+                getAppName($scope.applist);
                 $scope.totalItems = $scope.applist.length;
                 $scope.pageLength = 10;
                 $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
@@ -28,4 +29,11 @@ function appListCtrl($scope, glanceHttp) {
     };
 
     $scope.listApp();
+
+    function getAppName(apps){
+        $scope.curAppNames.splice(0, $scope.curAppNames.length);
+        angular.forEach(apps, function(value,index){
+            $scope.curAppNames.push(value.appName);
+        });
+    }
 }

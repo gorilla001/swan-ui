@@ -22,6 +22,7 @@
 							<li data-ng-show="appInfo.status!='3'"><a href="#" data-ng-click="stopApp(appInfo.appId)">停止</a></li>
 							<li data-ng-disabled="appInfo.status == '5'"><a data-ng-click="deleteApp(appInfo.appId)" href="#">删除</a></li>
 							<li data-ng-show="appInfo.status == '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum)" href="#">扩展</a></li>
+							<li ><a data-ng-click="openDialog()" href="#">更新</a></li>
 						</ul>
 					</div>
 				</div>
@@ -33,6 +34,7 @@
 				<ul class="nav nav-tabs">
 					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance">实例</a></li>
 					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring">监控</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a data-ui-sref="app.appdetail.version">版本</a></li>
 					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config">配置</a></li>
 					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event">事件</a></li>
 				</ul>

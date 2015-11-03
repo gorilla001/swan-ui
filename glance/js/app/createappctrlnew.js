@@ -7,9 +7,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
 
     $scope.cpuOptions = {
         min: 0.1,
-        max: 2,
+        max: 1.0,
         step: 0.1,
-        precision: 2,
+        precision: 1,
         orientation: 'horizontal',
         handle: 'round',
         tooltip: 'always',
@@ -52,22 +52,30 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             var creatLength = $scope.dynamicData[conditions].length;
             var creatData = $scope.dynamicData[conditions];
 
-            if(conditions === 'createEnv'){
-                if (creatData[creatLength - 1].key &&
-                    creatData[creatLength - 1].value) {
-                    newItemNo = creatLength + 1;
-                    creatData.push({'id': 'choice' + newItemNo});
-                } else {
-                    Notification.warning('输入框有空值,不能继续添加');
-                }
-            }else if(conditions === 'createPort'){
-                if (creatData[creatLength - 1].value) {
-                    newItemNo = creatLength + 1;
-                    creatData.push({'id': 'choice' + newItemNo});
-                } else {
-                    Notification.warning('输入框有空值,不能继续添加');
-                }
+            if (creatData[creatLength - 1].key &&
+                creatData[creatLength - 1].value) {
+                newItemNo = creatLength + 1;
+                creatData.push({'id': 'choice' + newItemNo});
+            } else {
+                Notification.warning('输入框有空值,不能继续添加');
             }
+
+            //if(conditions === 'createEnv'){
+            //    if (creatData[creatLength - 1].key &&
+            //        creatData[creatLength - 1].value) {
+            //        newItemNo = creatLength + 1;
+            //        creatData.push({'id': 'choice' + newItemNo});
+            //    } else {
+            //        Notification.warning('输入框有空值,不能继续添加');
+            //    }
+            //}else if(conditions === 'createPort'){
+            //    if (creatData[creatLength - 1].value) {
+            //        newItemNo = creatLength + 1;
+            //        creatData.push({'id': 'choice' + newItemNo});
+            //    } else {
+            //        Notification.warning('输入框有空值,不能继续添加');
+            //    }
+            //}
 
         },
         "removeChoice": function (conditions) {
@@ -91,33 +99,33 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                     $scope.deployinfo.envs[value.key] = value.value;
                 });
             } else if (conditions === 'createPort') {
-                //$scope.deployinfo.containerPortsInfo = {
-                //    "inner": [],
-                //    "outer": []
-                //};
+                $scope.deployinfo.containerPortsInfo = {
+                    "inner": [],
+                    "outer": []
+                };
 
-                $scope.deployinfo.containerPortsInfo = [];
-
-                angular.forEach(creatData, function (value) {
-                    $scope.deployinfo.containerPortsInfo.push(value.value);
-
-                });
+                //$scope.deployinfo.containerPortsInfo = [];
 
                 //angular.forEach(creatData, function (value) {
-                //    if(value.key === 'inner'){
-                //        $scope.deployinfo.containerPortsInfo.inner.push(value.value);
-                //    }else if(value.key === 'outer'){
-                //        $scope.deployinfo.containerPortsInfo.outer.push(value.value);
-                //    }
-                //
+                //    $scope.deployinfo.containerPortsInfo.push(value.value);
                 //
                 //});
+
+                angular.forEach(creatData, function (value) {
+                    if(value.key === 'inner'){
+                        $scope.deployinfo.containerPortsInfo.inner.push(value.value);
+                    }else if(value.key === 'outer'){
+                        $scope.deployinfo.containerPortsInfo.outer.push(value.value);
+                    }
+
+
+                });
             }
         }
     };
 
     $scope.deployApp = function () {
-        if ($scope.dynamicData.createPort[0].value)$scope.dynamicData.subNumber('createPort');
+        if ($scope.dynamicData.createPort[0].value && $scope.dynamicData.createPort[0].value)$scope.dynamicData.subNumber('createPort');
         if ($scope.dynamicData.createEnv[0].key && $scope.dynamicData.createEnv[0].value)$scope.dynamicData.subNumber('createEnv');
         if ($scope.cmdInput) {
             $scope.deployinfo.cmd = $scope.cmdInput;

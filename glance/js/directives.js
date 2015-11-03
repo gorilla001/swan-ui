@@ -163,3 +163,20 @@ glanceApp.directive('nameRepaetValidator', function() {
         }
     };
 });
+
+glanceApp.directive('samename', function () {
+    return {
+        restrict: "A",
+        require: 'ngModel',
+        link: function (scope, ele, attrs, ngModelController) {
+            ngModelController.$parsers.push(function (viewValue) {
+                if (scope.curAppNames.indexOf(viewValue) == -1) {
+                    ngModelController.$setValidity('samename', true);
+                } else {
+                    ngModelController.$setValidity('samename', false);
+                }
+                return viewValue;
+            });
+        }
+    };
+});

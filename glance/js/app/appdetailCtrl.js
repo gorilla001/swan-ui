@@ -1,9 +1,8 @@
 glanceApp.controller("appdetailCtrl", appdetailCtrl);
 
-appdetailCtrl.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp'];
+appdetailCtrl.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp', 'ngDialog'];
 
-function appdetailCtrl($scope, $state, $stateParams, glanceHttp) {
-
+function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog) {
     $scope.getAppInfo = function (appId) {
         glanceHttp.ajaxGet(['app.info', {app_id: appId}], function (data) {
             $scope.appInfo = data.data;
@@ -17,6 +16,13 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp) {
                 "envs": {}
             };
         });
+    };
+
+    $scope.openDialog = function () {
+        ngDialog.open({
+            template: '../../views/app/updateVersionDialog.html',
+            controller: 'SomeController',
+            scope: $scope});
     };
 
     $scope.getAppInfo($stateParams.appId);

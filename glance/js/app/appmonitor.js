@@ -23,11 +23,15 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                 var cpuUseds = 0, cpuTotals = 0, memUseds = 0, memTotals = 0;
                 var cpuPercent, cpuText, memPercent, memText;
                 $scope.appStat = data.data;
+                $scope.cpuCores = [];
                 if ($scope.appStat) {
                     for (var i = 0; i < $scope.appStat.length; i++) {
-                        if ($scope.appStat[i].cpuUsed && $scope.appStat[i].cpuTotal) {
-                            cpuUseds += $scope.appStat[i].cpuUsed;
-                            cpuTotals += $scope.appStat[i].cpuTotal;
+                        if ($scope.appStat[i].cpuUsedCores !== undefined && $scope.appStat[i].cpuShareCores) {
+                            $scope.appStat[i].cpuUsedCores = Number($scope.appStat[i].cpuUsedCores.toFixed(1))
+                            $scope.appStat[i].cpuShareCores = Number($scope.appStat[i].cpuShareCores.toFixed(1));
+                            cpuUseds += $scope.appStat[i].cpuUsedCores;
+                            cpuTotals += $scope.appStat[i].cpuShareCores;
+                            $scope.cpuCores.push( Number($scope.appStat[i].cpuShareCores.toFixed(1)));
                         }
 
                         if ($scope.appStat[i].memoryUsed && $scope.appStat[i].memoryTotal) {
@@ -38,7 +42,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                         }
                     }
 
-                    if (cpuUseds && cpuTotals) {
+                    if (cpuUseds !== undefined && cpuTotals) {
                         cpuPercent = (cpuUseds / cpuTotals * 100).toFixed(2);
                         cpuText = cpuPercent + "%";
                     } else {
