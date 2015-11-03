@@ -31,7 +31,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                             $scope.appStat[i].cpuShareCores = Number($scope.appStat[i].cpuShareCores.toFixed(1));
                             cpuUseds += $scope.appStat[i].cpuUsedCores;
                             cpuTotals += $scope.appStat[i].cpuShareCores;
-                            $scope.cpuCores.push( Number($scope.appStat[i].cpuShareCores.toFixed(1)));
+                            $scope.cpuCores.push( $scope.appStat[i].cpuShareCores);
                         }
 
                         if ($scope.appStat[i].memoryUsed && $scope.appStat[i].memoryTotal) {

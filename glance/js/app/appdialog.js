@@ -1,8 +1,8 @@
-glanceApp.controller("SomeController", SomeController);
+glanceApp.controller("versionDialogCtrl", versionDialogCtrl);
 
-SomeController.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp', 'ngDialog','Notification'];
+versionDialogCtrl.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp', 'ngDialog','Notification'];
 
-function SomeController($scope, $state, $stateParams, glanceHttp, ngDialog, Notification) {
+function versionDialogCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, Notification) {
     $scope.updateImageInfo = {};
 
     $scope.dialogOk = function(){
