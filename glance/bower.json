@@ -37,7 +37,8 @@
     "moment": "latest",
     "zrender": "~2.1.1",
     "circliful": "0.1.5",
-    "angular-ui-notification": "0.0.12"
+    "angular-ui-notification": "0.0.12",
+    "ng-dialog": "0.3.7"
   },
   "resolutions": {
     "angular": ">= 1.0.8"
