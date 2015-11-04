@@ -13,17 +13,19 @@
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
                         <input type="text" class="form-control" name="appName" ng-model="deployinfo.appName"
-                               data-required="required" ng-pattern="/^[\u4E00-\u9FA5A-Za-z0-9]+$/" samename>
+                               data-required="required" ng-pattern="/^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$/" data-ng-maxlength="64" samename>
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
                         <p data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine"
                            class="help-block">应用名不能为空</p>
 
                         <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
-                           class="help-block">应用名称不能含有特殊字符</p>
+                           class="help-block">应用名称不符合 Marathon 命名规则</p>
 
                         <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
                            class="help-block">应用名已存在</p>
+                        <p data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine"
+                           class="help-block">最大长度 64 个字符</p>
                     </div>
                 </div>
                 <div class="form-group">
