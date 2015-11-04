@@ -88,8 +88,8 @@
                                     data-infinite-scroll-distance='0'
                                     data-infinite-scroll-disabled='clusterlogs.isLoadingLogs'
                                     data-infinite-scroll-parent='true'>
-                                    <a data-ng-click="send()"><li data-ng-repeat='log in clusterlogs.logs'
-                                        data-ng-bind-html="log"></li></a>
+                                    <li data-ng-repeat='log in clusterlogs.logs'
+                                        data-ng-bind-html="log"></li>
                                 </ul>
                                 <code data-ng-show='clusterlogs.isLoadingLogs'>数据加载中...</code>
                             </div>
