@@ -21,7 +21,7 @@ gulp.task('copy-pics', ['copy-conf'], function() {
 });
 
 gulp.task('copy-fonts', ['copy-pics'], function() {
-    var sources = ['bower_components/bootstrap/dist/fonts/*'];
+    var sources = ['js/bower_components/bootstrap/dist/fonts/*'];
     gulp.src(sources)
         .pipe(gulp.dest('build/fonts'))
 });
