@@ -740,6 +740,17 @@ span.caret {
 .loader-inner > div {
     background-color: #337ab7;
 }
+
+.charts-loading {
+    left: 100px;
+}
+
+.ball-spin-fade-loader {
+  position: relative;
+  padding: 30px;
+  top: 0px;
+  left: 200px; 
+}
 /*集群状态遮罩层*/
 .cluster-manage {
 	position: relative;

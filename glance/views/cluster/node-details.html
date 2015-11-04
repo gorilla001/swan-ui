@@ -55,7 +55,7 @@
             <div class="col-md-12">
                 <div class="main-container">
 					<div class="main-container-body">
-						<ul class="server-info row">
+						<ul class="server-info row" data-ng-show="nodeInfo">
 							<li class="col-md-4">
 								IP地址<em>{/ node.ip /}</em>
 							</li>
@@ -63,19 +63,19 @@
 								所属集群<em><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a></em>
 							</li>
 							<li class="col-md-4">
-								CPU<em>{/ node.cpuNumber /}<sub>核</sub></em>
+								CPU<em>{/ nodeInfo.cpuNumber /}<sub>核</sub></em>
 							</li>
 							<li class="col-md-4">
-								系统版本<em>{/ node.osVersion /}</em>
+								系统版本<em>{/ nodeInfo.osVersion /}</em>
 							</li>
 							<li class="col-md-4">
-								agent版本<em>{/ node.agentVersion /}</em>
+								agent版本<em>{/ nodeInfo.agentVersion /}</em>
 							</li>
 							<li class="col-md-4">
 							   创建时间<em>{/ node.created_at /}</em>
 							</li>
 							<li class="col-md-4">
-								内存<em>{/ unitConversion.convertMem(node.memTotal) /}</em>
+								内存<em>{/ unitConversion.convertMem(nodeInfo.memTotal) /}</em>
 							</li>
 							<li class="col-md-4">
 								容器版本<em>docker-{/ node.dockerVersion /}</em>
@@ -84,18 +84,102 @@
 							   更新时间<em>{/ node.updated_at /}</em>
 							</li>
 						</ul>
+                        <div class="loading-spiner-holder" data-ng-hide="nodeInfo">
+                            <div class="loading-spiner">
+                                <div class="loaders">
+                                    <div class="loader">
+                                        <div class="loader-inner ball-spin-fade-loader">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
                 </div>
             </div>
+
+            
             <div class="col-md-12">
                 <div class="main-container">
                     <div class="main-container-body">
-                        <div id="node-cpu-chart"></div>
-                        <div id="node-memory-chart"></div>
-                        <div id="node-disk-chart"></div>
+                        
+                        <div class="charts-loading" data-ng-hide="showCharts">
+                            <p>CPU监控</p>
+                            <div class="loading-spiner-holder">
+                                <div class="loading-spiner">
+                                    <div class="loaders">
+                                        <div class="loader">
+                                            <div class="loader-inner ball-spin-fade-loader">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>内存监控</p>
+                            <div class="loading-spiner-holder">
+                                <div class="loading-spiner">
+                                    <div class="loaders">
+                                        <div class="loader">
+                                            <div class="loader-inner ball-spin-fade-loader">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p>磁盘监控</p>
+                            <div class="loading-spiner-holder">
+                                <div class="loading-spiner">
+                                    <div class="loaders">
+                                        <div class="loader">
+                                            <div class="loader-inner ball-spin-fade-loader">
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-ng-show="showCharts">
+                            <div id="node-cpu-chart"></div>
+                            <div id="node-memory-chart"></div>
+                            <div id="node-disk-chart"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 </div>
