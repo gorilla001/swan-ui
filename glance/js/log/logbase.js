@@ -7,16 +7,7 @@ logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader'];
 
 function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader) {
     $rootScope.show = "log";
-    moment.locale('zh-cn', {
-        longDateFormat: {
-            LT: "HH:mm",
-            LTS: "HH:mm:ss",
-            L: "DD/MM/YYYY",
-            LL: "D MMMM YYYY",
-            LLL: "D MMMM YYYY LT",
-            LLLL: "dddd D MMMM YYYY LT"
-        }
-    });
+    moment.locale('zh-cn');
 
     $scope.searchData = {
         lte: new Date(),
@@ -71,6 +62,12 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader) {
         glanceHttp.ajaxGet(['app.options', {cluster_id: clusterId}], function (data) {
             $scope.options = data.data;
         });
-    }
+    };
 
+    //datetimepicker option
+    $scope.dateOptions = {
+        startingDay: 1,
+        showWeeks: false
+    };
+    $scope.showMeridian = false;
 }

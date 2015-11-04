@@ -8,7 +8,7 @@
         <div class="main-container">
             <div class="main-container-body">
                 <div class="row">
-                    <form class=" col-md-2" name="staticForm" data-ng-submit="clusterlogs.searchLogs(searchData)">
+                    <form class=" col-md-3" name="staticForm" data-ng-submit="clusterlogs.searchLogs(searchData)">
                         <div class="form-group">
                             <label>集群名</label>
                             <select class="form-control"
@@ -31,40 +31,34 @@
 
                         </div>
                         <div class="form-group">
-                            <label>起止日期</label>
-
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown"
-                                   data-target="#" href="#">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="起始时间" date-format
-                                               data-ng-model="searchData.gte" data-required="required">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="searchData.gte"
-                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
-                                </ul>
+                            <div>
+                                <label>起止日期: </label>
+                                <datetimepicker
+                                        min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="searchData.gte" show-meridian="showMeridian"
+                                        date-format="yyyy-MM-dd" date-options="dateOptions"
+                                        readonly-date="false"
+                                        show-spinners="false"
+                                        readonly-time="false"
+                                        current-text="今天"
+                                        clear-text="清除"
+                                        close-text="关闭">
+                                </datetimepicker>
                             </div>
 
-                            <div class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown"
-                                   data-target="#" href="#">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="截止时间" date-format
-                                               data-ng-model="searchData.lte" data-required="required">
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker data-ng-model="searchData.lte"
-                                                    data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
-                                </ul>
+                            <div>
+                                <label>截止日期: </label>
+                                <datetimepicker
+                                        min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="searchData.lte" show-meridian="showMeridian"
+                                        date-format="yyyy-MM-dd" date-options="dateOptions"
+                                        readonly-date="false"
+                                        show-spinners="false"
+                                        readonly-time="false"
+                                        current-text="今天"
+                                        clear-text="清除"
+                                        close-text="关闭">
+                                </datetimepicker>
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,15 +81,15 @@
                                 class="btn btn-primary btn-sm btn-block">查询
                         </button>
                     </form>
-                    <div class="col-md-10">
+                    <div class="col-md-9">
                         <div class="main-container-body">
                             <div class="log-screen">
                                 <ul class="list-unstyled" data-infinite-scroll='clusterlogs.getlogs()'
                                     data-infinite-scroll-distance='0'
                                     data-infinite-scroll-disabled='clusterlogs.isLoadingLogs'
                                     data-infinite-scroll-parent='true'>
-                                    <li data-ng-repeat='log in clusterlogs.logs'
-                                        data-ng-bind-html="log"></li>
+                                    <a data-ng-click="send()"><li data-ng-repeat='log in clusterlogs.logs'
+                                        data-ng-bind-html="log"></li></a>
                                 </ul>
                                 <code data-ng-show='clusterlogs.isLoadingLogs'>数据加载中...</code>
                             </div>
