@@ -10,6 +10,7 @@ var useref = require('gulp-useref');
 var clean = require('gulp-clean');
 var gulpif = require('gulp-if');
 var rev = require('gulp-rev-hash');
+var jslint = require('gulp-jslint-simple');
 
 gulp.task('copy-confdev', function() {
     gulp.src('js/confdev.js')
@@ -24,7 +25,7 @@ gulp.task('copy-pics', ['copy-confdev'], function() {
 gulp.task('copy-fonts', ['copy-pics'], function() {
     var sources = ['bower_components/bootstrap/dist/fonts/*'];
     gulp.src(sources)
-        .pipe(gulp.dest('build/fonts'))
+        .pipe(gulp.dest('build/fonts'));
 });
 
 gulp.task('copy-swf', ['copy-fonts'], function() {
@@ -43,7 +44,7 @@ gulp.task('min-html', function() {
 
 gulp.task('html-replace', ['min-html'], function() {
     var assets = useref.assets();
-    var options = {collapseWhitespace: true};
+   // var options = {collapseWhitespace: true};
     var revAll = new RevAll();
     return gulp.src('index.html')
         .pipe(assets)
@@ -74,7 +75,18 @@ gulp.task('clean', ['html-rename'], function() {
 gulp.task('rev', function() {
     gulp.src('build/index.html')
         .pipe(rev())
-        .pipe(gulp.dest('build/'))
+        .pipe(gulp.dest('build/'));
 });
 
 gulp.task('default', ['clean', 'copy-swf']);
+
+gulp.task('lint', function () {
+  gulp.src('./js/*.js')
+  .pipe(jslint.run({
+    node: true,
+    vars: true
+  }))
+  .pipe(jslint.report({
+     reporter: require('jshint-stylish').reporter
+  }));
+});
