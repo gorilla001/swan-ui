@@ -278,7 +278,7 @@ a.remove {
 	color: #FFF;
 	min-height: 300px;
 	max-height: 400px;
-	overflow-y: auto;
+	overflow-y: scroll;
 }
 .log-screen code {
 	background-color: transparent;
