@@ -138,10 +138,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.containerMemSize = $scope.memSize;
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
-            Notification.success('应用创建中...');
+            Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
             $state.go('app.appdetail.instance', {appId: data.data});
         }, undefined, null, function (data) {
-            Notification.error('创建应用失败: ' + data.errors);
+            Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
         });
     };
 }

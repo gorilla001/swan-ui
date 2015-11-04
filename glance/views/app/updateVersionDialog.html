@@ -1,4 +1,4 @@
-<form class="form-horizontal" name="staticForm" data-ng-submit="dialogOk()">
+<form class="form-horizontal" name="staticForm" data-ng-submit="dialogOk(appInfo.name)">
     <h3>版本更新</h3>
 
     <div data-ng-class="{ 'has-error' : staticForm.iamgeurl.$invalid && !staticForm.iamgeurl.$pristine}">
