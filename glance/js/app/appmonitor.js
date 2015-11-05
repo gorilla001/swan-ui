@@ -81,6 +81,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                     'data-percent': memPercent,
                     'data-text': memText
                 }).circliful();
+                promise = $timeout($scope.initCircle, 3000);
             }
         }, undefined, null, function () {
             return undefined;
