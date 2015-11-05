@@ -12,7 +12,7 @@
 
             <p>应用CPU用量:<span>(CPU共享:{/appMetric.appCpuShare.toFixed(1)/})</span></p>
             <progressbar class="progress-striped active" type="info" max="appMetric.appCpuShare"
-                         value="appMetric.appCpuUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appCpuUsed.toFixed(1)/} / {/appMetric.appCpuShare.toFixed(1)/}</span>
+                         value="appMetric.appCpuUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appCpuUsed/} / {/appMetric.appCpuShare.toFixed(1)/}</span>
             </progressbar>
             <p>应用内存用量:(单位: MB)</p>
             <progressbar class="progress-striped active" type="success" max="appMetric.appMemShare"

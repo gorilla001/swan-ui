@@ -18,10 +18,10 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
                 cpuTotal = $scope.clusterMonitors.masMetrics.cpuTotal;
                 memTotal = $scope.clusterMonitors.masMetrics.memTotal;
 
-                option.series[0].data[0].value = (cpuUsed / cpuTotal) * 100;
-                option.series[0].data[1].value = (1 - cpuUsed / cpuTotal) * 100;
-                option.series[1].data[0].value = (memUsed / memTotal) * 100;
-                option.series[1].data[1].value = (1 - memUsed / memTotal) * 100;
+                option.series[0].data[0].value = $scope.clusterMonitors.masMetrics.cpuPercent;
+                option.series[0].data[1].value = 100 - option.series[0].data[0].value;
+                option.series[1].data[0].value = ($scope.clusterMonitors.masMetrics.memUsed / $scope.clusterMonitors.masMetrics.memTotal) * 100;
+                option.series[1].data[1].value = 100 - option.series[1].data[0].value;
                 clusterChart.setOption(option);
                 $scope.showAppMetrics = true;
             }
@@ -52,7 +52,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
         normal: {
             label: {
                 formatter: function (params) {
-                    return params.name + ':' + params.value.toFixed(1) + '%'
+                    return params.name + ':' + params.value.toFixed(2) + '%'
                 },
                 textStyle: {
                     baseline: 'top',
@@ -90,7 +90,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
                 radius: radius,
                 itemStyle: labelFromatter,
                 data: [
-                    {name: '集群CPU使用', itemStyle: labelBottom},
+                    {name: '集群CPU占用', itemStyle: labelBottom},
                     {name: 'CPU', itemStyle: labelTop}
                 ]
             },
