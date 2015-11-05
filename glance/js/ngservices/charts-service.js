@@ -161,12 +161,12 @@ function buildCharts(monitor) {
         if ($.isArray(seriesData[0])) {
             lineNumber = seriesData.length;
             for (var i = 0; i < lineNumber; i++) {
-                option.series[i] = seriesStyle;
+                option.series[i] = setSeriesStyles(indicator);
                 option.series[i].data = seriesData[i];
             }
         } else {
             option.series[0] = seriesStyle;
-            option.series[0].data = seriesData
+            option.series[0].data = seriesData;
         }
         option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
         option.series[lineNumber+1] = createMarkline(alarmingLines.frequency, alarmingLines.low.rate, alarmingLines.low.color);

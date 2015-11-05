@@ -61,7 +61,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     function getNodeInfo(data) {
         var nodeInfo = {};
-        var keys = ['cpuPercent', 'osVersion', 'agentVersion', 'memTotal'];
+        var keys = ['cpuPercent', 'osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
         var key;
         for (var i = 0; i < keys.length; i++) {
             key = keys[i];
