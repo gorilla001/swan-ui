@@ -2,26 +2,14 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     $rootScope.clusterClass = 'clusterMonitor';
     $scope.showAppMetrics = false;
     var cpuUsed = 0, cpuTotal = 0, memUsed = 0, memTotal = 0;
+    var ppp;
 
     var clusterChart = echarts.init(document.getElementById('clusterMetrics'));
-    clusterChart.showLoading({
-        text: '正在计算集群总体数据...',
-        effect: 'whirling', //spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'
-        textStyle: {
-            fontSize: 20
-        }
-    });
-
-    var timeoutRes = $timeout(function () {
-        clusterChart.hideLoading();
-        $scope.showAppMetrics = true;
-    }, 3000);
 
     $scope.getClusterMonitor = function () {
         glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: $stateParams.clusterId}], function (data) {
             cpuUsed = 0, cpuTotal = 0, memUsed = 0, memTotal = 0;
             if (data.data) {
-                console.log(data.data);
                 $scope.clusterMonitors = data.data;
                 angular.forEach($scope.clusterMonitors.appMetrics, function (value, index, array) {
                     cpuUsed += value.appCpuUsed;
@@ -34,7 +22,11 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
                 option.series[0].data[1].value = (1 - cpuUsed / cpuTotal) * 100;
                 option.series[1].data[0].value = (memUsed / memTotal) * 100;
                 option.series[1].data[1].value = (1 - memUsed / memTotal) * 100;
+                clusterChart.setOption(option);
+                $scope.showAppMetrics = true;
             }
+            ppp = $timeout($scope.getClusterMonitor, 3000);
+
         });
     };
 
@@ -115,16 +107,11 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
         ]
     };
 
-    var promise = $interval(function () {
-        $scope.getClusterMonitor();
-        clusterChart.setOption(option);
-    }, 3000);
 
     $scope.$on('$destroy', function () {
         clusterChart.clear();
         clusterChart.dispose();
-        $interval.cancel(promise);
-        $timeout.cancel(timeoutRes);
+        $timeout.cancel(ppp);
     });
 }
 
