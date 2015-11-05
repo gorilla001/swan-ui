@@ -80,6 +80,13 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
             }
         };
 
+        // var appStateCodes = {
+        //     1: "部署中",
+        //     2: "运行中",
+        //     3: "已停止",
+        //     4: "停止中",
+        //     5: "删除中"
+        // };
         var codes = {
             isDeleting: 5,
             isStopping: 3
