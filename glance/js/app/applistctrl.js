@@ -87,6 +87,7 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         //     4: "停止中",
         //     5: "删除中"
         // };
+        // reference link: https://github.com/Dataman-Cloud/omega-app/blob/master/docs%2Frest-api.md
         var codes = {
             isDeleting: 5,
             isStopping: 3
