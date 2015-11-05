@@ -5,7 +5,8 @@ BACKEND_URL = {
         getMe: "auth/getme",
         getCSUrl: "auth/getcsurl",
         createInvitationCodes: "auth/invitation_code/$num",
-        listUsers: "auth/user/list"
+        listUsers: "auth/user/list",
+        modifyPassword: 'auth/password/update'
         },
         
     cluster:  {
