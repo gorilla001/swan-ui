@@ -20,7 +20,8 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     $scope.getClusterMonitor = function () {
         glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: $stateParams.clusterId}], function (data) {
             cpuUsed = 0, cpuTotal = 0, memUsed = 0, memTotal = 0;
-            if (data.data && data.data.appMetrics.length) {
+            if (data.data) {
+                console.log(data.data);
                 $scope.clusterMonitors = data.data;
                 angular.forEach($scope.clusterMonitors.appMetrics, function (value, index, array) {
                     cpuUsed += value.appCpuUsed;
