@@ -1,5 +1,6 @@
 function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor) {
     $scope.node = {};
+    $scope.showCharts = false;
     $scope.getCurNode = function () {
         var showStates = ['normal', 'disconnect', 'warning', 'reset'];
         glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
@@ -22,10 +23,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.getNodeMetricData = function (nodeId) {
         glanceHttp.ajaxGet(["cluster.getNodeMonitor", {node_id: nodeId}], function(data) {
             if(data.data.length) {
-                setNodeInfos(data.data[0]);
+                $scope.nodeInfo = getNodeInfo(data.data[0]);
             }
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+            $scope.showCharts = true;
             addMetricData(data);
         });
     };
@@ -42,9 +44,12 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 if (wsTime < chartsTime) {
                     return;
                 }
-            } else {
-                setNodeInfos(data);
             }
+            var nodeInfo = getNodeInfo(data)
+            if (nodeInfo) {
+                $scope.nodeInfo = nodeInfo;
+            }
+
             nodesData.splice(0, 0, data);
             if(nodesData.length > maxNodesNumber) {
                 nodesData.pop();
@@ -54,12 +59,20 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         });
     }
 
-    function setNodeInfos(data) {
-        $scope.node.cpuNumber = data.cpuPercent.length;
-        $scope.node.osVersion = data.osVersion;
-        $scope.node.agentVersion = data.agentVersion;
-        $scope.node.memTotal = data.memTotal;
-        $scope.node.dockerVersion = data.dockerVersion;
+    function getNodeInfo(data) {
+        var nodeInfo = {};
+        var keys = ['cpuPercent', 'osVersion', 'agentVersion', 'memTotal'];
+        var key;
+        for (var i = 0; i < keys.length; i++) {
+            key = keys[i];
+            if(data[key]) {
+                nodeInfo[key] = data[key];
+            } else {
+                return false;
+            }
+        }
+        nodeInfo.cpuNumber = nodeInfo.cpuPercent.length;
+        return nodeInfo;
     }
 }
 
