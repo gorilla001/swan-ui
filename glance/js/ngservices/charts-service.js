@@ -119,7 +119,7 @@ function buildCharts(monitor) {
 
     function getCpuSeriesData(data) {
         var cpuSeriesData = [];
-        var cpuNumber = data[0].length;
+        var cpuNumber = data[data.length-1].length;
         for (var i = 0; i < cpuNumber; i++) {
             cpuSeriesData[i] = [];
             for (var j = 0; j < data.length; j++) {
@@ -156,7 +156,7 @@ function buildCharts(monitor) {
         });
 
         var seriesStyle = setSeriesStyles(indicator);
-        var seriesData = ($.isArray(yAxis[0])) ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
+        var seriesData = ($.isArray(yAxis[yAxis.length-1])) ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
         var lineNumber = 1;
         if ($.isArray(seriesData[0])) {
             lineNumber = seriesData.length;
