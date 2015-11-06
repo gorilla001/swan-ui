@@ -6,170 +6,188 @@
   </div>
 </div>
 <section class="server-detail">
-<div class="row">
-  <div class="col-md-12">
-    <div class="main-container server-detail-title">
-      <header class="clearfix">
-      <h2>
-        <a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id})">{/ node.name /}</a>
-        <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
-        <span class="label label-info" data-ng-repeat="attr in node.attributes">{/ attr.attribute /}</span>
-      </h2>
-      </header>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="main-container">
-      <div class="main-container-body server-status server-status-{/node.state/}"> 主机状态 <em data-ng-class="getClass(node.state, 'text')">{/statName[node.state]/}</em> </div>
-    </div>
-    <div class="main-container">
-      <div class="main-container-body">
-        <div class="row">
-          <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-normal.png" width="24">
-              <div>Mesos</div>
-            </div>
-          </div>
-          <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-normal.png" width="24">
-              <div>Marathon</div>
-            </div>
-          </div>
-          <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-normal.png" width="24">
-              <div>Zookeeper</div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-normal.png" width="24">
-              <div>Slave</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="main-container">
-      <div class="main-container-body">
-        <ul class="server-info" data-ng-show="nodeInfo">
-          <li>
-          <div>IP 地址</div>
-          <em>{/ node.ip /}</em> </li>
-          <li>
-          <div>所属集群</div>
-          <em><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a></em> </li>
-          <li>
-          <div>创建时间</div>
-          <em>{/ node.created_at /}</em> </li>
-          <li>
-          <div>CPU</div>
-          <em>{/ nodeInfo.cpuNumber /}<sub>核</sub></em> </li>
-          <li>
-          <div>内存</div>
-          <em>{/ unitConversion.convertMem(nodeInfo.memTotal) /}</em> </li>
-          <li>
-          <div>系统版本</div>
-          <em>{/ nodeInfo.osVersion /}</em> </li>
-          <li>
-          <div>容器版本</div>
-          <em>docker-{/ nodeInfo.dockerVersion /}</em> </li>
-          <li>
-          <div>agent版本</div>
-          <em>{/ nodeInfo.agentVersion /}</em> </li>
-          <li data-ng-show="node.updated_at">
-          <div>更新时间</div>
-          <em>{/ node.updated_at /}</em> </li>
-        </ul>
-        <div class="loading-spiner-holder" data-ng-hide="nodeInfo">
-          <div class="loading-spiner">
-            <div class="loaders">
-              <div class="loader">
-                <div class="loader-inner ball-spin-fade-loader">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-8">
-    <div class="main-container">
-      <div class="main-container-body">
-        <div class="charts-loading" data-ng-hide="showCharts">
-          <p>CPU监控</p>
-          <div class="loading-spiner-holder">
-            <div class="loading-spiner">
-              <div class="loaders">
-                <div class="loader">
-                  <div class="loader-inner ball-spin-fade-loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <p>内存监控</p>
-          <div class="loading-spiner-holder">
-            <div class="loading-spiner">
-              <div class="loaders">
-                <div class="loader">
-                  <div class="loader-inner ball-spin-fade-loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <p>磁盘监控</p>
-          <div class="loading-spiner-holder">
-            <div class="loading-spiner">
-              <div class="loaders">
-                <div class="loader">
-                  <div class="loader-inner ball-spin-fade-loader">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div data-ng-show="showCharts">
-          <div id="node-cpu-chart"></div>
-          <div id="node-memory-chart"></div>
-          <div id="node-disk-chart"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="main-container server-detail-title">
+				<header class="clearfix">
+			    <h2>
+              <a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id})">{/ node.name /}</a>
+              <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
+              <span class="label label-info" data-ng-repeat="attr in node.attributes">{/ attr.attribute /}</span>
+          </h2>
+        </header>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="main-container">
+				<div class="main-container-body server-status node-status-{/node.state/}">
+                    主机状态 <em data-ng-class="getClass(node.state)">{/statName[node.state]/}</em>
+				</div>
+			</div>
+			<div class="main-container">
+				<div class="main-container-body">
+					<div class="row">
+					
+						<div class="col-md-3" data-ng-show="isMasterFlag">
+							<div class="server-app-status">
+                                <img data-ng-src="/pics/ico-service-status-{/serviceState.mesos/}.png" width="24"/>
+								<div>Mesos</div>
+							</div>
+						</div>
+						<div class="col-md-3" data-ng-show="isMasterFlag">
+							<div class="server-app-status">
+                                <img src="/pics/ico-service-status-{/serviceState.marathon/}.png" width="24"/>
+								<div>Marathon</div>
+							</div>
+						</div>
+						<div class="col-md-3" data-ng-show="isMasterFlag">
+							<div class="server-app-status">
+                                <img src="/pics/ico-service-status-{/serviceState.zookeeper/}.png" width="24"/>
+								<div>Zookeeper</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="server-app-status" data-ng-hide="serviceState.slave === 'uninstalled'">
+                                <img src="/pics/ico-service-status-{/serviceState.slave/}.png" width="24"/>
+								<div>Slave</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main-container">
+				<div class="main-container-body">
+					<ul class="server-info" data-ng-show="nodeInfo">
+						<li>
+							<div>IP 地址</div>
+							<em>{/ node.ip /}</em>
+            </li>
+						<li>
+							<div>所属集群</div>
+							<em>
+                  <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a>
+              </em>
+            </li>
+						<li>
+							<div>创建时间</div>
+							<em>{/ node.created_at /}</em>
+            </li>
+						<li>
+							<div>CPU</div>
+							<em>{/ nodeInfo.cpuNumber /}<sub>核</sub></em>
+            </li>
+						<li>
+							<div>内存</div>
+							<em>{/ unitConversion.convertMem(nodeInfo.memTotal) /}</em>
+            </li>
+						<li>
+							<div>系统版本</div>
+							<em>{/ nodeInfo.osVersion /}</em>
+            </li>
+						<li>
+							<div>容器版本</div>
+							<em>docker-{/ nodeInfo.dockerVersion /}</em>
+            </li>
+						<li>
+							<div>agent版本</div>
+							<em>{/ nodeInfo.agentVersion /}</em>
+            </li>
+						<li data-ng-show="node.updated_at">
+							<div>更新时间</div>
+							<em>{/ node.updated_at /}</em>
+            </li>
+					</ul>
+					<div class="loading-spiner-holder" data-ng-hide="nodeInfo">
+						<div class="loading-spiner">
+							<div class="loaders">
+								<div class="loader">
+									<div class="loader-inner ball-spin-fade-loader">
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+										<div></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="main-container">
+				<div class="main-container-body">
+					<div class="charts-loading" data-ng-hide="showCharts">
+						<p>CPU监控</p>
+						<div class="loading-spiner-holder">
+							<div class="loading-spiner">
+								<div class="loaders">
+									<div class="loader">
+										<div class="loader-inner ball-spin-fade-loader">
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<p>内存监控</p>
+						<div class="loading-spiner-holder">
+							<div class="loading-spiner">
+								<div class="loaders">
+									<div class="loader">
+										<div class="loader-inner ball-spin-fade-loader">
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<p>磁盘监控</p>
+						<div class="loading-spiner-holder">
+							<div class="loading-spiner">
+								<div class="loaders">
+									<div class="loader">
+										<div class="loader-inner ball-spin-fade-loader">
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+											<div></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div data-ng-show="showCharts">
+						<div id="node-cpu-chart"></div>
+						<div id="node-memory-chart"></div>
+						<div id="node-disk-chart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 </div>

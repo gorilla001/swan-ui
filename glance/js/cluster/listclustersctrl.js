@@ -124,7 +124,7 @@ function listClustersCtrl($scope, glanceHttp) {
 
     function getSingleCluster(cluster, hideState) {
         var data = {};
-        var showStates = ['normal', 'disconnect', 'warning', 'reset'];
+        var showStates = ['running', 'terminated', 'failed', 'installing'];
         var masters = {};
         var nonMasters = {};
         if(!cluster.hideStates) {
