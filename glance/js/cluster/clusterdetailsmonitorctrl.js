@@ -1,8 +1,8 @@
-function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, $interval) {
+function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, $interval, Notification) {
     $rootScope.clusterClass = 'clusterMonitor';
     $scope.showAppMetrics = false;
     var cpuUsed = 0, cpuTotal = 0, memUsed = 0, memTotal = 0;
-    var ppp;
+    var successCycle,errorCycle;
 
     var clusterChart = echarts.init(document.getElementById('clusterMetrics'));
 
@@ -25,8 +25,12 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
                 clusterChart.setOption(option);
                 $scope.showAppMetrics = true;
             }
-            ppp = $timeout($scope.getClusterMonitor, 3000);
+            successCycle = $timeout($scope.getClusterMonitor, 3000);
 
+        },undefined, null, function (data) {
+            if(data.code === 1){
+                errorCycle = $timeout($scope.getClusterMonitor, 3000);
+            }
         });
     };
 
@@ -111,9 +115,10 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     $scope.$on('$destroy', function () {
         clusterChart.clear();
         clusterChart.dispose();
-        $timeout.cancel(ppp);
+        $timeout.cancel(successCycle);
+        $timeout.cancel(errorCycle);
     });
 }
 
-clusterMonitorCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout', '$interval'];
+clusterMonitorCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout', '$interval','Notification'];
 glanceApp.controller("clusterMonitorCtrl", clusterMonitorCtrl);
