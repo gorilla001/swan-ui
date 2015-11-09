@@ -30,7 +30,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
             $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
                 if (data["status"] == "running") {
                     $scope.isConected = true;
-                    $scope.msgstate = "您的主机连接成功!";
+                    $scope.msgstate = "主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。";
 
                 }
             });
