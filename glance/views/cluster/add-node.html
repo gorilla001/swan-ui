@@ -2,8 +2,8 @@
     <h1 class="pull-left">添加主机</h1>
 </div>
 
-<section>
-    <div class="main-container container-size-m add-node">
+<section class="add-node">
+    <div class="main-container">
         <div class="main-container-body">
             <div class="alert alert-info">
                 <h4><a href="#" ng-click="isCollapsed = !isCollapsed">在您安装主机之前，请点击查询以下条件，以确保您的环境满足下述条件：</a></h4>
@@ -19,13 +19,13 @@
                         <li>开启 iptables-nat。</li>
                     </ol>
                 </div>
-
             </div>
+		
             <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
 
                 <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
         (message_error_info.name && staticForm.name.$pristine)}">
-                    <label class="col-md-3 control-label">主机名称</label>
+                    <label class="col-md-2 control-label">主机名称</label>
 
                     <div class="col-md-8">
                         <input type="text" name="name" class="form-control" data-ng-model="form.name">
@@ -34,42 +34,66 @@
                             {/message_error_info["name"]/}</p>
                     </div>
                 </div>
-
+				
+				
+				<div class="form-group">
+					<label class="col-md-2 control-label"><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="bottom" title="Master 节点，集群中的控制节点，用于调度资源。请依照您选择的集群模式安装 master 节点数目，当您指定的 master 节点数目超过集群模式中的定义，其他节点将被作为动态节点加入集群。"></span> 主机类型</label>
+						<div class="col-md-10">
+							<div class="btn-group" data-toggle="buttons">
+							  <label class="btn btn-default btn-sm active" style="width: 100px;">
+								<input type="radio" name="options" id="option1" autocomplete="off" checked> Master
+							  </label>
+							  <label class="btn btn-default btn-sm" style="width: 100px;">
+								<input type="radio" name="options" id="option2" autocomplete="off"> Stlve
+							  </label>
+							</div>  
+							
+							<label class="checkbox-inline">
+								<input type="checkbox" id="inlineCheckbox1" value="option1"> <span data-toggle="tooltip" data-placement="top" title="动态节点，作为集群中动态可支配的资源，按照集群的使用接受master分配的各种任务。">动态节点</span>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" id="inlineCheckbox2" value="option2"> <span data-toggle="tooltip" data-placement="top" title="网关节点，将用作外部服务发现，需要此节点有固定的公网IP。">网关节点</span>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" id="inlineCheckbox3" value="option3"> <span data-toggle="tooltip" data-placement="top" title="代理节点，将用作集群内部服务发现，亦可部署应用。">代理节点</span>
+							</label>
+							<label class="checkbox-inline">
+								<input type="checkbox" id="inlineCheckbox3" value="option3"> <span data-toggle="tooltip" data-placement="top" title="数据节点，将作为集群中数据持久化的节点使用，请将数据应用部署于此类节点。">数据节点</span>
+							</label>
+					</div>
+				</div>
+				
                 <div class="form-group">
-                    <label class="col-md-3 control-label">连接主机</label>
+                    <label class="col-md-2 control-label">连接主机</label>
 
                     <div class="col-md-8" data-ng-show="nodeInstallScript">
-                        <p class="form-control-static">1. 安装 Docker
-                            <small>（主机已安装 Docker，请跳过）</small>
-                        </p>
-                        <div class="copy-code-agent">
-                            <code>curl -sSL https://get.docker.com/ | sh</code>
-                        </div>
-                        <p class="form-control-static">2. 安装 Agent</p>
-
-                        <div class="copy-code-agent">
-                            <code id="code" data-ng-bind="nodeInstallScript"></code>
-                            <button type="button" class="btn btn-default copy" title="点击复制代码"
+						<div class="copy-code-agent">
+							<h5>1. 安装 Docker <small>（主机已安装 Docker，请跳过）</small></h5>
+							<code>curl -sSL https://get.docker.com/ | sh</code>
+						</div>
+						<div class="copy-code-agent">
+                        	<h5>2. 安装 Agent
+								<button type="button" class="btn btn-primary copy" title="点击复制代码"
                                     data-clipboard-target="code" data-ng-click="isHintHide=false">
                                 <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
-                                <br>
-                                点击复制
+                                <em>点击复制</em>
                             </button>
+							</h5>
+                            <code id="code" data-ng-bind="nodeInstallScript"></code>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-
-                    <div class="col-md-8 form-control-static"
-                         data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
-                        {/msgstate/}
-                    </div>
+					<div class="col-md-8 col-md-offset-2">
+						<div data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
+							{/msgstate/}
+						</div>
+					</div>
                 </div>
 
                 <div class="form-group form-btnbar-b">
-                    <div class="col-md-offset-5">
+                    <div class="col-md-8 col-md-offset-2">
                         <button class="btn btn-primary" data-ng-disabled="staticForm.$invalid"
                                 data-ng-click="addNode()">
                             完成
@@ -84,3 +108,8 @@
         </div>
     </div>
 </section>
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
