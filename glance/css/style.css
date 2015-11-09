@@ -577,63 +577,7 @@ span.caret {
     height: 300px;
 }
 
-/* 主机详情 */
-.server-detail .main-container-body {
-	padding: 20px;
-}
-.server-detail .server-detail-title {
-	margin-bottom: 0;
-}
-.server-detail em {
-	font-style: normal;
-	font-size: 16px;
-}
-.server-detail em sub {
-	bottom: 0;
-	font-size: 60%;
-}
-.server-detail .server-info {
-	margin: 0;
-	padding: 0;
-}
-.server-detail .server-info li {
-	display: inline-block;
-	margin-right: 24px;
-	font-size: 12px;
-	color: #AAA;
-}
-.server-detail .server-info em {
-	margin-left: 6px;
-	color: #333;
-}
-.server-detail .server-status {
-	font-size: 16px;
-	color: #AAA;
-	background-size: 100px;
-	background-repeat: no-repeat;
-	background-position: right;
-}
-.server-detail .server-status-normal {
-	background-image: url(../pics/ico-service-status-normal.png);
-}
-.server-detail .server-status-disconnect {
-	background-image: url(../pics/ico-service-status-disconnect.png);
-}
-.server-detail .server-status-warning {
-	background-image: url(../pics/ico-service-status-warning.png);
-}
-.server-detail .server-status-reset {
-	background-image: url(../pics/ico-service-status-reset.png);
-}
-.server-detail .server-status em {
-	font-weight: bold;
-}
-.server-info {
-	position: relative;
-	background-color: #fff;
-}
-
-/* 添加主机 */
+/* ============ 添加主机 ============= */
 .add-node {
 	font-size: 14px;
 }
@@ -652,6 +596,12 @@ span.caret {
 }
 
 /* 主机详情 */
+.server-detail a {
+	text-decoration: underline;
+}
+.server-detail a:hover {
+	text-decoration: none;
+}
 .server-detail .main-container-body {
 	padding: 20px;
 }
@@ -660,24 +610,28 @@ span.caret {
 }
 .server-detail em {
 	font-style: normal;
-	font-size: 16px;
-}
+	font-size: 14px;
+	}
 .server-detail em sub {
 	bottom: 0;
 	font-size: 60%;
+	margin-left: 3px;
 }
 .server-detail .server-info {
 	margin: 0;
 	padding: 0;
 }
 .server-detail .server-info li {
-	display: inline-block;
-	margin-bottom: 2px;
+	margin-bottom: 12px;
 	font-size: 12px;
 	color: #AAA;
+	list-style: none;
+}
+.server-detail .server-info li div {
+	display: inline-block;
+	width: 70px;
 }
 .server-detail .server-info em {
-	margin-left: 6px;
 	color: #333;
 }
 .server-detail .server-status {
@@ -692,7 +646,7 @@ span.caret {
 }
 .server-detail .server-status-normal {
 	background-image: url(../pics/ico-service-status-normal.png);
-}
+}uba
 .server-detail .server-status-disconnect {
 	background-image: url(../pics/ico-service-status-disconnect.png);
 }
@@ -706,8 +660,11 @@ span.caret {
 	font-size: 20px;
 	font-weight: normal;
 	display: block;
-	margin-top: -4px;
+	margin-top: -2px;
 }
+
+
+
 .search-log label {
 	margin-bottom: 2px;
 }
