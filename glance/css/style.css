@@ -296,23 +296,37 @@ span.caret {
 /* 复制添加主机代码 */
 .copy-code-agent {
 	background-color: #F3F3F3;
-	padding: 10px 20px 10px 90px;
+	padding: 0;
 	vertical-align: middle;
-	position: relative;
+	margin-bottom: 20px;
+	background: linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+	background: -o-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+	background: -ms-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+	background: -moz-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+	background: -webkit-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+
+}
+.copy-code-agent h5 {
+	height: 30px;
+	line-height: 30px;
+	margin: 0;
+	padding: 0 0 0 12px;
 }
 .copy-code-agent code {
 	background-color: transparent;
+	font-size: 11px;
+	display: block;
+	padding: 12px;
 }
 .copy-code-agent button {
-	height: 100%;
-	width: 75px;
-	position: absolute;
-	left: 0;
-	top: 0;
-	font-size: 14px;
+	float: right;
+	height: 30px;
+	font-size: 12px;
+	border-radius: 0;
+	border: 0;
 }
-.copy-code-agent button span {
-	font-size: 20px;
+.copy-code-agent button em {
+	font-style: normal;
 }
 
 
@@ -323,6 +337,18 @@ span.caret {
 .create-cluster .form-control-static {
 	font-size: 14px;
 }
+.create-cluster .btn-radios .btn {
+	width: 30%;
+	margin-right: 2%;
+	white-space: normal;
+}
+.create-cluster .btn-radios .btn h2 {
+	margin-top: 12px;
+}
+.create-cluster .btn-radios .btn p {
+	font-size: 12px;
+}
+
 
 
 /* 闪烁提示 */
@@ -578,6 +604,7 @@ span.caret {
 }
 
 /* ============ 添加主机 ============= */
+/* 添加主机 */
 .add-node {
 	font-size: 14px;
 }
@@ -593,6 +620,26 @@ span.caret {
 	display: inline;
 	padding: 0 6px;
 	margin: 0 6px;
+}
+.add-node .btn-group {
+	margin-right: 20px;
+}
+.add-node .checkbox-inline {
+	font-size: 12px;
+}
+.add-node .checkbox-inline input {
+	margin-top: 1px;
+}
+.add-node .alert-info strong {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+.add-node .alert-info li {
+	margin: 0;
+	padding: 0;
+	list-style: decimal;
+	font-size: 12px;
+	margin-bottom: 3px
 }
 
 /* 主机详情 */
@@ -662,7 +709,12 @@ span.caret {
 	display: block;
 	margin-top: -2px;
 }
-
+.server-detail .server-app-status {
+	text-align: center;
+}
+.server-detail .server-app-status img {
+	margin-bottom: 5px;
+}
 
 
 .search-log label {
@@ -892,14 +944,4 @@ span.caret {
 .server-detail .server-info-instance li {
     display: block;
     margin-right: 0px;
-}
-
-.add-node .alert-info strong {
-	margin-left: 20px;
-	margin-bottom: 10px;
-}
-.add-node .alert-info li {
-	margin: 0;
-	padding: 0;
-	list-style: decimal;
 }
