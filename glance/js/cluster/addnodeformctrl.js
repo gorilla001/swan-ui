@@ -3,7 +3,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
     $scope.form = {};
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
-    $scope.addNode = function(isCon){
+    $scope.addNode = function(isCon) {
         glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"], function() {
             if (isCon) {
                 $state.reload();
