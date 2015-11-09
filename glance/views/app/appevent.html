@@ -1,7 +1,6 @@
 <div class="main-container-body">
-    <div ng-repeat="event in events">
 		<ul id="timeline">
-			<li class="work">
+			<li class="work" ng-repeat="event in events">
 				<div class="relative">
 					<span class="date">{/event.timestamp/}</span>
 					<span class="circle"></span>
@@ -16,5 +15,4 @@
 				</div>
 			</li>
 		</ul>	
-    </div>
 </div>
