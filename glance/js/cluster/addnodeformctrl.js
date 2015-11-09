@@ -1,9 +1,25 @@
 function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
     $scope.isConected = false;
     $scope.form = {};
+    $scope.attributes = [
+      { name: 'transient', selected: true },
+      { name: 'gateway', selected: false },
+      { name: 'proxy', selected: false },
+      { name: 'persistent', selected: false }
+    ];
+    $scope.attributesSelection = [];
+    $scope.selectedAttributes = function selectedAttributes() {
+        return filterFilter($scope.attributes, { selected: true });
+     };
+     $scope.$watch('attributes|filter:{selected:true}', function (nv) {
+       $scope.attributesSelection = nv.map(function (attribute) {
+         return attribute.name;
+       });
+     }, true);
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
     $scope.addNode = function(isCon) {
+        $scope.form.attributes = $scope.attributesSelection;
         glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"], function() {
             if (isCon) {
                 $state.reload();
@@ -41,5 +57,3 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
 
 addNodeFormCtrl.$inject = ["$rootScope", "$scope", "$state", "$stateParams", "glanceHttp"];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);
-
-
