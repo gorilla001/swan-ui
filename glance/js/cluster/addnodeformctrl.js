@@ -21,6 +21,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
             var cmdArray = new Array(
                 BACKEND_URL.agentConfig.installScript,
                 BACKEND_URL.agentConfig.dmHost,
+                BACKEND_URL.agentConfig.version,
                 BACKEND_URL.agentConfig.filesUrl,
                "sh -s",
                data.data.identifier
