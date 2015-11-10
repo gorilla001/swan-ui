@@ -1,16 +1,20 @@
 function LogLoader($filter, $rootScope, glanceHttp, $sce) {
     var LogLoader = function () {
         this.logs = [];
+        this.logInfo = [];
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = true;
+        this.logsId = [];
+        this.logSize = 0;
     };
 
-    LogLoader.prototype.getlogs = function () {
+    LogLoader.prototype.getlogs = function (callback) {
         if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete) return;
         this.isLoadingLogs = true;
         this.data.from = this.curLogNum;
+
         glanceHttp.ajaxBase("post",
             ["log.search", {"userId": $rootScope.userId}],
             this.data,
@@ -21,13 +25,19 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
                     (data.hits.hits[i].highlight) ? msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].highlight.msg[0]) :
                        msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].fields.msg[0]);
                     this.logs.push(msg);
+                    this.logsId.push(data.hits.hits[i]._id);
+                    this.logInfo.push(data.hits.hits[i].fields);
+
                 }
                 if (data.hits.hits.length == 0) {
                     this.isComplete = true;
                 }
-
+                this.logSize = data.hits.total;
                 this.curLogNum += data.hits.hits.length;
                 this.isLoadingLogs = false;
+                if(callback){
+                    callback(this.logSize)
+                }
             }.bind(this),
             function (data, status) {
                 if (status == 502) {
@@ -40,7 +50,10 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
         );
     };
 
-    LogLoader.prototype.searchLogs = function (searchData) {
+    LogLoader.prototype.searchLogs = function (searchData,callback) {
+        this.logs = [];
+        this.logInfo = [];
+        this.logsId = [];
         this.nodeId = searchData.nodeId;
         this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss');
         this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss');
@@ -69,11 +82,18 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
                 "timestamp": "asc"
             },
             "from": this.curLogNum,
-            "size": 20,
+            "size": function(){
+                if(searchData.size !== undefined){
+                    return searchData.size
+                }else{
+                    return 20
+                }
+            }(),
             "fields": [
                 "timestamp",
                 "msg",
-                "ip"
+                "ip",
+                "taskid"
             ],
             "highlight": {
                 "fields": {
@@ -121,7 +141,12 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
                     "ip": function () {
                         var nodesIp = [];
                         for (var i = 0; i < searchData.nodeId.length; i++) {
-                            nodesIp.push(searchData.nodeId[i].maker)
+                            if(searchData.nodeId[i].hasOwnProperty('maker')){
+                                nodesIp.push(searchData.nodeId[i].maker)
+                            }else{
+                                nodesIp.push(searchData.nodeId[i])
+                            }
+
                         }
                         return nodesIp;
                     }(),
@@ -130,12 +155,11 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
             };
             this.data.query.bool.must.push(this.nodeid_json);
         }
-        this.logs = [];
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
-        this.getlogs();
+        this.getlogs(callback);
 
     };
 
