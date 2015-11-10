@@ -3,6 +3,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     "use strict";
     $scope.node = {};
     $scope.showCharts = false;
+     $('.charts').hide();
     $scope.getCurNode = function () {
         var showStates = ['running', 'terminated', 'failed', 'installing'];
         glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
@@ -27,9 +28,12 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             if (data.data.length) {
                 $scope.nodeInfo = getNodeInfo(data.data[0]);
             }
+            $('.charts').show();
+            $scope.showCharts = true;
+
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
-            $scope.showCharts = true;
+            
             addMetricData(data);
         });
     };
