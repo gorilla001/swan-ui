@@ -8,18 +8,18 @@
         <div class="main-container">
             <div class="main-container-body">
                 <div class="row">
-                    <form class=" col-md-3" name="staticForm" data-ng-submit="clusterlogs.searchLogs(searchData)">
+                    <form class=" col-md-3" name="staticForm" data-ng-submit="getLog()">
                         <div class="form-group">
                             <label>集群名</label>
                             <select class="form-control"
                                     data-ng-options=" cluster.id as cluster.name for cluster in clusters"
-                                    data-ng-model="searchData.clusterId" data-required="required"></select>
+                                    data-ng-model="clusterId" data-required="required"></select>
                         </div>
                         <div class="form-group">
                             <label style="display: block">主机名/IP</label>
                             <isteven-multi-select
                                     input-model="inputNodesInfo"
-                                    output-model="searchData.nodeId"
+                                    output-model="nodeId"
                                     button-label="name"
                                     item-label="name maker"
                                     tick-property="ticked"
@@ -35,7 +35,7 @@
                                 <label style="display: block">起始日期: </label>
                                 <datetimepicker
                                         min-date="minDate" hour-step="hourStep"
-                                        minute-step="minuteStep" ng-model="searchData.gte" show-meridian="showMeridian"
+                                        minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
                                         date-format="yyyy-MM-dd" date-options="dateOptions"
                                         readonly-date="false"
                                         show-spinners="false"
@@ -50,7 +50,7 @@
                                 <label style="display: block">截止日期: </label>
                                 <datetimepicker
                                         min-date="minDate" hour-step="hourStep"
-                                        minute-step="minuteStep" ng-model="searchData.lte" show-meridian="showMeridian"
+                                        minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
                                         date-format="yyyy-MM-dd" date-options="dateOptions"
                                         readonly-date="false"
                                         show-spinners="false"
@@ -65,7 +65,7 @@
                             <label>应用名</label>
                             <select class="form-control"
                                     data-ng-options=" option.name as option.name for option in options"
-                                    data-ng-model="searchData.appName">
+                                    data-ng-model="appName">
                                 <option value=""></option>
                             </select>
                         </div>
@@ -75,27 +75,41 @@
                         <!--</div>-->
                         <div class="form-group">
                             <label>关键字</label>
-                            <input type="text" class="form-control input-sm" data-ng-model="searchData.logSearchKey">
+                            <input type="text" class="form-control input-sm" data-ng-model="logSearchKey">
                         </div>
                         <button type="submit" data-ng-disabled="staticForm.$invalid"
                                 class="btn btn-primary btn-sm btn-block">查询
                         </button>
                     </form>
-                    <div class="col-md-9">
+                    <div class="col-md-9" ng-hide="showContextUI">
                         <div class="log-screen">
-                            <ul class="list-unstyled" data-infinite-scroll='clusterlogs.getlogs()'
+                            <ul class="list-unstyled" data-infinite-scroll="clusterlogs.getlogs()"
                                 data-infinite-scroll-distance='0'
                                 data-infinite-scroll-disabled='clusterlogs.isLoadingLogs'
                                 data-infinite-scroll-parent='true'>
-                                <li data-ng-repeat='log in clusterlogs.logs'
-                                    data-ng-bind-html="log"></li>
+                                <li><a ng-click="getContextLog(clusterlogs.logInfo[$index],clusterlogs.logsId[$index])" href="#"
+                                       data-ng-repeat='log in clusterlogs.logs'
+                                       data-ng-bind-html="log"></a></li>
                             </ul>
                             <code data-ng-show='clusterlogs.isLoadingLogs'>数据加载中...</code>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9" ng-show="showContextUI">
+                        <div class="log-screen selected-log-list" id="contextLog">
+                            <a href="#" ng-click="returnLos()" class="btn btn-primary btn-sm hide-selected"
+                               style="position: absolute;"><span
+                                    class="glyphicon glyphicon-menu-left"></span></a>
+
+                            <ul class="list-unstyled" >
+                                <li id="{/contextlogs.logsId[$index]/}" data-ng-class="{'active': contextlogs.logsId[$index] === curId}" data-ng-repeat='logContext in contextlogs.logs'
+                                    data-ng-bind-html="logContext"></li>
+                            </ul>
+                            <code data-ng-show='contextlogs.isLoadingLogs'>数据加载中...</code>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-</div>
 </div>
