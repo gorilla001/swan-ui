@@ -6,7 +6,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     };
     $scope.setRole = function (role) {
         $scope.form.role = role;
-        if (role == "master") {
+        if (role === "master") {
             $scope.form.attributes.transient = false;
             $scope.form.attributes.gateway = true;
             $scope.form.attributes.proxy = false;
@@ -46,7 +46,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             );
             $scope.nodeInstallScript = cmdArray.join(' ');
             $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
-                if (data["status"] == "running") {
+                if (data["status"] === "running") {
                     $scope.isConected = true;
                     $scope.msgstate = "主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。";
 

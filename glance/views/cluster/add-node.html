@@ -47,9 +47,9 @@
                         <input type="radio" name="role" autocomplete="off">  Slave
                       </label>
                     </div>
-                    <div data-ng-class="{'disabled': form.role == 'master'}">
+                    <div>
                         <label class="checkbox-inline">
-                          <input type="checkbox" data-ng-model="form.attributes.transient" data-ng-disabled="form.role == 'master'" data-ng> <span data-toggle="tooltip" data-placement="top" title="动态节点，作为集群中动态可支配的资源，按照集群的使用接受master分配的各种任务。">动态节点</span>
+                          <input type="checkbox" data-ng-model="form.attributes.transient"> <span data-toggle="tooltip" data-placement="top" title="动态节点，作为集群中动态可支配的资源，按照集群的使用接受master分配的各种任务。">动态节点</span>
                         </label>
                     </div>
                     <div>
