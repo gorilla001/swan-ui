@@ -4,19 +4,13 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     $scope.clusterNames = [];
     
     $scope.statName = {
-        "normal": "正常",
-        "disconnect": "失联",
-        "warning": "预警",
-        "reset": "初始化"
+        "running": "正常",
+        "terminated": "失联",
+        "failed": "预警",
+        "installing": "初始化"
     };
 
-    $scope.serviceState = {
-        'marathon': "未知",
-        'mesos': "未知",
-        'zookeeper':"未知",
-        'slave':"未知",
-        'master_type':"1 master"
-    };
+    $scope.serviceState = {};
 
     $scope.delCluster = function (clusterId) {
         $scope.myConfirm("您确定要删除集群吗？", function () {
@@ -26,36 +20,14 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
         });
     };
 
-    $scope.getClass = function(status, classKey) {
-        var statusObj = {
-            normal: ['running', 'normal'],
-            offNormal: ['terminated', 'disconnect', 'failed']
-        };
+    $scope.getClass = function(status) {
         var classes = {
-            ui: {
-                normal: 'ico-status ico-status-normal',
-                offNormal: 'ico-status ico-status-disconnect',
-                others: 'ico-status ico-status-warning'
-            },
-            logo: {
-               normal:  'glyphicon glyphicon-ok',
-               offNormal: 'glyphicon glyphicon-remove',
-               others: 'glyphicon glyphicon-bell'
-            },
-            text: {
-                normal: 'text-success',
-                offNormal: 'text-danger',
-                others: 'text-warning'
-            }
+            'running': 'text-success',
+            'terminated': 'text-danger',
+            'failed': 'text-danger',
+            'installing': 'text-danger'
         };
-
-        if (statusObj.normal.indexOf(status) > -1) {
-            return classes[classKey].normal;
-        } else if (statusObj.offNormal.indexOf(status) > -1) {
-            return classes[classKey].offNormal;
-        } else {
-            return classes[classKey].others;
-        }
+        return classes[status];
     };
 
     $scope.getIsMaster = function(node) {
@@ -111,15 +83,14 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     $scope.getSeriveState = function (nodeServices) {
         for (var i = 0; i < nodeServices.length; i++) {
             if (nodeServices[i].name === "marathon") {
-                $scope.serviceState.marathon = nodeServices[i].status
+                $scope.serviceState.marathon = nodeServices[i].status;
             } else if (nodeServices[i].name === "master") {
-                $scope.serviceState.mesos = nodeServices[i].status
+                $scope.serviceState.mesos = nodeServices[i].status;
             } else if (nodeServices[i].name === "zookeeper") {
-                $scope.serviceState.zookeeper = nodeServices[i].status
+                $scope.serviceState.zookeeper = nodeServices[i].status;
             } else if (nodeServices[i].name === "slave") {
-                $scope.serviceState.slave = nodeServices[i].status
+                $scope.serviceState.slave = nodeServices[i].status;
             }
-
         }
     };
 

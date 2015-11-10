@@ -538,17 +538,17 @@ a.remove {
 	margin-right: 34px;
 	color: #4A4A4A;
 }
-.cluster-service-status-number li.normal a {
-	background-image: url(../pics/ico-service-status-normal.png);
+.cluster-service-status-number li.running a {
+	background-image: url(../pics/ico-node-status-running.png);
 }
-.cluster-service-status-number li.disconnect a {
-	background-image: url(../pics/ico-service-status-disconnect.png);
+.cluster-service-status-number li.terminated a {
+	background-image: url(../pics/ico-node-status-terminated.png);
 }
-.cluster-service-status-number li.warning a {
-	background-image: url(../pics/ico-service-status-warning.png);
+.cluster-service-status-number li.failed a {
+	background-image: url(../pics/ico-node-status-failed.png);
 }
-.cluster-service-status-number li.reset a {
-	background-image: url(../pics/ico-service-status-reset.png);
+.cluster-service-status-number li.installing a {
+	background-image: url(../pics/ico-node-status-installing.png);
 }
 .cluster-service-status-number li.unselected {
 	filter: alpha(opacity=40);
@@ -714,17 +714,17 @@ a.remove {
 	padding-top: 10px;
 	overflow: hidden;
 }
-.server-detail .server-status-normal {
-	background-image: url(../pics/ico-service-status-normal.png);
-}uba
-.server-detail .server-status-disconnect {
-	background-image: url(../pics/ico-service-status-disconnect.png);
+.server-detail .node-status-running {
+	background-image: url(../pics/ico-node-status-running.png);
 }
-.server-detail .server-status-warning {
-	background-image: url(../pics/ico-service-status-warning.png);
+.server-detail .node-status-terminated {
+	background-image: url(../pics/ico-node-status-terminated.png);
 }
-.server-detail .server-status-reset {
-	background-image: url(../pics/ico-service-status-reset.png);
+.server-detail .node-status-failed {
+	background-image: url(../pics/ico-node-status-failed.png);
+}
+.server-detail .node-status-installing {
+	background-image: url(../pics/ico-node-status-installing.png);
 }
 .server-detail .server-status em {
 	font-size: 20px;

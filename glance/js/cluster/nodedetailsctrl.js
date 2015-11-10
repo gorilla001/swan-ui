@@ -4,7 +4,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.node = {};
     $scope.showCharts = false;
     $scope.getCurNode = function () {
-        var showStates = ['normal', 'disconnect', 'warning', 'reset'];
+        var showStates = ['running', 'terminated', 'failed', 'installing'];
         glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
             $scope.node.state = $scope.getNodeState($scope.node, showStates);

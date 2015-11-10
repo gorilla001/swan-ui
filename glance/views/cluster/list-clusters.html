@@ -28,44 +28,44 @@
         <div class="main-container-body">
             <div data-ng-show="cluster.amounts.total">
                 <ul class="cluster-service-status-number">
-                    <li class="normal {/cluster.classes.normal/}" data-ng-show="cluster.amounts.normal">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'normal')" href="#">
-                            正常主机 <span>{/cluster.amounts.normal/}</span>
+                    <li class="running {/cluster.classes.running/}" data-ng-show="cluster.amounts.running">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'running')" href="#">
+                            正常主机 <span>{/cluster.amounts.running/}</span>
                         </a>
                     </li>
-                    <li class="disconnect {/cluster.classes.disconnect/}" data-ng-show="cluster.amounts.disconnect">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'disconnect')" href="#">    失联主机 <span>{/cluster.amounts.disconnect/}</span>
+                    <li class="terminated {/cluster.classes.terminated/}" data-ng-show="cluster.amounts.terminated">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'terminated')" href="#">    失联主机 <span>{/cluster.amounts.terminated/}</span>
                         </a>
                     </li>
-                    <li class="warning {/cluster.classes.warning/}" data-ng-show="cluster.amounts.warning">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'warning')" href="#">
-                            报警主机 <span>{/cluster.amounts.warning/}</span>
+                    <li class="failed {/cluster.classes.failed/}" data-ng-show="cluster.amounts.failed">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'failed')" href="#">
+                            报警主机 <span>{/cluster.amounts.failed/}</span>
                         </a>
                     </li>
-                    <li class="reset {/cluster.classes.reset/}" data-ng-show="cluster.amounts.reset">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'reset')" href="#">
-                            初始化主机 <span>{/cluster.amounts.reset/}</span>
+                    <li class="installing {/cluster.classes.installing/}" data-ng-show="cluster.amounts.installing">
+                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'installing')" href="#">
+                            初始化主机 <span>{/cluster.amounts.installing/}</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
                     <li data-ng-repeat="master in cluster.allMasters">
                         <a data-toggle="tooltip" title="{/master.name/} [{/master.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
-                            <img data-ng-src="/pics/service-master-status-{/master.showState/}.png"/>
+                            <img data-ng-src="/pics/node-master-status-{/master.showState/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
                     <li data-ng-repeat="node in cluster.firstNon">
                         <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
-                            <img data-ng-src="/pics/service-status-{/node.showState/}.png"/>
+                            <img data-ng-src="/pics/node-status-{/node.showState/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.basicInfos.showMore" data-ng-repeat="nonMasters in cluster.followingNon">
                     <li data-ng-repeat="node in nonMasters"> 
                         <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
-                            <img data-ng-src="/pics/service-status-{/node.showState/}.png"/>
+                            <img data-ng-src="/pics/node-status-{/node.showState/}.png"/>
                         </a>
                     </li>
                 </ul>
