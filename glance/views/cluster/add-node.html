@@ -74,12 +74,12 @@
                       <div class="copy-code-agent">
                         <h5>2. 安装 Agent
                           <button type="button" class="btn btn-primary copy" title="点击复制代码"
-                            data-clipboard-target="code" data-ng-click="isHintHide=false">
+                            data-clipboard-target="code" data-ng-click="clickToCopy()">
                             <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
                             <em>点击复制</em>
                           </button>
                         </h5>
-                        <code id="code" data-ng-bind="nodeInstallScript"></code>
+                        <code id="code" data-ng-bind="nodeInstallScript" data-ng-show="afterCopy"></code>
                       </div>
                     </div>
                   </div>
