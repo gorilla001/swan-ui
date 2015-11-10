@@ -1,8 +1,24 @@
 function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification) {
     $scope.isConected = false;
     $scope.form = {
-      attributes: {'transient': true}
+      attributes: {'transient': true},
+      role: 'slave'
     };
+    $scope.setRole = function (role) {
+        $scope.form.role = role;
+        if (role == "master") {
+            $scope.form.attributes.transient = false;
+            $scope.form.attributes.gateway = true;
+            $scope.form.attributes.proxy = false;
+            $scope.form.attributes.persistent = false;
+        } else {
+            $scope.form.attributes.transient = true;
+            $scope.form.attributes.gateway = false;
+            $scope.form.attributes.proxy = false;
+            $scope.form.attributes.persistent = false;
+        }
+            
+    }
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
     $scope.addNode = function(isCon) {
