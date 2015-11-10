@@ -17,49 +17,27 @@
       </div>
 
       <div class="form-group">
-        <label  class="col-md-2 control-label">集群规模</label>
+        <label class="col-md-2 control-label">集群规模</label>
         <div class="col-md-8">
-          <select class="form-control" data-ng-model="form.clusterType">
-            <option value="1_master">1个 Master</option>
-            <option value="3_masters">3个 Master</option>
-            <option value="5_masters">5个 Master</option>
-          </select>
-          <div>
-            </br>
-            <p><small>1 master, 开发环境使用， 适合6台主机以内使用。</small></p>
-            <p><small>3 master, 基础生产环境使用，适合30台主机以内使用。</small></p>
-            <p><small>5 master, 高容错级生产环境使用，适合30台主机以上使用。</small></p>
+          <div data-toggle="buttons" class="btn-radios">
+            <div class="btn btn-default active" data-ng-click="form.clusterType='1_master'">
+              <input type="radio" name="clusterType" autocomplete="off" value="1_master" data-ng-model="form.clusterType">
+              <h2>初级版</h2>
+              <p>1 Master，<br>开发环境使用，<br>适合6台主机以内使用。</p>
+            </div>
+            <div class="btn btn-default" data-ng-click="form.clusterType='3_masters'">
+              <input type="radio" name="clusterType" autocomplete="off" value="3_masters" data-ng-model="form.clusterType">
+              <h2>高级版</h2>
+              <p>3 Masters，<br>基础生产环境使用，<br>适合30台主机以内使用。</p>
+            </div>
+            <div class="btn btn-default" data-ng-click="form.clusterType='5_masters'">
+              <input type="radio" name="clusterType" autocomplete="off" value="5_masters" data-ng-model="form.clusterType">
+              <h2>企业版</h2>
+              <p>5 Masters，<br>高容错级生产环境使用，<br>适合30台主机以上使用。</p>
+            </div>
           </div>
         </div>
       </div>
-		
-		<div class="form-group">
-			<label for="inputPassword3" class="col-md-2 control-label">集群规模</label>
-			<div class="col-md-8">
-				
-				<div data-toggle="buttons" class="btn-radios">							
-				  <div class="btn btn-default active">
-					<input type="radio" id="option1" autocomplete="off" checked> 
-					<h2>初级版</h2>
-					<p>1 master，<br>开发环境使用，<br>适合6台主机以内使用。</p>
-				  </div>
-				  <div class="btn btn-default">
-					<input type="radio" id="option2" autocomplete="off"> 
-					<h2>高级版</h2>
-					<p>3 Master，<br>基础生产环境使用，<br>适合30台主机以内使用。</p>
-				  </div>
-				  <div class="btn btn-default">
-					<input type="radio" id="option3" autocomplete="off"> 
-					<h2>企业版</h2>
-					<p>5 Master，<br>高容错级生产环境使用，<br>适合30台主机以上使用。</p>
-				  </div>
-				</div>
-				
-			</div>
-		  </div>
-		
-		
-		
       <div class="form-group form-btnbar-b">
         <div class="col-sm-offset-2 col-md-10">
           <button class="btn btn-primary" data-ng-click="createCluster()"  data-ng-disabled="staticForm.$invalid">完成</button>
