@@ -2,12 +2,12 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     $rootScope.show = "cluster";
 
     $scope.clusterNames = [];
-    
+
     $scope.statName = {
-        "running": "正常",
-        "terminated": "失联",
-        "failed": "预警",
-        "installing": "初始化"
+        "running": "运行正常",
+        "terminated": "主机失联",
+        "failed": "主机预警",
+        "installing": "主机初始化中"
     };
 
     $scope.serviceState = {};
