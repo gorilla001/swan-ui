@@ -1,4 +1,4 @@
-function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
+function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification) {
     $scope.isConected = false;
     $scope.form = {
       attributes: {'transient': true}
@@ -39,7 +39,16 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp) {
         });
     };
     init();
+
+    $scope.clickToCopy = function() {
+      $scope.isHintHide = false;
+      $scope.afterCopy = true;
+      glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"]);
+      Notification.success('复制成功');
+    }
+
+
 }
 
-addNodeFormCtrl.$inject = ["$rootScope", "$scope", "$state", "$stateParams", "glanceHttp"];
+addNodeFormCtrl.$inject = ["$rootScope", "$scope", "$state", "$stateParams", "glanceHttp", "Notification"];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);
