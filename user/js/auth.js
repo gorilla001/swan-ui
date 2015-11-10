@@ -121,8 +121,7 @@ $(document).ready(function(){
     function login(url, postData) {
         ajaxReq(url, 'post', postData).success(function(data) {
             if (data && data.code === 0) {
-                docCookies.setItem('token', '\"' + data.data.token + '\"');
-                //docCookies.setItem('token', '\"' + data.data.token + '\"', undefined, '/', CONFIG.urls.domainUrl, undefined);
+                docCookies.setItem('token', '\"' + data.data.token + '\"', undefined, '/', CONFIG.urls.domainUrl, undefined);
                 window.location.href = CONFIG.urls.redirectUrl;
             } else if (data && data.code === 5) {
                 var modalChangeData = {
@@ -136,21 +135,35 @@ $(document).ready(function(){
                 changeModal(modalChangeData);
                 textMailJump('.active-button', textMailData, goToMailBox);
 
-                var sendActiveMailAgainData = {
-                    email: postData.email,
-                    url: todo
+                var sendActiveMailUrl = CONFIG.urls.baseUrl + CONFIG.urls.activeMailUrl;
+                var sendActiveMailPostData = {
+                    email: postData.email
                 };
 
-                $('.send-mail-again').on('click', sendActiveMailAgainData, function(e) {
+                //重新发送激活邮件
+                $('.send-mail-again').on('click',function(e) {
                     e.preventDefault();
-                    ajaxReq(url, type, data).success(function(data) {
-                        //TODO
-                        //重新发送激活邮件接口
-                        //发送成功是否需要提示
+                    ajaxReq(sendActiveMailUrl, 'post', sendActiveMailPostData).success(function(data) {
+                        if (data && data.code === 0) {
+                            var modalChangeData = {
+                                hideDom: '#not-yet-active',
+                                showDom: '#relative-success',
+                                tipDom: '.success-tips',
+                                tipText:  '发送成功！'
+                            };
+                            var textMailData = {
+                                text: '登录邮箱',
+                                mail: postData.email,
+                                dom: '#relative-success'
+                            };
+                            changeModal(modalChangeData);
+                            textMailJump('.success-click-button', textMailData, goToMailBox);
+                        } else if (data && data.code === 1) {
+                            $('#send-active-mail-error').text(dataError(data));
+                        }
                     }).error(function() {
                         interfaceError('#send-active-mail-error');
                     });
-
                 });
             } else {
                 $('#login-error').text('用户名或密码错误');
@@ -339,6 +352,10 @@ $(document).ready(function(){
             ajaxReq(url, 'get').success(function(data) {
                 if(data && data.code === 0) {
                     $(result.dom).modal('show');
+                    if (result.key === 'active') {
+                        $('.success-tips').text('激活成功');
+                        $('.success-click-button').text('立即登录数人云');
+                    }
                 } else if (data && data.code === 1){
                     $('#relative-error').modal('show');
                     $('.text-danger').text(dataError(data));
