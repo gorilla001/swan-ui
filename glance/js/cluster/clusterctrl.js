@@ -10,13 +10,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
         "installing": "初始化"
     };
 
-    $scope.serviceState = {
-        'marathon': "未知",
-        'mesos': "未知",
-        'zookeeper':"未知",
-        'slave':"未知",
-        'master_type':"1 master"
-    };
+    $scope.serviceState = {};
 
     $scope.delCluster = function (clusterId) {
         $scope.myConfirm("您确定要删除集群吗？", function () {
@@ -89,13 +83,13 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     $scope.getSeriveState = function (nodeServices) {
         for (var i = 0; i < nodeServices.length; i++) {
             if (nodeServices[i].name === "marathon") {
-                $scope.serviceState.marathon = nodeServices[i].status
+                $scope.serviceState.marathon = nodeServices[i].status;
             } else if (nodeServices[i].name === "master") {
-                $scope.serviceState.mesos = nodeServices[i].status
+                $scope.serviceState.mesos = nodeServices[i].status;
             } else if (nodeServices[i].name === "zookeeper") {
-                $scope.serviceState.zookeeper = nodeServices[i].status
+                $scope.serviceState.zookeeper = nodeServices[i].status;
             } else if (nodeServices[i].name === "slave") {
-                $scope.serviceState.slave = nodeServices[i].status
+                $scope.serviceState.slave = nodeServices[i].status;
             }
         }
     };
