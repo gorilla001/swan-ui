@@ -10,13 +10,6 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
         "reset": "初始化"
     };
 
-    $scope.serviceStateShow = {
-        "running": "运行正常",
-        "installing":"安装中",
-        "failed":"失败",
-        "uninstalled":"未安装"
-    };
-
     $scope.serviceState = {
         'marathon': "未知",
         'mesos': "未知",
