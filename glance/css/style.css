@@ -279,17 +279,40 @@ a.remove {
 	min-height: 300px;
 	max-height: 400px;
 	overflow-y: scroll;
+	overflow-x: scroll;
 }
 .log-screen code {
 	background-color: transparent;
 	color: #FFF;
+	padding: 0;
 }
-
-span.multiSelect > button {
-    width: 100%;
+.log-screen ul {
+	padding: 0;
 }
-span.caret {
-    right: 0px;
+.log-screen li {
+	list-style: none;
+}
+.log-screen li a {
+	display: block;
+	padding: 10px 40px 10px 10px;
+	color: #DDD;
+}
+.log-screen li a:hover, .log-screen li a:active {
+	background: rgba(52,152,219,0.4) url(../pics/arrow-right.png) right no-repeat;
+	text-decoration: none;
+	color: #FFF;
+}
+.log-screen li a:focus {
+	text-decoration: none;
+}
+.selected-log-list li {
+	padding: 10px 10px 10px 50px;
+	color: #DDD;
+}
+.selected-log-list li.active {
+	font-size: 13px;
+	background: rgba(52, 152, 219, 0.4);
+	color: #FFF;
 }
 
 
