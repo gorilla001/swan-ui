@@ -14,7 +14,6 @@
         <!--endbuild-->
     </head>
     <body>
-
         <div class="cloud-bg">
         	<nav class="navbar sr-nav">
         		<div class="container">
@@ -31,7 +30,7 @@
                     </div>
         			<div class="collapse navbar-collapse" id="sr-navbar-collapse">
         				<form class="navbar-form navbar-right">
-        	                <button class="btn login-button" type="button" data-toggle="modal" data-target="#login-in">登录</button>
+        	                <button class="btn login-button" type="button" data-toggle="modal" data-target="#login">登录</button>
                             <button class="btn register-button" type="button" data-toggle="modal" data-target="#register">注册</button>
         				</form>
         			</div>
@@ -75,53 +74,20 @@
         	</div>
         </footer>
 
-        <div class="modal fade" id="login-in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-						<img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-
-                    <div class="modal-body">
-                        <form role="form" class="loginInForm">
-							<h2>请登录数人云账户</h2>
-							<div class="notification help-block with-errors custom-errors" id="login-error"></div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="login-in-email" name="login-in-mail" data-username="true" required="required" placeholder="邮箱地址" />
-                            </div>
-
-                            <div class="form-group password-input">
-                                <input type="password" class="form-control" id="login-in-password" name="login-in-password" required="required" placeholder="密码" />
-                                <a href="#" title="忘记密码" data-dismiss="modal" data-toggle="modal" data-target="#reset-mail"><span class="glyphicon glyphicon-question-sign"></span></a>
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
-                            </div>
-                        </form>
-						<div class="switch">
-                            还没有账号？<a data-dismiss="modal" data-toggle="modal" data-target="#register">立即注册</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- 注册页面 -->
         <div class="modal fade modal-register" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-						<img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
 
                     <div class="modal-body">
                         <form role="form" class="registerForm">
-							<h2>请填写注册信息</h2>
-							<div class="notification help-block with-errors custom-errors" id="register-error"></div>
+                            <h2>请填写注册信息</h2>
+                            <div class="notification help-block with-errors custom-errors" id="register-error"></div>
                             <div class="form-group has-feedback">
                                 <input type="email" class="form-control" id="register-email" data-username="true" name="register-mail" required="required" placeholder="邮箱地址" />
                             </div>
@@ -131,7 +97,7 @@
                             </div>
 
                             <div class="form-group has-feedback">
-                                <input type="password" class="form-control" data-minlength="8" id="register-password" data-maxlength="16" data-password="true" name="register-password" required="required" placeholder="输入密码" />
+                                <input type="password" class="form-control" id="register-password" data-passwordtips="true" data-passwordmin="8" data-maxlength="16" data-passwordrule="true" name="register-password" required="required" placeholder="输入密码" />
                             </div>
 
                             <div class="form-group has-feedback">
@@ -142,34 +108,53 @@
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">注册</button>
                             </div>
                         </form>
-						<div class="switch">已经有了账号?<a data-dismiss="modal" data-toggle="modal" data-target="#login-in">立即登录</a></div>
+                        <div class="switch">
+                            已经有了账号？
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#login">立即登录</a>
+                        </div>
                     </div>
                     
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="register-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 登录页面 -->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
 
                     <div class="modal-body">
-                        <form role="form">
-                            <h2 class="text-success">注册成功！</h2>
+                        <form role="form" class="loginForm">
+							<h2>请登录数人云账户</h2>
+							<div class="notification help-block with-errors custom-errors" id="login-error"></div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">登录邮箱</button>
+                                <input type="email" class="form-control" id="login-email" name="login-mail" data-username="true" required="required" placeholder="邮箱地址" />
+                            </div>
+
+                            <div class="form-group password-input">
+                                <input type="password" class="form-control" id="login-password" name="login-password" required="required" placeholder="密码" />
+                                <a href="#" title="忘记密码" data-dismiss="modal" data-toggle="modal" data-target="#reset-mail"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
                             </div>
                         </form>
+						<div class="switch">
+                            还没有账号？
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#register">立即注册</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- 重置密码邮箱 -->
         <div class="modal fade" id="reset-mail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -196,6 +181,7 @@
             </div>
         </div>
 
+        <!-- 重置密码提示 -->
         <div class="modal fade" id="reset-tips" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -210,13 +196,13 @@
                             <h2>
                                 密码重置链接已发送至邮箱
                                 </br>
-                                <span class="jump-mail text-success"></span>
+                                <span class="text-success"></span>
                                 </br>
                                 请尽快更新密码。
                             </h2>
                             
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary btn-block">登录邮箱</button>
+                                <button class="btn btn-lg btn-primary btn-block go-to-mailbox"></button>
                             </div>
                         </form>
                     </div>
@@ -224,10 +210,10 @@
             </div>
         </div>
 
+        <!-- 重置密码密码 -->
         <div class="modal fade" id="reset-password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                     <div class="modal-header">
                         <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -237,11 +223,12 @@
                         <form role="form" class="resetPasswordForm">
                             <h2>请输入密码</h2>
                             <div class="notification help-block with-errors custom-errors" id="reset-password-error"></div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="new-password" name="reset-password" data-minlength="8" data-maxlength="16" data-password="true" required="required" placeholder="新密码" />
+
+                            <div class="form-group has-feedback">
+                                <input type="password" class="form-control" id="new-password" name="reset-password" data-passwordtips="true" data-passwordmin="8" data-maxlength="16" data-passwordrule="true" name="register-password" required="required" placeholder="新密码" />
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group has-feedback">
                                 <input type="password" class="form-control" id="new-password-compare" data-match="#new-password" data-match-error="两次输入密码不一致" required="required" placeholder="请重复密码" />
                             </div>
 
@@ -250,35 +237,41 @@
                             </div>
                         </form>
                         <div class="switch">
-                            <a data-dismiss="modal" data-toggle="modal" data-target="#login-in">返回登录</a>
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#login">返回登录</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="reset-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 激活提示 -->
+        <div class="modal fade" id="not-yet-active" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-
                     <div class="modal-header">
                         <img src="pics/dataman-logo-icon-landing.svg" height="43" style="opacity:0.6; filter:alpha(opacity=60);">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
 
                     <div class="modal-body">
-                        <form role="form" class="resetSuccessForm">
-                            <h2 class="text-success">密码重置成功！</h2>
+                        <form role="form">
+                            <h2>您的账户<span class="text-danger">尚未激活</span>，<br>请激活后再尝试登录。</h2>
+                            <div class="notification help-block with-errors custom-errors" id="send-active-mail-error"></div>
                             <div class="form-group">
-                                <button class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
+                                <button class="btn btn-lg btn-primary btn-block active-button">前往邮箱激活</button>
                             </div>
                         </form>
+                        <div class="switch">
+                            没有收到激活邮件？
+                            <a class="send-mail-again">重新发送</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade" id="active-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <!-- 正确提示 -->
+        <div class="modal fade" id="relative-success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -289,9 +282,9 @@
 
                     <div class="modal-body">
                         <form role="form">
-                            <h2 class="text-success">激活成功！</h2>
+                            <h2 class="success-tips text-success"></h2>
                             <div class="form-group">
-                                <button class="btn btn-lg btn-primary btn-block" data-target="#login-in">立即登录数人云</button>
+                                <button class="btn btn-lg btn-primary btn-block success-click-button"></button>
                             </div>
                         </form>
                     </div>
@@ -299,6 +292,7 @@
             </div>
         </div>
 
+        <!-- 错误提示 -->
         <div class="modal fade" id="relative-error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -310,13 +304,15 @@
 
                     <div class="modal-body">
                         <form role="form">
-                            <h2 class="text-tips"></h2>
+                            <h2 class="error-tips text-danger"></h2>
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-primary btn-block error-click-button"></button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        
 
         <div id="browserType" class="alert alert-warning alert-dismissible browser-alert" role="alert" hidden="hidden">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
