@@ -12,12 +12,22 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
 
     $scope.serviceState = {};
     
+    $scope.deleteCluster = function(clusterId, name) {
+        $('#confirmDeleteCluster').hide();
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        glanceHttp.ajaxGet(['cluster.delCluster', {cluster_id: clusterId}], function () {
+            Notification.success('集群' + name + '删除成功');
+            $state.go("cluster.listclusters", null, {reload: true});
+        });
+    }
+
     $scope.upgradeAgent = function (clusterId) {
         glanceHttp.ajaxPost(['cluster.updateCluster'], {"id": clusterId, "isUpdateAgent": true}, function() {
             Notification.success("设置升级集群agent成功")
         });
     }
-    
+
     $scope.getClass = function(status) {
         var classes = {
             'running': 'text-success',
