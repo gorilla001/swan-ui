@@ -37,8 +37,9 @@
 
 
                 <div class="form-group">
-                  <label class="col-md-2 control-label"><span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="bottom" title="Master 节点，集群中的控制节点，用于调度资源。请依照您选择的集群模式安装 master 节点数目，当您指定的 master 节点数目超过集群模式中的定义，其他节点将被作为动态节点加入集群。"></span> 主机类型</label>
+                  <label class="col-md-2 control-label"><span data-toggle="tooltip" data-placement="bottom" title="请在选择主机类型时认真阅读其定义，系统将依据主机类型来决定在该主机上运行何种应用，以及是否作为服务发现节点。"><span class="glyphicon glyphicon-info-sign"></span> 主机类型</span></label>
                   <div class="col-md-10">
+                    <!--
                     <div class="btn-group" data-toggle="buttons">
                       <label class="btn btn-default btn-sm active" style="width: 100px;">
                         <input type="radio" name="options" id="option1" autocomplete="off" checked> Master
@@ -46,18 +47,18 @@
                       <label class="btn btn-default btn-sm" style="width: 100px;">
                         <input type="radio" name="options" id="option2" autocomplete="off"> Slave
                       </label>
-                    </div>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" data-ng-model="form.attributes.transient"> <span data-toggle="tooltip" data-placement="top" title="动态节点，作为集群中动态可支配的资源，按照集群的使用接受master分配的各种任务。">动态节点</span>
+                    </div>-->
+                    <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="作为集群中动态可支配的资源，运行各种无状态应用。在集群规模为 3/5 Masters 时，首先加入集群的 3/5 Masters 节点不支持作为动态节点来运行无状态应用。">
+                      <input type="checkbox" data-ng-model="form.attributes.transient"> <span>动态节点</span>
                     </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" data-ng-model="form.attributes.gateway"> <span data-toggle="tooltip" data-placement="top" title="网关节点，将用作外部服务发现，需要此节点有固定的公网IP。">网关节点</span>
+                    <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将用作集群外部服务发现，需要此节点有固定的公网 IP。">
+                      <input type="checkbox" data-ng-model="form.attributes.gateway"> <span>网关节点</span>
                     </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" data-ng-model="form.attributes.proxy"> <span data-toggle="tooltip" data-placement="top" title="代理节点，将用作集群内部服务发现，亦可部署应用。">代理节点</span>
+                    <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将用作集群内部服务发现。">
+                      <input type="checkbox" data-ng-model="form.attributes.proxy"> <span>代理节点</span>
                     </label>
-                    <label class="checkbox-inline">
-                      <input type="checkbox" data-ng-model="form.attributes.persistent"> <span data-toggle="tooltip" data-placement="top" title="数据节点，将作为集群中数据持久化的节点使用，请将数据应用部署于此类节点。">数据节点</span>
+                    <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将作为集群中数据持久化的节点使用，请将有状态应用(MySQL, Redis等)部署于此类节点。">
+                      <input type="checkbox" data-ng-model="form.attributes.persistent"> <span>数据节点</span>
                     </label>
                   </div>
                 </div>
