@@ -1,4 +1,4 @@
-function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
+function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     $rootScope.show = "cluster";
 
     $scope.clusterNames = [];
@@ -19,6 +19,12 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
             });
         });
     };
+    
+    $scope.upgradeAgent = function (clusterId) {
+        glanceHttp.ajaxPost(['cluster.updateCluster'], {"id": clusterId, "isUpdateAgent": true}, function() {
+            Notification.success("设置升级集群agent成功")
+        });
+    }
 
     $scope.getClass = function(status) {
         var classes = {
@@ -156,5 +162,5 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp) {
     }
 }
 
-clusterCtrl.$inject = ["$scope", "$state", "$rootScope", "glanceHttp"];
+clusterCtrl.$inject = ["$scope", "$state", "$rootScope", "glanceHttp", 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);

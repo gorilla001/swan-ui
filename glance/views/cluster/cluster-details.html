@@ -22,6 +22,9 @@
         <li>
         <a href="#" data-ng-click="delCluster(cluster.id)">删除集群</a>
         </li>
+        <li data-ng-show="!cluster.is_agent_latest">
+            <a href="#" data-ng-click="upgradeAgent(cluster.id)">升级agent</a>
+        </li>
       </ul>
     </div>
   </div>

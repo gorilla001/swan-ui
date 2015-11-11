@@ -19,6 +19,7 @@
                             <th>名称</th>
                             <th>IP地址</th>
                             <th>运行状态</th>
+                            <th>agent版本</th>
                             <th>创建时间</th>
                             <th>更新时间</th>
                         </tr>
@@ -39,6 +40,8 @@
                             <td>
                                 <img data-ng-src="../pics/ico-node-status-{/node.showState/}.png" width="16"> {/statName[node.showState]/}
                             </td>
+                            <td>
+                                {/ node.agent_version/}
                             </td>
                             <td>
                                 {/ node.created_at /}
