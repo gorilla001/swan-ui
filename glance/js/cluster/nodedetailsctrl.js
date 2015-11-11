@@ -3,12 +3,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     "use strict";
     $scope.node = {};
     $scope.showCharts = false;
-     $('.charts').hide();
+    $('.charts').hide();
     $scope.getCurNode = function () {
-        var showStates = ['running', 'terminated', 'failed', 'installing'];
         glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
-            $scope.node.state = $scope.getNodeState($scope.node, showStates);
+            $scope.node.state = $scope.getNodeState($scope.node);
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.getSeriveState($scope.node.services);
         });

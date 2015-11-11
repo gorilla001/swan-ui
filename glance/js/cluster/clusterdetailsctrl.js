@@ -1,7 +1,6 @@
 function clusterDetailsCtrl($scope, $stateParams, glanceHttp) {
 
     function getCurCluster() {
-        var showStates = ['running', 'terminated', 'failed', 'installing'];
         glanceHttp.ajaxGet(["cluster.getCluster", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
             $scope.serviceState.master_type = $scope.cluster.cluster_type;
@@ -10,7 +9,7 @@ function clusterDetailsCtrl($scope, $stateParams, glanceHttp) {
             $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
 
             $scope.currentPage = 1;
-            var groupsWithState = $scope.groupMasterWithState($scope.cluster.nodes, showStates);
+            var groupsWithState = $scope.groupMasterWithState($scope.cluster.nodes);
             $scope.contentPage = [];
             $.each(groupsWithState, function(key, val) {
                 $scope.contentPage = $scope.contentPage.concat($scope.concatObjtoArr(val));

@@ -24,10 +24,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         });
     };
 
-    function countNodesAmount(nodes, showStates) {
+    function countNodesAmount(nodes) {
         var amounts = {};
         amounts.total = 0;
-        var groupsWithState = $scope.groupMasterWithState(nodes, showStates);
+        var groupsWithState = $scope.groupMasterWithState(nodes);
+        var showStates = Object.keys(NODE_STATUS);
 
         $.each(showStates, function(index, key) {
             amounts[key] = 0;
@@ -52,9 +53,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
          return basicInfos;
     }
 
-    function filtrateNonMasters(cluster, showStates, hideState) {
+    function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
-        var nonMasters = $scope.groupMasterWithState(nodes, showStates).nonMasters;
+        var nonMasters = $scope.groupMasterWithState(nodes).nonMasters;
         var showNonMasters = nonMasters;
         var index;
         if(hideState) {
@@ -66,6 +67,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
                     cluster.hideStates.splice(index, 1);
                 }
             } else {
+                var showStates = Object.keys(NODE_STATUS);
                 index = showStates.indexOf(hideState);
                 showStates.splice(index,1);
                 cluster.hideStates = showStates;
@@ -78,8 +80,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return showNonMasters;
     }
 
-    function getAllShowNonMasters(cluster, showStates, hideState) {
-        var showNonMasters = filtrateNonMasters(cluster, showStates, hideState);
+    function getAllShowNonMasters(cluster, hideState) {
+        var showNonMasters = filtrateNonMasters(cluster, hideState);
         var allShowNonMasters = {
             first: [],
             following: []
@@ -111,8 +113,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return allMasters;
     }
 
-    function getSelectedClass(showStates, hideStates) {
+    function getSelectedClass(hideStates) {
         var classes = {};
+        var showStates = Object.keys(NODE_STATUS);
         $.each(showStates, function(index, val) {
             classes[val] = '';
             if(hideStates.indexOf(val) > -1) {
@@ -124,7 +127,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function getSingleCluster(cluster, hideState) {
         var data = {};
-        var showStates = ['running', 'terminated', 'failed', 'installing'];
         var masters = {};
         var nonMasters = {};
         if(!cluster.hideStates) {
@@ -132,25 +134,26 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
         var nodes = cluster.nodes;
         data.basicInfos = getClusterBasicInfos(cluster);
-        data.amounts = countNodesAmount(nodes, showStates);
-        masters = $scope.groupMasterWithState(nodes, showStates).masters;
-        data.clusterState = isClusterBroken(masters, showStates);
+        data.amounts = countNodesAmount(nodes);
+        masters = $scope.groupMasterWithState(nodes).masters;
+        data.clusterState = isClusterBroken(masters);
 
         data.masters = masters;
         data.allMasters = getAllShowMasters(masters);
-        nonMasters = getAllShowNonMasters(cluster, showStates, hideState);
+        nonMasters = getAllShowNonMasters(cluster, hideState);
         data.firstNon = nonMasters.first;
         data.followingNon = nonMasters.following;
-        data.classes = getSelectedClass(showStates, cluster.hideStates);
+        data.classes = getSelectedClass(cluster.hideStates);
         return data;
     }
 
 
-    function isClusterBroken(masters, showStates) {
+    function isClusterBroken(masters) {
         var isBroken = false;
         var amount = 0;
         var brokenAmount = 0;
         var brokenStates = ['disconnect', 'warning'];
+        var showStates = Object.keys(NODE_STATUS);
         $.each(showStates, function(index, val) {
             amount += masters[val].length;
             if(brokenStates.indexOf(val) > -1) {
