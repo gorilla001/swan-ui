@@ -16,3 +16,4 @@ Release Note
 
 
 ### feature
+- 添加了升级agent功能，并可以查看主机agent的版本
