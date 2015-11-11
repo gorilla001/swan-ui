@@ -99,10 +99,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                     $scope.deployinfo.envs[value.key] = value.value;
                 });
             } else if (conditions === 'createPort') {
-                $scope.deployinfo.containerPortsInfo = {
-                    "inner": [],
-                    "outer": []
-                };
+                $scope.deployinfo.containerPortsInfo = [];
 
                 //$scope.deployinfo.containerPortsInfo = [];
 
@@ -112,13 +109,18 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                 //});
 
                 angular.forEach(creatData, function (value) {
-                    if(value.key === 'inner'){
-                        $scope.deployinfo.containerPortsInfo.inner.push(value.value);
-                    }else if(value.key === 'outer'){
-                        $scope.deployinfo.containerPortsInfo.outer.push(value.value);
-                    }
+                    var portInfo = {};
 
+                    value.hasOwnProperty('uri') ? portInfo = {
+                        type: value.key,
+                        port: value.value,
+                        uri: value.uri
+                    }: portInfo = {
+                        type: value.key,
+                        port: value.value
+                    };
 
+                    $scope.deployinfo.containerPortsInfo.push(portInfo);
                 });
             }
         }
@@ -132,11 +134,27 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         } else {
             delete $scope.deployinfo.cmd;
         }
+
+        if($scope.radio === '2'){
+            $scope.deployinfo.containerVolumesInfo = [];
+
+            var volumesInfo = {
+                containerPath: $scope.containerDir,
+                hostPath: $scope.dateDir
+            };
+            $scope.deployinfo.containerVolumesInfo.push(volumesInfo);
+
+            $scope.deployinfo.constraints = [["persistent", "LIKE", $scope.arrId]];
+        } else if($scope.radio === '1'){
+            $scope.deployinfo.constraints = [["transient", "LIKE", "transient.*"]];
+        }
+
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
         $scope.deployinfo.containerNum = $scope.containerNum.toString();
         $scope.deployinfo.containerCpuSize = $scope.cpuSize;
         $scope.deployinfo.containerMemSize = $scope.memSize;
         $scope.deployinfo.imageversion = $scope.imageversion;
+        console.log($scope.deployinfo);
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
             $state.go('app.appdetail.instance', {appId: data.data});
@@ -144,4 +162,30 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
         });
     };
+
+    $scope.getNode = function(clusterId){
+        $scope.nodesOk = [];
+        angular.forEach($scope.clusters, function(value, key) {
+            if(value.id === clusterId){
+                for(var i =0; i< value.nodes.length; i++){
+                    for(var j =0; j < value.nodes[i].attributes.length; j++){
+                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
+                            $scope.nodesOk.push(value.nodes[i]);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.getArrId = function(nodeOk){
+        if(nodeOk){
+            angular.forEach(nodeOk.attributes, function(value, key) {
+                if(value.attribute === 'persistent'){
+                    $scope.arrId = "persistent" + value.id;
+                }
+            });
+        }
+    }
 }

@@ -79,7 +79,45 @@
                     <div class="col-md-5">
                         <select class="form-control"
                                 data-ng-options=" cluster.id as cluster.name disable when cluster.status != 'running' for cluster in clusters"
-                                data-ng-model="clusterid" data-required="required"></select>
+                                data-ng-model="clusterid" data-required="required" ng-change="getNode(clusterid)"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">应用类型</label>
+
+                    <label>
+                        <input type="radio" ng-model="radio" value="1" data-required="required">
+                        无状态应用
+                    </label>
+                    <label>
+                        <input type="radio" ng-model="radio" value="2" data-required="required">
+                        有状态应用
+                    </label><br/>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">主机选择</label>
+
+                    <div class="col-md-5">
+                        <select class="form-control"
+                                data-ng-options=" nodeOk as nodeOk.name for nodeOk in nodesOk"
+                                data-ng-model="nodeIp" ng-change="getArrId(nodeIp)"></select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">容器目录</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="containerDir">
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">数据目录</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="dateDir">
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,17 +136,23 @@
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
                             <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
 
-                            <div class="col-md-4" data-ng-class="{'col-md-offset-3': !$first}">
+                            <div class="col-md-2" data-ng-class="{'col-md-offset-3': !$first}">
                                 <input type="number" data-ng-model="choice.value" name="" class="form-control"
                                        placeholder="端口" min="1" max="65535">
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" data-ng-model="choice.key">
                                     <option value="">选择类型</option>
-                                    <option value="inner">　对内</option>
-                                    <option value="outer">　对外</option>
+                                    <option value="1">　对内 TCP</option>
+                                    <option value="2">　对外 TCP</option>
+                                    <option value="3">　对外 HTTP</option>
                                 </select>
                             </div>
+
+                            <div class="col-md-2" data-ng-show="choice.key === '3'">
+                                <input type="text" data-ng-model="choice.uri" name="" class="form-control" placeholder="URI">
+                            </div>
+
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
                                     data-ng-click="dynamicData.removeChoice('createPort')">-
                             </button>
