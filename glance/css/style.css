@@ -98,9 +98,6 @@ a.remove {
 	font-weight: normal;
 	font-size: 12px;
 }
-.sidebar .super-user {
-    display: none;
-}
 
 /* Sidebar navigation */
 .nav-sidebar {

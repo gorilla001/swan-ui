@@ -10,9 +10,6 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
         $rootScope.userName = data.data["userName"];
         $rootScope.userId = data.data["userId"];
         $rootScope.isSuperuser = data.data["isSuperuser"];
-        if($rootScope.isSuperuser) {
-            $(".super-user").css("display", "block")
-        }
     });
     
     $scope.getCSUrl = function () {
