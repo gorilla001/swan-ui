@@ -17,7 +17,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
             glanceHttp.ajaxGet(['cluster.delCluster', {cluster_id: clusterId}], function () {
                 $state.go("cluster.listclusters", null, {reload: true});
             });
-        });
+        }, true);
     };
     
     $scope.upgradeAgent = function (clusterId) {

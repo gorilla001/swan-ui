@@ -1,9 +1,14 @@
 function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
     glanceUser.init();
-    $scope.myConfirm = function (msg, callback) {
+    $scope.myConfirm = function (msg, callback, showMore) {
         $scope._confirmMsg = msg;
         $scope._confirmCallback = callback;
         $('#confirmModal').modal("show");
+        if (showMore) {
+            $scope.deleteCluster = true;
+        } else {
+            $scope.deleteCluster = false;
+        }
     };
     
     glanceHttp.ajaxGet(["auth.getMe"], function (data) {
