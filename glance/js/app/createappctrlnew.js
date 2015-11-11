@@ -41,6 +41,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.memSize = 16;
     $scope.containerNum = 1;
     $scope.imageversion = "latest";
+    $scope.radio = "1";  //defalut apptype for radio box
 
 
     $scope.dynamicData = {
@@ -127,7 +128,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.deployApp = function () {
-        if ($scope.dynamicData.createPort[0].value && $scope.dynamicData.createPort[0].value)$scope.dynamicData.subNumber('createPort');
+        if ($scope.dynamicData.createPort[0].value && $scope.dynamicData.createPort[0].key)$scope.dynamicData.subNumber('createPort');
         if ($scope.dynamicData.createEnv[0].key && $scope.dynamicData.createEnv[0].value)$scope.dynamicData.subNumber('createEnv');
         if ($scope.cmdInput) {
             $scope.deployinfo.cmd = $scope.cmdInput;
@@ -190,5 +191,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                 }
             });
         }
+    };
+
+    $scope.clearUri = function(index){
+        if(($scope.dynamicData.createPort[index].key === '1' || $scope.dynamicData.createPort[index].key === '2') || $scope.dynamicData.createPort[index].uri){
+            delete $scope.dynamicData.createPort[index].uri;
+        }
+
     }
 }

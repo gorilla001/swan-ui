@@ -146,12 +146,12 @@
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
                             <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
 
-                            <div class="col-md-2" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="number" data-ng-model="choice.value" name="" class="form-control"
-                                       placeholder="端口" min="1" max="65535">
+                            <div class="col-md-2" data-ng-class="{'col-md-offset-3': !$first,'has-error' : staticForm['portNum'+$index].$invalid}">
+                                <input type="number" name="portNum{/$index/}" data-ng-model="choice.value" name="" class="form-control"
+                                       placeholder="端口" min="1" max="65535" ng-required="choice.key || choice.uri">
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-control" data-ng-model="choice.key">
+                            <div class="col-md-2" data-ng-class="{ 'has-error' : staticForm['portType'+$index].$invalid}">
+                                <select class="form-control" name="portType{/$index/}" data-ng-model="choice.key" ng-required="choice.uri || choice.value" ng-change="clearUri($index)">
                                     <option value="">选择类型</option>
                                     <option value="1">　对内 TCP</option>
                                     <option value="2">　对外 TCP</option>
@@ -160,8 +160,9 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-2" data-ng-show="choice.key === '3' || choice.key === '4'">
-                                <input type="text" data-ng-model="choice.uri" name="" class="form-control" placeholder="URI">
+                            <div class="col-md-2" data-ng-show="choice.key === '3' || choice.key === '4'" data-ng-class="{ 'has-error' : staticForm['portUri'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.uri" name="portUri{/$index/}" class="form-control" placeholder="URI"
+                                ng-required="choice.key === '3' || choice.key === '4'">
                             </div>
 
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
@@ -177,13 +178,13 @@
                                 <small>自定义环境变量</small>
                             </label>
 
-                            <div class="col-md-3" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="text" data-ng-model="choice.key" name="key" class="form-control"
-                                       placeholder="Key --- PATH">
+                            <div class="col-md-3" data-ng-class="{'col-md-offset-3' : !$first,'has-error' : staticForm['envKey'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.key" name="envKey{/$index/}" class="form-control"
+                                       placeholder="Key --- PATH" ng-required="choice.value">
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" data-ng-model="choice.value" name="value" class="form-control"
-                                       placeholder="Value">
+                            <div class="col-md-3" data-ng-class="{'has-error' : staticForm['envValue'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.value" name="envValue{/$index/}" class="form-control"
+                                       placeholder="Value" ng-required="choice.key">
                             </div>
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
                                     data-ng-click="dynamicData.removeChoice('createEnv')">-
