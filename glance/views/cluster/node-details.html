@@ -13,7 +13,7 @@
       <h2>
         <a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id})">{/ node.name /}</a>
         <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
-        <span class="label label-info" data-ng-repeat="attr in node.attributes">{/ attr.attribute /}</span>
+        <span class="label label-info" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
       </h2>
       </header>
     </div>
