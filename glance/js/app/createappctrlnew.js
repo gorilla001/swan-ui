@@ -136,13 +136,14 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }
 
         if($scope.radio === '2'){
-            $scope.deployinfo.containerVolumesInfo = [];
-
-            var volumesInfo = {
-                containerPath: $scope.containerDir,
-                hostPath: $scope.dateDir
-            };
-            $scope.deployinfo.containerVolumesInfo.push(volumesInfo);
+            if($scope.containerDir && $scope.dateDir){
+                $scope.deployinfo.containerVolumesInfo = [];
+                var volumesInfo = {
+                    containerPath: $scope.containerDir,
+                    hostPath: $scope.dateDir
+                };
+                $scope.deployinfo.containerVolumesInfo.push(volumesInfo);
+            }
 
             $scope.deployinfo.constraints = [["persistent", "LIKE", $scope.arrId]];
         } else if($scope.radio === '1'){
@@ -157,7 +158,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.containerCpuSize = $scope.cpuSize;
         $scope.deployinfo.containerMemSize = $scope.memSize;
         $scope.deployinfo.imageversion = $scope.imageversion;
-        console.log($scope.deployinfo);
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
             $state.go('app.appdetail.instance', {appId: data.data});
