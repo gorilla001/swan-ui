@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/ng-dialog/css/ngDialog-theme-plain.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css">
         <!--endbuild-->
         <link rel="shortcut icon" type="image/x-icon" href="pics/favicon.ico" />
     </head>
@@ -50,7 +51,7 @@
                                 <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span><span class="text">日志管理</span>
                             </a>
                         </li>
-                        <li class="super-user" data-ng-class="{'active': show=='admin'}" title="管理员管理" data-ng-show="isSuperuser">
+                        <li data-ng-class="{'active': show=='admin'}" title="管理员管理" data-ng-show="isSuperuser" data-ng-cloak>
                             <a data-ui-sref="admin">
                                 <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span><span class="text">管理员管理</span>
                             </a>
