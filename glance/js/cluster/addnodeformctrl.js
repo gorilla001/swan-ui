@@ -1,7 +1,10 @@
 function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification) {
     $scope.isConected = false;
     $scope.form = {
-      attributes: {'transient': true}
+      attributes: {'transient': true,
+          'gateway': false,
+          'proxy': false,
+          'persistent': false}
     };
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
@@ -46,7 +49,17 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
       glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"]);
       Notification.success('复制成功');
     }
-
+    
+    $scope.onAttributesChange = function(attribute) {
+        for (var attr_name in $scope.form.attributes) {
+            if ($scope.form.attributes[attr_name]) {
+                return;
+            }
+        }
+        $scope.form.attributes[attribute] = true;
+        Notification.error('必须选择至少一项主机类型');
+        
+    }
 
 }
 
