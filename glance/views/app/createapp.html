@@ -101,23 +101,33 @@
                     <div class="col-md-5">
                         <select class="form-control"
                                 data-ng-options=" nodeOk as nodeOk.name for nodeOk in nodesOk"
-                                data-ng-model="nodeIp" ng-change="getArrId(nodeIp)"></select>
+                                data-ng-model="nodeIp" ng-change="getArrId(nodeIp)" ng-required="radio === '2'"></select>
                     </div>
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
                     <label class="col-md-3 control-label">容器目录</label>
 
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="containerDir">
+                    <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid}">
+                        <input type="text" name="containerDir" class="form-control" data-ng-model="containerDir" ng-required="dateDir && radio === '2'">
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid}">
+                        <p data-ng-show="staticForm.containerDir.$error.required"
+                           class="help-block">数据目录有数据,则容器目录必须有数据</p>
                     </div>
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
                     <label class="col-md-3 control-label">数据目录</label>
 
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="dateDir">
+                    <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid}">
+                        <input type="text" name="dateDir"  class="form-control" data-ng-model="dateDir" ng-required="containerDir && radio === '2'">
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid}">
+                        <p data-ng-show="staticForm.dateDir.$error.required"
+                           class="help-block">容器目录有数据,则数据目录必须有数据</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -146,10 +156,11 @@
                                     <option value="1">　对内 TCP</option>
                                     <option value="2">　对外 TCP</option>
                                     <option value="3">　对外 HTTP</option>
+                                    <option value="4">　对内 HTTP</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-2" data-ng-show="choice.key === '3'">
+                            <div class="col-md-2" data-ng-show="choice.key === '3' || choice.key === '4'">
                                 <input type="text" data-ng-model="choice.uri" name="" class="form-control" placeholder="URI">
                             </div>
 
