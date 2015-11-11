@@ -10,6 +10,13 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         "installing": "主机初始化中"
     };
 
+    $scope.nodeAttributes = {
+        "transient": "动态节点",
+        "gateway": "网关节点",
+        "proxy": "代理节点",
+        "persistent": "数据节点"
+    };
+
     $scope.serviceState = {};
     
     $scope.deleteCluster = function(clusterId, name) {
