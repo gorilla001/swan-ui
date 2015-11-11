@@ -98,7 +98,7 @@
                         <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">查看集群</a>
                     </li>
                     <li>
-                        <a href="#" data-ng-click="delCluster(cluster.basicInfos.id)" >删除集群</a>
+                        <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster" >删除集群</a>
                     </li>
                 </ul>
             </div>
@@ -128,6 +128,28 @@
                 <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id)">解决完毕</button>
                 <button class="btn btn-default" data-ng-click="close(cluster.basicInfos.id)">忽略问题</button>
             </footer>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmDeleteCluster" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>您确定要删除集群吗？</h3>
+                    <div class="delete-cluster">
+                        <p>删除集群将在您的主机上一并清除：</p>
+                        <ul>
+                            <li>数人云管理组件</li>
+                            <li>通过数人云下发部署的应用及其未持久化的数据</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="deleteCluster(cluster.basicInfos.id, cluster.basicInfos.name)">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+                </div>
+            </div>
         </div>
     </div>
 </section>

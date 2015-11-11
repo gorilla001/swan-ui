@@ -1,4 +1,4 @@
-function listClustersCtrl($scope, glanceHttp) {
+function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data) {
@@ -182,7 +182,17 @@ function listClustersCtrl($scope, glanceHttp) {
             }
         });
     }
+
+    $scope.deleteCluster = function(clusterId, name) {
+        $('#confirmDeleteCluster').hide();
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        glanceHttp.ajaxGet(['cluster.delCluster', {cluster_id: clusterId}], function () {
+            Notification.success('集群' + name + '删除成功');
+            $state.go("cluster.listclusters", null, {reload: true});
+        });
+    }
 }
 
-listClustersCtrl.$inject = ["$scope", "glanceHttp"];
+listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);
