@@ -146,6 +146,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
 
             $scope.deployinfo.constraints = [["persistent", "LIKE", $scope.arrId]];
         } else if($scope.radio === '1'){
+            if($scope.deployinfo.hasOwnProperty('containerVolumesInfo')){
+                delete $scope.deployinfo.containerVolumesInfo;
+            }
             $scope.deployinfo.constraints = [["transient", "LIKE", "transient.*"]];
         }
 
