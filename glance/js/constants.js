@@ -23,6 +23,15 @@ CLUSTER_STATUS = {
     installing: 'installing',
     abnormal: 'abnormal',
     unknow: 'unknow'
-};WS_CODE = {
+};
+
+WS_CODE = {
     token_invalide: 4051
-}
+};
+
+SERVICES_STATUS = {
+    running: 'running',
+    installing: 'installing',
+    failed: 'failed',
+    uninstalled: 'uninstalled'
+};
