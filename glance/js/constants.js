@@ -18,6 +18,12 @@ NODE_STATUS = {
     installing: "installing"
 };
 
+CLUSTER_STATUS = {
+    running: 'running',
+    installing: 'installing',
+    terminated: 'terminated',
+    unknow: 'unknow'
+};
 WS_CODE = {
     token_invalide: 4051
 }
