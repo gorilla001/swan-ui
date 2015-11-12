@@ -1,4 +1,11 @@
 function listClustersCtrl($scope, glanceHttp, $state, Notification) {
+    var clusterTypes = {
+        '1_master': 1,
+        '3_master': 3,
+        '5_master': 5,
+    };
+
+
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data) {
@@ -127,7 +134,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function getSingleCluster(cluster, hideState) {
         var data = {};
+        var group = {};
         var masters = {};
+        var slaves = {};
         var nonMasters = {};
         if(!cluster.hideStates) {
             cluster.hideStates = [];
@@ -135,8 +144,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var nodes = cluster.nodes;
         data.basicInfos = getClusterBasicInfos(cluster);
         data.amounts = countNodesAmount(nodes);
-        masters = $scope.groupMasterWithState(nodes).masters;
-        data.clusterState = isClusterBroken(masters);
+        group = $scope.groupMasterWithState(nodes)
+        masters = group.masters;
+        slaves = group.nonMasters;
 
         data.masters = masters;
         data.allMasters = getAllShowMasters(masters);
@@ -144,26 +154,10 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         data.firstNon = nonMasters.first;
         data.followingNon = nonMasters.following;
         data.classes = getSelectedClass(cluster.hideStates);
-        return data;
-    }
-
-
-    function isClusterBroken(masters) {
-        var isBroken = false;
-        var amount = 0;
-        var brokenAmount = 0;
-        var brokenStates = [NODE_STATUS.terminated, NODE_STATUS.failed];
-        var showStates = Object.keys(NODE_STATUS);
-        $.each(showStates, function(index, val) {
-            amount += masters[val].length;
-            if(brokenStates.indexOf(val) > -1) {
-                brokenAmount += masters[val].length;
-            }
-        });
-        if (brokenAmount >= Math.ceil(amount/2)) {
-            isBroken = true;
+        if (nodes.length) {
+            data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.clusterType);
         }
-        return isBroken;
+        return data;
     }
 
     $scope.getPageData = function(clusterId, hideState) {
@@ -185,6 +179,138 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             }
         });
     }
+
+    function getSingleClusterStatus(masters, slaves, nodes, clusterType) {
+        var status;
+
+        if (isClusterUnknow(masters, slaves)) {
+            return CLUSTER_STATUS.unknow;
+        }
+
+        var needServices = getClusterNeedServices(nodes);
+        var masterServices = needServices.masterServices;
+        var slaveServices = needServices.slaveServices;
+
+        if (isClusterRunning(masterServices, slaveServices, clusterType)) {
+            status = CLUSTER_STATUS.running;
+        } else if (isCusterInstalling(masterServices, slaveServices, clusterType)) {
+            status = CLUSTER_STATUS.installing;
+        } else {
+            status = CLUSTER_STATUS.terminated;
+        }
+        return status;
+    }
+
+    function isClusterUnknow(masters, slaves) {
+        var isUnknow = false;
+        if (masters.terminated.length) {
+            isUnknow = true;
+        } else if (slaves.terminated.length){
+            var slavesAmount = 0;
+            angular.forEach(slaves, function(key, value) {
+                slavesAmount += value.length;
+            });
+            isUnknow = Boolean(slaves.terminated.length === slavesAmount);
+        }
+        return isUnknow;
+    }
+
+    function isClusterRunning(masterServices, slaveServices, clusterType) {
+        var isRunning = false;
+        var status = CLUSTER_STATUS.running;
+
+        var runningMasterAmount = calAmount(masterServices, status);
+
+        if (runningMasterAmount === clusterTypes[clusterType]) {
+            var runningSlaveAmount = 0;
+            runningSlaveAmount = calAmount(slaveServices, status);
+            if (runningSlaveAmount >= 1) {
+                isRunning = true;
+            }
+        }
+        return isRunning;
+    }
+
+    function isCusterInstalling(masterServices, slaveServices, clusterType) {
+        var isInstalling = false;
+
+        var totalMaster = calRunningFailedAmount(masterServices);
+        if (totalMaster < clusterTypes[clusterType]) {
+            var totalSlave = calRunningFailedAmount(slaveServices);
+            if (totalSlave === 0) {
+                isInstalling = true;
+            }
+        }
+        return isInstalling;
+    }
+
+    function getClusterNeedServices(nodes) {
+        var result = {
+            masterServices: [],
+            slaveServices: []
+        };
+        var needServices = {};
+        var i;
+        var node;
+        
+        for (i = 0; i < nodes.length; i ++) {
+            node = nodes[i];
+            needServices = getNodeNeedServices(node.services);
+            result.masterServices.push(needServices.master);
+            result.slaveServices.push(needServices.slave);
+        }
+        return result;
+    }
+
+    function getNodeNeedServices(services) {
+        var result = {
+            'master': {},
+            'slave': {}
+        };
+        var names = Object.keys(result);
+        var i;
+        var service;
+        var breakAmount = 0;
+        for (i = 0; i < services.length; i++) {
+            service = services[i];
+            
+            if (names.indexOf(service.name) > -1) {
+                result[service.name] = service;
+                breakAmount += 1;
+            }
+            if (breakAmount === names.length) {
+                break;
+            }
+        }
+        return result;
+    }
+
+    function calRunningFailedAmount(services) {
+        var total = 0;
+        var amounts = {
+            failed: 0,
+            running: 0
+        };
+        var status = Object.keys(amounts);
+        var i;
+        for (i = 0; i < status.length; i++) {
+            amounts[status[i]] = calAmount(services, status[i]);
+            total += amounts[status[i]];
+        }
+        return total;
+    }
+
+    function calAmount(services, status) {
+        var amount = 0;
+        var i;
+        var service;
+        for (i = 0; i < services.length; i++) {
+            service = services[i];
+            amount += (service.status === status ? 1 : 0);
+        }
+        return amount;
+    }
+
 }
 
 listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification"];
