@@ -55,7 +55,9 @@ BACKEND_URL = {
         options:"applications/$cluster_id/options",
         imageVersions:"applications/$app_id/image-versions",
         versionDeploy:"applications/$app_versionId/version-deploy",
-        updateVersion:"applications/update-version"
+        updateVersion:"applications/update-version",
+        isdeploying: "applications/$app_id/isdeploying",
+        cancelDeploy: "applications/$app_id/cancel-deployment"
     },
 
     userUrl: "MARKET",
