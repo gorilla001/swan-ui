@@ -160,9 +160,9 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-2" data-ng-show="choice.key === '3' || choice.key === '4'" data-ng-class="{ 'has-error' : staticForm['portUri'+$index].$invalid}">
+                            <div class="col-md-2" data-ng-show="choice.key === '2' || choice.key === '3'" data-ng-class="{ 'has-error' : staticForm['portUri'+$index].$invalid}">
                                 <input type="text" data-ng-model="choice.uri" name="portUri{/$index/}" class="form-control" placeholder="URI"
-                                ng-required="choice.key === '3' || choice.key === '4'">
+                                ng-required="choice.key === '2' || choice.key === '3'">
                             </div>
 
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
