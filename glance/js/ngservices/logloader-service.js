@@ -96,6 +96,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
                 "taskid"
             ],
             "highlight": {
+                "require_field_match": "true",
                 "fields": {
                     "msg": {
                         "pre_tags": [
