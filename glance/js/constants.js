@@ -17,3 +17,7 @@ NODE_STATUS = {
     failed: "failed",
     installing: "installing"
 };
+
+WS_CODE = {
+    token_invalide: 4051
+}

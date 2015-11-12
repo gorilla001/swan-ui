@@ -5,6 +5,12 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
 
     function buildWS(token) {
         ws = ngSocket(utils.buildFullURL(["ws.subscribe", {token: token}]));
+        ws._onCloseHandler = function (event) {
+            if (event.code != WS_CODE.token_invalide) {
+                ws.reconnect();
+            }
+        };
+        ws.socket.onclose = ws._onCloseHandler;
         ws.onMessage(function (msg) {
             var dataItems = JSON.parse(msg.data);
             if (!angular.isArray(dataItems)) {
