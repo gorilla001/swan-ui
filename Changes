@@ -7,6 +7,17 @@ Release Note
 - 重大的bug fix
 - 重大的feature
 
+##v0.1.111201
+
+###需要运维更新
+
+### bug fix
+
+
+### feature
+- 添加了升级agent功能，并可以查看主机agent的版本
+
+
 ##v0.1.111000
 
 ###需要运维更新
