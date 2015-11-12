@@ -217,13 +217,13 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function isClusterRunning(masterServices, slaveServices, clusterType) {
         var isRunning = false;
-        var status = CLUSTER_STATUS.running;
+        var status = [NODE_STATUS.running];
 
-        var runningMasterAmount = calAmount(masterServices, status);
+        var runningMasterAmount = calStatusAmount(masterServices, status);
 
         if (runningMasterAmount === clusterTypes[clusterType]) {
             var runningSlaveAmount = 0;
-            runningSlaveAmount = calAmount(slaveServices, status);
+            runningSlaveAmount = calStatusAmount(slaveServices, status);
             if (runningSlaveAmount >= 1) {
                 isRunning = true;
             }
@@ -233,10 +233,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function isCusterInstalling(masterServices, slaveServices, clusterType) {
         var isInstalling = false;
+        var status = [SERVICES_STATUS.running, SERVICES_STATUS.failed];
 
-        var totalMaster = calRunningFailedAmount(masterServices);
+        var totalMaster = calStatusAmount(masterServices, status);
         if (totalMaster < clusterTypes[clusterType]) {
-            var totalSlave = calRunningFailedAmount(slaveServices);
+            var totalSlave = calStatusAmount(slaveServices, status);
             if (totalSlave === 0) {
                 isInstalling = true;
             }
@@ -285,28 +286,15 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return result;
     }
 
-    function calRunningFailedAmount(services) {
-        var total = 0;
-        var amounts = {
-            failed: 0,
-            running: 0
-        };
-        var status = Object.keys(amounts);
-        var i;
-        for (i = 0; i < status.length; i++) {
-            amounts[status[i]] = calAmount(services, status[i]);
-            total += amounts[status[i]];
-        }
-        return total;
-    }
-
-    function calAmount(services, status) {
+    function calStatusAmount(services, status) {
         var amount = 0;
         var i;
-        var service;
         for (i = 0; i < services.length; i++) {
             service = services[i];
-            amount += (service.status === status ? 1 : 0);
+            amount += (status.indexOf(service.status) > -1 ? 1 : 0);
+            if (amount === status.length) {
+                break;
+            }
         }
         return amount;
     }
