@@ -21,9 +21,8 @@ NODE_STATUS = {
 CLUSTER_STATUS = {
     running: 'running',
     installing: 'installing',
-    terminated: 'terminated',
+    abnormal: 'abnormal',
     unknow: 'unknow'
-};
-WS_CODE = {
+};WS_CODE = {
     token_invalide: 4051
 }

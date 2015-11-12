@@ -196,7 +196,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         } else if (isCusterInstalling(masterServices, slaveServices, clusterType)) {
             status = CLUSTER_STATUS.installing;
         } else {
-            status = CLUSTER_STATUS.terminated;
+            status = CLUSTER_STATUS.abnormal;
         }
         return status;
     }
