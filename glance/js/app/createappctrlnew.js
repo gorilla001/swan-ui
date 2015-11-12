@@ -60,24 +60,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             } else {
                 Notification.warning('输入框有空值,不能继续添加');
             }
-
-            //if(conditions === 'createEnv'){
-            //    if (creatData[creatLength - 1].key &&
-            //        creatData[creatLength - 1].value) {
-            //        newItemNo = creatLength + 1;
-            //        creatData.push({'id': 'choice' + newItemNo});
-            //    } else {
-            //        Notification.warning('输入框有空值,不能继续添加');
-            //    }
-            //}else if(conditions === 'createPort'){
-            //    if (creatData[creatLength - 1].value) {
-            //        newItemNo = creatLength + 1;
-            //        creatData.push({'id': 'choice' + newItemNo});
-            //    } else {
-            //        Notification.warning('输入框有空值,不能继续添加');
-            //    }
-            //}
-
         },
         "removeChoice": function (conditions) {
             var creatLength = $scope.dynamicData[conditions].length;
@@ -95,19 +77,17 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             var creatData = $scope.dynamicData[conditions];
 
             if (conditions === 'createEnv') {
-                $scope.deployinfo.envs = {};
+                $scope.deployinfo.envs = [];
                 angular.forEach(creatData, function (value) {
-                    $scope.deployinfo.envs[value.key] = value.value;
+                    var envInfo = {
+                        key: value.key,
+                        value: value.value
+                    };
+
+                    $scope.deployinfo.envs.push(envInfo);
                 });
             } else if (conditions === 'createPort') {
                 $scope.deployinfo.containerPortsInfo = [];
-
-                //$scope.deployinfo.containerPortsInfo = [];
-
-                //angular.forEach(creatData, function (value) {
-                //    $scope.deployinfo.containerPortsInfo.push(value.value);
-                //
-                //});
 
                 angular.forEach(creatData, function (value) {
                     var portInfo = {};
