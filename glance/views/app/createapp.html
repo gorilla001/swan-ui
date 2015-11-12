@@ -79,7 +79,55 @@
                     <div class="col-md-5">
                         <select class="form-control"
                                 data-ng-options=" cluster.id as cluster.name disable when cluster.status != 'running' for cluster in clusters"
-                                data-ng-model="clusterid" data-required="required"></select>
+                                data-ng-model="clusterid" data-required="required" ng-change="getNode(clusterid)"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">应用类型</label>
+
+                    <label>
+                        <input type="radio" ng-model="radio" value="1" data-required="required">
+                        无状态应用
+                    </label>
+                    <label>
+                        <input type="radio" ng-model="radio" value="2" data-required="required">
+                        有状态应用
+                    </label><br/>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">主机选择</label>
+
+                    <div class="col-md-5">
+                        <select class="form-control"
+                                data-ng-options=" nodeOk as nodeOk.name for nodeOk in nodesOk"
+                                data-ng-model="nodeIp" ng-change="getArrId(nodeIp)" ng-required="radio === '2'"></select>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">容器目录</label>
+
+                    <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid}">
+                        <input type="text" name="containerDir" class="form-control" placeholder="容器挂载目录" data-ng-model="containerDir" ng-required="dateDir && radio === '2'">
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid}">
+                        <p data-ng-show="staticForm.containerDir.$error.required"
+                           class="help-block">数据目录有数据,则容器目录必须有数据</p>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-3 control-label">数据目录</label>
+
+                    <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid}">
+                        <input type="text" name="dateDir"  class="form-control" placeholder="数据挂载目录" data-ng-model="dateDir" ng-required="containerDir && radio === '2'">
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid}">
+                        <p data-ng-show="staticForm.dateDir.$error.required"
+                           class="help-block">容器目录有数据,则数据目录必须有数据</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,17 +146,25 @@
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
                             <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
 
-                            <div class="col-md-4" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="number" data-ng-model="choice.value" name="" class="form-control"
-                                       placeholder="端口" min="1" max="65535">
+                            <div class="col-md-2" data-ng-class="{'col-md-offset-3': !$first,'has-error' : staticForm['portNum'+$index].$invalid}">
+                                <input type="number" name="portNum{/$index/}" data-ng-model="choice.value" name="" class="form-control"
+                                       placeholder="端口" min="1" max="65535" ng-required="choice.key || choice.uri">
                             </div>
-                            <div class="col-md-2">
-                                <select class="form-control" data-ng-model="choice.key">
+                            <div class="col-md-2" data-ng-class="{ 'has-error' : staticForm['portType'+$index].$invalid}">
+                                <select class="form-control" name="portType{/$index/}" data-ng-model="choice.key" ng-required="choice.uri || choice.value" ng-change="clearUri($index)">
                                     <option value="">选择类型</option>
-                                    <option value="inner">　对内</option>
-                                    <option value="outer">　对外</option>
+                                    <option value="1">　对内 TCP</option>
+                                    <option value="2">　对外 TCP</option>
+                                    <option value="3">　对外 HTTP</option>
+                                    <option value="4">　对内 HTTP</option>
                                 </select>
                             </div>
+
+                            <div class="col-md-2" data-ng-show="choice.key === '3' || choice.key === '4'" data-ng-class="{ 'has-error' : staticForm['portUri'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.uri" name="portUri{/$index/}" class="form-control" placeholder="URI"
+                                ng-required="choice.key === '3' || choice.key === '4'">
+                            </div>
+
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
                                     data-ng-click="dynamicData.removeChoice('createPort')">-
                             </button>
@@ -122,13 +178,13 @@
                                 <small>自定义环境变量</small>
                             </label>
 
-                            <div class="col-md-3" data-ng-class="{'col-md-offset-3': !$first}">
-                                <input type="text" data-ng-model="choice.key" name="key" class="form-control"
-                                       placeholder="Key --- PATH">
+                            <div class="col-md-3" data-ng-class="{'col-md-offset-3' : !$first,'has-error' : staticForm['envKey'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.key" name="envKey{/$index/}" class="form-control"
+                                       placeholder="Key --- PATH" ng-required="choice.value">
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" data-ng-model="choice.value" name="value" class="form-control"
-                                       placeholder="Value">
+                            <div class="col-md-3" data-ng-class="{'has-error' : staticForm['envValue'+$index].$invalid}">
+                                <input type="text" data-ng-model="choice.value" name="envValue{/$index/}" class="form-control"
+                                       placeholder="Value" ng-required="choice.key">
                             </div>
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
                                     data-ng-click="dynamicData.removeChoice('createEnv')">-
