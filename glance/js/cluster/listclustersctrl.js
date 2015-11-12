@@ -234,15 +234,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     function isCusterInstalling(masterServices, slaveServices, clusterType) {
         var isInstalling = false;
         var status = [SERVICES_STATUS.running, SERVICES_STATUS.failed];
-
         var totalMaster = calStatusAmount(masterServices, status);
-        if (totalMaster < clusterTypes[clusterType]) {
-            var totalSlave = calStatusAmount(slaveServices, status);
-            if (totalSlave === 0) {
-                isInstalling = true;
-            }
-        }
-        return isInstalling;
+        var totalSlave = calStatusAmount(slaveServices, status);
+        return Boolean((totalMaster < clusterTypes[clusterType]) || (totalSlave === 0));
     }
 
     function getClusterNeedServices(nodes) {
@@ -286,15 +280,13 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return result;
     }
 
+            
     function calStatusAmount(services, status) {
         var amount = 0;
         var i;
         for (i = 0; i < services.length; i++) {
             service = services[i];
             amount += (status.indexOf(service.status) > -1 ? 1 : 0);
-            if (amount === status.length) {
-                break;
-            }
         }
         return amount;
     }
