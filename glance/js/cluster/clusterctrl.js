@@ -79,18 +79,18 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return serviceState;
     }
 
-    $scope.getNodeState = function(node, showStates) {
+    $scope.getNodeState = function(node) {
         var isMaster = $scope.getIsMaster(node);
         var servicesState = getNodeServicesState(node.services, isMaster);
         var showState;
         if (node.status === 'terminated'){
-            showState = showStates[1];
+            showState =  NODE_STATUS.terminated;
         } else if(node.status === "installing" || servicesState === 'installing') {
-            showState = showStates[3];
+            showState = NODE_STATUS.installing;
         } else if(servicesState === 'failed') {
-            showState = showStates[2];
+            showState = NODE_STATUS.failed;
         } else {
-            showState = showStates[0];
+            showState = NODE_STATUS.running;
         }
         return showState;
     };
@@ -136,15 +136,16 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return cluster;
     }
 
-    function classifyNodesByState(nodes, showStates) {
+    function classifyNodesByState(nodes) {
         var groups = {}
         var showState;
+        var showStates = Object.keys(NODE_STATUS);
         $.each(showStates, function(index, key) {
             groups[key] = [];
         });
         if(nodes && nodes.length) {
             $.each(nodes, function(nodeIndex, node) {
-                showState = $scope.getNodeState(node, showStates);
+                showState = $scope.getNodeState(node);
                 node.showState = showState;
                 groups[showState].push(node);
             });
@@ -152,11 +153,11 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return groups;
     }
 
-    $scope.groupMasterWithState = function(nodes, showStates) {
+    $scope.groupMasterWithState = function(nodes) {
         var groupsWithState = {};
         var cluster = groupMasters(nodes);
         $.each(cluster, function(key, val) {
-            groupsWithState[key] = classifyNodesByState(val, showStates);
+            groupsWithState[key] = classifyNodesByState(val);
         });
         return groupsWithState;
     }
