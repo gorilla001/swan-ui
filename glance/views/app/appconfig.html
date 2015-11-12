@@ -17,14 +17,18 @@
                 <dt>容器个数：</dt>
                 <dd>{/config.ContainerNum/}</dd>
             </dl>
-            <h4><span>应用地址</span></h4>
-            <table class="table table-striped table-bordered" ng-show="config.ContainerPortsInfo">
+            <dl ng-repeat="volumeInfo in config.ContainerVolumesInfo" ng-show="config.ContainerVolumesInfo.length">
+                <dt>挂载目录：</dt>
+                <dd>容器挂载目录:{/volumeInfo.HostPath/}</dd>
+                <dd>数据挂载目录:{/volumeInfo.ContainerPath/}</dd>
+            </dl>
+            <h4 ng-show="config.ContainerPortsInfo.length"><span>应用地址</span></h4>
+            <table class="table table-striped table-bordered" ng-show="config.ContainerPortsInfo.length">
                 <thead>
                 <tr>
                     <th>端口</th>
                     <th>服务地址类型</th>
-                    <th>IP 地址</th>
-                    <th>服务端口</th>
+                    <th>URI</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,11 +36,10 @@
                     <td>{/portInfo.port/}</td>
                     <td>{/portType[portInfo.type]/}</td>
                     <td>{/portInfo.uri/}</td>
-                    <td></td>
                 </tr>
                 </tbody>
             </table>
-            <h4 ng-show="config.Envs"><span>环境变量</span></h4>
+            <h4 ng-show="config.Envs.length"><span>环境变量</span></h4>
             <table class="table table-striped table-bordered" ng-show="config.Envs">
                 <thead>
                 <tr>
