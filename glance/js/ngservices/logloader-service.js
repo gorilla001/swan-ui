@@ -113,9 +113,11 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
 
         if (searchData.logSearchKey) {
             this.query_json = {
-                "query_string": {
-                    "query": searchData.logSearchKey,
-                    "default_field": "msg"
+                "match": {
+                    "msg": {
+                        "query": searchData.logSearchKey,
+                        "analyzer": "ik"
+                    }
                 }
             };
             this.data.query.bool.must.push(this.query_json);
