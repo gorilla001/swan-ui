@@ -52,7 +52,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.cpuSize = 0.1;
     $scope.memSize = 16;
     $scope.containerNum = 1;
-    $scope.imageversion = "latest";
+    $scope.imageversion = "";
     $scope.radio = "1";  //defalut apptype for radio box
 
     $scope.deployApp = function () {

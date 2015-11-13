@@ -8,7 +8,7 @@
         <div class="main-container-body">
             <form class="form-horizontal" name="staticForm" data-ng-submit="deployApp()">
                 <div class="form-group">
-                    <label class="col-md-2 control-label">应用名称</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>应用名称</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">选择集群</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>选择集群</label>
 
                     <div class="col-md-5">
                         <select class="form-control"
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">镜像地址</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>镜像地址</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
@@ -60,17 +60,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">镜像版本</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>镜像版本</label>
 
                     <div class="col-md-5">
-                        <input type="text" class="form-control" data-ng-model="imageversion" data-required="required">
+                        <input type="text" class="form-control" data-ng-model="imageversion" data-required="required" placeholder="版本号">
                         <span class="help-block">注:尽量不要使用 latest 作为版本号</span>
                     </div>
 
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">应用类型</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>应用类型</label>
 
                     <div class="col-md-5">
                         <label class="checkbox-inline">
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-2 control-label">主机选择</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>选择主机</label>
 
                     <div class="col-md-5">
                         <select class="form-control"
@@ -96,26 +96,11 @@
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-2 control-label">容器目录</label>
-
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
-                        <input type="text" name="containerDir" class="form-control" placeholder="容器挂载目录"
-                               data-ng-model="containerDir" ng-required="radio === '2'">
-                    </div>
-
-                    <div data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
-                        <p data-ng-show="staticForm.containerDir.$error.required  && !staticForm.containerDir.$pristine"
-                           class="help-block">容器目录必须有数据</p>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-2 control-label">数据目录</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>主机目录</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid && !staticForm.dateDir.$pristine}">
-                        <input type="text" name="dateDir" class="form-control" placeholder="数据挂载目录"
+                        <input type="text" name="dateDir" class="form-control" placeholder="宿主机路径"
                                data-ng-model="dateDir" ng-required="radio === '2'">
                     </div>
 
@@ -125,13 +110,28 @@
                     </div>
                 </div>
 
+                <div class="form-group" ng-show="radio === '2'">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>容器目录</label>
+
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
+                        <input type="text" name="containerDir" class="form-control" placeholder="容器内部目录"
+                               data-ng-model="containerDir" ng-required="radio === '2'">
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
+                        <p data-ng-show="staticForm.containerDir.$error.required  && !staticForm.containerDir.$pristine"
+                           class="help-block">容器目录必须有数据</p>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label class="col-md-2 control-label">容器规格</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>容器规格</label>
 
                     <div class="col-md-2">
                         <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}"
                                 min="cpuOptions.min" step="cpuOptions.step" max="cpuOptions.max"></slider>
-                        <p>CPU 共享: 1.0 现为:{/cpuSize/}</p>
+                        <p>CPU : 1.0 现为:{/cpuSize/}</p>
                     </div>
 
 
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">容器个数</label>
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>容器个数</label>
 
                     <div class="col-md-2"
                          data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
@@ -262,20 +262,20 @@
                         </div>
 
                         <div class="item-header">
-                            <h4>启动命令</h4>
+                            <h4>启动命令 <small>即 CMD</small></h4>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
                                 <label>启动命令</label>
-                                <input type="text" class="form-control" data-ng-model="cmdInput">
+                                <input type="text" class="form-control" data-ng-model="cmdInput" placeholder="输入需要运行的命令">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn btn-primary" data-ng-disabled="staticForm.$invalid"> 创 建
+                    <div class="col-md-offset-2 col-md-3">
+                        <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="staticForm.$invalid"> 创 建
                         </button>
                     </div>
                 </div>
