@@ -191,10 +191,31 @@ a.remove {
 	background-color: #FFF;
 	padding: 30px;
 }
-.main-container .main-container-body > .btn-group {
+
+/* 点击弹出按钮组 */
+.btn-group-toggle button {
+	background:url(../pics/bg-button-normal.png) no-repeat;
+	background-size: cover;
+	width: 65px; 
+	height: 38px; 
+	padding: 0; 
+	border: 0;
 	position: absolute;
-	right: 0;
-	top: 0;
+	top: -10px;
+	right: 10px;
+}
+.btn-group-toggle button:hover {
+	background:url(../pics/bg-button-hover.png) no-repeat;
+	background-size: cover;
+	box-shadow: none;
+}
+.btn-group-toggle.open .dropdown-toggle {
+	background:url(../pics/bg-button-selected.png) no-repeat;
+	background-size: cover;
+	box-shadow: none;
+}
+.btn-group-toggle.open button {
+	border-radius: 0px; 
 }
 .main-container footer {
 	line-height: 24px;
@@ -233,12 +254,6 @@ a.remove {
 }
 .cluster-detail .cluster-title h3 {
 	margin: 0;
-}
-.cluster-detail .cluster-title .btn {
-	height: 45px;
-	width: 45px;
-	font-size: 18px;
-	border: 0;
 }
 
 /* 主机详情 */
@@ -596,15 +611,6 @@ a.remove {
 }
 .cluster-detail .cluster-title h3 {
 	margin: 0;
-}
-.cluster-detail .cluster-title .btn {
-	height: 45px;
-	width: 45px;
-	font-size: 18px;
-	border: 0;
-	border-radius: 0;
-	background: #70bbe9;
-	color: #FFF;
 }
 .cluster-detail .cluster-title .btn:hover, .cluster-detail .cluster-title .btn:active {
 	background: #5bb1e8;
