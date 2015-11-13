@@ -15,10 +15,11 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     };
 
     $scope.portType = {
-        "1": "对内TCP",
-        "2": "对外TCP",
-        "3": "对外HTTP",
-        "4": "对内HTTP"
+        "1": "对内 TCP",
+        "2": "对外 TCP",
+        "3": "对外标准 HTTP",
+        "4": "对内 HTTP",
+        "5": "对外 HTTP"
     };
 
     $scope.getConfig();
