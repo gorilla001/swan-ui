@@ -178,16 +178,17 @@
                                     <option value="">选择类型</option>
                                     <option value="1">　对内 TCP</option>
                                     <option value="2">　对外 TCP</option>
-                                    <option value="3">　对外 HTTP</option>
+                                    <option value="3">　对外标准 HTTP</option>
                                     <option value="4">　对内 HTTP</option>
+                                    <option value="5">　对外 HTTP</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-2" data-ng-show="choice.key === '2' || choice.key === '3'"
+                            <div class="col-md-2" data-ng-show="choice.key === '2' || choice.key === '3' || choice.key === '5'"
                                  data-ng-class="{ 'has-error' : staticForm['portUri'+$index].$invalid}">
                                 <input type="text" data-ng-model="choice.uri" name="portUri{/$index/}"
-                                       class="form-control" placeholder="URI"
-                                       ng-required="choice.key === '2' || choice.key === '3'">
+                                       class="form-control" placeholder="域名"
+                                       ng-required="choice.key === '2' || choice.key === '3' || choice.key === '5'">
                             </div>
 
                             <button type="button" class="btn btn-default btn-xs" data-ng-show="$last"
