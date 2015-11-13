@@ -2,15 +2,9 @@
   <h1 class="pull-left" >集群管理</h1>
   <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">新建集群</button></a>
 </div>
-<a data-ui-sref="cluster.createcluster" data-ng-show="pageData.length === 0">
-  <div class="btn btn-xxl">
-        <p>
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            </br>
-            新建集群
-        </p>
-  </div>
-</a>
+  <a data-ui-sref="cluster.createcluster" data-ng-show="pageData.length === 0" class="btn-add-cluster">
+		<img src="../pics/ico-add-cluster.svg" width="42px"><br>创建群组
+	</a>
 
 <section data-ng-show="pageData.length !== 0" data-ng-repeat="cluster in pageData" class="cluster-manage">
     <div class="server-ico-list main-container">
