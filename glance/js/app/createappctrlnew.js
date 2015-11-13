@@ -126,12 +126,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                 $scope.deployinfo.containerVolumesInfo.push(volumesInfo);
             }
 
-            $scope.deployinfo.constraints = [["persistent", "LIKE", $scope.arrId]];
+            $scope.deployinfo.constraints = [["persistent", "LIKE", "persistent"], ["ip", "LIKE", $scope.nodeOkIp]];
         } else if($scope.radio === '1'){
             if($scope.deployinfo.hasOwnProperty('containerVolumesInfo')){
                 delete $scope.deployinfo.containerVolumesInfo;
             }
-            $scope.deployinfo.constraints = [["transient", "LIKE", "transient.*"]];
+            $scope.deployinfo.constraints = [["transient", "LIKE", "transient"]];
         }
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
@@ -163,13 +163,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         });
     };
 
-    $scope.getArrId = function(nodeOk){
-        if(nodeOk){
-            angular.forEach(nodeOk.attributes, function(value, key) {
-                if(value.attribute === 'persistent'){
-                    $scope.arrId = "persistent" + value.id;
-                }
-            });
+    $scope.getNodeOkIp = function(nodeOk){
+        if(nodeOk) {
+          $scope.nodeOkIp = nodeOk.ip;
         }
     };
 
