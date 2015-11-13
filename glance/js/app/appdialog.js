@@ -10,7 +10,7 @@ function versionDialogCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, N
         glanceHttp.ajaxPost(['app.updateVersion'], $scope.updateImageInfo, function (data) {
             Notification.success('应用 '+ appName +' 更新中...');
             $scope.$emit("checkIsDeploy");
-            $state.go('app.appdetail.version',undefined,{reload : true});
+            $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
         }, undefined, null, function (data) {
             Notification.error('应用 '+ appName +' 更新失败: ' + data.errors);
         });

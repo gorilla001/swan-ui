@@ -42,7 +42,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
                 }
                 promise = $timeout($scope.isDeploy, 10000);
             }else if($scope.isDeployState === IS_DEPLOYING){
-                $state.go('app.appdetail.version',undefined,{reload : true});
+                $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
             }
         }, undefined, null, function(data) {
 
