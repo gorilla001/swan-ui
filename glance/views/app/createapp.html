@@ -8,7 +8,7 @@
         <div class="main-container-body">
             <form class="form-horizontal" name="staticForm" data-ng-submit="deployApp()">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">应用名称</label>
+                    <label class="col-md-2 control-label">应用名称</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">镜像地址</label>
+                    <label class="col-md-2 control-label">镜像地址</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">容器规格</label>
+                    <label class="col-md-2 control-label">容器规格</label>
 
                     <div class="col-md-2">
                         <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}"
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">容器个数</label>
+                    <label class="col-md-2 control-label">容器个数</label>
 
                     <div class="col-md-2"
                          data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">选择集群</label>
+                    <label class="col-md-2 control-label">选择集群</label>
 
                     <div class="col-md-5">
                         <select class="form-control"
@@ -82,21 +82,23 @@
                                 data-ng-model="clusterid" data-required="required" ng-change="getNode(clusterid)"></select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">应用类型</label>
 
-                    <label>
-                        <input type="radio" ng-model="radio" value="1" data-required="required">
-                        无状态应用
-                    </label>
-                    <label>
-                        <input type="radio" ng-model="radio" value="2" data-required="required">
-                        有状态应用
-                    </label><br/>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">应用类型</label>
+                    <div class="col-md-5">
+                        <label class="checkbox-inline">
+                            <input type="radio" ng-model="radio" value="1" data-required="required">
+                            无状态应用
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" ng-model="radio" value="2" data-required="required">
+                            有状态应用
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-3 control-label">主机选择</label>
+                    <label class="col-md-2 control-label">主机选择</label>
 
                     <div class="col-md-5">
                         <select class="form-control"
@@ -106,7 +108,7 @@
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-3 control-label">容器目录</label>
+                    <label class="col-md-2 control-label">容器目录</label>
 
                     <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid}">
                         <input type="text" name="containerDir" class="form-control" placeholder="容器挂载目录" data-ng-model="containerDir" ng-required="dateDir && radio === '2'">
@@ -119,7 +121,7 @@
                 </div>
 
                 <div class="form-group" ng-show="radio === '2'">
-                    <label class="col-md-3 control-label">数据目录</label>
+                    <label class="col-md-2 control-label">数据目录</label>
 
                     <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid}">
                         <input type="text" name="dateDir"  class="form-control" placeholder="数据挂载目录" data-ng-model="dateDir" ng-required="containerDir && radio === '2'">
@@ -131,7 +133,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">镜像版本</label>
+                    <label class="col-md-2 control-label">镜像版本</label>
 
                     <div class="col-md-5">
                         <input type="text" class="form-control" data-ng-model="imageversion" data-required="required">
@@ -144,7 +146,7 @@
                 <div class="collapse" id="collapseExample">
                     <div class="well">
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createPort">
-                            <label class="col-md-3 control-label" data-ng-show="$first">端口号</label>
+                            <label class="col-md-2 control-label" data-ng-show="$first">端口号</label>
 
                             <div class="col-md-2" data-ng-class="{'col-md-offset-3': !$first,'has-error' : staticForm['portNum'+$index].$invalid}">
                                 <input type="number" name="portNum{/$index/}" data-ng-model="choice.value" name="" class="form-control"
@@ -173,7 +175,7 @@
                             </button>
                         </div>
                         <div class="form-group" data-ng-repeat="choice in dynamicData.createEnv">
-                            <label class="col-md-3 control-label" data-ng-show="$first">
+                            <label class="col-md-2 control-label" data-ng-show="$first">
                                 环境变量
                                 <small>自定义环境变量</small>
                             </label>
@@ -194,7 +196,7 @@
                             </button>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">CMD</label>
+                            <label class="col-md-2 control-label">CMD</label>
 
                             <div class="col-md-4">
                                 <input type="text" data-ng-model="cmdInput" name="" class="form-control"
