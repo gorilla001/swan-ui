@@ -152,7 +152,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var isBroken = false;
         var amount = 0;
         var brokenAmount = 0;
-        var brokenStates = ['disconnect', 'warning'];
+        var brokenStates = [NODE_STATUS.terminated, NODE_STATUS.failed];
         var showStates = Object.keys(NODE_STATUS);
         $.each(showStates, function(index, val) {
             amount += masters[val].length;
