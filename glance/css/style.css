@@ -617,9 +617,6 @@ a.remove {
 .cluster-detail .cluster-title h3 {
 	margin: 0;
 }
-.cluster-detail .cluster-title .btn:hover, .cluster-detail .cluster-title .btn:active {
-	background: #5bb1e8;
-}
 .cluster-detail .cluster-title .main-container-body {
 	height: 45px;
 	padding-top: 12px;
