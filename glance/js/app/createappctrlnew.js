@@ -99,7 +99,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-            $state.go('app.appdetail.instance', {appId: data.data});
+            $state.go('app.appdetail.config', {appId: data.data});
         }, undefined, null, function (data) {
             Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
         });
