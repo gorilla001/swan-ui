@@ -217,6 +217,11 @@ a.remove {
 .btn-group-toggle.open button {
 	border-radius: 0px; 
 }
+.btn-group-toggle {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
 .main-container footer {
 	line-height: 24px;
 	color: #9B9B9B;
