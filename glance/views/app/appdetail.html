@@ -13,9 +13,8 @@
 						<dt>应用状态：</dt>
 						<dd>{/appstate[appInfo.status]/}</dd>
 					</dl>
-					<div class="btn-group">
+					<div class="btn-group btn-group-toggle">
 						<button data-ng-disabled="!appInfo.status" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
-							<span class="glyphicon glyphicon-menu-hamburger"></span>
 						</button>
 						<ul class="dropdown-menu dropdown-menu-right">
 							<li data-ng-show="appInfo.status == '3'"><a href="#" data-ng-click="startApp(appInfo.appId, appInfo.name)">启动</a></li>
