@@ -4,6 +4,18 @@ createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
 
 function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.step = "stepone";
+    $scope.portInfo = {};
+    $scope.portInfos = [];
+    $scope.portType = {
+        "1": "对内 TCP",
+        "2": "对外 TCP",
+        "3": "对外标准 HTTP",
+        "4": "对内 HTTP",
+        "5": "对外 HTTP"
+    };
+
+    $scope.pathInfo = {};
+    $scope.pathsInfo = [];
 
     $scope.cpuOptions = {
         min: 0.1,
@@ -43,73 +55,19 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.imageversion = "latest";
     $scope.radio = "1";  //defalut apptype for radio box
 
-
-    $scope.dynamicData = {
-        "createEnv": [{id: 'choice1'}],
-        "createPort": [{id: 'choice1'}],
-
-        "addNewChoice": function (conditions) {
-            var newItemNo;
-            var creatLength = $scope.dynamicData[conditions].length;
-            var creatData = $scope.dynamicData[conditions];
-
-            if (creatData[creatLength - 1].key &&
-                creatData[creatLength - 1].value) {
-                newItemNo = creatLength + 1;
-                creatData.push({'id': 'choice' + newItemNo});
-            } else {
-                Notification.warning('输入框有空值,不能继续添加');
-            }
-        },
-        "removeChoice": function (conditions) {
-            var creatLength = $scope.dynamicData[conditions].length;
-            var creatData = $scope.dynamicData[conditions];
-
-            if (creatLength >= 2) {
-                creatData.pop();
-            } else {
-                Notification.warning('不能删除');
-            }
-        },
-
-        "subNumber": function (conditions) {
-
-            var creatData = $scope.dynamicData[conditions];
-
-            if (conditions === 'createEnv') {
-                $scope.deployinfo.envs = [];
-                angular.forEach(creatData, function (value) {
-                    var envInfo = {
-                        key: value.key,
-                        value: value.value
-                    };
-
-                    $scope.deployinfo.envs.push(envInfo);
-                });
-            } else if (conditions === 'createPort') {
-                $scope.deployinfo.containerPortsInfo = [];
-
-                angular.forEach(creatData, function (value) {
-                    var portInfo = {};
-
-                    value.hasOwnProperty('uri') ? portInfo = {
-                        type: value.key,
-                        port: value.value,
-                        uri: value.uri
-                    }: portInfo = {
-                        type: value.key,
-                        port: value.value
-                    };
-
-                    $scope.deployinfo.containerPortsInfo.push(portInfo);
-                });
-            }
-        }
-    };
-
     $scope.deployApp = function () {
-        if ($scope.dynamicData.createPort[0].value && $scope.dynamicData.createPort[0].key)$scope.dynamicData.subNumber('createPort');
-        if ($scope.dynamicData.createEnv[0].key && $scope.dynamicData.createEnv[0].value)$scope.dynamicData.subNumber('createEnv');
+        if($scope.portInfos.length){
+            $scope.deployinfo.containerPortsInfo = $scope.portInfos;
+        }else{
+            delete $scope.deployinfo.containerPortsInfo;
+        }
+
+        if($scope.pathsInfo.length){
+            $scope.deployinfo.envs = $scope.pathsInfo;
+        }else{
+            delete $scope.deployinfo.envs;
+        }
+
         if ($scope.cmdInput) {
             $scope.deployinfo.cmd = $scope.cmdInput;
         } else {
@@ -174,5 +132,27 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             delete $scope.dynamicData.createPort[index].uri;
         }
 
-    }
+    };
+
+    $scope.addPortInfo = function(portInfo){
+        $scope.portInfos.push(portInfo);
+        $scope.portInfo = {};
+    };
+
+    $scope.isOutterType = function(type){
+        return !!(type === '2'|| type === '3' || type === '5');
+    };
+
+    $scope.deletCurPort = function(index){
+        $scope.portInfos.splice(index,1);
+    };
+
+    $scope.addPathInfo = function(pathInfo){
+        $scope.pathsInfo.push(pathInfo);
+        $scope.pathInfo = {};
+    };
+
+    $scope.deletCurPath = function(index){
+        $scope.pathsInfo.splice(index,1);
+    };
 }
