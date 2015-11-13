@@ -5,6 +5,15 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '5_masters': 5,
     };
 
+    var clusterLeastNodesNumber = {
+        '1_master': 1,
+        '3_masters': 4,
+        '5_masters': 6,
+    };
+
+    $scope.clusterStatus = CLUSTER_STATUS;
+    $scope.nodeStatus = NODE_STATUS;
+
 
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
@@ -149,14 +158,15 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         slaves = group.nonMasters;
 
         data.masters = masters;
+        data.slaves = slaves;
         data.allMasters = getAllShowMasters(masters);
         nonMasters = getAllShowNonMasters(cluster, hideState);
         data.firstNon = nonMasters.first;
         data.followingNon = nonMasters.following;
         data.classes = getSelectedClass(cluster.hideStates);
-        if (nodes.length) {
-            data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.cluster_type);
-        }
+        data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.cluster_type);
+        data.problemNodes = getProblemNodes(masters, slaves, data.clusterStatus);
+        data.problemTips = setProblemTips(data.clusterStatus, cluster.cluster_type, nodes.length);
         return data;
     }
 
@@ -172,16 +182,25 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
     }
 
-    $scope.close = function(clusterId) {
-        $.each($scope.pageData, function(index, cluster) {
-            if(cluster.basicInfos.id === clusterId) {
-                $scope.pageData[index].clusterState = false;
+    $scope.close = function(clusterId, clusterStatus) {
+        var i;
+        if (clusterStatus === CLUSTER_STATUS.installing) {
+            $state.go('cluster.addnode', {'clusterId': clusterId});
+        } else {
+            for (i = 0; i < $scope.pageData.length; i++) {
+                if($scope.pageData[i].basicInfos.id === clusterId) {
+                    $scope.pageData[i].problemTips = null;
+                    break;
+                }
             }
-        });
+        }
     }
 
     function getSingleClusterStatus(masters, slaves, nodes, clusterType) {
         var status;
+        if(!nodes.length) {
+            return;
+        }
 
         if (isClusterUnknow(masters, slaves)) {
             return CLUSTER_STATUS.unknow;
@@ -286,6 +305,50 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             amount += (status.indexOf(service.status) > -1 ? 1 : 0);
         }
         return amount;
+    }
+
+    function setProblemTips(clusterStatus, clusterType, nodesAmount) {
+        if (!clusterStatus || (clusterStatus === CLUSTER_STATUS.running)) {
+            return;
+        }
+        var tips = {};
+        var needNumber = clusterLeastNodesNumber[clusterType] - nodesAmount;
+        var installingHeadText = '集群正在初始化中，还需添加 ' +  needNumber + ' 台主机';
+
+        tips[CLUSTER_STATUS.installing] = {
+            headText: installingHeadText,
+            paragraphText: '以下主机正在初始化中',
+            firstButtonText: '继续添加主机',
+            secondButtonText: '关闭'
+        };
+        tips[CLUSTER_STATUS.abnormal] = {
+            headText: '集群无法正常工作',
+            paragraphText: '以下主机出现问题，致使集群无法正常工作。',
+            firstButtonText: '知道了'
+        };
+        tips[CLUSTER_STATUS.unknow] = {
+            headText: '集群状态未知',
+            paragraphText: '以下主机失联，请连接主机查看。',
+            firstButtonText: '知道了'
+        };
+        return tips[clusterStatus];
+    }
+
+    function getProblemNodes(masters, slaves, clusterStatus) {
+        var problemNodes = [];
+        var nodeTypes = [masters, slaves];
+        var problemStatus = [];
+        if (clusterStatus === CLUSTER_STATUS.installing) {
+            problemStatus = [NODE_STATUS.installing];
+        } else {
+            problemStatus = [NODE_STATUS.terminated, NODE_STATUS.failed, NODE_STATUS.installing];
+        }
+        angular.forEach(nodeTypes, function(type, typeIndex) {
+            angular.forEach(problemStatus, function(status, statusIndex) {
+                problemNodes = problemNodes.concat(type[status]);
+            });
+        });
+        return problemNodes;
     }
 
 }
