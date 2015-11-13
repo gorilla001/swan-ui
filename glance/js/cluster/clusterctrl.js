@@ -83,9 +83,9 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         var isMaster = $scope.getIsMaster(node);
         var servicesState = getNodeServicesState(node.services, isMaster);
         var showState;
-        if (node.status === 'terminated'){
+        if (node.status === NODE_STATUS.terminated){
             showState =  NODE_STATUS.terminated;
-        } else if(node.status === "installing" || servicesState === 'installing') {
+        } else if(node.status === NODE_STATUS.installing || servicesState === 'installing') {
             showState = NODE_STATUS.installing;
         } else if(servicesState === 'failed') {
             showState = NODE_STATUS.failed;
