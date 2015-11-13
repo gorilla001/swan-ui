@@ -222,9 +222,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var runningMasterAmount = calStatusAmount(masterServices, status);
 
         if (runningMasterAmount === clusterTypes[clusterType]) {
-            var runningSlaveAmount = 0;
-            runningSlaveAmount = calStatusAmount(slaveServices, status);
-            if (runningSlaveAmount >= 1) {
+            if (calStatusAmount(slaveServices, status) >= 1) {
                 isRunning = true;
             }
         }
@@ -240,7 +238,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     }
 
     function getClusterNeedServices(nodes) {
-        var result = {
+        var clusterNeedServices = {
             masterServices: [],
             slaveServices: []
         };
@@ -251,18 +249,18 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         for (i = 0; i < nodes.length; i ++) {
             node = nodes[i];
             needServices = getNodeNeedServices(node.services);
-            result.masterServices.push(needServices.master);
-            result.slaveServices.push(needServices.slave);
+            clusterNeedServices.masterServices.push(needServices.master);
+            clusterNeedServices.slaveServices.push(needServices.slave);
         }
-        return result;
+        return clusterNeedServices;
     }
 
     function getNodeNeedServices(services) {
-        var result = {
+        var nodeNeedServices = {
             'master': {},
             'slave': {}
         };
-        var names = Object.keys(result);
+        var names = Object.keys(nodeNeedServices);
         var i;
         var service;
         var breakAmount = 0;
@@ -270,14 +268,14 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             service = services[i];
             
             if (names.indexOf(service.name) > -1) {
-                result[service.name] = service;
+                nodeNeedServices[service.name] = service;
                 breakAmount += 1;
             }
             if (breakAmount === names.length) {
                 break;
             }
         }
-        return result;
+        return nodeNeedServices;
     }
 
             
