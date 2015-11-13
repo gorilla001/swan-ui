@@ -1,4 +1,4 @@
-function glanceHttp($http, $state, $rootScope, utils) {
+function glanceHttp($http, $state, $rootScope, utils, Notification) {
     var token;
     var clearCallback;
     
@@ -28,7 +28,7 @@ function glanceHttp($http, $state, $rootScope, utils) {
             } else if (warningCallback) {
                 warningCallback(data);
             } else {
-                alert("服务未激活");
+                Notification.error("服务未激活");
             }
         }).error(function (data, status) {
             if (status == 403) {
@@ -38,7 +38,7 @@ function glanceHttp($http, $state, $rootScope, utils) {
                 errorCallback(data, status);
             } else {
                 console.log("request failed (" + status + ")");
-                alert("服务未激活");
+                Notification.error("服务未激活");
             }
         });
 
@@ -71,5 +71,5 @@ function glanceHttp($http, $state, $rootScope, utils) {
     };
 }
 
-glanceHttp.$inject = ["$http", "$state", "$rootScope", "utils"];
+glanceHttp.$inject = ["$http", "$state", "$rootScope", "utils", "Notification"];
 glanceApp.factory('glanceHttp', glanceHttp);

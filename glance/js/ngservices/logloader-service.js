@@ -1,4 +1,4 @@
-function LogLoader($filter, $rootScope, glanceHttp, $sce) {
+function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
     var LogLoader = function () {
         this.logs = [];
         this.logInfo = [];
@@ -41,7 +41,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
             }.bind(this),
             function (data, status) {
                 if (status == 502) {
-                    alert("服务未激活");
+                    Notification.error("服务未激活");
                     this.tryTimes = 0;
                 }
                 this.isLoadingLogs = false;
@@ -169,5 +169,5 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce) {
     return LogLoader;
 }
 
-LogLoader.$inject = ["$filter", "$rootScope", "glanceHttp", "$sce"];
+LogLoader.$inject = ["$filter", "$rootScope", "glanceHttp", "$sce", "Notification"];
 glanceApp.factory('LogLoader', LogLoader);
