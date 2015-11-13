@@ -976,3 +976,40 @@ a.remove {
     display: block;
     margin-right: 0px;
 }
+
+/* 新建应用 */
+.new-app label small {
+	font-weight: normal;
+	color: #CCC;
+	display: block;
+}
+.new-app .well {
+	padding: 19px 30px;
+}
+.new-app .ad-set {
+	margin-bottom: 15px;
+	display: inline-block;
+	padding-left: 8px;
+}
+
+.new-app .item-header {
+	border-bottom: 1px solid #CCC;
+	margin: 40px 0 20px 0;
+}
+.new-app .item-header:first-child {
+	margin-top: 0px;
+}
+.new-app .form-inline .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.new-app .form-inline input, .new-app .form-inline select {
+	margin-left: 6px;
+	margin-right: 12px;
+}
+.new-app table {
+	margin: 20px 0 0 0 ;
+}
+.new-app table td, .new-app table th {
+	background: #FFF;
+}
