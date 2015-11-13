@@ -1,8 +1,8 @@
 function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     var clusterTypes = {
         '1_master': 1,
-        '3_master': 3,
-        '5_master': 5,
+        '3_masters': 3,
+        '5_masters': 5,
     };
 
 
@@ -155,7 +155,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         data.followingNon = nonMasters.following;
         data.classes = getSelectedClass(cluster.hideStates);
         if (nodes.length) {
-            data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.clusterType);
+            data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.cluster_type);
         }
         return data;
     }
@@ -203,14 +203,14 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function isClusterUnknow(masters, slaves) {
         var isUnknow = false;
-        if (masters.terminated.length) {
+        if (masters[NODE_STATUS.terminated].length) {
             isUnknow = true;
-        } else if (slaves.terminated.length){
+        } else if (slaves[NODE_STATUS.terminated].length){
             var slavesAmount = 0;
-            angular.forEach(slaves, function(key, value) {
+            angular.forEach(slaves, function(value, key) {
                 slavesAmount += value.length;
             });
-            isUnknow = Boolean(slaves.terminated.length === slavesAmount);
+            isUnknow = Boolean(slaves[NODE_STATUS.terminated].length === slavesAmount);
         }
         return isUnknow;
     }
@@ -220,7 +220,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var status = [NODE_STATUS.running];
 
         var runningMasterAmount = calStatusAmount(masterServices, status);
-
         if (runningMasterAmount === clusterTypes[clusterType]) {
             if (calStatusAmount(slaveServices, status) >= 1) {
                 isRunning = true;
