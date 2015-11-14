@@ -1019,3 +1019,17 @@ a.remove {
 .new-app table td, .new-app table th {
 	background: #FFF;
 }
+/* 应用配置 */
+.app-config dl, .app-config dt, .app-config dd {
+	display: inline-block;
+}
+.app-config dl {
+	min-width: 40%;
+}
+.app-config h4 {
+	background: url(../pics/bg-line-gray.png) repeat-x left;
+}
+.app-config h4 span {
+	background: #FFF;
+	padding-right: 12px;
+}
