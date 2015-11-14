@@ -491,73 +491,79 @@ a.remove {
 .cluster-manage {
 	position: relative;
 }
-.cluster-manage .cluster-status-disconnect {
-	height: 340px;
-	width: 100%;
-	background-color: rgba(0,0,0,0.8);
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 1001;
+.cluster-status-panel {
+    height: 350px; 
+    width: 100%; 
+    background-color: rgba(0,0,0,0.8); 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    z-index: 1001;
 }
-.cluster-manage .cluster-status-disconnect .disconnect-content {
-	width: 560px;
-	height: 245px;
-	padding: 15px 25px;
-	background-color: #FFF;
-	border-radius: 4px;
-	margin: 48px auto 0 auto;
+.cluster-status-panel .cluster-status-main {
+    background: #FFF;
+    width: 60%;
+    margin: 20px auto;
 }
-.cluster-manage .disconnect-content h3 {
-	color: #D0021B;
-	font-size: 24px;
-	font-weight: 600;
-	margin: 0 0 5px 0;
+.cluster-status-panel header {
+    background-color: #EEE;
+    border-bottom: 1px solid #e5e5e5;
+    min-height: 16.43px;
+    padding: 15px 15px 12px 15px;
 }
-.cluster-manage .disconnect-content h4 {
-	color: #000;
-	font-size: 12px;
-	margin: 0 0 15px 0;
+.cluster-status-panel header h3 {
+    margin: 0;
 }
-.cluster-manage .disconnect-content ul {
-	margin-left: 24px;
-	margin-bottom: 20px;
-	padding-left: 0;
+.cluster-status-panel header img {
+    float: left;
+    margin-right: 6px;
 }
-.cluster-manage .disconnect-content li {
-	list-style: none;
-	line-height: 20px;
+.cluster-status-panel footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 15px;
+    text-align: right;
 }
-.cluster-manage footer {
-	text-align: right;
+.cluster-status-panel .cluster-status-content {
+    vertical-align: middle;
+    padding: 15px;
+}
+.cluster-status-panel .cluster-status-content ul {
+    margin-bottom: 0;
+    padding-left: 26px;
+}
+.cluster-status-panel .cluster-status-content li {
+    list-style: none;
+    margin-bottom: 5px;
 }
 
+
 .cluster-service-status-number, .cluster-service-ico-list {
-	font-size: 0;
-	margin: 0 0 20px 0;
-	padding: 0;
+    font-size: 0;
+    margin: 0 0 20px 0;
+    padding: 0;
 }
 .cluster-service-status-number {
-	margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 .cluster-service-status-number li {
-	display: inline-block;
-	list-style: none;
-	font-size: 12px;
+    display: inline-block;
+    list-style: none;
+    font-size: 12px;
 }
 .cluster-service-status-number li span {
-	font-size: 24px;
+    font-size: 24px;
 }
 .cluster-service-status-number li a {
-	display: block;
-	height: 28px;
-	background-repeat: no-repeat;
-	background-position: bottom left;
-	background-size: 22px;
-	padding-left: 30px;
-	margin-right: 34px;
-	color: #4A4A4A;
+    display: block;
+    height: 28px;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 22px;
+    padding-left: 30px;
+    margin-right: 34px;
+    color: #4A4A4A;
 }
+
 .cluster-service-status-number li.running a {
 	background-image: url(../pics/ico-node-status-running.png);
 }
