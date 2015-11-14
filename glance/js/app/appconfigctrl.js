@@ -11,7 +11,6 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     $scope.getConfig = function(){
         glanceHttp.ajaxGet(['app.config',{app_id: $stateParams.appId}], function (data) {
             $scope.config = data.data;
-            $scope.getAppInfo($stateParams.appId);
         });
     };
 
