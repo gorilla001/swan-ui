@@ -127,13 +127,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }
     };
 
-    $scope.clearUri = function(index){
-        if(($scope.dynamicData.createPort[index].key === '1' || $scope.dynamicData.createPort[index].key === '2') || $scope.dynamicData.createPort[index].uri){
-            delete $scope.dynamicData.createPort[index].uri;
-        }
-
-    };
-
     $scope.addPortInfo = function(portInfo){
         $scope.portInfos.push(portInfo);
         $scope.portInfo = {};
@@ -155,4 +148,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.deletCurPath = function(index){
         $scope.pathsInfo.splice(index,1);
     };
+
+    $scope.clearURI = function(radioType){
+        if((radioType === '1' || radioType === '4') && $scope.portInfo.uri){
+            delete $scope.portInfo.uri;
+        }
+    }
 }
