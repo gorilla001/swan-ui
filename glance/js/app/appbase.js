@@ -86,5 +86,31 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         });
     };
 
+    $scope.getNode = function(clusterId){
+        $scope.nodesOk = [];
+        $scope.gateWays= [];
+        $scope.proxyNodes = [];
+        angular.forEach($scope.clusters, function(value, key) {
+            if(value.id === clusterId){
+                for(var i =0; i< value.nodes.length; i++){
+                    for(var j =0; j < value.nodes[i].attributes.length; j++){
+                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
+                            $scope.nodesOk.push(value.nodes[i]);
+                        }
+
+                        if(value.nodes[i].attributes[j].attribute === 'gateway'){
+                            $scope.gateWays.push(value.nodes[i]);
+                        }
+
+                        if(value.nodes[i].attributes[j].attribute === 'proxy'){
+                            $scope.proxyNodes.push(value.nodes[i]);
+                        }
+
+                    }
+                }
+            }
+        });
+    };
+
     $scope.listCluster();
 }
