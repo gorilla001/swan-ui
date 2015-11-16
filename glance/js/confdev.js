@@ -60,7 +60,6 @@ BACKEND_URL = {
     agentConfig: {
       installScript: "curl -Ls INSTALLSCRIPT_URL | sudo -H",
       dmHost: "DM_HOST",
-      version: "OMEGA_AGENT_VERSION",
       filesUrl: "FILES_URL"
     }
 };

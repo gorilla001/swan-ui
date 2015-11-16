@@ -26,7 +26,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             var cmdArray = new Array(
                 BACKEND_URL.agentConfig.installScript,
                 BACKEND_URL.agentConfig.dmHost,
-                BACKEND_URL.agentConfig.version,
+                "OMEGA_AGENT_VERSION=" + $scope.agentVersionLatest,
                 BACKEND_URL.agentConfig.filesUrl,
                "sh -s",
                data.data.identifier
