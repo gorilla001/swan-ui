@@ -16,11 +16,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
                 toast = "您所删除的主机中包含 Master,删除后会引起故障，是否继续删除？";
             }
         }
-
         $scope.myConfirm(toast, function () {
-            glanceHttp.ajaxPost(["cluster.delNodes"], {"ids": nodeIds}, function (data) {
+            glanceHttp.ajaxDelete(["cluster.nodes", {"cluster_id": $stateParams.clusterId}], function (data) {
                 $state.reload("cluster.clusterdetails");
-            })
+            }, undefined, undefined, undefined, {"ids": nodeIds})
         });
     };
 

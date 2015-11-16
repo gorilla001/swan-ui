@@ -6,19 +6,33 @@ function utils() {
             });
         });
     };
-
-    function getBaseUrl(urlKey) {
-        var confs = urlKey.split('.');
-        var categoryKey = confs[0];
-        var detailKey = confs[1];
-        return BACKEND_URL[categoryKey].base + BACKEND_URL[categoryKey][detailKey];
+    
+    function getUrlBase(categoryKey, is_ws) {
+        if (BACKEND_URL[categoryKey].base) {
+            return BACKEND_URL[categoryKey].base;
+        } else {
+            var protocol = "http";
+            if (is_ws) {
+                protocol = "ws";
+            }
+            if (BACKEND_URL.defaultBase.isSSL) {
+                protocol = protocol+"s";
+            }
+            return protocol+"://" + BACKEND_URL.defaultBase.url;
+        }
     }
 
-    var buildFullURL = function(urlParams) {
-        var urlKey = urlParams[0];
-        var url = getBaseUrl(urlKey);
-        if (urlParams.length > 1) {
-            $.each(urlParams[1], function(key, val) {
+    function getUrlTemplate(urlName, is_ws) {
+        var confs = urlName.split('.');
+        var categoryKey = confs[0];
+        var detailKey = confs[1];
+        return getUrlBase(categoryKey, is_ws) + BACKEND_URL[categoryKey][detailKey];
+    }
+
+    var buildFullURL = function(urlName, params, is_ws) {
+        var url = getUrlTemplate(urlName, is_ws);
+        if (params) {
+            $.each(params, function(key, val) {
                 url = url.replace("$" + key, val);
             });
         }

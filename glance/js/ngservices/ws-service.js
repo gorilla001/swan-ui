@@ -4,7 +4,7 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
     var wsCallbacks = {};
 
     function buildWS(token) {
-        ws = ngSocket(utils.buildFullURL(["ws.subscribe", {token: token}]));
+        ws = ngSocket(utils.buildFullURL("ws.subscribe", {token: token}, true));
         ws._onCloseHandler = function (event) {
             if (event.code != WS_CODE.token_invalide) {
                 ws.reconnect();
