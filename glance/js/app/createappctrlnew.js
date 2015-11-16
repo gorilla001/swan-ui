@@ -107,32 +107,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         });
     };
 
-    $scope.getNode = function(clusterId,keyword){
-        $scope.nodesOk = [];
-        $scope.gateWays= [];
-        $scope.proxyNodes = [];
-        angular.forEach($scope.clusters, function(value, key) {
-            if(value.id === clusterId){
-                for(var i =0; i< value.nodes.length; i++){
-                    for(var j =0; j < value.nodes[i].attributes.length; j++){
-                        if(value.nodes[i].attributes[j].attribute === keyword){
-                            if(keyword ===  'persistent'){
-                                $scope.nodesOk.push(value.nodes[i]);
-                            }
-                            if(keyword ===  'gateway'){
-                                $scope.gateWays.push(value.nodes[i]);
-                            }
-                            if(keyword ===  'proxy'){
-                                $scope.proxyNodes.push(value.nodes[i]);
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-    };
-
     $scope.getNodeOkIp = function(nodeOk){
         if(nodeOk) {
           $scope.nodeOkIp = nodeOk.ip;
@@ -164,13 +138,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             $scope.portInfo.isUri = '1';
             $scope.portInfo.mapPort = 80;
         }else {
-            $scope.getNode($scope.clusterid,'proxy');
             $scope.portInfo.mapPort = "";
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
             }
             if($scope.portInfo.hasOwnProperty('isUri')){
-                delete $scope.portInfo.isUri
+                delete $scope.portInfo.isUri;
             }
         }
     };
@@ -178,9 +151,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.isURI = function(isUri){
         if(isUri === '1'){
             $scope.portInfo.mapPort = 80;
-        }else {
+        }else if(isUri === '2'){
             $scope.portInfo.mapPort = "";
-            $scope.getNode($scope.clusterid,'gateway');
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
             }

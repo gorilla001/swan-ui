@@ -22,7 +22,7 @@
                            class="help-block">应用名不能为空</p>
 
                         <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
-                           class="help-block">应用名称不符合 Marathon 命名规则</p>
+                           class="help-block">应用名称不符合数人云命名规则</p>
 
                         <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
                            class="help-block">应用名已存在</p>
@@ -39,7 +39,7 @@
                         <select class="form-control"
                                 data-ng-options=" cluster.id as cluster.name disable when cluster.status != 'running' for cluster in clusters"
                                 data-ng-model="clusterid" data-required="required"
-                                ng-change="getNode(clusterid,'persistent')">
+                                ng-change="getNode(clusterid)">
                             <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
                         </select>
                     </div>
