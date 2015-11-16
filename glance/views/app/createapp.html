@@ -201,7 +201,7 @@
                                 <div class="form-group">
                                     <label>映射端口</label>
                                     <input type="number" class="form-control" min="1" max="65535"
-                                           data-ng-model="portInfo.portMapping">
+                                           data-ng-model="portInfo.mapPort">
                                 </div>
                             </div>
 
@@ -226,7 +226,7 @@
                                 <div class="form-group">
                                     <label>映射端口</label>
                                     <input type="number" class="form-control" ng-disabled="true"
-                                           data-ng-model="portInfo.portMapping">
+                                           data-ng-model="portInfo.mapPort">
                                 </div>
                             </div>
 
@@ -239,12 +239,12 @@
                                 <div class="form-group">
                                     <label>映射端口</label>
                                     <input type="number" class="form-control"
-                                           data-ng-model="portInfo.portMapping">
+                                           data-ng-model="portInfo.mapPort">
                                 </div>
                             </div>
 
                             <button class="btn btn-default" type="button"
-                                    data-ng-disabled=""
+                                    data-ng-disabled="!portInfo.appPort && !portInfo.protocol && !portInfo.type"
                                     ng-click="addPortInfo(portInfo)">增加
                             </button>
                         </div>
@@ -266,9 +266,9 @@
                                     <td>{/portType[info.type]/}</td>
                                     <td>{/protocolType[info.protocol]/}</td>
                                     <td>
-                                        <span ng-show="info.type === '1'" ng-repeat="proxyNode in proxyNodes">{/protocolType[info.protocol]/}://{/proxyNode.ip/}:{/info.portMapping/}</span>
-                                        <span ng-show="info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">{/protocolType[info.protocol]/}://{/gateWay.ip/}:{/info.portMapping/}</span>
-                                        <span ng-show="info.type === '2' && info.isUri === '1'">{/protocolType[info.protocol]/}://{/info.uri/}:{/info.portMapping/}</span>
+                                        <span ng-show="info.type === '1'" ng-repeat="proxyNode in proxyNodes">{/protocolType[info.protocol]/}://{/proxyNode.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">{/protocolType[info.protocol]/}://{/gateWay.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.type === '2' && info.isUri === '1'">{/protocolType[info.protocol]/}://{/info.uri/}:{/info.mapPort/}</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-xs"

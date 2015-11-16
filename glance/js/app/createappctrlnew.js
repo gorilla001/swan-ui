@@ -140,7 +140,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.addPortInfo = function(portInfo){
-        console.log(11)
         $scope.portInfos.push(portInfo);
         $scope.portInfo = {};
     };
@@ -163,10 +162,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.portInfo.uri = "";
         if(portInfoType === '2'){
             $scope.portInfo.isUri = '1';
-            $scope.portInfo.portMapping = 80;
+            $scope.portInfo.mapPort = 80;
         }else {
             $scope.getNode($scope.clusterid,'proxy');
-            $scope.portInfo.portMapping = "";
+            $scope.portInfo.mapPort = "";
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
             }
@@ -178,9 +177,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
 
     $scope.isURI = function(isUri){
         if(isUri === '1'){
-            $scope.portInfo.portMapping = 80;
+            $scope.portInfo.mapPort = 80;
         }else {
-            $scope.portInfo.portMapping = "";
+            $scope.portInfo.mapPort = "";
             $scope.getNode($scope.clusterid,'gateway');
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
