@@ -185,5 +185,17 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
                 delete $scope.portInfo.uri
             }
         }
+    };
+
+    $scope.isDisable = function(portInfo){
+        if(portInfo.type === '1' && portInfo.mapPort){
+            return false;
+        }else if(portInfo.type === '2' && portInfo.isUri === '1' && portInfo.uri){
+            return false
+        }else if(portInfo.type === '2' && portInfo.isUri === '2' && portInfo.mapPort){
+            return false;
+        }
+
+        return true;
     }
 }
