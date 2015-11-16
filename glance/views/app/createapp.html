@@ -266,9 +266,9 @@
                                     <td>{/portType[info.type]/}</td>
                                     <td>{/protocolType[info.protocol]/}</td>
                                     <td>
-                                        <span ng-show="info.type === '1'" ng-repeat="proxyNode in proxyNodes">{/protocolType[info.protocol]/}://{/proxyNode.ip/}:{/info.mapPort/}</span>
-                                        <span ng-show="info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">{/protocolType[info.protocol]/}://{/gateWay.ip/}:{/info.mapPort/}</span>
-                                        <span ng-show="info.type === '2' && info.isUri === '1'">{/protocolType[info.protocol]/}://{/info.uri/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.type === '1'" ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.type === '2' && info.isUri === '1'">http://{/info.uri/}</span>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-xs"
