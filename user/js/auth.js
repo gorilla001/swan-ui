@@ -77,7 +77,7 @@ $(document).ready(function(){
                     hideDom: '#register',
                     showDom: '#relative-success',
                     tipDom: '.success-tips',
-                    tipText:  '注册成功！'
+                    tipText:  '请登录您的邮箱激活账号'
                 };
                 var textMailData = {
                     text: '登录邮箱',
