@@ -7,11 +7,13 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.portInfo = {};
     $scope.portInfos = [];
     $scope.portType = {
-        "1": "对内 TCP",
-        "2": "对外 TCP",
-        "3": "对外标准 HTTP",
-        "4": "对内 HTTP",
-        "5": "对外 HTTP"
+        "1": "对内",
+        "2": "对外"
+    };
+
+    $scope.protocolType = {
+        "1": "TCP",
+        "2": "HTTP"
     };
 
     $scope.pathInfo = {};
@@ -105,14 +107,24 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         });
     };
 
-    $scope.getNode = function(clusterId){
+    $scope.getNode = function(clusterId,keyword){
         $scope.nodesOk = [];
+        $scope.gateWays= [];
+        $scope.proxyNodes = [];
         angular.forEach($scope.clusters, function(value, key) {
             if(value.id === clusterId){
                 for(var i =0; i< value.nodes.length; i++){
                     for(var j =0; j < value.nodes[i].attributes.length; j++){
-                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
-                            $scope.nodesOk.push(value.nodes[i]);
+                        if(value.nodes[i].attributes[j].attribute === keyword){
+                            if(keyword ===  'persistent'){
+                                $scope.nodesOk.push(value.nodes[i]);
+                            }
+                            if(keyword ===  'gateway'){
+                                $scope.gateWays.push(value.nodes[i]);
+                            }
+                            if(keyword ===  'proxy'){
+                                $scope.proxyNodes.push(value.nodes[i]);
+                            }
                             break;
                         }
                     }
@@ -128,12 +140,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.addPortInfo = function(portInfo){
+        console.log(11)
         $scope.portInfos.push(portInfo);
         $scope.portInfo = {};
-    };
-
-    $scope.isOutterType = function(type){
-        return !!(type === '2'|| type === '3' || type === '5');
     };
 
     $scope.deletCurPort = function(index){
@@ -149,9 +158,33 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.pathsInfo.splice(index,1);
     };
 
-    $scope.clearURI = function(radioType){
-        if((radioType === '1' || radioType === '4') && $scope.portInfo.uri){
-            delete $scope.portInfo.uri;
+    /*************/
+    $scope.changeType = function(portInfoType){
+        $scope.portInfo.uri = "";
+        if(portInfoType === '2'){
+            $scope.portInfo.isUri = '1';
+            $scope.portInfo.portMapping = 80;
+        }else {
+            $scope.getNode($scope.clusterid,'proxy');
+            $scope.portInfo.portMapping = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri
+            }
+        }
+    };
+
+    $scope.isURI = function(isUri){
+        if(isUri === '1'){
+            $scope.portInfo.portMapping = 80;
+        }else {
+            $scope.portInfo.portMapping = "";
+            $scope.getNode($scope.clusterid,'gateway');
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
         }
     }
 }
