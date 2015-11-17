@@ -39,6 +39,9 @@ $(document).ready(function(){
                 return (!$el.val()) || (length >= minlength) || (length === 1);
             },
             'phonenumber': function($el) {
+                if ($el.val() === '') {
+                    return true;
+                }
                 var value = Number($el.val());
                 if (!value) {
                     return false;
@@ -72,6 +75,8 @@ $(document).ready(function(){
     $('.registerForm').validator(options).on('submit', function(e){
         var registerEmail = $('#register-email').val();
         var registerPassword = $('#register-password').val();
+        var phoneNumber = $('#register-phoneNumber').val();
+        phoneNumber = (phoneNumber !== '') ? phoneNumber: null;
 
         var registerPostData = {
             email: registerEmail,
