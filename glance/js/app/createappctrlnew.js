@@ -13,15 +13,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.step = "stepone";
     $scope.portInfo = {};
     $scope.portInfos = [];
-    $scope.portType = {
-        "1": "对内",
-        "2": "对外"
-    };
-
-    $scope.protocolType = {
-        "1": "TCP",
-        "2": "HTTP"
-    };
 
     $scope.pathInfo = {};
     $scope.pathsInfo = [];

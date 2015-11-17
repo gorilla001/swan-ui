@@ -26,16 +26,26 @@
             <table class="table table-striped table-bordered" ng-show="config.ContainerPortsInfo.length">
                 <thead>
                 <tr>
-                    <th>端口</th>
-                    <th>服务地址类型</th>
-                    <th>URI</th>
+                    <th>应用端口</th>
+                    <th>类型</th>
+                    <th>协议</th>
+                    <th>地址</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="portInfo in config.ContainerPortsInfo">
-                    <td>{/portInfo.Port/}</td>
-                    <td>{/portType[portInfo.Type]/}</td>
-                    <td>{/portInfo.Uri/}</td>
+                    <td>{/portInfo.appPort/}</td>
+                    <td>{/portType[portInfo.type]/}</td>
+                    <td>{/protocolType[portInfo.protocol]/}</td>
+                    <td>
+                        <span ng-show="portInfo.protocol === 1 && portInfo.type === 1" ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/portInfo.mapPort/}</span>
+                        <span ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</span>
+                        <span ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 1">{/portInfo.uri/}</span>
+                        <span ng-show="portInfo.protocol === 2 && portInfo.type === 1"  ng-repeat="proxyNode in proxyNodes">http://{/proxyNode.ip/}:{/portInfo.mapPort/}</span>
+                        <span ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 1">http://{/portInfo.uri/}</span>
+                        <span ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/portInfo.mapPort/}</span>
+                        <span ng-show="portInfo.protocol === 1 && portInfo.type === 2 && !portInfo.isUri "  ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
