@@ -178,17 +178,13 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     
     function isPortInfoDup(portInfo) {
         function equal(portInfo1, portInfo2) {
-            var attrnames = ["protocol", "type", "mapPort"];
+            var attrnames = ["type", "mapPort", "uri"];
             for(var i=0; i< attrnames.length; i++){
                 if(portInfo1[attrnames[i]] != portInfo2[attrnames[i]]) {
                     return false;
                 }
             }
-            if (portInfo1.protocol == SELECT_HTTP && portInfo1.type == OUTER && portInfo1.isUri === HAS_DOMAIN) {
-                return portInfo1.uri == portInfo2.uri;
-            } else {
-                return true;
-            }
+            return true;
         }
         for(var i=0; i<$scope.portInfos.length; i++){
             if(equal(portInfo, $scope.portInfos[i])) {
