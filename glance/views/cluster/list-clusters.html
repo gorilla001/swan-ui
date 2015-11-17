@@ -3,14 +3,14 @@
   <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">新建集群</button></a>
 </div>
   <a data-ui-sref="cluster.createcluster" data-ng-show="pageData.length === 0" class="btn-add-cluster">
-		<img src="../pics/ico-add-cluster.svg" width="42px"><br>创建群组
+		<img src="../pics/ico-add-cluster.svg" width="42px"><br>新建集群
 	</a>
 
 <section data-ng-show="pageData.length !== 0" data-ng-repeat="cluster in pageData" class="cluster-manage">
     <div class="server-ico-list main-container">
         <header class="clearfix main-container-header">
             <h2>
-            <span data-ng-show="!cluster.amounts.total">{/ cluster.basicInfos.name /}</span>
+                <span data-ng-show="!cluster.amounts.total">{/ cluster.basicInfos.name /}</span>
                 <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">
                     {/ cluster.basicInfos.name /}
                 </a>
@@ -97,28 +97,26 @@
         </div>
 
         <footer class="main-container-footer">
-            <span ng-show="cluster.basicInfos.created_at">创建时间: {/ cluster.basicInfos.created_at /}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span ng-show="cluster.basicInfos.updated_at">更新时间: {/ cluster.basicInfos.updated_at /}</span>
+            <span data-ng-show="cluster.basicInfos.updated_at">更新时间: {/ cluster.basicInfos.updated_at /}</span>
         </footer>
     </div>
-    <div class="cluster-status-disconnect" data-ng-show="cluster.clusterState && cluster.amounts.total">
-        <div class="disconnect-content">
-            <h3>集群无法正常工作</h3>
-            <h4>以下主机[Master]出现问题，致使集群无法正常工作。</h4>
-            <ul>
-                <li data-ng-repeat="master in cluster.masters.disconnect">
-                    <a href="#" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
-                        主机名 [{/master.status/}] {/master.ip/}
-                    </a>
-                </li>
-                <li data-ng-repeat="master in cluster.masters.warning">
-                    <a href="#" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
-                        主机名 [{/master.status/}] {/master.ip/}
-                    </a>
-                </li>
-            </ul>
+
+    <div class="cluster-status-panel" data-ng-show="cluster.problemTips">
+        <div class="cluster-status-main">
+            <header>
+                <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
+            </header>
+            <div class="cluster-status-content">
+                <p>{/cluster.problemTips.paragraphText/}</p>
+                <ul class="clearfix">
+                    <li data-ng-repeat="node in cluster.problemNodes">
+                        <a href="#" data-ui-sref="cluster.nodedetails({nodeId:node.id})">{/node.name/} &nbsp; [{/node.ip/}]</a>
+                    </li>
+                </ul>
+            </div>
             <footer>
-                <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id)">解决完毕</button>
-                <button class="btn btn-default" data-ng-click="close(cluster.basicInfos.id)">忽略问题</button>
+                <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
+                <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.basicInfos.id)">{/cluster.problemTips.secondButtonText/}</button>
             </footer>
         </div>
     </div>

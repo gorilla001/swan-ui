@@ -41,7 +41,7 @@ function updateAppCtrl($scope, $stateParams, $state, glanceHttp) {
     $scope.deployUpdateApp = function () {
         $scope.updatePort.subNumber();
         glanceHttp.ajaxPost(['app.deployLatest',{app_id: $stateParams.appId}],$scope.deployupdateinfo,function(data){
-            $state.go('app.appdetail.instance', {appId:data.data});
+            $state.go('app.appdetail.config', {appId:data.data});
         });
     };
 }

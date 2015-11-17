@@ -3,7 +3,28 @@ glanceApp.controller("createappCtrlNew", createappCtrl);
 createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
 
 function createappCtrl($scope, $state, glanceHttp, Notification) {
+    var INNER = '1';
+    var OUTER = '2';
+    var SELECT_TCP = '1';
+    var SELECT_HTTP = '2';
+    var HAS_DOMAIN = '1';
+    var NO_DOMAIN = '2';
+
     $scope.step = "stepone";
+    $scope.portInfo = {};
+    $scope.portInfos = [];
+    $scope.portType = {
+        "1": "对内",
+        "2": "对外"
+    };
+
+    $scope.protocolType = {
+        "1": "TCP",
+        "2": "HTTP"
+    };
+
+    $scope.pathInfo = {};
+    $scope.pathsInfo = [];
 
     $scope.cpuOptions = {
         min: 0.1,
@@ -40,76 +61,22 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.cpuSize = 0.1;
     $scope.memSize = 16;
     $scope.containerNum = 1;
-    $scope.imageversion = "latest";
+    $scope.imageversion = "";
     $scope.radio = "1";  //defalut apptype for radio box
 
-
-    $scope.dynamicData = {
-        "createEnv": [{id: 'choice1'}],
-        "createPort": [{id: 'choice1'}],
-
-        "addNewChoice": function (conditions) {
-            var newItemNo;
-            var creatLength = $scope.dynamicData[conditions].length;
-            var creatData = $scope.dynamicData[conditions];
-
-            if (creatData[creatLength - 1].key &&
-                creatData[creatLength - 1].value) {
-                newItemNo = creatLength + 1;
-                creatData.push({'id': 'choice' + newItemNo});
-            } else {
-                Notification.warning('输入框有空值,不能继续添加');
-            }
-        },
-        "removeChoice": function (conditions) {
-            var creatLength = $scope.dynamicData[conditions].length;
-            var creatData = $scope.dynamicData[conditions];
-
-            if (creatLength >= 2) {
-                creatData.pop();
-            } else {
-                Notification.warning('不能删除');
-            }
-        },
-
-        "subNumber": function (conditions) {
-
-            var creatData = $scope.dynamicData[conditions];
-
-            if (conditions === 'createEnv') {
-                $scope.deployinfo.envs = [];
-                angular.forEach(creatData, function (value) {
-                    var envInfo = {
-                        key: value.key,
-                        value: value.value
-                    };
-
-                    $scope.deployinfo.envs.push(envInfo);
-                });
-            } else if (conditions === 'createPort') {
-                $scope.deployinfo.containerPortsInfo = [];
-
-                angular.forEach(creatData, function (value) {
-                    var portInfo = {};
-
-                    value.hasOwnProperty('uri') ? portInfo = {
-                        type: value.key,
-                        port: value.value,
-                        uri: value.uri
-                    }: portInfo = {
-                        type: value.key,
-                        port: value.value
-                    };
-
-                    $scope.deployinfo.containerPortsInfo.push(portInfo);
-                });
-            }
-        }
-    };
-
     $scope.deployApp = function () {
-        if ($scope.dynamicData.createPort[0].value && $scope.dynamicData.createPort[0].key)$scope.dynamicData.subNumber('createPort');
-        if ($scope.dynamicData.createEnv[0].key && $scope.dynamicData.createEnv[0].value)$scope.dynamicData.subNumber('createEnv');
+        if($scope.portInfos.length){
+            $scope.deployinfo.containerPortsInfo = $scope.portInfos;
+        }else{
+            delete $scope.deployinfo.containerPortsInfo;
+        }
+
+        if($scope.pathsInfo.length){
+            $scope.deployinfo.envs = $scope.pathsInfo;
+        }else{
+            delete $scope.deployinfo.envs;
+        }
+
         if ($scope.cmdInput) {
             $scope.deployinfo.cmd = $scope.cmdInput;
         } else {
@@ -141,25 +108,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-            $state.go('app.appdetail.instance', {appId: data.data});
+            $state.go('app.appdetail.config', {appId: data.data});
         }, undefined, null, function (data) {
             Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
-        });
-    };
-
-    $scope.getNode = function(clusterId){
-        $scope.nodesOk = [];
-        angular.forEach($scope.clusters, function(value, key) {
-            if(value.id === clusterId){
-                for(var i =0; i< value.nodes.length; i++){
-                    for(var j =0; j < value.nodes[i].attributes.length; j++){
-                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
-                            $scope.nodesOk.push(value.nodes[i]);
-                            break;
-                        }
-                    }
-                }
-            }
         });
     };
 
@@ -169,10 +120,77 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }
     };
 
-    $scope.clearUri = function(index){
-        if(($scope.dynamicData.createPort[index].key === '1' || $scope.dynamicData.createPort[index].key === '2') || $scope.dynamicData.createPort[index].uri){
-            delete $scope.dynamicData.createPort[index].uri;
+    $scope.addPortInfo = function(portInfo){
+        $scope.portInfos.push(portInfo);
+        $scope.portInfo = {};
+    };
+
+    $scope.deletCurPort = function(index){
+        $scope.portInfos.splice(index,1);
+    };
+
+    $scope.addPathInfo = function(pathInfo){
+        $scope.pathsInfo.push(pathInfo);
+        $scope.pathInfo = {};
+    };
+
+    $scope.deletCurPath = function(index){
+        $scope.pathsInfo.splice(index,1);
+    };
+
+    $scope.changeType = function(portInfoType){
+        $scope.portInfo.uri = "";
+        if(portInfoType === OUTER && $scope.portInfo.protocol === SELECT_HTTP){
+            $scope.portInfo.isUri = HAS_DOMAIN;
+            $scope.portInfo.mapPort = 80;
+        }else {
+            $scope.portInfo.mapPort = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.changeProtocol = function(){
+        if($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER){
+            $scope.portInfo.isUri = HAS_DOMAIN;
         }
 
+        if($scope.portInfo.protocol === SELECT_TCP){
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.isURI = function(isUri){
+        if(isUri === HAS_DOMAIN){
+            $scope.portInfo.mapPort = 80;
+        }else if(isUri === NO_DOMAIN){
+            $scope.portInfo.mapPort = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+        }
+    };
+
+    $scope.isDisable = function(portInfo){
+        if(portInfo.type === INNER && portInfo.mapPort){
+            return false;
+        }else if(portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri){
+            return false
+        }else if(portInfo.type === OUTER && portInfo.isUri === NO_DOMAIN && portInfo.mapPort){
+            return false;
+        }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
+            return false;
+        }
+
+        return true;
     }
 }

@@ -13,7 +13,6 @@
                   class="btn btn-default dropdown-toggle"
                   data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">
-                  <span class="glyphicon glyphicon-menu-hamburger"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
@@ -23,7 +22,7 @@
                         <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm">删除集群</a>
                     </li>
                     <li data-ng-show="!cluster.is_agent_latest">
-                        <a href="#" data-ng-click="upgradeAgent(cluster.id)">升级agent</a>
+                        <a href="#" data-ng-click="upgradeAgent(cluster.id)">升级Agent</a>
                     </li>
                 </ul>
             </div>

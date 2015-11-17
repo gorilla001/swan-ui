@@ -3,15 +3,20 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$filter', '$timeout'];
+logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$filter', '$timeout','$interval'];
 
-function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeout) {
+function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeout, $interval) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
-    var clusterIdTemp;
+    var clusterIdTemp,promise;
 
     $scope.lte = new Date();
     $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
+
+    promise = $interval(function(){
+        $scope.lte = new Date();
+        $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
+    },60000);
 
     $scope.multiConfig = {
         selectAll: "全部选择",
@@ -143,4 +148,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
     };
 
     $scope.showMeridian = false;
+
+    $scope.$on('$destroy', function () {
+        $timeout.cancel(promise);
+    });
 }

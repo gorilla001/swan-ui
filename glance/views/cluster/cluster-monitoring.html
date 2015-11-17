@@ -3,7 +3,7 @@
     <div ng-show="showAppMetrics" class="clearfix">
         <p>集群内存占用:{/clusterMonitors.masMetrics.memUsed/}MB / {/clusterMonitors.masMetrics.memTotal/}MB</p>
 
-        <p>集群CPU共享:{/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</p>
+        <p>集群CPU:{/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</p>
 
         <div class="col-md-2" ng-repeat="appMetric in clusterMonitors.appMetrics">
             <p>应用名称: {/appMetric.appName/}</p>

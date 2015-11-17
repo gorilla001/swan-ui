@@ -11,9 +11,9 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     };
 
     $scope.nodeAttributes = {
-        "transient": "动态节点",
-        "gateway": "网关节点",
-        "proxy": "代理节点",
+        "transient": "计算节点",
+        "gateway": "外部网关",
+        "proxy": "内部代理",
         "persistent": "数据节点"
     };
 
@@ -31,7 +31,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
 
     $scope.upgradeAgent = function (clusterId) {
         glanceHttp.ajaxPost(['cluster.updateCluster'], {"id": clusterId, "isUpdateAgent": true}, function() {
-            Notification.success("设置升级集群agent成功")
+            Notification.success("设置升级集群 Agent 成功")
         });
     }
 
