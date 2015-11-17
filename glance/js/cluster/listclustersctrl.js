@@ -313,11 +313,16 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
         var tips = {};
         var needNumber = clusterLeastNodesNumber[clusterType] - nodesAmount;
-        var installingHeadText = '集群正在初始化中，还需添加 ' +  needNumber + ' 台主机';
+        var installingHeadText;
+        if (needNumber <= 0) {
+            installingHeadText = '集群初始化中';
+        } else {
+            installingHeadText = '集群初始化中，还需添加 ' +  needNumber + ' 台主机';
+        }
 
         tips[CLUSTER_STATUS.installing] = {
             headText: installingHeadText,
-            paragraphText: '以下主机正在初始化中',
+            paragraphText: '以下主机初始化中',
             firstButtonText: '继续添加主机',
             secondButtonText: '关闭'
         };
