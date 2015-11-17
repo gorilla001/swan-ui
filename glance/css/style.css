@@ -488,52 +488,52 @@ a.remove {
 
 
 /* 集群主机图标列表展示 */
-.cluster-manage {
-	position: relative;
-}
 .cluster-status-panel {
-    height: 350px; 
-    width: 100%; 
-    background-color: rgba(0,0,0,0.8); 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    z-index: 1001;
+	height: 100%; 
+	width: 100%; 
+	background-color: rgba(0,0,0,0.8); 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	z-index: 1001;
 }
 .cluster-status-panel .cluster-status-main {
-    background: #FFF;
-    width: 60%;
-    margin: 20px auto;
+	background: #FFF;
+	width: 60%;
+	margin: 10px auto 0 auto;
 }
 .cluster-status-panel header {
-    background-color: #EEE;
-    border-bottom: 1px solid #e5e5e5;
-    min-height: 16.43px;
-    padding: 15px 15px 12px 15px;
+	background-color: #EEE;
+	border-bottom: 1px solid #e5e5e5;
+    min-height: 16px;
+    padding: 12px 15px 6px 15px;
 }
 .cluster-status-panel header h3 {
-    margin: 0;
+	margin: 0;
 }
 .cluster-status-panel header img {
-    float: left;
-    margin-right: 6px;
+	float: left;
+	margin-right: 6px;
 }
 .cluster-status-panel footer {
-    border-top: 1px solid #e5e5e5;
-    padding: 15px;
+	border-top: 1px solid #e5e5e5;
+    padding: 10px 15px;
     text-align: right;
 }
 .cluster-status-panel .cluster-status-content {
-    vertical-align: middle;
-    padding: 15px;
+	vertical-align: middle;
+	padding: 15px;
 }
 .cluster-status-panel .cluster-status-content ul {
-    margin-bottom: 0;
-    padding-left: 26px;
+	margin-bottom: 0;
+	padding-left: 26px;
+	height: 45px;
+	overflow: auto;
 }
 .cluster-status-panel .cluster-status-content li {
-    list-style: none;
-    margin-bottom: 5px;
+	list-style: none;
+	margin-bottom: 3px;
+	font-size: 12px;
 }
 
 
