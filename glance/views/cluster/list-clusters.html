@@ -99,25 +99,25 @@
         <footer class="main-container-footer">
             <span data-ng-show="cluster.basicInfos.updated_at">更新时间: {/ cluster.basicInfos.updated_at /}</span>
         </footer>
-    </div>
 
-    <div class="cluster-status-panel" data-ng-show="cluster.problemTips">
-        <div class="cluster-status-main">
-            <header>
-                <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
-            </header>
-            <div class="cluster-status-content">
-                <p>{/cluster.problemTips.paragraphText/}</p>
-                <ul class="clearfix">
-                    <li data-ng-repeat="node in cluster.problemNodes">
-                        <a href="#" data-ui-sref="cluster.nodedetails({nodeId:node.id})">{/node.name/} &nbsp; [{/node.ip/}]</a>
-                    </li>
-                </ul>
+        <div class="cluster-status-panel" data-ng-show="cluster.problemTips">
+            <div class="cluster-status-main">
+                <header>
+                    <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
+                </header>
+                <div class="cluster-status-content">
+                    <p>{/cluster.problemTips.paragraphText/}</p>
+                    <ul class="clearfix">
+                        <li data-ng-repeat="node in cluster.problemNodes">
+                            <a href="#" data-ui-sref="cluster.nodedetails({nodeId:node.id})">{/node.name/} &nbsp; [{/node.ip/}]</a>
+                        </li>
+                    </ul>
+                </div>
+                <footer>
+                    <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
+                    <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.basicInfos.id)">{/cluster.problemTips.secondButtonText/}</button>
+                </footer>
             </div>
-            <footer>
-                <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
-                <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.basicInfos.id)">{/cluster.problemTips.secondButtonText/}</button>
-            </footer>
         </div>
     </div>
 
