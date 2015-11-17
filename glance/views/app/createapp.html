@@ -244,8 +244,8 @@
                             </div>
 
                             <button class="btn btn-default" type="button"
-                                    data-ng-disabled="!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '' || isDisable(portInfo)"
-                                    ng-click="addPortInfo(portInfo)">增加
+                                    data-ng-disabled="isAddPortDisable(portInfo)"
+                                    data-ng-click="addPortInfo(portInfo)">增加
                             </button>
                         </div>
 

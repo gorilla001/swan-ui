@@ -170,8 +170,30 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             }
         }
     };
+    
+    function isPortInfoDup(portInfo) {
+        function createPortTag(thePortInfo) {
+            var tag = thePortInfo.protocol + "|" + thePortInfo.type + "|" + thePortInfo.mapPort;
+            if (thePortInfo.protocol == SELECT_HTTP && thePortInfo.type == OUTER && thePortInfo.isUri === HAS_DOMAIN) {
+                tag += "|"+thePortInfo.uri;
+            } 
+            return tag;
+        };
+        var portTagBuf = [];
+        for (var i=0; i<$scope.portInfos.length; i++) {
+            portTagBuf.push(createPortTag($scope.portInfos[i]));
+        }
+        var portTag = createPortTag(portInfo);
+        return portTagBuf.indexOf(portTag) > -1
+    }
 
-    $scope.isDisable = function(portInfo){
+    $scope.isAddPortDisable = function(portInfo) {
+        if(!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '' ) {
+            return true;
+        }
+        if(isPortInfoDup(portInfo)) {
+            return true;
+        }
         if(portInfo.type === INNER && portInfo.mapPort){
             return false;
         }else if(portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri){
@@ -180,8 +202,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             return false;
         }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
             return false;
+        }else{
+            return true;
         }
-
-        return true;
     }
 }
