@@ -121,8 +121,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.addPortInfo = function(portInfo){
-        $scope.portInfos.push(portInfo);
-        $scope.portInfo = {};
+        if(isPortInfoDup(portInfo)){
+            Notification.error("应用地址重复");
+        } else {
+            $scope.portInfos.push(portInfo);
+            $scope.portInfo = {};
+        }
     };
 
     $scope.deletCurPort = function(index){
@@ -181,26 +185,29 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
     
     function isPortInfoDup(portInfo) {
-        function createPortTag(thePortInfo) {
-            var tag = thePortInfo.protocol + "|" + thePortInfo.type + "|" + thePortInfo.mapPort;
-            if (thePortInfo.protocol == SELECT_HTTP && thePortInfo.type == OUTER && thePortInfo.isUri === HAS_DOMAIN) {
-                tag += "|"+thePortInfo.uri;
-            } 
-            return tag;
-        };
-        var portTagBuf = [];
-        for (var i=0; i<$scope.portInfos.length; i++) {
-            portTagBuf.push(createPortTag($scope.portInfos[i]));
+        function equal(portInfo1, portInfo2) {
+            var attrnames = ["protocol", "type", "mapPort"];
+            for(var i=0; i< attrnames.length; i++){
+                if(portInfo1[attrnames[i]] != portInfo2[attrnames[i]]) {
+                    return false;
+                }
+            }
+            if (portInfo1.protocol == SELECT_HTTP && portInfo1.type == OUTER && portInfo1.isUri === HAS_DOMAIN) {
+                return portInfo1.uri == portInfo2.uri;
+            } else {
+                return true;
+            }
         }
-        var portTag = createPortTag(portInfo);
-        return portTagBuf.indexOf(portTag) > -1
+        for(var i=0; i<$scope.portInfos.length; i++){
+            if(equal(portInfo, $scope.portInfos[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     $scope.isAddPortDisable = function(portInfo) {
         if(!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '' ) {
-            return true;
-        }
-        if(isPortInfoDup(portInfo)) {
             return true;
         }
         if(portInfo.type === INNER && portInfo.mapPort){
