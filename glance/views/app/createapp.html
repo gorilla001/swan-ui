@@ -184,7 +184,6 @@
                                     <option value="2"> HTTP</option>
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <label>类型</label>
                                 <select class="form-control" data-ng-model="portInfo.type"
@@ -194,15 +193,20 @@
                                     <option value="2"> 对外</option>
                                 </select>
                             </div>
+<<<<<<< Updated upstream
                         </div>
                         <div class="form-inline" style="margin-bottom: 15px;">
                             <div class="form-group"
                                  data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
+=======
+							
+                            <div class="form-group" data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
+>>>>>>> Stashed changes
                                 <div class="form-group">
                                     <label>代理节点</label>
 
                                     <p ng-repeat="proxyNode in proxyNodes" class="form-control-static"
-                                       style="margin-left: 6px; margin-right: 25px;">{/proxyNode.ip/}</p>
+                                       style="margin-left: 6px; margin-right: 25px; padding:0;">{/proxyNode.ip/}</p>
                                 </div>
 
                                 <div class="form-group">
@@ -252,7 +256,7 @@
                                     <label>网关节点:</label>
 
                                     <p ng-repeat="gateWay in gateWays" class="form-control-static"
-                                       style="margin-left: 6px; margin-right: 25px;">{/gateWay.ip/}</p>
+                                       style="margin-left: 6px; margin-right: 25px; padding:0;">{/gateWay.ip/}</p>
                                 </div>
 
                                 <div class="form-group">
