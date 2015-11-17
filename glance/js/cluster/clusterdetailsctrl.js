@@ -1,7 +1,7 @@
 function clusterDetailsCtrl($scope, $stateParams, glanceHttp) {
 
     function getCurCluster() {
-        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
+        glanceHttp.ajaxGet(["cluster.getCluster", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
             $scope.serviceState.master_type = $scope.cluster.cluster_type;
             $scope.totalItems = $scope.cluster.nodes.length;
