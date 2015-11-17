@@ -5,7 +5,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.showCharts = false;
     $('.charts').hide();
     $scope.getCurNode = function () {
-        glanceHttp.ajaxGet(["cluster.nodeIns", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
+        glanceHttp.ajaxGet(["cluster.getNode", {node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
             $scope.node.state = $scope.getNodeState($scope.node);
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
@@ -23,7 +23,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        glanceHttp.ajaxGet(["cluster.nodeMonitor", {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
+        glanceHttp.ajaxGet(["cluster.getNodeMonitor", {node_id: nodeId}], function (data) {
             if (data.data.length) {
                 $scope.nodeInfo = getNodeInfo(data.data[0]);
             }

@@ -1,26 +1,27 @@
 BACKEND_URL = {
-    defaultBase: {
-        url: "DASHBOARD/",
-        isSSL: false
-    },
     auth: {
-        logout: "api/v1/auth/sign_out",
-        getMe: "api/v1/auth/getme",
-        getCSUrl: "api/v1/auth/getcsurl",
-        createInvitationCodes: "api/v1/auth/invitation_code/$num",
-        listUsers: "api/v1/auth/user/list",
-        modifyPassword: 'api/v1/auth/password/update'
+        base: "DASHBOARD/api/v1/",
+        logout: "auth/sign_out",
+        getMe: "auth/getme",
+        getCSUrl: "auth/getcsurl",
+        createInvitationCodes: "auth/invitation_code/$num",
+        listUsers: "auth/user/list",
+        modifyPassword: 'auth/password/update'
         },
         
     cluster:  {
-        clusterIns: "api/v2/cluster/$cluster_id",
-        cluster: "api/v2/cluster",
-        clusters: "api/v2/clusters",
-        nodeIns: "api/v2/cluster/$cluster_id/node/$node_id",
-        node: "api/v2/cluster/$cluster_id/node",
-        nodes: "api/v2/cluster/$cluster_id/nodes",
-        nodeId: "api/v2/cluster/$cluster_id/node/identifier",
-        nodeMonitor: "api/v2/cluster/$cluster_id/node/$node_id/metrics"
+        base: "DASHBOARD/api/v1/",
+        getNodeID: "cluster/$cluster_id/new_node_id",
+        updateNode: "cluster/node/update",
+        getNode: "cluster/node/$node_id",
+        createCluster: "cluster/add",
+        updateCluster: "cluster/update",
+        listClusters: "cluster/list",
+        getCluster: "cluster/$cluster_id",
+        delCluster: "cluster/$cluster_id/del",
+        listNodes: "cluster/$cluster_id/nodes/$page_num",
+        delNodes: "cluster/node/del",
+        getNodeMonitor: "cluster/node/$node_id/metrics"
     },
     metrics: {
         base: 'DASHBOARD/api/v1/',
@@ -29,12 +30,16 @@ BACKEND_URL = {
         appmonit:"appmetrics/cluster/$clusterID/app/$appName"
     },
     ws: {
-        base: "STREAMING/",
-        subscribe: "streaming/glance/$token"
+        base: "STREAMING/streaming/",
+        subscribe: "glance/$token"
     },
     log: {
         base: "DASHBOARD/",
         search: "logstash-$userId-*/_search"
+    },
+    service: {
+        base: "DASHBOARD/api/v1/",
+        createServiceInstance: "services/create"
     },
     app: {
         base: "DASHBOARD/api/v1/",

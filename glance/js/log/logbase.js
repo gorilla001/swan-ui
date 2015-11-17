@@ -32,7 +32,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
     $scope.contextlogs = new LogLoader();
 
     $scope.listCluster = function () {
-        glanceHttp.ajaxGet('cluster.clusters', function (data) {
+        glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data && data.data.length !== 0) {
                 $scope.clusters = data.data;
             }
@@ -48,7 +48,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
     });
 
     function getNodes(clusterId) {
-        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: clusterId}], function (data) {
+        glanceHttp.ajaxGet(["cluster.getCluster", {cluster_id: clusterId}], function (data) {
             $scope.nodes = data.data.nodes;
             var tempNodesInfo = [];
             angular.forEach($scope.nodes, function (data, index, array) {
