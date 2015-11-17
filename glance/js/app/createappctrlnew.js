@@ -3,6 +3,13 @@ glanceApp.controller("createappCtrlNew", createappCtrl);
 createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
 
 function createappCtrl($scope, $state, glanceHttp, Notification) {
+    var INNER = '1';
+    var OUTER = '2';
+    var SELECT_TCP = '1';
+    var SELECT_HTTP = '2';
+    var HAS_DOMAIN = '1';
+    var NO_DOMAIN = '2';
+
     $scope.step = "stepone";
     $scope.portInfo = {};
     $scope.portInfos = [];
@@ -133,8 +140,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
 
     $scope.changeType = function(portInfoType){
         $scope.portInfo.uri = "";
-        if(portInfoType === '2' && $scope.portInfo.protocol === '2'){
-            $scope.portInfo.isUri = '1';
+        if(portInfoType === OUTER && $scope.portInfo.protocol === SELECT_HTTP){
+            $scope.portInfo.isUri = HAS_DOMAIN;
             $scope.portInfo.mapPort = 80;
         }else {
             $scope.portInfo.mapPort = "";
@@ -148,11 +155,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.changeProtocol = function(){
-        if($scope.portInfo.protocol === '2' && $scope.portInfo.type === '2'){
-            $scope.portInfo.isUri = '1';
+        if($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER){
+            $scope.portInfo.isUri = HAS_DOMAIN;
         }
 
-        if($scope.portInfo.protocol === '1'){
+        if($scope.portInfo.protocol === SELECT_TCP){
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
             }
@@ -163,9 +170,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.isURI = function(isUri){
-        if(isUri === '1'){
+        if(isUri === HAS_DOMAIN){
             $scope.portInfo.mapPort = 80;
-        }else if(isUri === '2'){
+        }else if(isUri === NO_DOMAIN){
             $scope.portInfo.mapPort = "";
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
@@ -174,13 +181,13 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.isDisable = function(portInfo){
-        if(portInfo.type === '1' && portInfo.mapPort){
+        if(portInfo.type === INNER && portInfo.mapPort){
             return false;
-        }else if(portInfo.type === '2' && portInfo.isUri === '1' && portInfo.uri){
+        }else if(portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri){
             return false
-        }else if(portInfo.type === '2' && portInfo.isUri === '2' && portInfo.mapPort){
+        }else if(portInfo.type === OUTER && portInfo.isUri === NO_DOMAIN && portInfo.mapPort){
             return false;
-        }else if(portInfo.protocol === '1' && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
+        }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
             return false;
         }
 
