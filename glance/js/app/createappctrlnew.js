@@ -131,14 +131,28 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.pathsInfo.splice(index,1);
     };
 
-    /*************/
     $scope.changeType = function(portInfoType){
         $scope.portInfo.uri = "";
-        if(portInfoType === '2'){
+        if(portInfoType === '2' && $scope.portInfo.protocol === '2'){
             $scope.portInfo.isUri = '1';
             $scope.portInfo.mapPort = 80;
         }else {
             $scope.portInfo.mapPort = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.changeProtocol = function(){
+        if($scope.portInfo.protocol === '2' && $scope.portInfo.type === '2'){
+            $scope.portInfo.isUri = '1';
+        }
+
+        if($scope.portInfo.protocol === '1'){
             if($scope.portInfo.hasOwnProperty('uri')){
                 delete $scope.portInfo.uri
             }
@@ -165,6 +179,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }else if(portInfo.type === '2' && portInfo.isUri === '1' && portInfo.uri){
             return false
         }else if(portInfo.type === '2' && portInfo.isUri === '2' && portInfo.mapPort){
+            return false;
+        }else if(portInfo.protocol === '1' && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
             return false;
         }
 
