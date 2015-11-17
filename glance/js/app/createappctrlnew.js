@@ -111,22 +111,29 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }
     };
 
-    $scope.addPortInfo = function(portInfo){
-        if(isPortInfoDup(portInfo)){
-            Notification.error("应用地址重复");
-        } else {
-            $scope.portInfos.push(portInfo);
-            $scope.portInfo = {};
-        }
-    };
-
     $scope.deletCurPort = function(index){
         $scope.portInfos.splice(index,1);
     };
 
-    $scope.addPathInfo = function(pathInfo){
-        $scope.pathsInfo.push(pathInfo);
-        $scope.pathInfo = {};
+    $scope.addToArray = function(info, infoType){
+        var portErrorText = "应用地址重复";
+        var pathErrorText = "添加的环境变量的 KEY 不能重复";
+
+        if(isAllowToAdd(info,infoType)){
+            if(infoType === "path"){
+                Notification.error(pathErrorText);
+            }else if(infoType === "port"){
+                Notification.error(portErrorText);
+            }
+        }else{
+            if(infoType === "path"){
+                $scope.pathsInfo.push(info);
+                $scope.pathInfo = {};
+            }else if(infoType === "port"){
+                $scope.portInfos.push(info);
+                $scope.portInfo = {};
+            }
+        }
     };
 
     $scope.deletCurPath = function(index){
@@ -175,19 +182,32 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             }
         }
     };
-    
-    function isPortInfoDup(portInfo) {
-        function equal(portInfo1, portInfo2) {
-            var attrnames = ["type", "mapPort", "uri"];
+
+    function isAllowToAdd(info,infoType){
+        function equal(info1, info2) {
+            if(infoType === "path"){
+                var attrnames = ["key"];
+            }else if(infoType === "port"){
+                var attrnames = ["type", "mapPort", "uri"];
+            }
+
             for(var i=0; i< attrnames.length; i++){
-                if(portInfo1[attrnames[i]] != portInfo2[attrnames[i]]) {
+                if(info1[attrnames[i]] != info2[attrnames[i]]) {
                     return false;
                 }
             }
             return true;
         }
-        for(var i=0; i<$scope.portInfos.length; i++){
-            if(equal(portInfo, $scope.portInfos[i])) {
+
+        var array = [];
+        if(infoType === "path"){
+            array = $scope.pathsInfo;
+        }else if(infoType === "port"){
+            array = $scope.portInfos;
+        }
+
+        for(var i=0; i<array.length; i++){
+            if(equal(info, array[i])) {
                 return true;
             }
         }
@@ -207,6 +227,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
             return false;
         }else{
+            return true;
+        }
+    };
+
+    $scope.isAddPathDisable = function(pathInfo){
+        if(!pathInfo.key || !pathInfo.value || pathInfo.key === '' || pathInfo.value === '') {
             return true;
         }
     }

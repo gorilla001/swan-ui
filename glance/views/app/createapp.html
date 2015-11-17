@@ -264,7 +264,7 @@
 
                             <button class="btn btn-default" type="button"
                                     data-ng-disabled="isAddPortDisable(portInfo)"
-                                    data-ng-click="addPortInfo(portInfo)">增加
+                                    data-ng-click="addToArray(portInfo, 'port')">增加
                             </button>
                         </div>
 
@@ -333,8 +333,8 @@
                                 <input type="text" class="form-control" data-ng-model="pathInfo.value">
                             </div>
                             <button type="button" class="btn btn-default"
-                                    data-ng-disabled="!pathInfo.key || !pathInfo.key || pathInfo.key === '' || pathInfo.value === '' "
-                                    data-ng-click="addPathInfo(pathInfo)">
+                                    data-ng-disabled="isAddPathDisable(pathInfo) "
+                                    data-ng-click="addToArray(pathInfo, 'path')">
                                 增加
                             </button>
                         </div>
