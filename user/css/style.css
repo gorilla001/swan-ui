@@ -1041,10 +1041,10 @@ header .container {
 header nav {
 	position: absolute; 
 	top: 0px;
-	right: 50px; 
-	font-size: 14px;
+	right: 100px; 
+	font-size: 16px;
 }
 header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 	color: #FFF;
-	margin-left: 12px;
+	margin-left: 15px;
 }
