@@ -1017,10 +1017,10 @@ a:hover {
 }
 .modal-body .password-input a {
 	position: absolute;
-	top: 13px;
+	top: 15px;
 	right: 10px;
-	font-size: 18px;
-	color: #CCCCCC;
+	font-size: 12px;
+	color: #3498bd;
 }
 .modal-body .password-input a:hover {
 	color: #3498db;
