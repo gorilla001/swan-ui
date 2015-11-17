@@ -11,15 +11,10 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     $scope.getConfig = function(){
         glanceHttp.ajaxGet(['app.config',{app_id: $stateParams.appId}], function (data) {
             $scope.config = data.data;
+            if($scope.config.ClusterId){
+                $scope.getNode($scope.config.ClusterId);
+            }
         });
-    };
-
-    $scope.portType = {
-        "1": "对内 TCP",
-        "2": "对外 TCP",
-        "3": "对外标准 HTTP",
-        "4": "对内 HTTP",
-        "5": "对外 HTTP"
     };
 
     $scope.getConfig();

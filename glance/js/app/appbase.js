@@ -20,6 +20,16 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         '5': "删除中"
     };
 
+    $scope.portType = {
+        "1": "对内",
+        "2": "对外"
+    };
+
+    $scope.protocolType = {
+        "1": "TCP",
+        "2": "HTTP"
+    };
+
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             $scope.clusters = data.data;
@@ -90,26 +100,28 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         $scope.nodesOk = [];
         $scope.gateWays= [];
         $scope.proxyNodes = [];
-        angular.forEach($scope.clusters, function(value, key) {
-            if(value.id === clusterId){
-                for(var i =0; i< value.nodes.length; i++){
-                    for(var j =0; j < value.nodes[i].attributes.length; j++){
-                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
-                            $scope.nodesOk.push(value.nodes[i]);
+
+        for(var index in $scope.clusters){
+            if($scope.clusters[index].id === clusterId){
+                for(var i =0; i< $scope.clusters[index].nodes.length; i++){
+                    for(var j =0; j < $scope.clusters[index].nodes[i].attributes.length; j++){
+                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'persistent'){
+                            $scope.nodesOk.push($scope.clusters[index].nodes[i]);
                         }
 
-                        if(value.nodes[i].attributes[j].attribute === 'gateway'){
-                            $scope.gateWays.push(value.nodes[i]);
+                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'gateway'){
+                            $scope.gateWays.push($scope.clusters[index].nodes[i]);
                         }
 
-                        if(value.nodes[i].attributes[j].attribute === 'proxy'){
-                            $scope.proxyNodes.push(value.nodes[i]);
+                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'proxy'){
+                            $scope.proxyNodes.push($scope.clusters[index].nodes[i]);
                         }
 
                     }
                 }
+                break;
             }
-        });
+        }
     };
 
     $scope.listCluster();
