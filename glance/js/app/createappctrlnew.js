@@ -148,6 +148,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.changeProtocol = function(){
         if($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER){
             $scope.portInfo.isUri = HAS_DOMAIN;
+            $scope.portInfo.mapPort = 80;
         }
 
         if($scope.portInfo.protocol === SELECT_TCP){
