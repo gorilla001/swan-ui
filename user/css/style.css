@@ -1035,11 +1035,16 @@ a:hover {
     transform: translate3d(0px, -200px, 0px);
     -webkit-transform: translate3d(0px, -200px, 0px);
 }
+header .container {
+	position: relative;
+}
 header nav {
-	position:absolute; 
-	right:0; 
+	position: absolute; 
+	top: 0px;
+	right: 50px; 
 	font-size: 14px;
 }
-header nav a {
+header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 	color: #FFF;
+	margin-left: 12px;
 }
