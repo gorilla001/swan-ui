@@ -22,7 +22,7 @@
                            class="help-block">应用名不能为空</p>
 
                         <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
-                           class="help-block">应用名称不符合数人云规则命名规则</p>
+                           class="help-block">应用名称不符合数人云命名规则</p>
 
                         <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
                            class="help-block">应用名已存在</p>
@@ -170,25 +170,81 @@
                         <div class="form-inline">
                             <div class="form-group"
                                  data-ng-class="{ 'has-error' : staticForm.curPort.$invalid && !staticForm.curPort.$pristine }">
-                                <label>端口</label>
+                                <label>应用端口</label>
                                 <input type="number" name="curPort" class="form-control" min="1" max="65535"
-                                       data-ng-model="portInfo.port">
+                                       data-ng-model="portInfo.appPort">
                             </div>
                             <div class="form-group">
-                                <label>映射为</label>
-                                <select class="form-control" data-ng-model="portInfo.type" data-ng-change="clearURI(portInfo.type)">
-                                    <option value="">选择类型</option>
-                                    <option value="1">　对内 TCP (在内网可通过代理IP+端口访问)</option>
-                                    <option value="2">　对外 TCP (在公网可通过网关域名+IP:端口]访问)</option>
-                                    <option value="3">　对外标准 HTTP (在公网通过域名访问)</option>
-                                    <option value="4">　对内 HTTP (在内网可通过代理IP+端口访问)</option>
-                                    <option value="5">　对外 HTTP (在公网通过网关域名+IP:端口]访问)</option>
+                                <label>协议</label>
+                                <select class="form-control" data-ng-model="portInfo.protocol" ng-change="changeProtocol()">
+                                    <option value="">选择协议</option>
+                                    <option value="1"> TCP </option>
+                                    <option value="2"> HTTP </option>
                                 </select>
-                                <input type="text" class="form-control" placeholder="域名" data-ng-model="portInfo.uri"
-                                       ng-show="isOutterType(portInfo.type)">
                             </div>
+
+                            <div class="form-group">
+                                <label>类型</label>
+                                <select class="form-control" data-ng-model="portInfo.type" ng-change="changeType(portInfo.type)">
+                                    <option value="">选择类型</option>
+                                    <option value="1"> 对内 </option>
+                                    <option value="2"> 对外 </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group" data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
+                                <div class="form-group">
+                                    <label>代理节点</label>
+                                    <p ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>映射端口</label>
+                                    <input type="number" class="form-control" min="1" max="65535"
+                                           data-ng-model="portInfo.mapPort">
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-ng-show="portInfo.type === '2' && portInfo.protocol === '2'">
+                                <label class="checkbox-inline">
+                                    <input type="radio" ng-model="portInfo.isUri" value="1" ng-change="isURI(portInfo.isUri)">
+                                    有域名
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" ng-model="portInfo.isUri" value="2" ng-change="isURI(portInfo.isUri)">
+                                    无域名
+                                </label>
+                            </div>
+
+                            <div class="form-group" data-ng-show="portInfo.type === '2' && portInfo.isUri === '1' && portInfo.protocol === '2'">
+                                <div class="form-group">
+                                    <label>域名</label>
+                                    <input type="text" class="form-control"
+                                           data-ng-model="portInfo.uri">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>映射端口</label>
+                                    <input type="number" class="form-control" ng-disabled="true"
+                                           data-ng-model="portInfo.mapPort">
+                                </div>
+                            </div>
+
+                            <div class="form-group" data-ng-show=" (portInfo.type === '2' && portInfo.isUri !== '1') || (portInfo.type === '2' && portInfo.protocol === '1')">
+                                <div class="form-group">
+                                    <label>网关节点</label>
+                                    <p ng-repeat="gateWay in gateWays">{/gateWay.ip/}"</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>映射端口</label>
+                                    <input type="number" class="form-control" min="1" max="65535"
+                                           data-ng-model="portInfo.mapPort">
+                                </div>
+                            </div>
+
                             <button class="btn btn-default" type="button"
-                                    data-ng-disabled="!portInfo.port || !portInfo.type || portInfo.port == '' || portInfo.type == '' || (isOutterType(portInfo.type) && !portInfo.uri)"
+                                    data-ng-disabled="!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '' || isDisable(portInfo)"
                                     ng-click="addPortInfo(portInfo)">增加
                             </button>
                         </div>
@@ -197,17 +253,27 @@
                             <table class="table table-striped table-bordered" data-ng-show="portInfos.length">
                                 <thead>
                                 <tr>
-                                    <th>端口</th>
-                                    <th>服务地址类型</th>
-                                    <th>域名</th>
+                                    <th>应用端口</th>
+                                    <th>类型</th>
+                                    <th>协议</th>
+                                    <th>地址</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="info in portInfos">
-                                    <td>{/info.port/}</td>
+                                    <td>{/info.appPort/}</td>
                                     <td>{/portType[info.type]/}</td>
-                                    <td>{/info.uri/}</td>
+                                    <td>{/protocolType[info.protocol]/}</td>
+                                    <td>
+                                        <span ng-show="info.protocol === '1' && info.type === '1'" ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.protocol === '1' && info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.protocol === '1' && info.type === '2' && info.isUri === '1'">{/info.uri/}</span>
+                                        <span ng-show="info.protocol === '2' && info.type === '1'"  ng-repeat="proxyNode in proxyNodes">http://{/proxyNode.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.protocol === '2' && info.type === '2' && info.isUri === '1'">http://{/info.uri/}</span>
+                                        <span ng-show="info.protocol === '2' && info.type === '2' && info.isUri === '2'" ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/info.mapPort/}</span>
+                                        <span ng-show="info.protocol === '1' && info.type === '2' && !info.isUri "  ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/info.mapPort/}</span>
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-xs"
                                                 data-ng-click="deletCurPort($index)">删除
@@ -262,11 +328,10 @@
                         </div>
 
                         <div class="item-header">
-                            <h4>启动命令 <small>即 CMD</small></h4>
+                            <h4> CMD </h4>
                         </div>
                         <div class="form-inline">
                             <div class="form-group">
-                                <label>启动命令</label>
                                 <input type="text" class="form-control" data-ng-model="cmdInput" placeholder="输入需要运行的命令">
                             </div>
                         </div>

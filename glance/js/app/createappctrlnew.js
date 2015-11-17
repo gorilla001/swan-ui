@@ -3,15 +3,24 @@ glanceApp.controller("createappCtrlNew", createappCtrl);
 createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
 
 function createappCtrl($scope, $state, glanceHttp, Notification) {
+    var INNER = '1';
+    var OUTER = '2';
+    var SELECT_TCP = '1';
+    var SELECT_HTTP = '2';
+    var HAS_DOMAIN = '1';
+    var NO_DOMAIN = '2';
+
     $scope.step = "stepone";
     $scope.portInfo = {};
     $scope.portInfos = [];
     $scope.portType = {
-        "1": "对内 TCP",
-        "2": "对外 TCP",
-        "3": "对外标准 HTTP",
-        "4": "对内 HTTP",
-        "5": "对外 HTTP"
+        "1": "对内",
+        "2": "对外"
+    };
+
+    $scope.protocolType = {
+        "1": "TCP",
+        "2": "HTTP"
     };
 
     $scope.pathInfo = {};
@@ -105,22 +114,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         });
     };
 
-    $scope.getNode = function(clusterId){
-        $scope.nodesOk = [];
-        angular.forEach($scope.clusters, function(value, key) {
-            if(value.id === clusterId){
-                for(var i =0; i< value.nodes.length; i++){
-                    for(var j =0; j < value.nodes[i].attributes.length; j++){
-                        if(value.nodes[i].attributes[j].attribute === 'persistent'){
-                            $scope.nodesOk.push(value.nodes[i]);
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-    };
-
     $scope.getNodeOkIp = function(nodeOk){
         if(nodeOk) {
           $scope.nodeOkIp = nodeOk.ip;
@@ -130,10 +123,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.addPortInfo = function(portInfo){
         $scope.portInfos.push(portInfo);
         $scope.portInfo = {};
-    };
-
-    $scope.isOutterType = function(type){
-        return !!(type === '2'|| type === '3' || type === '5');
     };
 
     $scope.deletCurPort = function(index){
@@ -149,9 +138,59 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.pathsInfo.splice(index,1);
     };
 
-    $scope.clearURI = function(radioType){
-        if((radioType === '1' || radioType === '4') && $scope.portInfo.uri){
-            delete $scope.portInfo.uri;
+    $scope.changeType = function(portInfoType){
+        $scope.portInfo.uri = "";
+        if(portInfoType === OUTER && $scope.portInfo.protocol === SELECT_HTTP){
+            $scope.portInfo.isUri = HAS_DOMAIN;
+            $scope.portInfo.mapPort = 80;
+        }else {
+            $scope.portInfo.mapPort = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri;
+            }
         }
+    };
+
+    $scope.changeProtocol = function(){
+        if($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER){
+            $scope.portInfo.isUri = HAS_DOMAIN;
+        }
+
+        if($scope.portInfo.protocol === SELECT_TCP){
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+            if($scope.portInfo.hasOwnProperty('isUri')){
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.isURI = function(isUri){
+        if(isUri === HAS_DOMAIN){
+            $scope.portInfo.mapPort = 80;
+        }else if(isUri === NO_DOMAIN){
+            $scope.portInfo.mapPort = "";
+            if($scope.portInfo.hasOwnProperty('uri')){
+                delete $scope.portInfo.uri
+            }
+        }
+    };
+
+    $scope.isDisable = function(portInfo){
+        if(portInfo.type === INNER && portInfo.mapPort){
+            return false;
+        }else if(portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri){
+            return false
+        }else if(portInfo.type === OUTER && portInfo.isUri === NO_DOMAIN && portInfo.mapPort){
+            return false;
+        }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
+            return false;
+        }
+
+        return true;
     }
 }
