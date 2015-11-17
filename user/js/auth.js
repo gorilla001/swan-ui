@@ -6,7 +6,8 @@ $(document).ready(function(){
             username: '用户名格式错误',
             passwordrule: '密码可包含数字、标点、字母，至少要包含一位大写字母。',
             passwordtips: '密码可包含数字、标点、字母，至少要包含一位大写字母且长度为8~16位',
-            passwordmin: '密码长度不少于8位'
+            passwordmin: '密码长度不少于8位',
+            phonenumber: '手机号码格式错误'
         },
         custom: {
             'username' : function($el) {
@@ -36,7 +37,24 @@ $(document).ready(function(){
                 var length = $el.val().length;
                 var minlength = $el.data('passwordmin');
                 return (!$el.val()) || (length >= minlength) || (length === 1);
+            },
+            'phonenumber': function($el) {
+                var value = Number($el.val());
+                if (!value) {
+                    return false;
+                }
+                if ($el.val() === '0' + value) {
+                    return false;
+                }
+                var length = $el.val().length;
+                var requiredLength = Number($el.data('requiredlength'));
+                if (length !== requiredLength) {
+                    return false;
+                }
+                var re = /^1\d/;
+                return re.test(value);
             }
+
         }
     };
 
@@ -54,11 +72,13 @@ $(document).ready(function(){
     $('.registerForm').validator(options).on('submit', function(e){
         var registerEmail = $('#register-email').val();
         var registerPassword = $('#register-password').val();
-        var invitationCode = $('#register-inviation-code').val();
+
         var registerPostData = {
             email: registerEmail,
             password: registerPassword,
-            invitationcode: invitationCode
+            company: $('#register-company').val(),
+            wechat_qq: $('#register-wechatQQ').val(),
+            phone_number: $('#register-phoneNumber').val()
         };
 
         var regitsterUrl = CONFIG.urls.baseUrl + CONFIG.urls.registerUrl;
