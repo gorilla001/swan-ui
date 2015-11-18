@@ -143,6 +143,25 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return clusterBasicData;
     }
 
+    function getClusterNodesData(cluster, clickedStatus) {
+        var clusterNodesData = {
+            masters: [],
+            firstGroupSlaves: [],
+            followingGroupSlaves: [],
+            selectedClasses: {}
+        };
+        var nodes = cluster.nodes;
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
+        cluster.hiddenStatuses = cluster.hiddenStatuses? cluster.hiddenStatuses: [];
+        var filteredNodes = filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus);
+        var allShowSlaves = getAllShowSlaves(filteredNodes.slaves);
+        clusterNodesData.masters = getAllShowMasters(filteredNodes.masters);
+        clusterNodesData.firstGroupSlaves = allShowSlaves.first;
+        clusterNodesData.followingGroupSlaves = allShowSlaves.following;
+        clusterNodesData.selectedClasses = getSelectedClass(cluster.hiddenStatuses);
+        return clusterNodesData;
+    }
+
     function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
         var nonMasters = $scope.groupNodesByRoleAndStatus(nodes).slaves;
