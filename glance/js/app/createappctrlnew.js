@@ -120,6 +120,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.addPortInfo = function (portInfo) {
         if (isDisableAddList(portInfo, $scope.portInfos, ['type', 'mapPort', 'uri'])) {
             Notification.error('添加的应用地址已存在');
+        }else if((portInfo.mapPort == 80 || portInfo.mapPort == 443) && portInfo.isUri != HAS_DOMAIN && portInfo.type === OUTER){
+            Notification.error('无域名的情况下映射端口不能为 80 443');
         }else{
             $scope.portInfos.push(portInfo);
             $scope.portInfo = {};
