@@ -96,6 +96,29 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return allNodes;
     }
 
+    function getAllShowMasters(mastersWithStatus) {
+        return $scope.concatObjtoArr(mastersWithStatus);
+    }
+
+    function getAllShowSlaves(slavesWithStatus) {
+        var allShowSlaves = {
+            first: [],
+            following: []
+        };
+        var groupLength = 50;
+        var slaves = $scope.concatObjtoArr(slavesWithStatus);
+        var slavesLength = slaves.length;
+        if (slavesLength) {
+            var groupNumber = Math.ceil(slavesLength / groupLength);
+            if (groupNumber > 1) {
+                var i;
+                for (i = 1; i < groupNumber; i++) {
+                    allShowSlaves.following[i-1] = slaves.slice(i * groupLength, (i+1)*groupLength);
+                }
+            }
+        }
+        return allShowSlaves;
+    }
 
     function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
