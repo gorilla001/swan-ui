@@ -119,7 +119,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         var portErrorText = "应用地址重复";
         var pathErrorText = "添加的环境变量的 KEY 不能重复";
 
-        if(isAllowToAdd(info,infoType)){
+        if(isDisableAddList(info,infoType)){
             if(infoType === "path"){
                 Notification.error(pathErrorText);
             }else if(infoType === "port"){
@@ -183,7 +183,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         }
     };
 
-    function isAllowToAdd(info,infoType){
+    function isDisableAddList(info,infoType){
         function equal(info1, info2) {
             if(infoType === "path"){
                 var attrnames = ["key"];
