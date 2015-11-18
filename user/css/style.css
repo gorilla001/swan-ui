@@ -478,6 +478,15 @@ a:hover {
 	margin-bottom: 6px;
 }
 
+.footer-bg p a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.footer-bg p a:hover {
+    text-decoration: none;
+}
+
 .footer-logo {
 	display: inline-block;
 	vertical-align: top;
@@ -491,7 +500,7 @@ a:hover {
 }
 .footer-text {
 	text-align: center;
-	margin: 25px 0 10px 0;
+	margin: 15px 0 10px 0;
 	}
 .footer-partner {
 	text-align: center;
@@ -1050,4 +1059,28 @@ header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 }
 .has-error .form-control {
 	background-color: rgba(169,68,66,0.15);
+}
+.service-terms {
+    width: 60%;
+}
+.service-terms .modal-body {
+    max-height: 450px; 
+    overflow-y: scroll;
+}
+.service-terms .modal-body h5 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 25px;
+}
+.service-terms .modal-body dt {
+    font-weight: normal;
+    font-size: 14px;
+}
+.service-terms .modal-body dd, .service-terms .modal-body dt, .service-terms .modal-body dl, .service-terms .modal-body p, .service-terms .modal-body h5 {
+    margin-bottom: 15px;
+    text-indent: 2em;
+}
+.service-terms .modal-header h4 {
+    color: white;
+    margin-top: 15px;
 }
