@@ -51,7 +51,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     var ajaxPost = function (url, data, callback, params, errorCallback, warningCallback) {
         ajaxBase("post", url, data, params, callback, errorCallback, warningCallback);
     };
-
+    
     var ajaxFormPost = function(myScope, url, callback, errorCallback) {
         myScope.staticForm.$setPristine();
         myScope.message_error_info = {};
@@ -62,12 +62,32 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         });
     };
     
+    var ajaxPut = function (url, data, callback, params, errorCallback, warningCallback) {
+        ajaxBase("put", url, data, params, callback, errorCallback, warningCallback);
+    };
+    
+    var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback) {
+        myScope.staticForm.$setPristine();
+        myScope.message_error_info = {};
+        ajaxBase(method, url, myScope.form, undefined, callback, errorCallback, function(data){
+            if(data && data.code === MESSAGE_CODE.dataInvalid) {
+                myScope.message_error_info = data.errors;
+            }
+        });
+    }
+    
+    var ajaxFormPut = function(myScope, url, callback, errorCallback) {
+        ajaxFormSubmit("put", myScope, url, callback, errorCallback)
+    };
+    
     return {
         init: init,
         ajaxBase: ajaxBase,
         ajaxPost: ajaxPost,
+        ajaxPut: ajaxPut,
         ajaxGet: ajaxGet,
-        ajaxFormPost: ajaxFormPost
+        ajaxFormPost: ajaxFormPost,
+        ajaxFormPut: ajaxFormPut
     };
 }
 
