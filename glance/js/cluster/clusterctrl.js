@@ -79,20 +79,18 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         }
     }
 
-    $scope.getNodeState = function(node) {
+    $scope.getNodeStatus = function(node) {
         var isMaster = $scope.getIsMaster(node);
-        var servicesState = getNodeServicesState(node.services, isMaster);
-        var showState;
-        if (node.status === NODE_STATUS.terminated){
-            showState =  NODE_STATUS.terminated;
-        } else if(node.status === NODE_STATUS.installing || servicesState === 'installing') {
-            showState = NODE_STATUS.installing;
-        } else if(servicesState === 'failed') {
-            showState = NODE_STATUS.failed;
+        var servicesStatus = getNodeServiceStatus(node.services, isMaster);
+        if (node.status === NODE_STATUS.terminated) {
+            return NODE_STATUS.terminated;
+        } else if (node.status === NODE_STATUS.installing || servicesStatus === SERVICES_STATUS.installing) {
+            return NODE_STATUS.installing;
+        } else if (servicesStatus === SERVICES_STATUS.failed) {
+            return NODE_STATUS.failed;
         } else {
-            showState = NODE_STATUS.running;
+            return NODE_STATUS.running;
         }
-        return showState;
     };
 
     $scope.getSeriveState = function (nodeServices) {
@@ -145,7 +143,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         });
         if(nodes && nodes.length) {
             $.each(nodes, function(nodeIndex, node) {
-                showState = $scope.getNodeState(node);
+                showState = $scope.getNodeStatus(node);
                 node.showState = showState;
                 groups[showState].push(node);
             });
