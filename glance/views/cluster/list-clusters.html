@@ -1,18 +1,18 @@
 <div class="page-header">
-  <h1 class="pull-left" >集群管理</h1>
-  <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">新建集群</button></a>
+    <h1 class="pull-left" >集群管理</h1>
+    <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">新建集群</button></a>
 </div>
-  <a data-ui-sref="cluster.createcluster" data-ng-show="pageData.length === 0" class="btn-add-cluster">
-		<img src="../pics/ico-add-cluster.svg" width="42px"><br>新建集群
-	</a>
+<a data-ui-sref="cluster.createcluster" data-ng-show="clusters.length === 0" class="btn-add-cluster">
+    <img src="../pics/ico-add-cluster.svg" width="42px"><br>新建集群
+</a>
 
-<section data-ng-show="pageData.length !== 0" data-ng-repeat="cluster in pageData" class="cluster-manage">
+<section data-ng-show="clusters.length !== 0" data-ng-repeat="cluster in clustersBasicData" class="cluster-manage">
     <div class="server-ico-list main-container">
         <header class="clearfix main-container-header">
             <h2>
-                <span data-ng-show="!cluster.amounts.total">{/ cluster.basicInfos.name /}</span>
-                <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">
-                    {/ cluster.basicInfos.name /}
+                <span data-ng-show="!cluster.amounts.total">{/ cluster.infos.name /}</span>
+                <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">
+                    {/ cluster.infos.name /}
                 </a>
                 <small data-ng-show="cluster.amounts.total">
                     主机数量：{/cluster.amounts.total/}
@@ -22,60 +22,60 @@
         <div class="main-container-body">
             <div data-ng-show="cluster.amounts.total">
                 <ul class="cluster-service-status-number">
-                    <li class="running {/cluster.classes.running/}" data-ng-show="cluster.amounts.running">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'running')" href="#">
+                    <li class="running {/clustersNodesData[$index].selectedClasses.running/}" data-ng-show="cluster.amounts.running">
+                        <a data-ng-click="filterSingleCluster($index, 'running')" href="#">
                             正常主机 <span>{/cluster.amounts.running/}</span>
                         </a>
                     </li>
-                    <li class="terminated {/cluster.classes.terminated/}" data-ng-show="cluster.amounts.terminated">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'terminated')" href="#">    失联主机 <span>{/cluster.amounts.terminated/}</span>
+                    <li class="terminated {/clustersNodesData[$index].selectedClasses.terminated/}" data-ng-show="cluster.amounts.terminated">
+                        <a data-ng-click="filterSingleCluster($index, 'terminated')" href="#">    失联主机 <span>{/cluster.amounts.terminated/}</span>
                         </a>
                     </li>
-                    <li class="failed {/cluster.classes.failed/}" data-ng-show="cluster.amounts.failed">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'failed')" href="#">
+                    <li class="failed {/clustersNodesData[$index].selectedClasses.failed/}" data-ng-show="cluster.amounts.failed">
+                        <a data-ng-click="filterSingleCluster($index, 'failed')" href="#">
                             报警主机 <span>{/cluster.amounts.failed/}</span>
                         </a>
                     </li>
-                    <li class="installing {/cluster.classes.installing/}" data-ng-show="cluster.amounts.installing">
-                        <a data-ng-click="getPageData(cluster.basicInfos.id, 'installing')" href="#">
+                    <li class="installing {/clustersNodesData[$index].selectedClasses.installing/}" data-ng-show="cluster.amounts.installing">
+                        <a data-ng-click="filterSingleCluster($index, 'installing')" href="#">
                             初始化主机 <span>{/cluster.amounts.installing/}</span>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
-                    <li data-ng-repeat="master in cluster.allMasters">
-                        <a data-toggle="tooltip" title="{/master.name/} [{/master.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
+                    <li data-ng-repeat="master in clustersNodesData[$index].masters">
+                        <a data-toggle="tooltip" title="[{/master.name/}] [{/master.ip/}] {/statName[master.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:master.id})">
                             <img data-ng-src="/pics/node-master-status-{/master.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
-                    <li data-ng-repeat="node in cluster.firstNon">
-                        <a data-toggle="tooltip" title="{/node.name/} [{/node.nodeStatus/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
+                    <li data-ng-repeat="node in clustersNodesData[$index].firstGroupSlaves">
+                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:master.id})">
                             <img data-ng-src="/pics/node-status-{/node.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
-                <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.basicInfos.showMore" data-ng-repeat="nonMasters in cluster.followingNon">
-                    <li data-ng-repeat="node in nonMasters"> 
-                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showStatus/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
-                            <img data-ng-src="/pics/node-status-{/node.showStatus/}.png"/>
+                <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.infos.showMore" data-ng-repeat="slaves in clustersNodesData[$index].followingGroupSlaves">
+                    <li data-ng-repeat="node in slaves">
+                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:master.id})">
+                            <img data-ng-src="/pics/node-status-{/node.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
             </div>
 
-            <div data-ng-show="cluster.followingNon.length">
+            <div data-ng-show="clustersNodesData[$index].followingGroupSlaves.length">
                 共{/cluster.amounts.total/}台主机
-                <span data-ng-click="toggleShowMoreNonMasters(cluster.basicInfos.id)">
-                    {/cluster.basicInfos.clickWords/}
+                <span data-ng-click="toggleShowMoreSlaves($index)">
+                    {/cluster.infos.clickWords/}
                 </span>
             </div>
 
             <div data-ng-show="!cluster.amounts.total">
                 <h4>
                     集群中没有主机，
-                    <a data-ui-sref="cluster.addnode({clusterId:cluster.basicInfos.id})">
+                    <a data-ui-sref="cluster.addnode({clusterId:cluster.infos.id})">
                         添加主机
                     </a>
                 </h4>
@@ -84,20 +84,20 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a data-ui-sref="cluster.addnode({clusterId:cluster.basicInfos.id})">添加主机</a>
+                        <a data-ui-sref="cluster.addnode({clusterId:cluster.infos.id})">添加主机</a>
                     </li>
                     <li>
-                        <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.basicInfos.id, pageNum: 0})">查看集群</a>
+                        <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">查看集群</a>
                     </li>
                     <li>
-                    <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.basicInfos.id/}" >删除集群</a>
+                    <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.infos.id/}" >删除集群</a>
                     </li>
                 </ul>
             </div>
         </div>
 
         <footer class="main-container-footer">
-            <span data-ng-show="cluster.basicInfos.updated_at">更新时间: {/ cluster.basicInfos.updated_at /}</span>
+            <span data-ng-show="cluster.infos.updated_at">更新时间: {/ cluster.infos.updated_at /}</span>
         </footer>
 
         <div class="cluster-status-panel" data-ng-show="cluster.problemTips">
@@ -106,22 +106,22 @@
                     <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
                 </header>
                 <div class="cluster-status-content">
-                    <p>{/cluster.problemTips.paragraphText/}</p>
+                    <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
                     <ul class="clearfix">
                         <li data-ng-repeat="node in cluster.problemNodes">
-                            <a href="#" data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.basicInfos.id})">{/node.name/} &nbsp; [{/node.ip/}]</a>
+                            <a href="#" data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.infos.id})">{/node.name/} &nbsp; [{/node.ip/}]</a>
                         </li>
                     </ul>
                 </div>
                 <footer>
-                    <button class="btn btn-primary" data-ng-click="close(cluster.basicInfos.id, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
-                    <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.basicInfos.id)">{/cluster.problemTips.secondButtonText/}</button>
+                    <button class="btn btn-primary" data-ng-click="close(cluster.infos.id, $index, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
+                    <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.infos.id, $index)">{/cluster.problemTips.secondButtonText/}</button>
                 </footer>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="confirmDeleteCluster{/cluster.basicInfos.id/}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmDeleteCluster{/cluster.infos.id/}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="deleteCluster(cluster.basicInfos.id, cluster.basicInfos.name)">确定</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="deleteCluster(cluster.infos.id, cluster.infos.name)">确定</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
                 </div>
             </div>
