@@ -11,9 +11,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '5_masters': 6,
     };
 
-    $scope.clusterStatus = CLUSTER_STATUS;
     $scope.nodeStatus = NODE_STATUS;
-
 
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
@@ -124,7 +122,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var clusterBasicData = {
             infos: {},
             amounts: {},
-            problemNodes: []
+            problemNodes: [],
+            clusterStatus: ''
         };
         clusterBasicData.infos = getClusterBasicInfos(cluster);
         var nodes = cluster.nodes;
@@ -134,6 +133,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var masters = nodesWithRoleAndStatus.masters;
         var slaves = nodesWithRoleAndStatus.slaves;
         var clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
+        clusterBasicData.clickedStatus = clusterStatus;
         var problemTips = setProblemTips(clusterStatus, cluster.cluster_type, nodes.length);
 
         if (problemTips) {
@@ -238,7 +238,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         data.firstNon = nonMasters.first;
         data.followingNon = nonMasters.following;
         data.classes = getSelectedClass(cluster.hideStates);
-        data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.cluster_type);
+        data.clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
         data.problemNodes = getProblemNodes(masters, slaves, data.clusterStatus);
         data.problemTips = setProblemTips(data.clusterStatus, cluster.cluster_type, nodes.length);
         return data;
