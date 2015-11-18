@@ -222,13 +222,14 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         return allMasters;
     }
 
-    function getSelectedClass(hideStates) {
+    function getSelectedClass(hideStatuses) {
         var classes = {};
-        var showStates = Object.keys(NODE_STATUS);
-        $.each(showStates, function(index, val) {
-            classes[val] = '';
-            if(hideStates.indexOf(val) > -1) {
-                classes[val] = 'unselected';
+        var allStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(allStatuses, function(nodeStatus, index) {
+            if (hideStatuses.indexOf(nodeStatus) > -1) {
+                classes[nodeStatus] = 'unselected';
+            } else {
+                classes[nodeStatus] = '';
             }
         });
         return classes;
