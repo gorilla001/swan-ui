@@ -40,18 +40,17 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         });
     };
 
-    function countNodesAmount(nodes) {
-        var amounts = {};
-        amounts.total = 0;
-        var groupsWithState = $scope.groupNodesByRoleAndStatus(nodes);
-        var showStates = Object.keys(NODE_STATUS);
-
-        $.each(showStates, function(index, key) {
-            amounts[key] = 0;
-            $.each(groupsWithState, function(groupKey, group) {
-                amounts[key] += group[key].length;
+    function countNodesAmount(nodesWithRoleAndStatus) {
+        var amounts = {
+            total: 0
+        };
+        var nodeStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(nodeStatuses, function(nodeStatus, index) {
+            amounts[nodeStatus] = 0;
+            angular.forEach(nodesWithRoleAndStatus, function(nodesWithStatus, role) {
+                amounts[nodeStatus] += nodesWithStatus[nodeStatus].length;
             });
-            amounts.total += amounts[key];
+            amounts.total += amounts[nodeStatus];
         });
         return amounts;
     }
@@ -152,8 +151,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
         var nodes = cluster.nodes;
         data.basicInfos = getClusterBasicInfos(cluster);
-        data.amounts = countNodesAmount(nodes);
         group = $scope.groupNodesByRoleAndStatus(nodes);
+        data.amounts = countNodesAmount(group);
         masters = group.masters;
         slaves = group.slaves;
 
