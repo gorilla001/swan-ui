@@ -43,7 +43,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     function countNodesAmount(nodes) {
         var amounts = {};
         amounts.total = 0;
-        var groupsWithState = $scope.groupMasterWithState(nodes);
+        var groupsWithState = $scope.groupNodesByRoleAndStatus(nodes);
         var showStates = Object.keys(NODE_STATUS);
 
         $.each(showStates, function(index, key) {
@@ -71,7 +71,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
-        var nonMasters = $scope.groupMasterWithState(nodes).nonMasters;
+        var nonMasters = $scope.groupNodesByRoleAndStatus(nodes).slaves;
         var showNonMasters = nonMasters;
         var index;
         if(hideState) {
@@ -153,9 +153,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var nodes = cluster.nodes;
         data.basicInfos = getClusterBasicInfos(cluster);
         data.amounts = countNodesAmount(nodes);
-        group = $scope.groupMasterWithState(nodes)
+        group = $scope.groupNodesByRoleAndStatus(nodes);
         masters = group.masters;
-        slaves = group.nonMasters;
+        slaves = group.slaves;
 
         data.masters = masters;
         data.slaves = slaves;

@@ -44,22 +44,22 @@
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
                     <li data-ng-repeat="master in cluster.allMasters">
-                        <a data-toggle="tooltip" title="{/master.name/} [{/master.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:master.id, clusterId:cluster.basicInfos.id})">
-                            <img data-ng-src="/pics/node-master-status-{/master.showState/}.png"/>
+                        <a data-toggle="tooltip" title="{/master.name/} [{/master.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:master.id})">
+                            <img data-ng-src="/pics/node-master-status-{/master.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
                     <li data-ng-repeat="node in cluster.firstNon">
-                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.basicInfos.id})">
-                            <img data-ng-src="/pics/node-status-{/node.showState/}.png"/>
+                        <a data-toggle="tooltip" title="{/node.name/} [{/node.nodeStatus/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
+                            <img data-ng-src="/pics/node-status-{/node.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.basicInfos.showMore" data-ng-repeat="nonMasters in cluster.followingNon">
                     <li data-ng-repeat="node in nonMasters"> 
-                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showState/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.basicInfos.id})">
-                            <img data-ng-src="/pics/node-status-{/node.showState/}.png"/>
+                        <a data-toggle="tooltip" title="{/node.name/} [{/node.showStatus/}] [{/node.ip/}]" data-ui-sref="cluster.nodedetails({nodeId:node.id})">
+                            <img data-ng-src="/pics/node-status-{/node.showStatus/}.png"/>
                         </a>
                     </li>
                 </ul>

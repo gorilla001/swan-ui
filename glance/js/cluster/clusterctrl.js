@@ -115,49 +115,26 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return arr;
     }
 
-    function groupMasters(nodes) {
+    $scope.groupNodesByRoleAndStatus = function(nodes) {
         var cluster = {
-            masters: [],
-            nonMasters: []
+            masters: {},
+            slaves: {}
         };
-        if (nodes && nodes.length) {
-            var isMaster;
-            $.each(nodes, function(index, node) {
-                isMaster = $scope.getIsMaster(node);
-                if (isMaster) {
-                    cluster.masters.push(node);
-                }else{
-                    cluster.nonMasters.push(node);
-                }
+
+        var nodeStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(cluster, function(nodes, role) {
+            angular.forEach(nodeStatuses, function(status, index) {
+                cluster[role][status] = [];
             });
-        }
+        });
+
+        var nodeStatus;
+        angular.forEach(nodes, function(node, index) {
+            nodeStatus = $scope.getNodeStatus(node);
+            node.nodeStatus = nodeStatus;
+            $scope.getIsMaster(node)? cluster.masters[nodeStatus].push(node) : cluster.slaves[nodeStatus].push(node);
+        });
         return cluster;
-    }
-
-    function classifyNodesByState(nodes) {
-        var groups = {}
-        var showState;
-        var showStates = Object.keys(NODE_STATUS);
-        $.each(showStates, function(index, key) {
-            groups[key] = [];
-        });
-        if(nodes && nodes.length) {
-            $.each(nodes, function(nodeIndex, node) {
-                showState = $scope.getNodeStatus(node);
-                node.showState = showState;
-                groups[showState].push(node);
-            });
-        }
-        return groups;
-    }
-
-    $scope.groupMasterWithState = function(nodes) {
-        var groupsWithState = {};
-        var cluster = groupMasters(nodes);
-        $.each(cluster, function(key, val) {
-            groupsWithState[key] = classifyNodesByState(val);
-        });
-        return groupsWithState;
     }
 
     $scope.getClusterNames = function(clusters) {

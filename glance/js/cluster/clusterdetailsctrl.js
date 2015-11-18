@@ -9,9 +9,9 @@ function clusterDetailsCtrl($scope, $stateParams, glanceHttp) {
             $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
 
             $scope.currentPage = 1;
-            var groupsWithState = $scope.groupMasterWithState($scope.cluster.nodes);
+            var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes);
             $scope.contentPage = [];
-            $.each(groupsWithState, function(key, val) {
+            $.each(nodesWithRoleAndStatus, function(key, val) {
                 $scope.contentPage = $scope.contentPage.concat($scope.concatObjtoArr(val));
             });
             $scope.contentCurPage = $scope.contentPage.slice(0, $scope.pageLength);
