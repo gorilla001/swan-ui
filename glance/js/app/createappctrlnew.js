@@ -55,16 +55,18 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.imageversion = "";
     $scope.radio = "1";  //defalut apptype for radio box
 
+    $scope.deployinfo = {};
+
     $scope.deployApp = function () {
-        if($scope.portInfos.length){
+        if ($scope.portInfos.length) {
             $scope.deployinfo.containerPortsInfo = $scope.portInfos;
-        }else{
+        } else {
             delete $scope.deployinfo.containerPortsInfo;
         }
 
-        if($scope.pathsInfo.length){
+        if ($scope.pathsInfo.length) {
             $scope.deployinfo.envs = $scope.pathsInfo;
-        }else{
+        } else {
             delete $scope.deployinfo.envs;
         }
 
@@ -74,8 +76,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             delete $scope.deployinfo.cmd;
         }
 
-        if($scope.radio === '2'){
-            if($scope.containerDir && $scope.dateDir){
+        if ($scope.radio === '2') {
+            if ($scope.containerDir && $scope.dateDir) {
                 $scope.deployinfo.containerVolumesInfo = [];
                 var volumesInfo = {
                     containerPath: $scope.containerDir,
@@ -85,8 +87,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             }
 
             $scope.deployinfo.constraints = [["persistent", "LIKE", "persistent"], ["ip", "LIKE", $scope.nodeOkIp]];
-        } else if($scope.radio === '1'){
-            if($scope.deployinfo.hasOwnProperty('containerVolumesInfo')){
+        } else if ($scope.radio === '1') {
+            if ($scope.deployinfo.hasOwnProperty('containerVolumesInfo')) {
                 delete $scope.deployinfo.containerVolumesInfo;
             }
             $scope.deployinfo.constraints = [["transient", "LIKE", "transient"]];
@@ -105,134 +107,118 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         });
     };
 
-    $scope.getNodeOkIp = function(nodeOk){
-        if(nodeOk) {
-          $scope.nodeOkIp = nodeOk.ip;
+    $scope.getNodeOkIp = function (nodeOk) {
+        if (nodeOk) {
+            $scope.nodeOkIp = nodeOk.ip;
         }
     };
 
-    $scope.deletCurPort = function(index){
-        $scope.portInfos.splice(index,1);
+    $scope.deletCurPort = function (index) {
+        $scope.portInfos.splice(index, 1);
     };
 
-    $scope.addToArray = function(info, infoType){
-        var portErrorText = "应用地址重复";
-        var pathErrorText = "添加的环境变量的 KEY 不能重复";
-
-        if(isDisableAddList(info,infoType)){
-            if(infoType === "path"){
-                Notification.error(pathErrorText);
-            }else if(infoType === "port"){
-                Notification.error(portErrorText);
-            }
+    $scope.addPortInfo = function (portInfo) {
+        if (isDisableAddList(portInfo, $scope.portInfos, ['type', 'mapPort', 'uri'])) {
+            Notification.error('添加的应用地址已存在');
         }else{
-            if(infoType === "path"){
-                $scope.pathsInfo.push(info);
-                $scope.pathInfo = {};
-            }else if(infoType === "port"){
-                $scope.portInfos.push(info);
-                $scope.portInfo = {};
-            }
+            $scope.portInfos.push(portInfo);
+            $scope.portInfo = {};
         }
     };
 
-    $scope.deletCurPath = function(index){
-        $scope.pathsInfo.splice(index,1);
-    };
-
-    $scope.changeType = function(portInfoType){
-        $scope.portInfo.uri = "";
-        if(portInfoType === OUTER && $scope.portInfo.protocol === SELECT_HTTP){
-            $scope.portInfo.isUri = HAS_DOMAIN;
-            $scope.portInfo.mapPort = 80;
-        }else {
-            $scope.portInfo.mapPort = "";
-            if($scope.portInfo.hasOwnProperty('uri')){
-                delete $scope.portInfo.uri
-            }
-            if($scope.portInfo.hasOwnProperty('isUri')){
-                delete $scope.portInfo.isUri;
-            }
+    $scope.addPathInfo = function (pathInfo) {
+        if (isDisableAddList(pathInfo, $scope.pathsInfo, ['key'])) {
+            Notification.error('添加的环境变量的 KEY 不能重复');
+        }else{
+            $scope.pathsInfo.push(pathInfo);
+            $scope.pathInfo = {};
         }
     };
 
-    $scope.changeProtocol = function(){
-        if($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER){
-            $scope.portInfo.isUri = HAS_DOMAIN;
-            $scope.portInfo.mapPort = 80;
-        }
-
-        if($scope.portInfo.protocol === SELECT_TCP){
-            if($scope.portInfo.hasOwnProperty('uri')){
-                delete $scope.portInfo.uri
-            }
-            if($scope.portInfo.hasOwnProperty('isUri')){
-                delete $scope.portInfo.isUri;
-            }
-        }
-    };
-
-    $scope.isURI = function(isUri){
-        if(isUri === HAS_DOMAIN){
-            $scope.portInfo.mapPort = 80;
-        }else if(isUri === NO_DOMAIN){
-            $scope.portInfo.mapPort = "";
-            if($scope.portInfo.hasOwnProperty('uri')){
-                delete $scope.portInfo.uri
-            }
-        }
-    };
-
-    function isDisableAddList(info,infoType){
+    function isDisableAddList(info, infoArray, attrnames) {
         function equal(info1, info2) {
-            if(infoType === "path"){
-                var attrnames = ["key"];
-            }else if(infoType === "port"){
-                var attrnames = ["type", "mapPort", "uri"];
-            }
-
-            for(var i=0; i< attrnames.length; i++){
-                if(info1[attrnames[i]] != info2[attrnames[i]]) {
+            for (var i = 0; i < attrnames.length; i++) {
+                if (info1[attrnames[i]] != info2[attrnames[i]]) {
                     return false;
                 }
             }
             return true;
         }
 
-        var array = [];
-        if(infoType === "path"){
-            array = $scope.pathsInfo;
-        }else if(infoType === "port"){
-            array = $scope.portInfos;
-        }
-
-        for(var i=0; i<array.length; i++){
-            if(equal(info, array[i])) {
+        for (var i = 0; i < infoArray.length; i++) {
+            if (equal(info, infoArray[i])) {
                 return true;
             }
         }
         return false;
     }
 
-    $scope.isAddPortDisable = function(portInfo) {
-        if(!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '' ) {
+    $scope.deletCurPath = function (index) {
+        $scope.pathsInfo.splice(index, 1);
+    };
+
+    $scope.changeType = function (portInfoType) {
+        $scope.portInfo.uri = "";
+        if (portInfoType === OUTER && $scope.portInfo.protocol === SELECT_HTTP) {
+            $scope.portInfo.isUri = HAS_DOMAIN;
+            $scope.portInfo.mapPort = 80;
+        } else {
+            $scope.portInfo.mapPort = "";
+            if ($scope.portInfo.hasOwnProperty('uri')) {
+                delete $scope.portInfo.uri
+            }
+            if ($scope.portInfo.hasOwnProperty('isUri')) {
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.changeProtocol = function () {
+        if ($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER) {
+            $scope.portInfo.isUri = HAS_DOMAIN;
+            $scope.portInfo.mapPort = 80;
+        }
+
+        if ($scope.portInfo.protocol === SELECT_TCP) {
+            if ($scope.portInfo.hasOwnProperty('uri')) {
+                delete $scope.portInfo.uri
+            }
+            if ($scope.portInfo.hasOwnProperty('isUri')) {
+                delete $scope.portInfo.isUri;
+            }
+        }
+    };
+
+    $scope.isURI = function (isUri) {
+        if (isUri === HAS_DOMAIN) {
+            $scope.portInfo.mapPort = 80;
+        } else if (isUri === NO_DOMAIN) {
+            $scope.portInfo.mapPort = "";
+            if ($scope.portInfo.hasOwnProperty('uri')) {
+                delete $scope.portInfo.uri
+            }
+        }
+    };
+
+    $scope.isAddPortDisable = function (portInfo) {
+        if (!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '') {
             return true;
         }
-        if(portInfo.type === INNER && portInfo.mapPort){
+        if (portInfo.type === INNER && portInfo.mapPort) {
             return false;
-        }else if(portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri){
+        } else if (portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri) {
             return false
-        }else if(portInfo.type === OUTER && portInfo.isUri === NO_DOMAIN && portInfo.mapPort){
+        } else if (portInfo.type === OUTER && portInfo.isUri === NO_DOMAIN && portInfo.mapPort) {
             return false;
-        }else if(portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort){
+        } else if (portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort) {
             return false;
-        }else{
+        } else {
             return true;
         }
     };
 
-    $scope.isAddPathDisable = function(pathInfo){
-        if(!pathInfo.key || !pathInfo.value || pathInfo.key === '' || pathInfo.value === '') {
+    $scope.isAddPathDisable = function (pathInfo) {
+        if (!pathInfo.key || !pathInfo.value || pathInfo.key === '' || pathInfo.value === '') {
             return true;
         }
     }
