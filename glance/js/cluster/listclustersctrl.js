@@ -279,10 +279,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             'slave': {}
         };
         var names = Object.keys(nodeNeedServices);
-        var i;
         var service;
         var breakAmount = 0;
-        for (i = 0; i < services.length; i++) {
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
             
             if (names.indexOf(service.name) > -1) {

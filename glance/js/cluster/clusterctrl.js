@@ -49,34 +49,34 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return node.role === 'master';
     };
 
-    function getNodeServicesState(services, isMaster) {
-        var serviceState = 'running';
-        var masterServiceNames = ['zookeeper', 'master', 'marathon'];
-        var runningNumber = 0;
-        for (var i=0; i<services.length; i++) {
+    function getNodeServiceStatus(services, isMaster) {
+        var nodeServiceStatus = SERVICES_STATUS.running;
+        var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
-            if (service.status === 'installing') {
-                serviceState = 'installing';
-                break;
-            } else if (service.status == 'failed') {
-                if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = 'failed';
-                    break;
-                } else if (!isMaster && service.name == 'slave') {
-                    serviceState = 'failed';
-                    break;
-                }
-            } else if (service.status == 'uninstalled') {
-                if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = 'installing';
-                    break;
-                } else if (!isMaster && service.name == 'slave') {
-                    serviceState = 'installing';
-                    break;
-                }
+            if (service.status === SERVICES_STATUS.installing) {
+                return SERVICES_STATUS.installing;
+            }
+            nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
+            if (nodeServiceStatus) {
+                return nodeServiceStatus;
             }
         }
-        return serviceState;
+        return nodeServiceStatus;
+    }
+
+    function isNodeServicesFailedOrUninstalled(service, isMaster, statuses) {
+        if (statuses.indexOf(service.status) > -1) {
+            var serviceNames = {
+                master: ['zookeeper', 'master', 'marathon'],
+                slave: ['slave']
+            };
+            var masterCondition = Boolean(isMaster && (serviceNames.master.indexOf(service.name) > -1));
+            var slaveCondition = Boolean(!isMaster && (serviceNames.slave.indexOf(service.name) > -1));
+            if (masterCondition || slaveCondition) {
+                return service.status;
+            }
+        }
     }
 
     $scope.getNodeState = function(node) {
