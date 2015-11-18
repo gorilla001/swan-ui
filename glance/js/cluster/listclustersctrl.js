@@ -68,6 +68,20 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
          return basicInfos;
     }
 
+    function setHiddenStatuses(hiddenStatuses, clickedStatus) {
+         var index;
+         if(hiddenStatuses.length) {
+            index = hiddenStatuses.indexOf(clickedStatus);
+            (index === -1) ? hiddenStatuses.push(clickedStatus): hiddenStatuses.splice(index, 1);
+         } else {
+            var showStatuses = Object.keys(NODE_STATUS);
+            index = showStatuses.indexOf(clickedStatus);
+            hiddenStatuses = showStatuses.splice(index, 1);
+         }
+         return hiddenStatuses;
+    }
+
+
     function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
         var nonMasters = $scope.groupNodesByRoleAndStatus(nodes).slaves;
