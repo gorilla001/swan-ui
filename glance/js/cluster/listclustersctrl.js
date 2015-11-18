@@ -68,7 +68,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
          return basicInfos;
     }
 
-    function setHiddenStatuses(hiddenStatuses, clickedStatus) {
+    function buildHiddenStatuses(hiddenStatuses, clickedStatus) {
          var index;
          if(hiddenStatuses.length) {
             index = hiddenStatuses.indexOf(clickedStatus);
@@ -79,6 +79,21 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             hiddenStatuses = showStatuses.splice(index, 1);
          }
          return hiddenStatuses;
+    }
+
+    function filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus) {
+        var allNodes = angular.copy({}, nodesWithRoleAndStatus);
+        if (clickedStatus) {
+            cluster.hiddenStatuses = buildHiddenStatuses(cluster.hiddenStatuses, clickedStatus);
+            angular.forEach(allNodes, function(nodesWithRole, role) {
+                angular.forEach(nodesWithRole, function(nodesWithStatus, nodeStatus) {
+                    if (cluster.hiddenStatuses.indexOf(nodeStatus) > -1 ) {
+                        allNodes[role][nodeStatus] = [];
+                    }
+                });
+            });
+        }
+        return allNodes;
     }
 
 
