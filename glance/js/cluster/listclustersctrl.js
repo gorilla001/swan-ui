@@ -25,6 +25,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     };
     $scope.listCluster();
 
+    $scope.filterSingleCluster = function(index, clickedStatus) {
+        var cluster = $scope.clusters[index];
+        $scope.clustersNodesData[index] = getClusterNodesData(cluster, clickedStatus);
+    }
+
     $scope.toggleShowMoreNonMasters = function(clusterId) {
         $.each($scope.pageData, function(index, cluster) {
             if (cluster.basicInfos.id === clusterId) {
