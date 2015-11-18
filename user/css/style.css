@@ -1048,3 +1048,6 @@ header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 	color: #FFF;
 	margin-left: 15px;
 }
+.has-error .form-control {
+	background-color: rgba(169,68,66,0.15);
+}
