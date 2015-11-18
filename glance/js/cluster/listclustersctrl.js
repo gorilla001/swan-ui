@@ -119,6 +119,29 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
         return allShowSlaves;
     }
+    
+    function getClusterBasicData(cluster) {
+        var clusterBasicData = {
+            infos: {},
+            amounts: {},
+            problemNodes: []
+        };
+        clusterBasicData.infos = getClusterBasicInfos(cluster);
+        var nodes = cluster.nodes;
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
+
+        clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
+        var masters = nodesWithRoleAndStatus.masters;
+        var slaves = nodesWithRoleAndStatus.slaves;
+        var clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
+        var problemTips = setProblemTips(clusterStatus, cluster.cluster_type, nodes.length);
+
+        if (problemTips) {
+            clusterBasicData.problemTips = problemTips;
+            clusterBasicData.problemNodes = getProblemNodes(masters, slaves, clusterStatus);
+        }
+        return clusterBasicData;
+    }
 
     function filtrateNonMasters(cluster, hideState) {
         var nodes = cluster.nodes;
@@ -247,7 +270,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         }
     }
 
-    function getSingleClusterStatus(masters, slaves, nodes, clusterType) {
+    function getClusterStatus(masters, slaves, nodes, clusterType) {
         var status;
         if(!nodes.length) {
             return;
