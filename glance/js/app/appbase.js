@@ -12,6 +12,10 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.clusters = [];
     $scope.curAppNames = [];
 
+    $scope.nodesOk = [];
+    $scope.gateWays= [];
+    $scope.proxyNodes = [];
+
     $scope.appstate = {
         '1': "部署中",
         '2': "运行中",
