@@ -98,7 +98,24 @@ a.remove {
 	font-weight: normal;
 	font-size: 12px;
 }
+.sidebar .instructions {
+	position: absolute;
+	bottom: 50px;
+	width: 50%;
+	height: 30px;
+	left: 25%;
+}
+.sidebar .community {
+	position: absolute;
+	bottom: 50px;
+	width: 50%;
+	height: 30px;
+	left: 55%;
+}
 
+.sidebar .separator {
+	color: whitesmoke;
+}
 /* Sidebar navigation */
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
