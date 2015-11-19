@@ -1,8 +1,11 @@
-function utils() {
+function utils(Notification) {
     var clickToCopy = function() {
         $(".copy").each(function () {
             var clip = new ZeroClipboard($(this), {
                 moviePath: "/bower_components/zeroclipboard/dist/ZeroClipboard.swf"
+            });
+            clip.on("aftercopy", function(event) {
+                Notification.success('复制成功');
             });
         });
     };
@@ -43,5 +46,5 @@ function utils() {
         createPages: createPages
     }
 }
-
+utils.$inject = ["Notification"]
 glanceApp.factory('utils', utils);

@@ -9,7 +9,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
     $scope.addNode = function(isCon) {
-        glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"], function() {
+        glanceHttp.ajaxFormPut($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}], function() {
             if (isCon) {
                 $state.reload();
             } else {
@@ -46,8 +46,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.clickToCopy = function() {
       $scope.isHintHide = false;
       $scope.afterCopy = true;
-      glanceHttp.ajaxFormPost($scope, ["cluster.updateNode"]);
-      Notification.success('复制成功');
+      glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}]);
     }
     
     $scope.onAttributesChange = function(attribute) {
