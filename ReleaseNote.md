@@ -11,7 +11,7 @@ Release Note
 
 ###需要运维更新
 
-1. agentConfig.version从confdev.js中移除。（agent等版本会由后台返回）
+1. agentConfig.version从confdev.js中移除。（agent的版本会由后台返回）
 
 
 ### bug fix
