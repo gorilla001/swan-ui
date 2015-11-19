@@ -26,6 +26,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         glanceHttp.ajaxGet(['app.cancelDeploy',{app_id: $stateParams.appId}], function (data) {
             if(data.code == 0){
                 $scope.getImageVersions();
+                $scope.timepick = 0;
                 Notification.success('取消部署成功');
             }
         }, undefined, null, function(data) {
@@ -37,7 +38,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         glanceHttp.ajaxGet(['app.versionDeploy',{app_versionId: versionId}], function (data) {
             $scope.getImageVersions();
         }, undefined, null, function(data) {
-            Notification.error('部署失败: ' + data.errors);
+            Notification.error('部署失败: ' + $scope.addCode[data.code]);
         })
     };
 
@@ -49,6 +50,6 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         $scope.contentCurPage = $scope.versions.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
     };
 
-    $scope.getImageVersions();
+    $scope.getAppInfoPromise.then($scope.getImageVersions);
 
 }

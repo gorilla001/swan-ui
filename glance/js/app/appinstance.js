@@ -17,7 +17,7 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
         glanceHttp.ajaxGet(['app.instances',{app_id: $stateParams.appId}], function (data) {
             $scope.instances = data.data;
             if (isDeploying(data)) {
-                promise = $timeout(appInstances, 3000);
+                promise = $timeout(appInstances, 5000);
             }
             $scope.instances = hideStartTime(data.data);
         }, undefined, null, function(data) {

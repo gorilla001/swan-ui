@@ -30,6 +30,14 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         "2": "HTTP"
     };
 
+    $scope.addCode = {
+        10: "应用名称冲突",
+        11: "端口冲突",
+        12: "版本冲突",
+        13: "应用被锁定",
+        999: "网络异常"
+    };
+
     $scope.listCluster = function () {
         var deferred = $q.defer();
 

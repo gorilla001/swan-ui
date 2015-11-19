@@ -103,7 +103,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
             $state.go('app.appdetail.config', {appId: data.data},{reload: true});
         }, undefined, null, function (data) {
-            Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
+            Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + $scope.addCode[data.code]);
         });
     };
 
