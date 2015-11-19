@@ -63,7 +63,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
-            Notification.error('应用 ' + appName+' 停止失败:' + data.errors);
+            Notification.error('应用 ' + appName+' 停止失败:' + $scope.addCode[data.code]);
         });
     };
 
@@ -74,7 +74,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 $state.go('app.applist',undefined,{reload : true});
             }
         },undefined, null, function(data){
-            Notification.error('应用 '+ appName +' 启动失败: ' + data.errors);
+            Notification.error('应用 '+ appName +' 启动失败: ' + $scope.addCode[data.code]);
         });
     };
 
@@ -86,7 +86,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                     $state.go('app.applist',undefined,{reload : true});
                 }
             },undefined, null, function(data){
-                Notification.error('应用 ' + appName + ' 删除失败: ' + data.errors);
+                Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
             });
         });
     };
@@ -109,7 +109,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                     $state.go('app.applist',undefined,{reload : true})
                 }, 200, true);
         },undefined, null, function(data){
-            Notification.error( '应用 '+ $scope._appName + ' 扩容失败: ' + data.errors);
+            Notification.error( '应用 '+ $scope._appName + ' 扩容失败: ' + $scope.addCode[data.code]);
         });
     };
 

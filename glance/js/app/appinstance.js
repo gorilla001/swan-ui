@@ -21,7 +21,7 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
             }
             $scope.instances = hideStartTime(data.data);
         }, undefined, null, function(data) {
-            Notification.error('获取实例失败: ' + data.errors);
+            Notification.error('获取实例失败: ' + $scope.addCode[data.code]);
         })
 
     })();
