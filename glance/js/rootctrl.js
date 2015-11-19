@@ -30,4 +30,3 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
 
 rootCtrl.$inject = ["$scope", "$rootScope", "glanceUser", "glanceHttp"];
 glanceApp.controller("rootCtrl", rootCtrl);
-
