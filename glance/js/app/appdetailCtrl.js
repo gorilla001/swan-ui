@@ -1,13 +1,15 @@
 glanceApp.controller("appdetailCtrl", appdetailCtrl);
 
-appdetailCtrl.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp', 'ngDialog','$timeout','Notification'];
+appdetailCtrl.$inject = ['$scope', '$state', '$stateParams', 'glanceHttp', 'ngDialog','$timeout','Notification', '$q'];
 
-function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $timeout, Notification) {
+function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $timeout, Notification, $q) {
     var promise;
     var IS_NOT_DEPLOYING = 0;
     var IS_DEPLOYING = 1;
 
     $scope.getAppInfo = function (appId) {
+        var deferred = $q.defer();
+
         glanceHttp.ajaxGet(['app.info', {app_id: appId}], function (data) {
             $scope.appInfo = data.data;
             $scope.appState = $stateParams.appStatus;
@@ -17,7 +19,9 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
                 "appId": parseInt($scope.appInfo.appId),
                 "appName": $scope.appInfo.name
             };
+            deferred.resolve();
         });
+        return deferred.promise;
     };
 
     $scope.openDialog = function () {
@@ -27,7 +31,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
             scope: $scope});
     };
 
-    $scope.getAppInfo($stateParams.appId);
+     $scope.getAppInfoPromise = $scope.getAppInfo($stateParams.appId);
 
     $scope.$on("checkIsDeploy", function () {
         $scope.isDeploy()

@@ -101,7 +101,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-            $state.go('app.appdetail.config', {appId: data.data});
+            $state.go('app.appdetail.config', {appId: data.data},{reload: true});
         }, undefined, null, function (data) {
             Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + data.errors);
         });
@@ -223,5 +223,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         if (!pathInfo.key || !pathInfo.value || pathInfo.key === '' || pathInfo.value === '') {
             return true;
         }
-    }
+    };
+
+    $scope.listCluster();
 }

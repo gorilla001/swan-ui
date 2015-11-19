@@ -16,9 +16,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
     $scope.initStat = function () {
         $('#appCpuStat').data({text: '无数据', percent: 0}).circliful();
         $('#appMemStat').data({text: '无数据', percent: 0}).circliful();
-        $scope.$watch($scope.appInfo,function(){
-            $scope.initCircle();
-        });
+        $scope.getAppInfoPromise.then($scope.initCircle);
     };
 
     $scope.initCircle = function () {

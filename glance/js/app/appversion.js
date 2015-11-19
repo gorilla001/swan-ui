@@ -17,7 +17,6 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
                 $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
                 $scope.contentCurPage = $scope.versions.slice(0, $scope.pageLength);
             }
-            $scope.getAppInfo($stateParams.appId);
         }, undefined, null, function(data) {
             Notification.error('获取镜像列表失败: ' + data.errors);
         })

@@ -20,7 +20,6 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
                 promise = $timeout(appInstances, 3000);
             }
             $scope.instances = hideStartTime(data.data);
-            $scope.getAppInfo($stateParams.appId);
         }, undefined, null, function(data) {
             Notification.error('获取实例失败: ' + data.errors);
         })
