@@ -12,6 +12,7 @@ BACKEND_URL = {
     cluster:  {
         base: "DASHBOARD/api/v1/",
         getNodeID: "cluster/$cluster_id/new_node_id",
+        node: "cluster/$cluster_id/node",
         updateNode: "cluster/node/update",
         getNode: "cluster/node/$node_id",
         createCluster: "cluster/add",
@@ -65,7 +66,6 @@ BACKEND_URL = {
     agentConfig: {
       installScript: "curl -Ls INSTALLSCRIPT_URL | sudo -H",
       dmHost: "DM_HOST",
-      version: "OMEGA_AGENT_VERSION",
       filesUrl: "FILES_URL"
     }
 };

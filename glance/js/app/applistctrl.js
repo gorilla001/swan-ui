@@ -36,8 +36,6 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         $scope.contentCurPage = $scope.applist.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
     };
 
-    $scope.listApp();
-
     function getAppName(apps){
         $scope.curAppNames.splice(0, $scope.curAppNames.length);
         angular.forEach(apps, function(value,index){
@@ -166,4 +164,7 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         });
         return diffApps;
     }
+
+    var promise = $scope.listCluster();
+    promise.then($scope.listApp);
 }

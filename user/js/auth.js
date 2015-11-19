@@ -88,7 +88,7 @@ $(document).ready(function(){
 
         var regitsterUrl = CONFIG.urls.baseUrl + CONFIG.urls.registerUrl;
         if(e.isDefaultPrevented()) {
-            $('#register-error').text('请填写注册信息');
+            $('#register-error').text('注册信息有误，请重新填写。');
         } else {
             e.preventDefault();
             register(regitsterUrl, registerPostData);

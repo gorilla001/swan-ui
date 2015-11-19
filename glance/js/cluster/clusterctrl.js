@@ -1,39 +1,39 @@
 function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
-    $rootScope.show = "cluster";
+    $rootScope.show = 'cluster';
 
     $scope.clusterNames = [];
 
     $scope.statName = {
-        "running": "运行正常",
-        "terminated": "主机失联",
-        "failed": "主机预警",
-        "installing": "主机初始化中"
+        running: '运行正常',
+        terminated: '主机失联',
+        failed: '主机预警',
+        installing: '主机初始化中'
     };
 
     $scope.nodeAttributes = {
-        "transient": "计算节点",
-        "gateway": "外部网关",
-        "proxy": "内部代理",
-        "persistent": "数据节点"
+        transient: '计算节点',
+        gateway: '外部网关',
+        proxy: '内部代理',
+        persistent: '数据节点'
     };
 
     $scope.serviceState = {};
     
     $scope.deleteCluster = function(clusterId, name) {
-        $('#confirmDeleteCluster').hide();
+        $('#confirmDeleteCluster'+ clusterId).hide();
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
         glanceHttp.ajaxGet(['cluster.delCluster', {cluster_id: clusterId}], function () {
             Notification.success('集群' + name + '删除成功');
-            $state.go("cluster.listclusters", null, {reload: true});
+            $state.go('cluster.listclusters', null, {reload: true});
         });
-    }
+    };
 
     $scope.upgradeAgent = function (clusterId) {
-        glanceHttp.ajaxPost(['cluster.updateCluster'], {"id": clusterId, "isUpdateAgent": true}, function() {
-            Notification.success("设置升级集群 Agent 成功")
+        glanceHttp.ajaxPost(['cluster.updateCluster'], {'id': clusterId, 'isUpdateAgent': true}, function() {
+            Notification.success('设置升级集群 Agent 成功')
         });
-    }
+    };
 
     $scope.getClass = function(status) {
         var classes = {
@@ -46,32 +46,32 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     };
 
     $scope.getIsMaster = function(node) {
-        return node.role === "master";
+        return node.role === 'master';
     };
 
     function getNodeServicesState(services, isMaster) {
-        var serviceState = "running";
+        var serviceState = 'running';
         var masterServiceNames = ['zookeeper', 'master', 'marathon'];
         var runningNumber = 0;
         for (var i=0; i<services.length; i++) {
             service = services[i];
-            if (service.status === "installing") {
-                serviceState = "installing";
+            if (service.status === 'installing') {
+                serviceState = 'installing';
                 break;
-            } else if (service.status == "failed") {
+            } else if (service.status == 'failed') {
                 if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = "failed";
+                    serviceState = 'failed';
                     break;
-                } else if (!isMaster && service.name == "slave") {
-                    serviceState = "failed";
+                } else if (!isMaster && service.name == 'slave') {
+                    serviceState = 'failed';
                     break;
                 }
-            } else if (service.status == "uninstalled") {
+            } else if (service.status == 'uninstalled') {
                 if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = "installing";
+                    serviceState = 'installing';
                     break;
-                } else if (!isMaster && service.name == "slave") {
-                    serviceState = "installing";
+                } else if (!isMaster && service.name == 'slave') {
+                    serviceState = 'installing';
                     break;
                 }
             }
@@ -97,13 +97,13 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
 
     $scope.getSeriveState = function (nodeServices) {
         for (var i = 0; i < nodeServices.length; i++) {
-            if (nodeServices[i].name === "marathon") {
+            if (nodeServices[i].name === 'marathon') {
                 $scope.serviceState.marathon = nodeServices[i].status;
-            } else if (nodeServices[i].name === "master") {
+            } else if (nodeServices[i].name === 'master') {
                 $scope.serviceState.mesos = nodeServices[i].status;
-            } else if (nodeServices[i].name === "zookeeper") {
+            } else if (nodeServices[i].name === 'zookeeper') {
                 $scope.serviceState.zookeeper = nodeServices[i].status;
-            } else if (nodeServices[i].name === "slave") {
+            } else if (nodeServices[i].name === 'slave') {
                 $scope.serviceState.slave = nodeServices[i].status;
             }
         }
@@ -172,5 +172,5 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     }
 }
 
-clusterCtrl.$inject = ["$scope", "$state", "$rootScope", "glanceHttp", 'Notification'];
+clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);

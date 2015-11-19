@@ -11,12 +11,11 @@ Release Note
 
 ###需要运维更新
 
+1. agentConfig.version从confdev.js中移除。（agent的版本会由后台返回）
+
 
 ### bug fix
 
 
 ### feature
 
-- 发持久化应用
-- 支持对内，对外服务发现
-- 支持更新版本，用户使用错误镜像地址时撤销

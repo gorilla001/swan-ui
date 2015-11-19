@@ -51,7 +51,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('cluster.nodedetails', {
-                url: '/node/:nodeId',
+                url: '/:clusterId/node/:nodeId',
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/node-details.html',
@@ -60,7 +60,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('cluster.updatenode', {
-                url: '/node/:nodeId/update?name',
+                url: '/:clusterId/node/:nodeId/update?name',
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/update-node.html',

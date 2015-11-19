@@ -17,5 +17,6 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
         });
     };
 
-    $scope.getConfig();
+    var promise = $scope.listCluster();
+    promise.then($scope.getConfig);
 }

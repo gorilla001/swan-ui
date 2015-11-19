@@ -12,7 +12,7 @@ function versionDialogCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, N
             $scope.$emit("checkIsDeploy");
             $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
         }, undefined, null, function (data) {
-            Notification.error('应用 '+ appName +' 更新失败: ' + data.errors);
+            Notification.error('应用 '+ appName +' 更新失败: ' + $scope.addCode[data.code]);
         });
         ngDialog.closeAll();
 
