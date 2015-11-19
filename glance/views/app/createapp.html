@@ -22,7 +22,7 @@
                            class="help-block">应用名不能为空</p>
 
                         <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
-                           class="help-block">应用名称不符合数人云命名规则</p>
+                           class="help-block">应用名称只能为数字或者小写英文</p>
 
                         <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
                            class="help-block">应用名已存在</p>
@@ -194,7 +194,10 @@
                                 </select>
                             </div>
 
-                            <div class="form-group" data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
+                        </div>
+                        <div class="form-inline" style="margin-bottom: 15px;">
+                            <div class="form-group"
+                                 data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
                                 <div class="form-group">
                                     <label>代理节点</label>
 

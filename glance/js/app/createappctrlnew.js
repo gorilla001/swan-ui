@@ -206,6 +206,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         if (!portInfo.appPort || !portInfo.protocol || !portInfo.type || portInfo.protocol === '' || portInfo.type === '') {
             return true;
         }
+
+        if((portInfo.type === OUTER && portInfo.isUri != HAS_DOMAIN && $scope.gateWays.length == 0) || (portInfo.type === INNER && $scope.proxyNodes.length == 0)){
+            return true;
+        }
+
         if (portInfo.type === INNER && portInfo.mapPort) {
             return false;
         } else if (portInfo.type === OUTER && portInfo.isUri === HAS_DOMAIN && portInfo.uri) {
@@ -214,7 +219,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             return false;
         } else if (portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort) {
             return false;
-        } else {
+        } else{
             return true;
         }
     };
