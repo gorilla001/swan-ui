@@ -6,7 +6,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
     var promise;
     var IS_NOT_DEPLOYING = 0;
     var IS_DEPLOYING = 1;
-    $scope.timepick = 0;
+    $scope.counter = 0;
 
     $scope.getAppInfo = function (appId) {
         var deferred = $q.defer();
@@ -45,8 +45,8 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
         glanceHttp.ajaxGet(['app.isdeploying',{app_id: $stateParams.appId}], function (data) {
             $scope.isDeployState = data.data.isdeploying;
             if($scope.isDeployState === IS_NOT_DEPLOYING){
-                $scope.timepick += 1;
-                if(data.data.info !== "" && $scope.timepick > 1){
+                $scope.counter += 1;
+                if(data.data.info !== "" && $scope.counter > 1){
                     Notification.warning("镜像未找到");
                 }
                 promise = $timeout($scope.isDeploy, 10000);

@@ -26,7 +26,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         glanceHttp.ajaxGet(['app.cancelDeploy',{app_id: $stateParams.appId}], function (data) {
             if(data.code == 0){
                 $scope.getImageVersions();
-                $scope.timepick = 0;
+                $scope.counter = 0;
                 Notification.success('取消部署成功');
             }
         }, undefined, null, function(data) {
