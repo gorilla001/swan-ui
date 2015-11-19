@@ -3,14 +3,14 @@ $(document).ready(function(){
 
     var options = {
         errors: {
-            username: '用户名格式错误',
+            username: '邮箱地址格式错误',
             passwordrule: '密码可包含数字、标点、字母，至少要包含一位大写字母。',
             passwordtips: '密码可包含数字、标点、字母，至少要包含一位大写字母且长度为8~16位',
             passwordmin: '密码长度不少于8位',
             phonenumber: '手机号码格式错误'
         },
         custom: {
-            'username' : function($el) {
+            'username': function($el) {
                 var content = $el.val();
                 if (content === '') {
                     return true;
@@ -72,7 +72,14 @@ $(document).ready(function(){
     }
 
     //注册
+    // $("input").blur(function () {
+    //     if (!$('.registerForm').is(":invalid")) {
+    //       $('.register-button').removeAttr('disabled');
+    //     }
+    // });
+    
     $('.registerForm').validator(options).on('submit', function(e){
+
         var registerEmail = $('#register-email').val();
         var registerPassword = $('#register-password').val();
         var phoneNumber = $('#register-phoneNumber').val();
@@ -87,9 +94,8 @@ $(document).ready(function(){
         };
 
         var regitsterUrl = CONFIG.urls.baseUrl + CONFIG.urls.registerUrl;
-        if(e.isDefaultPrevented()) {
-            $('#register-error').text('注册信息有误，请重新填写。');
-        } else {
+        
+        if(!e.isDefaultPrevented()) {
             e.preventDefault();
             register(regitsterUrl, registerPostData);
         }
@@ -207,9 +213,7 @@ $(document).ready(function(){
         var url = CONFIG.urls.baseUrl + CONFIG.urls.resetPasswordUrl;
 
         if(e.isDefaultPrevented()) {
-            if(email === '') {
-                $('#reset-mail-error').text('请填写注册用户邮箱地址');
-            }
+            $('#reset-mail-error').text('请填写注册用户邮箱地址');
         } else {
             e.preventDefault();
             resetMail(url, postData);
