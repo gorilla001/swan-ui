@@ -47,7 +47,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
             if($scope.isDeployState === IS_NOT_DEPLOYING){
                 $scope.counter += 1;
                 if(data.data.info !== "" && $scope.counter > 1){
-                    Notification.warning("镜像未找到");
+                    Notification.warning("更新失败: 镜像未找到");
                 }
                 promise = $timeout($scope.isDeploy, 10000);
             }else if($scope.isDeployState === IS_DEPLOYING){
