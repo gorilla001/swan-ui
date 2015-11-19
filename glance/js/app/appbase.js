@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification', '$q'];
 
-function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification) {
+function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q) {
     $rootScope.show = "application";
 
     $scope.clusterNameMap = {};
@@ -30,13 +30,26 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         "2": "HTTP"
     };
 
+    $scope.addCode = {
+        10: "应用名称冲突",
+        11: "端口冲突",
+        12: "版本冲突",
+        13: "应用被锁定",
+        999: "网络异常"
+    };
+
     $scope.listCluster = function () {
+        var deferred = $q.defer();
+
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             $scope.clusters = data.data;
             angular.forEach(data.data, function (cluster) {
                 $scope.clusterNameMap[cluster.id] = cluster.name;
             });
+            deferred.resolve();
         });
+
+        return deferred.promise;
     };
 
     $scope.stopApp = function (appId, appName){
@@ -123,6 +136,4 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
             }
         }
     };
-
-    $scope.listCluster();
 }

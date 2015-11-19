@@ -31,11 +31,11 @@
         <div class="main-container"> <!-- Only required for left/right tabs -->
 			<header class="clearfix main-container-header">
 				<ul class="nav nav-tabs">
-					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config">配置</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a data-ui-sref="app.appdetail.version">版本</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring">监控</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance">实例</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event">事件</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config" data-ui-sref-opts="{reload: true}">配置</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a data-ui-sref="app.appdetail.version" data-ui-sref-opts="{reload: true}">版本</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring" data-ui-sref-opts="{reload: true}">监控</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance" data-ui-sref-opts="{reload: true}">实例</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event" data-ui-sref-opts="{reload: true}">事件</a></li>
 				</ul>
 			</header>
 

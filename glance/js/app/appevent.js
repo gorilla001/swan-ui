@@ -16,9 +16,5 @@ function appEventCtrl($scope, $rootScope, $stateParams, glanceHttp) {
         });
     };
 
-    $scope.$watch('appInfo', function(newValue, oldValue){
-        if (newValue) {
-            $scope.appEvent();
-        }
-    });
+    $scope.getAppInfoPromise.then($scope.appEvent);
 }
