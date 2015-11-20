@@ -31,8 +31,7 @@
                             </td>
                             <td>
                                 <a data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.id})">{/ node.name /}</a>
-                              <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span>
-                              <span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
+                              <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span><span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                             </td>
                             <td>
                                 {/ node.ip/}
