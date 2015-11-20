@@ -183,6 +183,15 @@ a.remove {
 	margin-top: 0;
 	margin-bottom: 10px;
 }
+.main-container header h2 .label {
+	padding-bottom: 0;
+	font-size: 11px;
+	font-weight: normal;
+	margin-right: 3px;
+}
+.main-container header h2 .modify-name {
+	margin: 0 12px 0 6px;
+}
 .main-container header .nav-tabs {
 	float: right;
 	margin-top: 0px;
