@@ -263,7 +263,7 @@
                                            data-ng-model="portInfo.mapPort">            </div>
                             </div>
 
-                            <button class="btn btn-default" type="button"
+                            <button class="btn" type="button" ng-class="{'btn-info':!isAddPortDisable(portInfo) , 'btn-sm':isAddPortDisable(portInfo), 'btn-default':isAddPortDisable(portInfo)}"
                                     data-ng-disabled="isAddPortDisable(portInfo)"
                                     data-ng-click="addPortInfo(portInfo)">增加
                             </button>
