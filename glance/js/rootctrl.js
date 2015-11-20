@@ -6,7 +6,7 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
         $('#confirmModal').modal("show");
     };
     
-    glanceHttp.ajaxGet(["auth.getMe"], function (data) {
+    glanceHttp.ajaxGet(["auth.user"], function (data) {
         $rootScope.userName = data.data["userName"];
         $rootScope.userId = data.data["userId"];
         $rootScope.isSuperuser = data.data["isSuperuser"];
@@ -15,13 +15,13 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
     
     $scope.getCSUrl = function () {
         var w = window.open();
-        glanceHttp.ajaxGet(["auth.getCSUrl"], function(data){
+        glanceHttp.ajaxGet("auth.customerservice", function(data){
             w.location = data.data.url;
         });
     };
     
     $scope.logout = function(){
-        glanceHttp.ajaxGet(["auth.logout"], function(data){
+        glanceHttp.ajaxDelete(["auth.auth"], function(data){
             glanceUser.clear();
             window.location.href = USER_URL;
         });

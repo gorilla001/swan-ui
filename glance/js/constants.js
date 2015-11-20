@@ -38,12 +38,10 @@ SERVICES_STATUS = {
 
 BACKEND_URL = {
     auth: {
-        logout: "api/v1/auth/sign_out",
-        getMe: "api/v1/auth/getme",
-        getCSUrl: "api/v1/auth/getcsurl",
-        createInvitationCodes: "api/v1/auth/invitation_code/$num",
-        listUsers: "api/v1/auth/user/list",
-        modifyPassword: 'api/v1/auth/password/update'
+        auth: "api/v2/auth",
+        user: "api/v2/user",
+        customerservice: "api/v2/customerservice",
+        password: 'api/v2/user/password'
         },
         
     cluster:  {
