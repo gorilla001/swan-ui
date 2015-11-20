@@ -11,13 +11,13 @@
             <p>应用实例个数: {/appMetric.instances/} 个</p>
 
             <p>应用CPU用量:<span>(CPU共享:{/appMetric.appCpuShare.toFixed(1)/})</span></p>
-            <progressbar class="progress-striped active" type="info" max="appMetric.appCpuShare"
+            <uib-progressbar class="progress-striped active" type="info" max="appMetric.appCpuShare"
                          value="appMetric.appCpuUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appCpuUsed/} / {/appMetric.appCpuShare.toFixed(1)/}</span>
-            </progressbar>
+            </uib-progressbar>
             <p>应用内存用量:(单位: MB)</p>
-            <progressbar class="progress-striped active" type="success" max="appMetric.appMemShare"
+            <uib-progressbar class="progress-striped active" type="success" max="appMetric.appMemShare"
                          value="appMetric.appMemUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appMemUsed.toFixed(1)/} MB / {/appMetric.appMemShare.toFixed(1)/} MB</span>
-            </progressbar>
+            </uib-progressbar>
         </div>
     </div>
 
