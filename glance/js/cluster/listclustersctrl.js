@@ -12,7 +12,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     };
 
     $scope.listCluster = function () {
-        glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
+        glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
             if (data && data.data) {
                 $scope.getClusterNames(data.data);
                 $scope.clusters = data.data;

@@ -45,7 +45,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.listCluster = function () {
         var deferred = $q.defer();
 
-        glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
+        glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
             $scope.clusters = data.data;
             angular.forEach(data.data, function (cluster) {
                 $scope.clusterNameMap[cluster.id] = cluster.name;
