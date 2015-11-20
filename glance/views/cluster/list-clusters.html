@@ -51,14 +51,14 @@
                 </ul>
                 <ul class="cluster-service-ico-list clearfix">
                     <li data-ng-repeat="node in clustersNodesData[$index].firstGroupSlaves">
-                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:master.id})">
+                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:node.id})">
                             <img data-ng-src="/pics/node-status-{/node.nodeStatus/}.png"/>
                         </a>
                     </li>
                 </ul>
                 <ul class="cluster-service-ico-list clearfix" data-ng-show="cluster.infos.showMore" data-ng-repeat="slaves in clustersNodesData[$index].followingGroupSlaves">
                     <li data-ng-repeat="node in slaves">
-                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:master.id})">
+                        <a data-toggle="tooltip" title="[{/node.name/}] [{/node.ip/}] {/statName[node.nodeStatus]/}" data-ui-sref="cluster.nodedetails({clusterId: clustersBasicData[$index].infos.id, nodeId:node.id})">
                             <img data-ng-src="/pics/node-status-{/node.nodeStatus/}.png"/>
                         </a>
                     </li>
