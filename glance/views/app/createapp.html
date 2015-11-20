@@ -201,7 +201,7 @@
                                 <div class="form-group">
                                     <label>代理节点</label>
 
-                                    <p ng-show="!proxyNodes.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点</p>
+                                    <p ng-show="!proxyNodes.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加代理节点)</span></p>
                                     <p ng-repeat="proxyNode in proxyNodes" class="form-control-static"
                                        style="margin-left: 6px; margin-right: 25px; padding:0;">{/proxyNode.ip/}</p>
                                 </div>
@@ -252,7 +252,7 @@
                                 <div class="form-group">
                                     <label>网关节点:</label>
 
-                                    <p ng-show="!gateWays.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点</p>
+                                    <p ng-show="!gateWays.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加网关节点)</span></p>
                                     <p ng-repeat="gateWay in gateWays" class="form-control-static"
                                        style="margin-left: 6px; margin-right: 25px; padding:0;">{/gateWay.ip/}</p>
                                 </div>
