@@ -18,7 +18,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
                 $scope.contentCurPage = $scope.versions.slice(0, $scope.pageLength);
             }
         }, undefined, null, function(data) {
-            Notification.error('获取镜像列表失败: ' + data.errors);
+            Notification.error('获取镜像列表失败: ' + $scope.addCode[data.code]);
         })
     };
 
