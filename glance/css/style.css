@@ -20,6 +20,9 @@ a, a:hover, a:visited {
 a:hover {
 	text-decoration: underline;
 }
+a.btn {
+	color: #FFF;
+}
 .btn {
 	border-radius: 2px;
 }
