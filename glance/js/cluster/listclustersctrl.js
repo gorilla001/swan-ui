@@ -11,7 +11,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '5_masters': 6,
     };
 
-    $scope.nodeStatus = NODE_STATUS;
 
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
@@ -30,18 +29,19 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         $scope.clustersNodesData[index] = getClusterNodesData(cluster, clickedStatus);
     }
 
-    $scope.toggleShowMoreNonMasters = function(clusterId) {
-        $.each($scope.pageData, function(index, cluster) {
-            if (cluster.basicInfos.id === clusterId) {
-                if(!cluster.basicInfos.showMore) {
-                    cluster.basicInfos.clickWords = '点击隐藏';
-                } else {
-                    cluster.basicInfos.clickWords = '点击显示更多';
-                }
-                cluster.basicInfos.showMore = !cluster.basicInfos.showMore;
-            }
-        });
+    $scope.toggleShowMoreSlaves = function(index) {
+        var basicInfos = $scope.clustersBasicData[index].infos;
+        basicInfos.clickWords = basicInfos.showMore ? '点击显示更多' : '点击隐藏';
+        basicInfos.showMore = !basicInfos.showMore;
     };
+
+    $scope.close = function(clusterId, index, clusterStatus) {
+        if (clusterStatus === CLUSTER_STATUS.installing) {
+            $state.go('cluster.addnode', {'clusterId': clusterId});
+        } else {
+            $scope.clustersBasicData[index].problemTips = null;
+        }
+    }
 
     function countNodesAmount(nodesWithRoleAndStatus) {
         var amounts = {
@@ -197,20 +197,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             }
         });
         return classes;
-    }
-
-    $scope.close = function(clusterId, clusterStatus) {
-        var i;
-        if (clusterStatus === CLUSTER_STATUS.installing) {
-            $state.go('cluster.addnode', {'clusterId': clusterId});
-        } else {
-            for (i = 0; i < $scope.pageData.length; i++) {
-                if($scope.pageData[i].basicInfos.id === clusterId) {
-                    $scope.pageData[i].problemTips = null;
-                    break;
-                }
-            }
-        }
     }
 
     function getClusterStatus(masters, slaves, nodes, clusterType) {
