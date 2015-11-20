@@ -11,47 +11,48 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '5_masters': 6,
     };
 
-    $scope.clusterStatus = CLUSTER_STATUS;
-    $scope.nodeStatus = NODE_STATUS;
-
-
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data) {
                 $scope.getClusterNames(data.data);
                 $scope.clusters = data.data;
-                $scope.pageData = [];
-                $scope.getPageData();
+                $scope.clustersBasicData = getAllClustersBasicData();
+                $scope.clustersNodesData = getAllClustersNodesData();
             }
         });
     };
     $scope.listCluster();
 
-    $scope.toggleShowMoreNonMasters = function(clusterId) {
-        $.each($scope.pageData, function(index, cluster) {
-            if (cluster.basicInfos.id === clusterId) {
-                if(!cluster.basicInfos.showMore) {
-                    cluster.basicInfos.clickWords = '点击隐藏';
-                } else {
-                    cluster.basicInfos.clickWords = '点击显示更多';
-                }
-                cluster.basicInfos.showMore = !cluster.basicInfos.showMore;
-            }
-        });
+    $scope.filterSingleCluster = function(index, clickedStatus) {
+        var cluster = $scope.clusters[index];
+        $scope.clustersNodesData[index] = getClusterNodesData(cluster, clickedStatus);
+    }
+
+    $scope.toggleShowMoreSlaves = function(index) {
+        var basicInfos = $scope.clustersBasicData[index].infos;
+        basicInfos.clickWords = basicInfos.showMore ? '点击显示更多' : '点击隐藏';
+        basicInfos.showMore = !basicInfos.showMore;
     };
 
-    function countNodesAmount(nodes) {
-        var amounts = {};
-        amounts.total = 0;
-        var groupsWithState = $scope.groupMasterWithState(nodes);
-        var showStates = Object.keys(NODE_STATUS);
+    $scope.close = function(clusterId, index, clusterStatus) {
+        if (clusterStatus === CLUSTER_STATUS.installing) {
+            $state.go('cluster.addnode', {'clusterId': clusterId});
+        } else {
+            $scope.clustersBasicData[index].problemTips = null;
+        }
+    }
 
-        $.each(showStates, function(index, key) {
-            amounts[key] = 0;
-            $.each(groupsWithState, function(groupKey, group) {
-                amounts[key] += group[key].length;
+    function countNodesAmount(nodesWithRoleAndStatus) {
+        var amounts = {
+            total: 0
+        };
+        var nodeStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(nodeStatuses, function(nodeStatus, index) {
+            amounts[nodeStatus] = 0;
+            angular.forEach(nodesWithRoleAndStatus, function(nodesWithStatus, role) {
+                amounts[nodeStatus] += nodesWithStatus[nodeStatus].length;
             });
-            amounts.total += amounts[key];
+            amounts.total += amounts[nodeStatus];
         });
         return amounts;
     }
@@ -69,134 +70,136 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
          return basicInfos;
     }
 
-    function filtrateNonMasters(cluster, hideState) {
-        var nodes = cluster.nodes;
-        var nonMasters = $scope.groupMasterWithState(nodes).nonMasters;
-        var showNonMasters = nonMasters;
-        var index;
-        if(hideState) {
-            if(cluster.hideStates.length) {
-                index = cluster.hideStates.indexOf(hideState);
-                if(index === -1) {
-                    cluster.hideStates.push(hideState);
-                } else if(index > -1) {
-                    cluster.hideStates.splice(index, 1);
-                }
-            } else {
-                var showStates = Object.keys(NODE_STATUS);
-                index = showStates.indexOf(hideState);
-                showStates.splice(index,1);
-                cluster.hideStates = showStates;
-            }
-            $.each(cluster.hideStates, function(stateIndex, val) {
-                showNonMasters[val] = [];
-            });
-        }
-
-        return showNonMasters;
+    function buildHiddenStatuses(hiddenStatuses, clickedStatus) {
+         var index;
+         if(hiddenStatuses.length) {
+            index = hiddenStatuses.indexOf(clickedStatus);
+            (index === -1) ? hiddenStatuses.push(clickedStatus): hiddenStatuses.splice(index, 1);
+         } else {
+            var showStatuses = Object.keys(NODE_STATUS);
+            index = showStatuses.indexOf(clickedStatus);
+            showStatuses.splice(index, 1);
+            hiddenStatuses = showStatuses;
+         }
+         return hiddenStatuses;
     }
 
-    function getAllShowNonMasters(cluster, hideState) {
-        var showNonMasters = filtrateNonMasters(cluster, hideState);
-        var allShowNonMasters = {
+    function filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus) {
+        var allNodes = angular.copy(nodesWithRoleAndStatus, {});
+        if (clickedStatus) {
+            cluster.hiddenStatuses = buildHiddenStatuses(cluster.hiddenStatuses, clickedStatus);
+            angular.forEach(allNodes, function(nodesWithRole, role) {
+                angular.forEach(nodesWithRole, function(nodesWithStatus, nodeStatus) {
+                    if (cluster.hiddenStatuses.indexOf(nodeStatus) > -1 ) {
+                        allNodes[role][nodeStatus] = [];
+                    }
+                });
+            });
+        }
+        return allNodes;
+    }
+
+    function getAllShowMasters(mastersWithStatus) {
+        return $scope.concatObjtoArr(mastersWithStatus);
+    }
+
+    function getAllShowSlaves(slavesWithStatus) {
+        var allShowSlaves = {
             first: [],
             following: []
         };
         var groupLength = 50;
-        var nonMasters = [];
-        if(showNonMasters) {
-            nonMasters = $scope.concatObjtoArr(showNonMasters);
-
-            allShowNonMasters.first = nonMasters.slice(0, groupLength);
-            var nodesLength = nonMasters.length;
-            if(nodesLength) {
-                var groupNumber = Math.ceil(nodesLength / groupLength);
-                if (groupNumber > 1) {
-                    for(var i = 1; i < groupNumber; i++) {
-                        allShowNonMasters.following[i-1] = nonMasters.slice(i * groupLength, (i+1)*groupLength);
-                    }
+        var slaves = $scope.concatObjtoArr(slavesWithStatus);
+        var slavesLength = slaves.length;
+        if (slavesLength) {
+            allShowSlaves.first = slaves.slice(0, groupLength);
+            var groupNumber = Math.ceil(slavesLength / groupLength);
+            if (groupNumber > 1) {
+                for (var i = 1; i < groupNumber; i++) {
+                    allShowSlaves.following[i-1] = slaves.slice(i * groupLength, (i+1)*groupLength);
                 }
             }
         }
-        return allShowNonMasters;
+        return allShowSlaves;
     }
+    
+    function getClusterBasicData(cluster) {
+        var clusterBasicData = {
+            infos: {},
+            amounts: {},
+            problemNodes: [],
+            clusterStatus: ''
+        };
+        clusterBasicData.infos = getClusterBasicInfos(cluster);
+        var nodes = cluster.nodes;
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
 
-    function getAllShowMasters(masters) {
-        var allMasters = [];
-        if(masters) {
-            allMasters = $scope.concatObjtoArr(masters);
+        clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
+        var masters = nodesWithRoleAndStatus.masters;
+        var slaves = nodesWithRoleAndStatus.slaves;
+        var clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
+        clusterBasicData.clusterStatus = clusterStatus;
+        var problemTips = setProblemTips(clusterStatus, cluster.cluster_type, nodes.length);
+
+        if (problemTips) {
+            clusterBasicData.problemTips = problemTips;
+            clusterBasicData.problemNodes = getProblemNodes(masters, slaves, clusterStatus);
         }
-        return allMasters;
+        return clusterBasicData;
     }
 
-    function getSelectedClass(hideStates) {
+    function getClusterNodesData(cluster, clickedStatus) {
+        var clusterNodesData = {
+            masters: [],
+            firstGroupSlaves: [],
+            followingGroupSlaves: [],
+            selectedClasses: {}
+        };
+        var nodes = cluster.nodes;
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
+        cluster.hiddenStatuses = cluster.hiddenStatuses? cluster.hiddenStatuses: [];
+        var filteredNodes = filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus);
+        var allShowSlaves = getAllShowSlaves(filteredNodes.slaves);
+        clusterNodesData.masters = getAllShowMasters(filteredNodes.masters);
+        clusterNodesData.firstGroupSlaves = allShowSlaves.first;
+        clusterNodesData.followingGroupSlaves = allShowSlaves.following;
+        clusterNodesData.selectedClasses = getSelectedClass(cluster.hiddenStatuses);
+        return clusterNodesData;
+    }
+
+    function getAllClustersBasicData() {
+        var allClustersBasicData = [];
+        if($scope.clusters.length) {
+            angular.forEach($scope.clusters, function(cluster, clusterIndex) {
+                allClustersBasicData[clusterIndex] = getClusterBasicData(cluster);
+            });
+        }
+        return allClustersBasicData;
+    }
+
+    function getAllClustersNodesData() {
+        var allClustersNodesData = [];
+        var i;
+        for (i = 0; i < $scope.clusters.length; i++) {
+            allClustersNodesData[i] = getClusterNodesData($scope.clusters[i]);
+        }
+        return allClustersNodesData;
+    }
+
+    function getSelectedClass(hideStatuses) {
         var classes = {};
-        var showStates = Object.keys(NODE_STATUS);
-        $.each(showStates, function(index, val) {
-            classes[val] = '';
-            if(hideStates.indexOf(val) > -1) {
-                classes[val] = 'unselected';
+        var allStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(allStatuses, function(nodeStatus, index) {
+            if (hideStatuses.indexOf(nodeStatus) > -1) {
+                classes[nodeStatus] = 'unselected';
+            } else {
+                classes[nodeStatus] = '';
             }
         });
         return classes;
     }
 
-    function getSingleCluster(cluster, hideState) {
-        var data = {};
-        var group = {};
-        var masters = {};
-        var slaves = {};
-        var nonMasters = {};
-        if(!cluster.hideStates) {
-            cluster.hideStates = [];
-        }
-        var nodes = cluster.nodes;
-        data.basicInfos = getClusterBasicInfos(cluster);
-        data.amounts = countNodesAmount(nodes);
-        group = $scope.groupMasterWithState(nodes)
-        masters = group.masters;
-        slaves = group.nonMasters;
-
-        data.masters = masters;
-        data.slaves = slaves;
-        data.allMasters = getAllShowMasters(masters);
-        nonMasters = getAllShowNonMasters(cluster, hideState);
-        data.firstNon = nonMasters.first;
-        data.followingNon = nonMasters.following;
-        data.classes = getSelectedClass(cluster.hideStates);
-        data.clusterStatus = getSingleClusterStatus(masters, slaves, nodes, cluster.cluster_type);
-        data.problemNodes = getProblemNodes(masters, slaves, data.clusterStatus);
-        data.problemTips = setProblemTips(data.clusterStatus, cluster.cluster_type, nodes.length);
-        return data;
-    }
-
-    $scope.getPageData = function(clusterId, hideState) {
-        if($scope.clusters) {
-            $.each($scope.clusters, function(clusterIndex, cluster) {
-                if (clusterId && clusterId === cluster.id) {
-                    $scope.pageData[clusterIndex] = getSingleCluster(cluster, hideState);
-                } else if(!clusterId) {
-                    $scope.pageData.push(getSingleCluster(cluster));
-                }
-            });
-        }
-    }
-
-    $scope.close = function(clusterId, clusterStatus) {
-        var i;
-        if (clusterStatus === CLUSTER_STATUS.installing) {
-            $state.go('cluster.addnode', {'clusterId': clusterId});
-        } else {
-            for (i = 0; i < $scope.pageData.length; i++) {
-                if($scope.pageData[i].basicInfos.id === clusterId) {
-                    $scope.pageData[i].problemTips = null;
-                    break;
-                }
-            }
-        }
-    }
-
-    function getSingleClusterStatus(masters, slaves, nodes, clusterType) {
+    function getClusterStatus(masters, slaves, nodes, clusterType) {
         var status;
         if(!nodes.length) {
             return;
@@ -279,10 +282,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             'slave': {}
         };
         var names = Object.keys(nodeNeedServices);
-        var i;
         var service;
         var breakAmount = 0;
-        for (i = 0; i < services.length; i++) {
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
             
             if (names.indexOf(service.name) > -1) {
@@ -299,8 +301,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             
     function calStatusAmount(services, status) {
         var amount = 0;
-        var i;
-        for (i = 0; i < services.length; i++) {
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
             amount += (status.indexOf(service.status) > -1 ? 1 : 0);
         }

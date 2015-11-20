@@ -49,50 +49,48 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return node.role === 'master';
     };
 
-    function getNodeServicesState(services, isMaster) {
-        var serviceState = 'running';
-        var masterServiceNames = ['zookeeper', 'master', 'marathon'];
-        var runningNumber = 0;
-        for (var i=0; i<services.length; i++) {
+    function getNodeServiceStatus(services, isMaster) {
+        var nodeServiceStatus = SERVICES_STATUS.running;
+        var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
-            if (service.status === 'installing') {
-                serviceState = 'installing';
-                break;
-            } else if (service.status == 'failed') {
-                if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = 'failed';
-                    break;
-                } else if (!isMaster && service.name == 'slave') {
-                    serviceState = 'failed';
-                    break;
-                }
-            } else if (service.status == 'uninstalled') {
-                if (isMaster && masterServiceNames.indexOf(service.name) > -1) {
-                    serviceState = 'installing';
-                    break;
-                } else if (!isMaster && service.name == 'slave') {
-                    serviceState = 'installing';
-                    break;
-                }
+            if (service.status === SERVICES_STATUS.installing) {
+                return SERVICES_STATUS.installing;
+            }
+            nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
+            if (nodeServiceStatus) {
+                return nodeServiceStatus;
             }
         }
-        return serviceState;
+        return nodeServiceStatus;
     }
 
-    $scope.getNodeState = function(node) {
-        var isMaster = $scope.getIsMaster(node);
-        var servicesState = getNodeServicesState(node.services, isMaster);
-        var showState;
-        if (node.status === NODE_STATUS.terminated){
-            showState =  NODE_STATUS.terminated;
-        } else if(node.status === NODE_STATUS.installing || servicesState === 'installing') {
-            showState = NODE_STATUS.installing;
-        } else if(servicesState === 'failed') {
-            showState = NODE_STATUS.failed;
-        } else {
-            showState = NODE_STATUS.running;
+    function isNodeServicesFailedOrUninstalled(service, isMaster, statuses) {
+        if (statuses.indexOf(service.status) > -1) {
+            var serviceNames = {
+                master: ['zookeeper', 'master', 'marathon'],
+                slave: ['slave']
+            };
+            var masterCondition = Boolean(isMaster && (serviceNames.master.indexOf(service.name) > -1));
+            var slaveCondition = Boolean(!isMaster && (serviceNames.slave.indexOf(service.name) > -1));
+            if (masterCondition || slaveCondition) {
+                return service.status;
+            }
         }
-        return showState;
+    }
+
+    $scope.getNodeStatus = function(node) {
+        var isMaster = $scope.getIsMaster(node);
+        var servicesStatus = getNodeServiceStatus(node.services, isMaster);
+        if (node.status === NODE_STATUS.terminated) {
+            return NODE_STATUS.terminated;
+        } else if (node.status === NODE_STATUS.installing || servicesStatus === SERVICES_STATUS.installing) {
+            return NODE_STATUS.installing;
+        } else if (servicesStatus === SERVICES_STATUS.failed) {
+            return NODE_STATUS.failed;
+        } else {
+            return NODE_STATUS.running;
+        }
     };
 
     $scope.getSeriveState = function (nodeServices) {
@@ -117,49 +115,26 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return arr;
     }
 
-    function groupMasters(nodes) {
+    $scope.groupNodesByRoleAndStatus = function(nodes) {
         var cluster = {
-            masters: [],
-            nonMasters: []
+            masters: {},
+            slaves: {}
         };
-        if (nodes && nodes.length) {
-            var isMaster;
-            $.each(nodes, function(index, node) {
-                isMaster = $scope.getIsMaster(node);
-                if (isMaster) {
-                    cluster.masters.push(node);
-                }else{
-                    cluster.nonMasters.push(node);
-                }
+
+        var nodeStatuses = Object.keys(NODE_STATUS);
+        angular.forEach(cluster, function(nodes, role) {
+            angular.forEach(nodeStatuses, function(status, index) {
+                cluster[role][status] = [];
             });
-        }
+        });
+
+        var nodeStatus;
+        angular.forEach(nodes, function(node, index) {
+            nodeStatus = $scope.getNodeStatus(node);
+            node.nodeStatus = nodeStatus;
+            $scope.getIsMaster(node)? cluster.masters[nodeStatus].push(node) : cluster.slaves[nodeStatus].push(node);
+        });
         return cluster;
-    }
-
-    function classifyNodesByState(nodes) {
-        var groups = {}
-        var showState;
-        var showStates = Object.keys(NODE_STATUS);
-        $.each(showStates, function(index, key) {
-            groups[key] = [];
-        });
-        if(nodes && nodes.length) {
-            $.each(nodes, function(nodeIndex, node) {
-                showState = $scope.getNodeState(node);
-                node.showState = showState;
-                groups[showState].push(node);
-            });
-        }
-        return groups;
-    }
-
-    $scope.groupMasterWithState = function(nodes) {
-        var groupsWithState = {};
-        var cluster = groupMasters(nodes);
-        $.each(cluster, function(key, val) {
-            groupsWithState[key] = classifyNodesByState(val);
-        });
-        return groupsWithState;
     }
 
     $scope.getClusterNames = function(clusters) {

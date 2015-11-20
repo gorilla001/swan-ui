@@ -788,7 +788,10 @@ a.remove {
 }
 .cluster-nodes table span.bg-primary {
 	padding: 0 3px;
+	margin-right: 3px;
+	display: inline-block;
 }
+
 #node-cpu-chart {
     height: 300px;
 }
