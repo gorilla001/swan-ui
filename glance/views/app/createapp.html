@@ -137,10 +137,10 @@
 
 
                     <div class="col-md-2">
-                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic"
+                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic" formatter="memOptions.formatter"
                                 handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step"
                                 max="memOptions.max"></slider>
-                        <p>内存最大值: 4096MB 现为:{/memSize/}MB</p>
+                        <p>内存最大值: {/memFormatter(memOptions.max)/}MB 现为:{/memFormatter(memSize)/}MB</p>
                     </div>
                 </div>
                 <div class="form-group">
