@@ -78,7 +78,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
          } else {
             var showStatuses = Object.keys(NODE_STATUS);
             index = showStatuses.indexOf(clickedStatus);
-            hiddenStatuses = showStatuses.splice(index, 1);
+            showStatuses.splice(index, 1);
+            hiddenStatuses = showStatuses;
          }
          return hiddenStatuses;
     }
