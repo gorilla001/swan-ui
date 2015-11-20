@@ -396,4 +396,16 @@ $(document).ready(function(){
     $('a[data-toggle=popover]').popover().click(function(e) {
         e.preventDefault();
     });
+
+    (function fetchVersions() {
+      $.each(CONFIG.urls.versionUrl, function(key, value) {
+        $.get(CONFIG.urls._versionBaseUrl + CONFIG.environment + "-" + value, function(data) {
+          v = $("#omegaVersion").attr('title');
+          $("#omegaVersion").attr('title', v.replace(key, value + ':' + data));
+          if (key === 'frontend') {
+            $("#omegaVersion").html(data);
+          }
+        });
+      });
+    })();
 });
