@@ -11,9 +11,8 @@
     <div class="main-container server-detail-title">
       <header class="clearfix">
       <h2>
-        <a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})">{/ node.name /}</a>
-        <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
-        <span class="label label-info" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
+        {/ node.name /}<a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})" class="modify-name" title="修改名称"><img src="../pics/ico-edit.svg" width="12"></a>
+        <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span><span class="label label-info" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
       </h2>
       </header>
     </div>
