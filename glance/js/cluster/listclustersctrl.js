@@ -80,7 +80,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
     }
 
     function filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus) {
-        var allNodes = angular.copy({}, nodesWithRoleAndStatus);
+        var allNodes = angular.copy(nodesWithRoleAndStatus, {});
         if (clickedStatus) {
             cluster.hiddenStatuses = buildHiddenStatuses(cluster.hiddenStatuses, clickedStatus);
             angular.forEach(allNodes, function(nodesWithRole, role) {
@@ -133,7 +133,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var masters = nodesWithRoleAndStatus.masters;
         var slaves = nodesWithRoleAndStatus.slaves;
         var clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
-        clusterBasicData.clickedStatus = clusterStatus;
+        clusterBasicData.clusterStatus = clusterStatus;
         var problemTips = setProblemTips(clusterStatus, cluster.cluster_type, nodes.length);
 
         if (problemTips) {
