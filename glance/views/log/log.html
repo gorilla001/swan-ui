@@ -96,6 +96,7 @@
                                        data-ng-bind-html="log"></a></li>
                             </ul>
                             <code data-ng-show='clusterlogs.isLoadingLogs'>数据加载中...</code>
+                            <code data-ng-show='clusterlogs.logs.length == 0 && clusterlogs.data'>未查询到符合条件的日志</code>
                         </div>
                     </div>
 
