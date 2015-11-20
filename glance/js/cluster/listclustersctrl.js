@@ -11,7 +11,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '5_masters': 6,
     };
 
-
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.listClusters'], function (data) {
             if (data && data.data) {
@@ -112,10 +111,10 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         var slaves = $scope.concatObjtoArr(slavesWithStatus);
         var slavesLength = slaves.length;
         if (slavesLength) {
+            allShowSlaves.first = slaves.slice(0, groupLength);
             var groupNumber = Math.ceil(slavesLength / groupLength);
             if (groupNumber > 1) {
-                var i;
-                for (i = 1; i < groupNumber; i++) {
+                for (var i = 1; i < groupNumber; i++) {
                     allShowSlaves.following[i-1] = slaves.slice(i * groupLength, (i+1)*groupLength);
                 }
             }
@@ -301,8 +300,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             
     function calStatusAmount(services, status) {
         var amount = 0;
-        var i;
-        for (i = 0; i < services.length; i++) {
+        for (var i = 0; i < services.length; i++) {
             service = services[i];
             amount += (status.indexOf(service.status) > -1 ? 1 : 0);
         }
