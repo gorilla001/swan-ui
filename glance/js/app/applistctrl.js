@@ -60,7 +60,9 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
             if (apps.length) {
                 text = notificationText[key];
                 $.each(apps, function(index, app) {
-                    Notification.success('应用' + app.appName + text);
+                    if(key !== "isScaling"){
+                        Notification.success('应用' + app.appName + text);
+                    }
                 });
             }
         });
