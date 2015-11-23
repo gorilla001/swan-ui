@@ -20,7 +20,7 @@
 							<li data-ng-show="appInfo.status == '3'"><a href="#" data-ng-click="startApp(appInfo.appId, appInfo.name)">启动</a></li>
 							<li data-ng-show="appInfo.status!='3'"><a href="#" data-ng-click="stopApp(appInfo.appId, appInfo.name)">停止</a></li>
 							<li data-ng-disabled="appInfo.status == '5'"><a data-ng-click="deleteApp(appInfo.appId, appInfo.name)" href="#">删除</a></li>
-							<li data-ng-show="appInfo.status == '2' && appInfo.stateful != '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum, appInfo.name)" href="#">扩展</a></li>
+							<li data-ng-show="appInfo.status == '2' && appInfo.appType != '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum, appInfo.name)" href="#">扩展</a></li>
 							<li ><a data-ng-click="openDialog()" href="#">更新</a></li>
 						</ul>
 					</div>
