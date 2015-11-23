@@ -53,7 +53,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         ajaxBase("get", url, null, params, callback, errorCallback, warningCallback);
     };
     
-    var ajaxDelete = function (url, callback, params, errorCallback, warningCallback, data) {
+    var ajaxDelete = function (url, callback, data, params, errorCallback, warningCallback) {
         ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback);
     };
 

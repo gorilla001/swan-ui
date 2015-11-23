@@ -20,7 +20,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         $scope.myConfirm(toast, function () {
             glanceHttp.ajaxDelete(["cluster.nodes", {"cluster_id": $stateParams.clusterId}], function (data) {
                 $state.reload("cluster.clusterdetails");
-            }, undefined, undefined, undefined,  {"ids": nodeIds})
+            }, {"ids": nodeIds})
         });
     };
 
