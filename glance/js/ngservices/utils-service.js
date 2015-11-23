@@ -10,18 +10,24 @@ function utils(Notification) {
         });
     };
 
-    function getBaseUrl(urlKey) {
-        var confs = urlKey.split('.');
+    
+    function getUrlTemplate(name) {
+        var confs = name.split('.');
         var categoryKey = confs[0];
         var detailKey = confs[1];
-        return BACKEND_URL[categoryKey].base + BACKEND_URL[categoryKey][detailKey];
+        var base;
+        if(BACKEND_URL_BASE[categoryKey]){
+            base = BACKEND_URL_BASE[categoryKey];
+        } else {
+            base = BACKEND_URL_BASE.defaultBase;
+        }
+        return base + BACKEND_URL[categoryKey][detailKey];
     }
 
-    var buildFullURL = function(urlParams) {
-        var urlKey = urlParams[0];
-        var url = getBaseUrl(urlKey);
-        if (urlParams.length > 1) {
-            $.each(urlParams[1], function(key, val) {
+    var buildFullURL = function(name, params) {
+        var url = getUrlTemplate(name);
+        if (params) {
+            $.each(params, function(key, val) {
                 url = url.replace("$" + key, val);
             });
         }

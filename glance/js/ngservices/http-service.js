@@ -8,7 +8,12 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     };
 
     var ajaxBase = function (method, url, data, params, callback, errorCallback, warningCallback) {
-        var fullURL = utils.buildFullURL(url);
+        var fullURL;
+        if (angular.isArray(url)) {
+            fullURL = utils.buildFullURL(url[0], url[1]);
+        } else {
+            fullURL = utils.buildFullURL(url);
+        }
         var headers = {
             'Content-Type': 'application/json; charset=UTF-8'
         };
@@ -32,7 +37,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
             }
         }).error(function (data, status) {
             if (status == 403) {
-                window.location.href = BACKEND_URL.userUrl;
+                window.location.href = USER_URL;
                 $rootScope.$destroy();
             } else if(errorCallback){
                 errorCallback(data, status);

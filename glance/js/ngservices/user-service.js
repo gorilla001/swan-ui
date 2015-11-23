@@ -7,7 +7,7 @@ function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS) {
             glanceHttp.init(token, clear);
             glanceWS.init(token);
         } else {
-            window.location.href = BACKEND_URL.userUrl;
+            window.location.href = USER_URL;
             $rootScope.$destroy();
         }
     };
