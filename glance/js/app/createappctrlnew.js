@@ -58,9 +58,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.memSize = 4;
     $scope.containerNum = 1;
     $scope.imageversion = "";
-    $scope.radio = "1";  //defalut apptype for radio box
 
-    $scope.deployinfo = {};
+    $scope.deployinfo = {
+        apptype: "1"          //defalut apptype for radio box
+    };
 
     $scope.deployApp = function () {
         if ($scope.portInfos.length) {
@@ -81,7 +82,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             delete $scope.deployinfo.cmd;
         }
 
-        if ($scope.radio === '2') {
+        if ($scope.deployinfo.apptype === '2') {
             if ($scope.containerDir && $scope.dateDir) {
                 $scope.deployinfo.containerVolumesInfo = [];
                 var volumesInfo = {
@@ -92,7 +93,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             }
 
             $scope.deployinfo.constraints = [["persistent", "LIKE", "persistent"], ["ip", "LIKE", $scope.nodeOkIp]];
-        } else if ($scope.radio === '1') {
+        } else if ($scope.deployinfo.apptype === '1') {
             if ($scope.deployinfo.hasOwnProperty('containerVolumesInfo')) {
                 delete $scope.deployinfo.containerVolumesInfo;
             }

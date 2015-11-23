@@ -75,34 +75,34 @@
 
                     <div class="col-md-5">
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="radio" value="1" data-required="required">
+                            <input type="radio" ng-model="deployinfo.apptype" value="1" data-required="required">
                             无状态应用
                         </label>
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="radio" value="2" data-required="required">
-                            有状态应用
+                            <input type="radio" ng-model="deployinfo.apptype" value="2" data-required="required">
+                            有状态应用 <span class="text-warning">(注:有状态应用不支持扩展实例)</span>
                         </label>
                     </div>
                 </div>
 
-                <div class="form-group" ng-show="radio === '2'">
+                <div class="form-group" ng-show="deployinfo.apptype === '2'">
                     <label class="col-md-2 control-label"><span class="text-danger">* </span>选择主机</label>
 
                     <div class="col-md-5">
                         <select class="form-control"
                                 data-ng-options=" nodeOk as nodeOk.name for nodeOk in nodesOk"
                                 data-ng-model="nodeInfo" ng-change="getNodeOkIp(nodeInfo)"
-                                ng-required="radio === '2'"></select>
+                                ng-required="deployinfo.apptype === '2'"></select>
                     </div>
                 </div>
 
-                <div class="form-group" ng-show="radio === '2'">
+                <div class="form-group" ng-show="deployinfo.apptype === '2'">
                     <label class="col-md-2 control-label"><span class="text-danger">* </span>主机目录</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid && !staticForm.dateDir.$pristine}">
                         <input type="text" name="dateDir" class="form-control" placeholder="宿主机路径"
-                               data-ng-model="dateDir" ng-required="radio === '2'">
+                               data-ng-model="dateDir" ng-required="deployinfo.apptype === '2'">
                     </div>
 
                     <div data-ng-class="{ 'has-error' : staticForm.dateDir.$invalid && !staticForm.dateDir.$pristine}">
@@ -111,13 +111,13 @@
                     </div>
                 </div>
 
-                <div class="form-group" ng-show="radio === '2'">
+                <div class="form-group" ng-show="deployinfo.apptype === '2'">
                     <label class="col-md-2 control-label"><span class="text-danger">* </span>容器目录</label>
 
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
                         <input type="text" name="containerDir" class="form-control" placeholder="容器内部目录"
-                               data-ng-model="containerDir" ng-required="radio === '2'">
+                               data-ng-model="containerDir" ng-required="deployinfo.apptype === '2'">
                     </div>
 
                     <div data-ng-class="{ 'has-error' : staticForm.containerDir.$invalid && !staticForm.containerDir.$pristine}">
