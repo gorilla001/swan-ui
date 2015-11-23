@@ -40,7 +40,7 @@
               <div>Zookeeper</div>
             </div>
           </div>
-          <div class="col-md-3" data-ng-show="!isMasterFlag||node.cluster.cluster_type=='1_master'">
+          <div class="col-md-3" data-ng-show="node.cluster.cluster_type=='1_master' || isMasterFlag===false">
             <div class="server-app-status"> <img src="../pics/ico-service-status-{/serviceState.slave/}.png" width="24">
               <div>Slave</div>
             </div>

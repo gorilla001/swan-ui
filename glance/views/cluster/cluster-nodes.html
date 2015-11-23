@@ -31,14 +31,13 @@
                             </td>
                             <td>
                                 <a data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.id})">{/ node.name /}</a>
-                              <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span>
-                              <span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
+                              <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span><span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                             </td>
                             <td>
                                 {/ node.ip/}
                             </td>
                             <td>
-                                <img data-ng-src="../pics/ico-node-status-{/node.showState/}.png" width="16"> {/statName[node.showState]/}
+                                <img data-ng-src="../pics/ico-node-status-{/node.nodeStatus/}.png" width="16"> {/statName[node.nodeStatus]/}
                             </td>
                             <td>
                                 {/ node.agent_version/}
@@ -54,7 +53,7 @@
                     </table>
                 </div>
 
-                <pagination total-items="totalItems" items-per-page="20" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination" previous-text="上一页" next-text="下一页"></pagination>
+                <uib-pagination total-items="totalItems" items-per-page="20" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination" previous-text="上一页" next-text="下一页"></uib-pagination>
             </div>
             <div data-ng-show="!cluster.nodes.length">
                 <h4>

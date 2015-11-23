@@ -18,9 +18,9 @@
             <div class="col-md-4" ng-repeat="instance in appStat">
                 <p>实例: {/instance.app.appId/}</p>
                 <p>实例CPU用量:<span>(CPU:{/cpuCores[$index]/})</span></p>
-                <progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuShareCores" value="instance.cpuUsedCores"><span style="color:black; white-space:nowrap;">{/instance.cpuUsedCores/} / {/instance.cpuShareCores/}</span></progressbar>
+                <uib-progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuShareCores" value="instance.cpuUsedCores"><span style="color:black; white-space:nowrap;">{/instance.cpuUsedCores/} / {/instance.cpuShareCores/}</span></uib-progressbar>
                 <p>实例内存用量:(单位: MB)</p>
-                <progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span style="color:black; white-space:nowrap;">{/instance.memoryUsed/} MB / {/instance.memoryTotal/} MB</span></progressbar>
+                <uib-progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span style="color:black; white-space:nowrap;">{/instance.memoryUsed/} MB / {/instance.memoryTotal/} MB</span></uib-progressbar>
             </div>
         </div>
     </div>

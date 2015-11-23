@@ -23,7 +23,7 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
     $scope.logout = function(){
         glanceHttp.ajaxGet(["auth.logout"], function(data){
             glanceUser.clear();
-            window.location.href = BACKEND_URL.userUrl;
+            window.location.href = USER_URL;
         });
     };
 }

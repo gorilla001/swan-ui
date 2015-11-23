@@ -24,10 +24,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             $scope.nodeId = data.data.identifier;
             $scope.form.id = $scope.nodeId;
             var cmdArray = new Array(
-                BACKEND_URL.agentConfig.installScript,
-                BACKEND_URL.agentConfig.dmHost,
+                AGENT_CONFIG.installScript,
+                AGENT_CONFIG.dmHost,
                 "OMEGA_AGENT_VERSION=" + $scope.agentVersionLatest,
-                BACKEND_URL.agentConfig.filesUrl,
+                AGENT_CONFIG.filesUrl,
                "sh -s",
                data.data.identifier
             );

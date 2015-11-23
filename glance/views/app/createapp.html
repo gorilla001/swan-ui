@@ -137,10 +137,10 @@
 
 
                     <div class="col-md-2">
-                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic"
+                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic" formatter="memOptions.formatter"
                                 handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step"
                                 max="memOptions.max"></slider>
-                        <p>内存最大值: 4096MB 现为:{/memSize/}MB</p>
+                        <p>内存最大值: {/memFormatter(memOptions.max)/}MB 现为:{/memFormatter(memSize)/}MB</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -201,7 +201,7 @@
                                 <div class="form-group">
                                     <label>代理节点</label>
 
-                                    <p ng-show="!proxyNodes.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点</p>
+                                    <p ng-show="!proxyNodes.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加代理节点)</span></p>
                                     <p ng-repeat="proxyNode in proxyNodes" class="form-control-static"
                                        style="margin-left: 6px; margin-right: 25px; padding:0;">{/proxyNode.ip/}</p>
                                 </div>
@@ -252,7 +252,7 @@
                                 <div class="form-group">
                                     <label>网关节点:</label>
 
-                                    <p ng-show="!gateWays.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点</p>
+                                    <p ng-show="!gateWays.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加网关节点)</span></p>
                                     <p ng-repeat="gateWay in gateWays" class="form-control-static"
                                        style="margin-left: 6px; margin-right: 25px; padding:0;">{/gateWay.ip/}</p>
                                 </div>
@@ -263,7 +263,7 @@
                                            data-ng-model="portInfo.mapPort">            </div>
                             </div>
 
-                            <button class="btn btn-default" type="button"
+                            <button class="btn" type="button" ng-class="{'btn-info':!isAddPortDisable(portInfo) , 'btn-sm':isAddPortDisable(portInfo), 'btn-default':isAddPortDisable(portInfo)}"
                                     data-ng-disabled="isAddPortDisable(portInfo)"
                                     data-ng-click="addPortInfo(portInfo)">增加
                             </button>

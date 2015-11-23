@@ -113,7 +113,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                         'nodeId': new Array(ip),
                         'instanceName': taskid,
                         'clusterId': clusterIdTemp,
-                        'size': $scope.contextlogs.logSize
+                        'size': total
                     };
                     $scope.contextlogs.searchLogs($scope.searchData,function(){
                         $timeout(function(){
