@@ -30,6 +30,8 @@
                             data-ng-click="stopApp(app.appId, app.appName)" data-ng-show="app.appStatus!='3'">停止</button>
                         <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='2' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 
                             data-ng-click="startApp(app.appId, app.appName)" data-ng-show="app.appStatus == '3'">启动</button>
+                        <button type="button" class="btn btn-default btn-xs"
+                                data-ng-click="undoApp(app.appId, app.appName)" data-ng-show="app.appStatus == '6'">撤销</button>
                         <button type="button" data-ng-disabled="app.appStatus == '5' || !app.appStatus" data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs">删除</button>
                     </td>
                 </tr>

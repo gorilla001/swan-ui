@@ -86,7 +86,8 @@ BACKEND_URL = {
         versionDeploy:"api/v1/applications/$app_versionId/version-deploy",
         updateVersion:"api/v1/applications/update-version",
         isdeploying: "api/v1/applications/$app_id/isdeploying",
-        cancelDeploy: "api/v1/applications/$app_id/cancel-deployment"
+        cancelDeploy: "api/v1/applications/$app_id/cancel-deployment",
+        undoScaling: "api/v1/applications/$app_id/cancel-scaling"
     }
         
 }
