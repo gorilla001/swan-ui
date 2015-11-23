@@ -66,6 +66,10 @@ prod 环境将 dev 改成 prod，devwww.dataman-int.net 改成www.shurenyun.com
 
 ##v0.1.110201
 
+###需要运维更新
+
+1. 在 nginx.conf 里面将 /api/v1/auth/sign_out 与 /api/v1/auth/sign_in 放到一起， 即不需要 auth_request .
+
 ### bug fix
 
 1. watch on web sokcet message when axaj request resolved and charts build finished
