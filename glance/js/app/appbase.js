@@ -21,7 +21,8 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         '2': "运行中",
         '3': "已停止",
         '4': "停止中 ",
-        '5': "删除中"
+        '5': "删除中",
+        '6': "扩展中"
     };
 
     $scope.portType = {
@@ -87,6 +88,17 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 }
             },undefined, null, function(data){
                 Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
+            });
+        });
+    };
+
+    $scope.undoApp = function (appId, appName) {
+        $scope.myConfirm("您确定要撤销扩展中的应用吗？", function () {
+            glanceHttp.ajaxGet(['app.undoScaling',{app_id: parseInt(appId)}], function (data) {
+                    Notification.success('应用 ' + appName + ' 撤销中...');
+                    $state.go('app.applist',undefined,{reload : true});
+            },undefined, null, function(data){
+                Notification.error('应用 ' + appName + ' 撤销失败: ' + $scope.addCode[data.code]);
             });
         });
     };
