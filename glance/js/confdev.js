@@ -1,9 +1,9 @@
 BACKEND_URL_BASE = {
     defaultBase: "DASHBOARD/",
-    ws: null,
+    ws: "STREAMING/",
     auth: null,
     cluster: null,
-    metrics: "STREAMING/",
+    metrics: null,
     log: null,
     app: null,
 }
