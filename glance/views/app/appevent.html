@@ -9,8 +9,8 @@
 					<p>
 						<span ng-show="event.app.appName">应用名称：<em>{/event.app.appName/}</em></span>
 						<span ng-show="event.taskId">实例名称：<em>{/event.taskId/}</em></span>
-						<span ng-show="event.currentType">事件类型：<em>{/event.currentType/}</em></span>
-						<span ng-show="event.eventType">事件结果：<em>{/event.eventType/}</em></span>
+						<span ng-show="event.currentType">事件类型：<em>{/currentTypeText[event.currentType]/}</em></span>
+						<span ng-show="event.eventType">事件结果：<em>{/eventTypeText[event.eventType]/}</em></span>
 					</p>
 				</div>
 			</li>
