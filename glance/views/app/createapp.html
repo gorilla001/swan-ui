@@ -169,104 +169,7 @@
                             <h4>应用地址</h4>
                         </div>
                         <div class="form-inline" style="margin-bottom: 15px;">
-                            <div class="form-group"
-                                 data-ng-class="{ 'has-error' : staticForm.curPort.$invalid && !staticForm.curPort.$pristine }">
-                                <label>应用端口</label>
-                                <input type="number" name="curPort" class="form-control" min="1" max="65535"
-                                       data-ng-model="portInfo.appPort">
-                            </div>
-                            <div class="form-group">
-                                <label>协议</label>
-                                <select class="form-control" data-ng-model="portInfo.protocol"
-                                        ng-change="changeProtocol()">
-                                    <option value="">选择协议</option>
-                                    <option value="1"> TCP</option>
-                                    <option value="2"> HTTP</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>类型</label>
-                                <select class="form-control" data-ng-model="portInfo.type"
-                                        ng-change="changeType(portInfo.type)">
-                                    <option value="">选择类型</option>
-                                    <option value="1"> 对内</option>
-                                    <option value="2"> 对外</option>
-                                </select>
-                            </div>
-
-                        </div>
-                        <div class="form-inline" style="margin-bottom: 15px;">
-                            <div class="form-group"
-                                 data-ng-show="(portInfo.protocol === '1' && portInfo.type === '1' && !portInfo.isUri) || (portInfo.protocol === '2' && portInfo.type === '1' )">
-                                <div class="form-group">
-                                    <label>代理节点</label>
-
-                                    <p ng-show="!proxyNodes.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加代理节点)</span></p>
-                                    <p ng-repeat="proxyNode in proxyNodes" class="form-control-static"
-                                       style="margin-left: 6px; margin-right: 25px; padding:0;">{/proxyNode.ip/}</p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>映射端口</label>
-                                    <input type="number" class="form-control" min="1" max="65535"
-                                           data-ng-model="portInfo.mapPort">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-inline" style="margin-bottom: 15px;">
-                            <div class="form-group" data-ng-show="portInfo.type === '2' && portInfo.protocol === '2'">
-                                <label class="checkbox-inline">
-                                    <input type="radio" ng-model="portInfo.isUri" value="1"
-                                           ng-change="isURI(portInfo.isUri)">
-                                    有域名
-                                </label>
-                                <label class="checkbox-inline">
-                                    <input type="radio" ng-model="portInfo.isUri" value="2"
-                                           ng-change="isURI(portInfo.isUri)">
-                                    无域名
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="form-inline" style="margin-bottom: 15px;">
-                            <div class="form-group"
-                                 data-ng-show="portInfo.type === '2' && portInfo.isUri === '1' && portInfo.protocol === '2'">
-                                <div class="form-group">
-                                    <label>域名</label>
-                                    <input type="text" class="form-control"
-                                           data-ng-model="portInfo.uri">
-                                </div>
-
-                                <div class="form-group">
-                                    <label>映射端口</label>
-                                    <input type="number" class="form-control" ng-disabled="true"
-                                           data-ng-model="portInfo.mapPort">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-inline" style="margin-bottom: 15px;">
-                            <div class="form-group"
-                                 data-ng-show=" (portInfo.type === '2' && portInfo.isUri !== '1') || (portInfo.type === '2' && portInfo.protocol === '1')">
-                                <div class="form-group">
-                                    <label>网关节点:</label>
-
-                                    <p ng-show="!gateWays.length" class="form-control-static" style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加网关节点)</span></p>
-                                    <p ng-repeat="gateWay in gateWays" class="form-control-static"
-                                       style="margin-left: 6px; margin-right: 25px; padding:0;">{/gateWay.ip/}</p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>映射端口</label>
-                                    <input type="number" class="form-control" min="1" max="65535"
-                                           data-ng-model="portInfo.mapPort">            </div>
-                            </div>
-
-                            <button class="btn" type="button" ng-class="{'btn-info':!isAddPortDisable(portInfo) , 'btn-sm':isAddPortDisable(portInfo), 'btn-default':isAddPortDisable(portInfo)}"
-                                    data-ng-disabled="isAddPortDisable(portInfo)"
-                                    data-ng-click="addPortInfo(portInfo)">增加
-                            </button>
+                            <button type="button" class="btn btn-default" data-ng-click="openPortModule()"> 添加应用地址 </button>
                         </div>
 
                         <div class="table-responsive">
@@ -325,18 +228,9 @@
                         </div>
 
                         <div class="form-inline">
-                            <div class="form-group">
-                                <label>KEY</label>
-                                <input type="text" class="form-control" placeholder="Path" data-ng-model="pathInfo.key">
-                            </div>
-                            <div class="form-group">
-                                <label>VALUE</label>
-                                <input type="text" class="form-control" data-ng-model="pathInfo.value">
-                            </div>
                             <button type="button" class="btn btn-default"
-                                    data-ng-disabled="isAddPathDisable(pathInfo) "
-                                    data-ng-click="addPathInfo(pathInfo)">
-                                增加
+                                    data-ng-click="openPathModule()">
+                                添加环境变量
                             </button>
                         </div>
 

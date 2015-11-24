@@ -1,8 +1,8 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -33,8 +33,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         reversed: false
     };
 
-    $scope.memFormatter = function(rawValue){
-        return Math.pow(2,rawValue);
+    $scope.memFormatter = function (rawValue) {
+        return Math.pow(2, rawValue);
     };
 
     $scope.memOptions = {
@@ -107,7 +107,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-            $state.go('app.appdetail.config', {appId: data.data},{reload: true});
+            $state.go('app.appdetail.config', {appId: data.data}, {reload: true});
         }, undefined, null, function (data) {
             Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + $scope.addCode[data.code]);
         });
@@ -126,9 +126,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.addPortInfo = function (portInfo) {
         if (isDisableAddList(portInfo, $scope.portInfos, ['type', 'mapPort', 'uri'])) {
             Notification.error('添加的应用地址已存在');
-        }else if((portInfo.mapPort == 80 || portInfo.mapPort == 443) && portInfo.isUri != HAS_DOMAIN && portInfo.type === OUTER){
+        } else if ((portInfo.mapPort == 80 || portInfo.mapPort == 443) && portInfo.isUri != HAS_DOMAIN && portInfo.type === OUTER) {
             Notification.error('无域名的情况下映射端口不能为 80 443');
-        }else{
+        } else {
             $scope.portInfos.push(portInfo);
             $scope.portInfo = {};
         }
@@ -137,7 +137,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     $scope.addPathInfo = function (pathInfo) {
         if (isDisableAddList(pathInfo, $scope.pathsInfo, ['key'])) {
             Notification.error('添加的环境变量的 KEY 不能重复');
-        }else{
+        } else {
             $scope.pathsInfo.push(pathInfo);
             $scope.pathInfo = {};
         }
@@ -213,7 +213,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             return true;
         }
 
-        if((portInfo.type === OUTER && portInfo.isUri != HAS_DOMAIN && $scope.gateWays.length == 0) || (portInfo.type === INNER && $scope.proxyNodes.length == 0)){
+        if ((portInfo.type === OUTER && portInfo.isUri != HAS_DOMAIN && $scope.gateWays.length == 0) || (portInfo.type === INNER && $scope.proxyNodes.length == 0)) {
             return true;
         }
 
@@ -225,7 +225,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
             return false;
         } else if (portInfo.protocol === SELECT_TCP && (portInfo.type && portInfo.type !== '') && portInfo.mapPort) {
             return false;
-        } else{
+        } else {
             return true;
         }
     };
@@ -237,4 +237,41 @@ function createappCtrl($scope, $state, glanceHttp, Notification) {
     };
 
     $scope.listCluster();
+
+    // createPortModule
+    $scope.openPortModule = function (size) {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: '../../views/app/createPortModule.html',
+            controller: 'ModalPortCtrl',
+            size: size,
+            scope: $scope,
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function () {
+            $scope.portInfo = {};
+        }, function () {
+            $scope.portInfo = {};
+        });
+    };
+
+    // createPathModule
+    $scope.openPathModule = function (size) {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: '../../views/app/createPathModule.html',
+            controller: 'ModalPathCtrl',
+            size: size,
+            scope: $scope,
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function () {
+            $scope.pathInfo = {};
+        }, function () {
+            $scope.pathInfo = {};
+        });
+    };
+
 }
