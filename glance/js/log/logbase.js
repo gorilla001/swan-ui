@@ -69,6 +69,13 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         });
     };
 
+    $scope.isDisableGteDate = function(curDate, mode) {
+        return curDate > $scope.lte;
+    };
+    $scope.isDisablelteDate = function(curDate, mode) {
+        return curDate < $scope.gte;
+    };
+    
     $scope.getLog = function () {
         $scope.showContextUI = false;
         $scope.searchData = {

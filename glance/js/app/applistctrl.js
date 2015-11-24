@@ -52,14 +52,17 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         var diffApps = getDiffApps(oldValue, diffIds);
         var notificationText = {
             isDeleting: '删除成功',
-            isStopping: '停止成功'
+            isStopping: '停止成功',
+            isScaling: '扩展成功'
         };
         var text;
         $.each(diffApps, function(key, apps) {
             if (apps.length) {
                 text = notificationText[key];
                 $.each(apps, function(index, app) {
-                    Notification.success('应用' + app.appName + text);
+                    if(key !== "isScaling"){
+                        Notification.success('应用' + app.appName + text);
+                    }
                 });
             }
         });
@@ -75,6 +78,10 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
             isStopping: {
                 apps: [],
                 ids: []
+            },
+            isScaling: {
+                apps:[],
+                ids:[]
             }
         };
 
@@ -83,12 +90,14 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         //     2: "运行中",
         //     3: "已停止",
         //     4: "停止中",
-        //     5: "删除中"
+        //     5: "删除中",
+        //     6: "扩展中"
         // };
         // reference link: https://github.com/Dataman-Cloud/omega-app/blob/master/docs%2Frest-api.md
         var codes = {
             isDeleting: 5,
-            isStopping: 3
+            isStopping: 3,
+            isScaling: 6
         };
 
         for (var i = 0; i < applist.length; i++) {
@@ -124,7 +133,8 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
     function getDiffAppIds(newValue, oldValue) {
         var diffIds = {
             isDeleting: [],
-            isStopping: []
+            isStopping: [],
+            isScaling: []
         };
 
         $.each(diffIds, function(key, ids) {
@@ -149,7 +159,8 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
     function getDiffApps(deleteStopApps, diffIds) {
         var diffApps = {
             isDeleting: [],
-            isStopping: []
+            isStopping: [],
+            isScaling:[]
         };
         var app;
         $.each(diffIds, function(key, ids) {
