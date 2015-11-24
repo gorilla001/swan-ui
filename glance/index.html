@@ -27,6 +27,7 @@
                 <div class="col-xs-1 col-sm-1 col-md-2 sidebar">
                     <div class="user">
                         <span class="glyphicon glyphicon-user" style="font-size: 36px; color: #9b9b9b;"></span>
+						<img src="../pics/ico-user-header.svg">
                         <h5 data-ng-bind="userName"></h5>
                         <a href="#" data-ui-sref="modifyPassword"><span class="glyphicon glyphicon-cog" aria-hidden="true" title="修改密码"></span></a>&nbsp;
                         <a href="#" data-ng-click="logout()">
@@ -57,7 +58,10 @@
                             </a>
                         </li>
                     </ul>
-
+					<ul class="nav-sidebar-footer">
+						<li><a href="http://open.shurenyun.com" title="用户手册"><div class="userdoc"><span>用户手册</span></div></a></li>
+						<li><a href="http://doc.shurenyun.com" title="数人社区"><div class="bbs"><span>数人社区</span></div></a></li>
+					</ul>
                     <a href="http://doc.shurenyun.com" class="instructions">使用说明 <span class="separator">&nbsp;&nbsp;| </span></a>
                     <a href="http://open.shurenyun.com" class="community">数人云社区</a>
                     <!--<a href="#" class="sidebar-logo"></a>-->
