@@ -17,6 +17,10 @@
                 <dt>容器个数：</dt>
                 <dd>{/config.ContainerNum/}</dd>
             </dl>
+            <dl>
+                <dt>应用模式：</dt>
+                <dd>{/networkText[config.Network]/}</dd>
+            </dl>
             <dl ng-repeat="volumeInfo in config.ContainerVolumesInfo" ng-show="config.ContainerVolumesInfo.length">
                 <dt>挂载目录：</dt>
                 <dd>容器挂载目录:{/volumeInfo.HostPath/}</dd>
