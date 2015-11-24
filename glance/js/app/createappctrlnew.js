@@ -60,7 +60,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     $scope.imageversion = "";
 
     $scope.deployinfo = {
-        apptype: "1"          //defalut apptype for radio box
+        apptype: "1",        //defalut apptype for radio box
+        network: "BRIDGE"    //defalut network for radio box
     };
 
     $scope.deployApp = function () {
