@@ -20,7 +20,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         });
     };
     var init = function() {
-        glanceHttp.ajaxGet(["cluster.getNodeID", {cluster_id: $stateParams.clusterId}], function(data){
+        glanceHttp.ajaxGet(["cluster.nodeId", {cluster_id: $stateParams.clusterId}], function(data){
             $scope.nodeId = data.data.identifier;
             $scope.form.id = $scope.nodeId;
             var cmdArray = new Array(

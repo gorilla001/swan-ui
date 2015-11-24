@@ -5,7 +5,7 @@ function updateClusterFormCtrl($scope, $state, $stateParams, glanceHttp) {
     };
     $scope.message_error_info = {};
     $scope.updateCluster = function() {
-        glanceHttp.ajaxFormPost($scope, ['cluster.updateCluster'], function() {
+        glanceHttp.ajaxFormPut($scope, ['cluster.cluster'], function() {
             $state.go("cluster.clusterdetails.nodes", {"clusterId": $stateParams.clusterId});
         });
     };

@@ -346,6 +346,7 @@ $(document).ready(function(){
                 key: 'code',
                 replaceWord: '$reset_code',
                 url: 'verifyMailAddress',
+                method: 'get',
                 dom: '#reset-password',
                 errorDom: '#reset-password-error'
             },
@@ -353,6 +354,7 @@ $(document).ready(function(){
                 key: 'active',
                 replaceWord: '$active_code',
                 url: 'activeUrl',
+                method: 'put',
                 dom: '#relative-success',
                 errorDom: '#active-success-error'
             }
@@ -378,7 +380,7 @@ $(document).ready(function(){
             url = url.replace(result.replaceWord, result.code);
             verifyCode = result.code;
 
-            ajaxReq(url, 'get').success(function(data) {
+            ajaxReq(url, result.method).success(function(data) {
                 if(data && data.code === 0) {
                     $(result.dom).modal('show');
                     if (result.key === 'active') {

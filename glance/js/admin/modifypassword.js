@@ -8,7 +8,7 @@ function modifyPasswordCtrl($scope, $rootScope, glanceHttp, $window, Notificatio
     $scope.message_error_info = {};
 
     $scope.modifyPassword = function(){
-        glanceHttp.ajaxFormPost($scope, ["auth.modifyPassword"], function() {
+        glanceHttp.ajaxFormPut($scope, ["auth.password"], function() {
             // Notification.success('密码修改成功！');
             alert('密码修改成功！');
             $window.history.back();
