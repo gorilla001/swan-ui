@@ -38,27 +38,21 @@ SERVICES_STATUS = {
 
 BACKEND_URL = {
     auth: {
-        logout: "api/v1/auth/sign_out",
-        getMe: "api/v1/auth/getme",
-        getCSUrl: "api/v1/auth/getcsurl",
-        createInvitationCodes: "api/v1/auth/invitation_code/$num",
-        listUsers: "api/v1/auth/user/list",
-        modifyPassword: 'api/v1/auth/password/update'
+        auth: "api/v2/auth",
+        user: "api/v2/user",
+        customerservice: "api/v2/customerservice",
+        password: 'api/v2/user/password'
         },
         
     cluster:  {
-        getNodeID: "api/v1/cluster/$cluster_id/new_node_id",
-        node: "api/v1/cluster/$cluster_id/node",
-        updateNode: "api/v1/cluster/node/update",
-        getNode: "api/v1/cluster/node/$node_id",
-        createCluster: "api/v1/cluster/add",
-        updateCluster: "api/v1/cluster/update",
-        listClusters: "api/v1/cluster/list",
-        getCluster: "api/v1/cluster/$cluster_id",
-        delCluster: "api/v1/cluster/$cluster_id/del",
-        listNodes: "api/v1/cluster/$cluster_id/nodes/$page_num",
-        delNodes: "api/v1/cluster/node/del",
-        getNodeMonitor: "api/v1/cluster/node/$node_id/metrics"
+        nodeId: "api/v2/cluster/$cluster_id/node/identifier",
+        node: "api/v2/cluster/$cluster_id/node",
+        nodeIns: "api/v2/cluster/$cluster_id/node/$node_id",
+        cluster: "api/v2/cluster",
+        clusterIns: "api/v2/cluster/$cluster_id",
+        clusters: "api/v2/clusters",
+        nodes: "api/v2/cluster/$cluster_id/nodes",
+        nodeMonitor: "api/v2/cluster/$cluster_id/node/$node_id/metrics"
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",

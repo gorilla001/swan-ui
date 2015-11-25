@@ -1,15 +1,15 @@
 CONFIG = {
   environment:"ENVIRONMENT", //dev, demo, prod
   urls: {
-    baseUrl: "DASHBOARD/api/v1/",
+    baseUrl: "DASHBOARD/",
     redirectUrl: "DASHBOARD/",
-    loginUrl: 'auth/sign_in',
-    registerUrl: 'auth/registration',
+    loginUrl: 'api/v2/auth',
+    registerUrl: 'api/v2/auth/user/registration',
     domainUrl: "BODY_DOMAIN",
-    resetPasswordUrl: "auth/password/resetrequest",
-    verifyMailAddress: "auth/password/reset/$reset_code",
-    activeUrl: "auth/active/$active_code",
-    activeMailUrl: "auth/active",
+    resetPasswordUrl: "api/v2/auth/password/resetrequest",
+    verifyMailAddress: "api/v2/auth/password/$reset_code",
+    activeUrl: "api/v2/auth/user/activation/$active_code",
+    activeMailUrl: "api/v2/auth/user/activation",
     _versionBaseUrl: "MARKET" + "/version/",
     versionUrl: {
       agent: "omega-agent",
