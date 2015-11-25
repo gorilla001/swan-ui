@@ -22,9 +22,9 @@
                 <dd>{/networkText[config.Network]/}</dd>
             </dl>
             <dl ng-repeat="volumeInfo in config.ContainerVolumesInfo" ng-show="config.ContainerVolumesInfo.length">
-                <dt>挂载目录：</dt>
-                <dd>容器挂载目录:{/volumeInfo.HostPath/}</dd>
-                <dd>数据挂载目录:{/volumeInfo.ContainerPath/}</dd>
+                <dt>挂载目录{/$index + 1/}：</dt>
+                <dd>容器挂载目录: {/volumeInfo.HostPath/}</dd>
+                <dd>数据挂载目录: {/volumeInfo.ContainerPath/}</dd>
             </dl>
             <h4 ng-show="config.ContainerPortsInfo.length"><span>应用地址</span></h4>
             <table class="table table-striped table-bordered" ng-show="config.ContainerPortsInfo.length">

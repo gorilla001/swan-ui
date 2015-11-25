@@ -19,6 +19,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     $scope.pathInfo = {};
     $scope.pathsInfo = [];
 
+    $scope.dirInfo = {
+        hostPath: "",
+        containerPath: ""
+    };
+    $scope.dirsInfo = [];
+
     $scope.cpuOptions = {
         min: 0.1,
         max: 1.0,
@@ -105,13 +111,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }
 
         if ($scope.deployinfo.apptype === HAS_STATE) {
-            if ($scope.containerDir && $scope.dateDir) {
-                $scope.deployinfo.containerVolumesInfo = [];
-                var volumesInfo = {
-                    containerPath: $scope.containerDir,
-                    hostPath: $scope.dateDir
-                };
-                $scope.deployinfo.containerVolumesInfo.push(volumesInfo);
+            if ($scope.dirsInfo.length) {
+                $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
             }
 
             $scope.makeConstraints($scope.persistNodes, $scope.persistentEles);
@@ -165,6 +166,15 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }
     };
 
+    $scope.addDirInfo = function (dirInfo) {
+        if (isDisableAddList(dirInfo, $scope.dirsInfo, ['hostPath', 'containerPath'])) {
+            Notification.error('添加的目录重复');
+        } else {
+            $scope.dirsInfo.push(dirInfo);
+            $scope.dirInfo = {};
+        }
+    };
+
     function isDisableAddList(info, infoArray, attrnames) {
         function equal(info1, info2) {
             for (var i = 0; i < attrnames.length; i++) {
@@ -182,6 +192,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }
         return false;
     }
+
+    $scope.deletCurDir = function (index) {
+        $scope.dirsInfo.splice(index, 1);
+    };
 
     $scope.deletCurPath = function (index) {
         $scope.pathsInfo.splice(index, 1);
@@ -297,10 +311,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
 
     //multi-nodes-select
-    $scope.makeConstraints = function(nodesSelect,elements){
+    $scope.makeConstraints = function (nodesSelect, elements) {
         var index = 0;
-        elements.splice(1,elements.length);
-        for(;index < nodesSelect.length; index++){
+        elements.splice(1, elements.length);
+        for (; index < nodesSelect.length; index++) {
             var temp = ["ip", "LIKE", nodesSelect[index].ip];
             elements.push(temp);
         }
@@ -308,4 +322,21 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         $scope.deployinfo.constraints = elements;
     };
 
+    // createDirModule
+    $scope.openDirModule = function (size) {
+
+        var modalInstance = $uibModal.open({
+            templateUrl: '../../views/app/createDirModule.html',
+            controller: 'ModalDirCtrl',
+            size: size,
+            scope: $scope,
+            backdrop: 'static'
+        });
+
+        modalInstance.result.then(function () {
+            $scope.dirInfo = {};
+        }, function () {
+            $scope.dirInfo = {};
+        });
+    };
 }
