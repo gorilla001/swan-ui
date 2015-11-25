@@ -11,7 +11,7 @@ BACKEND_URL_BASE = {
 USER_URL = "MARKET",
 
 AGENT_CONFIG = {
-    installScript: "curl -Ls INSTALLSCRIPT_URL | sudo -H",
     dmHost: "DM_HOST",
-    filesUrl: "FILES_URL"
+    filesUrl: "FILES_URL",
+    installScript: "bash -c \"$(curl -Ls INSTALLSCRIPT_URL)\""
 };
