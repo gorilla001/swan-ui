@@ -320,23 +320,23 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }
 
         $scope.deployinfo.constraints = elements;
-        // createDirModule
-        $scope.openDirModule = function (size) {
+    };
 
-            var modalInstance = $uibModal.open({
-                templateUrl: '../../views/app/createDirModule.html',
-                controller: 'ModalDirCtrl',
-                size: size,
-                scope: $scope,
-                backdrop: 'static'
-            });
+    // createDirModule
+    $scope.openDirModule = function (size) {
 
-            modalInstance.result.then(function () {
-                $scope.dirInfo = {};
-            }, function () {
-                $scope.dirInfo = {};
-            });
-        };
+        var modalInstance = $uibModal.open({
+            templateUrl: '../../views/app/createDirModule.html',
+            controller: 'ModalDirCtrl',
+            size: size,
+            scope: $scope,
+            backdrop: 'static'
+        });
 
+        modalInstance.result.then(function () {
+            $scope.dirInfo = {};
+        }, function () {
+            $scope.dirInfo = {};
+        });
     };
 }
