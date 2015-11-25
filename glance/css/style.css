@@ -100,32 +100,13 @@ a.remove {
 	padding: 20px 0 50px 0;
 }
 .sidebar .user img {
-	width: 90px;
-	height: 90px;
-	border-radius: 45px;
+	width: 68px;
+	height: 68px;
 }
 .sidebar .user h5 {
 	color: #9B9B9B;
 	font-weight: normal;
 	font-size: 12px;
-}
-.sidebar .instructions {
-	position: absolute;
-	bottom: 50px;
-	width: 50%;
-	height: 30px;
-	left: 25%;
-}
-.sidebar .community {
-	position: absolute;
-	bottom: 50px;
-	width: 50%;
-	height: 30px;
-	left: 55%;
-}
-
-.sidebar .separator {
-	color: whitesmoke;
 }
 /* Sidebar navigation */
 .nav-sidebar {
@@ -153,7 +134,65 @@ a.remove {
 }
 .nav-sidebar > li > a span.glyphicon {
   margin-right: 6px;
-}	
+}
+.nav-sidebar-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+.nav-sidebar-footer li {
+	width: 50%;
+	float: left;
+	border-right: 1px solid #3d3d3d;
+	list-style: none;
+}
+.nav-sidebar-footer li:last-child {
+	border-right: 0;
+}
+.nav-sidebar-footer li div {
+	display: inline-block;
+}
+.nav-sidebar-footer li a {
+	background: #303030;
+	color: #9b9b9b;
+	display: block;
+	height: 40px;	
+	text-align: center;
+	font-size: 12px;
+	vertical-align: middle;
+	overflow: hidden;
+	padding-top: 11px;
+}
+.nav-sidebar-footer li a:hover {
+	background: rgba(241,241,241,0.5);
+	color: #F1F1F1;
+	text-decoration: none;
+}
+.nav-sidebar-footer li a div {
+	background-repeat: no-repeat;
+	padding-left: 24px;
+	width: auto;
+	height: 18px;
+	line-height: 20px;
+}
+.nav-sidebar-footer li a:hover div {
+	color: #FFF;
+}
+.nav-sidebar-footer li a div.userdoc {
+	background-image: url(../pics/ico-userdoc.svg);
+}
+.nav-sidebar-footer li a:hover div.userdoc {
+	background-image: url(../pics/ico-userdoc-hover.svg);
+}
+.nav-sidebar-footer li a div.bbs {
+	background-image: url(../pics/ico-bbs.svg);
+}
+.nav-sidebar-footer li a:hover div.bbs {
+	background-image: url(../pics/ico-bbs-hover.svg);
+}
 /*
  * Main content
  */
@@ -295,7 +334,10 @@ a.remove {
 	color: #FFF;
 	text-decoration: none;
 }
-.btn-add-cluster image {
+.btn-add-cluster:visited {
+	color: #FFF;
+}
+.btn-add-cluster img {
 	margin-bottom: 15px;
 }
 
@@ -498,6 +540,9 @@ a.remove {
 	}
 	.sidebar .sidebar-logo {
 		background: url(../pics/dataman-logo-icon.svg) no-repeat top center;
+	}
+	.nav-sidebar-footer li a div span {
+		display: none;
 	}
 }
 
