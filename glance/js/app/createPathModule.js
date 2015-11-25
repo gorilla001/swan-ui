@@ -1,8 +1,11 @@
 /**
  * Created by my9074 on 15/11/24.
  */
-glanceApp.controller('ModalPathCtrl', function ($scope, $uibModalInstance) {
+glanceApp.controller("ModalPathCtrl", ModalPathCtrl);
 
+ModalPathCtrl.$inject = ['$scope', '$uibModalInstance'];
+
+function ModalPathCtrl($scope, $uibModalInstance){
     $scope.ok = function () {
         $scope.addPathInfo($scope.pathInfo);
         $uibModalInstance.close()
@@ -11,4 +14,4 @@ glanceApp.controller('ModalPathCtrl', function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-});
+}
