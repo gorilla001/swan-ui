@@ -15,6 +15,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.nodesOk = [];
     $scope.gateWays= [];
     $scope.proxyNodes = [];
+    $scope.transient = [];
 
     $scope.appstate = {
         '1': "部署中",
@@ -129,6 +130,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         $scope.nodesOk = [];
         $scope.gateWays= [];
         $scope.proxyNodes = [];
+        $scope.transient = [];
 
         for(var index in $scope.clusters){
             if($scope.clusters[index].id === clusterId){
@@ -144,6 +146,10 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
 
                         if($scope.clusters[index].nodes[i].attributes[j].attribute === 'proxy'){
                             $scope.proxyNodes.push($scope.clusters[index].nodes[i]);
+                        }
+
+                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'transient'){
+                            $scope.transient.push($scope.clusters[index].nodes[i]);
                         }
 
                     }
