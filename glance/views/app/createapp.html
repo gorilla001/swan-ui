@@ -142,15 +142,37 @@
                 <div class="form-group" ng-show="deployinfo.apptype === '2'">
                     <label class="col-md-2 control-label">主机/容器目录</label>
 
-                    <button type="button" class="btn btn-default"
-                            data-ng-click="openDirModule()">
-                        添加目录
-                    </button>
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-info btn-sm"
+                                data-ng-click="openDirModule()">
+                            添加目录
+                        </button>
 
-                    <div data-ng-repeat="dir in dirsInfo" data-ng-show="dirsInfo.length">
-                        <p>容器挂载目录{/$index+1/}:{/dir.hostPath/}  数据挂载目录{/$index+1/}:{/dir.containerPath/}<button type="button" data-ng-click="deletCurDir($index)">删除</button></p>
+                        <!--<div data-ng-repeat="dir in dirsInfo" data-ng-show="dirsInfo.length">-->
+                            <!--<p>容器挂载目录{/$index+1/}:{/dir.hostPath/}  数据挂载目录{/$index+1/}:{/dir.containerPath/}<button type="button" data-ng-click="deletCurDir($index)">删除</button></p>-->
+                        <!--</div>-->
+
+                        <table class="table table-striped table-bordered" data-ng-show="dirsInfo.length">
+                            <thead>
+                            <tr>
+                                <th>容器目录</th>
+                                <th>数据挂载目录</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="dir in dirsInfo">
+                                <td>{/dir.hostPath/}</td>
+                                <td>{/dir.containerPath/}</td>
+                                <td>
+                                    <button type="button" data-ng-click="deletCurDir($index)"
+                                            class="btn btn-default btn-xs">删除
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-
                 </div>
 
                 <div class="form-group">
@@ -196,7 +218,7 @@
                             <h4>应用地址</h4>
                         </div>
                         <div class="form-inline" style="margin-bottom: 15px;">
-                            <button type="button" class="btn btn-default" data-ng-click="openPortModule()"> 添加应用地址 </button>
+                            <button type="button" class="btn btn-info btn-sm" data-ng-click="openPortModule()"> 添加应用地址 </button>
                         </div>
 
                         <div class="table-responsive">
@@ -255,7 +277,7 @@
                         </div>
 
                         <div class="form-inline">
-                            <button type="button" class="btn btn-default"
+                            <button type="button" class="btn btn-info btn-sm"
                                     data-ng-click="openPathModule()">
                                 添加环境变量
                             </button>
