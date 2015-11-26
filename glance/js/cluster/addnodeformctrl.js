@@ -26,10 +26,8 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             var cmdArray = new Array(
                 "sudo -H",
                 AGENT_CONFIG.dmHost,
-                "OMEGA_AGENT_VERSION=" + $scope.agentVersionLatest,
-                AGENT_CONFIG.filesUrl,
-                AGENT_CONFIG.installScript,
-               "-s",
+                "OMEGA_ENV=" + RUNNING_ENV,
+                "bash -c \"$(curl -Ls https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/wtzhou/install-agent.sh)\" -s",
                data.data.identifier
             );
             $scope.nodeInstallScript = cmdArray.join(' ');
