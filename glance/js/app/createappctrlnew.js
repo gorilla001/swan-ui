@@ -312,13 +312,14 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
 
     //multi-nodes-select
     $scope.makeConstraints = function (nodesSelect, elements) {
-        var index = 0;
+        var temp = ["ip", "LIKE"];
         elements.splice(1, elements.length);
-        for (; index < nodesSelect.length; index++) {
-            var temp = ["ip", "LIKE", nodesSelect[index].ip];
+        var regular =nodesSelect.map(function(item){return item.ip}).join('|');
+
+        if(nodesSelect.length){
+            temp.push(regular);
             elements.push(temp);
         }
-
         $scope.deployinfo.constraints = elements;
     };
 
