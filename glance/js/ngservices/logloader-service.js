@@ -5,13 +5,13 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
-        this.isComplete = true;
+        this.isComplete = false;
         this.logsId = [];
         this.logSize = 0;
     };
 
     LogLoader.prototype.getlogs = function (callback) {
-        if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete) return;
+        if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete || !this.data) return;
         this.isLoadingLogs = true;
         this.data.from = this.curLogNum;
 
