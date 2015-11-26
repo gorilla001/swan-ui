@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">应用地址配置:</h3>
+    <h3 class="modal-title">应用地址配置</h3>
 </div>
 <div class="modal-body">
     <div class="form-inline" style="margin-bottom: 15px;">
@@ -10,7 +10,7 @@
                    data-ng-model="portInfo.appPort">
         </div>
         <div class="form-group">
-            <label>协议</label>
+            <label>&nbsp;协议</label>
             <select class="form-control" data-ng-model="portInfo.protocol"
                     ng-change="changeProtocol()">
                 <option value="">选择协议</option>
@@ -19,7 +19,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label>类型</label>
+            <label>&nbsp;类型</label>
             <select class="form-control" data-ng-model="portInfo.type"
                     ng-change="changeType(portInfo.type)">
                 <option value="">选择类型</option>
@@ -39,7 +39,7 @@
                    style="margin-left: 6px; margin-right: 25px;">无节点 <span class="text-danger">(请在集群中添加代理节点)</span></p>
 
                 <p ng-repeat="proxyNode in proxyNodes" class="form-control-static"
-                   style="margin-left: 6px; margin-right: 25px; padding:0;">{/proxyNode.ip/}</p>
+                   style="margin-left: 6px; margin-right: 25px;">{/proxyNode.ip/}</p>
             </div>
 
             <div class="form-group">
@@ -75,7 +75,7 @@
             </div>
 
             <div class="form-group">
-                <label>映射端口</label>
+                <label>&nbsp;映射端口</label>
                 <input type="number" class="form-control" ng-disabled="true"
                        data-ng-model="portInfo.mapPort">
             </div>
@@ -92,7 +92,7 @@
                     无节点 <span class="text-danger">(请在集群中添加网关节点)</span></p>
 
                 <p ng-repeat="gateWay in gateWays" class="form-control-static"
-                   style="margin-left: 6px; margin-right: 25px; padding:0;">{/gateWay.ip/}</p>
+                   style="margin-left: 6px; margin-right: 25px;">{/gateWay.ip/}</p>
             </div>
 
             <div class="form-group">

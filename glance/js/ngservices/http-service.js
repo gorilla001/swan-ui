@@ -28,8 +28,10 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         };
 
         $http(req).success(function (data) {
-            if (data && callback && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
-                callback(data);
+            if (data && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
+                if(callback) {
+                    callback(data);
+                }
             } else if (warningCallback) {
                 warningCallback(data);
             } else {

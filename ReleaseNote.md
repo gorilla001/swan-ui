@@ -11,7 +11,6 @@ Release Note
 
 ###需要运维更新
 
-1. 更新 install.sh [https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh](https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh)
 
 ### bug fix
 
