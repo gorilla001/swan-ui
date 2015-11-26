@@ -5,13 +5,13 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
-        this.isComplete = true;
+        this.isComplete = false;
         this.logsId = [];
         this.logSize = 0;
     };
 
     LogLoader.prototype.getlogs = function (callback) {
-        if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete) return;
+        if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete || !this.data) return;
         this.isLoadingLogs = true;
         this.data.from = this.curLogNum;
 
@@ -29,12 +29,13 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                     this.logInfo.push(data.hits.hits[i].fields);
 
                 }
+                
+                this.isLoadingLogs = false;
                 if (data.hits.hits.length == 0) {
                     this.isComplete = true;
                 }
                 this.logSize = data.hits.total;
                 this.curLogNum += data.hits.hits.length;
-                this.isLoadingLogs = false;
                 if(callback){
                     callback(this.logSize)
                 }
