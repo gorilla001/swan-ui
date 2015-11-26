@@ -329,7 +329,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
             elements.push(temp);
         }
         $scope.deployinfo.constraints = elements;
-        console.log($scope.deployinfo)
     };
 
     // createDirModule
