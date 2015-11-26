@@ -34,7 +34,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             );
             $scope.nodeInstallScript = cmdArray.join(' ');
             $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
-                if (data["status"] === "running") {
+                if (data["status"] != "terminated") {
                     $scope.isConected = true;
                     $scope.msgstate = "主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。";
 
@@ -45,9 +45,11 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     init();
 
     $scope.clickToCopy = function() {
-      $scope.isHintHide = false;
-      $scope.afterCopy = true;
-      glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}]);
+      if (!$scope.afterCopy) {
+          glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}], function (data) {
+              $scope.afterCopy = true;
+          });
+      }
     }
     
     $scope.onAttributesChange = function(attribute) {
