@@ -29,12 +29,13 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                     this.logInfo.push(data.hits.hits[i].fields);
 
                 }
+                
+                this.isLoadingLogs = false;
                 if (data.hits.hits.length == 0) {
                     this.isComplete = true;
                 }
                 this.logSize = data.hits.total;
                 this.curLogNum += data.hits.hits.length;
-                this.isLoadingLogs = false;
                 if(callback){
                     callback(this.logSize)
                 }
