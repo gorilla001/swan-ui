@@ -84,7 +84,8 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         var servicesStatus = getNodeServiceStatus(node.services, isMaster);
         if (node.status === NODE_STATUS.terminated) {
             return NODE_STATUS.terminated;
-        } else if (node.status === NODE_STATUS.installing || servicesStatus === SERVICES_STATUS.installing) {
+        } else if (node.status === NODE_STATUS.installing || node.status === NODE_STATUS.initing 
+                || node.status === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
             return NODE_STATUS.installing;
         } else if (servicesStatus === SERVICES_STATUS.failed) {
             return NODE_STATUS.failed;
