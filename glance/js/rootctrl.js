@@ -10,7 +10,6 @@ function rootCtrl($scope, $rootScope, glanceUser, glanceHttp) {
         $rootScope.userName = data.data["userName"];
         $rootScope.userId = data.data["userId"];
         $rootScope.isSuperuser = data.data["isSuperuser"];
-        $rootScope.agentVersionLatest = data.data["agent_version_latest"]
     });
     
     $scope.getCSUrl = function () {
