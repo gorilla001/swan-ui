@@ -6,7 +6,9 @@ BACKEND_URL_BASE = {
     metrics: null,
     log: null,
     app: null,
-}
+},
+
+RUNNING_ENV = "ENVIRONMENT", //dev, demo, prod
 
 USER_URL = "MARKET",
 
