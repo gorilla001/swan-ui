@@ -313,13 +313,23 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     //multi-nodes-select
     $scope.makeConstraints = function (nodesSelect, elements) {
         var index = 0;
+        var regular = "";
+        var temp = ["ip", "LIKE"];
         elements.splice(1, elements.length);
         for (; index < nodesSelect.length; index++) {
-            var temp = ["ip", "LIKE", nodesSelect[index].ip];
-            elements.push(temp);
+            if(index == 0){
+                regular += nodesSelect[index].ip;
+            }else{
+                regular += "|" + nodesSelect[index].ip;
+            }
         }
 
+        if(nodesSelect.length){
+            temp.push(regular);
+            elements.push(temp);
+        }
         $scope.deployinfo.constraints = elements;
+        console.log($scope.deployinfo)
     };
 
     // createDirModule
