@@ -20,8 +20,13 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
 
                 option.series[0].data[0].value = $scope.clusterMonitors.masMetrics.cpuPercent;
                 option.series[0].data[1].value = 100 - option.series[0].data[0].value;
+                option.series[0].itemStyle.normal.label.formatter = dataFormatter;
+                option.series[0].data[0].name = "集群CPU占用";
+
                 option.series[1].data[0].value = ($scope.clusterMonitors.masMetrics.memUsed / $scope.clusterMonitors.masMetrics.memTotal) * 100;
                 option.series[1].data[1].value = 100 - option.series[1].data[0].value;
+                option.series[1].itemStyle.normal.label.formatter = dataFormatter;
+                option.series[1].data[0].name = "集群内存占用";
                 clusterChart.setOption(option);
                 $scope.showAppMetrics = true;
             }
@@ -29,6 +34,17 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
 
         },undefined, null, function (data) {
             if(data.code === 1){
+                //when data is null
+                option.series[0].data[0].value = 0;
+                option.series[0].data[1].value = 100;
+                option.series[0].data[0].name = "集群CPU占用:无";
+                option.series[0].itemStyle.normal.label.formatter = "";
+
+                option.series[1].data[0].value = 0;
+                option.series[1].data[1].value = 100;
+                option.series[1].data[0].name = "集群内存占用:无";
+                option.series[1].itemStyle.normal.label.formatter = "";
+                clusterChart.setOption(option);
                 errorCycle = $timeout($scope.getClusterMonitor, 3000);
             }
         });
@@ -55,9 +71,8 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     var labelFromatter = {
         normal: {
             label: {
-                formatter: function (params) {
-                    return params.name + ':' + params.value.toFixed(2) + '%'
-                },
+                show: true,
+                formatter: dataFormatter,
                 textStyle: {
                     baseline: 'top',
                     fontSize: 17,
@@ -110,6 +125,10 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
             }
         ]
     };
+
+    function dataFormatter(params){
+            return params.name + ':' + params.value.toFixed(2) + '%'
+    }
 
 
     $scope.$on('$destroy', function () {
