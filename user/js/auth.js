@@ -170,15 +170,42 @@ $(document).ready(function(){
                 changeModal(modalChangeData);
                 textMailJump('.success-click-button', textMailData, goToMailBox);
             } else if (data && data.code === 1) {
-                $('.register-mail-tip').show();
+                var error = dataError(data);
+                $('.register-code-tip').show();
                 $('.register-mail-error').addClass('has-error');
-                $('#register-error').text(dataError(data));
+                $('#register-code-error').text(error);
+
+                $("#register-email").focus(function (argument) {
+                    $('.register-code-tip').hide();
+                    $('.register-mail-error').removeClass('has-error');
+                });
+
             }
         }).error(function(data) {
             $('#register').modal('hide');
             $('#error-modal').modal('show');
         });
     }
+
+    //登录提示
+    (function() {
+        $('#login-email').blur(function() {
+            if ($('.login-error').hasClass('has-error')) {
+                $('.login-tip').show();
+            } else {
+                $('.login-tip').hide();
+            }
+        });
+
+        $('#login-password').blur(function () {
+            if ($('.password-input').hasClass('has-error')) {
+                $('.login-password-tip').show();
+            } else {
+                $('.login-password-tip').hide();
+            }
+        });
+
+    })();
 
     //登录
     $('.loginForm').validator(options).on('submit', function(e) {
@@ -191,13 +218,7 @@ $(document).ready(function(){
         var url = CONFIG.urls.baseUrl + CONFIG.urls.loginUrl;
 
         if(e.isDefaultPrevented()) {
-            var errorText;
-            if (loginEmail === '' || loginPassword === '') {
-                errorText = '请填写登录信息';
-            } else {
-                errorText = '请输入正确信息';
-            }
-            $('#login-error').text(errorText);
+            
         } else {
             e.preventDefault();
             login(url, loginPostData);
@@ -254,7 +275,15 @@ $(document).ready(function(){
                     });
                 });
             } else {
-                $('#login-error').text('用户名或密码错误');
+                var error = '用户名或密码错误';
+                $('#login-code-text').text(error);
+                $('.login-error').addClass('has-error');
+                $('.login-code-tip').show();
+
+                $("#login-email").focus(function (argument) {
+                    $('.login-code-tip').hide();
+                    $('.login-error').removeClass('has-error');
+                });
             }
         }).error(function(data, status) {
             $('#login').modal('hide');
