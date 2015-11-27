@@ -15,7 +15,9 @@ NODE_STATUS = {
     running: "running",
     terminated: "terminated",
     failed: "failed",
-    installing: "installing"
+    installing: "installing",
+    initing: "initing",
+    upgrading: "upgrading"
 };
 
 CLUSTER_STATUS = {
