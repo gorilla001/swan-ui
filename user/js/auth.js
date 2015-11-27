@@ -7,11 +7,12 @@ $(document).ready(function(){
             passwordrule: '密码可包含数字、标点、字母，至少要包含一位大写字母。',
             passwordtips: '密码可包含数字、标点、字母，至少要包含一位大写字母且长度为8~16位',
             passwordmin: '密码长度不少于8位',
-            phonenumber: '手机号码格式错误'
+            phonenumber: '手机号码格式错误',
+            need: ' '
         },
         custom: {
             'username': function($el) {
-                var content = $el.val();
+                var content = $el.val().trim();
                 if (content === '') {
                     return true;
                 } else {
@@ -56,6 +57,9 @@ $(document).ready(function(){
                 }
                 var re = /^1\d/;
                 return re.test(value);
+            },
+            'need': function($el) {
+                return $el.val().trim().length > 0;
             }
 
         }
@@ -71,13 +75,61 @@ $(document).ready(function(){
         });
     }
 
-    //注册
-    // $("input").blur(function () {
-    //     if (!$('.registerForm').is(":invalid")) {
-    //       $('.register-button').removeAttr('disabled');
-    //     }
-    // });
+    // 注册提示
+    (function() {
+
+        $("#register-email").focus(function() {
+            $('.register-mail-tip').show();
+        });
+        $("#register-email").blur(function() {
+            if (!$('.register-mail-error').hasClass("has-error")) {
+                $('.register-mail-tip').hide();
+            }
+        });
+
+        $("#register-password").focus(function() {
+            $('.register-password-tip').show();
+        });
+        $("#register-password").blur(function() {
+            if (!$('.register-password-error').hasClass("has-error")) {
+                $('.register-password-tip').hide();
+            }
+        });
+
+        $("#register-company").blur(function() {
+            if ($('.register-company-error').hasClass("has-error")) {
+                $('.register-company-tip').show();
+            } else {
+                $('.register-company-tip').hide();
+            }
+        });
+
+        $("#register-wechatQQ").blur(function() {
+            if ($('.register-wechatQQ-error').hasClass("has-error")) {
+                $('.register-wechatQQ-tip').show();
+            } else {
+                $('.register-wechatQQ-tip').hide();
+            }
+        });
+
+        $("#register-phoneNumber").blur(function() {
+            if ($('.register-phoneNumber-error').hasClass("has-error")) {
+                $('.register-phoneNumber-tip').show();
+            } else {
+                $('.register-phoneNumber-tip').hide();
+            }
+        });
+
+        $("#register-password-confirm").blur(function() {
+            if ($('.register-password-confirm-error').hasClass("has-error")) {
+                $('.register-password-confirm-tip').show();
+            } else {
+                $('.register-password-confirm-tip').hide();
+            }
+        });
+    })();
     
+    // 注册
     $('.registerForm').validator(options).on('submit', function(e){
 
         var registerEmail = $('#register-email').val();
@@ -118,10 +170,13 @@ $(document).ready(function(){
                 changeModal(modalChangeData);
                 textMailJump('.success-click-button', textMailData, goToMailBox);
             } else if (data && data.code === 1) {
+                $('.register-mail-tip').show();
+                $('.register-mail-error').addClass('has-error');
                 $('#register-error').text(dataError(data));
             }
         }).error(function(data) {
-            interfaceError('#register-error');
+            $('#register').modal('hide');
+            $('#error-modal').modal('show');
         });
     }
 
@@ -151,6 +206,7 @@ $(document).ready(function(){
 
     function login(url, postData) {
         ajaxReq(url, 'post', postData).success(function(data) {
+
             if (data && data.code === 0) {
                 docCookies.setItem('token', '\"' + data.data.token + '\"', undefined, '/', CONFIG.urls.domainUrl, undefined);
                 window.location.href = CONFIG.urls.redirectUrl;
@@ -193,14 +249,16 @@ $(document).ready(function(){
                             $('#send-active-mail-error').text(dataError(data));
                         }
                     }).error(function() {
-                        interfaceError('#send-active-mail-error');
+                        $('#not-yet-active').modal('hide');
+                        $('#error-modal').modal('show');
                     });
                 });
             } else {
                 $('#login-error').text('用户名或密码错误');
             }
         }).error(function(data, status) {
-            interfaceError('#login-error');
+            $('#login').modal('hide');
+            $('#error-modal').modal('show');
         });
     }
 
@@ -240,7 +298,8 @@ $(document).ready(function(){
                 $('#reset-mail-error').text(dataError(data));
             }
         }).error(function(data) {
-            interfaceError('#reset-mail-error');
+            $('#reset-mail').modal('hide');
+            $('#error-modal').modal('show');
         });
     }
 
@@ -267,7 +326,6 @@ $(document).ready(function(){
 
     function resetPassword(url, postData) {
         ajaxReq(url, 'put', postData).success(function(data) {
-            data.code = 0;
             if (data && data.code === 0) {
                 var modalChangeData = {
                     hideDom: '#reset-password',
@@ -281,7 +339,8 @@ $(document).ready(function(){
                 $('#reset-password-error').text(dataError(data));
             }
         }).error(function(data) {
-            interfaceError('#reset-password-error');
+            $('#reset-password').modal('hide');
+            $('#error-modal').modal('show');
         });   
     }
 
@@ -393,8 +452,7 @@ $(document).ready(function(){
                     $('.error-click-button').hide();
                 }
             }).error(function(data) {
-                //tips
-                alert('服务器忙，请稍后再试。');
+                $('#error-modal').modal('show');
             });
         }
     })();
