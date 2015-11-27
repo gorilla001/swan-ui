@@ -558,6 +558,10 @@
                                    <div class="arrow"></div>
                                    <span id="register-error">请输入正确的邮箱地址格式。例如：***@***</span>
                                 </div>
+                                <div class="prompt-box register-code-tip">
+                                   <div class="arrow"></div>
+                                   <span id="register-code-error"></span>
+                                </div>
                             </div>
 
                             <div class="form-group has-feedback register-company-error">
@@ -627,14 +631,27 @@
                     <div class="modal-body">
                         <form role="form" class="loginForm">
 							<h2>请登录数人云账户</h2>
-							<div class="notification help-block with-errors custom-errors" id="login-error"></div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="login-email" name="login-mail" data-username="true" required="required" placeholder="邮箱地址" style="padding-right: 70px;" />
+                            <div class="form-group login-error">
+                                <input type="email" class="form-control" id="login-email" name="login-mail" data-need="true" required="required" placeholder="邮箱地址" style="padding-right: 70px;" />
+
+                                <div class="prompt-box login-tip">
+                                   <div class="arrow"></div>
+                                   <span id="login-error-text">请填写登录信息</span>
+                                </div>
+
+                                <div class="prompt-box login-code-tip">
+                                   <div class="arrow"></div>
+                                   <span id="login-code-text"></span>
+                                </div>
                             </div>
 
                             <div class="form-group password-input">
-                                <input type="password" class="form-control" id="login-password" name="login-password" required="required" placeholder="密码" />
+                                <input type="password" class="form-control" id="login-password" name="login-password" data-need="true" required="required" placeholder="密码" />
                                 <a href="#" title="忘记密码" data-dismiss="modal" data-toggle="modal" data-target="#reset-mail">忘记密码</a>
+                                <div class="prompt-box login-password-tip">
+                                   <div class="arrow"></div>
+                                   <span id="login-password-error-text">请填写登录信息</span>
+                                </div>
                             </div>
 
                             <div class="form-group">
