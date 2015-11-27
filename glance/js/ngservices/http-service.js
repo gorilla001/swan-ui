@@ -38,10 +38,12 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
                 Notification.error("服务未激活");
             }
         }).error(function (data, status) {
-            if (status == 403) {
+            if (status == 401) {
                 window.location.href = USER_URL;
                 $rootScope.$destroy();
-            } else if(errorCallback){
+            } else if (status == 403) {
+                Notification.error("您没有权限进行此操作");
+            }else if(errorCallback){
                 errorCallback(data, status);
             } else {
                 console.log("request failed (" + status + ")");
@@ -74,9 +76,11 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback) {
         myScope.staticForm.$setPristine();
         myScope.message_error_info = {};
-        ajaxBase(method, url, myScope.form, undefined, callback, errorCallback, function(data){
+        ajaxBase(method, url, myScope.form, undefined, callback, function(data, status){
             if(data && data.code === MESSAGE_CODE.dataInvalid) {
                 myScope.message_error_info = data.errors;
+            } else if (errorCallback) {
+                errorCallback(data, status);
             }
         });
     }

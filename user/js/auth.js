@@ -181,9 +181,21 @@ $(document).ready(function(){
                 });
 
             }
-        }).error(function(data) {
-            $('#register').modal('hide');
-            $('#error-modal').modal('show');
+        }).error(function(resp) {
+            if (resp.responseJSON && resp.responseJSON.code === 1) {
+                var error = dataError(resp.responseJSON);
+                $('.register-code-tip').show();
+                $('.register-mail-error').addClass('has-error');
+                $('#register-code-error').text(error);
+
+                $("#register-email").focus(function (argument) {
+                    $('.register-code-tip').hide();
+                    $('.register-mail-error').removeClass('has-error');
+                });
+            } else {
+                $('#register').modal('hide');
+                $('#error-modal').modal('show');
+            }
         });
     }
 
@@ -230,7 +242,9 @@ $(document).ready(function(){
             if (data && data.code === 0) {
                 docCookies.setItem('token', '\"' + data.data.token + '\"', undefined, '/', CONFIG.urls.domainUrl, undefined);
                 window.location.href = CONFIG.urls.redirectUrl;
-            } else if (data && data.code === 5) {
+            } 
+        }).error(function(resp) {
+            if (resp.responseJSON && resp.responseJSON.code === 5) {
                 var modalChangeData = {
                     hideDom: '#login',
                     showDom: '#not-yet-active'
@@ -268,12 +282,16 @@ $(document).ready(function(){
                         } else if (data && data.code === 1) {
                             $('#send-active-mail-error').text(dataError(data));
                         }
-                    }).error(function() {
-                        $('#not-yet-active').modal('hide');
-                        $('#error-modal').modal('show');
+                    }).error(function(resp) {
+                        if (resp.responseJSON && resp.responseJSON.code === 1) {
+                            $('#send-active-mail-error').text(dataError(resp.responseJSON));
+                        } else {
+                            $('#not-yet-active').modal('hide');
+                            $('#error-modal').modal('show');
+                        }
                     });
                 });
-            } else {
+            } else if (resp.responseJSON && resp.responseJSON.code === 1) {
                 var error = '用户名或密码错误';
                 $('#login-code-text').text(error);
                 $('.login-error').addClass('has-error');
@@ -283,11 +301,11 @@ $(document).ready(function(){
                     $('.login-code-tip').hide();
                     $('.login-error').removeClass('has-error');
                 });
+            } else {
+                $('#login').modal('hide');
+                $('#error-modal').modal('show');
             }
-        }).error(function(data, status) {
-            $('#login').modal('hide');
-            $('#error-modal').modal('show');
-        });
+        })
     }
 
     //忘记密码-填写邮箱提示
@@ -346,9 +364,21 @@ $(document).ready(function(){
                     $('.reset-mail-code-tip').hide();
                 });
             }
-        }).error(function(data) {
-            $('#reset-mail').modal('hide');
-            $('#error-modal').modal('show');
+        }).error(function(resp) {
+            if(resp.responseJSON && resp.responseJSON.code === 1) {
+                var error = dataError(resp.responseJSON);
+                $('.reset-mail-error').addClass('has-error');
+                $('.reset-mail-code-text').text(error);
+                $('.reset-mail-code-tip').show();
+
+                $('#reset-mail-address').focus(function() {
+                    $('.reset-mail-error').removeClass('has-error');
+                    $('.reset-mail-code-tip').hide();
+                });
+            } else {
+                $('#reset-mail').modal('hide');
+                $('#error-modal').modal('show');
+            }
         });
     }
 
@@ -418,9 +448,21 @@ $(document).ready(function(){
                 });
 
             }
-        }).error(function(data) {
-            $('#reset-password').modal('hide');
-            $('#error-modal').modal('show');
+        }).error(function(resp) {
+            if (resp.responseJSON && resp.responseJSON.code === 1) {
+                var error = dataError(resp.responseJSON);
+                $('.reset-password-code-tip').text(error);
+                $('.reset-password-error').addClass('has-error');
+                $('.reset-password-code').show();
+
+                $("#new-password").focus(function () {
+                    $('.reset-password-code').hide();
+                    $('.reset-password-error').removeClass('has-error');
+                });
+            } else {
+                $('#reset-password').modal('hide');
+                $('#error-modal').modal('show');
+            }
         });   
     }
 
@@ -531,8 +573,15 @@ $(document).ready(function(){
                     $('.text-danger').text(dataError(data));
                     $('.error-click-button').hide();
                 }
-            }).error(function(data) {
-                $('#error-modal').modal('show');
+            }).error(function(resp) {
+                if (resp.responseJSON && resp.responseJSON.code === 1){
+                    $('#relative-error').modal('show');
+                    $('.text-danger').text(dataError(resp.responseJSON));
+                    $('.error-click-button').hide();
+                } else {
+                    //tips
+                    $('#error-modal').modal('show');
+                }
             });
         }
     })();
