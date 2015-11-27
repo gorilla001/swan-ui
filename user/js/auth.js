@@ -175,7 +175,7 @@ $(document).ready(function(){
                 $('.register-mail-error').addClass('has-error');
                 $('#register-code-error').text(error);
 
-                $("#register-email").focus(function (argument) {
+                $("#register-email").focus(function () {
                     $('.register-code-tip').hide();
                     $('.register-mail-error').removeClass('has-error');
                 });
@@ -204,7 +204,6 @@ $(document).ready(function(){
                 $('.login-password-tip').hide();
             }
         });
-
     })();
 
     //登录
@@ -280,7 +279,7 @@ $(document).ready(function(){
                 $('.login-error').addClass('has-error');
                 $('.login-code-tip').show();
 
-                $("#login-email").focus(function (argument) {
+                $("#login-email").focus(function () {
                     $('.login-code-tip').hide();
                     $('.login-error').removeClass('has-error');
                 });
@@ -291,6 +290,17 @@ $(document).ready(function(){
         });
     }
 
+    //忘记密码-填写邮箱提示
+    (function () {
+        $('#reset-mail-address').blur(function() {
+            if($('.reset-mail-error').hasClass('has-error')) {
+                $('.reset-mail-tip').show();
+            } else {
+                $('.reset-mail-tip').hide();
+            }
+        });
+    })();
+
     //忘记密码
     $('.resetMailForm').validator(options).on('submit', function(e) {
         var email = $('#reset-mail-address').val();
@@ -300,7 +310,8 @@ $(document).ready(function(){
         var url = CONFIG.urls.baseUrl + CONFIG.urls.resetPasswordUrl;
 
         if(e.isDefaultPrevented()) {
-            $('#reset-mail-error').text('请填写注册用户邮箱地址');
+
+            // $('#reset-mail-error').text('请填写注册用户邮箱地址');
         } else {
             e.preventDefault();
             resetMail(url, postData);
@@ -324,13 +335,44 @@ $(document).ready(function(){
                 changeModal(modalChangeData);
                 textMailJump('.go-to-mailbox', textMailData, goToMailBox);    
             } else if(data && data.code === 1) {
-                $('#reset-mail-error').text(dataError(data));
+
+                var error = dataError(data);
+                $('.reset-mail-error').addClass('has-error');
+                $('.reset-mail-code-text').text(error);
+                $('.reset-mail-code-tip').show();
+
+                $('#reset-mail-address').focus(function() {
+                    $('.reset-mail-error').removeClass('has-error');
+                    $('.reset-mail-code-tip').hide();
+                });
             }
         }).error(function(data) {
             $('#reset-mail').modal('hide');
             $('#error-modal').modal('show');
         });
     }
+
+    //忘记密码-输入新密码提示
+    (function() {
+        $('#new-password').focus(function() {
+            $('.reset-password-tip').show();
+        });
+
+        $("#new-password").blur(function() {
+            if (!$('.reset-password-error').hasClass("has-error")) {
+                $('.reset-password-tip').hide();
+            }
+        });
+
+        $("#new-password-compare").blur(function() {
+            if($('.reset-password-compare-error').hasClass("has-error")) {
+                $('.reset-password-compare-tip').show();
+            } else {
+                $('.reset-password-compare-tip').hide();
+            }
+        });
+    })();
+
 
     $('.resetPasswordForm').validator(options).on('submit', function(e) {
         var newPassword = $('#new-password').val();
@@ -365,7 +407,16 @@ $(document).ready(function(){
                 changeModal(modalChangeData);
                 $('.success-click-button').text('立即登录数人云');
             } else if(data && data.code === 1){
-                $('#reset-password-error').text(dataError(data));
+                var error = dataError(data);
+                $('.reset-password-code-tip').text(error);
+                $('.reset-password-error').addClass('has-error');
+                $('.reset-password-code').show();
+
+                $("#new-password").focus(function () {
+                    $('.reset-password-code').hide();
+                    $('.reset-password-error').removeClass('has-error');
+                });
+
             }
         }).error(function(data) {
             $('#reset-password').modal('hide');
