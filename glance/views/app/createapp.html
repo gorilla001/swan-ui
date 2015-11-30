@@ -178,20 +178,23 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label"><span class="text-danger">* </span>容器规格</label>
 
-                    <div class="col-md-2">
-                        <slider ng-model="cpuSize" slider-tooltip="shows" handle="{/ cpuOptions.handle /}"
-                                min="cpuOptions.min" step="cpuOptions.step" max="cpuOptions.max"></slider>
-                        <p>CPU : 1.0 现为:{/cpuSize/}</p>
-                    </div>
-
-
-                    <div class="col-md-2">
-                        <slider ng-model="memSize" slider-tooltip="shows" scale="logarithmic" formatter="memOptions.formatter"
-                                handle="{/ memOptions.handle /}" min="memOptions.min" step="memOptions.step"
-                                max="memOptions.max"></slider>
-                        <p>内存最大值: {/memFormatter(memOptions.max)/}MB 现为:{/memFormatter(memSize)/}MB</p>
+                    <div class="col-md-5">
+                        <rzslider
+                                rz-slider-model="cpuSlider.min"
+                                rz-slider-options="cpuSlider.options" style="width: 70%; float: left;"></rzslider>
+                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;"><strong style="font-size: 30px;">{/cpuSize/}</strong></span>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-md-5 col-md-offset-2">
+                        <rzslider
+                                rz-slider-model="memSlider.min"
+                                rz-slider-options="memSlider.options" style="width: 70%; float: left;"></rzslider>
+                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;"><strong style="font-size: 30px;">{/memSize/}</strong> <sub>MB</sub></span>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="col-md-2 control-label"><span class="text-danger">* </span>容器个数</label>
 

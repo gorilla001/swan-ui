@@ -25,47 +25,38 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
     $scope.dirsInfo = [];
 
-    $scope.cpuOptions = {
-        min: 0.1,
-        max: 1.0,
-        step: 0.1,
-        precision: 1,
-        orientation: 'horizontal',
-        handle: 'round',
-        tooltip: 'always',
-        tooltipseparator: ':',
-        tooltipsplit: false,
-        enabled: true,
-        naturalarrowkeys: false,
-        range: false,
-        reversed: false
-    };
-
-    $scope.memFormatter = function (rawValue) {
-        return Math.pow(2, rawValue);
-    };
-
-    $scope.memOptions = {
-        min: 4,
-        max: 12,
-        step: 1,
-        precision: 2,
-        orientation: 'horizontal',
-        handle: 'round',
-        tooltip: 'always',
-        tooltipseparator: ':',
-        tooltipsplit: false,
-        enabled: true,
-        naturalarrowkeys: false,
-        range: false,
-        reversed: false,
-        formatter: $scope.memFormatter
-    };
-
     $scope.cpuSize = 0.1;
-    $scope.memSize = 4;
+    $scope.memSize = 16;
     $scope.containerNum = 1;
     $scope.imageversion = "";
+
+    $scope.cpuSlider = {
+        min: 1,
+        max: 10,
+        options: {
+            step: 1,
+            floor: 1,
+            ceil:10,
+            showSelectionBar:true,
+            translate: function(value) {
+                return $scope.cpuSize = value/10.0;
+            }
+        }
+    };
+
+    $scope.memSlider = {
+        min: 4,
+        max: 12,
+        options: {
+            step: 1,
+            floor: 4,
+            ceil:12,
+            showSelectionBar:true,
+            translate: function (rawValue) {
+                return $scope.memSize = Math.pow(2, rawValue);
+            }
+        }
+    };
 
     $scope.deployinfo = {
         apptype: "1",        //defalut apptype for radio box
@@ -126,7 +117,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
         $scope.deployinfo.containerNum = $scope.containerNum.toString();
         $scope.deployinfo.containerCpuSize = $scope.cpuSize;
-        $scope.deployinfo.containerMemSize = $scope.memFormatter($scope.memSize);
+        $scope.deployinfo.containerMemSize = $scope.memSize;
         $scope.deployinfo.imageversion = $scope.imageversion;
         glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
             Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
