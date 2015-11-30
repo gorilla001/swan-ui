@@ -106,6 +106,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
 
     $scope.upContainNum = function (appId, containerNum, appName) {
         $('#expandConNumModal').modal("show");
+        $scope.tempNum = containerNum;
         $scope._expandConNum = containerNum;
         $scope._expandAppId = appId;
         $scope._appName = appName;
@@ -116,13 +117,20 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 "updateContainerNum": $scope._expandConNum,
                 "appId": $scope._expandAppId.toString()
         };
+        if($scope.tempNum > $scope._expandConNum){
+            $scope.updateContainerText = " 缩容中...";
+            $scope.updateContainerErrorText = " 缩容失败 "
+        }else{
+            $scope.updateContainerText = " 扩容中...";
+            $scope.updateContainerErrorText = " 扩容失败 "
+        }
         glanceHttp.ajaxPost(['app.upContainerNum'],$scope.containDate,function(data){
                 $timeout(function () {
-                    Notification.success('应用 '+ $scope._appName +' 扩容中...');
+                    Notification.success('应用 '+ $scope._appName +$scope.updateContainerText);
                     $state.go('app.applist',undefined,{reload : true})
                 }, 200, true);
         },undefined, null, function(data){
-            Notification.error( '应用 '+ $scope._appName + ' 扩容失败: ' + $scope.addCode[data.code]);
+            Notification.error( '应用 '+ $scope._appName + $scope.updateContainerErrorText + $scope.addCode[data.code]);
         });
     };
 
