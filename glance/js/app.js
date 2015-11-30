@@ -1,4 +1,4 @@
-var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngSocket','infinite-scroll','ngSanitize','isteven-multi-select', 'ui.bootstrap.datetimepicker', 'ui.bootstrap-slider', 'ui-notification', 'ngDialog']);
+var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngSocket','infinite-scroll','ngSanitize','isteven-multi-select', 'ui.bootstrap.datetimepicker', 'ui-notification', 'ngDialog', 'rzModule']);
 
 glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider','$locationProvider',
     function($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
