@@ -15,13 +15,23 @@
                                     data-ng-options=" cluster.id as cluster.name for cluster in clusters"
                                     data-ng-model="clusterId" data-required="required"></select>
                         </div>
+
+                        <div class="form-group">
+                            <label><span class="text-danger">* </span>应用名</label>
+                            <select class="form-control"
+                                    data-ng-options=" option.name as option.name for option in options"
+                                    data-ng-model="appName" data-required="required" ng-change="getNodes(appName,clusterId)">
+                                <option value=""></option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
                             <label style="display: block">主机名/IP</label>
                             <isteven-multi-select
                                     input-model="inputNodesInfo"
                                     output-model="nodeId"
-                                    button-label="name"
-                                    item-label="name maker"
+                                    button-label="ip"
+                                    item-label="ip"
                                     tick-property="ticked"
                                     helper-elements="all none filter"
                                     max-height="200px"
@@ -29,15 +39,6 @@
                                     >
                             </isteven-multi-select>
 
-                        </div>
-
-                        <div class="form-group">
-                            <label><span class="text-danger">* </span>应用名</label>
-                            <select class="form-control"
-                                    data-ng-options=" option.name as option.name for option in options"
-                                    data-ng-model="appName" data-required="required">
-                                <option value=""></option>
-                            </select>
                         </div>
 
                         <div class="form-group">
