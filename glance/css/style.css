@@ -10,7 +10,7 @@ body,html {
 	letter-spacing: 0.2px;
 }
 section {
-	margin: 40px 0;
+	margin: 20px 0 40px 0;
 }
 a, a:hover, a:visited {
 	color: #427fed;
@@ -24,9 +24,9 @@ a.btn {
 	color: #FFF;
 }
 .btn {
-	border-radius: 2px;
+	border-radius: 2;
 }
-.btn-default {
+.btn-default, a.btn-default {
 	background-color: #FFF;
 	border: 1px solid #CCCCCC;
 	color: #666;
@@ -204,6 +204,7 @@ a.remove {
   border-bottom: 3px solid #DCDCDC;
   margin-right: -15px;
   margin-left: -15px;
+  margin-bottom: 0;
 }
 .main .page-header h1 {
 	margin: 27px 0 0 20px;
@@ -1166,4 +1167,79 @@ rzslider .rz-bubble {
 .prompt-last {
     right: -100px;
     top: -43px;
+}
+.breadcrumb {
+	padding: 8px 0 0 0;
+	background-color: transparent;
+}
+
+.select-nodetype-panel h3 {
+	margin: 0 0 30px 0;
+}
+.select-nodetype-panel .nodetype-new, .select-nodetype-panel .nodetype-old {
+	background-color: #EEEEEE;
+	padding: 10px 20px 20px 20px;
+	border-radius: 6px;
+	margin-bottom: 20px;
+}
+.select-nodetype-panel .nodetype-new {
+	margin-bottom: 50px;
+}
+.select-nodetype-panel .select-cloudcompany li {
+	display: inline-block; 
+	margin-right: 40px;
+}
+.select-nodetype-panel .select-cloudcompany a img {
+	height: 30px;
+}
+.select-nodetype-panel .select-cloudcompany a:hover img {
+	opacity: 1;
+}
+
+.select-nodetype-panel .thumbnail img {
+	margin: 30px auto;
+}
+.select-nodetype-panel .thumbnail h3 {
+	margin-bottom: 10px;
+}
+.select-nodetype-panel .caption {
+	padding: 9px 18px;
+}
+.select-nodetype-panel .caption p {
+	min-height: 150px;
+}
+.select-nodetype-panel .buynode-step .thumbnail img {
+	width: 95%;
+}
+.select-nodetype-panel .buynode-step .text-center img {
+	height: 50px;
+	width: auto;
+	margin: 0;
+}
+.select-nodetype-panel .buynode-step .text-center {
+	height: 50px;
+	line-height: 50px;
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+.select-nodetype-panel .buynode-step .text-center span {
+	font-size: 25px;
+	padding: 0 24px;
+}
+.select-nodetype-panel .buynode-step .caption {
+	border-top: 1px solid #DDD;
+	padding: 18px;
+	background-color: #EEE;
+}
+.select-nodetype-panel .buynode-step .caption p {
+	min-height: auto;
+}
+.select-nodetype-panel .buynode-step .text-right .btn {
+	width: 120px;
+}
+.select-nodetype-panel .buynode-step .text-right {
+	margin-top: 50px;
+}
+.font-blue {
+ color:blue;
 }

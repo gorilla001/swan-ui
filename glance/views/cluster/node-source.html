@@ -1,0 +1,31 @@
+<div class="page-header">
+  <div>
+    <h1 class="pull-left">添加主机</h1>
+    <small><br>数人云可以助您轻松接入遍布各地的计算资源，<br>无论主机的操作系统和网络环境。</small>
+  </div>
+</div>
+<ol class="breadcrumb">
+  <li>
+  <a data-ui-sref="cluster.listclusters">首页</a>
+  </li>
+  <li>添加主机</li>
+</ol>
+<section>
+<div class="main-container add-node">
+  <div class="main-container-body select-nodetype-panel">
+    <h3>您要接入的主机属于下面哪一种情况？</h3>
+    <div class="nodetype-old">
+      <h4>我已有一台主机 <small>请选择主机上的操作系统类型</small></h4>
+      <div class="btn-group" role="group" aria-label="...">
+        <a type="button" class="btn btn-info"data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})">Ubuntu</a>
+        <a type="button" class="btn btn-info"data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})">CentOS</a>
+      </div>
+    </div>
+    <h3>或者</h3>
+    <div class="nodetype-new">
+      <h4>我想去买一台新主机</h4>
+      <a type="button" class="btn btn-info" data-ui-sref="cluster.iaasprovider({clusterId:clusterId, nodeId:nodeId})">通过主机市场买一台合适的云主机</a>
+    </div>
+  </div>
+</div>
+</section>

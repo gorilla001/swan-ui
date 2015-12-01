@@ -76,7 +76,7 @@
             <div data-ng-show="!cluster.amounts.total">
                 <h4>
                     集群中没有主机，
-                    <a data-ui-sref="cluster.addnode({clusterId:cluster.infos.id})">
+                    <a data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})">
                         添加主机
                     </a>
                 </h4>
@@ -85,7 +85,7 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a data-ui-sref="cluster.addnode({clusterId:cluster.infos.id})">添加主机</a>
+                        <a data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})">添加主机</a>
                     </li>
                     <li>
                         <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">查看集群</a>

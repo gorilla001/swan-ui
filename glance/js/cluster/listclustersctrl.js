@@ -37,7 +37,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
     $scope.close = function(clusterId, index, clusterStatus) {
         if (clusterStatus === CLUSTER_STATUS.installing) {
-            $state.go('cluster.addnode', {'clusterId': clusterId});
+            $state.go('cluster.nodesource', {'clusterId': clusterId});
         } else {
             $scope.clustersBasicData[index].problemTips = null;
         }
