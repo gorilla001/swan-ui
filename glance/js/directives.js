@@ -169,7 +169,7 @@ glanceApp.directive('samename', function () {
         restrict: "A",
         require: 'ngModel',
         scope: {
-            names: '=apps'
+            names: '=nameList'
         },
         link: function (scope, ele, attrs, ngModelController) {
             ngModelController.$validators.samename = function(modelValue, viewValue) {
