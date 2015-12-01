@@ -16,7 +16,7 @@
                         <input type="text" class="form-control" name="appName" ng-model="deployinfo.appName"
                                data-required="required"
                                ng-pattern="/^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])$/"
-                               data-ng-maxlength="64" samename>
+                               data-ng-maxlength="64" samename apps="curAppNames">
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
                         <p data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine"
@@ -25,7 +25,7 @@
                         <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
                            class="help-block">应用名称只能为数字或者小写英文</p>
 
-                        <p data-ng-show="staticForm.appName.$error.samename && !staticForm.appName.$pristine"
+                        <p data-ng-show="staticForm.appName.$error.samename"
                            class="help-block">应用名已存在</p>
 
                         <p data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine"

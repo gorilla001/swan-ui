@@ -168,15 +168,24 @@ glanceApp.directive('samename', function () {
     return {
         restrict: "A",
         require: 'ngModel',
+        scope: {
+            names: '=apps'
+        },
         link: function (scope, ele, attrs, ngModelController) {
-            ngModelController.$parsers.push(function (viewValue) {
-                if (scope.curAppNames.indexOf(viewValue) == -1) {
-                    ngModelController.$setValidity('samename', true);
-                } else {
-                    ngModelController.$setValidity('samename', false);
+            ngModelController.$validators.samename = function(modelValue, viewValue) {
+                if (ngModelController.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
+                    return true;
                 }
-                return viewValue;
-            });
+
+                if (scope.names.indexOf(modelValue) == -1) {
+                    // it is valid
+                    return true;
+                }
+
+                // it is invalid
+                return false;
+            };
         }
     };
 });
