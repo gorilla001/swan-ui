@@ -19,29 +19,29 @@
   </div>
   <div class="col-md-4">
     <div class="main-container">
-      <div class="main-container-body server-status server-status-{/node.state/}"> 主机状态 <em data-ng-class="getClass(node.state, 'text')">{/statName[node.state]/}</em>
+      <div class="main-container-body server-status server-status-{/statusCache[node.cluster.id]['nodes'][node.id].status/}"> 主机状态 <em data-ng-class="getClass(statusCache[node.cluster.id]['nodes'][node.id].status, 'text')">{/statName[statusCache[node.cluster.id]['nodes'][node.id].status]/}</em>
      </div>
     </div>
     <div class="main-container">
       <div class="main-container-body">
         <div class="row">
           <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-{/serviceState.mesos/}.png" width="24"/>
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].master/}.png" width="24"/>
               <div>Mesos</div>
             </div>
           </div>
           <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-{/serviceState.marathon/}.png" width="24">
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].marathon/}.png" width="24">
               <div>Marathon</div>
             </div>
           </div>
           <div class="col-md-3" data-ng-show="isMasterFlag">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-{/serviceState.zookeeper/}.png" width="24">
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].zookeeper/}.png" width="24">
               <div>Zookeeper</div>
             </div>
           </div>
           <div class="col-md-3" data-ng-show="node.cluster.cluster_type=='1_master' || isMasterFlag===false">
-            <div class="server-app-status"> <img src="../pics/ico-service-status-{/serviceState.slave/}.png" width="24">
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].slave/}.png" width="24">
               <div>Slave</div>
             </div>
           </div>

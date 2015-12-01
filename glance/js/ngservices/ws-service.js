@@ -49,14 +49,21 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
 
     function listenNodeStatus() {
         wsOnMessage(function (data) {
-            $rootScope.$broadcast("nodeStatusUpdate-" + data.nodeId, data);
+            $rootScope.$broadcast("nodeStatusUpdate", data);
         }, SUB_INFOTYPE.nodeStatus);
+    }
+    
+    function listenServiceStatus() {
+        wsOnMessage(function (data) {
+            $rootScope.$broadcast("serviceStatusUpdate", data);
+        }, SUB_INFOTYPE.serviceStatus);
     }
 
     var init = function (token) {
         buildWS(token);
         listenMetrics();
         listenNodeStatus();
+        listenServiceStatus();
     };
 
     var clear = function () {

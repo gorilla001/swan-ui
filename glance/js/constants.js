@@ -8,7 +8,8 @@ MESSAGE_CODE = {
 
 SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",
-    nodeMetric: "NodeMetric"
+    nodeMetric: "NodeMetric",
+    serviceStatus: "ServiceStatus"
 };
 
 NODE_STATUS = {

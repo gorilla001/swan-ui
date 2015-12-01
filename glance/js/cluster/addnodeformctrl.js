@@ -31,8 +31,8 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
                data.data.identifier
             );
             $scope.nodeInstallScript = cmdArray.join(' ');
-            $scope.$on("nodeStatusUpdate-" + $scope.nodeId, function (event, data) {
-                if (data["status"] != "terminated") {
+            $scope.$on("nodeStatusUpdate", function (event, data) {
+                if (data["nodeId"] == $scope.nodeId && data["status"] != "terminated") {
                     $scope.isConected = true;
                     $scope.msgstate = "主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。";
 
