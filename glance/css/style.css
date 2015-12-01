@@ -1135,3 +1135,22 @@ rzslider .rz-bubble.rz-limit {
 rzslider .rz-bubble {
 	font-size: 11px;
 }
+
+/*添加主机 主机类型提示*/
+.prompt-box {
+    position: absolute;
+    right: -205px;
+    top: -60px;
+    background: #FFF;
+    border: 1px solid #EEE;
+    padding: 10px;
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.1);
+    font-size: 11px;
+    background-color: #fcf8e3;
+    font-weight: 100;
+    text-align: left;
+}
+.prompt-last {
+    right: -100px;
+    top: -43px;
+}

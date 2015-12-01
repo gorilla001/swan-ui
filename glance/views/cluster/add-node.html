@@ -33,9 +33,9 @@
                         <li>开启 iptables-nat。</li>
                     </ol>
                 </div>
-              </div>
+            </div>
 
-              <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
+            <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
 
                 <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
                   (message_error_info.name && staticForm.name.$pristine)}">
@@ -52,30 +52,55 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        <span data-toggle="tooltip" data-placement="bottom" title="请在选择主机类型时认真阅读其定义，系统将依据主机类型来决定在该主机上运行何种应用，以及是否作为服务发现节点。"></span>
-                        <span class="glyphicon glyphicon-info-sign"></span> 
-                        主机类型
+                         <div data-ng-mouseenter="promptAll=true" ng-mouseleave="promptAll=false">
+                              <span class="glyphicon glyphicon-info-sign"></span>
+                              主机类型
+                          </div>
+                          <div class="prompt-box" data-ng-show="promptAll">
+                               <span>请在选择主机类型时认真阅读其定义，系统将依据主机类型来决定在该主机上运行何种应用，以及是否作为服务发现节点。</span>
+                          </div>
                     </label>
 
                     <div class="col-md-10">
-                        <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="作为集群中动态可支配的计算资源，运行各种无状态应用。">
-                          <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.transient" data-ng-change="onAttributesChange('transient')"/>
-                          <span>计算节点</span>
+
+                        <label class="checkbox-inline">
+                          <div data-ng-mouseenter="promptTransient=true" ng-mouseleave="promptTransient=false">
+                              <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.transient" data-ng-change="onAttributesChange('transient')"/>
+                              <span>计算节点</span>
+                          </div>
+                          <div class="prompt-box" data-ng-show="promptTransient">
+                               <span>作为集群中动态可支配的计算资源，运行各种无状态应用。</span>
+                          </div>
                         </label>
 
-                        <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将作为集群中数据持久化的节点使用，请将有状态应用(MySQL, Redis等)部署于此类节点。">
-                            <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.persistent" data-ng-change="onAttributesChange('persistent')">
-                            <span>数据节点</span>
+                        <label class="checkbox-inline">
+                            <div data-ng-mouseenter="promptPersistent=true" ng-mouseleave="promptPersistent=false">
+                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.persistent" data-ng-change="onAttributesChange('persistent')">
+                                <span>数据节点</span>
+                            </div>
+                            <div class="prompt-box" data-ng-show="promptPersistent">
+                               <span>将作为集群中数据持久化的节点使用，请将有状态应用(MySQL, Redis等)部署于此类节点。</span>
+                            </div>
                         </label>
 
-                        <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将用作集群外部服务发现，需要此节点有固定的公网 IP。">
-                            <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.gateway" data-ng-change="onAttributesChange('gateway')">
-                            <span>外部网关</span>
+                        <label class="checkbox-inline">
+                            <div data-ng-mouseenter="promptGateway=true" ng-mouseleave="promptGateway=false">
+                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.gateway" data-ng-change="onAttributesChange('gateway')">
+                                <span>外部网关</span>
+                            </div>
+                            <div class="prompt-box" data-ng-show="promptGateway">
+                               <span>将用作集群外部服务发现，需要此节点有固定的公网 IP。</span>
+                            </div>
                         </label>
 
-                        <label class="checkbox-inline" data-toggle="tooltip" data-placement="top" title="将用作集群内部服务发现。">
-                            <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.proxy" data-ng-change="onAttributesChange('proxy')">
-                            <span>内部代理</span>
+                        <label class="checkbox-inline">
+                            <div data-ng-mouseenter="promptProxy=true" ng-mouseleave="promptProxy=false">
+                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.proxy" data-ng-change="onAttributesChange('proxy')">
+                                <span>内部代理</span>
+                            </div>
+                            <div class="prompt-box prompt-last" data-ng-show="promptProxy">
+                               <span>将用作集群内部服务发现。</span>
+                            </div>
                         </label>
                     </div>
                 </div>
@@ -125,8 +150,3 @@
         </div>
     </div>
 </section>
-<script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
