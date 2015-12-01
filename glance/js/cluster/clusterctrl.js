@@ -71,21 +71,23 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         statusCache[clusterId]["nodes"][nodeId]["services"][serviceName] = status;
     }
     
-    $scope.updateNodeStatus = function (clusterId, nodeId, status, statusCache) {
+    $scope.updateNodeStatus = function (clusterId, nodeId, rawStatus, statusCache) {
         var servicesStatus = getNodeServiceStatus(clusterId, nodeId, statusCache);
-        if (!status) {
-            status = statusCache[clusterId]["nodes"][nodeId].status;
+        var status;
+        if (!rawStatus) {
+            rawStatus = statusCache[clusterId]["nodes"][nodeId].status;
         }
-        if (status === NODE_STATUS.terminated) {
-            statusCache[clusterId]["nodes"][nodeId].status = NODE_STATUS.terminated;
-        } else if (status === NODE_STATUS.installing || status === NODE_STATUS.initing 
-                || status === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
-            statusCache[clusterId]["nodes"][nodeId].status = NODE_STATUS.installing;
+        if (rawStatus === NODE_STATUS.terminated) {
+            status = NODE_STATUS.terminated;
+        } else if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing 
+                || rawStatus === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
+            status = NODE_STATUS.installing;
         } else if (servicesStatus === SERVICES_STATUS.failed) {
-            statusCache[clusterId]["nodes"][nodeId].status = NODE_STATUS.failed;
+            status = NODE_STATUS.failed;
         } else {
-            statusCache[clusterId]["nodes"][nodeId].status = NODE_STATUS.running;
+            status = NODE_STATUS.running;
         }
+        statusCache[clusterId]["nodes"][nodeId].status = status;
     }
     
     $scope.addNode2StatusStore = function (clusterId, node, statusCache) {
