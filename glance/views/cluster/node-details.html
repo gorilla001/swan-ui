@@ -25,22 +25,36 @@
     <div class="main-container">
       <div class="main-container-body">
         <div class="row">
-          <div class="col-md-3" data-ng-show="isMasterFlag">
+
+          <div class="col-md-2" data-ng-show="statusCache[node.cluster.id]['nodes'][node.id]['services'].bamboo_gateway">
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].bamboo_gateway/}.png" width="24"/>
+              <div>Bamboo Gateway</div>
+            </div>
+          </div>
+
+          <div class="col-md-2" data-ng-show="statusCache[node.cluster.id]['nodes'][node.id]['services'].bamboo_proxy">
+            <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].bamboo_proxy/}.png" width="24"/>
+              <div>Bamboo Proxy</div>
+            </div>
+          </div>
+
+
+          <div class="col-md-2" data-ng-show="isMasterFlag && statusCache[node.cluster.id]['nodes'][node.id]['services'].master">
             <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].master/}.png" width="24"/>
               <div>Mesos</div>
             </div>
           </div>
-          <div class="col-md-3" data-ng-show="isMasterFlag">
+          <div class="col-md-2" data-ng-show="isMasterFlag && statusCache[node.cluster.id]['nodes'][node.id]['services'].marathon">
             <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].marathon/}.png" width="24">
               <div>Marathon</div>
             </div>
           </div>
-          <div class="col-md-3" data-ng-show="isMasterFlag">
+          <div class="col-md-2" data-ng-show="isMasterFlag && statusCache[node.cluster.id]['nodes'][node.id]['services'].zookeeper">
             <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].zookeeper/}.png" width="24">
               <div>Zookeeper</div>
             </div>
           </div>
-          <div class="col-md-3" data-ng-show="node.cluster.cluster_type=='1_master' || isMasterFlag===false">
+          <div class="col-md-2" data-ng-show="(node.cluster.cluster_type=='1_master' || isMasterFlag===false) && statusCache[node.cluster.id]['nodes'][node.id]['services'].slave">
             <div class="server-app-status"> <img src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'].slave/}.png" width="24">
               <div>Slave</div>
             </div>
