@@ -6,7 +6,7 @@ CONFIG = {
     loginUrl: 'api/v2/auth',
     registerUrl: 'api/v2/auth/user/registration',
     domainUrl: "BODY_DOMAIN",
-    resetPasswordUrl: "api/v2/auth/password/resetrequest",
+    resetPasswordUrl: "api/v2/auth/password/reseturl",
     verifyMailAddress: "api/v2/auth/password/$reset_code",
     activeUrl: "api/v2/auth/user/activation/$active_code",
     activeMailUrl: "api/v2/auth/user/activation",
