@@ -17,8 +17,6 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         persistent: '数据节点'
     };
 
-    $scope.serviceState = {};
-    
     $scope.deleteCluster = function(clusterId, name) {
         $('#confirmDeleteCluster'+ clusterId).hide();
         $('body').removeClass('modal-open');
@@ -49,64 +47,76 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return node.role === 'master';
     };
 
-    function getNodeServiceStatus(services, isMaster) {
-        var nodeServiceStatus = SERVICES_STATUS.running;
-        var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
-        for (var i = 0; i < services.length; i++) {
-            service = services[i];
-            if (service.status === SERVICES_STATUS.installing) {
-                return SERVICES_STATUS.installing;
-            }
-            nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
-            if (nodeServiceStatus) {
-                return nodeServiceStatus;
-            }
-        }
-        return nodeServiceStatus;
-    }
-
-    function isNodeServicesFailedOrUninstalled(service, isMaster, statuses) {
-        if (statuses.indexOf(service.status) > -1) {
-            var serviceNames = {
-                master: ['zookeeper', 'master', 'marathon'],
-                slave: ['slave']
-            };
-            var masterCondition = Boolean(isMaster && (serviceNames.master.indexOf(service.name) > -1));
-            var slaveCondition = Boolean(!isMaster && (serviceNames.slave.indexOf(service.name) > -1));
-            if (masterCondition || slaveCondition) {
-                return service.status;
-            }
-        }
-    }
-
-    $scope.getNodeStatus = function(node) {
-        var isMaster = $scope.getIsMaster(node);
-        var servicesStatus = getNodeServiceStatus(node.services, isMaster);
-        if (node.status === NODE_STATUS.terminated) {
-            return NODE_STATUS.terminated;
-        } else if (node.status === NODE_STATUS.installing || node.status === NODE_STATUS.initing 
-                || node.status === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
-            return NODE_STATUS.installing;
-        } else if (servicesStatus === SERVICES_STATUS.failed) {
-            return NODE_STATUS.failed;
+    function getNodeServiceStatus(clusterId, nodeId, statusCache) {
+        var checkServices;
+        if (statusCache[clusterId]["masters"][nodeId]) {
+            checkServices = ['zookeeper', 'master', 'marathon'];
         } else {
-            return NODE_STATUS.running;
+            checkServices = ["slave"]
         }
-    };
-
-    $scope.getSeriveState = function (nodeServices) {
-        for (var i = 0; i < nodeServices.length; i++) {
-            if (nodeServices[i].name === 'marathon') {
-                $scope.serviceState.marathon = nodeServices[i].status;
-            } else if (nodeServices[i].name === 'master') {
-                $scope.serviceState.mesos = nodeServices[i].status;
-            } else if (nodeServices[i].name === 'zookeeper') {
-                $scope.serviceState.zookeeper = nodeServices[i].status;
-            } else if (nodeServices[i].name === 'slave') {
-                $scope.serviceState.slave = nodeServices[i].status;
+        for (var serviceName in statusCache[clusterId]["nodes"][nodeId]["services"]) {
+            var serviceStatus = statusCache[clusterId]["nodes"][nodeId]["services"][serviceName]
+            if (serviceStatus == SERVICES_STATUS.installing) {
+                return SERVICES_STATUS.installing;
+            } else if (serviceStatus == SERVICES_STATUS.failed || serviceStatus == SERVICES_STATUS.uninstalled){
+                if (checkServices.indexOf(serviceName) > -1) {
+                    return serviceStatus;
+                }
             }
         }
-    };
+        return SERVICES_STATUS.running;
+    }
+    
+    $scope.updateServiceStatus = function (clusterId, nodeId, serviceName, status, statusCache) {
+        statusCache[clusterId]["nodes"][nodeId]["services"][serviceName] = status;
+    }
+    
+    $scope.updateNodeStatus = function (clusterId, nodeId, rawStatus, statusCache) {
+        var servicesStatus = getNodeServiceStatus(clusterId, nodeId, statusCache);
+        var status;
+        if (!rawStatus) {
+            rawStatus = statusCache[clusterId]["nodes"][nodeId].status;
+        }
+        if (rawStatus === NODE_STATUS.terminated) {
+            status = NODE_STATUS.terminated;
+        } else if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing 
+                || rawStatus === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
+            status = NODE_STATUS.installing;
+        } else if (servicesStatus === SERVICES_STATUS.failed) {
+            status = NODE_STATUS.failed;
+        } else {
+            status = NODE_STATUS.running;
+        }
+        statusCache[clusterId]["nodes"][nodeId].status = status;
+    }
+    
+    $scope.addNode2StatusStore = function (clusterId, node, statusCache) {
+        if (!statusCache[clusterId]) {
+            statusCache[clusterId] = {"masters": {}, "nodes": {}};
+        }
+        if (node.role == "master") {
+            statusCache[clusterId]["masters"][node.id] = true;
+        }
+        statusCache[clusterId]["nodes"][node.id] = {"services": {}};
+        angular.forEach(node.services, function (service) {
+            $scope.updateServiceStatus(clusterId, node.id, service.name, service.status, statusCache)
+        });
+        $scope.updateNodeStatus(clusterId, node.id, node.status, statusCache);
+    }
+    
+    $scope.startListenStatusUpdate = function (statusCache) {
+        $scope.$on('nodeStatusUpdate', function (event, data) {
+            $scope.updateNodeStatus(data.clusterId, data.nodeId, data.status, statusCache);
+        });
+        $scope.$on('serviceStatusUpdate', function (event, data) {
+            angular.forEach(data, function (val, key){
+                if (key != "clusterId" && key != "nodeId") {
+                    $scope.updateServiceStatus(data.clusterId, data.nodeId, key, val, statusCache)
+                }
+            });
+            $scope.updateNodeStatus(data.clusterId, data.nodeId, undefined, statusCache);
+        });
+    }
 
     $scope.concatObjtoArr = function(obj) {
         var arr = [];
@@ -116,7 +126,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         return arr;
     }
 
-    $scope.groupNodesByRoleAndStatus = function(nodes) {
+    $scope.groupNodesByRoleAndStatus = function(nodes, clusterId, statusCache) {
         var cluster = {
             masters: {},
             slaves: {}
@@ -129,11 +139,10 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
             });
         });
 
-        var nodeStatus;
         angular.forEach(nodes, function(node, index) {
-            nodeStatus = $scope.getNodeStatus(node);
-            node.nodeStatus = nodeStatus;
-            $scope.getIsMaster(node)? cluster.masters[nodeStatus].push(node) : cluster.slaves[nodeStatus].push(node);
+            $scope.addNode2StatusStore(clusterId, node, statusCache)
+            node.nodeStatus = statusCache[clusterId]["nodes"][node.id].status;
+            $scope.getIsMaster(node)? cluster.masters[node.nodeStatus].push(node) : cluster.slaves[node.nodeStatus].push(node);
         });
         return cluster;
     }

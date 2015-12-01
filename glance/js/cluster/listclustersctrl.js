@@ -10,7 +10,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '3_masters': 4,
         '5_masters': 6,
     };
-
+    $scope.statusCache = {};
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
             if (data && data.data) {
@@ -18,6 +18,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
                 $scope.clusters = data.data;
                 $scope.clustersBasicData = getAllClustersBasicData();
                 $scope.clustersNodesData = getAllClustersNodesData();
+                $scope.startListenStatusUpdate($scope.statusCache);
             }
         });
     };
@@ -132,7 +133,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         };
         clusterBasicData.infos = getClusterBasicInfos(cluster);
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusCache);
 
         clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
         var masters = nodesWithRoleAndStatus.masters;
@@ -156,7 +157,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             selectedClasses: {}
         };
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusCache);
         cluster.hiddenStatuses = cluster.hiddenStatuses? cluster.hiddenStatuses: [];
         var filteredNodes = filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus);
         var allShowSlaves = getAllShowSlaves(filteredNodes.slaves);

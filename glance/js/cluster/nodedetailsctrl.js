@@ -4,12 +4,18 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.node = {};
     $scope.showCharts = false;
     $('.charts').hide();
+    function initStatusCache(){
+        $scope.statusCache = {};
+        $scope.statusCache[$stateParams.clusterId] = {"nodes": {}, "masters": {}};
+        $scope.statusCache[$stateParams.clusterId].nodes[$stateParams.nodeId] = {"services": {}}
+    };
+    initStatusCache();
     $scope.getCurNode = function () {
         glanceHttp.ajaxGet(["cluster.nodeIns", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
-            $scope.node.state = $scope.getNodeStatus($scope.node);
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
-            $scope.getSeriveState($scope.node.services);
+            $scope.addNode2StatusStore($scope.node.cluster.id, $scope.node, $scope.statusCache);
+            $scope.startListenStatusUpdate($scope.statusCache);
         });
     };
     $scope.getCurNode();

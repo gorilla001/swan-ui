@@ -37,7 +37,7 @@
                                 {/ node.ip/}
                             </td>
                             <td>
-                                <img data-ng-src="../pics/ico-node-status-{/node.nodeStatus/}.png" width="16"> {/statName[node.nodeStatus]/}
+                                <img data-ng-src="../pics/ico-node-status-{/statusCache[cluster.id]['nodes'][node.id].status/}.png" width="16"> {/statName[statusCache[cluster.id]['nodes'][node.id].status]/}
                             </td>
                             <td>
                                 {/ node.agent_version/}
