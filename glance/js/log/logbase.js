@@ -42,26 +42,27 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
 
     $scope.$watch('clusterId', function (newValue, oldValue) {
         if (newValue) {
-            getNodes(newValue);
             $scope.getAppOptions(newValue);
         }
     });
 
-    function getNodes(clusterId) {
-        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: clusterId}], function (data) {
-            $scope.nodes = data.data.nodes;
-            var tempNodesInfo = [];
-            angular.forEach($scope.nodes, function (data, index, array) {
-                tempNodesInfo.push({
-                    name: "主机名:" + data.name,
-                    maker: data.ip,
-                    ticked: false
-                });
-            });
-            $scope.inputNodesInfo = tempNodesInfo;
+    $scope.getNodes = function (appName, clusterId) {
+        if (appName && clusterId) {
+            glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+                $scope.nodes = data.data;
 
-        });
-    }
+                var tempNodesInfo = [];
+                angular.forEach($scope.nodes, function (data, index, array) {
+                    tempNodesInfo.push({
+                        ip: data.Ip,
+                        maker: data.Ip,
+                        ticked: false
+                    });
+                });
+                $scope.inputNodesInfo = tempNodesInfo;
+            });
+        }
+    };
 
     $scope.getAppOptions = function (clusterId) {
         glanceHttp.ajaxGet(['app.options', {cluster_id: clusterId}], function (data) {
