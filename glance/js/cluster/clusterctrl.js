@@ -104,11 +104,11 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         $scope.updateNodeStatus(clusterId, node.id, node.status, statusCache);
     }
     
-    $scope.startListenStatusUpdate = function (statusCache) {
-        $scope.$on('nodeStatusUpdate', function (event, data) {
+    $scope.startListenStatusUpdate = function (scope, statusCache) {
+        scope.$on('nodeStatusUpdate', function (event, data) {
             $scope.updateNodeStatus(data.clusterId, data.nodeId, data.status, statusCache);
         });
-        $scope.$on('serviceStatusUpdate', function (event, data) {
+        scope.$on('serviceStatusUpdate', function (event, data) {
             angular.forEach(data, function (val, key){
                 if (key != "clusterId" && key != "nodeId") {
                     $scope.updateServiceStatus(data.clusterId, data.nodeId, key, val, statusCache)

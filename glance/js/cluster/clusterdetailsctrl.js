@@ -10,7 +10,7 @@ function clusterDetailsCtrl($scope, $stateParams, glanceHttp) {
 
             $scope.currentPage = 1;
             var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusCache);
-            $scope.startListenStatusUpdate($scope.statusCache);
+            $scope.startListenStatusUpdate($scope, $scope.statusCache);
             $scope.contentPage = [];
             $.each(nodesWithRoleAndStatus, function(key, val) {
                 $scope.contentPage = $scope.contentPage.concat($scope.concatObjtoArr(val));

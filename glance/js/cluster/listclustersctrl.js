@@ -18,7 +18,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
                 $scope.clusters = data.data;
                 $scope.clustersBasicData = getAllClustersBasicData();
                 $scope.clustersNodesData = getAllClustersNodesData();
-                $scope.startListenStatusUpdate($scope.statusCache);
+                $scope.startListenStatusUpdate($scope, $scope.statusCache);
             }
         });
     };
