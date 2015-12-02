@@ -28,7 +28,7 @@ function appEventCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     };
 
     $scope.appEvent = function () {
-        glanceHttp.ajaxGet(['metrics.event',{clusterID: $scope.appInfo.clusterId ,appName: $scope.appInfo.name}], function (data) {
+        glanceHttp.ajaxGet(['app.event',{app_id: $stateParams.appId}], function (data) {
             $scope.events = data.data;
         });
     };

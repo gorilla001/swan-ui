@@ -85,7 +85,8 @@ BACKEND_URL = {
         isdeploying: "api/v1/applications/$app_id/isdeploying",
         cancelDeploy: "api/v1/applications/$app_id/cancel-deployment",
         undoScaling: "api/v1/applications/$app_id/cancel-scaling",
-        getNodes: "api/v1/applications/$clusterId/get-appnodes?cluster_id=$cluster_id&app_name=$app_name"
+        getNodes: "api/v1/applications/$clusterId/get-appnodes?cluster_id=$cluster_id&app_name=$app_name",
+        event: "api/v1/applications/$app_id/events"
     }
         
 };
