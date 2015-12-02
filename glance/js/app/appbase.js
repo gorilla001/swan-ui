@@ -110,13 +110,13 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         });
     };
 
-    $scope.upContainNum = function (appId, containerNum, appName, whereFrom) {
+    $scope.upContainNum = function (appId, containerNum, appName, isfromDetail) {
         $('#expandConNumModal').modal("show");
         $scope.tempNum = containerNum;
         $scope._expandConNum = containerNum;
         $scope._expandAppId = appId;
         $scope._appName = appName;
-        $scope.whereFrom = whereFrom;
+        $scope.fromDetail = isfromDetail;
     };
     
     $scope.ensureExpandConNumCallback = function (appId) {
@@ -135,7 +135,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         glanceHttp.ajaxPost(['app.upContainerNum'],$scope.containDate,function(data){
                 $timeout(function () {
                     Notification.success('应用 '+ $scope._appName +$scope.updateContainerText);
-                    if($scope.whereFrom){
+                    if($scope.fromDetail){
                         $state.go('app.appdetail.config',{appId: appId},{reload : true})
                     }else {
                         $state.go('app.applist',{appId: appId},{reload : true})
