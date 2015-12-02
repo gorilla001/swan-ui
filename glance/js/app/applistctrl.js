@@ -9,6 +9,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
 
     var promise;
     $scope.deleteStopApps = {};
+    $scope.currentPage = undefined;
+
     $scope.listApp = function () {
         glanceHttp.ajaxGet(['app.list'], function (data) {
             if (data.data) {
@@ -22,9 +24,10 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
             $scope.totalItems = $scope.applist.length;
             $scope.pageLength = 10;
             $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
-            var appPageIndex = calAppPageIndex($rootScope.currentAppId);
-            $scope.currentPage = appPageIndex + 1;
-            $scope.contentCurPage = $scope.applist.slice($scope.pageLength * appPageIndex, $scope.pageLength * (appPageIndex + 1));
+            if(!$scope.currentPage) {
+                $scope.currentPage = calAppPageIndex($rootScope.currentAppId) + 1;
+            }
+            $scope.contentCurPage = $scope.applist.slice($scope.pageLength * ($scope.currentPage-1), $scope.pageLength * $scope.currentPage);
         });
     };
 
@@ -110,7 +113,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
         // reference link: https://github.com/Dataman-Cloud/omega-app/blob/master/docs%2Frest-api.md
         var codes = {
             isDeleting: 5,
-            isStopping: 3,
+            isStopping: 4,
             isScaling: 6
         };
 
