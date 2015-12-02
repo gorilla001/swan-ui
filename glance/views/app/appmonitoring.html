@@ -2,26 +2,40 @@
     <div class="main-container-body">
         <div class="row">
             <div class="col-md-6">
-                <div id="appCpuStat" data-dimension="300" data-info="CPU使用资源" data-width="5"
+                <div class="col-md-offset-2" id="appCpuStat" data-dimension="300" data-info="CPU使用资源" data-width="15"
                      data-fontsize="38"
                      data-fgcolor="#39C7C8" data-bgcolor="#eee"
                      data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
             </div>
 
             <div class="col-md-6">
-                <div id="appMemStat" data-dimension="300" data-info="内存使用资源" data-width="5"
+                <div class="col-md-offset-2" id="appMemStat" data-dimension="300" data-info="内存使用资源" data-width="15"
                      data-fontsize="38"
                      data-fgcolor="#B6A2DC" data-bgcolor="#eee"
                      data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
             </div>
-
-            <div class="col-md-4" ng-repeat="instance in appStat">
-                <p>实例: {/instance.app.appId/}</p>
-                <p>实例CPU用量:<span>(CPU:{/cpuCores[$index]/})</span></p>
-                <uib-progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuShareCores" value="instance.cpuUsedCores"><span style="color:black; white-space:nowrap;">{/instance.cpuUsedCores/} / {/instance.cpuShareCores/}</span></uib-progressbar>
-                <p>实例内存用量:(单位: MB)</p>
-                <uib-progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span style="color:black; white-space:nowrap;">{/instance.memoryUsed/} MB / {/instance.memoryTotal/} MB</span></uib-progressbar>
-            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>实例</th>
+                    <th>CPU用量</th>
+                    <th>内存用量 (MB)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="instance in appStat">
+                    <td>{/instance.app.appId/}</td>
+                    <td style="width: 30%;">
+                        <uib-progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuShareCores" value="instance.cpuUsedCores"><span>{/instance.cpuUsedCores/} / {/instance.cpuShareCores/}</span>
+                        </uib-progressbar>
+                    </td>
+                    <td style="width: 30%;">
+                        <uib-progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span>{/instance.memoryUsed/} / {/instance.memoryTotal/}</span>
+                        </uib-progressbar>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
