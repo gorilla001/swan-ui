@@ -3,12 +3,13 @@
  */
 glanceApp.controller("appListCtrl", appListCtrl);
 
-appListCtrl.$inject = ['$scope', 'glanceHttp','$timeout', 'Notification'];
+appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification'];
 
-function appListCtrl($scope, glanceHttp, $timeout, Notification) {
+function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
 
     var promise;
     $scope.deleteStopApps = {};
+    $scope.currentPage = undefined;
 
     $scope.listApp = function () {
         glanceHttp.ajaxGet(['app.list'], function (data) {
@@ -23,14 +24,30 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
             $scope.totalItems = $scope.applist.length;
             $scope.pageLength = 10;
             $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
-            $scope.contentCurPage = $scope.applist.slice(0, $scope.pageLength);
+            if(!$scope.currentPage) {
+                $scope.currentPage = calAppPageIndex($rootScope.currentAppId) + 1;
+            }
+            $scope.contentCurPage = $scope.applist.slice($scope.pageLength * ($scope.currentPage-1), $scope.pageLength * $scope.currentPage);
         });
     };
 
-
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
+    function calAppPageIndex(appId) {
+        var pageIndex = 0;
+        if (!appId) {
+            return pageIndex;
+        }
+        var app;
+        var index = 0;
+        for (var i = 0; i < $scope.applist.length; i++) {
+            app = $scope.applist[i];
+            if (appId === app.appId) {
+                index = i;
+                break;
+            }
+        }
+        pageIndex = Math.floor(index / $scope.pageLength);
+        return pageIndex;
+    }
 
     $scope.pageChanged = function() {
         $scope.contentCurPage = $scope.applist.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
@@ -96,7 +113,7 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
         // reference link: https://github.com/Dataman-Cloud/omega-app/blob/master/docs%2Frest-api.md
         var codes = {
             isDeleting: 5,
-            isStopping: 3,
+            isStopping: 4,
             isScaling: 6
         };
 
