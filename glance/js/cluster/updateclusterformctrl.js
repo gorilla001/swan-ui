@@ -9,6 +9,10 @@ function updateClusterFormCtrl($scope, $state, $stateParams, glanceHttp) {
             $state.go("cluster.clusterdetails.nodes", {"clusterId": $stateParams.clusterId});
         });
     };
+
+    $scope.goback = function(){
+        history.back();
+    }
 }
 
 updateClusterFormCtrl.$inject = ["$scope", "$state", "$stateParams", "glanceHttp"];
