@@ -1136,6 +1136,19 @@ rzslider .rz-bubble {
 	font-size: 11px;
 }
 
+.progress {
+	margin-bottom: 0px;
+	height: 15px;
+	position: relative;
+}
+.progress span {
+	color:black;
+	white-space:nowrap;
+	position: absolute;
+	left: 6px;
+	top: -2px;
+	font-size: 11px;
+}
 /*添加主机 主机类型提示*/
 .prompt-box {
     position: absolute;
