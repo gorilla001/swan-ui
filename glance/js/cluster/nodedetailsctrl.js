@@ -98,7 +98,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             }, {"ids": ids})
         });
     }
+    
+    $scope.resetService = function (serviceName) {
+        glanceHttp.ajaxPost(["cluster.serviceStatus", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
+                {"method": "reset"});
+    }
 }
-
 nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);

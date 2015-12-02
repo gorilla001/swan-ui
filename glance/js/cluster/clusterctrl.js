@@ -68,6 +68,9 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     }
     
     $scope.updateServiceStatus = function (clusterId, nodeId, serviceName, status, statusCache) {
+        if (status == "uninstalling"){
+            status = SERVICES_STATUS.installing;
+        }
         statusCache[clusterId]["nodes"][nodeId]["services"][serviceName] = status;
     }
     
