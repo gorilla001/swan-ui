@@ -59,8 +59,7 @@ BACKEND_URL = {
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",
-        event:"api/v1/event/$clusterID/$appName",
-        appmonit:"api/v1/appmetrics/cluster/$clusterID/app/$appName"
+        appmonit:"api/v1/metrics/cluster/$clusterID/app/$appName"
     },
     ws: {
         subscribe: "streaming/glance/$token"
@@ -85,7 +84,8 @@ BACKEND_URL = {
         isdeploying: "api/v1/applications/$app_id/isdeploying",
         cancelDeploy: "api/v1/applications/$app_id/cancel-deployment",
         undoScaling: "api/v1/applications/$app_id/cancel-scaling",
-        getNodes: "api/v1/applications/$clusterId/get-appnodes?cluster_id=$cluster_id&app_name=$app_name"
+        getNodes: "api/v1/applications/$clusterId/get-appnodes?cluster_id=$cluster_id&app_name=$app_name",
+        event: "api/v1/applications/$app_id/events"
     }
         
 };
