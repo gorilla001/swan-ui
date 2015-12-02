@@ -15,7 +15,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             $scope.node = data.data;
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.addNode2StatusStore($scope.node.cluster.id, $scope.node, $scope.statusCache);
-            $scope.startListenStatusUpdate($scope.statusCache);
+            $scope.startListenStatusUpdate($scope, $scope.statusCache);
         });
     };
     $scope.getCurNode();
