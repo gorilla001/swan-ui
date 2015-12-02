@@ -20,13 +20,9 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
 
                 option.series[0].data[0].value = $scope.clusterMonitors.masMetrics.cpuPercent;
                 option.series[0].data[1].value = 100 - option.series[0].data[0].value;
-                option.series[0].itemStyle.normal.label.formatter = dataFormatter;
-                option.series[0].data[0].name = "集群CPU占用";
 
                 option.series[1].data[0].value = ($scope.clusterMonitors.masMetrics.memUsed / $scope.clusterMonitors.masMetrics.memTotal) * 100;
                 option.series[1].data[1].value = 100 - option.series[1].data[0].value;
-                option.series[1].itemStyle.normal.label.formatter = dataFormatter;
-                option.series[1].data[0].name = "集群内存占用";
                 clusterChart.setOption(option);
                 $scope.showAppMetrics = true;
             }
@@ -37,13 +33,9 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
                 //when data is null
                 option.series[0].data[0].value = 0;
                 option.series[0].data[1].value = 100;
-                option.series[0].data[0].name = "集群CPU占用:无";
-                option.series[0].itemStyle.normal.label.formatter = "";
 
                 option.series[1].data[0].value = 0;
                 option.series[1].data[1].value = 100;
-                option.series[1].data[0].name = "集群内存占用:无";
-                option.series[1].itemStyle.normal.label.formatter = "";
                 clusterChart.setOption(option);
                 errorCycle = $timeout($scope.getClusterMonitor, 3000);
             }
@@ -54,12 +46,13 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
 
     var labelTop = {
         normal: {
-            color: '#cccccc',
+            color: '#4a86e8',
             label: {
-                show: false,
+                show: true,
                 position: 'center',
-                formatter: '{a}',
+                formatter: '{d}'+'%',
                 textStyle: {
+                    fontSize: 35,
                     baseline: 'bottom'
                 }
             },
@@ -71,8 +64,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     var labelFromatter = {
         normal: {
             label: {
-                show: true,
-                formatter: dataFormatter,
+                show: false,
                 textStyle: {
                     baseline: 'top',
                     fontSize: 17,
@@ -81,19 +73,39 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
             }
         }
     };
-    var labelBottom = {
+    var labelCpuBottom = {
         normal: {
-            color: '#4a86e8',
+            color: '#cccccc',
             label: {
                 show: true,
-                position: 'center'
+                position: 'center',
+                formatter: 'CPU 占用',
+                textStyle: {
+                    fontSize: 14
+                }
             },
             labelLine: {
                 show: false
             }
         }
     };
-    var radius = [85, 90];
+    var labelMemBottom = {
+        normal: {
+            color: '#cccccc',
+            label: {
+                show: true,
+                position: 'center',
+                formatter: '内存占用',
+                textStyle: {
+                    fontSize: 14
+                }
+            },
+            labelLine: {
+                show: false
+            }
+        }
+    };
+    var radius = [90, 110];
     var option = {
         toolbox: {
             show: true,
@@ -105,31 +117,26 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
         series: [
             {
                 type: 'pie',
-                center: ['20%', '30%'],
+                center: ['20%', '50%'],
                 radius: radius,
                 itemStyle: labelFromatter,
                 data: [
-                    {name: '集群CPU占用', itemStyle: labelBottom},
-                    {name: 'CPU', itemStyle: labelTop}
+                    {name: 'CPU占用', itemStyle: labelTop},
+                    {name: 'other', itemStyle: labelCpuBottom}
                 ]
             },
             {
                 type: 'pie',
-                center: ['80%', '30%'],
+                center: ['80%', '50%'],
                 radius: radius,
                 itemStyle: labelFromatter,
                 data: [
-                    {name: '集群内存占用', itemStyle: labelBottom},
-                    {name: '内存', itemStyle: labelTop}
+                    {name: '内存占用', itemStyle: labelTop},
+                    {name: 'other', itemStyle: labelMemBottom}
                 ]
             }
         ]
     };
-
-    function dataFormatter(params){
-            return params.name + ':' + params.value.toFixed(2) + '%'
-    }
-
 
     $scope.$on('$destroy', function () {
         clusterChart.clear();

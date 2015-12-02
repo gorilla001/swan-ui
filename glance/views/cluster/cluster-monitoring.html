@@ -1,24 +1,34 @@
 <div class="main-container-body">
     <div id="clusterMetrics" style="height:350px;"></div>
     <div ng-show="showAppMetrics" class="clearfix">
-        <p>集群内存占用:{/clusterMonitors.masMetrics.memUsed/}MB / {/clusterMonitors.masMetrics.memTotal/}MB</p>
-
-        <p>集群CPU:{/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</p>
-
-        <div class="col-md-2" ng-repeat="appMetric in clusterMonitors.appMetrics">
-            <p>应用名称: {/appMetric.appName/}</p>
-
-            <p>应用实例个数: {/appMetric.instances/} 个</p>
-
-            <p>应用CPU用量:<span>(CPU共享:{/appMetric.appCpuShare.toFixed(1)/})</span></p>
-            <uib-progressbar class="progress-striped active" type="info" max="appMetric.appCpuShare"
-                         value="appMetric.appCpuUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appCpuUsed/} / {/appMetric.appCpuShare.toFixed(1)/}</span>
-            </uib-progressbar>
-            <p>应用内存用量:(单位: MB)</p>
-            <uib-progressbar class="progress-striped active" type="success" max="appMetric.appMemShare"
-                         value="appMetric.appMemUsed"><span style="color:black; white-space:nowrap;">{/appMetric.appMemUsed.toFixed(1)/} MB / {/appMetric.appMemShare.toFixed(1)/} MB</span>
-            </uib-progressbar>
-        </div>
+        <h4>集群CPU: {/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</h4>
+        <h4>集群内存占用 (MB): {/clusterMonitors.masMetrics.memUsed/} / {/clusterMonitors.masMetrics.memTotal/}</h4>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>应用名称</th>
+                <th>实例个数 (个)</th>
+                <th>CPU用量</th>
+                <th>内存用量 (MB)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="appMetric in clusterMonitors.appMetrics">
+                <td>{/appMetric.appName/}</td>
+                <td>{/appMetric.instances/}</td>
+                <td style="width: 30%;">
+                    <uib-progressbar class="progress-striped active" type="info" max="appMetric.appCpuShare"
+                                     value="appMetric.appCpuUsed"><span>{/appMetric.appCpuUsed/} / {/appMetric.appCpuShare.toFixed(1)/}</span>
+                    </uib-progressbar>
+                </td>
+                <td style="width: 30%;">
+                    <uib-progressbar class="progress-striped active" type="success" max="appMetric.appMemShare"
+                                     value="appMetric.appMemUsed"><span>{/appMetric.appMemUsed.toFixed(1)/} / {/appMetric.appMemShare.toFixed(1)/}</span>
+                    </uib-progressbar>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
