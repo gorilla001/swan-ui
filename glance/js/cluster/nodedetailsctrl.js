@@ -1,5 +1,5 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state) {
     "use strict";
     $scope.node = {};
     $scope.showCharts = false;
@@ -86,7 +86,19 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         nodeInfo.cpuNumber = nodeInfo.cpuPercent.length;
         return nodeInfo;
     }
+
+    $scope.deleNode = function(id){
+        var ids = [];
+        ids.push(id);
+        var toast = "您确定要移除主机吗？";
+
+        $scope.myConfirm(toast, function () {
+            glanceHttp.ajaxDelete(["cluster.nodes", {"cluster_id": $stateParams.clusterId}], function (data) {
+                $state.go("cluster.clusterdetails.nodes",{"clusterId": $stateParams.clusterId});
+            }, {"ids": ids})
+        });
+    }
 }
 
-nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor"];
+nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);
