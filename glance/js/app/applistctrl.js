@@ -3,13 +3,12 @@
  */
 glanceApp.controller("appListCtrl", appListCtrl);
 
-appListCtrl.$inject = ['$scope', 'glanceHttp','$timeout', 'Notification'];
+appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification'];
 
-function appListCtrl($scope, glanceHttp, $timeout, Notification) {
+function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
 
     var promise;
     $scope.deleteStopApps = {};
-
     $scope.listApp = function () {
         glanceHttp.ajaxGet(['app.list'], function (data) {
             if (data.data) {
@@ -23,14 +22,29 @@ function appListCtrl($scope, glanceHttp, $timeout, Notification) {
             $scope.totalItems = $scope.applist.length;
             $scope.pageLength = 10;
             $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
-            $scope.contentCurPage = $scope.applist.slice(0, $scope.pageLength);
+            var appPageIndex = calAppPageIndex($rootScope.currentAppId);
+            $scope.currentPage = appPageIndex + 1;
+            $scope.contentCurPage = $scope.applist.slice($scope.pageLength * appPageIndex, $scope.pageLength * (appPageIndex + 1));
         });
     };
 
-
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
+    function calAppPageIndex(appId) {
+        var pageIndex = 0;
+        if (!appId) {
+            return pageIndex;
+        }
+        var app;
+        var index = 0;
+        for (var i = 0; i < $scope.applist.length; i++) {
+            app = $scope.applist[i];
+            if (appId === app.appId) {
+                index = i;
+                break;
+            }
+        }
+        pageIndex = Math.floor(index / $scope.pageLength);
+        return pageIndex;
+    }
 
     $scope.pageChanged = function() {
         $scope.contentCurPage = $scope.applist.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
