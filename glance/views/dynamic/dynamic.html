@@ -22,7 +22,17 @@
                 </ul>
             </div>
 
-            <div ng-repeat="appMon in cluster.appMonitors">
+            <div>
+                <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[65, 75]"
+                          use-color="#68d1f2" show-text="CPU占用">
+                </piechart>
+
+                <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[65, 75]"
+                          use-color="#ff9494" show-text="内存占用">
+                </piechart>
+            </div>
+
+           <div ng-repeat="appMon in cluster.appMonitors">
                 <span>{/appMon.appName/}</span>
                 <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
                             use-color="#68d1f2" show-text="CPU使用">

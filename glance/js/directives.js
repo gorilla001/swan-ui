@@ -252,32 +252,34 @@ glanceApp.directive('piechart', function() {
                 }
             };
 
-            var option = {
-                series: [
-                    {
-                        type: 'pie',
-                        radius: scope.radius || [45,55],
-                        itemStyle: labelFromatter,
-                        data: [
-                            {name: 'used', value:   (scope.used || scope.used === 0) ? scope.used : 50, itemStyle: labelTop},
-                            {name: 'other', value: ((scope.total-scope.used) || (scope.total-scope.used) === 0) ? (scope.total-scope.used) : 50, itemStyle: labelBottom}
-                        ]
-                    }
-                ]
-            };
+            function createOption(){
+                return {
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: scope.radius || [45,55],
+                            itemStyle: labelFromatter,
+                            data: [
+                                {name: 'used', value:   (scope.used || scope.used === 0) ? scope.used : 50, itemStyle: labelTop},
+                                {name: 'other', value: ((scope.total-scope.used) || (scope.total-scope.used) === 0) ? (scope.total-scope.used) : 50, itemStyle: labelBottom}
+                            ]
+                        }
+                    ]
+                }
+            }
 
             var ndWrapper  = elem.find('div')[0];
             ndWrapper.style.width = (scope.radius[1] * 2 || 110) + 'px';
             ndWrapper.style.height = (scope.radius[1] * 2 || 110)+ 'px';
             var clusterChart = echarts.init(ndWrapper);
-            clusterChart.setOption(option);
+            clusterChart.setOption(createOption());
 
-            scope.$watch(function () { return scope.used; }, function (value) {
-                if (value || value === 0) { clusterChart.setOption(option); }
+            scope.$watch(function () { return scope.used; }, function (newValue, oldValue) {
+                if (newValue != oldValue) { clusterChart.setOption(createOption()); }
             }, true);
 
-            scope.$watch(function () { return scope.total; }, function (value) {
-                if (value || value === 0) { clusterChart.setOption(option); }
+            scope.$watch(function () { return scope.total; }, function (newValue, oldValue) {
+                if (newValue != oldValue) { clusterChart.setOption(createOption()); }
             }, true);
         }
     }
