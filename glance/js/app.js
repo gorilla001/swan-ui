@@ -55,7 +55,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/iaas-provider.html',
-                        controller: function($scope, $stateParams) {
+                        controller: function(['$scope', '$stateParams'], $scope, $stateParams) {
                           $scope.clusterId = $stateParams.clusterId;
                           $scope.nodeId = $stateParams.nodeId;
                         }
@@ -67,7 +67,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/iaas-qcloud.html',
-                        controller: function($scope, $stateParams) {
+                        controller: function(['$scope', '$stateParams'], $scope, $stateParams) {
                           $scope.clusterId = $stateParams.clusterId;
                           $scope.nodeId = $stateParams.nodeId;
                           $scope.skip = {'step': 1};
