@@ -16,11 +16,13 @@
             amounts: {}
         };
 
+        var listClusterDataGetFromBackend;
+
         function listAllClusters() {
             var deferred = $q.defer();
             glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
                 if (data && data.data) {
-                    $scope.clusters = data.data;
+                    listClusterDataGetFromBackend = data.data;
                     $scope.clusterList = collectClusterList(data.data);
                 }
                 deferred.resolve();
