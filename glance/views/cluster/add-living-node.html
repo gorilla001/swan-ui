@@ -64,28 +64,8 @@
                     <div class="col-md-10">
 
                         <label class="checkbox-inline">
-                          <div data-ng-mouseenter="promptTransient=true" ng-mouseleave="promptTransient=false">
-                              <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.transient" data-ng-change="onAttributesChange('transient')"/>
-                              <span>计算节点</span>
-                          </div>
-                          <div class="prompt-box" data-ng-show="promptTransient">
-                               <span>作为集群中动态可支配的计算资源，运行各种无状态应用。</span>
-                          </div>
-                        </label>
-
-                        <label class="checkbox-inline">
-                            <div data-ng-mouseenter="promptPersistent=true" ng-mouseleave="promptPersistent=false">
-                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.persistent" data-ng-change="onAttributesChange('persistent')">
-                                <span>数据节点</span>
-                            </div>
-                            <div class="prompt-box" data-ng-show="promptPersistent">
-                               <span>将作为集群中数据持久化的节点使用，请将有状态应用(MySQL, Redis等)部署于此类节点。</span>
-                            </div>
-                        </label>
-
-                        <label class="checkbox-inline">
                             <div data-ng-mouseenter="promptGateway=true" ng-mouseleave="promptGateway=false">
-                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.gateway" data-ng-change="onAttributesChange('gateway')">
+                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.gateway" >
                                 <span>外部网关</span>
                             </div>
                             <div class="prompt-box" data-ng-show="promptGateway">
@@ -95,7 +75,7 @@
 
                         <label class="checkbox-inline">
                             <div data-ng-mouseenter="promptProxy=true" ng-mouseleave="promptProxy=false">
-                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.proxy" data-ng-change="onAttributesChange('proxy')">
+                                <input type="checkbox" data-ng-disabled="afterCopy" data-ng-model="form.attributes.proxy" >
                                 <span>内部代理</span>
                             </div>
                             <div class="prompt-box prompt-last" data-ng-show="promptProxy">

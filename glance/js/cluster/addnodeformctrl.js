@@ -4,10 +4,8 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.isConected = false;
     $scope.form = {
       attributes: {
-                    'transient': true,
                     'gateway': false,
                     'proxy': false,
-                    'persistent': false
                   },
       id: $scope.nodeId
     };
@@ -46,17 +44,6 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
               $scope.afterCopy = true;
           });
       }
-    }
-    
-    $scope.onAttributesChange = function(attribute) {
-        for (var attr_name in $scope.form.attributes) {
-            if ($scope.form.attributes[attr_name]) {
-                return;
-            }
-        }
-        $scope.form.attributes[attribute] = true;
-        Notification.error('必须选择至少一项主机类型');
-        
     }
 
 }
