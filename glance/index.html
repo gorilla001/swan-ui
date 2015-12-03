@@ -35,6 +35,11 @@
                     </div>
 
                     <ul class="nav nav-sidebar">
+                        <li data-ng-class="{'active': show=='dynamic'}" title="新闻动态">
+                            <a data-ui-sref="dynamic" data-ui-sref-opts="{reload: true}">
+                                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span><span class="text">新闻动态</span>
+                            </a>
+                        </li>
                         <li data-ng-class="{'active': show=='cluster'}" title="集群管理">
                             <a data-ui-sref="cluster.listclusters" data-ui-sref-opts="{reload: true}">
                                 <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span><span class="text">集群管理</span>
@@ -165,6 +170,7 @@
         <script src="js/app/createPortModule.js" type="text/javascript"></script>
         <script src="js/app/createPathModule.js" type="text/javascript"></script>
         <script src="js/app/createDirModule.js" type="text/javascript"></script>
+        <script src="js/dynamic/dynamicbase.js" type="text/javascript"></script>
         <!--endbuild-->
 
         <!-- baidu -->
