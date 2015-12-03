@@ -5,9 +5,9 @@
     'use strict';
     glanceApp.controller('dynamicBaseCtrl', dynamicBaseCtrl);
 
-    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp'];
+    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'groupNodes'];
 
-    function dynamicBaseCtrl($scope, $rootScope, glanceHttp) {
+    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, groupNodes) {
         $rootScope.show = 'dynamic';
 
         $scope.clusterList = [];
@@ -23,12 +23,14 @@
         function collectClusterList(clusters) {
             var clusterList = [];
             var cluster;
+            var amounts = {};
             for (var i = 0; i < clusters.length; i++) {
                 cluster = clusters[i];
+                amounts = groupNodes.countNodesAmounts(cluster.nodes);
                 clusterList[i] = {
                     id: cluster.id,
                     name: cluster.name,
-                    nodes: cluster.nodes
+                    amounts: amounts
                 };
             }
             return clusterList;
