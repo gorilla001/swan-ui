@@ -189,3 +189,125 @@ glanceApp.directive('samename', function () {
         }
     };
 });
+
+glanceApp.directive('pirChart', function() {
+    return {
+        restrict: 'E',
+        template: '<div></div>',
+        scope:{
+            cpuPre: '=cpuValue',
+            memPre: '=memValue'
+        },
+        link: function(scope, elem, attrs, ctrl) {
+            var labelCpuTop = {
+                normal: {
+                    color: '#68d1f2',
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{d}'+'%',
+                        textStyle: {
+                            fontSize: 17,
+                            baseline: 'bottom'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+            var labelMemTop = {
+                normal: {
+                    color: '#ff9494',
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{d}'+'%',
+                        textStyle: {
+                            fontSize: 17,
+                            baseline: 'bottom'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+            var labelFromatter = {
+                normal: {
+                    label: {
+                        show: false,
+                        textStyle: {
+                            baseline: 'top',
+                            fontSize: 8,
+                            color: '#000000'
+                        }
+                    }
+                }
+            };
+            var labelCpuBottom = {
+                normal: {
+                    color: '#eee',
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: 'CPU 占用',
+                        textStyle: {
+                            fontSize: 7
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+            var labelMemBottom = {
+                normal: {
+                    color: '#eee',
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: '内存占用',
+                        textStyle: {
+                            fontSize: 7
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+            var radius = [45, 55];
+            var option = {
+                series: [
+                    {
+                        type: 'pie',
+                        center: ['30%', '30%'],
+                        radius: radius,
+                        itemStyle: labelFromatter,
+                        data: [
+                            {name: 'CPU占用', value: scope.cpuPre, itemStyle: labelCpuTop},
+                            {name: 'other', value: 100-scope.cpuPre, itemStyle: labelCpuBottom}
+                        ]
+                    },
+                    {
+                        type: 'pie',
+                        center: ['30%', '80%'],
+                        radius: radius,
+                        itemStyle: labelFromatter,
+                        data: [
+                            {name: '内存占用', value: scope.memPre, itemStyle: labelMemTop},
+                            {name: 'other', value: 100-scope.memPre, itemStyle: labelMemBottom}
+                        ]
+                    }
+                ]
+            };
+
+            var ndWrapper  = elem.find('div')[0];
+            ndWrapper.style.width = 200 + 'px';
+            ndWrapper.style.height = 300 + 'px';
+            var clusterChart = echarts.init(ndWrapper);
+            clusterChart.setOption(option);
+        }
+    };
+});
