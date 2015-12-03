@@ -195,8 +195,10 @@ glanceApp.directive('pirChart', function() {
         restrict: 'E',
         template: '<div></div>',
         scope:{
-            cpuPre: '=cpuValue',
-            memPre: '=memValue'
+            cpuUsed: '=cpuUsed',
+            cpuTotal: '=cpuTotal',
+            memUsed: '=memUsed',
+            memTotal: '=memTotal'
         },
         link: function(scope, elem, attrs, ctrl) {
             var labelCpuTop = {
@@ -286,8 +288,8 @@ glanceApp.directive('pirChart', function() {
                         radius: radius,
                         itemStyle: labelFromatter,
                         data: [
-                            {name: 'CPU占用', value: scope.cpuPre, itemStyle: labelCpuTop},
-                            {name: 'other', value: 100-scope.cpuPre, itemStyle: labelCpuBottom}
+                            {name: 'CPU占用', value: scope.cpuUsed, itemStyle: labelCpuTop},
+                            {name: 'other', value: scope.cpuTotal-scope.cpuUsed, itemStyle: labelCpuBottom}
                         ]
                     },
                     {
@@ -296,8 +298,8 @@ glanceApp.directive('pirChart', function() {
                         radius: radius,
                         itemStyle: labelFromatter,
                         data: [
-                            {name: '内存占用', value: scope.memPre, itemStyle: labelMemTop},
-                            {name: 'other', value: 100-scope.memPre, itemStyle: labelMemBottom}
+                            {name: '内存占用', value: scope.memUsed, itemStyle: labelMemTop},
+                            {name: 'other', value: scope.memTotal-scope.memUsed, itemStyle: labelMemBottom}
                         ]
                     }
                 ]

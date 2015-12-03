@@ -2,10 +2,9 @@
     <h1>新闻动态</h1>
 </div>
 <section>
-    <div class="main-container" ng-repeat="cluster in clusterList track by $index">
+    <div data-ng-show="cluster.nodes.length" class="main-container" ng-repeat="cluster in clusterList">
         <div class="main-container-body">
             <span>{/cluster.name/}</span> - <span>{/cluster.id/}</span>
-            <pir-chart cpu-value="30" mem-value="60"></pir-chart>
             <div data-ng-show="cluster.amounts">
                 <ul class="cluster-service-status-number">
                     <li class="running" data-ng-show="cluster.amounts.running">
@@ -21,6 +20,11 @@
                       <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
                     </li>
                 </ul>
+            </div>
+
+            <div ng-repeat="appMon in cluster.appMonitors">
+                <span>{/appMon.appName/}</span>
+                <pir-chart cpu-used="10" cpu-total="30" mem-used="50" mem-total="60"></pir-chart>
             </div>
         </div>
     </div>
