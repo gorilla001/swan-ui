@@ -6,7 +6,7 @@ function createClusterFormCtrl($scope, $state, glanceHttp) {
     $scope.createCluster = function (isAddNode) {
         glanceHttp.ajaxFormPost($scope, ['cluster.cluster'], function (data) {
             if (isAddNode) {
-                $state.go('cluster.addnode', {'clusterId': data.data.id});
+                $state.go('cluster.nodesource', {'clusterId': data.data.id});
             } else {
                 $state.go('cluster.listclusters');
             }

@@ -41,12 +41,46 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                     }
                 }
             })
-            .state('cluster.addnode', {
-                url: '/:clusterId/addnode',
+            .state('cluster.nodesource', {
+                url: '/:clusterId/nodesource',
                 views: {
                     'first': {
-                        templateUrl: '/views/cluster/add-node.html',
+                        templateUrl: '/views/cluster/node-source.html',
                         controller: 'addNodeCtrl'
+                    }
+                }
+            })
+            .state('cluster.iaasprovider', {
+                url: '/:clusterId/iaasprovider/:nodeId',
+                views: {
+                    'first': {
+                        templateUrl: '/views/cluster/iaas-provider.html',
+                        controller: function($scope, $stateParams) {
+                          $scope.clusterId = $stateParams.clusterId;
+                          $scope.nodeId = $stateParams.nodeId;
+                        }
+                    }
+                }
+            })
+            .state('cluster.iaasqcloud', {
+              url: '/:clusterId/iaasqcloud/:nodeId',
+                views: {
+                    'first': {
+                        templateUrl: '/views/cluster/iaas-qcloud.html',
+                        controller: function($scope, $stateParams) {
+                          $scope.clusterId = $stateParams.clusterId;
+                          $scope.nodeId = $stateParams.nodeId;
+                          $scope.skip = {'step': 1};
+                        }
+                    }
+                }
+            })
+            .state('cluster.addlivingnode', {
+              url: '/:clusterId/addlivingnode/:nodeId',
+                views: {
+                    'first': {
+                        templateUrl: '/views/cluster/add-living-node.html',
+                        controller: 'addLivingNodeCtrl'
                     }
                 }
             })

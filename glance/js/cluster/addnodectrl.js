@@ -1,9 +1,12 @@
-function addNodeCtrl(utils,$scope) {
-    utils.clickToCopy();
-    $scope.isCollapsed = false;
+function addNodeCtrl($scope, $stateParams, glanceHttp) {
+  $scope.clusterId = $stateParams.clusterId;
+  var init = function() {
+    glanceHttp.ajaxGet(["cluster.nodeId", {cluster_id: $stateParams.clusterId}], function(data){
+      $scope.nodeId = data.data.identifier;
+    });
+  };
+  init();
 }
 
-addNodeCtrl.$inject = ['utils','$scope'];
+addNodeCtrl.$inject = ['$scope', '$stateParams', 'glanceHttp'];
 glanceApp.controller("addNodeCtrl", addNodeCtrl);
-
-
