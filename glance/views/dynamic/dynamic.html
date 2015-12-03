@@ -2,21 +2,21 @@
     <h1>新闻动态</h1>
 </div>
 <section>
-    <div data-ng-show="cluster.nodes.length" class="main-container" ng-repeat="cluster in clusterList">
+    <div class="main-container" ng-repeat="(clusterId, cluster) in clusterList track by clusterId">
         <div class="main-container-body">
             <span>{/cluster.name/}</span> - <span>{/cluster.id/}</span>
             <div data-ng-show="cluster.amounts">
                 <ul class="cluster-service-status-number">
-                    <li class="running" data-ng-show="cluster.amounts.running">
+                    <li class="running">
                       <a>正常主机 <span>{/cluster.amounts.running/}</span></a>
                     </li>
-                    <li class="terminated" data-ng-show="cluster.amounts.terminated">
+                    <li class="terminated">
                       <a>失联主机 <span>{/cluster.amounts.terminated/}</span></a>
                     </li>
-                    <li class="failed" data-ng-show="cluster.amounts.failed">
+                    <li class="failed">
                       <a>报警主机 <span>{/cluster.amounts.failed/}</span></a>
                     </li>
-                    <li class="installing" data-ng-show="cluster.amounts.installing">
+                    <li class="installing">
                       <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
                     </li>
                 </ul>

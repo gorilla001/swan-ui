@@ -2,16 +2,64 @@
     'use strict';
     function groupNodes() {
 
-        var countNodesAmounts = function (nodes) {
-            var amounts = {};
-            amounts = initNodesAmounts();
+        var getNodesCache = function(cluster) {
+            var cache = {
+                services: {},
+                status: {},
+                amounts: {}
+            };
+
+            var amounts = initNodesAmounts();
             
-            var nodeStatus;
+            var serviceStatus, nodeStatus;
+            var nodes = cluster.nodes;
+            var node;
+
             for(var i = 0; i < nodes.length; i++) {
-                nodeStatus = calNodeStatus(nodes[i]);
+                node = nodes[i];
+                serviceStatus = calNodeServiceStatus(node.role, node.services);
+                nodeStatus = calNodeStatus(node.role, serviceStatus, node.status);
+                cache.services[node.id] = node.services;
+                cache.status[node.id] = nodeStatus;
                 amounts[nodeStatus] += 1;
             }
-            return amounts;
+            cache.amounts = amounts;
+            return cache;
+        }
+
+        var updateNodesAmounts = function(clusters, clusterId, nodeId, services, status, cache) {
+            var role = findUpdatedNodeRole(clusters, clusterId, nodeId);
+            var oldServices, newServices, oldNodeStatus, newNodeStatus;
+
+            var oldServiceStatus = calNodeServiceStatus(role, cache.services);
+            var oldNodeStatus =  cache.nodeStatus;
+            var amounts = cache.amounts;
+
+            //服务有更新
+            if (services) {
+                var newServiceStatus = calNodeServiceStatus(role, services);
+
+                if (oldServiceStatus !== newServiceStatus) {
+                    newNodeStatus = calNodeStatus(role, newServiceStatus, oldNodeStatus);
+                } else {
+                    newNodeStatus = oldNodeStatus;
+                }
+            }
+
+            //主机状态有更新
+            if (status) {
+                newNodeStatus = calNodeStatus(role, oldServiceStatus, status);
+            }
+
+            if (oldNodeStatus !== newNodeStatus) {
+                amounts[oldNodeStatus] -= 1;
+                amounts[newNodeStatus] += 1;
+            }
+            return {
+                amounts: amounts,
+                newNodeStatus: newNodeStatus,
+                newServices: services
+            };
         };
 
         function initNodesAmounts() {
@@ -23,24 +71,35 @@
             return amounts;
         }
 
-        function calNodeStatus(node) {
-            var isMaster = calIsMaster(node);
-            var servicesStatus = calNodeServiceStatus(node.services, isMaster);
-            if (node.status === NODE_STATUS.terminated) {
+        function findUpdatedNodeRole (clusters, clusterId, nodeId) {
+            for (var i = 0; i < clusters.length; i++) {
+                if (clusterId === clusters[i].id) {
+                    for (var j = 0; j < clusters[i].nodes.length; j++) {
+                        if(nodeId === clusters[i].nodes[j].id) {
+                            return clusters[i].nodes[j].role;
+                        }
+                    }
+                } 
+            }
+        }
+
+        function calNodeStatus(role, serviceStatus, status) {
+            var isMaster = calIsMaster(role);
+            if (status === NODE_STATUS.terminated) {
                 return NODE_STATUS.terminated;
-            } else if (node.status === NODE_STATUS.installing || servicesStatus === SERVICES_STATUS.installing) {
+            } else if (status === NODE_STATUS.installing || serviceStatus === SERVICES_STATUS.installing) {
                 return NODE_STATUS.installing;
-            } else if (servicesStatus === SERVICES_STATUS.failed) {
+            } else if (serviceStatus === SERVICES_STATUS.failed) {
                 return NODE_STATUS.failed;
             } else {
                 return NODE_STATUS.running;
             }
         }
-
     
-        function calNodeServiceStatus(services, isMaster) {
+        function calNodeServiceStatus(role, services) {
             var nodeServiceStatus = SERVICES_STATUS.running;
             var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
+            var isMaster = calIsMaster(role);
             var service;
             for (var i = 0; i < services.length; i++) {
                 service = services[i];
@@ -69,12 +128,13 @@
             }
         }
 
-        function calIsMaster(node) {
-            return node.role === 'master';
+        function calIsMaster(role) {
+            return role === 'master';
         }
-        
+
         return {
-            countNodesAmounts: countNodesAmounts
+            getNodesCache: getNodesCache,
+            updateNodesAmounts: updateNodesAmounts
         };
     }
     
