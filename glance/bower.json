@@ -27,6 +27,7 @@
     "zeroclipboard": "~2.2.0",
     "angular-ui-router": "~0.2.15",
     "ngSocket": "~0.2.1",
+    "angular-mocks": "^1.4.6",
     "angular-cookies": "~1.4.3",
     "angular-sanitize": "~1.4.3",
     "ngInfiniteScroll": "~1.2.1",
