@@ -259,8 +259,8 @@ glanceApp.directive('piechart', function() {
                         radius: scope.radius || [45,55],
                         itemStyle: labelFromatter,
                         data: [
-                            {name: 'used', value: scope.used || 50, itemStyle: labelTop},
-                            {name: 'other', value: (scope.total-scope.used) || 50, itemStyle: labelBottom}
+                            {name: 'used', value:   (scope.used == undefined) ? 50 : scope.used, itemStyle: labelTop},
+                            {name: 'other', value: ((scope.total-scope.used) == undefined)? 50 : (scope.total-scope.used), itemStyle: labelBottom}
                         ]
                     }
                 ]
@@ -273,11 +273,11 @@ glanceApp.directive('piechart', function() {
             clusterChart.setOption(option);
 
             scope.$watch(function () { return scope.used; }, function (value) {
-                if (value) { clusterChart.setOption(option); }
+                if (value !== undefined) { clusterChart.setOption(option); }
             }, true);
 
             scope.$watch(function () { return scope.total; }, function (value) {
-                if (value) { clusterChart.setOption(option); }
+                if (value !== undefined) { clusterChart.setOption(option); }
             }, true);
         }
     }
