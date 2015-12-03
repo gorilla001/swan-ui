@@ -189,7 +189,7 @@ function buildCharts(monitor) {
                 seriesName: 'CPU使用率'
             },
             styles: {
-                lineWidth: 2,
+                lineWidth: 3,
                 axesColor: '#9B9B9B',
                 axiesFontsize: '11px'
             }
@@ -203,8 +203,8 @@ function buildCharts(monitor) {
                 seriesName: '内存使用率'
             },
             styles: {
-                lineColor: '#B6A2DC',
-                lineWidth: 2,
+                lineColor: '#68d1f2',
+                lineWidth: 3,
                 axesColor: '#9B9B9B',
                 axiesFontsize: '11px'
             }
@@ -218,8 +218,8 @@ function buildCharts(monitor) {
                 seriesName: '磁盘使用率'
             },
             styles: {
-                lineColor: '#B6A2DC',
-                lineWidth: 2,
+                lineColor: '#7268f2',
+                lineWidth: 3,
                 axesColor: '#9B9B9B',
                 axiesFontsize: '11px'
             }
