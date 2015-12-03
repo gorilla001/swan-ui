@@ -24,7 +24,12 @@
 
             <div ng-repeat="appMon in cluster.appMonitors">
                 <span>{/appMon.appName/}</span>
-                <pir-chart cpu-used="10" cpu-total="30" mem-used="50" mem-total="60"></pir-chart>
+                <piechart chart-used="40" chart-total="120" radius="[45, 55]"
+                            use-color="#68d1f2" show-text="CPU使用">
+                </piechart>
+                <piechart chart-used="60" chart-total="90" radius="[45, 55]"
+                            use-color="#68d1f2" show-text="内存使用">
+                </piechart>
             </div>
         </div>
     </div>

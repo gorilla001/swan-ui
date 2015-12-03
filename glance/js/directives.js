@@ -190,20 +190,23 @@ glanceApp.directive('samename', function () {
     };
 });
 
-glanceApp.directive('pirChart', function() {
+glanceApp.directive('piechart', function() {
     return {
         restrict: 'E',
         template: '<div></div>',
-        scope:{
-            cpuUsed: '=cpuUsed',
-            cpuTotal: '=cpuTotal',
-            memUsed: '=memUsed',
-            memTotal: '=memTotal'
+        scope: {
+            used: '=chartUsed',
+            total: '=chartTotal',
+            usecolor: '@useColor',
+            backgroundColor: '@backgroundColor',
+            radius: '=radius',
+            showText: '@showText'
+
         },
-        link: function(scope, elem, attrs, ctrl) {
-            var labelCpuTop = {
+        link:function(scope, elem, attrs, ctrl){
+            var labelTop = {
                 normal: {
-                    color: '#68d1f2',
+                    color: scope.usecolor || "#68d1f2",
                     label: {
                         show: true,
                         position: 'center',
@@ -218,16 +221,16 @@ glanceApp.directive('pirChart', function() {
                     }
                 }
             };
-            var labelMemTop = {
+
+            var labelBottom = {
                 normal: {
-                    color: '#ff9494',
+                    color: scope.backgroundColor || "#eee",
                     label: {
                         show: true,
                         position: 'center',
-                        formatter: '{d}'+'%',
+                        formatter: scope.showText || "pieCart",
                         textStyle: {
-                            fontSize: 17,
-                            baseline: 'bottom'
+                            fontSize: 7
                         }
                     },
                     labelLine: {
@@ -235,6 +238,7 @@ glanceApp.directive('pirChart', function() {
                     }
                 }
             };
+
             var labelFromatter = {
                 normal: {
                     label: {
@@ -247,69 +251,34 @@ glanceApp.directive('pirChart', function() {
                     }
                 }
             };
-            var labelCpuBottom = {
-                normal: {
-                    color: '#eee',
-                    label: {
-                        show: true,
-                        position: 'center',
-                        formatter: 'CPU 占用',
-                        textStyle: {
-                            fontSize: 7
-                        }
-                    },
-                    labelLine: {
-                        show: false
-                    }
-                }
-            };
-            var labelMemBottom = {
-                normal: {
-                    color: '#eee',
-                    label: {
-                        show: true,
-                        position: 'center',
-                        formatter: '内存占用',
-                        textStyle: {
-                            fontSize: 7
-                        }
-                    },
-                    labelLine: {
-                        show: false
-                    }
-                }
-            };
-            var radius = [45, 55];
+
             var option = {
                 series: [
                     {
                         type: 'pie',
-                        center: ['30%', '30%'],
-                        radius: radius,
+                        radius: scope.radius || [45,55],
                         itemStyle: labelFromatter,
                         data: [
-                            {name: 'CPU占用', value: scope.cpuUsed, itemStyle: labelCpuTop},
-                            {name: 'other', value: scope.cpuTotal-scope.cpuUsed, itemStyle: labelCpuBottom}
-                        ]
-                    },
-                    {
-                        type: 'pie',
-                        center: ['30%', '80%'],
-                        radius: radius,
-                        itemStyle: labelFromatter,
-                        data: [
-                            {name: '内存占用', value: scope.memUsed, itemStyle: labelMemTop},
-                            {name: 'other', value: scope.memTotal-scope.memUsed, itemStyle: labelMemBottom}
+                            {name: 'used', value: scope.used || 50, itemStyle: labelTop},
+                            {name: 'other', value: (scope.total-scope.used) || 50, itemStyle: labelBottom}
                         ]
                     }
                 ]
             };
 
             var ndWrapper  = elem.find('div')[0];
-            ndWrapper.style.width = 200 + 'px';
-            ndWrapper.style.height = 300 + 'px';
+            ndWrapper.style.width = (scope.radius[1] * 2 || 110) + 'px';
+            ndWrapper.style.height = (scope.radius[1] * 2 || 110)+ 'px';
             var clusterChart = echarts.init(ndWrapper);
             clusterChart.setOption(option);
+
+            scope.$watch(function () { return scope.used; }, function (value) {
+                if (value) { clusterChart.setOption(option); }
+            }, true);
+
+            scope.$watch(function () { return scope.total; }, function (value) {
+                if (value) { clusterChart.setOption(option); }
+            }, true);
         }
-    };
+    }
 });
