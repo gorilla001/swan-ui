@@ -2,9 +2,9 @@
     <h1>新闻动态</h1>
 </div>
 <section>
-    <div class="main-container" ng-repeat="li in list track by $index">
+    <div class="main-container" ng-repeat="cluster in clusterList track by $index">
         <div class="main-container-body">
-            <span>appName</span>
+        <span>{/cluster.name/}</span> - <span>{/cluster.id/}</span>
             <pir-chart cpu-value="30" mem-value="60"></pir-chart>
         </div>
     </div>
