@@ -200,7 +200,8 @@ glanceApp.directive('piechart', function () {
             usecolor: '@useColor',
             backgroundColor: '@backgroundColor',
             radius: '=radius',
-            showText: '@showText'
+            showText: '@showText',
+            textcolor: '@textColor'
 
         },
         link: function (scope, elem, attrs, ctrl) {
@@ -218,7 +219,8 @@ glanceApp.directive('piechart', function () {
                         formatter: '{b}' + '%',
                         textStyle: {
                             fontSize: 17,
-                            baseline: 'bottom'
+                            baseline: 'bottom',
+                            color: scope.textcolor || "#68d1f2"
                         }
                     },
                     labelLine: {
@@ -235,7 +237,8 @@ glanceApp.directive('piechart', function () {
                         position: 'center',
                         formatter: scope.showText || "pieCart",
                         textStyle: {
-                            fontSize: 7
+                            fontSize: 7,
+                            color: '#CCC'
                         }
                     },
                     labelLine: {
@@ -267,39 +270,44 @@ glanceApp.directive('piechart', function () {
                             data: [
                                 {
                                     name: function () {
-                                        if (scope.total) {
-                                            return (scope.used / scope.total * 100).toFixed(2)
-                                        } else if (scope.used == undefined || scope.total == undefined) {
-                                            return 'NaN'
-                                        } else {
-                                            return '0.00'
-                                        }
-                                    }(), value: function () {
-                                    if (scope.used || scope.used === 0) {
-                                        return scope.used
-                                    } else if (scope.used == undefined || scope.total == undefined) {
-                                        return 0
-                                    } else {
-                                        return 50
-                                    }
+                                                if (scope.total) {
+                                                    return (scope.used / scope.total * 100).toFixed(2)
+                                                } else if (scope.used == undefined || scope.total == undefined) {
+                                                    return 'NaN'
+                                                } else {
+                                                    return '0.00'
+                                                }
+                                            }(),
+                                    value: function () {
+                                                if ((scope.used && scope.total != undefined) || scope.used === 0) {
+                                                    return scope.used
+                                                } else if ((scope.used == undefined || scope.total == undefined) || (scope.used != undefined && scope.total == undefined)) {
+                                                    return 0
+                                                } else {
+                                                    return 50
+                                                }
 
-                                }(), itemStyle: labelTop
+                                            }(),
+                                    itemStyle: labelTop
                                 },
                                 {
-                                    name: 'other', value: function () {
-                                    if (scope.total - scope.used > 0) {
-                                        return scope.total - scope.used
-                                    } else {
-                                        return 1
-                                    }
-                                }(), itemStyle: labelBottom
+                                    name: 'other',
+                                    value: function () {
+                                                if(scope.total && scope.used && (scope.total - scope.used == 0)){
+                                                    return 0;
+                                                } else if(scope.total - scope.used > 0) {
+                                                    return scope.total - scope.used
+                                                } else {
+                                                    return 1e-100
+                                                }
+                                            }(),
+                                    itemStyle: labelBottom
                                 }
                             ]
                         }
                     ]
                 }
             }
-
             var ndWrapper = elem.find('div')[0];
             ndWrapper.style.width = (scope.radius[1] * 2 || 110) + 'px';
             ndWrapper.style.height = (scope.radius[1] * 2 || 110) + 'px';

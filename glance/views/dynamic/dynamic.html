@@ -1,45 +1,54 @@
-<div class="page-header">
-    <h1>新闻动态</h1>
-</div>
-<section>
-    <div class="main-container" ng-repeat="(clusterId, cluster) in clusterList track by clusterId">
+<section class="news">
+    <div class="main-container">
         <div class="main-container-body">
-            <span>{/cluster.name/}</span> - <span>{/cluster.id/}</span>
-            <div data-ng-show="cluster.amounts">
-                <ul class="cluster-service-status-number">
-                    <li class="running">
-                      <a>正常主机 <span>{/cluster.amounts.running/}</span></a>
-                    </li>
-                    <li class="terminated">
-                      <a>失联主机 <span>{/cluster.amounts.terminated/}</span></a>
-                    </li>
-                    <li class="failed">
-                      <a>报警主机 <span>{/cluster.amounts.failed/}</span></a>
-                    </li>
-                    <li class="installing">
-                      <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
-                    </li>
-                </ul>
+            <h1>新闻动态</h1>
+        </div>
+    </div>
+</section>
+<section class="dashboard">
+    <div class="main-container" ng-repeat="(clusterId, cluster) in clusterList track by clusterId">
+        <div class="main-container-body clearfix">
+            <h2>{/cluster.name/}</h2>
+            <div class="dashboard-left">
+                <div class="dashboard-cluster">
+                    <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
+                              use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2">
+                    </piechart>
+
+                    <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
+                              use-color="#ff9494" show-text="内存占用" text-color="#ff9494">
+                    </piechart>
+                </div>
+                <div data-ng-show="cluster.amounts">
+                    <ul class="cluster-service-status-number">
+                        <li class="running">
+                          <a>正常主机 <span>{/cluster.amounts.running/}</span></a>
+                        </li>
+                        <li class="terminated">
+                          <a>失联主机 <span>{/cluster.amounts.terminated/}</span></a>
+                        </li>
+                        <li class="failed">
+                          <a>报警主机 <span>{/cluster.amounts.failed/}</span></a>
+                        </li>
+                        <li class="installing">
+                          <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div class="dashboard-right">
 
-            <div>
-                <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[65, 75]"
-                          use-color="#68d1f2" show-text="CPU占用">
-                </piechart>
-
-                <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[65, 75]"
-                          use-color="#ff9494" show-text="内存占用">
-                </piechart>
-            </div>
-
-           <div ng-repeat="appMon in cluster.appMonitors">
-                <span>{/appMon.appName/}</span>
-                <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
-                            use-color="#68d1f2" show-text="CPU使用">
-                </piechart>
-                <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare" radius="[45, 55]"
-                            use-color="#ff9494" show-text="内存使用">
-                </piechart>
+                <div class="dashboard-app">
+                   <div ng-repeat="appMon in cluster.appMonitors" class="app-info">
+                        <h5>{/appMon.appName/}</h5>
+                        <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
+                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2">
+                        </piechart>
+                        <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare" radius="[45, 55]"
+                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494">
+                        </piechart>
+                   </div>
+                </div>
             </div>
         </div>
     </div>
