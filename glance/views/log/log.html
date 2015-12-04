@@ -7,43 +7,28 @@
     <section class="search-log">
         <div class="main-container">
             <div class="main-container-body">
-                <div class="row">
-                    <form class=" col-md-3" name="staticForm" data-ng-submit="getLog()">
-                        <div class="form-group">
-                            <label><span class="text-danger">* </span>集群名</label>
-                            <select class="form-control"
+                    <form class="row" name="staticForm" data-ng-submit="getLog()">
+                        <div class="form-group col-md-2">
+                            <label>集群名 <span class="text-danger">* </span></label>
+                            <select class="form-control input-sm"
                                     data-ng-options=" cluster.id as cluster.name for cluster in clusters"
                                     data-ng-model="clusterId" data-required="required"></select>
                         </div>
 
-                        <div class="form-group">
-                            <label><span class="text-danger">* </span>应用名</label>
-                            <select class="form-control"
+                        <div class="form-group col-md-2">
+                            <label>应用名 <span class="text-danger">* </span></label>
+                            <select class="form-control input-sm"
                                     data-ng-options=" option.name as option.name for option in options"
                                     data-ng-model="appName" data-required="required" ng-change="getNodes(appName,clusterId)">
                                 <option value=""></option>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label style="display: block"><span class="text-danger">* </span>主机名/IP</label>
-                            <isteven-multi-select
-                                    input-model="inputNodesInfo"
-                                    output-model="nodeId"
-                                    button-label="ip"
-                                    item-label="ip"
-                                    tick-property="ticked"
-                                    helper-elements="all none filter"
-                                    max-height="200px"
-                                    translation="multiConfig"
-                                    >
-                            </isteven-multi-select>
 
-                        </div>
 
-                        <div class="form-group">
-                            <div>
-                                <label style="display: block"><span class="text-danger">* </span>起始日期: </label>
+                        <div class="form-group col-md-8">
+                            <div style="display: inline-block; margin-right: 20px">
+                                <label style="display: block">起始日期 <span class="text-danger">* </span></label>
                                 <datetimepicker
                                         min-date="minDate" hour-step="hourStep"
                                         minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
@@ -58,9 +43,8 @@
                                         date-disabled="isDisableGteDate(date, mode)">
                                 </datetimepicker>
                             </div>
-
-                            <div>
-                                <label style="display: block"><span class="text-danger">* </span>截止日期: </label>
+                            <div style="display: inline-block;">
+                                <label style="display: block">截止日期 <span class="text-danger">* </span></label>
                                 <datetimepicker
                                         min-date="minDate" hour-step="hourStep"
                                         minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
@@ -76,19 +60,38 @@
                                 </datetimepicker>
                             </div>
                         </div>
+                        <div class="form-group col-md-2">
+                            <label style="display: block">主机名/IP <span class="text-danger">* </span></label>
+                            <isteven-multi-select
+                                    input-model="inputNodesInfo"
+                                    output-model="nodeId"
+                                    button-label="ip"
+                                    item-label="ip"
+                                    tick-property="ticked"
+                                    helper-elements="all none filter"
+                                    max-height="200px"
+                                    translation="multiConfig"
+                            >
+                            </isteven-multi-select>
+
+                        </div>
                         <!--<div class="form-group">-->
                         <!--<label>实例名</label>-->
                         <!--<input type="text" class="form-control input-sm" data-ng-model="searchData.instanceName">-->
                         <!--</div>-->
-                        <div class="form-group">
+                        <div class="form-group col-md-4">
                             <label>关键字</label>
                             <input type="text" class="form-control input-sm" data-ng-model="logSearchKey">
                         </div>
-                        <button type="submit" data-ng-disabled="staticForm.$invalid || !nodeId.length"
-                                class="btn btn-primary btn-sm btn-block">查询
-                        </button>
+                        <div class="col-md-2">
+                            <label></label>
+                            <button type="submit" data-ng-disabled="staticForm.$invalid || !nodeId.length"
+                                    class="btn btn-primary btn-sm btn-block">查询
+                            </button>
+                        </div>
                     </form>
-                    <div class="col-md-9" ng-hide="showContextUI">
+                <hr>
+                    <div ng-hide="showContextUI">
                         <div class="log-screen">
                             <ul class="list-unstyled" data-infinite-scroll="clusterlogs.getlogs()"
                                 data-infinite-scroll-distance='0'
@@ -103,7 +106,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-9" ng-show="showContextUI">
+                    <div ng-show="showContextUI">
                         <div class="log-screen selected-log-list" id="contextLog">
                             <a href="#" ng-click="returnLos()" class="btn btn-primary btn-sm hide-selected"
                                style="position: absolute;"><span
@@ -117,7 +120,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 </div>

@@ -1349,3 +1349,15 @@ rzslider .rz-bubble {
 	width: 10%;
 	padding-top: 40px;
 }
+
+.datetimepicker-wrapper input {
+	height: 30px;
+}
+.form-group .multiSelect > button {
+	min-height: 30px !important;
+	width: 100%;
+	text-align: left;
+}
+.datetimepicker-wrapper > input {
+	width: 110px !important;
+}

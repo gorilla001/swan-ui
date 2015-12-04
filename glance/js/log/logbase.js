@@ -23,7 +23,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "选择主机（ 可选 ）"
+        nothingSelected: "选择主机"
     };
 
     $scope.inputNodesInfo = [];
