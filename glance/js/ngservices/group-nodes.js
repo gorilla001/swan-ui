@@ -2,63 +2,66 @@
     'use strict';
     function groupNodes() {
 
-        var getNodesCache = function(cluster) {
-            var cache = {
+        var getOriginalCluster = function(cluster) {
+            var originalCluster = {
                 services: {},
-                status: {},
+                nodeStatus: {},
+                rawStatus: {},
                 amounts: {}
             };
+            originalCluster.amounts = initNodesAmounts();
+            var serviceStatus, nodeStatus, node;
 
-            var amounts = initNodesAmounts();
-            
-            var serviceStatus, nodeStatus;
-            var nodes = cluster.nodes;
-            var node;
-
-            for(var i = 0; i < nodes.length; i++) {
-                node = nodes[i];
+            for(var i = 0; i < cluster.nodes.length; i++) {
+                node = cluster.nodes[i];
                 serviceStatus = calNodeServiceStatus(node.role, node.services);
                 nodeStatus = calNodeStatus(node.role, serviceStatus, node.status);
-                cache.services[node.id] = node.services;
-                cache.status[node.id] = nodeStatus;
-                amounts[nodeStatus] += 1;
+                originalCluster.services[node.id] = node.services;
+                originalCluster.nodeStatus[node.id] = nodeStatus;
+                originalCluster.rawStatus[node.id] = node.status;
+                originalCluster.amounts[nodeStatus] += 1;
             }
-            cache.amounts = amounts;
-            return cache;
-        }
+            return originalCluster;
+        };
 
-        var updateNodesAmounts = function(clusters, clusterId, nodeId, services, status, cache) {
+        var updateClusterCache = function(clusters, wsData, clusterCache) {
+            
+            var clusterId = wsData.clusterId;
+            var nodeId = wsData.nodeId;
+            var status = wsData.status;
+
+            var oldServices = clusterCache.servicesCache[nodeId];
+            var newServices = oldServices;
+            var oldNodeStatus = clusterCache.nodeStatusCache[nodeId];
+            var newNodeStatus = oldNodeStatus;
+            var rawStatus = clusterCache.rawStatusCache[nodeId];
+            var amounts = clusterCache.amounts;
+
+            var oldServiceStatus = calNodeServiceStatus(role, oldServices);
+
             var role = findUpdatedNodeRole(clusters, clusterId, nodeId);
-            var oldServices, newServices, oldNodeStatus, newNodeStatus;
 
-            var oldServiceStatus = calNodeServiceStatus(role, cache.services);
-            var oldNodeStatus =  cache.nodeStatus;
-            var amounts = cache.amounts;
-
-            //服务有更新
-            if (services) {
-                var newServiceStatus = calNodeServiceStatus(role, services);
-
-                if (oldServiceStatus !== newServiceStatus) {
-                    newNodeStatus = calNodeStatus(role, newServiceStatus, oldNodeStatus);
-                } else {
-                    newNodeStatus = oldNodeStatus;
-                }
-            }
-
-            //主机状态有更新
+            // 主机状态有更新
             if (status) {
                 newNodeStatus = calNodeStatus(role, oldServiceStatus, status);
+                rawStatus = status;
+            } else { //服务状态有更新
+                newServices = collectLatestServices(wsData, oldServices);
+                var newServiceStatus = calNodeServiceStatus(role, newServices);
+                if (newServiceStatus !== oldServiceStatus) {
+                    newNodeStatus = calNodeStatus(role, newServiceStatus, rawStatus);
+                }
             }
-
             if (oldNodeStatus !== newNodeStatus) {
                 amounts[oldNodeStatus] -= 1;
                 amounts[newNodeStatus] += 1;
             }
+
             return {
-                amounts: amounts,
+                newAmounts: amounts,
                 newNodeStatus: newNodeStatus,
-                newServices: services
+                newServices: newServices,
+                newRawStatus: rawStatus
             };
         };
 
@@ -85,9 +88,17 @@
 
         function calNodeStatus(role, serviceStatus, status) {
             var isMaster = calIsMaster(role);
+
+            var isInstalling = Boolean(
+                (status === NODE_STATUS.installing) || 
+                (serviceStatus === SERVICES_STATUS.installing) || 
+                (status === NODE_STATUS.initing) || 
+                (status === NODE_STATUS.upgrading)
+            );
+            
             if (status === NODE_STATUS.terminated) {
                 return NODE_STATUS.terminated;
-            } else if (status === NODE_STATUS.installing || serviceStatus === SERVICES_STATUS.installing) {
+            } else if (isInstalling) {
                 return NODE_STATUS.installing;
             } else if (serviceStatus === SERVICES_STATUS.failed) {
                 return NODE_STATUS.failed;
@@ -103,7 +114,7 @@
             var service;
             for (var i = 0; i < services.length; i++) {
                 service = services[i];
-                if (service.status === SERVICES_STATUS.installing) {
+                if (service.status === SERVICES_STATUS.installing || service.status === 'uninstalling') {
                     return SERVICES_STATUS.installing;
                 }
                 nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
@@ -132,9 +143,20 @@
             return role === 'master';
         }
 
+        function collectLatestServices(wsData, cacheServices) {
+            var latestServices = angular.copy(cacheServices);
+            var key;
+            for (key in wsData) {
+                if ((key !== 'clusterId') && (key !== 'nodeId')) {
+                    latestServices[key] = wsData[key];
+                }
+            }
+            return latestServices;
+        }
+
         return {
-            getNodesCache: getNodesCache,
-            updateNodesAmounts: updateNodesAmounts
+            getOriginalCluster: getOriginalCluster,
+            updateClusterCache: updateClusterCache
         };
     }
     
