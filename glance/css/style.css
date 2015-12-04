@@ -1272,12 +1272,12 @@ rzslider .rz-bubble {
 }
 .dashboard .dashboard-left {
 	float: left;
-	width: 420px;
+	width: 450px;
 	padding-top: 30px;
 	text-align: center;
 }
 .dashboard .dashboard-right {
-	margin-left: 450px;
+	margin-left: 480px;
 	height: 300px;
 	overflow-y: auto;
 }
