@@ -8,7 +8,7 @@
     dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'groupNodes', '$q'];
 
     function dynamicBaseCtrl($scope, $rootScope, glanceHttp, groupNodes, $q) {
-        $rootScope.show = 'dynamic';
+        $rootScope.show = 'home';
 
         var clusterCache = {
             statusCache: {},
