@@ -88,9 +88,17 @@
 
         function calNodeStatus(role, serviceStatus, status) {
             var isMaster = calIsMaster(role);
+
+            var isInstalling = Boolean(
+                (status === NODE_STATUS.installing) || 
+                (serviceStatus === SERVICES_STATUS.installing) || 
+                (status === NODE_STATUS.initing) || 
+                (status === NODE_STATUS.upgrading)
+            );
+            
             if (status === NODE_STATUS.terminated) {
                 return NODE_STATUS.terminated;
-            } else if (status === NODE_STATUS.installing || serviceStatus === SERVICES_STATUS.installing) {
+            } else if (isInstalling) {
                 return NODE_STATUS.installing;
             } else if (serviceStatus === SERVICES_STATUS.failed) {
                 return NODE_STATUS.failed;
