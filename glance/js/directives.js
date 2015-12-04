@@ -104,7 +104,7 @@ glanceApp.directive('regexValidator', function() {
                 var length = value.length;
                 return Boolean(length <= 0 || (length >= 8 && length <= 16));
             };
-            
+
             ctrl.$parsers.unshift(function(value) {
                 var valid = true;
                 if (value) {
@@ -190,7 +190,7 @@ glanceApp.directive('samename', function () {
     };
 });
 
-glanceApp.directive('piechart', function() {
+glanceApp.directive('piechart', function () {
     return {
         restrict: 'E',
         template: '<div></div>',
@@ -203,14 +203,19 @@ glanceApp.directive('piechart', function() {
             showText: '@showText'
 
         },
-        link:function(scope, elem, attrs, ctrl){
+        link: function (scope, elem, attrs, ctrl) {
+
+            if (scope.total - scope.used <= 0) {
+                scope.usecolor = '#FF3030';
+            }
+
             var labelTop = {
                 normal: {
                     color: scope.usecolor || "#68d1f2",
                     label: {
                         show: true,
                         position: 'center',
-                        formatter: '{d}'+'%',
+                        formatter: '{b}' + '%',
                         textStyle: {
                             fontSize: 17,
                             baseline: 'bottom'
@@ -252,34 +257,58 @@ glanceApp.directive('piechart', function() {
                 }
             };
 
-            function createOption(){
+            function createOption() {
                 return {
                     series: [
                         {
                             type: 'pie',
-                            radius: scope.radius || [45,55],
+                            radius: scope.radius || [45, 55],
                             itemStyle: labelFromatter,
                             data: [
-                                {name: 'used', value:   (scope.used || scope.used === 0) ? scope.used : 50, itemStyle: labelTop},
-                                {name: 'other', value: ((scope.total-scope.used) || (scope.total-scope.used) === 0) ? (scope.total-scope.used) : 50, itemStyle: labelBottom}
+                                {
+                                    name: function () {
+                                        if (scope.total) {
+                                            return (scope.used / scope.total * 100).toFixed(2)
+                                        } else {
+                                            return '0.00'
+                                        }
+                                    }(), value: (scope.used || scope.used === 0) ? scope.used : 50, itemStyle: labelTop
+                                },
+                                {
+                                    name: 'other', value: function () {
+                                    if (scope.total - scope.used > 0) {
+                                        return scope.total - scope.used
+                                    } else {
+                                        return 0
+                                    }
+                                }(), itemStyle: labelBottom
+                                }
                             ]
                         }
                     ]
                 }
             }
 
-            var ndWrapper  = elem.find('div')[0];
+            var ndWrapper = elem.find('div')[0];
             ndWrapper.style.width = (scope.radius[1] * 2 || 110) + 'px';
-            ndWrapper.style.height = (scope.radius[1] * 2 || 110)+ 'px';
+            ndWrapper.style.height = (scope.radius[1] * 2 || 110) + 'px';
             var clusterChart = echarts.init(ndWrapper);
             clusterChart.setOption(createOption());
 
-            scope.$watch(function () { return scope.used; }, function (newValue, oldValue) {
-                if (newValue != oldValue) { clusterChart.setOption(createOption()); }
+            scope.$watch(function () {
+                return scope.used;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    clusterChart.setOption(createOption());
+                }
             }, true);
 
-            scope.$watch(function () { return scope.total; }, function (newValue, oldValue) {
-                if (newValue != oldValue) { clusterChart.setOption(createOption()); }
+            scope.$watch(function () {
+                return scope.total;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    clusterChart.setOption(createOption());
+                }
             }, true);
         }
     }
