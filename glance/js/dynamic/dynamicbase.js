@@ -11,7 +11,8 @@
         $rootScope.show = 'dynamic';
 
         var clusterCache = {
-            statusCache: {},
+            nodeStatusCache: {},
+            rawStatusCache: {},
             servicesCache: {},
             amounts: {}
         };
@@ -31,10 +32,10 @@
             return deferred.promise;
         }
 
-        function jionMonitorInClusterList() {
+        function joinMonitorInClusterList() {
             angular.forEach($scope.clusterList, function (cluster) {
                 if(cluster.nodes.length){
-                    glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: cluster.id}], function (data) {
+                    glanceHttp.ajaxGet(['metrics.getClusterMonitor', {cluster_id: cluster.id}], function (data) {
                         if (data && data.data) {
                             if(data.data.appMetrics){
                                 cluster.appMonitors = data.data.appMetrics;
@@ -49,76 +50,57 @@
         }
 
         var promise = listAllClusters();
-        promise.then(jionMonitorInClusterList);
-
+        promise.then(joinMonitorInClusterList);
 
         function collectClusterList(clusters) {
             var clusterList = {};
             var cluster;
-            var cache = {};
+            var originalCluster = {};
             for (var i = 0; i < clusters.length; i++) {
                 cluster = clusters[i];
 
-                cache = groupNodes.getNodesCache(cluster);
-                clusterCache.statusCache[cluster.id] = cache.status;
-                clusterCache.servicesCache[cluster.id] = cache.services;
-                clusterCache.amounts[cluster.id] = cache.amounts;
+                if (cluster.nodes.length) {
 
-                clusterList[cluster.id] = {
-                    id: cluster.id,
-                    name: cluster.name,
-                    amounts: cache.amounts,
-                    nodes: cluster.nodes,
-                    appMonitors: [],
-                    masMetrics:{}
-                };
+                    originalCluster = groupNodes.getOriginalCluster(cluster);
+
+                    clusterCache.nodeStatusCache[cluster.id] = originalCluster.nodeStatus;
+                    clusterCache.rawStatusCache[cluster.id] = originalCluster.rawStatus;
+                    clusterCache.servicesCache[cluster.id] = originalCluster.services;
+                    clusterCache.amounts[cluster.id] = originalCluster.amounts;
+
+                    clusterList[cluster.id] = {
+                        id: cluster.id,
+                        name: cluster.name,
+                        amounts: originalCluster.amounts,
+                        nodes: cluster.nodes,
+                        appMonitors: [],
+                        masMetrics:{}
+                    };
+                }
 
             }
             return clusterList;
         }
 
         $scope.$on('nodeStatusUpdate', function(event, data) {
-            updateNodes(data.clusterId, data.nodeId, data.status);
+            updateNodeAmountsAndClusterCache(data);
         });
 
         $scope.$on('serviceStatusUpdate', function (event, data) {
-            var cacheServices = clusterCache.servicesCache[data.clusterId];
-            var latestServices = collectLatestServices(data, cacheServices);
-
-            updateNodes(data.clusterId, data.nodeId, undefined, latestServices);
+            updateNodeAmountsAndClusterCache(data);
         });
 
-        function updateNodes(clusterId, nodeId, status, services) {
+        function updateNodeAmountsAndClusterCache(wsData) {
+            var latestData = groupNodes.updateClusterCache(listClusterDataGetFromBackend, wsData, clusterCache);
 
-            var copyClusterCache = angular.copy(clusterCache);
+            // 更新页面数据
+            $scope.clusterList[wsData.clusterId].amounts = latestData.newAmounts;
 
-            var cache = {
-                nodeStatus: copyClusterCache.statusCache[clusterId][nodeId],
-                services: copyClusterCache.servicesCache[clusterId][nodeId],
-                amounts: copyClusterCache.amounts[clusterId]
-            };
-
-            var latestData = groupNodes.updateNodesAmounts(listClusterDataGetFromBackend, clusterId, nodeId, services, status, cache);
-
-            $scope.clusterList[clusterId].amounts = latestData.amounts;
-
-            //更新cache
-            clusterCache.amounts[clusterId] = latestData.amounts;
-            clusterCache.statusCache[clusterId][nodeId] = latestData.newNodeStatus;
-            if(services) {
-                clusterCache.servicesCache[clusterId][nodeId] = latestData.newServices;
-            }
-        }
-
-        function collectLatestServices(wsData, cacheServices) {
-            var latestServices = angular.copy(cacheServices);
-            var key;
-            for (key in wsData) {
-                if ((key !== 'clusterId') && (key !== 'nodeId')) {
-                    latestServices[key] = wsData[key];
-                }
-            }
-            return latestServices;
+            // 更新集群cache
+            clusterCache.nodeStatusCache[wsData.clusterId][wsData.nodeId] = latestData.newNodeStatus;
+            clusterCache.rawStatusCache[wsData.clusterId][wsData.nodeId] = latestData.newRawStatus;
+            clusterCache.servicesCache[wsData.clusterId][wsData.nodeId] = latestData.newServices;
+            clusterCache.amounts[wsData.clusterId] = latestData.newAmounts;
         }
 
     }
