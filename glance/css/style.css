@@ -1304,7 +1304,7 @@ rzslider .rz-bubble {
 .dashboard .dashboard-app .app-info {
 	text-align:  center;
 	display: inline-block;
-	margin: 0 20px;
+	margin: 0 20px 10px 20px;
 }
 .dashboard .cluster-service-status-number {
 	margin-bottom: 10px;
