@@ -2,7 +2,7 @@ var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate',
 
 glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider','$locationProvider',
     function($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
-        $urlRouterProvider.otherwise('/cluster/listclusters');
+        $urlRouterProvider.otherwise('/dynamic');
         $stateProvider
             .state("cluster", {
                 url: '/cluster',
@@ -230,6 +230,15 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                     '': {
                         templateUrl: '/views/log/log.html',
                         controller: 'logBaseCtrl'
+                    }
+                }
+            })
+            .state('dynamic', {
+                url: '/dynamic',
+                views: {
+                    '': {
+                        templateUrl: '/views/dynamic/dynamic.html',
+                        controller: 'dynamicBaseCtrl'
                     }
                 }
             })

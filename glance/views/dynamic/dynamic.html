@@ -1,0 +1,71 @@
+
+<section class="main-news ">
+    <div class="main-container">
+        <div class="main-container-body clearfix">
+            <div class="news-hot">
+                <h3>新闻动态</h3>
+                <h4>玩转数人云：快速搭建ZooKeeper集群</h4>
+                <p>熟悉ZooKeeper的朋友都清楚，这是一个好东西。只是搭建ZooKeeper集群却不是一件容易的事。使用数人云部署ZooKeeper集群？那就是分分钟的事。<a href="http://open.shurenyun.com/article/11" target="_blank">阅读全文</a> </p>
+            </div>
+            <div class="news-list">
+                <ul>
+                    <li><a href="http://open.shurenyun.com/article/10" target="_blank">Mesos Meetup 第三期干货PPT下载</a></li>
+                    <li><a href="http://open.shurenyun.com/article/8" target="_blank">永洪BI也能在数人云上跳舞</a></li>
+                    <li><a href="http://open.shurenyun.com/article/7" target="_blank">微软容器未来的安全版本</a></li>
+                    <li><a href="http://open.shurenyun.com/article/6" target="_blank">没有主机？用笔记本一样玩转数人云</a></li>
+                </ul>
+            </div>
+            <div class="news-more">
+                <a href="http://open.shurenyun.com/" class="btn btn-success" target="_blank">数人之家 <span class="glyphicon glyphicon-arrow-right   "></span></a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="dashboard">
+    <div class="main-container" ng-repeat="(clusterId, cluster) in clusterList track by clusterId">
+        <div class="main-container-body clearfix">
+            <h2>{/cluster.name/}</h2>
+            <div class="dashboard-left">
+                <div class="dashboard-cluster">
+                    <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
+                              use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2">
+                    </piechart>
+
+                    <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
+                              use-color="#ff9494" show-text="内存占用" text-color="#ff9494">
+                    </piechart>
+                </div>
+                <div data-ng-show="cluster.amounts">
+                    <ul class="cluster-service-status-number">
+                        <li class="running">
+                          <a>正常主机 <span>{/cluster.amounts.running/}</span></a>
+                        </li>
+                        <li class="terminated">
+                          <a>失联主机 <span>{/cluster.amounts.terminated/}</span></a>
+                        </li>
+                        <li class="failed">
+                          <a>报警主机 <span>{/cluster.amounts.failed/}</span></a>
+                        </li>
+                        <li class="installing">
+                          <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dashboard-right">
+
+                <div class="dashboard-app">
+                   <div ng-repeat="appMon in cluster.appMonitors" class="app-info">
+                        <h5>{/appMon.appName/}</h5>
+                        <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
+                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2">
+                        </piechart>
+                        <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare" radius="[45, 55]"
+                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494">
+                        </piechart>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -104,7 +104,7 @@ glanceApp.directive('regexValidator', function() {
                 var length = value.length;
                 return Boolean(length <= 0 || (length >= 8 && length <= 16));
             };
-            
+
             ctrl.$parsers.unshift(function(value) {
                 var valid = true;
                 if (value) {
@@ -188,4 +188,147 @@ glanceApp.directive('samename', function () {
             };
         }
     };
+});
+
+glanceApp.directive('piechart', function () {
+    return {
+        restrict: 'E',
+        template: '<div></div>',
+        scope: {
+            used: '=chartUsed',
+            total: '=chartTotal',
+            usecolor: '@useColor',
+            backgroundColor: '@backgroundColor',
+            radius: '=radius',
+            showText: '@showText',
+            textcolor: '@textColor'
+
+        },
+        link: function (scope, elem, attrs, ctrl) {
+
+            if (scope.total - scope.used <= 0) {
+                scope.usecolor = '#FF3030';
+            }
+
+            var labelTop = {
+                normal: {
+                    color: scope.usecolor || "#68d1f2",
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{b}' + '%',
+                        textStyle: {
+                            fontSize: 17,
+                            baseline: 'bottom',
+                            color: scope.textcolor || "#68d1f2"
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+
+            var labelBottom = {
+                normal: {
+                    color: scope.backgroundColor || "#eee",
+                    label: {
+                        show: true,
+                        position: 'center',
+                        formatter: scope.showText || "pieCart",
+                        textStyle: {
+                            fontSize: 7,
+                            color: '#CCC'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    }
+                }
+            };
+
+            var labelFromatter = {
+                normal: {
+                    label: {
+                        show: false,
+                        textStyle: {
+                            baseline: 'top',
+                            fontSize: 8,
+                            color: '#000000'
+                        }
+                    }
+                }
+            };
+
+            function createOption() {
+                return {
+                    series: [
+                        {
+                            type: 'pie',
+                            radius: scope.radius || [45, 55],
+                            itemStyle: labelFromatter,
+                            data: [
+                                {
+                                    name: function () {
+                                                if (scope.total) {
+                                                    return (scope.used / scope.total * 100).toFixed(2)
+                                                } else if (scope.used == undefined || scope.total == undefined) {
+                                                    return 'NaN'
+                                                } else {
+                                                    return '0.00'
+                                                }
+                                            }(),
+                                    value: function () {
+                                                if ((scope.used && scope.total != undefined) || scope.used === 0) {
+                                                    return scope.used
+                                                } else if ((scope.used == undefined || scope.total == undefined) || (scope.used != undefined && scope.total == undefined)) {
+                                                    return 0
+                                                } else {
+                                                    return 50
+                                                }
+
+                                            }(),
+                                    itemStyle: labelTop
+                                },
+                                {
+                                    name: 'other',
+                                    value: function () {
+                                                if(scope.total && scope.used && (scope.total - scope.used == 0)){
+                                                    return 0;
+                                                } else if(scope.total - scope.used > 0) {
+                                                    return scope.total - scope.used
+                                                } else {
+                                                    return 1e-100
+                                                }
+                                            }(),
+                                    itemStyle: labelBottom
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+            var ndWrapper = elem.find('div')[0];
+            ndWrapper.style.width = (scope.radius[1] * 2 || 110) + 'px';
+            ndWrapper.style.height = (scope.radius[1] * 2 || 110) + 'px';
+            var clusterChart = echarts.init(ndWrapper);
+            clusterChart.setOption(createOption());
+
+            scope.$watch(function () {
+                return scope.used;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    clusterChart.setOption(createOption());
+                }
+            }, true);
+
+            scope.$watch(function () {
+                return scope.total;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    clusterChart.setOption(createOption());
+                }
+            }, true);
+        }
+    }
 });
