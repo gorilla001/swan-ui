@@ -1168,7 +1168,65 @@ rzslider .rz-bubble {
     right: -100px;
     top: -43px;
 }
-.breadcrumb {
+
+/* dashboard */
+.dashboard .main-container-body {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.dashboard h2 {
+	color: #BBBBBB;
+	margin: 0 0 20px 0;
+	font-weight:  normal;
+	font-size: 18px;
+}
+.dashboard .dashboard-left {
+	float: left;
+	width: 420px;
+	padding-top: 30px;
+	text-align: center;
+}
+.dashboard .dashboard-right {
+	margin-left: 450px;
+	height: 300px;
+	overflow-y: auto;
+}
+.dashboard .dashboard-cluster {
+	display: inline-block;
+	margin-bottom: 60px;
+}
+.dashboard .dashboard-cluster piechart {
+	display: inline-block;
+	margin: 0 20px;
+}
+.dashboard .dashboard-app {
+	margin-bottom: 20px;
+}
+.dashboard .dashboard-app h5 {
+	color: #999;
+	margin-top: 0;
+}
+.dashboard .dashboard-app piechart {
+	display: block;
+	margin: 0 0 15px 0;
+}
+.dashboard .dashboard-app .app-info {
+	text-align:  center;
+	display: inline-block;
+	margin: 0 20px;
+}
+.dashboard .cluster-service-status-number {
+	margin-bottom: 10px;
+}
+.dashboard .cluster-service-status-number li a {
+	background-size: 18px;
+	cursor: text;
+	padding-left: 20px;
+	margin-right: 15px;
+}
+.dashboard .cluster-service-status-number li a:hover {
+	text-decoration: none;
+}.breadcrumb {
 	padding: 8px 0 0 0;
 	background-color: transparent;
 }
