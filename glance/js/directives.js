@@ -269,17 +269,28 @@ glanceApp.directive('piechart', function () {
                                     name: function () {
                                         if (scope.total) {
                                             return (scope.used / scope.total * 100).toFixed(2)
+                                        } else if (scope.used == undefined || scope.total == undefined) {
+                                            return 'NaN'
                                         } else {
                                             return '0.00'
                                         }
-                                    }(), value: (scope.used || scope.used === 0) ? scope.used : 50, itemStyle: labelTop
+                                    }(), value: function () {
+                                    if (scope.used || scope.used === 0) {
+                                        return scope.used
+                                    } else if (scope.used == undefined || scope.total == undefined) {
+                                        return 0
+                                    } else {
+                                        return 50
+                                    }
+
+                                }(), itemStyle: labelTop
                                 },
                                 {
                                     name: 'other', value: function () {
                                     if (scope.total - scope.used > 0) {
                                         return scope.total - scope.used
                                     } else {
-                                        return 0
+                                        return 1
                                     }
                                 }(), itemStyle: labelBottom
                                 }
