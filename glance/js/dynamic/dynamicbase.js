@@ -39,6 +39,8 @@
                                 cluster.masMetrics = data.data.masMetrics;
                             }
                         }
+                    }, undefined, undefined, function(data) {
+                        console.log(data.error);
                     });
                 }
             });
