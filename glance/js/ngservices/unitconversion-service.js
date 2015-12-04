@@ -3,12 +3,13 @@ function unitConversion() {
         if (size) {
             size = Math.round(size/1024/1024);
             if (size < 1024) {
-                return size + "MB";
+                return {num: size, unit: "MB"};
             } else {
-                return (size/1024).toFixed(2) + "GB";
+                size = (size/1024).toFixed(2)
+                return {num: size, unit: "GB"};
             }
         } else {
-            return size;
+            return {num: size, unit: null};
         }
     };
     
@@ -16,17 +17,18 @@ function unitConversion() {
         if (size) {
             size = Math.round(size/1000/1000/1000);
             if (size < 1000) {
-                return size + "GB";
+                return {num: size, unit: "GB"};
             } else {
                 size = (size/1000).toFixed(2);
                 if (size < 1000) {
-                    return size + "TB";
+                    return {num: size, unit: "TB"};
                 } else {
-                    return (size/1000).toFixed(2) + "PB";
+                    size = (size/1000).toFixed(2)
+                    return  {num: size, unit: "PB"};
                 }
             }
         } else {
-            return size;
+            return {num: size, unit: null};
         }
     };
     
