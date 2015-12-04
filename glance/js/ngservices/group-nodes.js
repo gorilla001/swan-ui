@@ -114,7 +114,7 @@
             var service;
             for (var i = 0; i < services.length; i++) {
                 service = services[i];
-                if (service.status === SERVICES_STATUS.installing) {
+                if (service.status === SERVICES_STATUS.installing || service.status === 'uninstalling') {
                     return SERVICES_STATUS.installing;
                 }
                 nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
