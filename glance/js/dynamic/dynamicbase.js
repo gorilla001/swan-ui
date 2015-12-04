@@ -112,12 +112,10 @@
 
         function collectLatestServices(wsData, cacheServices) {
             var latestServices = angular.copy(cacheServices);
-            var serviceNames = Object.keys(cacheServices);
-            var serviceName;
-            for (var i = 0; i < serviceNames.length; i++) {
-                serviceName = serviceNames[i];
-                if (serviceName in wsData) {
-                    latestServices.serviceName = cacheServices.serviceName;
+            var key;
+            for (key in wsData) {
+                if ((key !== 'clusterId') && (key !== 'nodeId')) {
+                    latestServices[key] = wsData[key];
                 }
             }
             return latestServices;
