@@ -3,6 +3,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     "use strict";
     $scope.node = {};
     $scope.showCharts = false;
+    $scope.serviceViews = [];
     $('.charts').hide();
     function initStatusCache(){
         $scope.statusCache = {};
@@ -16,9 +17,30 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.addNode2StatusStore($scope.node.cluster.id, $scope.node, $scope.statusCache);
             $scope.startListenStatusUpdate($scope, $scope.statusCache);
+            
+            createServiceViews();
         });
     };
     $scope.getCurNode();
+    
+    function createServiceViews() {
+        if ($scope.isMasterFlag) {
+            $scope.serviceViews = [
+                 {name: "master", label: "Mesos"},
+                 {name: "marathon", label: "Marathon"},
+                 {name: "zookeeper", label: "Zookeeper"},
+            ];
+            if ($scope.node.cluster.cluster_type=='1_master') {
+                $scope.serviceViews.push({name: "slave", label: "Slave"});
+            };
+        } else {
+            $scope.serviceViews = [
+                   {name: "slave", label: "Slave"},
+              ];
+        }
+        $scope.serviceViews.push({name: "bamboo_gateway", label: "Gateway"});
+        $scope.serviceViews.push({name: "bamboo_proxy", label: "Proxy"});
+    }
 
     $scope.DOMs = {
         cpu: 'node-cpu-chart',
@@ -98,7 +120,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             }, {"ids": ids})
         });
     }
+    
+    $scope.resetService = function (serviceName) {
+        glanceHttp.ajaxPost(["cluster.serviceStatus", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
+                {"method": "reset"});
+    }
 }
-
 nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);

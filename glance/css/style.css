@@ -351,33 +351,123 @@ a.remove {
 }
 
 /* 主机详情 */
-.server-detail .server-info h3 {
-	margin-top: 0;
+.server-detail a {
+    text-decoration: underline;
 }
-.server-detail .server-info dl {
-	margin-bottom: 0;
+.server-detail a:hover {
+    text-decoration: none;
 }
-
-.server-detail .server-info dt {
-	display: inline-block;
-	color: #9B9B9B;
-	font-weight: normal;
+.server-detail .main-container-body {
+    padding: 20px;
 }
-.server-detail .server-info dd {
-	display: inline-block;
-	font-size: 14px;
-	margin-right: 24px;
+.server-detail .server-detail-title {
+    margin-bottom: 0;
 }
-.server-detail .server-model dt {
-	color: #9B9B9B;
-	font-weight: normal;
+.server-detail em {
+    font-style: normal;
+    font-size: 14px;
+    }
+.server-detail em sub {
+    bottom: 0;
+    font-size: 60%;
+    margin-left: 3px;
 }
-.server-detail .server-model dt a {
-	margin-right: 6px;
+.server-detail .server-info {
+    margin: 0;
+    padding: 0;
 }
-.server-detail .server-model dd {
-	padding-left: 18px;
-	font-size: 14px;
+.server-detail .server-info li {
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #AAA;
+    list-style: none;
+}
+.server-detail .server-info li div {
+    display: inline-block;
+    width: 80px;
+    font-weight: 400;
+}
+.server-detail .server-info em {
+    color: #262626;
+    font-size: 13px;
+    font-weight: 400;
+}
+.server-detail .server-status {
+    font-size: 12px;
+    color: #AAA;
+    background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: right -10px center;
+    height: 57px;
+    padding-top: 10px;
+    overflow: hidden;
+}
+.server-detail .server-status-normal {
+    background-image: url(../pics/ico-service-status-normal.png);
+}uba
+.server-detail .server-status-disconnect {
+    background-image: url(../pics/ico-service-status-disconnect.png);
+}
+.server-detail .server-status-warning {
+    background-image: url(../pics/ico-service-status-warning.png);
+}
+.server-detail .server-status-reset {
+    background-image: url(../pics/ico-service-status-reset.png);
+}
+.server-detail .server-status em {
+    font-size: 20px;
+    font-weight: normal;
+    display: block;
+    margin-top: -2px;
+}
+.server-detail .server-app-status {
+    margin: 0;
+    padding: 0;
+}
+.server-detail .server-app-status li {
+    font-size: 11px;
+    float: left;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    width: 16%
+}
+.server-detail .server-app-status div {
+    width: 30px;
+    margin: 0 auto;
+    position: relative;
+}
+.server-detail .server-app-status em {
+    margin-top: 6px;
+    line-height: 1;
+    display: block;
+    font-size: 11px;
+    text-align: center;
+}
+.server-detail .server-app-status .btn {
+    font-size: 11px;
+    height: 14px;
+    line-height: 14px;
+    padding-top: 0;
+    padding-bottom: 0;
+    position: absolute;
+    top: -10px;
+    right: -30px;
+}
+.server-detail .server-app-status .btn:before {
+    content:"";
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #f0ad4e;
+    position: absolute;
+    bottom: -4px;
+    left: -5px;
+    transform:rotate(50deg);
+}
+.server-detail .server-app-status .btn:hover:before {
+    border-top: 10px solid #ec971f;
 }
 
 /* 日志显示 */
