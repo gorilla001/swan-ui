@@ -1498,3 +1498,17 @@ rzslider .rz-bubble {
 	width: 10%;
 	padding-top: 40px;
 }
+
+.app-detail-header h3 {
+	margin: 0 0 6px 0;
+}
+.app-detail-header dt {
+	display: inline-block;
+}
+.app-detail-header dd {
+	display: inline-block;
+	margin: 0 21px 0 6px;
+}
+.app-detail-header dl {
+	margin-bottom: 0;
+}

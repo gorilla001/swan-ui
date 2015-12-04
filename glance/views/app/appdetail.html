@@ -2,16 +2,14 @@
     <h1 class="pull-left" >应用详情</h1>
 </div>
 <section>
-	<div class="server-detail">
-		<div class="server-info server-info-instance">
+	<div>
+		<div class="app-detail-header">
 			<div class="main-container">
 				<div class="main-container-body">
 					<h3 class="ng-binding">{/appInfo.name/}</h3>
 					<dl>
-						<dt>最近更新时间：</dt>
-						<dd>{/appInfo.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
-						<dt>应用状态：</dt>
-						<dd>{/appstate[appInfo.status]/}</dd>
+						<dt>最近更新时间：</dt><dd>{/appInfo.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
+						<dt>应用状态：</dt><dd>{/appstate[appInfo.status]/}</dd>
 					</dl>
 					<div class="btn-group btn-group-toggle">
 						<button data-ng-disabled="!appInfo.status" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
