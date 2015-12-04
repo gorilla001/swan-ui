@@ -1361,3 +1361,50 @@ rzslider .rz-bubble {
 .datetimepicker-wrapper > input {
 	width: 110px !important;
 }
+
+.main-news {
+	margin: 20px 0 0 0;
+}
+.main-news .main-container .main-container-body {
+	padding-top: 15px;
+	padding-bottom: 15px
+}
+.main-news .news-hot {
+	float: left;
+	width: 50%;
+	margin-right: 2%;
+}
+.main-news .news-hot h3 {
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-weight: 500;
+	color: #666666;
+}
+.main-news .news-hot h4 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: #777;
+}
+.main-news .news-hot p {
+	margin-top: 0;
+	margin-bottom: 0px;
+	color: #777;
+}
+.main-news .news-list {
+	float: left;
+	width: 30%;
+	margin-right: 5%;
+	padding-top: 30px;
+}
+.main-news .news-list ul {
+	border-left: 1px solid #CCC;
+	margin-left: 5%;
+}
+.main-news .news-list li {
+	margin-bottom: 3px;
+}
+.main-news .news-more {
+	float: right;
+	width: 10%;
+	padding-top: 40px;
+}
