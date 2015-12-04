@@ -78,34 +78,50 @@
         }
 
         $scope.$on('nodeStatusUpdate', function(event, data) {
-            var clusterId = data.clusterId;
-            var nodeId = data.nodeId;
-            var status = data.status;
+            updateNodes(data.clusterId, data.nodeId, data.status);
+        });
+
+        $scope.$on('serviceStatusUpdate', function (event, data) {
+            var cacheServices = clusterCache.servicesCache[data.clusterId];
+            var latestServices = collectLatestServices(data, cacheServices);
+
+            updateNodes(data.clusterId, data.nodeId, undefined, latestServices);
+        });
+
+        function updateNodes(clusterId, nodeId, status, services) {
 
             var copyClusterCache = angular.copy(clusterCache);
 
             var cache = {
                 nodeStatus: copyClusterCache.statusCache[clusterId][nodeId],
                 services: copyClusterCache.servicesCache[clusterId][nodeId],
-                amounts: copyClusterCache.amounts[data.clusterId]
+                amounts: copyClusterCache.amounts[clusterId]
             };
 
-            var latestData = groupNodes.updateNodesAmounts($scope.clusters, clusterId, nodeId, undefined, status, cache);
-            var amounts = latestData.amounts;
+            var latestData = groupNodes.updateNodesAmounts(listClusterDataGetFromBackend, clusterId, nodeId, services, status, cache);
 
-            $scope.clusterList[clusterId].amounts = amounts;
+            $scope.clusterList[clusterId].amounts = latestData.amounts;
 
             //更新cache
-            clusterCache.amounts[data.clusterId] = amounts;
+            clusterCache.amounts[clusterId] = latestData.amounts;
             clusterCache.statusCache[clusterId][nodeId] = latestData.newNodeStatus;
+            if(services) {
+                clusterCache.servicesCache[clusterId][nodeId] = latestData.newServices;
+            }
+        }
 
-        });
-
-        $scope.$on('serviceStatusUpdate', function (event, data) {
-            // console.log('services', data)
-            // TODO
-
-        });
+        function collectLatestServices(wsData, cacheServices) {
+            var latestServices = angular.copy(cacheServices);
+            var serviceNames = Object.keys(cacheServices);
+            var serviceName;
+            for (var i = 0; i < serviceNames.length; i++) {
+                serviceName = serviceNames[i];
+                if (serviceName in wsData) {
+                    latestServices.serviceName = cacheServices.serviceName;
+                }
+            }
+            return latestServices;
+        }
 
     }
 })();
