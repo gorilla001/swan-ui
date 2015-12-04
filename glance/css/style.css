@@ -50,8 +50,8 @@ a.remove {
  */
 
 .sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
 }
 
 /*
@@ -59,7 +59,7 @@ a.remove {
  * Hide default border to remove 1px line.
  */
 .navbar-fixed-top {
-  border: 0;
+	border: 0;
 }
 
 /*
@@ -67,17 +67,17 @@ a.remove {
  */
 .sidebar {
 	position: fixed;
-    top: 0px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #3D3D3D;
-    border-right: 1px solid #eee;
-  }
+	top: 0px;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	display: block;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+	background-color: #3D3D3D;
+	border-right: 1px solid #eee;
+}
 .sidebar .sidebar-logo {
 	position: absolute;
 	bottom: 50px;
@@ -110,30 +110,30 @@ a.remove {
 }
 /* Sidebar navigation */
 .nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
+	margin-right: -21px; /* 20px padding + 1px border */
+	margin-bottom: 20px;
+	margin-left: -20px;
 }
 .nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-  text-align: center;
-  font-size: 14px;
-  transition: all 0.3s ease-out 0s;
-  color: #9b9b9b;
+	padding-right: 20px;
+	padding-left: 20px;
+	text-align: center;
+	font-size: 14px;
+	transition: all 0.3s ease-out 0s;
+	color: #9b9b9b;
 }
 .nav-sidebar > li > a:focus, .nav-sidebar > li > a:hover {
-  background: rgba(241,241,241,0.5);
-  color: #F1F1F1;
+	background: rgba(241,241,241,0.5);
+	color: #F1F1F1;
 }
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #3D3D3D;
-  background-color: #F1F1F1;
+	color: #3D3D3D;
+	background-color: #F1F1F1;
 }
 .nav-sidebar > li > a span.glyphicon {
-  margin-right: 6px;
+	margin-right: 6px;
 }
 .nav-sidebar-footer {
 	position: absolute;
@@ -159,7 +159,7 @@ a.remove {
 	background: #303030;
 	color: #9b9b9b;
 	display: block;
-	height: 40px;	
+	height: 40px;
 	text-align: center;
 	font-size: 12px;
 	vertical-align: middle;
@@ -198,13 +198,13 @@ a.remove {
  */
 
 .main .page-header {
-  margin-top: 0;
-  height: 90px;
-  background-color: #FFF;	
-  border-bottom: 3px solid #DCDCDC;
-  margin-right: -15px;
-  margin-left: -15px;
-  margin-bottom: 0;
+	margin-top: 0;
+	height: 90px;
+	background-color: #FFF;
+	border-bottom: 3px solid #DCDCDC;
+	margin-right: -15px;
+	margin-left: -15px;
+	margin-bottom: 0;
 }
 .main .page-header h1 {
 	margin: 27px 0 0 20px;
@@ -212,12 +212,12 @@ a.remove {
 	float: left;
 }
 .main .page-header small{
-	font-size: 12px; 
-	color: rgb(119, 119, 119); 
-	float: left; 
-	padding-left: 15px; 
-	vertical-align: bottom; 
-	margin: 20px 0px 0px 15px; 
+	font-size: 12px;
+	color: rgb(119, 119, 119);
+	float: left;
+	padding-left: 15px;
+	vertical-align: bottom;
+	margin: 20px 0px 0px 15px;
 	border-left: 1px solid #CCC;
 }
 .main .page-header .btn {
@@ -282,9 +282,9 @@ a.remove {
 .btn-group-toggle button {
 	background:url(../pics/bg-button-normal.png) no-repeat;
 	background-size: cover;
-	width: 65px; 
-	height: 38px; 
-	padding: 0; 
+	width: 65px;
+	height: 38px;
+	padding: 0;
 	border: 0;
 	position: absolute;
 	top: -10px;
@@ -301,7 +301,7 @@ a.remove {
 	box-shadow: none;
 }
 .btn-group-toggle.open button {
-	border-radius: 0px; 
+	border-radius: 0px;
 }
 .btn-group-toggle {
 	position: absolute;
@@ -318,15 +318,15 @@ a.remove {
 }
 /* 无集群时，新建集群按钮 */
 .btn-add-cluster {
-	display: block; 
+	display: block;
 	width: 200px;
-	height: 200px; 
-	text-align: center; 
-	color: #FFF; 
-	background-color: #4386fc; 
-	text-decoration: none; 
-	font-size: 20px; 
-	padding-top: 55px; 
+	height: 200px;
+	text-align: center;
+	color: #FFF;
+	background-color: #4386fc;
+	text-decoration: none;
+	font-size: 20px;
+	padding-top: 55px;
 	margin: 15% auto;
 	border-radius: 100px;
 }
@@ -504,19 +504,19 @@ a.remove {
 }
 
 @-moz-keyframes bg {
-  0%{background: rgba(170,206,54,0.2);}
-  25%{background: rgba(170,206,54,0.5);}
-  50%{background: rgba(170,206,54,0.1);}
-  75%{background: rgba(170,206,54,0.3);}
-  100%{background: rgba(170,206,54,0.2);}
-} 
+	0%{background: rgba(170,206,54,0.2);}
+	25%{background: rgba(170,206,54,0.5);}
+	50%{background: rgba(170,206,54,0.1);}
+	75%{background: rgba(170,206,54,0.3);}
+	100%{background: rgba(170,206,54,0.2);}
+}
 @-webkit-keyframes bg {
-  0%  {background: rgba(170,206,54,0.2);}
-  25% {background: rgba(170,206,54,0.5);}
-  50%{background: rgba(170,206,54,0.1);}
-  75%{background: rgba(170,206,54,0.3);}
-  100%{background: rgba(170,206,54,0.2);}
-} 
+	0%  {background: rgba(170,206,54,0.2);}
+	25% {background: rgba(170,206,54,0.5);}
+	50%{background: rgba(170,206,54,0.1);}
+	75%{background: rgba(170,206,54,0.3);}
+	100%{background: rgba(170,206,54,0.2);}
+}
 
 
 /* 响应式布局 */
@@ -581,12 +581,12 @@ a.remove {
 
 /* 集群主机图标列表展示 */
 .cluster-status-panel {
-	height: 100%; 
-	width: 100%; 
-	background-color: rgba(0,0,0,0.8); 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+	position: absolute;
+	top: 0;
+	left: 0;
 	z-index: 1001;
 }
 .cluster-status-panel .cluster-status-main {
@@ -597,8 +597,8 @@ a.remove {
 .cluster-status-panel header {
 	background-color: #EEE;
 	border-bottom: 1px solid #e5e5e5;
-    min-height: 16px;
-    padding: 12px 15px 6px 15px;
+	min-height: 16px;
+	padding: 12px 15px 6px 15px;
 }
 .cluster-status-panel header h3 {
 	margin: 0;
@@ -609,8 +609,8 @@ a.remove {
 }
 .cluster-status-panel footer {
 	border-top: 1px solid #e5e5e5;
-    padding: 10px 15px;
-    text-align: right;
+	padding: 10px 15px;
+	text-align: right;
 }
 .cluster-status-panel .cluster-status-content {
 	vertical-align: middle;
@@ -630,30 +630,30 @@ a.remove {
 
 
 .cluster-service-status-number, .cluster-service-ico-list {
-    font-size: 0;
-    margin: 0 0 20px 0;
-    padding: 0;
+	font-size: 0;
+	margin: 0 0 20px 0;
+	padding: 0;
 }
 .cluster-service-status-number {
-    margin-bottom: 50px;
+	margin-bottom: 50px;
 }
 .cluster-service-status-number li {
-    display: inline-block;
-    list-style: none;
-    font-size: 12px;
+	display: inline-block;
+	list-style: none;
+	font-size: 12px;
 }
 .cluster-service-status-number li span {
-    font-size: 24px;
+	font-size: 24px;
 }
 .cluster-service-status-number li a {
-    display: block;
-    height: 28px;
-    background-repeat: no-repeat;
-    background-position: bottom left;
-    background-size: 22px;
-    padding-left: 30px;
-    margin-right: 34px;
-    color: #4A4A4A;
+	display: block;
+	height: 28px;
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	background-size: 22px;
+	padding-left: 30px;
+	margin-right: 34px;
+	color: #4A4A4A;
 }
 
 .cluster-service-status-number li.running a {
@@ -682,19 +682,19 @@ a.remove {
 	float: none;
 }
 .cluster-service-ico-list .tooltip.top {
-  margin-top: -9px;
+	margin-top: -9px;
 }
 .cluster-service-ico-list .tooltip.in {
-  filter: alpha(opacity=100);
-  opacity: 1;
+	filter: alpha(opacity=100);
+	opacity: 1;
 }
 .cluster-service-ico-list .tooltip-inner {
-  background-color: #DFDFDF;
-  color: #000;
-  border: 1px solid #FFF;
+	background-color: #DFDFDF;
+	color: #000;
+	border: 1px solid #FFF;
 }
 .cluster-service-ico-list .tooltip.top .tooltip-arrow {
-  border-top-color: #DFDFDF;
+	border-top-color: #DFDFDF;
 }
 .cluster-service-ico-list footer {
 	padding-left: 300px;
@@ -721,15 +721,15 @@ a.remove {
 	padding-bottom: 0;
 }
 #cluster-cpu-chart {
-    height: 300px;
+	height: 300px;
 }
 
 #cluster-memory-chart {
-    height: 300px;
+	height: 300px;
 }
 
 #cluster-disk-chart {
-    height: 300px;
+	height: 300px;
 }
 
 /* ============ 添加主机 ============= */
@@ -787,7 +787,7 @@ a.remove {
 .server-detail em {
 	font-style: normal;
 	font-size: 14px;
-	}
+}
 .server-detail em sub {
 	bottom: 0;
 	font-size: 60%;
@@ -859,15 +859,15 @@ a.remove {
 }
 
 #node-cpu-chart {
-    height: 300px;
+	height: 300px;
 }
 
 #node-memory-chart {
-    height: 300px;
+	height: 300px;
 }
 
 #node-disk-chart {
-    height: 300px;
+	height: 300px;
 }
 /*loading*/
 #main {
@@ -879,18 +879,18 @@ a.remove {
 	left: 50%;
 }
 .loader-inner > div {
-    background-color: #337ab7;
+	background-color: #337ab7;
 }
 
 .charts-loading {
-    left: 100px;
+	left: 100px;
 }
 
 .ball-spin-fade-loader {
-  position: relative;
-  padding: 30px;
-  top: 0px;
-  left: 200px; 
+	position: relative;
+	padding: 30px;
+	top: 0px;
+	left: 200px;
 }
 /*集群状态遮罩层*/
 .cluster-manage {
@@ -939,143 +939,143 @@ a.remove {
 
 /* 工单入口 */
 .tab-rb-feedback {
-    background-color: #f0ad4e;
-    border-radius: 3px 0 0 3px;
-    cursor: pointer;
-    height: 35px;
-    position: fixed;
-    bottom: 40px;
-    right: 0px;
-    width: 35px;
+	background-color: #f0ad4e;
+	border-radius: 3px 0 0 3px;
+	cursor: pointer;
+	height: 35px;
+	position: fixed;
+	bottom: 40px;
+	right: 0px;
+	width: 35px;
 }
 .tab-rb-feedback a {
-    color: #FFF;
+	color: #FFF;
 }
 .tab-rb-feedback i {
-    background-color: #f0ad4e;
-    height: 35px;
-    position: relative;
-    width: 35px;
-    z-index: 2;
-    font-size: 20px;
-    line-height: 35px;
-    text-align: center;
-    left: 0;
-    top: 0;
+	background-color: #f0ad4e;
+	height: 35px;
+	position: relative;
+	width: 35px;
+	z-index: 2;
+	font-size: 20px;
+	line-height: 35px;
+	text-align: center;
+	left: 0;
+	top: 0;
 }
 .tab-rb-feedback em {
-    background-color: #f0ad4e;
-    border-radius: 3px 0 0 3px;
-    color: #fff;
-    height: 35px;
-    left: 35px;
-    line-height: 35px;
-    position: absolute;
-    text-align: center;
-    top: 0;
-    transition: left 0.3s ease-in-out 0.1s;
-    width: 50px;
-    z-index: 1;
-    font-style: normal;
+	background-color: #f0ad4e;
+	border-radius: 3px 0 0 3px;
+	color: #fff;
+	height: 35px;
+	left: 35px;
+	line-height: 35px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	transition: left 0.3s ease-in-out 0.1s;
+	width: 50px;
+	z-index: 1;
+	font-style: normal;
 }
 .tab-rb-feedback a:hover em {
-    left: -50px;
+	left: -50px;
 }
 
 /* 新建应用 */
 .new-app label small {
-    font-weight: normal;
-    color: #CCC;
-    display: block;
+	font-weight: normal;
+	color: #CCC;
+	display: block;
 }
 .new-app .well {
-    padding: 19px 0;
+	padding: 19px 0;
 }
 .new-app .ad-set {
-    margin-bottom: 15px;
-    display: inline-block;
-    padding-left: 8px;
+	margin-bottom: 15px;
+	display: inline-block;
+	padding-left: 8px;
 }
 
 /* 应用事件 */
 #timeline {
-  list-style: none;
-  margin: 0 0 30px 160px;
-  padding-left: 30px;
-  border-left: 6px solid #eee9dc;
+	list-style: none;
+	margin: 0 0 30px 160px;
+	padding-left: 30px;
+	border-left: 6px solid #eee9dc;
 }
 #timeline li {
-  margin: 40px 0;
-  position: relative;
+	margin: 40px 0;
+	position: relative;
 }
 #timeline li:first-child {
-  margin-top: 0;
+	margin-top: 0;
 }
 #timeline .date {
-  margin-top: -8px;
-  top: 50%;
-  left: -190px;
-  font-size: 0.95em;
-  line-height: 20px;
-  position: absolute;
-  font-size: 14px;
+	margin-top: -8px;
+	top: 50%;
+	left: -190px;
+	font-size: 0.95em;
+	line-height: 20px;
+	position: absolute;
+	font-size: 14px;
 }
 #timeline .circle {
-  margin-top: -8px;
-  top: 50%;
-  left: -41px;
-  width: 16px;
-  height: 16px;
-  background: #FFF;
-  border: 3px solid #eee9dc;
-  border-radius: 50%;
-  display: block;
-  position: absolute;
+	margin-top: -8px;
+	top: 50%;
+	left: -41px;
+	width: 16px;
+	height: 16px;
+	background: #FFF;
+	border: 3px solid #eee9dc;
+	border-radius: 50%;
+	display: block;
+	position: absolute;
 }
 #timeline .content {
-  padding: 15px;
-  border-color: #eee9dc;
-  border-width: 2px;
-  border-style: solid;
-  border-radius: 0.5em;
-  position: relative;
+	padding: 15px;
+	border-color: #eee9dc;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 0.5em;
+	position: relative;
 }
 #timeline .content:before, #timeline .content:after {
-  content: "";
-  width: 0;
-  height: 0;
-  border: solid transparent;
-  position: absolute;
-  pointer-events: none;
-  right: 100%;
+	content: "";
+	width: 0;
+	height: 0;
+	border: solid transparent;
+	position: absolute;
+	pointer-events: none;
+	right: 100%;
 }
 #timeline .content:before {
-  border-right-color: inherit;
-  border-width: 15px;
-  top: 50%;
-  margin-top: -15px;
+	border-right-color: inherit;
+	border-width: 15px;
+	top: 50%;
+	margin-top: -15px;
 }
 #timeline .content:after {
-  border-width: 17px;
-  top: 50%;
-  margin-top: -17px;
+	border-width: 17px;
+	top: 50%;
+	margin-top: -17px;
 }
 #timeline .content p {
-  text-align: justify;
-  word-break: break-word;
-  margin: 0;
-  color: #BBB;
+	text-align: justify;
+	word-break: break-word;
+	margin: 0;
+	color: #BBB;
 }
 #timeline .content p em {
-  margin: 0 20px 0 0;
-  color: #3d3d3d;
-  font-style: normal;
+	margin: 0 20px 0 0;
+	color: #3d3d3d;
+	font-style: normal;
 }
 
 /*应用实例*/
 .server-detail .server-info-instance li {
-    display: block;
-    margin-right: 0px;
+	display: block;
+	margin-right: 0px;
 }
 
 /* 新建应用 */
@@ -1152,21 +1152,21 @@ rzslider .rz-bubble {
 }
 /*添加主机 主机类型提示*/
 .prompt-box {
-    position: absolute;
-    right: -205px;
-    top: -60px;
-    background: #FFF;
-    border: 1px solid #EEE;
-    padding: 10px;
-    box-shadow: 0px 0px 3px rgba(0,0,0,0.1);
-    font-size: 11px;
-    background-color: #fcf8e3;
-    font-weight: 100;
-    text-align: left;
+	position: absolute;
+	right: -205px;
+	top: -60px;
+	background: #FFF;
+	border: 1px solid #EEE;
+	padding: 10px;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.1);
+	font-size: 11px;
+	background-color: #fcf8e3;
+	font-weight: 100;
+	text-align: left;
 }
 .prompt-last {
-    right: -100px;
-    top: -43px;
+	right: -100px;
+	top: -43px;
 }
 
 /* dashboard */
@@ -1175,7 +1175,7 @@ rzslider .rz-bubble {
 	padding-bottom: 15px;
 }
 .dashboard h2 {
-	color: #BBBBBB;
+	color: #666;
 	margin: 0 0 20px 0;
 	font-weight:  normal;
 	font-size: 18px;
@@ -1205,6 +1205,7 @@ rzslider .rz-bubble {
 .dashboard .dashboard-app h5 {
 	color: #999;
 	margin-top: 0;
+	font-size: 12px;
 }
 .dashboard .dashboard-app piechart {
 	display: block;
@@ -1227,9 +1228,9 @@ rzslider .rz-bubble {
 .dashboard .cluster-service-status-number li a:hover {
 	text-decoration: none;
 }.breadcrumb {
-	padding: 8px 0 0 0;
-	background-color: transparent;
-}
+	 padding: 8px 0 0 0;
+	 background-color: transparent;
+ }
 
 .select-nodetype-panel h3 {
 	margin: 0 0 30px 0;
@@ -1244,7 +1245,7 @@ rzslider .rz-bubble {
 	margin-bottom: 50px;
 }
 .select-nodetype-panel .select-cloudcompany li {
-	display: inline-block; 
+	display: inline-block;
 	margin-right: 40px;
 }
 .select-nodetype-panel .select-cloudcompany a img {
@@ -1299,5 +1300,52 @@ rzslider .rz-bubble {
 	margin-top: 50px;
 }
 .font-blue {
- color:blue;
+	color:blue;
+}
+
+.main-news {
+	margin: 20px 0 -20px 0;
+}
+.main-news .main-container .main-container-body {
+	padding-top: 15px;
+	padding-bottom: 15px
+}
+.main-news .news-hot {
+	float: left;
+	width: 50%;
+	margin-right: 2%;
+}
+.main-news .news-hot h3 {
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-weight: 500;
+	color: #666666;
+}
+.main-news .news-hot h4 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: #777;
+}
+.main-news .news-hot p {
+	margin-top: 0;
+	margin-bottom: 0px;
+	color: #777;
+}
+.main-news .news-list {
+	float: left;
+	width: 30%;
+	margin-right: 5%;
+	padding-top: 30px;
+}
+.main-news .news-list ul {
+	border-left: 1px solid #CCC;
+	margin-left: 5%;
+}
+.main-news .news-list li {
+	margin-bottom: 3px;
+}
+.main-news .news-more {
+	float: right;
+	width: 10%;
+	padding-top: 40px;
 }
