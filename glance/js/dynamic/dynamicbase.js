@@ -10,12 +10,7 @@
     function dynamicBaseCtrl($scope, $rootScope, glanceHttp, groupNodes, $q) {
         $rootScope.show = 'dynamic';
 
-        var clusterCache = {
-            nodeStatusCache: {},
-            rawStatusCache: {},
-            servicesCache: {},
-            amounts: {}
-        };
+        var clusterCache = {};
 
         var listClusterDataGetFromBackend;
 
@@ -63,10 +58,12 @@
 
                     originalCluster = groupNodes.getOriginalCluster(cluster);
 
-                    clusterCache.nodeStatusCache[cluster.id] = originalCluster.nodeStatus;
-                    clusterCache.rawStatusCache[cluster.id] = originalCluster.rawStatus;
-                    clusterCache.servicesCache[cluster.id] = originalCluster.services;
-                    clusterCache.amounts[cluster.id] = originalCluster.amounts;
+                    clusterCache[cluster.id] = {};
+
+                    clusterCache[cluster.id].nodeStatusCache = originalCluster.nodeStatus;
+                    clusterCache[cluster.id].rawStatusCache = originalCluster.rawStatus;
+                    clusterCache[cluster.id].servicesCache = originalCluster.services;
+                    clusterCache[cluster.id].amounts = originalCluster.amounts;
 
                     clusterList[cluster.id] = {
                         id: cluster.id,
@@ -91,16 +88,17 @@
         });
 
         function updateNodeAmountsAndClusterCache(wsData) {
-            var latestData = groupNodes.updateClusterCache(listClusterDataGetFromBackend, wsData, clusterCache);
-
+            var singleClusterCache = clusterCache[wsData.clusterId];
+            var latestData = groupNodes.updateClusterCache(listClusterDataGetFromBackend, wsData, singleClusterCache);
             // 更新页面数据
             $scope.clusterList[wsData.clusterId].amounts = latestData.newAmounts;
 
             // 更新集群cache
-            clusterCache.nodeStatusCache[wsData.clusterId][wsData.nodeId] = latestData.newNodeStatus;
-            clusterCache.rawStatusCache[wsData.clusterId][wsData.nodeId] = latestData.newRawStatus;
-            clusterCache.servicesCache[wsData.clusterId][wsData.nodeId] = latestData.newServices;
-            clusterCache.amounts[wsData.clusterId] = latestData.newAmounts;
+            clusterCache[wsData.clusterId].nodeStatusCache[wsData.nodeId] = latestData.newNodeStatus;
+            clusterCache[wsData.clusterId].rawStatusCache[wsData.nodeId] = latestData.newRawStatus;
+            clusterCache[wsData.clusterId].servicesCache[wsData.nodeId] = latestData.newServices;
+            clusterCache[wsData.clusterId].amounts = latestData.newAmounts;
+
         }
 
     }

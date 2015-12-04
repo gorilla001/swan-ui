@@ -30,12 +30,12 @@
             var nodeId = wsData.nodeId;
             var status = wsData.status;
 
-            var oldServices = clusterCache.servicesCache[clusterId][nodeId];
+            var oldServices = clusterCache.servicesCache[nodeId];
             var newServices = oldServices;
-            var oldNodeStatus = clusterCache.nodeStatusCache[clusterId][nodeId];
+            var oldNodeStatus = clusterCache.nodeStatusCache[nodeId];
             var newNodeStatus = oldNodeStatus;
-            var rawStatus = clusterCache.rawStatusCache[clusterId][nodeId];
-            var amounts = clusterCache.amounts[clusterId];
+            var rawStatus = clusterCache.rawStatusCache[nodeId];
+            var amounts = clusterCache.amounts;
 
             var oldServiceStatus = calNodeServiceStatus(role, oldServices);
 
