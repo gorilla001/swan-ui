@@ -81,13 +81,13 @@
             return clusterList;
         }
 
-        $scope.$on('nodeStatusUpdate', function(event, data) {
-            updateNodeAmountsAndClusterCache(data);
-        });
-
-        $scope.$on('serviceStatusUpdate', function (event, data) {
-            updateNodeAmountsAndClusterCache(data);
-        });
+        //$scope.$on('nodeStatusUpdate', function(event, data) {
+        //    updateNodeAmountsAndClusterCache(data);
+        //});
+        //
+        //$scope.$on('serviceStatusUpdate', function (event, data) {
+        //    updateNodeAmountsAndClusterCache(data);
+        //});
 
         function updateNodeAmountsAndClusterCache(wsData) {
             var singleClusterCache = clusterCache[wsData.clusterId];
