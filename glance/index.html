@@ -58,10 +58,13 @@
                         </li>
                     </ul>
 
-                    <div class="alert alert-warning" role="alert" data-ng-hide="hideUpdateAgentTip">
-                        <span class="glyphicon glyphicon-remove-sign" data-ng-click="hideUpdateAgentTip=true"></span>
+                    <div class="alert alert-warning" role="alert">
                         由于本次产品升级不兼容旧版本，<strong>须升级Agent、重装应用方可正常使用，</strong>由此带来的不便敬请谅解!<br><br>
-                        <a href="http://doc.shurenyun.com/function/agent_upgrade.html" target="_blank">如何升级 Agent?</a>
+                        <div>
+                            <a href="http://doc.shurenyun.com/function/agent_upgrade.html" target="_blank">如何升级 Agent?</a>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+
                     </div>
 
 					<a href="#" class="sidebar-logo"></a>
