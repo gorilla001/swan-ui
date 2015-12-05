@@ -1,6 +1,6 @@
 <div class="main-container-body">
     <div class="main-container-body clearfix col-md-6 control-label">
-        <piechart chart-used="30" chart-total="100" radius="[75, 90]"
+        <piechart chart-used="clusterMonitors.masMetrics.cpuPercent" chart-total="100" radius="[75, 90]"
                   use-color="#68d1f2" show-text="CPU 占用" text-color="#68d1f2">
         </piechart>
         <h4>集群CPU: {/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</h4>
@@ -8,7 +8,7 @@
     </div>
 
     <div class="main-container-body clearfix col-md-6 control-label">
-        <piechart chart-used="50" chart-total="100" radius="[75, 90]"
+        <piechart chart-used="clusterMonitors.masMetrics.memUsed" chart-total="clusterMonitors.masMetrics.memTotal" radius="[75, 90]"
                   use-color="#ff9494" show-text="内存占用" text-color="#ff9494">
         </piechart>
         <h4>集群内存占用 (MB): {/clusterMonitors.masMetrics.memUsed/} / {/clusterMonitors.masMetrics.memTotal/}</h4>
