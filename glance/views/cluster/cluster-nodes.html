@@ -4,7 +4,7 @@
             <div data-ng-show="cluster.nodes.length">
                 <div>
                     <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
-                    <a href="/cluster/{/cluster.id /}/addnode">
+                    <a href="#" data-ui-sref="cluster.nodesource({clusterId:cluster.id})">
                         <button type="button" class="btn btn-default btn-sm">添加主机</button>
                     </a>
                     <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
