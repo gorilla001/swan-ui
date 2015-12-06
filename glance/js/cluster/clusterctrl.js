@@ -11,10 +11,8 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     };
 
     $scope.nodeAttributes = {
-        transient: '计算节点',
         gateway: '外部网关',
         proxy: '内部代理',
-        persistent: '数据节点'
     };
 
     $scope.deleteCluster = function(clusterId, name) {
@@ -66,14 +64,14 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         }
         return SERVICES_STATUS.running;
     }
-    
+
     $scope.updateServiceStatus = function (clusterId, nodeId, serviceName, status, statusCache) {
         if (status == "uninstalling"){
             status = SERVICES_STATUS.installing;
         }
         statusCache[clusterId]["nodes"][nodeId]["services"][serviceName] = status;
     }
-    
+
     $scope.updateNodeStatus = function (clusterId, nodeId, rawStatus, statusCache) {
         var servicesStatus = getNodeServiceStatus(clusterId, nodeId, statusCache);
         var status;
@@ -82,7 +80,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         }
         if (rawStatus === NODE_STATUS.terminated) {
             status = NODE_STATUS.terminated;
-        } else if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing 
+        } else if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing
                 || rawStatus === NODE_STATUS.upgrading || servicesStatus === SERVICES_STATUS.installing) {
             status = NODE_STATUS.installing;
         } else if (servicesStatus === SERVICES_STATUS.failed) {
@@ -92,7 +90,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         }
         statusCache[clusterId]["nodes"][nodeId].status = status;
     }
-    
+
     $scope.addNode2StatusStore = function (clusterId, node, statusCache) {
         if (!statusCache[clusterId]) {
             statusCache[clusterId] = {"masters": {}, "nodes": {}};
@@ -106,7 +104,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         });
         $scope.updateNodeStatus(clusterId, node.id, node.status, statusCache);
     }
-    
+
     $scope.startListenStatusUpdate = function (scope, statusCache) {
         scope.$on('nodeStatusUpdate', function (event, data) {
             $scope.updateNodeStatus(data.clusterId, data.nodeId, data.status, statusCache);
