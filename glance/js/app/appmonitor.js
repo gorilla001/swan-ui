@@ -36,7 +36,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
             successPromise = $timeout(initMonitor, 3000);
         }, undefined, null, function (data) {
             if (data.code === 1) {
-                errorPromise = $timeout($scope.getClusterMonitor, 3000);
+                errorPromise = $timeout(initMonitor, 3000);
             }
         });
     }
