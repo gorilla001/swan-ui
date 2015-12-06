@@ -1,18 +1,15 @@
 <div class="main-container">
     <div class="main-container-body">
         <div class="row">
-            <div class="col-md-6">
-                <div class="col-md-offset-2" id="appCpuStat" data-dimension="300" data-info="CPU使用资源" data-width="15"
-                     data-fontsize="38"
-                     data-fgcolor="#39C7C8" data-bgcolor="#eee"
-                     data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
+            <div class="main-container-body col-md-4 col-md-offset-1">
+                <piechart chart-used="cpuUsedCores" chart-total="cpuShareCores" radius="[75, 90]"
+                          use-color="#68d1f2" show-text="CPU 使用资源" text-color="#68d1f2">
+                </piechart>
             </div>
-
-            <div class="col-md-6">
-                <div class="col-md-offset-2" id="appMemStat" data-dimension="300" data-info="内存使用资源" data-width="15"
-                     data-fontsize="38"
-                     data-fgcolor="#B6A2DC" data-bgcolor="#eee"
-                     data-icon="long-arrow-up" data-icon-size="28" data-icon-color="#fff"></div>
+            <div class="main-container-body col-md-4 col-md-offset-3">
+                <piechart chart-used="memoryUsed" chart-total="memoryTotal" radius="[75, 90]"
+                          use-color="#ff9494" show-text="内存使用资源" text-color="#ff9494">
+                </piechart>
             </div>
             <table class="table">
                 <thead>
@@ -23,14 +20,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="instance in appStat">
-                    <td>{/instance.app.appId/}</td>
+                <tr ng-repeat="(key, appMonitor) in appMonitors">
+                    <td>{/appMonitor.app.appId/}</td>
                     <td style="width: 30%;">
-                        <uib-progressbar class="progress-striped active" id="instanceCpu" type="info" max="instance.cpuShareCores" value="instance.cpuUsedCores"><span>{/instance.cpuUsedCores/} / {/instance.cpuShareCores/}</span>
+                        <uib-progressbar class="progress-striped active" id="instanceCpu" type="info"
+                                         max="appMonitor.cpuShareCores" value="appMonitor.cpuUsedCores"><span>{/appMonitor.cpuUsedCores/} / {/appMonitor.cpuShareCores/}</span>
                         </uib-progressbar>
                     </td>
                     <td style="width: 30%;">
-                        <uib-progressbar class="progress-striped active" id="instanceMem" type="success" max="instance.memoryTotal" value="instance.memoryUsed"><span>{/instance.memoryUsed/} / {/instance.memoryTotal/}</span>
+                        <uib-progressbar class="progress-striped active" id="instanceMem" type="success"
+                                         max="appMonitor.memoryTotal" value="appMonitor.memoryUsed"><span>{/appMonitor.memoryUsed/} / {/appMonitor.memoryTotal/}</span>
                         </uib-progressbar>
                     </td>
                 </tr>
