@@ -1,13 +1,13 @@
 function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification) {
     $rootScope.clusterClass = 'clusterMonitor';
     $scope.showAppMetrics = false;
-    $scope.cpuUsed = 0, $scope.cpuTotal = 0, $scope.memUsed = 0, $scope.memTotal = 0;
     var successCycle, errorCycle;
 
     $scope.getClusterMonitor = function () {
         glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: $stateParams.clusterId}], function (data) {
             if (data.data) {
                 $scope.clusterMonitors = data.data;
+                $scope.cpuUsed = 0, $scope.cpuTotal = 0, $scope.memUsed = 0, $scope.memTotal = 0;
                 if ($scope.clusterMonitors.appMetrics) {
                     angular.forEach($scope.clusterMonitors.appMetrics, function (value, index, array) {
                         $scope.cpuUsed += value.appCpuUsed;
