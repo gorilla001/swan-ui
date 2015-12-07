@@ -38,8 +38,14 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                    {name: "slave", label: "Slave"},
               ];
         }
-        $scope.serviceViews.push({name: "bamboo_gateway", label: "Gateway"});
-        $scope.serviceViews.push({name: "bamboo_proxy", label: "Proxy"});
+        angular.forEach($scope.node.attributes, function (attribute){
+            if (attribute.attribute == "gateway") {
+                $scope.serviceViews.push({name: "bamboo_gateway", label: "Gateway"});
+            }
+            if (attribute.attribute == "proxy") {
+                $scope.serviceViews.push({name: "bamboo_proxy", label: "Proxy"});
+            }
+        });
     }
 
     $scope.DOMs = {

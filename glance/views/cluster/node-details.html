@@ -61,7 +61,7 @@
             <div class="main-container">
                 <div class="main-container-body">
                     <ul class="clearfix server-app-status">
-                        <li data-ng-show="statusCache[node.cluster.id]['nodes'][node.id]['services'][serviceView.name]" data-ng-repeat="serviceView in serviceViews"> 
+                        <li data-ng-repeat="serviceView in serviceViews"> 
                             <div>
                                 <img data-ng-src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'][serviceView.name]/}.png" width="30">
                                 <button class="btn btn-xs btn-warning" 
