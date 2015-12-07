@@ -4,13 +4,13 @@
     </div>
 
     <div class="modal-body">
-        <div class="form-group" ng-show="deployinfo.apptype === '2'">
+        <div class="form-group">
             <label class="col-md-2 control-label">主机目录</label>
 
             <div class="col-md-5"
                  data-ng-class="{ 'has-error' : dirForm.dateDir.$invalid && !dirForm.dateDir.$pristine}">
                 <input type="text" name="dateDir" class="form-control" placeholder="宿主机路径"
-                       data-ng-model="dirInfo.hostPath" ng-required="deployinfo.apptype === '2'">
+                       data-ng-model="dirInfo.hostPath" data-required="required">
             </div>
 
             <div data-ng-class="{ 'has-error' : dirForm.dateDir.$invalid && !dirForm.dateDir.$pristine}">
@@ -19,13 +19,13 @@
             </div>
         </div>
 
-        <div class="form-group" ng-show="deployinfo.apptype === '2'">
+        <div class="form-group">
             <label class="col-md-2 control-label">容器目录</label>
 
             <div class="col-md-5"
                  data-ng-class="{ 'has-error' : dirForm.containerDir.$invalid && !dirForm.containerDir.$pristine}">
                 <input type="text" name="containerDir" class="form-control" placeholder="容器内部目录"
-                       data-ng-model="dirInfo.containerPath" ng-required="deployinfo.apptype === '2'">
+                       data-ng-model="dirInfo.containerPath" data-required="required">
             </div>
 
             <div data-ng-class="{ 'has-error' : dirForm.containerDir.$invalid && !dirForm.containerDir.$pristine}">

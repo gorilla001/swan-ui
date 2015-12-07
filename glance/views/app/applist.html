@@ -25,7 +25,7 @@
                     <td><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a></td>
                     <td>{/app.containerNum/}</td>
                     <td>
-                        <button type="button" data-ng-disabled="app.apptype == '2' || app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"  data-ng-click="upContainNum(app.appId, app.containerNum, app.appName)" class="btn btn-default btn-xs">扩展</button>
+                        <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"  data-ng-click="upContainNum(app.appId, app.containerNum, app.appName)" class="btn btn-default btn-xs">扩展</button>
                         <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 
                             data-ng-click="stopApp(app.appId, app.appName)" data-ng-show="app.appStatus!='3'">停止</button>
                         <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='2' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 

@@ -59,7 +59,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
 
     $scope.deployinfo = {
-        apptype: "1",        //defalut apptype for radio box
+        //apptype: "1",        //defalut apptype for radio box
         network: "BRIDGE"    //defalut network for radio box
     };
 
@@ -71,16 +71,17 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         nothingSelected: "All"
     };
 
-    $scope.multiPerConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "请选择主机"
-    };
+    //$scope.multiPerConfig = {
+    //    selectAll: "全部选择",
+    //    selectNone: "清空",
+    //    reset: "恢复",
+    //    search: "查询匹配词",
+    //    nothingSelected: "请选择主机"
+    //};
 
-    $scope.persistentEles = [["persistent", "LIKE", "persistent"]];
-    $scope.transientEles = [["transient", "LIKE", "transient"]];
+    //$scope.persistentEles = [["persistent", "LIKE", "persistent"]];
+    //$scope.transientEles = [["transient", "LIKE", "transient"]];
+    $scope.defaultEles = [["attributes", "UNLIKE", "proxy|gateway"]];
 
     $scope.deployApp = function () {
         if ($scope.portInfos.length) {
@@ -101,18 +102,33 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
             delete $scope.deployinfo.cmd;
         }
 
-        if ($scope.deployinfo.apptype === HAS_STATE) {
-            if ($scope.dirsInfo.length) {
-                $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
-            }
-
-            $scope.makeConstraints($scope.persistNodes, $scope.persistentEles);
-        } else if ($scope.deployinfo.apptype === NO_STATE) {
-            if ($scope.deployinfo.hasOwnProperty('containerVolumesInfo')) {
-                delete $scope.deployinfo.containerVolumesInfo;
-            }
-            $scope.makeConstraints($scope.tranNodes, $scope.transientEles);
+        //add dirsInfo
+        if ($scope.dirsInfo.length) {
+            $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
+        }else {
+            delete $scope.deployinfo.containerVolumesInfo;
         }
+
+        //Constraints
+        if($scope.selectNodes.length){
+            $scope.makeConstraints($scope.selectNodes, $scope.defaultEles);
+        }else {
+            //$scope.makeConstraints($scope.selectNodes, $scope.defaultEles);
+            $scope.deployinfo.constraints = $scope.defaultEles;
+        }
+
+        //if ($scope.deployinfo.apptype === HAS_STATE) {
+        //    if ($scope.dirsInfo.length) {
+        //        $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
+        //    }
+        //
+        //    $scope.makeConstraints($scope.persistNodes, $scope.persistentEles);
+        //} else if ($scope.deployinfo.apptype === NO_STATE) {
+        //    if ($scope.deployinfo.hasOwnProperty('containerVolumesInfo')) {
+        //        delete $scope.deployinfo.containerVolumesInfo;
+        //    }
+        //    $scope.makeConstraints($scope.tranNodes, $scope.transientEles);
+        //}
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
         $scope.deployinfo.containerNum = $scope.containerNum.toString();
@@ -303,6 +319,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
 
     //multi-nodes-select
     $scope.makeConstraints = function (nodesSelect, elements) {
+        nodesSelect = [{ip:'12.12.12.1',iq:'1'},{ip:'12.12.12.2',iq:'2'}];
         var temp = ["ip", "LIKE"];
         elements.splice(1, elements.length);
         var regular =nodesSelect.map(function(item){return item.ip}).join('|');

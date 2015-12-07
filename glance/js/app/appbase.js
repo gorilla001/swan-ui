@@ -147,31 +147,38 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         });
     };
 
-    $scope.getNode = function(clusterId){
-        $scope.nodesOk = [];
-        $scope.gateWays= [];
+    $scope.getNode = function (clusterId) {
+        //$scope.nodesOk = [];
+        $scope.gateWays = [];
         $scope.proxyNodes = [];
-        $scope.transient = [];
+        $scope.creatAppNodeList = [];
+        //$scope.transient = [];
 
-        for(var index in $scope.clusters){
-            if($scope.clusters[index].id === clusterId){
-                for(var i =0; i< $scope.clusters[index].nodes.length; i++){
-                    for(var j =0; j < $scope.clusters[index].nodes[i].attributes.length; j++){
-                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'persistent'){
-                            $scope.nodesOk.push($scope.clusters[index].nodes[i]);
-                        }
+        for (var index in $scope.clusters) {
+            if ($scope.clusters[index].id === clusterId) {
+                for (var i = 0; i < $scope.clusters[index].nodes.length; i++) {
+                    for (var j = 0; j < $scope.clusters[index].nodes[i].attributes.length; j++) {
+                        //if($scope.clusters[index].nodes[i].attributes[j].attribute === 'persistent'){
+                        //    $scope.nodesOk.push($scope.clusters[index].nodes[i]);
+                        //}
 
-                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'gateway'){
+                        if ($scope.clusters[index].nodes[i].attributes[j].attribute === 'gateway') {
                             $scope.gateWays.push($scope.clusters[index].nodes[i]);
                         }
 
-                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'proxy'){
+                        if ($scope.clusters[index].nodes[i].attributes[j].attribute === 'proxy') {
                             $scope.proxyNodes.push($scope.clusters[index].nodes[i]);
                         }
 
-                        if($scope.clusters[index].nodes[i].attributes[j].attribute === 'transient'){
-                            $scope.transient.push($scope.clusters[index].nodes[i]);
+                        if ($scope.clusters[index].nodes[i].attributes[j].attribute !== 'proxy' &&
+                            $scope.clusters[index].nodes[i].attributes[j].attribute !== 'gateway' &&
+                            $scope.clusters[index].nodes[i].role !== 'master' && $scope.clusters[index].nodes[i].status === 'running') {
+                                $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
                         }
+
+                        //if($scope.clusters[index].nodes[i].attributes[j].attribute === 'transient'){
+                        //    $scope.transient.push($scope.clusters[index].nodes[i]);
+                        //}
 
                     }
                 }
