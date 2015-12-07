@@ -36,15 +36,15 @@
             var status = wsData.status;
 
             var oldServices = clusterCache.servicesCache[nodeId];
-            var newServices = oldServices;
+            var newServices = angular.copy(oldServices);
             var oldNodeStatus = clusterCache.nodeStatusCache[nodeId];
-            var newNodeStatus = oldNodeStatus;
+            var newNodeStatus = angular.copy(oldNodeStatus);
             var rawStatus = clusterCache.rawStatusCache[nodeId];
             var amounts = clusterCache.amounts;
 
-            var oldServiceStatus = calNodeServiceStatus(role, oldServices);
-
             var role = findUpdatedNodeRole(clusters, clusterId, nodeId);
+
+            var oldServiceStatus = calNodeServiceStatus(role, oldServices);
 
             // 主机状态有更新
             if (status) {
@@ -119,7 +119,6 @@
         }
     
         function calNodeServiceStatus(role, services) {
-            var nodeServiceStatus = SERVICES_STATUS.running;
             var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
             var isMaster = calIsMaster(role);
             var service;
@@ -128,12 +127,12 @@
                 if (service.status === SERVICES_STATUS.installing || service.status === 'uninstalling') {
                     return SERVICES_STATUS.installing;
                 }
-                nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
+                var nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
                 if (nodeServiceStatus) {
                     return nodeServiceStatus;
                 }
             }
-            return nodeServiceStatus;
+            return SERVICES_STATUS.running;
         }
 
         function isNodeServicesFailedOrUninstalled(service, isMaster, statuses) {
@@ -157,12 +156,23 @@
         function collectLatestServices(wsData, cacheServices) {
             var latestServices = angular.copy(cacheServices);
             var key;
+            var index;
             for (key in wsData) {
                 if ((key !== 'clusterId') && (key !== 'nodeId')) {
-                    latestServices[key] = wsData[key];
+                    index = calServiceIndex(key, cacheServices);
+                    latestServices[index].status = wsData[key];
                 }
             }
             return latestServices;
+        }
+
+        function calServiceIndex(key, array) {
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].name === key) {
+                    return i;
+                }
+            }
+            return -1;
         }
         
     }
