@@ -160,7 +160,11 @@
             for (key in wsData) {
                 if ((key !== 'clusterId') && (key !== 'nodeId')) {
                     index = calServiceIndex(key, cacheServices);
-                    latestServices[index].status = wsData[key];
+                    if (index === -1) {
+                        latestServices.push({name: key, status: wsData[key]});
+                    } else {
+                        latestServices[index].status = wsData[key];
+                    }
                 }
             }
             return latestServices;
