@@ -174,6 +174,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                             $scope.clusters[index].nodes[i].attributes[j].attribute !== 'gateway' &&
                             $scope.clusters[index].nodes[i].role !== 'master' && $scope.clusters[index].nodes[i].status === 'running') {
                                 $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
+                            console.log('creatAppNodeList:',$scope.creatAppNodeList);
                         }
 
                         //if($scope.clusters[index].nodes[i].attributes[j].attribute === 'transient'){
