@@ -17,7 +17,43 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/unit/**/*.spec.js'
+        'js/confdev.js',
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/loaders.css/loaders.css.js',
+        'bower_components/angular/angular.js',
+        'bower_components/angular-cookies/angular-cookies.js',
+        'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+        'bower_components/angular-sanitize/angular-sanitize.js',
+        'bower_components/ngSocket/dist/ngSocket.js',
+        'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js',
+        'bower_components/zeroclipboard/dist/ZeroClipboard.js',
+        'bower_components/angular-animate/angular-animate.min.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+        'bower_components/isteven-angular-multiselect/isteven-multi-select.js',
+        'bower_components/moment/min/moment-with-locales.min.js',
+        'bower_components/circliful/js/jquery.circliful.min.js',
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.js',
+        'bower_components/ng-dialog/js/ngDialog.min.js',
+        'bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js',
+        'bower_components/echarts/src/echarts-dataman.js',
+        'bower_components/angularjs-slider/dist/rzslider.min.js',
+
+        'bower_components/angular-mocks/angular-mocks.js',
+
+        'js/app.js',
+        'js/constants.js',
+        'js/directives.js',
+        'js/rootctrl.js',
+        'js/ngservices/*.js',
+        
+        'js/cluster/*.js',
+        'js/app/*.js',
+        'js/log/*.js',
+        'js/admin/*.js',
+        'js/dynamic/*.js',
+        'test/unit/**/*.spec.js'
+
     ],
 
 
