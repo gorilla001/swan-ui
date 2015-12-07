@@ -7,7 +7,7 @@
 
     function groupNodes() {
 
-        var getOriginalCluster = function(cluster) {
+        function getOriginalCluster(cluster) {
             var originalCluster = {
                 services: {},
                 nodeStatus: {},
@@ -29,7 +29,7 @@
             return originalCluster;
         };
 
-        var updateClusterCache = function(clusters, wsData, clusterCache) {
+        function updateClusterCache(clusters, wsData, clusterCache) {
             
             var clusterId = wsData.clusterId;
             var nodeId = wsData.nodeId;
