@@ -1,5 +1,10 @@
 (function () {
     'use strict';
+    angular.module('glance')
+        .factory('groupNodes', groupNodes);
+
+    groupNodes.$inject = [];
+
     function groupNodes() {
 
         var getOriginalCluster = function(cluster) {
@@ -47,6 +52,7 @@
                 rawStatus = status;
             } else { //服务状态有更新
                 newServices = collectLatestServices(wsData, oldServices);
+
                 var newServiceStatus = calNodeServiceStatus(role, newServices);
                 if (newServiceStatus !== oldServiceStatus) {
                     newNodeStatus = calNodeStatus(role, newServiceStatus, rawStatus);
@@ -63,6 +69,11 @@
                 newServices: newServices,
                 newRawStatus: rawStatus
             };
+        };
+
+        return {
+            getOriginalCluster: getOriginalCluster,
+            updateClusterCache: updateClusterCache
         };
 
         function initNodesAmounts() {
@@ -153,14 +164,7 @@
             }
             return latestServices;
         }
-
-        return {
-            getOriginalCluster: getOriginalCluster,
-            updateClusterCache: updateClusterCache
-        };
+        
     }
-    
-    groupNodes.$inject = [];
-    glanceApp.factory('groupNodes', groupNodes);
 
 })();
