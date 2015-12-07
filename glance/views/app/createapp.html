@@ -87,27 +87,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger">* </span>应用类型</label>
-
-                    <div class="col-md-5">
-                        <label class="checkbox-inline">
-                            <input type="radio" ng-model="deployinfo.apptype" value="1" data-required="required">
-                            无状态应用
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="radio" ng-model="deployinfo.apptype" value="2" data-required="required">
-                            有状态应用 <span class="text-warning">(注:有状态应用不支持扩展实例)</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group" data-ng-show="deployinfo.apptype === '1'">
                     <label class="col-md-2 control-label">选择主机</label>
 
                     <div class="col-md-5">
                         <isteven-multi-select
-                                input-model="transient"
-                                output-model="tranNodes"
+                                input-model="creatAppNodeList"
+                                output-model="selectNodes"
                                 button-label="ip"
                                 item-label="ip"
                                 tick-property="ticked"
@@ -119,27 +104,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" data-ng-show="deployinfo.apptype === '2'">
-                    <label class="col-md-2 control-label"><span class="text-danger">* </span>选择主机</label>
-
-                    <div class="col-md-5">
-                        <isteven-multi-select
-                                input-model="nodesOk"
-                                output-model="persistNodes"
-                                button-label="ip"
-                                item-label="ip"
-                                tick-property="ticked"
-                                helper-elements="all none filter"
-                                max-height="200px"
-                                translation="multiPerConfig"
-                        >
-                        </isteven-multi-select>
-
-                        <span class="text-warning">(注:有状态应用主机至少选择一台)</span>
-                    </div>
-                </div>
-
-                <div class="form-group" ng-show="deployinfo.apptype === '2'">
+                <div class="form-group">
                     <label class="col-md-2 control-label">主机/容器目录</label>
 
                     <div class="col-md-5">
@@ -147,10 +112,6 @@
                                 data-ng-click="openDirModule()">
                             添加目录
                         </button>
-
-                        <!--<div data-ng-repeat="dir in dirsInfo" data-ng-show="dirsInfo.length">-->
-                            <!--<p>容器挂载目录{/$index+1/}:{/dir.hostPath/}  数据挂载目录{/$index+1/}:{/dir.containerPath/}<button type="button" data-ng-click="deletCurDir($index)">删除</button></p>-->
-                        <!--</div>-->
 
                         <table class="table table-striped table-bordered" data-ng-show="dirsInfo.length">
                             <thead>
@@ -323,7 +284,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="staticForm.$invalid || (deployinfo.apptype === '2' && persistNodes.length == 0)">
+                        <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="staticForm.$invalid">
                             创 建
                         </button>
                     </div>

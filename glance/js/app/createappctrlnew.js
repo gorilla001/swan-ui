@@ -9,8 +9,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     var SELECT_HTTP = '2';
     var HAS_DOMAIN = '1';
     var NO_DOMAIN = '2';
-    var NO_STATE = '1';
-    var HAS_STATE = '2';
 
     $scope.step = "stepone";
     $scope.portInfo = {};
@@ -59,7 +57,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
 
     $scope.deployinfo = {
-        apptype: "1",        //defalut apptype for radio box
         network: "BRIDGE"    //defalut network for radio box
     };
 
@@ -71,16 +68,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         nothingSelected: "All"
     };
 
-    $scope.multiPerConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "请选择主机"
-    };
-
-    $scope.persistentEles = [["persistent", "LIKE", "persistent"]];
-    $scope.transientEles = [["transient", "LIKE", "transient"]];
+    $scope.defaultEles = [["attributes", "UNLIKE", "proxy|gateway"]];
 
     $scope.deployApp = function () {
         if ($scope.portInfos.length) {
@@ -101,17 +89,18 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
             delete $scope.deployinfo.cmd;
         }
 
-        if ($scope.deployinfo.apptype === HAS_STATE) {
-            if ($scope.dirsInfo.length) {
-                $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
-            }
+        //add dirsInfo
+        if ($scope.dirsInfo.length) {
+            $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
+        }else {
+            delete $scope.deployinfo.containerVolumesInfo;
+        }
 
-            $scope.makeConstraints($scope.persistNodes, $scope.persistentEles);
-        } else if ($scope.deployinfo.apptype === NO_STATE) {
-            if ($scope.deployinfo.hasOwnProperty('containerVolumesInfo')) {
-                delete $scope.deployinfo.containerVolumesInfo;
-            }
-            $scope.makeConstraints($scope.tranNodes, $scope.transientEles);
+        //Constraints
+        if($scope.selectNodes.length){
+            $scope.makeConstraints($scope.selectNodes, $scope.defaultEles);
+        }else {
+            $scope.deployinfo.constraints = $scope.defaultEles;
         }
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
