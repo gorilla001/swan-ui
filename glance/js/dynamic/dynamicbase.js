@@ -60,12 +60,7 @@
 
                     originalCluster = groupNodes.getOriginalCluster(cluster);
 
-                    clusterCache[cluster.id] = {};
-
-                    clusterCache[cluster.id].nodeStatusCache = originalCluster.nodeStatus;
-                    clusterCache[cluster.id].rawStatusCache = originalCluster.rawStatus;
-                    clusterCache[cluster.id].servicesCache = originalCluster.services;
-                    clusterCache[cluster.id].amounts = originalCluster.amounts;
+                    clusterCache[cluster.id] = originalCluster;
 
                     clusterList[cluster.id] = {
                         id: cluster.id,

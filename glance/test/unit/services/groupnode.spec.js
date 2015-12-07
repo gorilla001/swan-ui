@@ -48,9 +48,9 @@
                 var services = mockClusterData.nodes[0].services;
 
                 var originalCluster = groupNodes.getOriginalCluster(mockClusterData);
-                expect(originalCluster.services[nodeId]).toEqual(services);
-                expect(originalCluster.nodeStatus[nodeId]).toEqual('failed');
-                expect(originalCluster.rawStatus[nodeId]).toEqual('running');
+                expect(originalCluster.servicesCache[nodeId]).toEqual(services);
+                expect(originalCluster.nodeStatusCache[nodeId]).toEqual('failed');
+                expect(originalCluster.rawStatusCache[nodeId]).toEqual('running');
                 expect(originalCluster.amounts.failed).toEqual(1);
             });
         });

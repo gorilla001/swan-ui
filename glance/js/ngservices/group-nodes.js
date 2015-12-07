@@ -9,9 +9,9 @@
 
         function getOriginalCluster(cluster) {
             var originalCluster = {
-                services: {},
-                nodeStatus: {},
-                rawStatus: {},
+                nodeStatusCache: {},
+                rawStatusCache: {},
+                servicesCache: {},
                 amounts: {}
             };
             originalCluster.amounts = initNodesAmounts();
@@ -21,9 +21,10 @@
                 node = cluster.nodes[i];
                 serviceStatus = calNodeServiceStatus(node.role, node.services);
                 nodeStatus = calNodeStatus(node.role, serviceStatus, node.status);
-                originalCluster.services[node.id] = node.services;
-                originalCluster.nodeStatus[node.id] = nodeStatus;
-                originalCluster.rawStatus[node.id] = node.status;
+
+                originalCluster.nodeStatusCache[node.id] = nodeStatus;
+                originalCluster.rawStatusCache[node.id] = node.status;
+                originalCluster.servicesCache[node.id] = node.services;
                 originalCluster.amounts[nodeStatus] += 1;
             }
             return originalCluster;
