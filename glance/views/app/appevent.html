@@ -1,18 +1,21 @@
 <div class="main-container-body">
-		<ul id="timeline">
-			<li class="work" ng-repeat="event in events">
-				<div class="relative">
-					<span class="date">{/event.timestamp/}</span>
-					<span class="circle"></span>
-				</div>
-				<div class="content">
-					<p>
-						<span ng-show="event.app.appName">应用名称：<em>{/event.app.appName/}</em></span>
-						<span ng-show="event.taskId">实例名称：<em>{/event.taskId/}</em></span>
-						<span ng-show="event.currentType">事件类型：<em>{/currentTypeText[event.currentType]/}</em></span>
-						<span ng-show="event.eventType">事件结果：<em>{/eventTypeText[event.eventType]/}</em></span>
-					</p>
-				</div>
-			</li>
-		</ul>	
+    <ul id="timeline">
+        <li class="work" ng-repeat="event in events">
+            <div class="relative">
+                <span class="date">{/event.timestamp/}</span>
+                <span class="circle"></span>
+            </div>
+            <div class="content">
+                <p>
+                    <span ng-show="event.appName">应用名称：<em>{/event.appName/}</em></span>
+                    <span ng-show="event.taskId">实例名称：<em>{/event.taskId/}</em></span>
+                    <span ng-show="event.currentType">事件类型：<em>{/currentTypeText[event.currentType]/}</em></span>
+                    <span ng-show="event.eventType">事件结果：<em>{/eventTypeText[event.eventType]/}</em></span>
+                </p>
+            </div>
+        </li>
+    </ul>
+    <uib-pagination total-items="totalItems" items-per-page="pageLength" ng-model="currentPage"
+                    ng-change="pageChanged(currentPage)" data-ng-show="showPagination" previous-text="上一页"
+                    next-text="下一页"></uib-pagination>
 </div>
