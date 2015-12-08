@@ -12,10 +12,9 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.clusters = [];
     $scope.curAppNames = [];
 
-    $scope.nodesOk = [];
     $scope.gateWays= [];
     $scope.proxyNodes = [];
-    $scope.transient = [];
+    $scope.creatAppNodeList = [];
 
     $rootScope.currentAppId;
 
