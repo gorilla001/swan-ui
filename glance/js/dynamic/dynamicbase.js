@@ -60,12 +60,7 @@
 
                     originalCluster = groupNodes.getOriginalCluster(cluster);
 
-                    clusterCache[cluster.id] = {};
-
-                    clusterCache[cluster.id].nodeStatusCache = originalCluster.nodeStatus;
-                    clusterCache[cluster.id].rawStatusCache = originalCluster.rawStatus;
-                    clusterCache[cluster.id].servicesCache = originalCluster.services;
-                    clusterCache[cluster.id].amounts = originalCluster.amounts;
+                    clusterCache[cluster.id] = originalCluster;
 
                     clusterList[cluster.id] = {
                         id: cluster.id,
@@ -81,16 +76,17 @@
             return clusterList;
         }
 
-        //$scope.$on('nodeStatusUpdate', function(event, data) {
-        //    updateNodeAmountsAndClusterCache(data);
-        //});
-        //
-        //$scope.$on('serviceStatusUpdate', function (event, data) {
-        //    updateNodeAmountsAndClusterCache(data);
-        //});
+        $scope.$on('nodeStatusUpdate', function(event, data) {
+            updateNodeAmountsAndClusterCache(data);
+        });
+        
+        $scope.$on('serviceStatusUpdate', function (event, data) {
+            updateNodeAmountsAndClusterCache(data);
+        });
 
         function updateNodeAmountsAndClusterCache(wsData) {
             var singleClusterCache = clusterCache[wsData.clusterId];
+            
             var latestData = groupNodes.updateClusterCache(listClusterDataGetFromBackend, wsData, singleClusterCache);
             // 更新页面数据
             $scope.clusterList[wsData.clusterId].amounts = latestData.newAmounts;

@@ -7,11 +7,11 @@
 
     function groupNodes() {
 
-        var getOriginalCluster = function(cluster) {
+        function getOriginalCluster(cluster) {
             var originalCluster = {
-                services: {},
-                nodeStatus: {},
-                rawStatus: {},
+                nodeStatusCache: {},
+                rawStatusCache: {},
+                servicesCache: {},
                 amounts: {}
             };
             originalCluster.amounts = initNodesAmounts();
@@ -21,30 +21,31 @@
                 node = cluster.nodes[i];
                 serviceStatus = calNodeServiceStatus(node.role, node.services);
                 nodeStatus = calNodeStatus(node.role, serviceStatus, node.status);
-                originalCluster.services[node.id] = node.services;
-                originalCluster.nodeStatus[node.id] = nodeStatus;
-                originalCluster.rawStatus[node.id] = node.status;
+
+                originalCluster.nodeStatusCache[node.id] = nodeStatus;
+                originalCluster.rawStatusCache[node.id] = node.status;
+                originalCluster.servicesCache[node.id] = node.services;
                 originalCluster.amounts[nodeStatus] += 1;
             }
             return originalCluster;
         };
 
-        var updateClusterCache = function(clusters, wsData, clusterCache) {
+        function updateClusterCache(clusters, wsData, clusterCache) {
             
             var clusterId = wsData.clusterId;
             var nodeId = wsData.nodeId;
             var status = wsData.status;
 
             var oldServices = clusterCache.servicesCache[nodeId];
-            var newServices = oldServices;
+            var newServices = angular.copy(oldServices);
             var oldNodeStatus = clusterCache.nodeStatusCache[nodeId];
-            var newNodeStatus = oldNodeStatus;
+            var newNodeStatus = angular.copy(oldNodeStatus);
             var rawStatus = clusterCache.rawStatusCache[nodeId];
             var amounts = clusterCache.amounts;
 
-            var oldServiceStatus = calNodeServiceStatus(role, oldServices);
-
             var role = findUpdatedNodeRole(clusters, clusterId, nodeId);
+
+            var oldServiceStatus = calNodeServiceStatus(role, oldServices);
 
             // 主机状态有更新
             if (status) {
@@ -119,7 +120,6 @@
         }
     
         function calNodeServiceStatus(role, services) {
-            var nodeServiceStatus = SERVICES_STATUS.running;
             var statuses = [SERVICES_STATUS.failed, SERVICES_STATUS.uninstalled];
             var isMaster = calIsMaster(role);
             var service;
@@ -128,12 +128,12 @@
                 if (service.status === SERVICES_STATUS.installing || service.status === 'uninstalling') {
                     return SERVICES_STATUS.installing;
                 }
-                nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
+                var nodeServiceStatus = isNodeServicesFailedOrUninstalled(service, isMaster, statuses);
                 if (nodeServiceStatus) {
                     return nodeServiceStatus;
                 }
             }
-            return nodeServiceStatus;
+            return SERVICES_STATUS.running;
         }
 
         function isNodeServicesFailedOrUninstalled(service, isMaster, statuses) {
@@ -157,12 +157,27 @@
         function collectLatestServices(wsData, cacheServices) {
             var latestServices = angular.copy(cacheServices);
             var key;
+            var index;
             for (key in wsData) {
                 if ((key !== 'clusterId') && (key !== 'nodeId')) {
-                    latestServices[key] = wsData[key];
+                    index = calServiceIndex(key, cacheServices);
+                    if (index === -1) {
+                        latestServices.push({name: key, status: wsData[key]});
+                    } else {
+                        latestServices[index].status = wsData[key];
+                    }
                 }
             }
             return latestServices;
+        }
+
+        function calServiceIndex(key, array) {
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].name === key) {
+                    return i;
+                }
+            }
+            return -1;
         }
         
     }
