@@ -105,8 +105,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }else {
             $scope.deployinfo.constraints = $scope.defaultEles;
         }
-        //Constraints if HOST
-        if($scope.deployinfo.network === HOST_MODEL){
+        //Constraints if checked HOST and checked single
+        if($scope.single){
             $scope.deployinfo.constraints.push($scope.hostEles)
         }
 

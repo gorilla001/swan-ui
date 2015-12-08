@@ -172,6 +172,9 @@
                         <input type="number" class="form-control" name="containerNum" data-ng-model="containerNum"
                                min="1" data-required="required">
                     </div>
+                    <label style="margin-top: 7px; font-weight: normal;"> 1容器/主机
+                        <input type="checkbox" ng-model="single"  uib-popover="每个主机只能运行一个当前应用的容器" popover-trigger="mouseenter">
+                    </label>
                     <div data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
                         <p data-ng-show="staticForm.containerNum.$error.min && !staticForm.containerNum.$pristine"
                            class="help-block">容器个数必须大于 1 </p>
