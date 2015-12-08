@@ -28,10 +28,28 @@ function appEventCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     };
 
     $scope.appEvent = function () {
-        glanceHttp.ajaxGet(['app.event',{app_id: $stateParams.appId}], function (data) {
-            $scope.events = data.data;
-        });
+        getEvents(1)
     };
+
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChanged = function(currentPage) {
+        getEvents(currentPage)
+    };
+
+    function getEvents(page){
+        glanceHttp.ajaxGet(['app.event',{app_id: $stateParams.appId, page: page}], function (data) {
+            if(data.data){
+                $scope.events = data.data.Message;
+
+                $scope.totalItems = data.data.Page;
+                $scope.pageLength = 20;
+                $scope.showPagination = ($scope.totalItems > $scope.pageLength);
+            }
+        });
+    }
 
     $scope.getAppInfoPromise.then($scope.appEvent);
 }
