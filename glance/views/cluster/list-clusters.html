@@ -11,7 +11,7 @@
         <header class="clearfix main-container-header">
             <h2>
                 <span data-ng-show="!cluster.amounts.total">{/ cluster.infos.name /}</span>
-                <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">
+                <a data-ng-show="cluster.amounts.total" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id})">
                     {/ cluster.infos.name /}
                 </a>
                 <small data-ng-show="cluster.amounts.total">
