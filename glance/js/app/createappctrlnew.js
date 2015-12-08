@@ -10,7 +10,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     var HAS_DOMAIN = '1';
     var NO_DOMAIN = '2';
 
-    $scope.step = "stepone";
+    var HOST_MODEL = 'HOST';
+    var BRIDGE_MODEL = 'BRIDGE';
+
     $scope.portInfo = {};
     $scope.portInfos = [];
 
@@ -69,6 +71,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
 
     $scope.defaultEles = [["attributes", "UNLIKE", "proxy|gateway"]];
+    $scope.hostEles = ["hostname", "UNIQUE"];
 
     $scope.deployApp = function () {
         if ($scope.portInfos.length) {
@@ -101,6 +104,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
             $scope.makeConstraints($scope.selectNodes, $scope.defaultEles);
         }else {
             $scope.deployinfo.constraints = $scope.defaultEles;
+        }
+        //Constraints if HOST
+        if($scope.deployinfo.network === HOST_MODEL){
+            $scope.deployinfo.constraints.push($scope.hostEles)
         }
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
