@@ -24,7 +24,9 @@
 <section class="dashboard">
     <div class="main-container" ng-repeat="(clusterId, cluster) in clusterList track by clusterId">
         <div class="main-container-body clearfix">
-            <h2>{/cluster.name/}</h2>
+            <h2>
+                <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
+            </h2>
             <div class="dashboard-left">
                 <div class="dashboard-cluster">
                     <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
