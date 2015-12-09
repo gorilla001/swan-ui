@@ -76,26 +76,28 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     function addMetricData(data) {
         var nodesData, maxNodesNumber, nodeInfo, chartsData, wsTime, chartsTime;
         nodesData = data.data;
-        $scope.$on('newNodeMetric-' + $stateParams.nodeId, function (event, data) {
-            maxNodesNumber = 180;
-            if (nodesData.length) {
-                wsTime = monitor.calHourMin(data.timestamp);
-                chartsTime = monitor.calHourMin(nodesData[0].timestamp);
-                if (wsTime < chartsTime) {
-                    return;
+        $scope.$on(SUB_INFOTYPE.nodeMetric, function (event, data) {
+            if (data.nodeId == $stateParams.nodeId) {
+                maxNodesNumber = 180;
+                if (nodesData.length) {
+                    wsTime = monitor.calHourMin(data.timestamp);
+                    chartsTime = monitor.calHourMin(nodesData[0].timestamp);
+                    if (wsTime < chartsTime) {
+                        return;
+                    }
                 }
+                nodeInfo = getNodeInfo(data);
+                if (nodeInfo) {
+                    $scope.nodeInfo = nodeInfo;
+                }
+    
+                nodesData.splice(0, 0, data);
+                if (nodesData.length > maxNodesNumber) {
+                    nodesData.pop();
+                }
+                chartsData = monitor.httpMonitor.getChartsData(nodesData);
+                buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
             }
-            nodeInfo = getNodeInfo(data);
-            if (nodeInfo) {
-                $scope.nodeInfo = nodeInfo;
-            }
-
-            nodesData.splice(0, 0, data);
-            if (nodesData.length > maxNodesNumber) {
-                nodesData.pop();
-            }
-            chartsData = monitor.httpMonitor.getChartsData(nodesData);
-            buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
         });
     }
 

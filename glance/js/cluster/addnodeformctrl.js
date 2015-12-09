@@ -11,7 +11,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     };
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
-    $scope.$on("nodeStatusUpdate", function (event, data) {
+    $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
       if(data["nodeId"] == $scope.nodeId && data["status"] != "terminated") {
         $scope.isConected = true;
         $scope.msgstate = "主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。";
