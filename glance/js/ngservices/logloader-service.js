@@ -94,6 +94,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 "timestamp",
                 "msg",
                 "ipport",
+                "ip",
                 "taskid"
             ],
             "highlight": {
