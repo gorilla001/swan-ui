@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="instance in instances">
-            <td>{/instance.instancdId/}</td>
+            <td>实例{/$index + 1/} ({/instance.instancdId/})</td>
             <td>{/appstate[instance.instancdStatus]/}</td>
             <td data-ng-hide="instance.hideStartTime">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
             <td data-ng-show="instance.hideStartTime"></td>
