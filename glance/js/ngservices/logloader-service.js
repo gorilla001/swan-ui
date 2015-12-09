@@ -140,7 +140,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             };
             this.data.query.bool.must.push(this.typename_json);
         }
-        if (searchData.nodeId.length) {
+        if (searchData.nodeId && searchData.nodeId.length) {
             this.nodeid_json = {
                 "terms": {
                     "ipport": function () {
