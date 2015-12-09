@@ -66,7 +66,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     tempNodesInfo.push({
                         ip: data.Ip,
                         maker: data.Ip,
-                        name: "实例"+(index + 1),
+                        name: "实例" + (index + 1) + "(" + data.Ip + ")",
                         ticked: false
                     });
                 });
