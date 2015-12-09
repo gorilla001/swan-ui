@@ -8,22 +8,14 @@ logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$filt
 function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeout, $interval) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
-    var clusterIdTemp,promise;
-
-    $scope.lte = new Date();
-    $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
-
-    promise = $interval(function(){
-        $scope.lte = new Date();
-        $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
-    },60000);
+    var clusterIdTemp;
 
     $scope.multiConfig = {
         selectAll: "全部选择",
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "选择主机"
+        nothingSelected: "ALL"
     };
 
     $scope.inputNodesInfo = [];
@@ -46,9 +38,27 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         }
     });
 
-    $scope.getNodes = function (appName, clusterId) {
+    //$scope.getNodes = function (appName, clusterId) {
+    //    if (appName && clusterId) {
+    //        glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+    //            $scope.nodes = data.data;
+    //
+    //            var tempNodesInfo = [];
+    //            angular.forEach($scope.nodes, function (data, index, array) {
+    //                tempNodesInfo.push({
+    //                    ip: data.Ip,
+    //                    maker: data.Ip,
+    //                    ticked: false
+    //                });
+    //            });
+    //            $scope.inputNodesInfo = tempNodesInfo;
+    //        });
+    //    }
+    //};
+
+    $scope.getNodePorts = function (appName, clusterId) {
         if (appName && clusterId) {
-            glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+            glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
                 $scope.nodes = data.data;
 
                 var tempNodesInfo = [];
@@ -56,6 +66,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     tempNodesInfo.push({
                         ip: data.Ip,
                         maker: data.Ip,
+                        name: "实例" + (index + 1) + "(" + data.Ip + ")",
                         ticked: false
                     });
                 });
@@ -99,14 +110,13 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
 
         function getContextLogTotal(times, total) {
             times += 1;
-            addDate = moment(logInfo.timestamp[0]).add(120 * times, 's').toDate();
-            subDate = moment(logInfo.timestamp[0]).subtract(120 * times, 's').toDate();
+            addDate = moment(logInfo.timestamp[0]).add(60 * times, 's').toDate();
+            subDate = moment(logInfo.timestamp[0]).subtract(60 * times, 's').toDate();
             var startDate = $filter('date')(subDate, 'yyyy-MM-ddTHH:mm:ss');
             var endDate = $filter('date')(addDate, 'yyyy-MM-ddTHH:mm:ss');
             $scope.searchData = {
                 'gte': startDate,
                 'lte': endDate,
-                'nodeId': new Array(ip),
                 'instanceName': taskid,
                 'clusterId': clusterIdTemp,
                 'size': 0
@@ -118,7 +128,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     $scope.searchData = {
                         'gte': startDate,
                         'lte': endDate,
-                        'nodeId': new Array(ip),
                         'instanceName': taskid,
                         'clusterId': clusterIdTemp,
                         'size': total
@@ -154,10 +163,17 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         startingDay: 1,
         showWeeks: false
     };
-
     $scope.showMeridian = false;
 
-    $scope.$on('$destroy', function () {
-        $timeout.cancel(promise);
+    $scope.$watch('timeRange', function () {
+        if($scope.timeRange === undefined){
+            //defualt 3 min ago
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - 3 * 60 * 1000);
+        }else if($scope.timeRange !== 'other'){
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - $scope.timeRange * 60 * 1000);
+        }
+
     });
 }

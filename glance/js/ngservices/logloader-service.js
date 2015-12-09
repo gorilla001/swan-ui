@@ -93,6 +93,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             "fields": [
                 "timestamp",
                 "msg",
+                "ipport",
                 "ip",
                 "taskid"
             ],
@@ -139,10 +140,10 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             };
             this.data.query.bool.must.push(this.typename_json);
         }
-        if (searchData.nodeId.length) {
+        if (searchData.nodeId && searchData.nodeId.length) {
             this.nodeid_json = {
                 "terms": {
-                    "ip": function () {
+                    "ipport": function () {
                         var nodesIp = [];
                         for (var i = 0; i < searchData.nodeId.length; i++) {
                             if(searchData.nodeId[i].hasOwnProperty('maker')){
@@ -163,6 +164,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
+
         this.getlogs(callback);
 
     };

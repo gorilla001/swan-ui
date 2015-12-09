@@ -86,6 +86,7 @@ BACKEND_URL = {
         cancelDeploy: "api/v1/applications/$app_id/cancel-deployment",
         undoScaling: "api/v1/applications/$app_id/cancel-scaling",
         getNodes: "api/v1/applications/$clusterId/get-appnodes?cluster_id=$cluster_id&app_name=$app_name",
+        getNodePorts: "api/v1/applications/$clusterId/get-appnodes-port?cluster_id=$cluster_id&app_name=$app_name",
         event: "api/v1/applications/$app_id/events?page=$page"
     }
         

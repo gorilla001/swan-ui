@@ -19,54 +19,18 @@
                             <label>应用名 <span class="text-danger">* </span></label>
                             <select class="form-control input-sm"
                                     data-ng-options=" option.name as option.name for option in options"
-                                    data-ng-model="appName" data-required="required" ng-change="getNodes(appName,clusterId)">
+                                    data-ng-model="appName" data-required="required" ng-change="getNodePorts(appName,clusterId)">
                                 <option value=""></option>
                             </select>
                         </div>
 
-
-
-                        <div class="form-group col-md-8">
-                            <div style="display: inline-block; margin-right: 20px">
-                                <label style="display: block">起始日期 <span class="text-danger">* </span></label>
-                                <datetimepicker
-                                        min-date="minDate" hour-step="hourStep"
-                                        minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
-                                        date-format="yyyy-MM-dd" date-options="dateOptions"
-                                        readonly-date="false"
-                                        show-spinners="false"
-                                        readonly-time="false"
-                                        current-text="今天"
-                                        clear-text="清除"
-                                        close-text="关闭"
-                                        mousewheel="false"
-                                        date-disabled="isDisableGteDate(date, mode)">
-                                </datetimepicker>
-                            </div>
-                            <div style="display: inline-block;">
-                                <label style="display: block">截止日期 <span class="text-danger">* </span></label>
-                                <datetimepicker
-                                        min-date="minDate" hour-step="hourStep"
-                                        minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
-                                        date-format="yyyy-MM-dd" date-options="dateOptions"
-                                        readonly-date="false"
-                                        show-spinners="false"
-                                        readonly-time="false"
-                                        current-text="今天"
-                                        clear-text="清除"
-                                        close-text="关闭"
-                                        mousewheel="false"
-                                        date-disabled="isDisablelteDate(date, mode)">
-                                </datetimepicker>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label style="display: block">主机名/IP <span class="text-danger">* </span></label>
+                        <div class="form-group col-md-3">
+                            <label style="display: block">实例名</label>
                             <isteven-multi-select
                                     input-model="inputNodesInfo"
                                     output-model="nodeId"
-                                    button-label="ip"
-                                    item-label="ip"
+                                    button-label="name"
+                                    item-label="name"
                                     tick-property="ticked"
                                     helper-elements="all none filter"
                                     max-height="200px"
@@ -79,15 +43,63 @@
                         <!--<label>实例名</label>-->
                         <!--<input type="text" class="form-control input-sm" data-ng-model="searchData.instanceName">-->
                         <!--</div>-->
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-3">
                             <label>关键字</label>
                             <input type="text" class="form-control input-sm" data-ng-model="logSearchKey">
                         </div>
-                        <div class="col-md-2">
-                            <label></label>
-                            <button type="submit" data-ng-disabled="staticForm.$invalid || !nodeId.length"
-                                    class="btn btn-primary btn-sm btn-block">查询
-                            </button>
+
+                        <div class="col-md-12">
+                            <div class="form-group" style=" width: 150px; display: inline-block;">
+                                <label>查询时间范围</label>
+                                <select class="form-control input-sm" data-ng-model="timeRange">
+                                    <option value="">3分钟</option>
+                                    <option value="10">10分钟</option>
+                                    <option value="30">30分钟</option>
+                                    <option value="60">1小时</option>
+                                    <option value="1440">1天</option>
+                                    <option value="other">精确时间</option>
+                                </select>
+                            </div>
+                            <div  data-ng-show="timeRange === 'other'" style="display: inline-block;">
+                                <div style="display: inline-block; margin-right: 20px; margin-left: 20px;">
+                                    <label style="display: block">起始日期 <span class="text-danger">* </span></label>
+                                    <datetimepicker
+                                            min-date="minDate" hour-step="hourStep"
+                                            minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
+                                            date-format="yyyy-MM-dd" date-options="dateOptions"
+                                            readonly-date="false"
+                                            show-spinners="false"
+                                            readonly-time="false"
+                                            current-text="今天"
+                                            clear-text="清除"
+                                            close-text="关闭"
+                                            mousewheel="false"
+                                            date-disabled="isDisableGteDate(date, mode)">
+                                    </datetimepicker>
+                                </div>
+                                <div style="display: inline-block;">
+                                    <label style="display: block">截止日期 <span class="text-danger">* </span></label>
+                                    <datetimepicker
+                                            min-date="minDate" hour-step="hourStep"
+                                            minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
+                                            date-format="yyyy-MM-dd" date-options="dateOptions"
+                                            readonly-date="false"
+                                            show-spinners="false"
+                                            readonly-time="false"
+                                            current-text="今天"
+                                            clear-text="清除"
+                                            close-text="关闭"
+                                            mousewheel="false"
+                                            date-disabled="isDisablelteDate(date, mode)">
+                                    </datetimepicker>
+                                </div>
+                            </div>
+                            <div style="display: inline-block; margin-left: 20px;">
+                                <label></label>
+                                <button type="submit" data-ng-disabled="staticForm.$invalid"
+                                        class="btn btn-primary btn-sm" style=" width: 150px;">查询
+                                </button>
+                            </div>
                         </div>
                     </form>
                 <hr>
