@@ -110,8 +110,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
 
         function getContextLogTotal(times, total) {
             times += 1;
-            addDate = moment(logInfo.timestamp[0]).add(120 * times, 's').toDate();
-            subDate = moment(logInfo.timestamp[0]).subtract(120 * times, 's').toDate();
+            addDate = moment(logInfo.timestamp[0]).add(60 * times, 's').toDate();
+            subDate = moment(logInfo.timestamp[0]).subtract(60 * times, 's').toDate();
             var startDate = $filter('date')(subDate, 'yyyy-MM-ddTHH:mm:ss');
             var endDate = $filter('date')(addDate, 'yyyy-MM-ddTHH:mm:ss');
             $scope.searchData = {
