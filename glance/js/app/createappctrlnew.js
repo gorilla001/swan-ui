@@ -70,7 +70,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         nothingSelected: "All"
     };
 
-    $scope.defaultEles = [["attributes", "UNLIKE", "proxy|gateway"]];
+    $scope.defaultEles = [];    //defalut constraints
     $scope.hostEles = ["hostname", "UNIQUE"];
 
     $scope.deployApp = function () {
@@ -300,7 +300,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     //multi-nodes-select
     $scope.makeConstraints = function (nodesSelect, elements) {
         var temp = ["ip", "LIKE"];
-        elements.splice(1, elements.length);
         var regular =nodesSelect.map(function(item){return item.ip}).join('|');
 
         if(nodesSelect.length){
