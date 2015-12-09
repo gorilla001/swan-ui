@@ -117,7 +117,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
             $scope.searchData = {
                 'gte': startDate,
                 'lte': endDate,
-                'nodeId': new Array(ip),
                 'instanceName': taskid,
                 'clusterId': clusterIdTemp,
                 'size': 0
@@ -129,7 +128,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     $scope.searchData = {
                         'gte': startDate,
                         'lte': endDate,
-                        'nodeId': new Array(ip),
                         'instanceName': taskid,
                         'clusterId': clusterIdTemp,
                         'size': total

@@ -164,7 +164,6 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
-        console.log(this.data)
 
         this.getlogs(callback);
 
