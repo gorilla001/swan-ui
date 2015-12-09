@@ -93,7 +93,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             "fields": [
                 "timestamp",
                 "msg",
-                "ip",
+                "ipport",
                 "taskid"
             ],
             "highlight": {
@@ -142,7 +142,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         if (searchData.nodeId.length) {
             this.nodeid_json = {
                 "terms": {
-                    "ip": function () {
+                    "ipport": function () {
                         var nodesIp = [];
                         for (var i = 0; i < searchData.nodeId.length; i++) {
                             if(searchData.nodeId[i].hasOwnProperty('maker')){
@@ -163,6 +163,8 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
+        console.log(this.data)
+
         this.getlogs(callback);
 
     };

@@ -8,15 +8,7 @@ logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$filt
 function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeout, $interval) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
-    var clusterIdTemp,promise;
-
-    $scope.lte = new Date();
-    $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
-
-    promise = $interval(function(){
-        $scope.lte = new Date();
-        $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
-    },60000);
+    var clusterIdTemp;
 
     $scope.multiConfig = {
         selectAll: "全部选择",
@@ -46,9 +38,27 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         }
     });
 
-    $scope.getNodes = function (appName, clusterId) {
+    //$scope.getNodes = function (appName, clusterId) {
+    //    if (appName && clusterId) {
+    //        glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+    //            $scope.nodes = data.data;
+    //
+    //            var tempNodesInfo = [];
+    //            angular.forEach($scope.nodes, function (data, index, array) {
+    //                tempNodesInfo.push({
+    //                    ip: data.Ip,
+    //                    maker: data.Ip,
+    //                    ticked: false
+    //                });
+    //            });
+    //            $scope.inputNodesInfo = tempNodesInfo;
+    //        });
+    //    }
+    //};
+
+    $scope.getNodePorts = function (appName, clusterId) {
         if (appName && clusterId) {
-            glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+            glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
                 $scope.nodes = data.data;
 
                 var tempNodesInfo = [];
@@ -56,6 +66,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     tempNodesInfo.push({
                         ip: data.Ip,
                         maker: data.Ip,
+                        name: "实例"+(index + 1),
                         ticked: false
                     });
                 });
@@ -154,10 +165,17 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         startingDay: 1,
         showWeeks: false
     };
-
     $scope.showMeridian = false;
 
-    $scope.$on('$destroy', function () {
-        $timeout.cancel(promise);
+    $scope.$watch('timeRange', function () {
+        if($scope.timeRange === undefined){
+            //defualt 3 min ago
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - 3 * 60 * 1000);
+        }else if($scope.timeRange !== 'other'){
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - $scope.timeRange * 60 * 1000);
+        }
+
     });
 }
