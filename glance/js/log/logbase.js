@@ -15,7 +15,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "选择主机"
+        nothingSelected: "ALL"
     };
 
     $scope.inputNodesInfo = [];
@@ -117,6 +117,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
             $scope.searchData = {
                 'gte': startDate,
                 'lte': endDate,
+                'nodeId': new Array(ip),
                 'instanceName': taskid,
                 'clusterId': clusterIdTemp,
                 'size': 0
@@ -128,6 +129,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
                     $scope.searchData = {
                         'gte': startDate,
                         'lte': endDate,
+                        'nodeId': new Array(ip),
                         'instanceName': taskid,
                         'clusterId': clusterIdTemp,
                         'size': total
