@@ -55,7 +55,9 @@
                             </td>
                             <td class="agent-version">
                                 <span>{/ statusCache[cluster.id]['nodes'][node.id].agentVersion/}
-                                    <em class="label label-danger" data-ng-show="statusCache[cluster.id]['nodes'][node.id].isUpgradeFailed">升级失败</em>
+                                    <em class="label label-danger" data-ng-show="isUpgradeFailed(statusCache[cluster.id]['nodes'][node.id])">
+                                        升级失败
+                                    </em>
                                 </span>
                             </td>
                             <td>
