@@ -3,12 +3,13 @@
  */
 glanceApp.controller("appListCtrl", appListCtrl);
 
-appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification', '$stateParams', '$state', '$timeout'];
+appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification', '$stateParams', '$state'];
 
-function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $stateParams, $state, $timeout) {
+function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $stateParams, $state) {
 
     var promise, listPromise;
     $scope.deleteStopApps = {};
+    $scope.applist = [];
 
     $scope.listApp = function () {
         getPreList($stateParams.page);
