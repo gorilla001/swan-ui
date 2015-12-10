@@ -1,4 +1,4 @@
-function clusterDetailsCtrl($scope, $stateParams, glanceHttp, Notification) {
+function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification) {
 
     $scope.statusCache = {};
     function getCurCluster() {
@@ -31,24 +31,27 @@ function clusterDetailsCtrl($scope, $stateParams, glanceHttp, Notification) {
     
     $scope.upgradeAgent = function (clusterId) {
         glanceHttp.ajaxPut(['cluster.cluster'], {'id': clusterId, 'isUpdateAgent': true}, function() {
+            $scope.cluster.agent_version = $rootScope.agentVersion;
             angular.forEach($scope.statusCache[$scope.cluster.id]["nodes"], function(node) {
                 node.isUpgradeFailed = false;
             });
         });
     };
     
-    $scope.getUpgradeStatus = function(nodes){
-        var failedNum = 0;
+    $scope.isUpgradeFailed = function(statusNode) {
+        return (statusNode.isUpgradeFailed && statusNode.agentVersion != $scope.cluster.agent_version
+                && statusNode.agentVersion != $rootScope.agentVersion)
+    }
+    
+    $scope.getUpgradeStatus = function(statusNodes){
         var noUpgradeNum = 0;
-        angular.forEach(nodes, function(node) {
-            if (node.isUpgradeFailed) {
-                failedNum += 1;
-            } else if ($scope.cluster.agent_version && node.agentVersion != $scope.cluster.agent_version
-                    && node.status != NODE_STATUS.terminated) {
+        angular.forEach(statusNodes, function(statusNode) {
+            if ($scope.cluster.agent_version && statusNode.agentVersion != $scope.cluster.agent_version
+                && statusNode.agentVersion != $rootScope.agentVersion && statusNode.status != NODE_STATUS.terminated) {
                 noUpgradeNum += 1;
             }
         })
-        var oldNum = $scope.countOldAgent(nodes);
+        var oldNum = $scope.countOldAgent(statusNodes);
         if (oldNum == 0) {
             return "success"
         } else if (noUpgradeNum > 0) {
@@ -59,5 +62,5 @@ function clusterDetailsCtrl($scope, $stateParams, glanceHttp, Notification) {
     }
 }
 
-clusterDetailsCtrl.$inject = ["$scope", "$stateParams", "glanceHttp", "Notification"];
+clusterDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "Notification"];
 glanceApp.controller("clusterDetailsCtrl", clusterDetailsCtrl);
