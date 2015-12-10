@@ -259,7 +259,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         }
     };
 
-    $scope.listCluster();
+    var promise= $scope.getAppName();
+    promise.then($scope.listCluster);
 
     // createPortModule
     $scope.openPortModule = function (size) {

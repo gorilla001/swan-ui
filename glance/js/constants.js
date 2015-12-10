@@ -70,7 +70,8 @@ BACKEND_URL = {
         search: "logstash-$userId-*/_search"
     },
     app: {
-        list: "api/v1/applications/",
+        list: "api/v1/applications/?page=$page",
+        allList:"api/v1/applications/",
         deploy: "api/v1/applications/deploy",
         instances: "api/v1/applications/$app_id/instances",
         info: "api/v1/applications/$app_id",

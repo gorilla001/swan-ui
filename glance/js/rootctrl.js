@@ -26,11 +26,6 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp) {
             window.location.href = USER_URL;
         });
     };
-
-    $scope.goToApplist = function() {
-        $rootScope.currentAppId = undefined;
-        $state.go("app.applist", undefined, {reload: true});
-    }
 }
 
 rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "glanceHttp"];
