@@ -18,17 +18,15 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
       }
     });
     $scope.addNode = function(isCon) {
-        glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}], function() {
-            if (isCon) {
-                $state.go('cluster.nodesource', {
-                    'clusterId':$stateParams.clusterId
-                });
-            } else {
-                $state.go('cluster.clusterdetails.nodes', {
-                    'clusterId':$stateParams.clusterId
-                });
-            }
-        });
+        if (isCon) {
+            $state.go('cluster.nodesource', {
+                'clusterId':$stateParams.clusterId
+            });
+        } else {
+            $state.go('cluster.clusterdetails.nodes', {
+                'clusterId':$stateParams.clusterId
+            });
+        }
     };
     var cmdArray = new Array(
         "sudo -H",
