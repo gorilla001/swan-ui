@@ -30,6 +30,7 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
                         }
                     });
                 }
+                $rootScope.$broadcast(data.type, data.message);
             });
         });
     }
@@ -41,29 +42,8 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
         wsCallbacks[infoType].push(callback);
     }
 
-    function listenMetrics() {
-        wsOnMessage(function (data) {
-            $rootScope.$broadcast("newNodeMetric-" + data.nodeId, data);
-        }, SUB_INFOTYPE.nodeMetric);
-    }
-
-    function listenNodeStatus() {
-        wsOnMessage(function (data) {
-            $rootScope.$broadcast("nodeStatusUpdate", data);
-        }, SUB_INFOTYPE.nodeStatus);
-    }
-    
-    function listenServiceStatus() {
-        wsOnMessage(function (data) {
-            $rootScope.$broadcast("serviceStatusUpdate", data);
-        }, SUB_INFOTYPE.serviceStatus);
-    }
-
     var init = function (token) {
         buildWS(token);
-        listenMetrics();
-        listenNodeStatus();
-        listenServiceStatus();
     };
 
     var clear = function () {

@@ -25,11 +25,6 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         });
     };
 
-    $scope.upgradeAgent = function (clusterId) {
-        glanceHttp.ajaxPut(['cluster.cluster'], {'id': clusterId, 'isUpdateAgent': true}, function() {
-            Notification.success('设置升级集群 Agent 成功')
-        });
-    };
 
     $scope.getClass = function(status) {
         var classes = {
@@ -74,7 +69,7 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         }
     }
 
-    $scope.updateNodeStatus = function (clusterId, nodeId, rawStatus, statusCache) {
+    $scope.updateNodeStatus = function (clusterId, nodeId, rawStatus, agentVersion, statusCache) {
         if (statusCache[clusterId] && statusCache[clusterId]["nodes"][nodeId]) {
             var servicesStatus = getNodeServiceStatus(clusterId, nodeId, statusCache);
             var status;
@@ -92,7 +87,20 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
                 status = NODE_STATUS.running;
             }
             statusCache[clusterId]["nodes"][nodeId].status = status;
+            if (agentVersion){
+                statusCache[clusterId]["nodes"][nodeId].agentVersion = agentVersion;
+            }
         }
+    }
+    
+    $scope.countOldAgent = function(nodes) {
+        var num = 0;
+        angular.forEach(nodes, function(node) {
+            if (node.agentVersion != $rootScope.agentVersion) {
+                num += 1;
+            }
+        })
+        return num;
     }
 
     $scope.addNode2StatusStore = function (clusterId, node, statusCache) {
@@ -106,20 +114,20 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         angular.forEach(node.services, function (service) {
             $scope.updateServiceStatus(clusterId, node.id, service.name, service.status, statusCache)
         });
-        $scope.updateNodeStatus(clusterId, node.id, node.status, statusCache);
+        $scope.updateNodeStatus(clusterId, node.id, node.status, node.agent_version, statusCache);
     }
 
     $scope.startListenStatusUpdate = function (scope, statusCache) {
-        scope.$on('nodeStatusUpdate', function (event, data) {
-            $scope.updateNodeStatus(data.clusterId, data.nodeId, data.status, statusCache);
+        scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+            $scope.updateNodeStatus(data.clusterId, data.nodeId, data.status, data.agentVersion, statusCache);
         });
-        scope.$on('serviceStatusUpdate', function (event, data) {
+        scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
             angular.forEach(data, function (val, key){
                 if (key != "clusterId" && key != "nodeId") {
                     $scope.updateServiceStatus(data.clusterId, data.nodeId, key, val, statusCache)
                 }
             });
-            $scope.updateNodeStatus(data.clusterId, data.nodeId, undefined, statusCache);
+            $scope.updateNodeStatus(data.clusterId, data.nodeId, undefined, undefined, statusCache);
         });
     }
 

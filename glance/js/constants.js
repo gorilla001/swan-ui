@@ -9,7 +9,8 @@ MESSAGE_CODE = {
 SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",
     nodeMetric: "NodeMetric",
-    serviceStatus: "ServiceStatus"
+    serviceStatus: "ServiceStatus",
+    agentUpgradeFailed: "AgentUpgradeFailed"
 };
 
 NODE_STATUS = {

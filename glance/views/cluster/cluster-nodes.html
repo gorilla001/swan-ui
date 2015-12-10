@@ -10,6 +10,17 @@
                     <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                             data-ng-disabled="!checkedNodes.value.length">删除主机
                     </button>
+                    <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-warning btn-sm" 
+                        autocomplete="off" data-ng-show="getUpgradeStatus(statusCache[cluster.id]['nodes'])=='upgrading'" disabled="disabled">
+                            升级中 
+                        <span class="badge" data-ng-bind="countOldAgent(statusCache[cluster.id]['nodes'])"></span>
+                    </button>
+                    <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-warning btn-sm" 
+                        autocomplete="off" data-ng-click="upgradeAgent(cluster.id)" 
+                        data-ng-show="getUpgradeStatus(statusCache[cluster.id]['nodes'])=='failed'">
+                            升级Agent 
+                        <span class="badge" data-ng-bind="countOldAgent(statusCache[cluster.id]['nodes'])"></span>
+                    </button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -42,8 +53,10 @@
                             <td>
                                 <img data-ng-src="../pics/ico-node-status-{/statusCache[cluster.id]['nodes'][node.id].status/}.png" width="16"> {/statName[statusCache[cluster.id]['nodes'][node.id].status]/}
                             </td>
-                            <td>
-                                {/ node.agent_version/}
+                            <td class="agent-version">
+                                <span>{/ statusCache[cluster.id]['nodes'][node.id].agentVersion/}
+                                    <em class="label label-danger" data-ng-show="statusCache[cluster.id]['nodes'][node.id].isUpgradeFailed">升级失败</em>
+                                </span>
                             </td>
                             <td>
                                 {/ node.created_at /}
