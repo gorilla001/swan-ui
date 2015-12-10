@@ -16,7 +16,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.proxyNodes = [];
     $scope.creatAppNodeList = [];
 
-    $rootScope.currentAppId;
+    $scope.allAppNames = [];
 
     $scope.appstate = {
         '1': "部署中",
@@ -59,37 +59,34 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         return deferred.promise;
     };
 
-    $scope.stopApp = function (appId, appName){
-        $rootScope.currentAppId = appId;
+    $scope.stopApp = function (appId, appName, page){
         glanceHttp.ajaxGet(['app.stop',{app_id: parseInt(appId)}], function (data) {
             if(data.data.stopState == 0){
                 Notification.success('应用' + appName +' 停止中...');
-                $state.go('app.applist', {appId: appId}, {reload : true});
+                $state.go('app.applist', {page: page}, {reload : true});
             }
         },undefined, null, function(data){
             Notification.error('应用 ' + appName+' 停止失败:' + $scope.addCode[data.code]);
         });
     };
 
-    $scope.startApp = function (appId, appName){
-        $rootScope.currentAppId = appId;
+    $scope.startApp = function (appId, appName, page){
         glanceHttp.ajaxGet(['app.start',{app_id: parseInt(appId)}], function (data) {
             if(data.data.startState == 0){
                 Notification.success('应用 '+ appName +' 启动中...');
-                $state.go('app.applist', {appId: appId}, {reload : true});
+                $state.go('app.applist', {page: page}, {reload : true});
             }
         },undefined, null, function(data){
             Notification.error('应用 '+ appName +' 启动失败: ' + $scope.addCode[data.code]);
         });
     };
 
-    $scope.deleteApp = function (appId, appName) {
-        $rootScope.currentAppId = appId;
+    $scope.deleteApp = function (appId, appName, page) {
         $scope.myConfirm("您确定要删除应用吗？", function () {
             glanceHttp.ajaxGet(['app.deleteApp',{app_id: parseInt(appId)}], function (data) {
                 if(data.data.deletState == 0){
                     Notification.success('应用 ' + appName + ' 删除中...');
-                    $state.go('app.applist',{appId: appId},{reload : true});
+                    $state.go('app.applist',{page: page},{reload : true});
                 }
             },undefined, null, function(data){
                 Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
@@ -97,29 +94,28 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         });
     };
 
-    $scope.undoApp = function (appId, appName) {
-        $rootScope.currentAppId = appId;
+    $scope.undoApp = function (appId, appName, page) {
         $scope.myConfirm("您确定要撤销扩展中的应用吗？", function () {
             glanceHttp.ajaxGet(['app.undoScaling',{app_id: parseInt(appId)}], function (data) {
                     Notification.success('应用 ' + appName + ' 撤销中...');
-                    $state.go('app.applist',{appId: appId},{reload : true});
+                    $state.go('app.applist',{page:page},{reload : true});
             },undefined, null, function(data){
                 Notification.error('应用 ' + appName + ' 撤销失败: ' + $scope.addCode[data.code]);
             });
         });
     };
 
-    $scope.upContainNum = function (appId, containerNum, appName, isfromDetail) {
+    $scope.upContainNum = function (appId, containerNum, appName, isfromDetail, page) {
         $('#expandConNumModal').modal("show");
         $scope.tempNum = containerNum;
         $scope._expandConNum = containerNum;
         $scope._expandAppId = appId;
         $scope._appName = appName;
         $scope.fromDetail = isfromDetail;
+        $scope.curPage = page;
     };
     
     $scope.ensureExpandConNumCallback = function (appId) {
-        $rootScope.currentAppId = appId;
         $scope.containDate = {
                 "updateContainerNum": $scope._expandConNum,
                 "appId": $scope._expandAppId.toString()
@@ -135,9 +131,9 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 $timeout(function () {
                     Notification.success('应用 '+ $scope._appName +$scope.updateContainerText);
                     if($scope.fromDetail){
-                        $state.go('app.appdetail.config',{appId: appId},{reload : true})
+                        $state.go('app.appdetail.config',{appId: appId, page: $scope.curPage},{reload : true})
                     }else {
-                        $state.go('app.applist',{appId: appId},{reload : true})
+                        $state.go('app.applist',{page: $scope.curPage},{reload : true})
 
                     }
                 }, 200, true);
@@ -174,4 +170,20 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
             }
         }
     };
+
+    // get all app list to Check repeat
+    $scope.getAppName = function () {
+        var deferred = $q.defer();
+        $scope.allAppNames = [];
+        glanceHttp.ajaxGet(['app.allList'], function (data) {
+            if (data.data && data.data.App) {
+                $scope.allAppList = data.data.App;
+                angular.forEach($scope.allAppList, function (value, index) {
+                    $scope.allAppNames.push(value.appName);
+                });
+            }
+            deferred.resolve();
+        });
+        return deferred.promise;
+    }
 }

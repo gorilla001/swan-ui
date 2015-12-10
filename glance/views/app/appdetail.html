@@ -15,10 +15,10 @@
 						<button data-ng-disabled="!appInfo.status" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
 						</button>
 						<ul class="dropdown-menu dropdown-menu-right">
-							<li data-ng-show="appInfo.status == '3'"><a href="#" data-ng-click="startApp(appInfo.appId, appInfo.name)">启动</a></li>
-							<li data-ng-show="appInfo.status!='3'"><a href="#" data-ng-click="stopApp(appInfo.appId, appInfo.name)">停止</a></li>
-							<li data-ng-disabled="appInfo.status == '5'"><a data-ng-click="deleteApp(appInfo.appId, appInfo.name)" href="#">删除</a></li>
-							<li data-ng-show="appInfo.status == '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum, appInfo.name, true)" href="#">扩展</a></li>
+							<li data-ng-show="appInfo.status == '3'"><a href="#" data-ng-click="startApp(appInfo.appId, appInfo.name, curPageNumber)">启动</a></li>
+							<li data-ng-show="appInfo.status!='3'"><a href="#" data-ng-click="stopApp(appInfo.appId, appInfo.name, curPageNumber)">停止</a></li>
+							<li data-ng-disabled="appInfo.status == '5'"><a data-ng-click="deleteApp(appInfo.appId, appInfo.name, curPageNumber)" href="#">删除</a></li>
+							<li data-ng-show="appInfo.status == '2'"><a data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum, appInfo.name, true, curPageNumber)" href="#">扩展</a></li>
 							<li ><a data-ng-click="openDialog()" href="#">更新</a></li>
 						</ul>
 					</div>
@@ -29,11 +29,11 @@
         <div class="main-container"> <!-- Only required for left/right tabs -->
 			<header class="clearfix main-container-header">
 				<ul class="nav nav-tabs">
-					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config" data-ui-sref-opts="{reload: true}">配置</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a data-ui-sref="app.appdetail.version" data-ui-sref-opts="{reload: true}">版本</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring" data-ui-sref-opts="{reload: true}">监控</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance" data-ui-sref-opts="{reload: true}">实例</a></li>
-					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event" data-ui-sref-opts="{reload: true}">事件</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a data-ui-sref="app.appdetail.config({appId:appInfo.appId, page:curPageNumber})" data-ui-sref-opts="{reload: true}">配置</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a data-ui-sref="app.appdetail.version({appId:appInfo.appId, page:curPageNumber})" data-ui-sref-opts="{reload: true}">版本</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a data-ui-sref="app.appdetail.monitoring({appId:appInfo.appId, page:curPageNumber})" data-ui-sref-opts="{reload: true}">监控</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a data-ui-sref="app.appdetail.instance({appId:appInfo.appId, page:curPageNumber})" data-ui-sref-opts="{reload: true}">实例</a></li>
+					<li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a data-ui-sref="app.appdetail.event({appId:appInfo.appId, page:curPageNumber})" data-ui-sref-opts="{reload: true}">事件</a></li>
 				</ul>
 			</header>
 

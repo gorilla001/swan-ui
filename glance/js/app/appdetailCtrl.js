@@ -7,6 +7,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
     var IS_NOT_DEPLOYING = 0;
     var IS_DEPLOYING = 1;
     $scope.counter = 0;
+    $scope.curPageNumber = $stateParams.page;
 
     $scope.getAppInfo = function (appId) {
         var deferred = $q.defer();
@@ -51,7 +52,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
                 }
                 promise = $timeout($scope.isDeploy, 10000);
             }else if($scope.isDeployState === IS_DEPLOYING){
-                $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
+                $state.go('app.appdetail.version',{appId: $scope.configObject.appId, page: $stateParams.page},{reload : true});
             }
         }, undefined, null, function(data) {
 

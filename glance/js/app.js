@@ -143,7 +143,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('app.applist', {
-                url: '/applist',
+                url: '/applist/page:page',
                 views: {
                     'first': {
                         templateUrl: '/views/app/applist.html',
@@ -161,7 +161,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('app.appdetail', {
-                url: '/:appId',
+                url: '/page:page/:appId',
                 abstract: true,
                 views: {
                     'first': {

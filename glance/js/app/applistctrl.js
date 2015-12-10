@@ -3,33 +3,51 @@
  */
 glanceApp.controller("appListCtrl", appListCtrl);
 
-appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification'];
+appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification', '$stateParams', '$state', '$timeout'];
 
-function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
+function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $stateParams, $state, $timeout) {
 
-    var promise;
+    var promise, listPromise;
     $scope.deleteStopApps = {};
-    $scope.currentPage = undefined;
 
     $scope.listApp = function () {
-        glanceHttp.ajaxGet(['app.list'], function (data) {
-            if (data.data) {
-                $scope.applist = data.data;
-                getAppName($scope.applist);
-                $scope.deleteStopApps = getDeleteStopApps(data.data);
-                if (isNeedCall($scope.deleteStopApps)) {
-                    promise = $timeout($scope.listApp, 3000);
-                }
-            }
-            $scope.totalItems = $scope.applist.length;
-            $scope.pageLength = 10;
-            $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
-            if(!$scope.currentPage) {
-                $scope.currentPage = calAppPageIndex($rootScope.currentAppId) + 1;
-            }
-            $scope.contentCurPage = $scope.applist.slice($scope.pageLength * ($scope.currentPage-1), $scope.pageLength * $scope.currentPage);
-        });
+        getPreList($stateParams.page);
+        $scope.setPage($stateParams.page);
+
+        listPromise = $timeout($scope.listApp, 5000);
+
+        //glanceHttp.ajaxGet(['app.list'], function (data) {
+        //    if (data.data) {
+        //        $scope.applist = data.data;
+        //        getAppName($scope.applist);
+        //        $scope.deleteStopApps = getDeleteStopApps(data.data);
+        //        if (isNeedCall($scope.deleteStopApps)) {
+        //            promise = $timeout($scope.listApp, 3000);
+        //        }
+        //    }
+        //    $scope.totalItems = $scope.applist.length;
+        //    $scope.pageLength = 20;
+        //    $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
+        //    if(!$scope.currentPage) {
+        //        $scope.currentPage = calAppPageIndex($rootScope.currentAppId) + 1;
+        //    }
+        //    $scope.contentCurPage = $scope.applist.slice($scope.pageLength * ($scope.currentPage-1), $scope.pageLength * $scope.currentPage);
+        //});
     };
+
+    function getPreList(page){
+        glanceHttp.ajaxGet(['app.list',{page: page}], function (data) {
+            if(data.data){
+                $scope.applist = data.data.App;
+
+                $scope.totalItems = data.data.TotalNumber;
+                $scope.pageLength = 20;
+                $scope.showPagination = ($scope.totalItems > $scope.pageLength);
+            }
+        });
+
+        $state.go('app.applist', {page: page});
+    }
 
     function calAppPageIndex(appId) {
         var pageIndex = 0;
@@ -49,16 +67,13 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
         return pageIndex;
     }
 
-    $scope.pageChanged = function() {
-        $scope.contentCurPage = $scope.applist.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
+    $scope.pageChanged = function(currentPage) {
+        getPreList(currentPage);
     };
 
-    function getAppName(apps){
-        $scope.curAppNames.splice(0, $scope.curAppNames.length);
-        angular.forEach(apps, function(value,index){
-            $scope.curAppNames.push(value.appName);
-        });
-    }
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
     
     $scope.$on('$destroy', function(){
         $timeout.cancel(promise);
@@ -195,4 +210,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification) {
 
     var promise = $scope.listCluster();
     promise.then($scope.listApp);
+
+    $scope.$on('$destroy', function () {
+        $timeout.cancel(listPromise);
+    });
 }
