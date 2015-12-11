@@ -52,6 +52,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
           $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels);
           glanceHttp.ajaxFormPost($scope, ['cluster.node', {'cluster_id': $stateParams.clusterId}], function (data) {
               $scope.afterCopy = true;
+
           });
       }
     };
@@ -77,10 +78,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     };
 
     $scope.deleteLabel = function(label) {
-        glanceHttp.ajaxDelete(['cluster.label'], {'labels': [label.id]}, function(resp) {
+        glanceHttp.ajaxDelete(['cluster.label'], function(resp) {
             deleteLabel(label, $scope.selectedLabels);
             deleteLabel(label, $scope.unselectedLabels);
-        });
+        }, {'labels': [label.id]});
     };
 
     function deleteLabel(label, labels) {
