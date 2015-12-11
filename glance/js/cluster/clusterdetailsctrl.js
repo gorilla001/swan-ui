@@ -47,7 +47,8 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         var noUpgradeNum = 0;
         angular.forEach(statusNodes, function(statusNode) {
             if ($scope.cluster.agent_version && statusNode.agentVersion != $scope.cluster.agent_version
-                && statusNode.agentVersion != $rootScope.agentVersion && statusNode.status != NODE_STATUS.terminated) {
+                && statusNode.agentVersion != $rootScope.agentVersion && !statusNode.isUpgradeFailed && 
+                statusNode.status != NODE_STATUS.terminated) {
                 noUpgradeNum += 1;
             }
         })
