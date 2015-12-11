@@ -1,7 +1,8 @@
-function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
+function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification, labelDataService) {
     $rootScope.show = 'cluster';
 
     $scope.clusterNames = [];
+    $scope.allLabels = [];
 
     $scope.statName = {
         running: '运行正常',
@@ -88,7 +89,25 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
             });
         }
     }
+
+    $scope.getAllLabels = function() {
+        return labelDataService.listAllLabels()
+            .success(function(resp) {
+                $scope.allLabels = resp.data;
+            });
+    }
+
+    $scope.getAllLabels();
+
+    $scope.getAllNodeLabelIds = function(labels) {
+        var ids = [];
+        for(var i = 0; i < labels.length; i++) {
+            ids.push(labels[i].id);
+        }
+        return ids;
+    }
+    
 }
 
-clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification'];
+clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification', 'labelDataService'];
 glanceApp.controller('clusterCtrl', clusterCtrl);

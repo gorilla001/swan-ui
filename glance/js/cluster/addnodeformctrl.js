@@ -72,16 +72,12 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         }
     };
 
-    // // 新建标签
-    // $scope.createLabel = function(newLabelName) {
-
-    //     glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
-    //         // TODO
-    //         // $scope.selectedLabels.push(resp.data);
-    //         // $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels);
-    //         // $scope.getAllLabels();
-    //     });
-    // };
+    // 新建标签
+    $scope.createLabel = function(newLabelName) {
+        glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
+            $scope.selectedLabels.push(resp.data);
+        });
+    };
 
     function deleteLabel(label, labels) {
         for (var i = 0; i < labels.length; i++) {
