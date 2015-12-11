@@ -1,0 +1,50 @@
+<div class="modal fade modal-tag" id="addLabel2NodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">标签管理</h4>
+      </div>
+
+      <div class="modal-body">
+        <ul>
+          <li data-ng-repeat="selectedLabel in selectedLabels">
+            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
+              {/selectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+            <a href="#" title="删除标签" data-ng-click="deleteLabel(selectedLabel.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </li>
+
+          <li data-ng-repeat="unselectedLabel in unselectedLabels">
+            <span class="tag" data-ng-click="labeldNode(unselectedLabel)" title="贴标签">
+              {/unselectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel.id)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </li>
+        </ul>
+
+        <form class="form-inline panel-create-tag">
+          <div class="form-group">
+            <input type="text" class="form-control input-sm" placeholder="标签名称" data-ng-model="newLabelName">
+          </div>
+          <button type="submit" class="btn btn-sm btn-success" data-ng-click="createLabel(newLabelName)">新建标签</button>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary">保存</button>
+      </div>
+    </div>
+  </div>
+</div>

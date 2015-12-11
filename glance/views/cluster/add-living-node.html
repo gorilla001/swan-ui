@@ -14,7 +14,7 @@
 
 </ol>
 
-<section class="add-node">
+<section class="add-node" data-ng-controller="addNodeFormCtrl">
     <div class="main-container">
         <div class="main-container-body">
             <div class="alert alert-info">
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="addNodeFormCtrl">
+            <form name="staticForm" class="form-horizontal" role="form">
 
                 <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
                   (message_error_info.name && staticForm.name.$pristine)}">
@@ -90,32 +90,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label">
-                         <div>主机标签</div>
-                    </label>
+                  <label class="col-md-2 control-label">主机标签</label>
+                  <div class="col-md-10">
+                    <div>
+                      <span data-ng-repeat="label in selectedLabels track by $index" class="tag selected" data-ng-click="tearLabel(label, afterCopy)" title="移除标签">
+                          <div>{/label.name/}</div>
+                          <em class="line-left"></em>
+                          <em class="line-right"></em>
+                      </span>
 
-                    <div class="col-md-10">
-                      <div data-ng-repeat="label in allLabels track by $index" class="checkbox-inline">
-                        <label>
-                          <input type="checkbox" data-ng-checked="form.labels.indexOf(label.id) !== -1" data-ng-click="toggleLabel2Node(label.id)">
-                          &nbsp;
-                        </label>
-                        <span class="label label-info">{/label.name/}</span>
-                        <span class="glyphicon glyphicon-remove" data-ng-click="removeLabel(label.id)"></span>
-                      </div>
-
-                      <a href="#" data-ng-click="hideCreateLabelInput=false" data-ng-show="hideCreateLabelInput">
-                        新建标签
-                      </a>
-
-                      <div class="createLabel" data-ng-hide="hideCreateLabelInput" >
-                        <input type="text" name="labelName" data-ng-model="labelName">
-                        <button type="button" class="btn btn-primary" data-ng-click="createLabel(labelName)">确定</button>
-                        <button type="button" class="btn btn-defalut" data-ng-click="hideCreateLabelInput=true">取消</button>
-                      </div>
-
+                      <button type="button" class="btn btn-info btn-add-tag" data-toggle="modal" data-target="#addLabel2NodeModal" data-ng-disabled="afterCopy">+</button>
                     </div>
+                  </div>
                 </div>
+
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">连接主机</label>
@@ -156,9 +144,9 @@
                         <code id="code" data-ng-bind="nodeInstallScript" data-ng-show="afterCopy"></code>
                       </div>
                     </div>
-                  </div>
+                </div>
 
-                  <div class="form-group">
+                <div class="form-group">
                     <div class="col-md-8 col-md-offset-2">
                       <div data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
                         {/msgstate/}
@@ -180,5 +168,9 @@
                 </div>
             </form>
         </div>
+        <div data-ng-include="'views/cluster/add-living-node-label-modal.html'"></div>
     </div>
+
+    
+
 </section>

@@ -1,11 +1,11 @@
-function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, labelDataService, Notification) {
+function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
 
-    $scope.allLabels = [];
+    $scope.selectedLabels = [];
+    $scope.unselectedLabels = angular.copy($scope.allLabels);
 
-    $scope.hideCreateLabelInput = true;
     $scope.isConected = false;
 
     $scope.form = {
@@ -49,50 +49,58 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, l
     $scope.nodeInstallScript = cmdArray.join(' ');
     $scope.clickToCopy = function() {
       if (!$scope.afterCopy) {
-          getFromAttributes();
-          glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}], function (data) {
+          $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels);
+          glanceHttp.ajaxFormPost($scope, ['cluster.node', {'cluster_id': $stateParams.clusterId}], function (data) {
               $scope.afterCopy = true;
           });
       }
     };
 
-    function getFromAttributes() {
-        var attribute;
-        for(attribute in $scope.form.attributes) {
-            $scope.form.attributes[attribute] = false;
-            if (attribute === $scope.attribute) {
-                $scope.form.attributes[$scope.attribute] = true;
+    // 贴标签
+    $scope.labeldNode = function(label) {
+        $scope.selectedLabels.push(label);
+        deleteLabel(label, $scope.unselectedLabels);
+    };
+
+    // 撕标签
+    $scope.tearLabel = function(label, afterCopy) {
+        if (!afterCopy) {
+            $scope.unselectedLabels.unshift(label);
+            deleteLabel(label, $scope.selectedLabels);
+        } else {
+            Notification.error("安装命令已生成，标签无法修改，可从该主机的主机详情页面修改。");
+        }
+    };
+
+    // // 新建标签
+    // $scope.createLabel = function(newLabelName) {
+
+    //     glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
+    //         // TODO
+    //         // $scope.selectedLabels.push(resp.data);
+    //         // $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels);
+    //         // $scope.getAllLabels();
+    //     });
+    // };
+
+    function deleteLabel(label, labels) {
+        for (var i = 0; i < labels.length; i++) {
+            if (label.id === labels[i].id) {
+                labels.splice(i, 1);
+                return labels;
             }
         }
     }
-
-    function getAllLabels() {
-        return labelDataService.listAllLabels()
-            .success(function(resp) {
-                $scope.allLabels = resp.data;
-            });
-    }
-
-    getAllLabels();
-
-    $scope.createLabel = function(labelName) {
-        $scope.hideCreateLabelInput = true;
-
-        glanceHttp.ajaxPost(['cluster.label'], {'name': labelName}, function(resp) {
-            $scope.form.labels.push(resp.data.id);
-            getAllLabels();
-        });
-    };
     
-    $scope.toggleLabel2Node = function(labelId) {
-        var index = $scope.form.labels.indexOf(labelId);
-        if (index === -1) {
-            $scope.form.labels.push(labelId);
-        } else {
-            $scope.form.labels.splice(index, 1);
-        }
-    };
-    
+    // $scope.toggleLabel2Node = function(labelId) {
+    //     var index = $scope.form.labels.indexOf(labelId);
+    //     if (index === -1) {
+    //         $scope.form.labels.push(labelId);
+    //     } else {
+    //         $scope.form.labels.splice(index, 1);
+    //     }
+    // };
+
     // $scope.removeLabel = function(labelId) {
     //     glanceHttp.ajaxDelete(['cluster.deleteLabel'], {'labelId': labelId}, function() {
     //         getAllLabels();
@@ -101,5 +109,5 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, l
 
 }
 
-addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'glanceHttp', 'labelDataService', 'Notification'];
+addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'glanceHttp', 'Notification'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);
