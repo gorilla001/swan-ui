@@ -56,13 +56,17 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
       }
     };
 
-    // 贴标签
+    $scope.createLabel = function(newLabelName) {
+        glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
+            $scope.selectedLabels.push(resp.data);
+        });
+    };
+
     $scope.labeldNode = function(label) {
         $scope.selectedLabels.push(label);
         deleteLabel(label, $scope.unselectedLabels);
     };
 
-    // 撕标签
     $scope.tearLabel = function(label, afterCopy) {
         if (!afterCopy) {
             $scope.unselectedLabels.unshift(label);
@@ -72,10 +76,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         }
     };
 
-    // 新建标签
-    $scope.createLabel = function(newLabelName) {
-        glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
-            $scope.selectedLabels.push(resp.data);
+    $scope.deleteLabel = function(label) {
+        glanceHttp.ajaxDelete(['cluster.label'], {'labels': [label.id]}, function(resp) {
+            deleteLabel(label, $scope.selectedLabels);
+            deleteLabel(label, $scope.unselectedLabels);
         });
     };
 
@@ -87,21 +91,6 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             }
         }
     }
-    
-    // $scope.toggleLabel2Node = function(labelId) {
-    //     var index = $scope.form.labels.indexOf(labelId);
-    //     if (index === -1) {
-    //         $scope.form.labels.push(labelId);
-    //     } else {
-    //         $scope.form.labels.splice(index, 1);
-    //     }
-    // };
-
-    // $scope.removeLabel = function(labelId) {
-    //     glanceHttp.ajaxDelete(['cluster.deleteLabel'], {'labelId': labelId}, function() {
-    //         getAllLabels();
-    //     });
-    // };
 
 }
 
