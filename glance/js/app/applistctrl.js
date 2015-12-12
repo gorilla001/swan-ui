@@ -7,48 +7,25 @@ appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notific
 
 function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $stateParams, $state) {
 
-    var promise, listPromise;
+    var listPromise;
     $scope.deleteStopApps = {};
     $scope.applist = [];
 
     $scope.listApp = function () {
-        getPreList($stateParams.page);
-        $scope.setPage($stateParams.page);
-
-        listPromise = $timeout($scope.listApp, 5000);
-
-        //glanceHttp.ajaxGet(['app.list'], function (data) {
-        //    if (data.data) {
-        //        $scope.applist = data.data;
-        //        getAppName($scope.applist);
-        //        $scope.deleteStopApps = getDeleteStopApps(data.data);
-        //        if (isNeedCall($scope.deleteStopApps)) {
-        //            promise = $timeout($scope.listApp, 3000);
-        //        }
-        //    }
-        //    $scope.totalItems = $scope.applist.length;
-        //    $scope.pageLength = 20;
-        //    $scope.showPagination = Boolean($scope.totalItems > $scope.pageLength);
-        //    if(!$scope.currentPage) {
-        //        $scope.currentPage = calAppPageIndex($rootScope.currentAppId) + 1;
-        //    }
-        //    $scope.contentCurPage = $scope.applist.slice($scope.pageLength * ($scope.currentPage-1), $scope.pageLength * $scope.currentPage);
-        //});
-    };
-
-    function getPreList(page){
-        glanceHttp.ajaxGet(['app.list',{page: page}], function (data) {
-            if(data.data){
+        glanceHttp.ajaxGet(['app.list', {page: $stateParams.page}], function (data) {
+            if (data.data) {
                 $scope.applist = data.data.App;
 
                 $scope.totalItems = data.data.TotalNumber;
                 $scope.pageLength = 20;
                 $scope.showPagination = ($scope.totalItems > $scope.pageLength);
+                $scope.setPage($stateParams.page);
+                listPromise = $timeout($scope.listApp, 5000);
             }
+        }, undefined, null, function (data) {
+            listPromise = $timeout($scope.listApp, 5000);
         });
-
-        $state.go('app.applist', {page: page});
-    }
+    };
 
     function calAppPageIndex(appId) {
         var pageIndex = 0;
@@ -69,7 +46,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $st
     }
 
     $scope.pageChanged = function(currentPage) {
-        getPreList(currentPage);
+        $state.go('app.applist', {page: currentPage});
+
     };
 
     $scope.setPage = function (pageNo) {
