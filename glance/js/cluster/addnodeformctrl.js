@@ -10,7 +10,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
       id: $scope.nodeId
     };
 
-    $scope.attribute = 'gateway';
+    $scope.attribute = 'noAttribute';
   
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};

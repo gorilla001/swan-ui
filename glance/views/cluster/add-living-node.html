@@ -65,7 +65,11 @@
                         可选组件
                     </label>
                     <div class="col-md-10">
-
+                        <label class="checkbox-inline">
+                            <input type="radio" data-ng-disabled="afterCopy"
+                                   data-ng-model="attribute" value="noAttribute">
+                            无
+                        </label>
                         <span uib-popover="提供对外(公网)服务发现，安装此组件的主机需要有固定的公网IP，不对外提供服务的集群可以不安装"
                               popover-trigger="mouseenter">
                             <label class="checkbox-inline">
@@ -82,11 +86,6 @@
                                 内部代理
                             </label>
                         </span>
-                        <label class="checkbox-inline">
-                            <input type="radio" data-ng-disabled="afterCopy"
-                                   data-ng-model="attribute" value="noAttribute">
-                            无
-                        </label>
                     </div>
                 </div>
 
