@@ -154,8 +154,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     };
 
     $scope.addDirInfo = function (dirInfo) {
-        if (isDisableAddList(dirInfo, $scope.dirsInfo, ['hostPath', 'containerPath'])) {
-            Notification.error('添加的目录重复');
+        if (isDisableAddList(dirInfo, $scope.dirsInfo, ['containerPath'])) {
+            Notification.error('添加的容器目录重复');
         } else {
             $scope.dirsInfo.push(dirInfo);
             $scope.dirInfo = {};
