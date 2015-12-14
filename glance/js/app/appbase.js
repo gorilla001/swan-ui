@@ -161,9 +161,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                     }
 
                     if ($scope.clusters[index].nodes[i].status === 'running') {
-                        if($scope.clusters[index].cluster_type !== '1_master' && $scope.clusters[index].nodes[i].role !== 'master'){
-                            $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
-                        }else if($scope.clusters[index].cluster_type === '1_master'){
+                        if($scope.clusters[index].cluster_type === '1_master' || $scope.clusters[index].nodes[i].role !== 'master'){
                             $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
                         }
 
