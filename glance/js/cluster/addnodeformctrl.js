@@ -52,8 +52,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         var attribute;
         for(attribute in $scope.form.attributes) {
             $scope.form.attributes[attribute] = false;
+            if (attribute === $scope.attribute) {
+                $scope.form.attributes[$scope.attribute] = true;
+            }
         }
-        $scope.form.attributes[$scope.attribute] = true;
     }
 
 }
