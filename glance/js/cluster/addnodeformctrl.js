@@ -9,6 +9,9 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
                   },
       id: $scope.nodeId
     };
+
+    $scope.attribute = 'gateway';
+  
     $scope.msgstate = "等待主机链接......";
     $scope.message_error_info = {};
     $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
@@ -38,10 +41,19 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.nodeInstallScript = cmdArray.join(' ');
     $scope.clickToCopy = function() {
       if (!$scope.afterCopy) {
+          getFromAttributes();
           glanceHttp.ajaxFormPost($scope, ["cluster.node", {"cluster_id": $stateParams.clusterId}], function (data) {
               $scope.afterCopy = true;
           });
       }
+    };
+
+    function getFromAttributes() {
+        var attribute;
+        for(attribute in $scope.form.attributes) {
+            $scope.form.attributes[attribute] = false;
+        }
+        $scope.form.attributes[$scope.attribute] = true;
     }
 
 }
