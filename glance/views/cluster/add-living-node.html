@@ -60,24 +60,30 @@
                   </div>
                 </div>
 
-
                 <div class="form-group">
                     <label class="col-md-2 control-label">
                         可选组件
                     </label>
                     <div class="col-md-10">
+                        <label class="checkbox-inline">
+                            <input type="radio" data-ng-disabled="afterCopy"
+                                   data-ng-model="attribute" value="noAttribute">
+                            无
+                        </label>
                         <span uib-popover="提供对外(公网)服务发现，安装此组件的主机需要有固定的公网IP，不对外提供服务的集群可以不安装"
                               popover-trigger="mouseenter">
                             <label class="checkbox-inline">
-                                    <input type="checkbox" data-ng-disabled="afterCopy"
-                                           data-ng-model="form.attributes.gateway">外部网关
+                                <input type="radio" data-ng-disabled="afterCopy"
+                                       data-ng-model="attribute" value="gateway">
+                                外部网关
                             </label>
                         </span>
                         <span uib-popover="提供内部(内网)服务发现，推荐集群中至少选择一台主机安装此组件，特殊需求可以安装多台"
-                              popover-trigger="mouseenter" style="margin-left: 12px;">
+                              popover-trigger="mouseenter">
                             <label class="checkbox-inline">
-                                    <input type="checkbox" data-ng-disabled="afterCopy"
-                                           data-ng-model="form.attributes.proxy">内部代理
+                                <input type="radio" data-ng-disabled="afterCopy"
+                                       data-ng-model="attribute" value="proxy">
+                                内部代理
                             </label>
                         </span>
                     </div>
