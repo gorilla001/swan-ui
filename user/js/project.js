@@ -15,7 +15,6 @@
          }, 200);
      }
      $('#fullpage').fullpage({
-         resize:true,
          navigation: true, // 显示导航
          loopBottom: true, // 顶部轮滚
          loopTop: false, // 顶部轮滚
@@ -37,21 +36,8 @@
 
              // 返回事件阻塞
              return flag;
-         },
-         afterRender: function(){ //fix #181
-             $('.modal')
-                 .on('shown.bs.modal', function() {
-                     $fn.fullPage().setScrollOverflow(false);
-                 })
-                 .on('hidden.bs.modal', function() {
-                     $fn.fullPage().setScrollOverflow(true);
-                 });
          }
-     });
-
-     $('#service-term').modal('show.bs.modal',function(){
-         $.fn.fullpage.setAllowScrolling(false, 'down');
-     });
+     })
  });
  $(function () {
      $(window).resize(function () {
