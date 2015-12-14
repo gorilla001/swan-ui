@@ -36,7 +36,6 @@
                 expect($scope.selectedLabels).toEqual(selectedLabels);
                 expect($scope.unselectedLabels).toEqual([]);
             });
-
         });
 
         describe('tearLabel', function() {
@@ -63,7 +62,25 @@
                 expect($scope.selectedLabels).toEqual(selectedLabels);
                 expect($scope.unselectedLabels).toEqual(unselectedLabels);
             });
+        });
 
+
+        describe('arrayDiff', function() {
+            it('should diff subtractor from minuend', function() {
+                $scope.allLabels = [
+                    {name: 'label1', id: 1},
+                    {name: 'label2', id: 2},
+                    {name: 'label3', id: 3}
+                ];
+                $scope.selectedLabels = [{name: 'label1', id: 1}];
+                var unselectedLabels = [
+                    {name: 'label2', id: 2},
+                    {name: 'label3', id: 3}
+                ];
+                $scope.unselectedLabels = $scope.arrayDiff($scope.selectedLabels, $scope.allLabels);
+                
+                expect(unselectedLabels).toEqual(unselectedLabels);
+            });
         });
 
 

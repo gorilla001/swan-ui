@@ -1,4 +1,4 @@
-function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification, labelDataService) {
+function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     $rootScope.show = 'cluster';
 
     $scope.clusterNames = [];
@@ -90,15 +90,6 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification, label
         }
     }
 
-    $scope.getAllLabels = function() {
-        return labelDataService.listAllLabels()
-            .success(function(resp) {
-                $scope.allLabels = resp.data;
-            });
-    }
-
-    $scope.getAllLabels();
-
     $scope.getAllNodeLabelIds = function(labels) {
         var ids = [];
         for(var i = 0; i < labels.length; i++) {
@@ -109,5 +100,5 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification, label
     
 }
 
-clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification', 'labelDataService'];
+clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);
