@@ -158,8 +158,12 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                                 $scope.proxyNodes.push($scope.clusters[index].nodes[i]);
                             }
                         }
-                    } else if ($scope.clusters[index].nodes[i].role !== 'master' && $scope.clusters[index].nodes[i].status === 'running') {
-                        $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
+                    }
+
+                    if ($scope.clusters[index].nodes[i].status === 'running') {
+                        if($scope.clusters[index].cluster_type === '1_master' || $scope.clusters[index].nodes[i].role !== 'master'){
+                            $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
+                        }
 
                     }
 
