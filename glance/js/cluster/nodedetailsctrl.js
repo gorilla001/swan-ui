@@ -155,7 +155,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.deleteLabel = function(label) {
         labelService.deleteLabel(label, $scope);
-        confirmNodeLabel();
     };
 
     function confirmNodeLabel() {
