@@ -17,7 +17,7 @@
 
         // 查询用户所有标签
         function listAllLabels() {
-            return glanceHttp.ajaxGet(['cluster.label']);
+            return glanceHttp.ajaxGet(['cluster.label'], function(){}, undefined, function() {});
         }
 
         // 展开标签的操作
@@ -39,11 +39,12 @@
 
         // 新建标签
         function createLabel(newLabelName, $scope) {
-            return glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName})
+            return glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName},
+                function() {}, undefined, function() {})
                 .then(function(resp) {
                     labeldNode(resp.data.data, $scope);
                 }, function(resp) {
-                    // Notification.error(resp.data.errors.name);
+                    Notification.error(resp.data.errors.name);
             });
         }
 
@@ -55,12 +56,12 @@
 
         // 删标签
         function deleteLabel(label, $scope) {
-            glanceHttp.ajaxDelete(['cluster.label'], function(){}, {'labels': [label.id]})
+            glanceHttp.ajaxDelete(['cluster.label'], function(){}, {'labels': [label.id]}, undefined, function() {})
                 .then(function() {
                     spliceLabel(label, $scope.selectedLabels);
                     spliceLabel(label, $scope.unselectedLabels);
-                }, function() {
-
+                }, function(resp) {
+                    Notification.error(resp.data.errors.labels);
                 });
         }
 

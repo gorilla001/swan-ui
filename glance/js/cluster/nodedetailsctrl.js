@@ -165,10 +165,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             labels: labelIds
         };
 
-        glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {
-
-        }, undefined, function(resp) {
-            Notification.error(resp.errors.labels);
+        glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {}, undefined, 
+            function(resp) {
+                Notification.error(resp.errors.labels);
         });
     }
 
