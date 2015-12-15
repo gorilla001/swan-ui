@@ -85,11 +85,11 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     };
     
     var ajaxDelete = function (url, callback, data, params, errorCallback, warningCallback, loading) {
-        ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback, loading);
     };
 
     var ajaxPost = function (url, data, callback, params, errorCallback, warningCallback, loading) {
-        ajaxBase("post", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("post", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
     var ajaxFormPost = function(myScope, url, callback, errorCallback, loading) {
