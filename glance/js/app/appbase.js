@@ -38,10 +38,11 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     };
 
     $scope.addCode = {
-        10: "应用名称冲突",
-        11: "端口冲突",
-        12: "版本冲突",
-        13: "应用被锁定",
+        100: "应用名称冲突",
+        101: "端口冲突",
+        102: "版本冲突",
+        103: "应用被锁定",
+        104: "撤销失败，应用扩展已完成",
         999: "网络异常"
     };
 
