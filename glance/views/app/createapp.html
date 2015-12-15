@@ -48,7 +48,7 @@
                         <select class="form-control"
                                 data-ng-options=" cluster.id as cluster.name disable when cluster.status != 'running' for cluster in clusters"
                                 data-ng-model="clusterid" data-required="required"
-                                ng-change="getNode(clusterid)">
+                                ng-change="getChangeData(clusterid)">
                             <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
                         </select>
                     </div>
