@@ -60,7 +60,8 @@ BACKEND_URL = {
         nodes: "api/v2/cluster/$cluster_id/nodes",
         nodeMonitor: "api/v2/cluster/$cluster_id/node/$node_id/metrics",
         serviceStatus: "api/v2/cluster/$cluster_id/node/$node_id/service/$service_name/status",
-        label: "api/v2/label"
+        label: "api/v2/label",
+        nodeLabel: "api/v2/cluster/$cluster_id/node/$node_id/labels"
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",

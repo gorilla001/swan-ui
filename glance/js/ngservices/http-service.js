@@ -97,7 +97,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     };
     
     var ajaxPut = function (url, data, callback, params, errorCallback, warningCallback, loading) {
-        ajaxBase("put", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("put", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
     var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback, loading) {

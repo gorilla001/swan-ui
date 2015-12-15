@@ -125,7 +125,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 $state.go('cluster.clusterdetails.nodes',{'clusterId': $stateParams.clusterId});
             }, {'ids': ids})
         });
-    }
+    };
     
     $scope.resetService = function (serviceName) {
         glanceHttp.ajaxPost(['cluster.serviceStatus', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
@@ -138,7 +138,12 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.labeldNode = function(label) {
         labelService.labeldNode(label, $scope);
-        confirmNodeLabel();
+        confirmNodeLabel()
+            .then(function() {
+                
+            }, function() {
+                updateNodeLabels();
+            });
     };
 
     $scope.createLabel = function(newLabelName) {
@@ -164,9 +169,17 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             labels: labelIds
         };
 
-        glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {}, undefined, 
+        return glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {
+        }, undefined, 
             function(resp) {
                 Notification.error(resp.errors.labels);
+        });
+    }
+
+    function updateNodeLabels() {
+        glanceHttp.ajaxGet(['cluster.nodeLabel', {'cluster_id': $stateParams.clusterId, 'node_id': $stateParams.nodeId}], function(resp) {
+            $scope.selectedLabels = listNodeLabels(resp.data);
+            $scope.changeLabels();
         });
     }
 
