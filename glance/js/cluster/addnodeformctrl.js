@@ -1,9 +1,10 @@
-function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification, labelDataService) {
+function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification, labelService) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
 
     $scope.selectedLabels = [];
+    $scope.unselectedLabels = [];
 
     $scope.isConected = false;
 
@@ -56,57 +57,29 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     };
 
     $scope.changeLabels = function() {
-        labelDataService.listAllLabels()
-            .success(function(resp) {
-                $scope.allLabels = resp.data;
-                $scope.unselectedLabels = $scope.arrayDiff($scope.selectedLabels, $scope.allLabels);
-            });
+        labelService.changeLabels($scope);
+    }
+
+    $scope.labeldNode = function(label) {
+        labelService.labeldNode(label, $scope);
     };
 
     $scope.createLabel = function(newLabelName) {
-        glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName}, function(resp) {
-            $scope.selectedLabels.push(resp.data);
-        });
-    };
-
-    $scope.labeldNode = function(label) {
-        $scope.selectedLabels.push(label);
-        spliceLabel(label, $scope.unselectedLabels);
+        labelService.createLabel(newLabelName, $scope);
     };
 
     $scope.tearLabel = function(label, afterCopy) {
         if (!afterCopy) {
-            $scope.unselectedLabels.unshift(label);
-            spliceLabel(label, $scope.selectedLabels);
+            labelService.tearLabel(label, $scope);
         } else {
             Notification.error('安装命令已生成，标签无法修改，可从该主机的主机详情页面修改。');
         }
     };
 
     $scope.deleteLabel = function(label) {
-        glanceHttp.ajaxDelete(['cluster.label'], function(resp) {
-            spliceLabel(label, $scope.selectedLabels);
-            spliceLabel(label, $scope.unselectedLabels);
-        }, {'labels': [label.id]});
+        labelService.deleteLabel(label, $scope);
     };
-
-    function spliceLabel(label, labels) {
-        for (var i = 0; i < labels.length; i++) {
-            if (label.id === labels[i].id) {
-                labels.splice(i, 1);
-            }
-        }
-    }
-
-    $scope.arrayDiff = function(subtractor, minuend) {
-        var newMinuend = angular.copy(minuend);
-        for (var i = 0; i < subtractor.length; i++) {
-            spliceLabel(subtractor[i], newMinuend);
-        }
-        return newMinuend;
-    }
-
 }
 
-addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'glanceHttp', 'Notification', 'labelDataService'];
+addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'glanceHttp', 'Notification', 'labelService'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);

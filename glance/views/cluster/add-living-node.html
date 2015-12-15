@@ -91,19 +91,8 @@
 
                 <div class="form-group">
                   <label class="col-md-2 control-label">主机标签</label>
-                  <div class="col-md-8">
-                    <div>
-                      <span data-ng-repeat="label in selectedLabels track by $index" class="tag selected" data-ng-click="tearLabel(label, afterCopy)" title="移除标签">
-                          <div>{/label.name/}</div>
-                          <em class="line-left"></em>
-                          <em class="line-right"></em>
-                      </span>
-
-                      <button type="button" class="btn btn-info btn-add-tag" data-toggle="modal" data-target="#addLabel2NodeModal" data-ng-disabled="afterCopy" data-ng-click="changeLabels();">+</button>
-                    </div>
-                  </div>
+                  <div data-ng-include="'views/cluster/node-label.html'"></div>
                 </div>
-
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">连接主机</label>
