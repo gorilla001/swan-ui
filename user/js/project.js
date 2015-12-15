@@ -20,6 +20,7 @@
          loopTop: false, // 顶部轮滚
          css3: true, // 开启CSS3动画
          fitToSection: false,
+         normalScrollElements: '.modal',
          
 
          onLeave: function (index, nextIndex, direction) {
@@ -37,7 +38,7 @@
              // 返回事件阻塞
              return flag;
          }
-     })
+     });
  });
  $(function () {
      $(window).resize(function () {
