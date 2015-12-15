@@ -2,12 +2,32 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     var token;
     var clearCallback;
     
+    if (!$rootScope.loadings) {
+        $rootScope.loadings = {};
+    }
+    
     var init = function (thetoken, theclearCallback) {
         token = thetoken;
         clearCallback = theclearCallback;
     };
+    
+    function startLoading(loading) {
+        if (loading) {
+            if (!$rootScope.loadings[loading]) {
+                $rootScope.loadings[loading] = 1;
+            } else {
+                $rootScope.loadings[loading] += 1;
+            }
+        }
+    }
+    
+    function stopLoading(loading) {
+        if (loading) {
+            $rootScope.loadings[loading] -= 1;
+        }
+    }
 
-    var ajaxBase = function (method, url, data, params, callback, errorCallback, warningCallback) {
+    var ajaxBase = function (method, url, data, params, callback, errorCallback, warningCallback, loading) {
         var fullURL;
         if (angular.isArray(url)) {
             fullURL = utils.buildFullURL(url[0], url[1]);
@@ -26,8 +46,12 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
             data: data,
             params: params
         };
-
+        if (loading == undefined) {
+            loading = "default";
+        }
+        startLoading(loading);
         $http(req).success(function (data) {
+            stopLoading(loading);
             if (data && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
                 if(callback) {
                     callback(data);
@@ -38,6 +62,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
                 Notification.error("服务未激活");
             }
         }).error(function (data, status) {
+            stopLoading(loading);
             if (status == 401) {
                 window.location.href = USER_URL;
                 $rootScope.$destroy();
@@ -53,27 +78,27 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
 
     };
 
-    var ajaxGet = function (url, callback, params, errorCallback, warningCallback) {
-        ajaxBase("get", url, null, params, callback, errorCallback, warningCallback);
+    var ajaxGet = function (url, callback, params, errorCallback, warningCallback, loading) {
+        ajaxBase("get", url, null, params, callback, errorCallback, warningCallback, loading);
     };
     
-    var ajaxDelete = function (url, callback, data, params, errorCallback, warningCallback) {
-        ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback);
+    var ajaxDelete = function (url, callback, data, params, errorCallback, warningCallback, loading) {
+        ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback, loading);
     };
 
-    var ajaxPost = function (url, data, callback, params, errorCallback, warningCallback) {
-        ajaxBase("post", url, data, params, callback, errorCallback, warningCallback);
+    var ajaxPost = function (url, data, callback, params, errorCallback, warningCallback, loading) {
+        ajaxBase("post", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
-    var ajaxFormPost = function(myScope, url, callback, errorCallback) {
-        ajaxFormSubmit("post", myScope, url, callback, errorCallback);
+    var ajaxFormPost = function(myScope, url, callback, errorCallback, loading) {
+        ajaxFormSubmit("post", myScope, url, callback, errorCallback, loading);
     };
     
-    var ajaxPut = function (url, data, callback, params, errorCallback, warningCallback) {
-        ajaxBase("put", url, data, params, callback, errorCallback, warningCallback);
+    var ajaxPut = function (url, data, callback, params, errorCallback, warningCallback, loading) {
+        ajaxBase("put", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
-    var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback) {
+    var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback, loading) {
         myScope.staticForm.$setPristine();
         myScope.message_error_info = {};
         ajaxBase(method, url, myScope.form, undefined, callback, function(data, status){
@@ -82,11 +107,11 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
             } else if (errorCallback) {
                 errorCallback(data, status);
             }
-        });
+        }, undefined, loading);
     }
     
-    var ajaxFormPut = function(myScope, url, callback, errorCallback) {
-        ajaxFormSubmit("put", myScope, url, callback, errorCallback);
+    var ajaxFormPut = function(myScope, url, callback, errorCallback, loading) {
+        ajaxFormSubmit("put", myScope, url, callback, errorCallback, loading);
     };
     
     return {
