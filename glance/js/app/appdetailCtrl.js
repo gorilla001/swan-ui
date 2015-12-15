@@ -11,20 +11,16 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
 
     $scope.getAppInfo = function (appId) {
         var deferred = $q.defer();
-        glanceHttp.ajaxGet(['app.instances',{app_id: $stateParams.appId}], function (data) {
-            glanceHttp.ajaxGet(['app.info', {app_id: appId}], function (data) {
-                $scope.appInfo = data.data;
-                $scope.appState = $stateParams.appStatus;
+        glanceHttp.ajaxGet(['app.info', {app_id: appId}], function (data) {
+            $scope.appInfo = data.data;
+            $scope.appState = $stateParams.appStatus;
 
-                $scope.configObject = {
-                    "clusterId": $scope.appInfo.clusterId,
-                    "appId": parseInt($scope.appInfo.appId),
-                    "appName": $scope.appInfo.name
-                };
-                deferred.resolve();
-            });
-        }, undefined, null, function(data) {
-
+            $scope.configObject = {
+                "clusterId": $scope.appInfo.clusterId,
+                "appId": parseInt($scope.appInfo.appId),
+                "appName": $scope.appInfo.name
+            };
+            deferred.resolve();
         });
         return deferred.promise;
     };
