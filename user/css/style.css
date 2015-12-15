@@ -1050,39 +1050,14 @@ header .container {
 header nav {
 	position: absolute; 
 	top: 0px;
-	right: 100px; 
+	right: 0px; 
 	font-size: 16px;
 }
 header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 	color: #FFF;
-	margin-left: 15px;
 }
 .has-error .form-control {
 	background-color: rgba(169,68,66,0.15);
-}
-.service-terms {
-    width: 60%;
-}
-.service-terms .modal-body {
-    max-height: 450px; 
-    overflow-y: scroll;
-}
-.service-terms .modal-body h5 {
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 25px;
-}
-.service-terms .modal-body dt {
-    font-weight: normal;
-    font-size: 14px;
-}
-.service-terms .modal-body dd, .service-terms .modal-body dt, .service-terms .modal-body dl, .service-terms .modal-body p, .service-terms .modal-body h5 {
-    margin-bottom: 15px;
-    text-indent: 2em;
-}
-.service-terms .modal-header h4 {
-    color: white;
-    margin-top: 15px;
 }
 
 
@@ -1106,6 +1081,7 @@ header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 .modal-header {
     background-color: #333b42;
     border-bottom: 0 none;
+    color: #FFF;
     height: 80px;
     text-align: center;
 }
@@ -1219,4 +1195,49 @@ header nav a, header nav a:hover, header nav a:active, header nav a:focus {
 }
 .modal-body .form-group {
     position: relative;
+}
+
+.navbar-nav > li > a {
+    color: #FFF;
+}
+.navbar-nav > li > a:hover, .navbar-nav > li > a:active, .navbar-nav > li > a:focus {
+    background: none;
+    color: #EEE;
+}
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background: none;
+    color: #EEE;
+}
+.dropdown-menu {
+    min-width: 80px;
+}
+.dropdown-menu > li > a {
+    margin-left: 0;
+    text-align: center;
+}
+.service-terms {
+    width: 60%;
+}
+.service-terms .modal-body {
+    max-height: 450px; 
+    overflow-y: scroll;
+}
+.service-terms .modal-body h1 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 25px;
+}
+.service-terms .modal-body h2 {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: left;
+}
+.service-terms .modal-body li,
+.service-terms .modal-body p,
+.service-terms .modal-body h1,
+.service-terms .modal-body h2 
+{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    text-indent: 2em;
 }

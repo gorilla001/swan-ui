@@ -9,8 +9,6 @@ body {
 body {
     font-family: "Lantinghei SC", "Microsoft Yahei", "微软雅黑", Helvetica, Arial, sans-serif;
     font-size: 12px;
-    word-spacing: 1px;
-    letter-spacing: 1px;
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #FFF;
