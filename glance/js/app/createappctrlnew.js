@@ -19,6 +19,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     $scope.pathInfo = {};
     $scope.pathsInfo = [];
 
+    $scope.outerPorts = [];
+    $scope.innerPorts = [];
+    $scope.domains = [];
+
     $scope.dirInfo = {
         hostPath: "",
         containerPath: ""
@@ -136,13 +140,35 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
     $scope.addPortInfo = function (portInfo) {
         if (isDisableAddList(portInfo, $scope.portInfos, ['type', 'mapPort', 'uri'])) {
             Notification.error('添加的应用地址已存在');
-        } else if ((portInfo.mapPort == 80 || portInfo.mapPort == 443) && portInfo.isUri != HAS_DOMAIN && portInfo.type === OUTER) {
-            Notification.error('无域名的情况下映射端口不能为 80 443');
+        } else if (portInfo.isUri != HAS_DOMAIN && portOccupied(portInfo)) {
+            Notification.error(portInfo.mapPort + ' 端口已占用');
+        } else if(uriOccupied(portInfo)){
+            Notification.error(portInfo.uri + ' 域名已占用');
         } else {
             $scope.portInfos.push(portInfo);
             $scope.portInfo = {};
         }
     };
+
+    /*
+     Check whether the port is being used
+     */
+    function portOccupied(portInfo){
+        if(portInfo.type === OUTER && $scope.outerPorts.indexOf(portInfo.mapPort) != -1){
+            return true
+        }else if(portInfo.type === INNER && $scope.innerPorts.indexOf(portInfo.mapPort) != -1){
+            return true
+        }else {
+            return false
+        }
+    }
+
+    /*
+     Check whether the URI is being used
+     */
+    function uriOccupied(portInfo){
+        return $scope.domains.indexOf(portInfo.uri) != -1
+    }
 
     $scope.addPathInfo = function (pathInfo) {
         if (isDisableAddList(pathInfo, $scope.pathsInfo, ['key'])) {
@@ -257,6 +283,25 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         if (!pathInfo.key || !pathInfo.value || pathInfo.key === '' || pathInfo.value === '') {
             return true;
         }
+    };
+
+    $scope.getChangeData = function(clusterId){
+        $scope.getNode(clusterId);
+        glanceHttp.ajaxGet(['app.ports',({cluster_id: clusterId})],function(data){
+            if(data.data){
+                if(data.data.OuterPorts && data.data.OuterPorts.length){
+                    $scope.outerPorts = data.data.OuterPorts;
+                }
+
+                if(data.data.InnerPorts && data.data.InnerPorts.length){
+                    $scope.innerPorts = data.data.InnerPorts;
+                }
+
+                if(data.data.Domains && data.data.Domains.length){
+                    $scope.domains = data.data.Domains;
+                }
+            }
+        })
     };
 
     var promise= $scope.getAppName();
