@@ -1,20 +1,28 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr) {
-    "use strict";
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
+    'use strict';
     $scope.node = {};
     $scope.showCharts = false;
+
+    $scope.hideLabelTrash = true;
+    $scope.allLabels = [];
+    $scope.unselectedLabels = [];
+    $scope.selectedLabels = [];
+
     $scope.serviceViews = [];
     $('.charts').hide();
     
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.getCurNode = function () {
-        glanceHttp.ajaxGet(["cluster.nodeIns", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
+        glanceHttp.ajaxGet(['cluster.nodeIns', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
             $scope.statusMgr.startListen($scope);
             
             createServiceViews();
+
+            $scope.selectedLabels = listNodeLabels(data.data.node_labels);
         });
     };
     $scope.getCurNode();
@@ -47,7 +55,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        glanceHttp.ajaxGet(["cluster.nodeMonitor", {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
+        glanceHttp.ajaxGet(['cluster.nodeMonitor', {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
             if (data.data.length) {
                 $scope.nodeInfo = getNodeInfo(data.data[0]);
             }
@@ -110,19 +118,71 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.deleNode = function(id){
         var ids = [];
         ids.push(id);
-        var toast = "您确定要移除主机吗？";
+        var toast = '您确定要移除主机吗？';
 
         $scope.myConfirm(toast, function () {
-            glanceHttp.ajaxDelete(["cluster.nodes", {"cluster_id": $stateParams.clusterId}], function (data) {
-                $state.go("cluster.clusterdetails.nodes",{"clusterId": $stateParams.clusterId});
-            }, {"ids": ids})
+            glanceHttp.ajaxDelete(['cluster.nodes', {'cluster_id': $stateParams.clusterId}], function (data) {
+                $state.go('cluster.clusterdetails.nodes',{'clusterId': $stateParams.clusterId});
+            }, {'ids': ids})
         });
     }
     
     $scope.resetService = function (serviceName) {
-        glanceHttp.ajaxPost(["cluster.serviceStatus", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
-                {"method": "reset"});
+        glanceHttp.ajaxPost(['cluster.serviceStatus', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
+                {'method': 'reset'});
+    };
+
+    $scope.changeLabels = function() {
+        labelService.changeLabels($scope);
+    };
+
+    $scope.labeldNode = function(label) {
+        labelService.labeldNode(label, $scope);
+        confirmNodeLabel();
+    };
+
+    $scope.createLabel = function(newLabelName) {
+        labelService.createLabel(newLabelName, $scope)
+            .then(function() {
+                confirmNodeLabel();
+            });
+    };
+
+    $scope.tearLabel = function(label) {
+        labelService.tearLabel(label, $scope);
+        confirmNodeLabel();
+    };
+
+    $scope.deleteLabel = function(label) {
+        labelService.deleteLabel(label, $scope);
+        confirmNodeLabel();
+    };
+
+    function confirmNodeLabel() {
+        var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels);
+        var putData = {
+            id: $stateParams.nodeId,
+            labels: labelIds
+        };
+
+        glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {
+
+        }, undefined, function(resp) {
+            Notification.error(resp.errors.labels);
+        });
     }
+
+    function listNodeLabels(labels) {
+        var nodeLabels = [];
+        for (var i = 0; i < labels.length; i++) {
+            nodeLabels[i] = {};
+            nodeLabels[i].id = labels[i].label.id;
+            nodeLabels[i].name = labels[i].label.name;
+        }
+        return nodeLabels;
+    }
+
 }
-nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state", "ClusterStatusMgr"];
-glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);
+
+nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
+glanceApp.controller('nodeDetailsCtrl', nodeDetailsCtrl);
