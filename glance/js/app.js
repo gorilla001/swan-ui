@@ -1,4 +1,4 @@
-var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngSocket','infinite-scroll','ngSanitize','isteven-multi-select', 'ui.bootstrap.datetimepicker', 'ui-notification', 'ngDialog', 'rzModule']);
+var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngSocket','infinite-scroll','ngSanitize','isteven-multi-select', 'ui.bootstrap.datetimepicker', 'ui-notification', 'ngDialog', 'rzModule','ngTable']);
 
 glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider','$locationProvider',
     function($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
@@ -143,7 +143,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('app.applist', {
-                url: '/applist/page:page',
+                url: '/applist/',
                 views: {
                     'first': {
                         templateUrl: '/views/app/applist.html',
