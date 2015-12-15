@@ -26,6 +26,12 @@ gulp.task('copy-fonts', ['copy-pics'], function() {
         .pipe(gulp.dest('build/fonts'))
 });
 
+gulp.task('copy-html', ['copy-fonts'],  function() {
+    var sources = ['price.html', 'case-miaosha.html'];
+    gulp.src(sources)
+        .pipe(gulp.dest('build/'));
+});
+
 gulp.task('html-replace', function() {
     var assets = useref.assets();
     var revAll = new RevAll();
@@ -61,4 +67,4 @@ gulp.task('rev', function() {
         .pipe(gulp.dest('build/'))
 });
 
-gulp.task('default', ['clean', 'copy-fonts']);
+gulp.task('default', ['clean', 'copy-html']);
