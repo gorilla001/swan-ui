@@ -5,6 +5,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
 
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
+    $scope.allLabelNames = [];
 
     $scope.isConected = false;
 
@@ -49,16 +50,19 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.nodeInstallScript = cmdArray.join(' ');
     $scope.clickToCopy = function() {
       if (!$scope.afterCopy) {
-          $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels);
-          glanceHttp.ajaxFormPost($scope, ['cluster.node', {'cluster_id': $stateParams.clusterId}], function (data) {
+          $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
+          glanceHttp.ajaxFormPost($scope, ['cluster.node', {'cluster_id': $stateParams.clusterId}], function () {
               $scope.afterCopy = true;
           });
       }
     };
 
     $scope.changeLabels = function() {
-        labelService.changeLabels($scope);
-    }
+        labelService.changeLabels($scope)
+            .then(function() {
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
+    };
 
     $scope.labeldNode = function(label) {
         labelService.labeldNode(label, $scope);
