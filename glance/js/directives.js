@@ -274,7 +274,7 @@ glanceApp.directive('piechart', function () {
                                                 if(scope.errorText != undefined){
                                                     if (scope.total && scope.used) {
                                                         return (scope.used / scope.total * 100).toFixed(2) + '%'
-                                                    } else if (scope.used == undefined || scope.total == undefined) {
+                                                    } else if (scope.used == undefined || !scope.total) {
                                                         return '异常'
                                                     } else {
                                                         return '0.00%'
@@ -284,12 +284,10 @@ glanceApp.directive('piechart', function () {
                                                 }
                                             }(),
                                     value: function () {
-                                                if ((scope.used && scope.total != undefined) || scope.used === 0) {
+                                                if (scope.used != undefined && scope.total) {
                                                     return scope.used
-                                                } else if ((scope.used == undefined || scope.total == undefined) || (scope.used != undefined && scope.total == undefined)) {
+                                                }  else {
                                                     return 0
-                                                } else {
-                                                    return 50
                                                 }
 
                                             }(),
