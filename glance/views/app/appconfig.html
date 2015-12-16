@@ -15,15 +15,11 @@
             </dl>
             <dl>
                 <dt>容器个数：</dt>
-                <dd>{/config.ContainerNum/}</dd>
+                <dd>{/config.ContainerNum/}<span ng-show="config.Unique"> (主机只能运行一个当前应用容器)</span></dd>
             </dl>
             <dl>
                 <dt>应用模式：</dt>
                 <dd>{/networkText[config.Network]/}</dd>
-            </dl>
-            <dl ng-show="config.Unique">
-                <dt>应用概况：</dt>
-                <dd>主机只能运行一个当前应用容器</dd>
             </dl>
             <dl ng-show="config.Iplist">
                 <dt>所在主机地址：</dt>
