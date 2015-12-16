@@ -20,6 +20,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
             clusterID: $scope.appInfo.clusterId,
             appName: $scope.appInfo.name
         }], function (data) {
+            $scope.errorCode = data.code;
             if (data.data) {
                 $scope.cpuUsedCores = 0;
                 $scope.cpuShareCores = 0;
@@ -35,6 +36,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
             }
             successPromise = $timeout(initMonitor, 3000);
         }, undefined, null, function (data) {
+            $scope.errorCode = data.code;
             if (data.code === 1) {
                 errorPromise = $timeout(initMonitor, 3000);
             }

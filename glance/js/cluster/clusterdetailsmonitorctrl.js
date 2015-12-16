@@ -5,6 +5,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
 
     $scope.getClusterMonitor = function () {
         glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: $stateParams.clusterId}], function (data) {
+            $scope.errorCode = data.code;
             if (data.data) {
                 $scope.clusterMonitors = data.data;
                 $scope.cpuUsed = 0, $scope.cpuTotal = 0, $scope.memUsed = 0, $scope.memTotal = 0;
@@ -21,6 +22,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
             successCycle = $timeout($scope.getClusterMonitor, 3000);
 
         }, undefined, null, function (data) {
+            $scope.errorCode = data.code;
             if (data.code === 1) {
                 errorCycle = $timeout($scope.getClusterMonitor, 3000);
             }
