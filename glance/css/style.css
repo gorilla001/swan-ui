@@ -1307,12 +1307,23 @@ rzslider .rz-bubble {
 	overflow-y: auto;
 }
 .dashboard .dashboard-cluster {
-	display: inline-block;
 	margin-bottom: 60px;
 }
-.dashboard .dashboard-cluster piechart {
+.dashboard .dashboard-cluster > div {
 	display: inline-block;
-	margin: 0 20px;
+	text-align: center;
+	vertical-align: top;
+	margin: 0 30px;
+}
+.dashboard .dashboard-cluster .cluster-piechart-num {
+	margin-top: 9px;
+	font-size: 10px;
+	color: #CCC;
+}
+.dashboard .dashboard-cluster .cluster-piechart-num em {
+	font-size: 20px;
+	color: #333;
+	font-style: normal;
 }
 .dashboard .dashboard-app {
 	margin-bottom: 20px;

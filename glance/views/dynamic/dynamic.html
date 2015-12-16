@@ -29,14 +29,22 @@
             </h2>
             <div class="dashboard-left">
                 <div class="dashboard-cluster">
-                    <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
-                              use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2">
-                    </piechart>
-
-                    <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
-                              use-color="#ff9494" show-text="内存占用" text-color="#ff9494">
-                    </piechart>
+                    <div>
+                        <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
+                              use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2" error-code="errorCode">
+                        </piechart>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare/}</em> / {/cluster.masMetrics.cpuTotal/}</div>
+                    </div>
+                    <div>
+                        <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
+                              use-color="#ff9494" show-text="内存占用" text-color="#ff9494" error-code="errorCode">
+                        </piechart>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal"><em>{/cluster.masMetrics.memUsed/}</em> / {/cluster.masMetrics.memTotal/} MB</div>
+                    </div>
                 </div>
+
+
+
                 <div data-ng-show="cluster.amounts">
                     <ul class="cluster-service-status-number">
                         <li class="running">
@@ -60,10 +68,10 @@
                    <div ng-repeat="appMon in cluster.appMonitors" class="app-info">
                         <h5>{/appMon.appName/}</h5>
                         <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
-                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2">
+                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2" error-code="errorCode">
                         </piechart>
                         <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare" radius="[45, 55]"
-                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494">
+                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494" error-code="errorCode">
                         </piechart>
                    </div>
                 </div>
