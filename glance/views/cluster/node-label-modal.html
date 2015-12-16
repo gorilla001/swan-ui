@@ -30,11 +30,12 @@
           </li>
         </ul>
 
-        <form class="form-inline panel-create-tag">
-          <div class="form-group">
-            <input type="text" class="form-control input-sm" placeholder="标签名称" data-ng-model="newLabelName">
+        <form class="form-inline panel-create-tag" name="label">
+          <div class="form-group" data-ng-class="{'has-error' : label.newLabelName.$error.samename}">
+            <input type="text" class="form-control input-sm" placeholder="标签名称" name="newLabelName" data-ng-model="newLabelName" data-ng-trim="true" data-required="required" data-samename data-name-list="allLabelNames">
+            <p data-ng-show="label.newLabelName.$error.samename" class="help-block"><small>标签名已存在</small></p>
           </div>
-          <button type="submit" class="btn btn-sm btn-success" data-ng-click="createLabel(newLabelName)">新建标签</button>
+          <button type="submit" class="btn btn-sm btn-success" data-ng-click="createLabel(newLabelName)" data-ng-disabled="label.newLabelName.$invalid">新建标签</button>
         </form>
       </div>
 

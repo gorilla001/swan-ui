@@ -88,14 +88,22 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
                 $scope.clusterNames.push(cluster.name);
             });
         }
-    }
+    };
 
-    $scope.getAllNodeLabelIds = function(labels) {
-        var ids = [];
-        for(var i = 0; i < labels.length; i++) {
-            ids.push(labels[i].id);
+    $scope.getAllNodeLabelIds = function(labels, id) {
+        return arrayValuesfromArray(labels, id);
+    };
+
+    $scope.getAllLabelNames = function(labels, name) {
+        return arrayValuesfromArray(labels, name);
+    };
+
+    function arrayValuesfromArray(array, valueKey) {
+        var allValues = [];
+        for(var i = 0; i < array.length; i++) {
+            allValues.push(array[i][valueKey]);
         }
-        return ids;
+        return allValues
     }
     
 }

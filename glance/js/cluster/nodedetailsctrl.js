@@ -5,6 +5,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.showCharts = false;
 
     $scope.hideLabelTrash = true;
+    $scope.allLabelNames = [];
     $scope.allLabels = [];
     $scope.unselectedLabels = [];
     $scope.selectedLabels = [];
@@ -133,7 +134,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     };
 
     $scope.changeLabels = function() {
-        labelService.changeLabels($scope);
+        labelService.changeLabels($scope)
+            .then(function() {
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
+        
     };
 
     $scope.labeldNode = function(label) {
@@ -149,6 +154,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.createLabel = function(newLabelName) {
         labelService.createLabel(newLabelName, $scope)
             .then(function() {
+                $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
                 confirmNodeLabel();
             });
     };
@@ -160,19 +167,20 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.deleteLabel = function(label) {
         labelService.deleteLabel(label, $scope);
+        $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+        $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
     };
 
     function confirmNodeLabel() {
-        var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels);
+        var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
         var putData = {
             id: $stateParams.nodeId,
             labels: labelIds
         };
 
         return glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {
-        }, undefined, 
-            function(resp) {
-                Notification.error(resp.errors.labels);
+        }, undefined, function(resp) {
+            Notification.error(resp.errors.labels);
         });
     }
 
