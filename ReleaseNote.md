@@ -11,6 +11,8 @@ Release Note
 
 ###需要运维更新
 
+sed -i "s#APIURL#$APIURL#g" glance/js/confdev.js
+sed -i "s#APIURL#$APIURL#g" user/js/conf.js
 
 ### bug fix
 

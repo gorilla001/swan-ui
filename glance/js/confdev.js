@@ -1,5 +1,5 @@
 BACKEND_URL_BASE = {
-    defaultBase: "DASHBOARD/",
+    defaultBase: "APIURL/",
     ws: "STREAMING/",
     auth: null,
     cluster: null,
