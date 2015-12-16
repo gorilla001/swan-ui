@@ -33,7 +33,7 @@
                         <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
                               use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2" error-code="errorCode">
                         </piechart>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare/}</em> / {/cluster.masMetrics.cpuTotal/}</div>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare.toFixed(2)/}</em> / {/cluster.masMetrics.cpuTotal/}</div>
                     </div>
                     <div>
                         <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
