@@ -9,6 +9,7 @@ appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$timeout', 'Notifi
 function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngTableParams) {
 
     var listClusterPromise = $scope.listCluster(),listAppPromise;
+    var appListReloadInterval = 8000;
     //promise.then($scope.listApp);
     // app list request params
     $scope.appListParams = {
@@ -17,8 +18,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     // app list table object
     $scope.appListTable = new ngTableParams({
             page: 1,  //current page index
-            count: 20, // current count
-            sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
+            count: 10, // current count
+            //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
         }, {
             counts: [5, 10, 20], // custom page count
             total: 0,
@@ -27,14 +28,23 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                     var total = res.data.TotalNumber;
                     params.total(total);
                     if (total > 0) {
-                        // every 5 seconds reload app list to refresh app list
-                        listAppPromise = $timeout(function(){$scope.appListTable.reload()}, 5000);
                         $defer.resolve(res.data.App);
                     }
-                }, params.url());
+                    // every 5 seconds reload app list to refresh app list
+                    $timeout.cancel(listAppPromise);
+                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+
+                }, params.url(),function(errorRes){
+
+                    // on error every 5 seconds reload app list to refresh app list
+                    $timeout.cancel(listAppPromise);
+                    $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+                });
             }
         }
     );
+
+
     ////app list params is change ,reload app list
     //$scope.$watch('appListParams',function(newValue,oldValue){
     //    $scope.appListTable.parameters(newValue);
@@ -47,7 +57,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
 
     //
     $scope.$on('$destroy', function () {
-        $timeout.cancel(promise);
+        $timeout.cancel(listClusterPromise);
+        $timeout.cancel(listAppPromise);
     });
 
 }
