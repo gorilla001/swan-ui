@@ -21,6 +21,14 @@
                 <dt>应用模式：</dt>
                 <dd>{/networkText[config.Network]/}</dd>
             </dl>
+            <dl ng-show="config.Unique">
+                <dt>应用概况：</dt>
+                <dd>主机只能运行一个当前应用容器</dd>
+            </dl>
+            <dl ng-show="config.Iplist">
+                <dt>所在主机地址：</dt>
+                <dd><span ng-repeat="ip in config.Iplist">{/ip/} / </span></dd>
+            </dl>
             <dl ng-repeat="volumeInfo in config.ContainerVolumesInfo" ng-show="config.ContainerVolumesInfo.length">
                 <dt>挂载目录{/$index + 1/}：</dt>
                 <dd>容器挂载目录: {/volumeInfo.HostPath/}</dd>
