@@ -23,7 +23,7 @@
                     <td>{/appstate[app.appStatus]/}</td>
                     <td>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                     <td><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a></td>
-                    <td>{/app.containerNum/}</td>
+                    <td><span ng-show="app.tasks">{/app.tasks/}/{/app.containerNum/}</span> <span ng-hide="app.tasks">{/app.containerNum/}</span></td>
                     <td>
                         <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"  data-ng-click="upContainNum(app.appId, app.containerNum, app.appName, null ,currentPage)" class="btn btn-default btn-xs">扩展</button>
                         <button type="button" data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus" class="btn btn-default btn-xs" 
