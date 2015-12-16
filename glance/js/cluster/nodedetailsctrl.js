@@ -154,8 +154,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.createLabel = function(newLabelName) {
         labelService.createLabel(newLabelName, $scope)
             .then(function() {
-                $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
-                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
                 confirmNodeLabel();
             });
     };
@@ -167,8 +165,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.deleteLabel = function(label) {
         labelService.deleteLabel(label, $scope);
-        $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
-        $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
     };
 
     function confirmNodeLabel() {

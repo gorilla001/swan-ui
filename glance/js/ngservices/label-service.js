@@ -43,6 +43,8 @@
                 function() {}, undefined, function() {})
                 .then(function(resp) {
                     labeldNode(resp.data.data, $scope);
+                    $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+                    $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
                 }, function(resp) {
                     Notification.error(resp.data.errors.name);
             });
@@ -60,6 +62,8 @@
                 .then(function() {
                     spliceLabel(label, $scope.selectedLabels);
                     spliceLabel(label, $scope.unselectedLabels);
+                    $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+                    $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
                 }, function(resp) {
                     Notification.error(resp.data.errors.labels);
                 });
