@@ -404,7 +404,7 @@ a.remove {
 }
 .server-detail .server-status-normal {
     background-image: url(../pics/ico-service-status-normal.png);
-}uba
+}
 .server-detail .server-status-disconnect {
     background-image: url(../pics/ico-service-status-disconnect.png);
 }
