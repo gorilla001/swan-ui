@@ -1,22 +1,18 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr) {
     "use strict";
     $scope.node = {};
     $scope.showCharts = false;
     $scope.serviceViews = [];
     $('.charts').hide();
-    function initStatusCache(){
-        $scope.statusCache = {};
-        $scope.statusCache[$stateParams.clusterId] = {"nodes": {}, "masters": {}};
-        $scope.statusCache[$stateParams.clusterId].nodes[$stateParams.nodeId] = {"services": {}}
-    };
-    initStatusCache();
+    
+    $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.getCurNode = function () {
         glanceHttp.ajaxGet(["cluster.nodeIns", {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
             $scope.node = data.data;
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
-            $scope.addNode2StatusStore($scope.node.cluster.id, $scope.node, $scope.statusCache);
-            $scope.startListenStatusUpdate($scope, $scope.statusCache);
+            $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
+            $scope.statusMgr.startListen($scope);
             
             createServiceViews();
         });
@@ -25,25 +21,19 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     
     function createServiceViews() {
         if ($scope.isMasterFlag) {
-            $scope.serviceViews = [
-                 {name: "master", label: "Mesos"},
-                 {name: "marathon", label: "Marathon"},
-                 {name: "zookeeper", label: "Zookeeper"},
-            ];
+            $scope.serviceViews = ["master", "marathon", "zookeeper"];
             if ($scope.node.cluster.cluster_type=='1_master') {
-                $scope.serviceViews.push({name: "slave", label: "Slave"});
+                $scope.serviceViews.push("slave");
             };
         } else {
-            $scope.serviceViews = [
-                   {name: "slave", label: "Slave"},
-              ];
+            $scope.serviceViews = ["slave"];
         }
         angular.forEach($scope.node.attributes, function (attribute){
             if (attribute.attribute == "gateway") {
-                $scope.serviceViews.push({name: "bamboo_gateway", label: "Gateway"});
+                $scope.serviceViews.push("bamboo_gateway");
             }
             if (attribute.attribute == "proxy") {
-                $scope.serviceViews.push({name: "bamboo_proxy", label: "Proxy"});
+                $scope.serviceViews.push("bamboo_proxy");
             }
         });
     }
@@ -134,5 +124,5 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 {"method": "reset"});
     }
 }
-nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state"];
+nodeDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "unitConversion", "buildCharts", "monitor", "$state", "ClusterStatusMgr"];
 glanceApp.controller("nodeDetailsCtrl", nodeDetailsCtrl);

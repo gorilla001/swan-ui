@@ -1,4 +1,4 @@
-function listClustersCtrl($scope, glanceHttp, $state, Notification) {
+function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatusMgr) {
     var clusterTypes = {
         '1_master': 1,
         '3_masters': 3,
@@ -10,7 +10,9 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         '3_masters': 4,
         '5_masters': 6,
     };
-    $scope.statusCache = {};
+    
+    $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
+    
     $scope.listCluster = function () {
         glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
             if (data && data.data) {
@@ -18,7 +20,6 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
                 $scope.clusters = data.data;
                 $scope.clustersBasicData = getAllClustersBasicData();
                 $scope.clustersNodesData = getAllClustersNodesData();
-                $scope.startListenStatusUpdate($scope, $scope.statusCache);
             }
         });
     };
@@ -133,7 +134,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
         };
         clusterBasicData.infos = getClusterBasicInfos(cluster);
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusCache);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr);
 
         clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
         var masters = nodesWithRoleAndStatus.masters;
@@ -157,7 +158,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
             selectedClasses: {}
         };
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusCache);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr);
         cluster.hiddenStatuses = cluster.hiddenStatuses? cluster.hiddenStatuses: [];
         var filteredNodes = filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus);
         var allShowSlaves = getAllShowSlaves(filteredNodes.slaves);
@@ -360,5 +361,5 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification) {
 
 }
 
-listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification"];
+listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification", "ClusterStatusMgr"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);

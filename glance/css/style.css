@@ -9,6 +9,18 @@ body,html {
 	color: #3D3D3D;
 	letter-spacing: 0.2px;
 }
+::selection {
+    background: #427fed; 
+    color: #FFF;
+}
+::-moz-selection {
+    background: #427fed;
+    color: #FFF;
+}
+::-webkit-selection {
+    background: #427fed;
+    color: #FFF;
+}  
 section {
 	margin: 20px 0 40px 0;
 }
@@ -392,6 +404,14 @@ a.remove {
     font-size: 13px;
     font-weight: 400;
 }
+.server-detail .server-info li.tag-list .title {
+    float: left;
+}
+.server-detail .server-info li.tag-list .list {
+    margin-left: 80px;
+    display: block;
+    width: auto;
+}
 .server-detail .server-status {
     font-size: 12px;
     color: #AAA;
@@ -441,8 +461,13 @@ a.remove {
     margin-top: 6px;
     line-height: 1;
     display: block;
-    font-size: 11px;
+    font-size: 10px;
     text-align: center;
+}
+.server-detail .server-app-status span.version {
+    font-size: 9px; 
+    color: #BBB;
+    display: block;
 }
 .server-detail .server-app-status .btn {
     font-size: 11px;
@@ -1547,4 +1572,15 @@ rzslider .rz-bubble {
 }
 .app-detail-header dl {
 	margin-bottom: 0;
+}
+.btn-dropdown-info .dropdown-menu {
+    min-width: 130px;
+}
+.btn-dropdown-info .dropdown-menu li {
+    padding: 5px 20px;
+}
+.badge {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
 }
