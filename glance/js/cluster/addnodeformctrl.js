@@ -64,8 +64,8 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
             });
     };
 
-    $scope.labeldNode = function(label) {
-        labelService.labeldNode(label, $scope);
+    $scope.labelledNode = function(label) {
+        labelService.labelledNode(label, $scope);
     };
 
     $scope.createLabel = function(newLabelName) {

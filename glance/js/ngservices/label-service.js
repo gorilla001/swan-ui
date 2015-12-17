@@ -9,7 +9,7 @@
         return {
             listAllLabels: listAllLabels,
             changeLabels: changeLabels,
-            labeldNode: labeldNode,
+            labelledNode: labelledNode,
             createLabel: createLabel,
             tearLabel: tearLabel,
             deleteLabel: deleteLabel
@@ -32,7 +32,7 @@
         }
 
         // 给主机贴标签
-        function labeldNode(label, $scope) {
+        function labelledNode(label, $scope) {
             $scope.selectedLabels.push(label);
             spliceLabel(label, $scope.unselectedLabels);
         }
@@ -42,7 +42,7 @@
             return glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName},
                 function() {}, undefined, function() {})
                 .then(function(resp) {
-                    labeldNode(resp.data.data, $scope);
+                    labelledNode(resp.data.data, $scope);
                     $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
                     $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
                 }, function(resp) {

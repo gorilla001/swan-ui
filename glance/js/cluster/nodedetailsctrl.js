@@ -141,8 +141,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         
     };
 
-    $scope.labeldNode = function(label) {
-        labelService.labeldNode(label, $scope);
+    $scope.labelledNode = function(label) {
+        labelService.labelledNode(label, $scope);
         confirmNodeLabel()
             .then(function() {
                 
