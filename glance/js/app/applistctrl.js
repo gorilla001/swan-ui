@@ -22,7 +22,9 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $st
                 $scope.setPage($stateParams.page);
                 listPromise = $timeout($scope.listApp, 5000);
             }
-        }, undefined, null, function (data) {
+        }, null, function(data, status){
+            console.log("request failed (" + status + ")");
+        }, function (data) {
             listPromise = $timeout($scope.listApp, 5000);
         });
     };

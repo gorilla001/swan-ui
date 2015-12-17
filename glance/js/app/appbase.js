@@ -55,6 +55,10 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                 $scope.clusterNameMap[cluster.id] = cluster.name;
             });
             deferred.resolve();
+        }, null, function(data, status){
+            console.log("request failed (" + status + ")");
+        }, function(data){
+            console.log(data.errors);
         });
 
         return deferred.promise;
