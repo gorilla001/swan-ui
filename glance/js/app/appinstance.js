@@ -16,6 +16,9 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
     (function appInstances() {
         glanceHttp.ajaxGet(['app.instances',{app_id: $stateParams.appId}], function (data) {
             $scope.instances = data.data;
+            //appdetail status depend on instance, so when instances changed,you should call getAppInfo
+            $scope.getAppInfo($stateParams.appId);
+
             if (isDeploying(data)) {
                 promise = $timeout(appInstances, 5000);
             }
