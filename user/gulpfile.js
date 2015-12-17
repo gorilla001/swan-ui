@@ -26,16 +26,10 @@ gulp.task('copy-fonts', ['copy-pics'], function() {
         .pipe(gulp.dest('build/fonts'))
 });
 
-gulp.task('copy-html', ['copy-fonts'],  function() {
-    var sources = ['price.html', 'case-miaosha.html'];
-    gulp.src(sources)
-        .pipe(gulp.dest('build/'));
-});
-
 gulp.task('html-replace', function() {
     var assets = useref.assets();
-    var revAll = new RevAll();
-    return gulp.src('index.html')
+    var revAll = new RevAll({dontRenameFile: ['.html'], dontUpdateReference: ['.html']});
+    return gulp.src(['index.html', 'price.html', 'case-miaosha.html'])
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
@@ -47,24 +41,10 @@ gulp.task('html-replace', function() {
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('html-rename', ['html-replace'], function() {
-    gulp.src('build/index.*.html')
-      .pipe(rename('index.html'))
-      .pipe(gulp.dest('build/'));
-});
-
-gulp.task('clean', ['html-rename'], function() {
-    var sources = [
-      'build/index.**.html'
-    ];
-    return gulp.src(sources, {read: false})
-        .pipe(clean());
-});
-
 gulp.task('rev', function() {
     gulp.src('build/index.html')
         .pipe(rev())
         .pipe(gulp.dest('build/'))
 });
 
-gulp.task('default', ['clean', 'copy-html']);
+gulp.task('default', ['html-replace', 'copy-fonts']);

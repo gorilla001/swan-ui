@@ -31,6 +31,7 @@
             angular.forEach($scope.clusterList, function (cluster) {
                 if(cluster.nodes.length){
                     glanceHttp.ajaxGet(['metrics.getClusterMonitor', {cluster_id: cluster.id}], function (data) {
+                        $scope.errorCode = data.code;
                         if (data && data.data) {
                             if(data.data.appMetrics){
                                 cluster.appMonitors = data.data.appMetrics;
@@ -40,6 +41,7 @@
                             }
                         }
                     }, undefined, undefined, function(data) {
+                        $scope.errorCode = data.code;
                         console.log(data.error);
                     });
                 }

@@ -201,7 +201,8 @@ glanceApp.directive('piechart', function () {
             backgroundColor: '@backgroundColor',
             radius: '=radius',
             showText: '@showText',
-            textcolor: '@textColor'
+            textcolor: '@textColor',
+            errorText: '=errorCode'
 
         },
         link: function (scope, elem, attrs, ctrl) {
@@ -216,7 +217,7 @@ glanceApp.directive('piechart', function () {
                     label: {
                         show: true,
                         position: 'center',
-                        formatter: '{b}' + '%',
+                        formatter: '{b}',
                         textStyle: {
                             fontSize: 17,
                             baseline: 'bottom',
@@ -270,21 +271,23 @@ glanceApp.directive('piechart', function () {
                             data: [
                                 {
                                     name: function () {
-                                                if (scope.total) {
-                                                    return (scope.used / scope.total * 100).toFixed(2)
-                                                } else if (scope.used == undefined || scope.total == undefined) {
-                                                    return 'NaN'
-                                                } else {
-                                                    return '0.00'
+                                                if(scope.errorText != undefined){
+                                                    if (scope.total && scope.used) {
+                                                        return (scope.used / scope.total * 100).toFixed(2) + '%'
+                                                    } else if (scope.used == undefined || !scope.total) {
+                                                        return '异常'
+                                                    } else {
+                                                        return '0.00%'
+                                                    }
+                                                }else {
+                                                    return '加载中'
                                                 }
                                             }(),
                                     value: function () {
-                                                if ((scope.used && scope.total != undefined) || scope.used === 0) {
+                                                if (scope.used != undefined && scope.total) {
                                                     return scope.used
-                                                } else if ((scope.used == undefined || scope.total == undefined) || (scope.used != undefined && scope.total == undefined)) {
+                                                }  else {
                                                     return 0
-                                                } else {
-                                                    return 50
                                                 }
 
                                             }(),
@@ -324,6 +327,14 @@ glanceApp.directive('piechart', function () {
 
             scope.$watch(function () {
                 return scope.total;
+            }, function (newValue, oldValue) {
+                if (newValue !== oldValue) {
+                    clusterChart.setOption(createOption());
+                }
+            }, true);
+
+            scope.$watch(function () {
+                return scope.errorText;
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     clusterChart.setOption(createOption());
