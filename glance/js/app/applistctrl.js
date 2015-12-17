@@ -23,6 +23,8 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
         }, {
             counts: [5, 10, 20], // custom page count
             total: 0,
+            paginationMaxBlocks: 13,
+            paginationMinBlocks: 2,
             getData: function ($defer, params) {
                 glanceHttp.ajaxGet(['app.list'], function (res) {
                     var total = res.data.TotalNumber;
@@ -38,7 +40,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
 
                     // on error every 5 seconds reload app list to refresh app list
                     $timeout.cancel(listAppPromise);
-                    $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
                 });
             }
         }
