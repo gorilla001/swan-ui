@@ -28,7 +28,7 @@
                 <div class="main-container-body">
                     <ul class="server-info">
                         <li>
-                            <div>主机状态</div><em><big data-ng-class="getClass(statusCache[node.cluster.id]['nodes'][node.id].status)">{/statName[statusCache[node.cluster.id]['nodes'][node.id].status]/}</big></em>
+                            <div>主机状态</div><em><big data-ng-class="getClass(statusMgr.nodes[node.id].status)">{/statName[statusMgr.nodes[node.id].status]/}</big></em>
                         </li>
                         <li>
                             <div>IP 地址</div><em>{/ node.ip /}</em>
@@ -67,15 +67,16 @@
             <div class="main-container">
                 <div class="main-container-body">
                     <ul class="clearfix server-app-status">
-                        <li data-ng-repeat="serviceView in serviceViews"> 
+                        <li data-ng-repeat="service in serviceViews"> 
                             <div>
-                                <img data-ng-src="../pics/ico-service-status-{/statusCache[node.cluster.id]['nodes'][node.id]['services'][serviceView.name]/}.png" width="30">
+                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30">
                                 <button class="btn btn-xs btn-warning" 
-                                data-ng-show="statusCache[node.cluster.id]['nodes'][node.id]['services'][serviceView.name]=='failed' && 
-                                    (statusCache[node.cluster.id]['nodes'][node.id].status=='running'||statusCache[node.cluster.id]['nodes'][node.id].status=='failed')"
-                                data-ng-click="resetService(serviceView.name)">重置</button>
+                                data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
+                                    (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
+                                data-ng-click="resetService(service)">重置</button>
                             </div>  
-                            <em data-ng-bind="serviceView.label"></em>
+                            <em data-ng-bind="getServiceLabel(service)"></em>
+                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1]"></span>
                         </li>
                     </ul>
                 </div>
