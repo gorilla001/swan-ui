@@ -68,8 +68,8 @@
                     };
                 }
                 
-                for (var i = 0; i < cluster.nodes.length; i++) {
-                    $scope.statusMgr.addNode(cluster.id, cluster.nodes[i]);
+                for (var j = 0; j < cluster.nodes.length; j++) {
+                    $scope.statusMgr.addNode(cluster.id, cluster.nodes[j]);
                 }
 
             }
