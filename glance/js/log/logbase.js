@@ -38,24 +38,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         }
     });
 
-    //$scope.getNodes = function (appName, clusterId) {
-    //    if (appName && clusterId) {
-    //        glanceHttp.ajaxGet(["app.getNodes", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
-    //            $scope.nodes = data.data;
-    //
-    //            var tempNodesInfo = [];
-    //            angular.forEach($scope.nodes, function (data, index, array) {
-    //                tempNodesInfo.push({
-    //                    ip: data.Ip,
-    //                    maker: data.Ip,
-    //                    ticked: false
-    //                });
-    //            });
-    //            $scope.inputNodesInfo = tempNodesInfo;
-    //        });
-    //    }
-    //};
-
     $scope.getNodePorts = function (appName, clusterId) {
         if (appName && clusterId) {
             glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
@@ -102,56 +84,36 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         $scope.clusterlogs.searchLogs($scope.searchData);
     };
 
+
     $scope.getContextLog = function (logInfo, indexId) {
         $scope.curId = indexId;
-        var ip = logInfo.ip[0];
-        var taskid = logInfo.taskid[0];
-        var date = moment(logInfo.timestamp[0]).toDate();
-
-        function getContextLogTotal(times, total) {
-            times += 1;
-            addDate = moment(logInfo.timestamp[0]).add(60 * times, 's').toDate();
-            subDate = moment(logInfo.timestamp[0]).subtract(60 * times, 's').toDate();
-            var startDate = $filter('date')(subDate, 'yyyy-MM-ddTHH:mm:ss');
-            var endDate = $filter('date')(addDate, 'yyyy-MM-ddTHH:mm:ss');
-            $scope.searchData = {
-                'gte': startDate,
-                'lte': endDate,
-                'instanceName': taskid,
-                'clusterId': clusterIdTemp,
-                'size': 0
-            };
-            $scope.contextlogs.searchLogs($scope.searchData, function (logSize) {
-                if (logSize < total && times < 6) {
-                    getContextLogTotal(times, total);
-                } else {
-                    $scope.searchData = {
-                        'gte': startDate,
-                        'lte': endDate,
-                        'instanceName': taskid,
-                        'clusterId': clusterIdTemp,
-                        'size': total
-                    };
-                    $scope.contextlogs.searchLogs($scope.searchData,function(){
-                        $timeout(function(){
-                            var scrollHeight = 0;
-                            var Odiv = document.getElementById("contextLog");
-                            var Oli = document.getElementsByClassName("list-unstyled")[1].getElementsByTagName("li");
-                            for (var i = 0; i < Oli.length; i++) {
-                                scrollHeight += Oli[i].offsetHeight;
-                                if (Oli[i].className.indexOf('active') > 0) {
-                                    break;
-                                }
-                            }
-                            Odiv.scrollTop = scrollHeight - Odiv.offsetHeight / 2;
-                        }, 250);
-                    });
-                }
-            });
-        }
-
-        getContextLogTotal(0, 100);
         $scope.showContextUI = true;
+        var taskid = logInfo.taskid[0];
+
+        $scope.contextSearchData = {
+            counter:{
+                conterGte: (Number(logInfo.counter.join()) - 100) ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
+                conterLte: (Number(logInfo.counter.join()) + 100)
+            },
+            instanceName: taskid,
+            clusterId: clusterIdTemp,
+            size: 200
+        };
+
+        $scope.contextlogs.searchLogs($scope.contextSearchData, function (logSize) {
+            $timeout(function(){
+                var scrollHeight = 0;
+                var Odiv = document.getElementById("contextLog");
+                var Oli = document.getElementsByClassName("list-unstyled")[1].getElementsByTagName("li");
+                for (var i = 0; i < Oli.length; i++) {
+                    scrollHeight += Oli[i].offsetHeight;
+                    if (Oli[i].className.indexOf('active') > 0) {
+                        break;
+                    }
+                }
+                Odiv.scrollTop = scrollHeight - Odiv.offsetHeight / 2;
+            }, 250);
+        });
     };
 
     $scope.returnLos = function () {
