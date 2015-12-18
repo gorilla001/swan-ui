@@ -92,7 +92,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
 
         $scope.contextSearchData = {
             counter:{
-                conterGte: (Number(logInfo.counter.join()) - 100) ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
+                conterGte: (Number(logInfo.counter.join()) - 100) > 0 ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
                 conterLte: (Number(logInfo.counter.join()) + 100)
             },
             instanceName: taskid,
@@ -103,15 +103,15 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeou
         $scope.contextlogs.searchLogs($scope.contextSearchData, function (logSize) {
             $timeout(function(){
                 var scrollHeight = 0;
-                var Odiv = document.getElementById("contextLog");
-                var Oli = document.getElementsByClassName("list-unstyled")[1].getElementsByTagName("li");
-                for (var i = 0; i < Oli.length; i++) {
-                    scrollHeight += Oli[i].offsetHeight;
-                    if (Oli[i].className.indexOf('active') > 0) {
+                var oDiv = document.getElementById("contextLog");
+                var oLi = document.getElementsByClassName("list-unstyled")[1].getElementsByTagName("li");
+                for (var i = 0; i < oLi.length; i++) {
+                    scrollHeight += oLi[i].offsetHeight;
+                    if (oLi[i].className.indexOf('active') > 0) {
                         break;
                     }
                 }
-                Odiv.scrollTop = scrollHeight - Odiv.offsetHeight / 2;
+                oDiv.scrollTop = scrollHeight - oDiv.offsetHeight / 2;
             }, 250);
         });
     };
