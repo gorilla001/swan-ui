@@ -11,21 +11,21 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     var listClusterPromise = $scope.listCluster(),listAppPromise;
     var appListReloadInterval = 8000;
     //promise.then($scope.listApp);
-    // app list request params
-    $scope.appListParams = {
-        searchKeyWord:'',
-    };
+    //// app list request params
+    //$scope.appListParams = {
+    //    searchKeyWord:'',
+    //    page: 1,  //current page index
+    //    count: 10, // current count
+    //    //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
+    //};
     // app list table object
-    $scope.appListTable = new ngTableParams({
-            page: 1,  //current page index
-            count: 10, // current count
-            //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
-        }, {
+    $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
             counts: [5, 10, 20], // custom page count
             total: 0,
             paginationMaxBlocks: 13,
             paginationMinBlocks: 2,
             getData: function ($defer, params) {
+                $rootScope.appListParams = $scope.appListTable.parameters();
                 glanceHttp.ajaxGet(['app.list'], function (res) {
                     var total = res.data.TotalNumber;
                     params.total(total);
