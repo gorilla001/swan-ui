@@ -94,17 +94,37 @@
 
                     <div class="col-md-8" data-ng-show="nodeInstallScript">
                       <div class="copy-code-agent">
-                        <h5>1. 安装 Docker <small>（主机已安装 Docker，请跳过）</small></h5>
-                        <code>curl -sSL https://get.docker.com/ | sh</code>
-                      </div>
-                      <div class="copy-code-agent">
-                        <h5>2. 安装 Agent <small>请登录目标主机，运行以下命令，本操作需要sudo权限。</small>
+                        <header class="clearfix">
                           <button type="button" class="btn btn-primary copy" title="点击复制代码"
-                            data-clipboard-target="code" data-ng-click="clickToCopy()">
-                            <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+                            data-clipboard-target="install-docker-code">
+                            <span class="glyphicon glyphicon-copy"></span>
+                            <em>点击复制</em>
+                          </button>
+                          <h5>
+                            1. 安装 Docker 
+                            <small class="help-block">主机已安装 Docker，请跳过。</small>
+                          </h5>
+                        </header>
+                        <code id="install-docker-code">curl -sSL https://get.docker.com/ | sh</code>
+                      </div>
+
+                      <div class="copy-code-agent">
+                        <header class="clearfix">
+                          <button type="button" class="btn btn-primary copy " title="点击复制代码"
+                            data-clipboard-target="code" data-ng-click="clickToCopy()"
+                          >
+                            <span class="glyphicon glyphicon-copy"></span>
                             <em>点击生成命令</em>
                           </button>
-                        </h5>
+                          <h5>
+                            2. 安装 Agent 
+                            <small class="help-block">
+                              请登录目标主机，运行以下命令，本操作需要 sudo 权限。依据组件不同，可能需要 
+                              <strong class="text-success">2~5G</strong>
+                              磁盘空间。
+                            </small>
+                          </h5>
+                        </header>
                         <code id="code" data-ng-bind="nodeInstallScript" data-ng-show="afterCopy"></code>
                       </div>
                     </div>
