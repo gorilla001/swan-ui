@@ -9,15 +9,9 @@ appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$timeout', 'Notifi
 function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngTableParams) {
 
     var listClusterPromise = $scope.listCluster(),listAppPromise;
-    var appListReloadInterval = 8000;
+    var appListReloadInterval = 5000;
+    $scope.applist = [];
     //promise.then($scope.listApp);
-    //// app list request params
-    //$scope.appListParams = {
-    //    searchKeyWord:'',
-    //    page: 1,  //current page index
-    //    count: 10, // current count
-    //    //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
-    //};
     // app list table object
     $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
             counts: [5, 10, 20], // custom page count
@@ -27,7 +21,13 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
             getData: function ($defer, params) {
                 $rootScope.appListParams = $scope.appListTable.parameters();
                 glanceHttp.ajaxGet(['app.list'], function (res) {
+                    //If you remove when the current application of only one application,
+                    //set new Page and Switch back page
+                    if(!res.data.App.length && $rootScope.appListParams.page > 1){
+                        $rootScope.appListParams.page = $rootScope.appListParams.page - 1
+                    }
                     var total = res.data.TotalNumber;
+                    $scope.applist = res.data.App;
                     params.total(total);
                     if (total > 0) {
                         $defer.resolve(res.data.App);
