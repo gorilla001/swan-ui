@@ -27,9 +27,8 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                     this.logs.push(msg);
                     this.logsId.push(data.hits.hits[i]._id);
                     this.logInfo.push(data.hits.hits[i].fields);
-
                 }
-                
+
                 this.isLoadingLogs = false;
                 if (data.hits.hits.length == 0) {
                     this.isComplete = true;
@@ -56,8 +55,6 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.logInfo = [];
         this.logsId = [];
         this.nodeId = searchData.nodeId;
-        this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
-        this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
         this.clusterId = searchData.clusterId;
         this.data = {
             "query": {
@@ -66,14 +63,6 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                         {
                             "term": {
                                 "clusterid": this.clusterId
-                            }
-                        },
-                        {
-                            "range": {
-                                "timestamp": {
-                                    "gte": this.gte,
-                                    "lte": this.lte
-                                }
                             }
                         }
                     ]
@@ -95,7 +84,8 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 "msg",
                 "ipport",
                 "ip",
-                "taskid"
+                "taskid",
+                "counter"
             ],
             "highlight": {
                 "require_field_match": "true",
@@ -113,6 +103,33 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             }
         };
 
+        if(angular.isDate(searchData.gte )&& angular.isDate(searchData.lte)){
+            this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
+            this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
+            this.timeRange = {
+                "range": {
+                    "timestamp": {
+                        "gte": this.gte,
+                        "lte": this.lte
+                    }
+                }
+            };
+
+            this.data.query.bool.must.push(this.timeRange);
+        }
+
+        if(searchData.counter){
+            this.contextCounter = {
+                "range": {
+                    "counter": {
+                        "gte": this.conterGte = searchData.counter.conterGte,
+                        "lte": this.conterLte = searchData.counter.conterLte
+
+                    }
+                }
+            };
+            this.data.query.bool.must.push(this.contextCounter);
+        }
         if (searchData.logSearchKey) {
             this.query_json = {
                 "match": {
