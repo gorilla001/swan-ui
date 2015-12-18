@@ -546,24 +546,31 @@ a.remove {
 	padding: 0;
 	vertical-align: middle;
 	margin-bottom: 20px;
-	background: linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
-	background: -o-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
-	background: -ms-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
-	background: -moz-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
-	background: -webkit-linear-gradient(top , #EAEAEA 30px, #F3F3F3 30px);
+}
 
+.copy-code-agent header {
+	background: #EAEAEA;
 }
-.copy-code-agent h5 {
-	height: 30px;
-	line-height: 30px;
-	margin: 0;
-	padding: 0 0 0 12px;
+.copy-code-agent header h5 {
+	margin: 0 130px 0 0;
+	padding: 9px 0 0 12px;
 }
+.copy-code-agent header h5 .help-block {
+	font-size: 10px;
+	line-height: 1.5;
+	margin-top: 3px;
+	margin-bottom: 6px;
+}
+.copy-code-agent header .btn {
+	float: right;
+}
+
 .copy-code-agent code {
 	background-color: transparent;
 	font-size: 11px;
 	display: block;
 	padding: 12px;
+	margin-bottom: 6px;
 }
 .copy-code-agent button {
 	float: right;
