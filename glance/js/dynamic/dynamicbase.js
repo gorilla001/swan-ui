@@ -5,12 +5,12 @@
     'use strict';
     glanceApp.controller('dynamicBaseCtrl', dynamicBaseCtrl);
 
-    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'groupNodes', '$q'];
+    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$q', 'ClusterStatusMgr'];
 
-    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, groupNodes, $q) {
+    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, $q, ClusterStatusMgr) {
         $rootScope.show = 'home';
 
-        var clusterCache = {};
+        $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
 
         var listClusterDataGetFromBackend;
 
@@ -54,52 +54,27 @@
         function collectClusterList(clusters) {
             var clusterList = {};
             var cluster;
-            var originalCluster = {};
             for (var i = 0; i < clusters.length; i++) {
                 cluster = clusters[i];
-
+                
                 if (cluster.nodes.length) {
-
-                    originalCluster = groupNodes.getOriginalCluster(cluster);
-
-                    clusterCache[cluster.id] = originalCluster;
-
+                    
                     clusterList[cluster.id] = {
                         id: cluster.id,
                         name: cluster.name,
-                        amounts: originalCluster.amounts,
                         nodes: cluster.nodes,
                         appMonitors: [],
                         masMetrics:{}
                     };
                 }
+                
+                for (var j = 0; j < cluster.nodes.length; j++) {
+                    $scope.statusMgr.addNode(cluster.id, cluster.nodes[j]);
+                }
 
             }
+            $scope.statusMgr.startListen($scope);
             return clusterList;
         }
-
-        $scope.$on('nodeStatusUpdate', function(event, data) {
-            updateNodeAmountsAndClusterCache(data);
-        });
-        
-        $scope.$on('serviceStatusUpdate', function (event, data) {
-            updateNodeAmountsAndClusterCache(data);
-        });
-
-        function updateNodeAmountsAndClusterCache(wsData) {
-            var singleClusterCache = clusterCache[wsData.clusterId];
-            
-            var latestData = groupNodes.updateClusterCache(listClusterDataGetFromBackend, wsData, singleClusterCache);
-            // 更新页面数据
-            $scope.clusterList[wsData.clusterId].amounts = latestData.newAmounts;
-
-            // 更新集群cache
-            clusterCache[wsData.clusterId].nodeStatusCache[wsData.nodeId] = latestData.newNodeStatus;
-            clusterCache[wsData.clusterId].rawStatusCache[wsData.nodeId] = latestData.newRawStatus;
-            clusterCache[wsData.clusterId].servicesCache[wsData.nodeId] = latestData.newServices;
-            clusterCache[wsData.clusterId].amounts = latestData.newAmounts;
-
-        }
-
     }
 })();

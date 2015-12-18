@@ -19,7 +19,8 @@ NODE_STATUS = {
     failed: "failed",
     installing: "installing",
     initing: "initing",
-    upgrading: "upgrading"
+    upgrading: "upgrading",
+    uninstalling: "uninstalling"
 };
 
 CLUSTER_STATUS = {
@@ -37,7 +38,8 @@ SERVICES_STATUS = {
     running: 'running',
     installing: 'installing',
     failed: 'failed',
-    uninstalled: 'uninstalled'
+    uninstalled: 'uninstalled',
+    uninstalling: "uninstalling"
 };
 
 BACKEND_URL = {

@@ -56,8 +56,8 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.logInfo = [];
         this.logsId = [];
         this.nodeId = searchData.nodeId;
-        this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss');
-        this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss');
+        this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
+        this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
         this.clusterId = searchData.clusterId;
         this.data = {
             "query": {

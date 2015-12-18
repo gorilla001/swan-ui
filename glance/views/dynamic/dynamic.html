@@ -33,7 +33,7 @@
                         <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
                               use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2" error-code="errorCode">
                         </piechart>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare/}</em> / {/cluster.masMetrics.cpuTotal/}</div>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare.toFixed(2)/}</em> / {/cluster.masMetrics.cpuTotal/}</div>
                     </div>
                     <div>
                         <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
@@ -45,19 +45,19 @@
 
 
 
-                <div data-ng-show="cluster.amounts">
+                <div>
                     <ul class="cluster-service-status-number">
                         <li class="running">
-                          <a>正常主机 <span>{/cluster.amounts.running/}</span></a>
+                          <a>正常主机 <span>{/statusMgr.nodeStatusCount[clusterId].running || 0/}</span></a>
                         </li>
                         <li class="terminated">
-                          <a>失联主机 <span>{/cluster.amounts.terminated/}</span></a>
+                          <a>失联主机 <span>{/statusMgr.nodeStatusCount[clusterId].terminated || 0/}</span></a>
                         </li>
                         <li class="failed">
-                          <a>报警主机 <span>{/cluster.amounts.failed/}</span></a>
+                          <a>报警主机 <span>{/statusMgr.nodeStatusCount[clusterId].failed || 0/}</span></a>
                         </li>
                         <li class="installing">
-                          <a>初始化主机 <span>{/cluster.amounts.installing/}</span></a>
+                          <a>初始化主机 <span>{/(statusMgr.nodeStatusCount[clusterId].installing + statusMgr.nodeStatusCount[clusterId].upgrading) || 0/}</span></a>
                         </li>
                     </ul>
                 </div>
