@@ -12,6 +12,14 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp) {
         $rootScope.isSuperuser = data.data["isSuperuser"];
         $rootScope.latestVersion = data.data["latestVersion"]
     });
+
+    // app list request params
+    $rootScope.appListParams = {
+        searchKeyWord:'',
+        page: 1,  //current page index
+        count: 10, // current count
+        //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
+    };
     
     $scope.getCSUrl = function () {
         var w = window.open();

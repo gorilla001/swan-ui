@@ -16,7 +16,7 @@
             </div>
             <table ng-table="appListTable" class="table table-striped" ng-table-columns-binding="boundCols">
                 <tbody>
-                <tr ng-repeat="app in $data">
+                <tr ng-repeat="app in applist">
                     <td data-title="'应用名称'" sortable="'name'"><a href="#"
                                                                  data-ui-sref="app.appdetail.config({appId:app.appId})">{/app.appName/}</a>
                     </td>
