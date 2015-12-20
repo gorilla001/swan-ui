@@ -11,6 +11,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     var listClusterPromise = $scope.listCluster(),listAppPromise;
     var appListReloadInterval = 5000;
     $scope.applist = [];
+    $rootScope.appListParams.searchKeyWord = "";
     //promise.then($scope.listApp);
     // app list table object
     $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
@@ -53,8 +54,9 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     //});
 
     // do search
-    $scope.doSearch= function ($event) {
-        $scope.appListTable.parameters({searchKeyWord: $scope.appListParams.searchKeyWord});
+    $scope.doSearch= function (searchKey) {
+        $rootScope.appListParams.searchKeyWord = searchKey;
+        $scope.appListTable.parameters({searchKeyWord: $rootScope.appListParams.searchKeyWord});
     };
 
     //
