@@ -42,7 +42,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                     // on error every 5 seconds reload app list to refresh app list
                     $timeout.cancel(listAppPromise);
                     listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
-                });
+                }, undefined, false);
             }
         }
     );
