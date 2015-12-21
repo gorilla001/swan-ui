@@ -46,11 +46,13 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
             data: data,
             params: params
         };
+
         if (loading == undefined) {
             loading = "default";
         }
         startLoading(loading);
-        $http(req).success(function (data) {
+        
+        return $http(req).success(function (data) {
             stopLoading(loading);
             if (data && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
                 if(callback) {
@@ -79,15 +81,15 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     };
 
     var ajaxGet = function (url, callback, params, errorCallback, warningCallback, loading) {
-        ajaxBase("get", url, null, params, callback, errorCallback, warningCallback, loading);
+       return ajaxBase("get", url, null, params, callback, errorCallback, warningCallback, loading);
     };
     
     var ajaxDelete = function (url, callback, data, params, errorCallback, warningCallback, loading) {
-        ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("delete", url, data, params, callback, errorCallback, warningCallback, loading);
     };
 
     var ajaxPost = function (url, data, callback, params, errorCallback, warningCallback, loading) {
-        ajaxBase("post", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("post", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
     var ajaxFormPost = function(myScope, url, callback, errorCallback, loading) {
@@ -95,7 +97,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
     };
     
     var ajaxPut = function (url, data, callback, params, errorCallback, warningCallback, loading) {
-        ajaxBase("put", url, data, params, callback, errorCallback, warningCallback, loading);
+        return ajaxBase("put", url, data, params, callback, errorCallback, warningCallback, loading);
     };
     
     var ajaxFormSubmit = function(method, myScope, url, callback, errorCallback, loading) {

@@ -1,0 +1,47 @@
+<div class="modal fade modal-tag" id="addLabel2NodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">标签管理</h4>
+      </div>
+
+      <div class="modal-body">
+        <ul>
+          <li data-ng-repeat="selectedLabel in selectedLabels">
+            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
+              {/selectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+            <a href="#" title="删除标签" data-ng-hide="hideLabelTrash" data-ng-click="deleteLabel(selectedLabel)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </li>
+
+          <li data-ng-repeat="unselectedLabel in unselectedLabels">
+            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签">
+              {/unselectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel)">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </li>
+        </ul>
+
+        <form class="form-inline panel-create-tag" name="label">
+          <div class="form-group" data-ng-class="{'has-error' : label.newLabelName.$error.samename}">
+            <input type="text" class="form-control input-sm" placeholder="标签名称" name="newLabelName" data-ng-model="newLabelName" data-ng-trim="true" data-required="required" data-samename data-name-list="allLabelNames">
+            <p data-ng-show="label.newLabelName.$error.samename" class="help-block"><small>标签名已存在</small></p>
+          </div>
+          <button type="submit" class="btn btn-sm btn-success" data-ng-click="createLabel(newLabelName)" data-ng-disabled="label.newLabelName.$invalid">新建标签</button>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">完成</button>
+      </div>
+    </div>
+  </div>
+</div>
