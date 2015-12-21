@@ -51,6 +51,9 @@
                 var status;
                 if (!rawStatus) {
                     rawStatus = this.nodes[nodeId].status;
+                    if (rawStatus === NODE_STATUS.failed) {
+                        rawStatus = NODE_STATUS.running;
+                    }
                 }
                 if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing
                     || rawStatus === NODE_STATUS.uninstalling) {
