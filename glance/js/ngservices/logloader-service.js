@@ -69,7 +69,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 }
             },
             "sort": {
-                "timestamp": "asc"
+                "timestamp.sort": "asc"
             },
             "from": this.curLogNum,
             "size": function(){

@@ -42,11 +42,11 @@
                    style="margin-left: 6px; margin-right: 25px;">{/proxyNode.ip/}</p>
             </div>
 
-            <div class="form-group" ng-class="{'has-error' : invalidPort(portInfo.mapPort)}">
+            <div class="form-group" ng-class="{'has-error' : invalidPort(portInfo.mapPort) || portOccupied(portInfo)}">
                 <label>映射端口</label>
                 <input type="number" class="form-control" min="1" max="65535"
                        data-ng-model="portInfo.mapPort">
-                <span ng-show="invalidPort(portInfo.mapPort)" class="text-danger"> 端口被占用</span>
+                <span ng-show="invalidPort(portInfo.mapPort) || portOccupied(portInfo)" class="text-danger"> 端口被占用</span>
             </div>
         </div>
     </div>
@@ -69,10 +69,11 @@
     <div class="form-inline" style="margin-bottom: 15px;">
         <div class="form-group"
              data-ng-show="portInfo.type === '2' && portInfo.isUri === '1' && portInfo.protocol === '2'">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error' : uriOccupied(portInfo)}">
                 <label>域名</label>
                 <input type="text" class="form-control"
                        data-ng-model="portInfo.uri">
+                <span ng-show="uriOccupied(portInfo)" class="text-danger"> 域名被占用</span>
             </div>
 
             <div class="form-group">
@@ -96,15 +97,15 @@
                    style="margin-left: 6px; margin-right: 25px;">{/gateWay.ip/}</p>
             </div>
 
-            <div class="form-group" ng-class="{'has-error' : invalidPort(portInfo.mapPort)}">
+            <div class="form-group" ng-class="{'has-error' : invalidPort(portInfo.mapPort) || portOccupied(portInfo)}">
                 <label>映射端口</label>
                 <input type="number" class="form-control" min="1" max="65535"
                        data-ng-model="portInfo.mapPort"></div>
-                <span ng-show="invalidPort(portInfo.mapPort)" class="text-danger"> 端口被占用</span>
+                <span ng-show="invalidPort(portInfo.mapPort) || portOccupied(portInfo)" class="text-danger"> 端口被占用</span>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" data-ng-disabled="isAddPortDisable(portInfo) || invalidPort(portInfo.mapPort)" data-ng-click="ok()">添加</button>
+    <button class="btn btn-primary" type="button" data-ng-disabled="isAddPortDisable(portInfo) || invalidPort(portInfo.mapPort) || portOccupied(portInfo) || uriOccupied(portInfo)" data-ng-click="ok()">添加</button>
     <button class="btn btn-default" type="button" ng-click="cancel()">取消</button>
 </div>
