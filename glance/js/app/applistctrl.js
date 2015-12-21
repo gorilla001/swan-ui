@@ -1,198 +1,68 @@
 /**
  * Created by myu on 15-8-13.
  */
+
 glanceApp.controller("appListCtrl", appListCtrl);
 
-appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp','$timeout', 'Notification', '$stateParams', '$state'];
+appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$timeout', 'Notification', 'ngTableParams'];
 
-function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, $stateParams, $state) {
+function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngTableParams) {
 
-    var listPromise;
-    $scope.deleteStopApps = {};
+    var listClusterPromise = $scope.listCluster(),listAppPromise;
+    var appListReloadInterval = 5000;
     $scope.applist = [];
-
-    $scope.listApp = function () {
-        glanceHttp.ajaxGet(['app.list', {page: $stateParams.page}], function (data) {
-            if (data.data) {
-                $scope.applist = data.data.App;
-
-                $scope.totalItems = data.data.TotalNumber;
-                $scope.pageLength = 20;
-                $scope.showPagination = ($scope.totalItems > $scope.pageLength);
-                $scope.setPage($stateParams.page);
-                listPromise = $timeout($scope.listApp, 5000);
-            }
-        }, null, function(data, status){
-            console.log("request failed (" + status + ")");
-        }, function (data) {
-            listPromise = $timeout($scope.listApp, 5000);
-        });
-    };
-
-    function calAppPageIndex(appId) {
-        var pageIndex = 0;
-        if (!appId) {
-            return pageIndex;
-        }
-        var app;
-        var index = 0;
-        for (var i = 0; i < $scope.applist.length; i++) {
-            app = $scope.applist[i];
-            if (appId === app.appId) {
-                index = i;
-                break;
-            }
-        }
-        pageIndex = Math.floor(index / $scope.pageLength);
-        return pageIndex;
-    }
-
-    $scope.pageChanged = function(currentPage) {
-        $state.go('app.applist', {page: currentPage});
-
-    };
-
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
-    
-    $scope.$on('$destroy', function(){
-        $timeout.cancel(promise);
-    });
-
-    $scope.$watch('deleteStopApps', function(newValue, oldValue) {
-        var diffIds = getDiffAppIds(newValue, oldValue);
-        var diffApps = getDiffApps(oldValue, diffIds);
-        var notificationText = {
-            isDeleting: '删除成功',
-            isStopping: '停止成功',
-            isScaling: '扩展成功'
-        };
-        var text;
-        $.each(diffApps, function(key, apps) {
-            if (apps.length) {
-                text = notificationText[key];
-                $.each(apps, function(index, app) {
-                    if(key !== "isScaling"){
-                        Notification.success('应用' + app.appName + text);
+    $rootScope.appListParams.searchKeyWord = "";
+    //promise.then($scope.listApp);
+    // app list table object
+    $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
+            counts: [5, 10, 20], // custom page count
+            total: 0,
+            paginationMaxBlocks: 13,
+            paginationMinBlocks: 2,
+            getData: function ($defer, params) {
+                $rootScope.appListParams = $scope.appListTable.parameters();
+                glanceHttp.ajaxGet(['app.list'], function (res) {
+                    //If you remove when the current application of only one application,
+                    //set new Page and Switch back page
+                    if(!res.data.App.length && $rootScope.appListParams.page > 1){
+                        $rootScope.appListParams.page = $rootScope.appListParams.page - 1
                     }
-                });
-            }
-        });
-    });
-
-
-    function getDeleteStopApps(applist) {
-        var deleteStopApps = {
-            isDeleting: {
-                apps: [],
-                ids: []
-            },
-            isStopping: {
-                apps: [],
-                ids: []
-            },
-            isScaling: {
-                apps:[],
-                ids:[]
-            }
-        };
-
-        // var appStateCodes = {
-        //     1: "部署中",
-        //     2: "运行中",
-        //     3: "已停止",
-        //     4: "停止中",
-        //     5: "删除中",
-        //     6: "扩展中"
-        // };
-        // reference link: https://github.com/Dataman-Cloud/omega-app/blob/master/docs%2Frest-api.md
-        var codes = {
-            isDeleting: 5,
-            isStopping: 4,
-            isScaling: 6
-        };
-
-        for (var i = 0; i < applist.length; i++) {
-            $.each(codes, function(key, value) {
-                if(applist[i].appStatus === value) {
-                    deleteStopApps[key].apps.push(applist[i]);
-                    deleteStopApps[key].ids.push(applist[i].appId);
-                }
-            });
-        }
-        return deleteStopApps;
-    }
-
-    function isNeedCall(deleteStopApps) {
-        var needCall = false;
-        for (var kind in deleteStopApps) {
-            if(deleteStopApps[kind].ids.length) {
-                needCall = true;
-                break;
-            }
-        }
-        return needCall;
-    }
-
-    function arrayDiff(newArray, oldArray) {
-        var diffArray = [];
-        diffArray = oldArray.filter(function(i) {
-            return newArray.indexOf(i) === -1;
-        });
-        return diffArray;
-    }
-
-    function getDiffAppIds(newValue, oldValue) {
-        var diffIds = {
-            isDeleting: [],
-            isStopping: [],
-            isScaling: []
-        };
-
-        $.each(diffIds, function(key, ids) {
-           if(newValue[key] && oldValue[key]) {
-               diffIds[key] = arrayDiff(newValue[key].ids, oldValue[key].ids);
-           }
-        });
-        return diffIds;
-    }
-
-    function getAppById(kind, id) {
-        var app;
-        for(var i = 0; i < kind.apps.length; i++) {
-            if(kind.apps[i].appId == id) {
-                app = kind.apps[i];
-                break;
-            }
-        }
-        return app;
-    }
-
-    function getDiffApps(deleteStopApps, diffIds) {
-        var diffApps = {
-            isDeleting: [],
-            isStopping: [],
-            isScaling:[]
-        };
-        var app;
-        $.each(diffIds, function(key, ids) {
-            if (ids.length) {
-                $.each(ids, function(index, id) {
-                    app = getAppById(deleteStopApps[key], id);
-                    if(app) {
-                        diffApps[key].push(app);
+                    var total = res.data.TotalNumber;
+                    $scope.applist = res.data.App;
+                    params.total(total);
+                    if (total > 0) {
+                        $defer.resolve(res.data.App);
                     }
-                });
+                    // every 5 seconds reload app list to refresh app list
+                    $timeout.cancel(listAppPromise);
+                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+
+                }, params.url(),function(errorRes){
+
+                    // on error every 5 seconds reload app list to refresh app list
+                    $timeout.cancel(listAppPromise);
+                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+                }, undefined, false);
             }
-        });
-        return diffApps;
-    }
+        }
+    );
 
-    var promise = $scope.listCluster();
-    promise.then($scope.listApp);
 
+    ////app list params is change ,reload app list
+    //$scope.$watch('appListParams',function(newValue,oldValue){
+    //    $scope.appListTable.parameters(newValue);
+    //});
+
+    // do search
+    $scope.doSearch= function (searchKey) {
+        $rootScope.appListParams.searchKeyWord = searchKey;
+        $scope.appListTable.parameters({searchKeyWord: $rootScope.appListParams.searchKeyWord});
+    };
+
+    //
     $scope.$on('$destroy', function () {
-        $timeout.cancel(listPromise);
+        $timeout.cancel(listClusterPromise);
+        $timeout.cancel(listAppPromise);
     });
+
 }
