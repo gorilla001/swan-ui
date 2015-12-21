@@ -102,6 +102,12 @@
                 <em>反馈</em>
             </a>
         </div>
+        
+        <!-- GrowingIO -->
+        <script type='text/javascript'>
+            var _vds = _vds || [];
+        </script>
+        
         <!-- rev-hash -->
         <script src="js/confdev.js" type="text/javascript"></script>
         <!-- end -->
@@ -182,18 +188,15 @@
 
         <!-- baidu -->
         <script>
-            var _hmt = _hmt || [];
-            (function() {
-                var hm = document.createElement("script");
-                hm.src = "//hm.baidu.com/hm.js?cd74c0fcc0c51aecc3bb276315e35e6a";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
-        </script>
-
-        <!-- GrowingIO -->
-        <script type='text/javascript'>
-            var _vds = _vds || [];(function(){ _vds.push(['setAccountId', '0edf12ee248505950b0a77b02d47c537']); (function() {var vds = document.createElement('script'); vds.type='text/javascript'; vds.async = true;vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(vds, s);})();})();
+            if (RUNNING_ENV === "prod") {
+                var _hmt = _hmt || [];
+                (function() {
+                    var hm = document.createElement("script");
+                    hm.src = "//hm.baidu.com/hm.js?cd74c0fcc0c51aecc3bb276315e35e6a";
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(hm, s);
+                })();
+            }
         </script>
 
     </body>
