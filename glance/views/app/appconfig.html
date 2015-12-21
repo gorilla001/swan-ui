@@ -24,7 +24,7 @@
             </dl>
             <dl ng-show="config.Iplist">
                 <dt>所在主机地址：</dt>
-                <dd><span ng-repeat="ip in config.Iplist">{/ip/} / </span></dd>
+                <dd><span ng-repeat="ip in config.Iplist">{/ip/} &nbsp; </span></dd>
             </dl>
             <dl ng-repeat="volumeInfo in config.ContainerVolumesInfo" ng-show="config.ContainerVolumesInfo.length">
                 <dt>挂载目录{/$index + 1/}：</dt>
