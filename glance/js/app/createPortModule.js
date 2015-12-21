@@ -9,8 +9,8 @@ function ModalPortCtrl($scope, $uibModalInstance) {
 
     var pattern = /500[1-9]|50[1-9][0-9]|5100|1[0-9][0-9][0-9][0-9]|20000|31[0-9][0-9][0-9]|32000/;
 
-    $scope.invalidPort = function (port) {
-        return pattern.test(port);
+    $scope.invalidPort = function (portInfo) {
+        return pattern.test(portInfo.mapPort) || $scope.portOccupied(portInfo);
     };
 
     $scope.ok = function () {
