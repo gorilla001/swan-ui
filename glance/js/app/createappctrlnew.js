@@ -1,8 +1,8 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -12,6 +12,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
 
     var HOST_MODEL = 'HOST';
     var BRIDGE_MODEL = 'BRIDGE';
+
+    //defalut select Node Type is 'node'
+    $scope.selectNodeType = 'node';
+    $scope.creatAppLableList = [];
 
     $scope.portInfo = {};
     $scope.portInfos = [];
@@ -103,16 +107,30 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
             delete $scope.deployinfo.containerVolumesInfo;
         }
 
-        //Constraints
-        if($scope.selectNodes.length){
-            $scope.makeConstraints($scope.selectNodes, $scope.defaultEles);
-        }else {
-            $scope.deployinfo.constraints = $scope.defaultEles;
+        if($scope.selectNodeType === 'node'){
+            //Constraints of node
+            if($scope.selectNodes.length){
+                $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
+            }else {
+                $scope.deployinfo.constraints = $scope.defaultEles;
+            }
+            //Constraints if checked HOST and checked single
+            if($scope.single){
+                $scope.deployinfo.constraints.push($scope.hostEles)
+            }
+        }else if($scope.selectNodeType === 'lable'){
+            //Constraints of lable
+            if($scope.selectLables.length){
+                $scope.makeConstraints($scope.selectLables, $scope.defaultEles, 'lableName');
+            }else {
+                $scope.deployinfo.constraints = $scope.defaultEles;
+            }
+            //Constraints if checked HOST and checked single
+            if($scope.single){
+                $scope.deployinfo.constraints.push($scope.hostEles)
+            }
         }
-        //Constraints if checked HOST and checked single
-        if($scope.single){
-            $scope.deployinfo.constraints.push($scope.hostEles)
-        }
+
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
         $scope.deployinfo.containerNum = $scope.containerNum.toString();
@@ -277,6 +295,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
 
     $scope.getChangeData = function(clusterId){
         $scope.getNode(clusterId);
+        //get lable List of cluster
+        getClusterLables.listClusterLabels(clusterId, $scope);
         glanceHttp.ajaxGet(['app.ports',({cluster_id: clusterId})],function(data){
             if(data.data){
                 if(data.data.OuterPorts && data.data.OuterPorts.length){
@@ -333,10 +353,21 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         });
     };
 
-    //multi-nodes-select
-    $scope.makeConstraints = function (nodesSelect, elements) {
-        var temp = ["ip", "LIKE"];
-        var regular =nodesSelect.map(function(item){return item.ip}).join('|');
+
+    /*
+     nodesSelect: Multi Select List
+     elements: defalut constraints
+     attribute: if Node Multi Select Type is 'node' attribute='ip',
+                if Node Multi Select Type is 'lable' attribute='lableName'
+     */
+    $scope.makeConstraints = function (nodesSelect, elements, attribute) {
+        if(attribute === 'ip'){
+            var temp = ["ip", "LIKE"];
+        }else if(attribute === 'lableName'){
+            var temp = ["lable", "LIKE"];
+        }
+
+        var regular =nodesSelect.map(function(item){return item[attribute]}).join('|');
 
         if(nodesSelect.length){
             temp.push(regular);

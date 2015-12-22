@@ -97,12 +97,32 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">选择主机</label>
 
-                    <div class="col-md-5">
+                    <div class="col-md-2">
+                        <select class="form-control" data-ng-model="selectNodeType">
+                            <option value="node">按主机选择</option>
+                            <option value="lable">按标签选择</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-5" ng-show="selectNodeType === 'node'">
                         <isteven-multi-select
                                 input-model="creatAppNodeList"
                                 output-model="selectNodes"
                                 button-label="ip"
                                 item-label="ip"
+                                tick-property="ticked"
+                                helper-elements="all none filter"
+                                max-height="200px"
+                                translation="multiTranConfig"
+                        >
+                        </isteven-multi-select>
+                    </div>
+                    <div class="col-md-5" ng-show="selectNodeType === 'lable'">
+                        <isteven-multi-select
+                                input-model="creatAppLableList"
+                                output-model="selectLables"
+                                button-label="lableName"
+                                item-label="lableName"
                                 tick-property="ticked"
                                 helper-elements="all none filter"
                                 max-height="200px"
