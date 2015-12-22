@@ -56,7 +56,7 @@ gulp.task('template-min', function () {
         }))
         .pipe(angularTemplatecache('templateCacheHtml.js', {
             module: 'glance',
-            root: 'views'
+            root: '/views'
         }))
         .pipe(gulp.dest('js/'));
 });
