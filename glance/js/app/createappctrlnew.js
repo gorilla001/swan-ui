@@ -127,12 +127,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal) {
         });
     };
 
-    $scope.getNodeOkIp = function (nodeOk) {
-        if (nodeOk) {
-            $scope.nodeOkIp = nodeOk.ip;
-        }
-    };
-
     $scope.deletCurPort = function (index) {
         $scope.portInfos.splice(index, 1);
     };
