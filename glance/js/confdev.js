@@ -8,12 +8,13 @@ BACKEND_URL_BASE = {
     app: null,
 },
 
-RUNNING_ENV = "ENVIRONMENT", //dev, demo, prod
+RUNNING_ENV = "ENVIRONMENT"; //dev, demo, prod
 
-USER_URL = "MARKET",
+USER_URL = "MARKET";
 
 AGENT_CONFIG = {
-    dmHost: "LOCAL_DM_HOST"
+    dmHost: "LOCAL_DM_HOST",
+    installUrl: ""
 };
 
 (function() {
