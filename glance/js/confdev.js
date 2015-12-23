@@ -14,7 +14,7 @@ USER_URL = "MARKET";
 
 AGENT_CONFIG = {
     dmHost: "LOCAL_DM_HOST",
-    installUrl: ""
+    installUrl: "AGENT_URL"
 };
 
 (function() {
@@ -24,5 +24,9 @@ AGENT_CONFIG = {
     AGENT_CONFIG.dmHost = 'DM_HOST=ws://demostreaming.dataman-inc.net/';
   } else if (RUNNING_ENV === 'prod') {
     AGENT_CONFIG.dmHost = '';
+  }
+  
+  if (!AGENT_CONFIG.installUrl || AGENT_CONFIG.installUrl === 'AGENT_URL') {
+      AGENT_CONFIG.installUrl = "https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh";
   }
 })();

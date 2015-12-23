@@ -41,15 +41,11 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         }
     };
     
-    var agent_install_url = AGENT_CONFIG.installUrl;
-    if (!agent_install_url) {
-        agent_install_url = "https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh";
-    }
     var cmdArray = new Array(
         'sudo -H',
         AGENT_CONFIG.dmHost,
         'OMEGA_ENV=' + RUNNING_ENV,
-        'bash -c \"$(curl -Ls ' + agent_install_url + ')\" -s',
+        'bash -c \"$(curl -Ls ' + AGENT_CONFIG.installUrl + ')\" -s',
        $scope.nodeId
     );
     $scope.nodeInstallScript = cmdArray.join(' ');
