@@ -26,7 +26,7 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
             if (data.code === 1) {
                 errorCycle = $timeout($scope.getClusterMonitor, 3000);
             }
-        });
+        }, false);
     };
 
     $scope.getClusterMonitor();

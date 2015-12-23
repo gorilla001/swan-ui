@@ -40,7 +40,7 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
             if (data.code === 1) {
                 errorPromise = $timeout(initMonitor, 3000);
             }
-        });
+        }, false);
     }
 
     $scope.$on('$destroy', function () {
