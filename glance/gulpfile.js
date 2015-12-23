@@ -58,25 +58,22 @@ gulp.task('template-min', function () {
             module: 'glance',
             root: '/views'
         }))
-        .pipe(gulp.dest('js/'));
+        .pipe(gulp.dest('build/js/'));
 });
-//inject to index.html
-gulp.task("partials-inject",['template-min'],function(){
-    var templateInjectFile = gulp.src('js/templateCacheHtml.js', { read: false });
+
+gulp.task('html-replace', ['template-min'], function() {
+
+    var templateInjectFile = gulp.src('build/js/templateCacheHtml.js', { read: false });
     var templatenjectOptions = {
         starttag: '<!-- inject:template.js  -->',
         addRootSlash: false
     };
-    return gulp.src('index.html')
-        .pipe(inject(templateInjectFile, templatenjectOptions))
-        .pipe(gulp.dest("./"));
-})
 
-gulp.task('html-replace', ['partials-inject'], function() {
     var assets = useref.assets();
    // var options = {collapseWhitespace: true};
     var revAll = new RevAll();
     return gulp.src('index.html')
+        .pipe(inject(templateInjectFile, templatenjectOptions))
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
