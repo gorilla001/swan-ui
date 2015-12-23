@@ -26,21 +26,18 @@
         }
 
         function getLables(data) {
-            var lableSet = new Set();
-            var lableList = [];
+            var lableIdTemp = [];
+            var lableArray = [];
             angular.forEach(data.nodes, function (node, nodeIndex) {
                 angular.forEach(node.node_labels, function (nodelabe, labeIndex) {
-                    lableSet.add(nodelabe.label.name)
+                    if(lableIdTemp.indexOf(nodelabe.label.id) === -1){
+                        lableArray.push(nodelabe.label);
+                        lableIdTemp.push(nodelabe.label.id)
+                    }
                 })
             });
 
-            lableSet.forEach(function (value1, value2, set) {
-                var lableObj = {};
-                lableObj.lableName = value1;
-                lableList.push(lableObj);
-            });
-
-            return lableList;
+            return lableArray;
 
         }
     }

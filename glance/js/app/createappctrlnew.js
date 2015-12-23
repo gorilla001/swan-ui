@@ -16,6 +16,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     //defalut select Node Type is 'node'
     $scope.selectNodeType = 'node';
     $scope.creatAppLableList = [];
+    $scope.appLableList = [];
+    $scope.selectLabelIdList = [];
 
     $scope.portInfo = {};
     $scope.portInfos = [];
@@ -107,28 +109,15 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             delete $scope.deployinfo.containerVolumesInfo;
         }
 
-        if($scope.selectNodeType === 'node'){
-            //Constraints of node
-            if($scope.selectNodes.length){
-                $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
-            }else {
-                $scope.deployinfo.constraints = $scope.defaultEles;
-            }
-            //Constraints if checked HOST and checked single
-            if($scope.single){
-                $scope.deployinfo.constraints.push($scope.hostEles)
-            }
-        }else if($scope.selectNodeType === 'lable'){
-            //Constraints of lable
-            if($scope.selectLables.length){
-                $scope.makeConstraints($scope.selectLables, $scope.defaultEles, 'lableName');
-            }else {
-                $scope.deployinfo.constraints = $scope.defaultEles;
-            }
-            //Constraints if checked HOST and checked single
-            if($scope.single){
-                $scope.deployinfo.constraints.push($scope.hostEles)
-            }
+        //Constraints of node
+        if($scope.selectNodes.length){
+            $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
+        }else {
+            $scope.deployinfo.constraints = $scope.defaultEles;
+        }
+        //Constraints if checked HOST and checked single
+        if($scope.single){
+            $scope.deployinfo.constraints.push($scope.hostEles)
         }
 
 
@@ -393,4 +382,14 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.dirInfo = {};
         });
     };
+
+    $scope.multiOpen = function(lableIdList){
+        $scope.selectLabelIdList = lableIdList.map(function(item){return item.id});
+        console.log($scope.selectLabelIdList);
+        if(!$scope.selectLabelIdList.length){
+            $scope.appLableList = $scope.creatAppNodeList;
+        }else {
+            $scope.appLableList = [{ip:"1.1.1.1"},{ip:"1.1.1.2"},{ip:"1.1.1.3"},{ip:"1.1.1.4"}]
+        }
+    }
 }

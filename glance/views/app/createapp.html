@@ -94,22 +94,53 @@
                     </div>
                 </div>
 
+                <!--<div class="form-group">-->
+                    <!--<label class="col-md-2 control-label">选择主机</label>-->
+
+                    <!--<div class="col-md-2">-->
+                        <!--<select class="form-control" data-ng-model="selectNodeType">-->
+                            <!--<option value="node">按主机选择</option>-->
+                            <!--<option value="lable">按标签选择</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-5" ng-show="selectNodeType === 'node'">-->
+                        <!--<isteven-multi-select-->
+                                <!--input-model="creatAppNodeList"-->
+                                <!--output-model="selectNodes"-->
+                                <!--button-label="ip"-->
+                                <!--item-label="ip"-->
+                                <!--tick-property="ticked"-->
+                                <!--helper-elements="all none filter"-->
+                                <!--max-height="200px"-->
+                                <!--translation="multiTranConfig"-->
+                        <!--&gt;-->
+                        <!--</isteven-multi-select>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-5" ng-show="selectNodeType === 'lable'">-->
+                        <!--<isteven-multi-select-->
+                                <!--input-model="creatAppLableList"-->
+                                <!--output-model="selectLables"-->
+                                <!--button-label="lableName"-->
+                                <!--item-label="lableName"-->
+                                <!--tick-property="ticked"-->
+                                <!--helper-elements="all none filter"-->
+                                <!--max-height="200px"-->
+                                <!--translation="multiTranConfig"-->
+                        <!--&gt;-->
+                        <!--</isteven-multi-select>-->
+                    <!--</div>-->
+                <!--</div>-->
+
                 <div class="form-group">
-                    <label class="col-md-2 control-label">选择主机</label>
+                    <label class="col-md-2 control-label">选择主机2</label>
 
                     <div class="col-md-2">
-                        <select class="form-control" data-ng-model="selectNodeType">
-                            <option value="node">按主机选择</option>
-                            <option value="lable">按标签选择</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-5" ng-show="selectNodeType === 'node'">
                         <isteven-multi-select
-                                input-model="creatAppNodeList"
-                                output-model="selectNodes"
-                                button-label="ip"
-                                item-label="ip"
+                                input-model="creatAppLableList"
+                                output-model="selectLables"
+                                button-label="name"
+                                item-label="name"
                                 tick-property="ticked"
                                 helper-elements="all none filter"
                                 max-height="200px"
@@ -117,16 +148,18 @@
                         >
                         </isteven-multi-select>
                     </div>
-                    <div class="col-md-5" ng-show="selectNodeType === 'lable'">
+
+                    <div class="col-md-5">
                         <isteven-multi-select
-                                input-model="creatAppLableList"
-                                output-model="selectLables"
-                                button-label="lableName"
-                                item-label="lableName"
+                                input-model="appLableList"
+                                output-model="selectNodes"
+                                button-label="ip"
+                                item-label="ip"
                                 tick-property="ticked"
                                 helper-elements="all none filter"
                                 max-height="200px"
                                 translation="multiTranConfig"
+                                on-open="multiOpen(selectLables)"
                         >
                         </isteven-multi-select>
                     </div>
