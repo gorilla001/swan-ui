@@ -12,6 +12,10 @@ var gulpif = require('gulp-if');
 var rev = require('gulp-rev-hash');
 var jslint = require('gulp-jslint-simple');
 
+var angularTemplatecache = require('gulp-angular-templatecache');
+var minifyHtml = require('gulp-minify-html');
+var inject = require('gulp-inject');
+
 gulp.task('copy-confdev', function() {
     gulp.src('js/confdev.js')
         .pipe(gulp.dest('build/js/'));
@@ -34,19 +38,42 @@ gulp.task('copy-swf', ['copy-fonts'], function() {
         .pipe(gulp.dest('build/js'));
 });
 
-gulp.task('min-html', function() {
-    var sources = 'views/**/*.html';
-    var options = {collapseWhitespace: true};
-    return gulp.src(sources)
-        .pipe(htmlmin(options).on('error', gutil.log))
-        .pipe(gulp.dest('build/views'));
+//gulp.task('min-html', function() {
+//    var sources = 'views/**/*.html';
+//    var options = {collapseWhitespace: true};
+//    return gulp.src(sources)
+//        .pipe(htmlmin(options).on('error', gutil.log))
+//        .pipe(gulp.dest('build/views'));
+//});
+
+// views html to js
+gulp.task('template-min', function () {
+    return gulp.src('views/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtml.js', {
+            module: 'glance',
+            root: '/views'
+        }))
+        .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('html-replace', ['min-html'], function() {
+gulp.task('html-replace', ['template-min'], function() {
+
+    var templateInjectFile = gulp.src('build/js/templateCacheHtml.js', { read: false });
+    var templatenjectOptions = {
+        starttag: '<!-- inject:template.js  -->',
+        addRootSlash: false
+    };
+
     var assets = useref.assets();
    // var options = {collapseWhitespace: true};
     var revAll = new RevAll();
     return gulp.src('index.html')
+        .pipe(inject(templateInjectFile, templatenjectOptions))
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
