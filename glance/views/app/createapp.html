@@ -97,9 +97,23 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">选择主机</label>
 
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <isteven-multi-select
-                                input-model="creatAppNodeList"
+                                input-model="creatAppLableList"
+                                output-model="selectLables"
+                                button-label="name"
+                                item-label="name"
+                                tick-property="ticked"
+                                helper-elements="all none filter"
+                                max-height="200px"
+                                translation="multiTranConfig"
+                        >
+                        </isteven-multi-select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <isteven-multi-select
+                                input-model="appLableList"
                                 output-model="selectNodes"
                                 button-label="ip"
                                 item-label="ip"
@@ -107,6 +121,7 @@
                                 helper-elements="all none filter"
                                 max-height="200px"
                                 translation="multiTranConfig"
+                                on-open="multiOpen(selectLables)"
                         >
                         </isteven-multi-select>
                     </div>
