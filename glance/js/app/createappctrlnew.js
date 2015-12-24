@@ -19,6 +19,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.appLableList = [];
     $scope.selectLabelIdList = [];
 
+    $scope.ajaxParams = {
+        labels:[]
+    }
+
     $scope.portInfo = {};
     $scope.portInfos = [];
 
@@ -72,12 +76,19 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         network: "BRIDGE"    //defalut network for radio box
     };
 
-    $scope.multiTranConfig = {
+    $scope.nodeMultiConfig = {
         selectAll: "全部选择",
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "All"
+        nothingSelected: "主机"
+    };
+    $scope.lableMultiConfig = {
+        selectAll: "全部选择",
+        selectNone: "清空",
+        reset: "恢复",
+        search: "查询匹配词",
+        nothingSelected: "标签"
     };
 
     $scope.defaultEles = [];    //defalut constraints
@@ -284,12 +295,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     $scope.getChangeData = function (clusterId) {
         //empty multi-select collection
-        $scope.selectLables = [];
-        $scope.selectNodes = [];
         $scope.creatAppLableList = [];
         $scope.appLableList = [];
 
         $scope.getNode(clusterId);
+        $scope.appLableList = $scope.creatAppNodeList;
         //get lable List of cluster
         getClusterLables.listClusterLabels(clusterId, $scope);
         glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
@@ -391,23 +401,45 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         });
     };
 
-    $scope.multiOpen = function (lableIdList) {
-        //set appLableList empty
-        $scope.appLableList = [];
-
-        $scope.ajaxParams = {};
-        $scope.selectLabelIdList = lableIdList.map(function (item) {
-            return item.id
-        });
-        if (!$scope.selectLabelIdList.length) {
-            $scope.appLableList = $scope.creatAppNodeList;
+    $scope.funcClick = function (data) {
+        if (data.ticked) {
+            $scope.ajaxParams.labels.push(data.id);
         } else {
-            $scope.ajaxParams.labels = $scope.selectLabelIdList;
-            glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
-                $scope.appLableList = data.data;
-            }, $scope.ajaxParams, function (data) {
-
-            });
+            var index = $scope.ajaxParams.labels.indexOf(data.id)
+            $scope.ajaxParams.labels.splice(index, 1);
         }
+
+        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+            $scope.appLableList = data.data;
+            $scope.appLableList.map(function(item){
+                item.ticked = true;
+                return item;
+            })
+        }, $scope.ajaxParams, function (data) {
+
+        });
+
+    };
+
+    $scope.funcSelectAll = function(){
+        $scope.ajaxParams.labels = [];
+        angular.forEach($scope.creatAppLableList, function(lable){
+            $scope.ajaxParams.labels.push(lable.id)
+        });
+
+        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+            $scope.appLableList = data.data;
+            $scope.appLableList.map(function(item){
+                item.ticked = true;
+                return item;
+            })
+        }, $scope.ajaxParams, function (data) {
+
+        });
+    };
+
+    $scope.funcSelectNone = function(){
+        $scope.ajaxParams.labels = [];
+        $scope.appLableList = $scope.creatAppNodeList;
     }
 }
