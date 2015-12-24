@@ -13,12 +13,12 @@
             listClusterLabels: listClusterLabels
         };
 
-        function listClusterLabels(clusterId, $scope) {
+        function listClusterLabels(clusterId, scope) {
             glanceHttp.ajaxGet(['cluster.clusterIns', ({cluster_id: clusterId})], function () {
                 }, undefined, function () {
                 })
                 .success(function (data) {
-                    $scope.creatAppLableList = getLables(data.data)
+                    scope.creatAppLableList = getLables(data.data)
                 })
                 .error(function (data, status) {
 
@@ -30,7 +30,7 @@
             var lableArray = [];
             angular.forEach(data.nodes, function (node, nodeIndex) {
                 angular.forEach(node.node_labels, function (nodelabe, labeIndex) {
-                    if(lableIdTemp.indexOf(nodelabe.label.id) === -1){
+                    if (lableIdTemp.indexOf(nodelabe.label.id) === -1) {
                         lableArray.push(nodelabe.label);
                         lableIdTemp.push(nodelabe.label.id)
                     }

@@ -46,10 +46,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         options: {
             step: 1,
             floor: 1,
-            ceil:10,
-            showSelectionBar:true,
-            translate: function(value) {
-                return $scope.cpuSize = value/10.0;
+            ceil: 10,
+            showSelectionBar: true,
+            translate: function (value) {
+                return $scope.cpuSize = value / 10.0;
             }
         }
     };
@@ -60,8 +60,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         options: {
             step: 1,
             floor: 4,
-            ceil:12,
-            showSelectionBar:true,
+            ceil: 12,
+            showSelectionBar: true,
             translate: function (rawValue) {
                 return $scope.memSize = Math.pow(2, rawValue);
             }
@@ -105,18 +105,18 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         //add dirsInfo
         if ($scope.dirsInfo.length) {
             $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
-        }else {
+        } else {
             delete $scope.deployinfo.containerVolumesInfo;
         }
 
         //Constraints of node
-        if($scope.selectNodes.length){
+        if ($scope.selectNodes.length) {
             $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
-        }else {
+        } else {
             $scope.deployinfo.constraints = $scope.defaultEles;
         }
         //Constraints if checked HOST and checked single
-        if($scope.single){
+        if ($scope.single) {
             $scope.deployinfo.constraints.push($scope.hostEles)
         }
 
@@ -150,12 +150,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     /*
      Check whether the port is being used
      */
-    $scope.portOccupied = function(portInfo){
-        if(portInfo.type === OUTER && portInfo.isUri != HAS_DOMAIN && $scope.outerPorts.indexOf(portInfo.mapPort) != -1){
+    $scope.portOccupied = function (portInfo) {
+        if (portInfo.type === OUTER && portInfo.isUri != HAS_DOMAIN && $scope.outerPorts.indexOf(portInfo.mapPort) != -1) {
             return true
-        }else if(portInfo.type === INNER && $scope.innerPorts.indexOf(portInfo.mapPort) != -1){
+        } else if (portInfo.type === INNER && $scope.innerPorts.indexOf(portInfo.mapPort) != -1) {
             return true
-        }else {
+        } else {
             return false
         }
     };
@@ -163,7 +163,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     /*
      Check whether the URI is being used
      */
-    $scope.uriOccupied = function(portInfo){
+    $scope.uriOccupied = function (portInfo) {
         return $scope.domains.indexOf(portInfo.uri) != -1
     };
 
@@ -282,28 +282,34 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         }
     };
 
-    $scope.getChangeData = function(clusterId){
+    $scope.getChangeData = function (clusterId) {
+        //empty multi-select collection
+        $scope.selectLables = [];
+        $scope.selectNodes = [];
+        $scope.creatAppLableList = [];
+        $scope.appLableList = [];
+
         $scope.getNode(clusterId);
         //get lable List of cluster
         getClusterLables.listClusterLabels(clusterId, $scope);
-        glanceHttp.ajaxGet(['app.ports',({cluster_id: clusterId})],function(data){
-            if(data.data){
-                if(data.data.OuterPorts && data.data.OuterPorts.length){
+        glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
+            if (data.data) {
+                if (data.data.OuterPorts && data.data.OuterPorts.length) {
                     $scope.outerPorts = data.data.OuterPorts;
                 }
 
-                if(data.data.InnerPorts && data.data.InnerPorts.length){
+                if (data.data.InnerPorts && data.data.InnerPorts.length) {
                     $scope.innerPorts = data.data.InnerPorts;
                 }
 
-                if(data.data.Domains && data.data.Domains.length){
+                if (data.data.Domains && data.data.Domains.length) {
                     $scope.domains = data.data.Domains;
                 }
             }
         })
     };
 
-    var promise= $scope.getAppName();
+    var promise = $scope.getAppName();
     promise.then($scope.listCluster);
 
     // createPortModule
@@ -347,18 +353,20 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
      nodesSelect: Multi Select List
      elements: defalut constraints
      attribute: if Node Multi Select Type is 'node' attribute='ip',
-                if Node Multi Select Type is 'lable' attribute='lableName'
+     if Node Multi Select Type is 'lable' attribute='lableName'
      */
     $scope.makeConstraints = function (nodesSelect, elements, attribute) {
-        if(attribute === 'ip'){
+        if (attribute === 'ip') {
             var temp = ["ip", "LIKE"];
-        }else if(attribute === 'lableName'){
+        } else if (attribute === 'lableName') {
             var temp = ["lable", "LIKE"];
         }
 
-        var regular =nodesSelect.map(function(item){return item[attribute]}).join('|');
+        var regular = nodesSelect.map(function (item) {
+            return item[attribute]
+        }).join('|');
 
-        if(nodesSelect.length){
+        if (nodesSelect.length) {
             temp.push(regular);
             elements.push(temp);
         }
@@ -383,14 +391,23 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         });
     };
 
-    $scope.multiOpen = function(lableIdList){
+    $scope.multiOpen = function (lableIdList) {
         //set appLableList empty
         $scope.appLableList = [];
-        $scope.selectLabelIdList = lableIdList.map(function(item){return item.id});
-        if(!$scope.selectLabelIdList.length){
+
+        $scope.ajaxParams = {};
+        $scope.selectLabelIdList = lableIdList.map(function (item) {
+            return item.id
+        });
+        if (!$scope.selectLabelIdList.length) {
             $scope.appLableList = $scope.creatAppNodeList;
-        }else {
-            $scope.appLableList = [{ip:"1.1.1.1"},{ip:"1.1.1.2"},{ip:"1.1.1.3"},{ip:"1.1.1.4"}]
+        } else {
+            $scope.ajaxParams.labels = $scope.selectLabelIdList;
+            glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+                $scope.appLableList = data.data;
+            }, $scope.ajaxParams, function (data) {
+
+            });
         }
     }
 }
