@@ -1,4 +1,15 @@
-function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr) {
+function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr, clusterStatus) {
+    'use strict';
+
+    $scope.failedNodeIds = [];
+    $scope.failedNodes = [];
+
+    var clusterStatusTexts = {
+        running: '运行正常',
+        installing: '初始化中',
+        abnormal: '异常',
+        unknow: '未知'
+    };
 
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.upgradeFailedNodes = {};
@@ -21,6 +32,11 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
                 $scope.contentPage = $scope.contentPage.concat($scope.concatObjtoArr(val));
             });
             $scope.contentCurPage = $scope.contentPage.slice(0, $scope.pageLength);
+
+            $scope.clusterStatus = clusterStatus.getClusterStatus($scope.cluster.nodes, $scope.cluster.cluster_type);
+            $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+            $scope.nodeStatusCount = $scope.statusMgr.nodeStatusCount[$stateParams.clusterId];
+
         });
     }
     getCurCluster();
@@ -30,8 +46,66 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
             $scope.upgradeFailedNodes = {};
         });
     };
+
+    $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+        updateClusterStatus();
+    });
+
+    $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+        updateClusterStatus();
+    });
+
+    function updateClusterStatus() {
+        $scope.clusterStatus = $scope.cluster.clusterStatus;
+        $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+    }
+
+
+    // $scope.repairCluster = function() {
+    //     glanceHttp.ajaxPost(['cluster.repair', {
+    //         'cluster_id': $stateParams.clusterId
+    //     }], {'ids': $scope.failedNodeIds}, function(resp) {
+    //         $scope.callback(resp.data);
+    //     }, null, function(resp) {
+    //         // todo
+    //         // Notification.error(resp.errors);
+    //     });
+    // };
+
+    // function listenNodeStatusConut() {
+    //     $scope.$on($scope.nodeStatusCount.failed, function(event, data) {
+    //         listFailedNodesAndIds();
+    //     });
+    // }
+
     
+
+    // function listFailedNodesAndIds() {
+    //     listFailedNodeIds();
+    //     listFailedNodes();
+    // }
+
+    // function listFailedNodeIds() {
+    //     var nodes = $scope.statusMgr.nodes;
+    //     for(var nodeId in nodes) {
+    //         if (nodes[nodeId].status === NODE_STATUS.failed) {
+    //             $scope.failedNodeIds.push(nodeId);
+    //         }
+    //     }
+    // }
+
+    // function listFailedNodes() {
+    //     var allNodes = $scope.cluster.nodes;
+    //     for (var i = 0; i < allNodes.length; i++) {
+    //         if ($scope.failedNodeIds.indexOf(allNodes[i].id) !== -1) {
+    //             $scope.failedNodes.push(allNodes[i]);
+    //         }
+    //     }
+    // }
+
 }
 
-clusterDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "Notification", "ClusterStatusMgr"];
-glanceApp.controller("clusterDetailsCtrl", clusterDetailsCtrl);
+clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus'];
+glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);
