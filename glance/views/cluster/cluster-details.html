@@ -17,7 +17,12 @@
             <h3>
                 {/cluster.name/}
                 <small>主机数量: {/cluster.nodes.length/}</small>
-                <small>集群状态：{/clusterStatusText/}</small>
+                &nbsp;&nbsp;&nbsp;
+                <small>
+                  集群状态：<span data-ng-class="clusterStatusTextClass">
+                    {/clusterStatusText/}
+                  </span>
+                </small>
             </h3>
             <div class="btn-group btn-group-toggle">
                 <button type="button"

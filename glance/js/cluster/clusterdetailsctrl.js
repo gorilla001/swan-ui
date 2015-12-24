@@ -32,6 +32,8 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
 
             $scope.clusterStatus = clusterStatus.getClusterStatus($scope.cluster.nodes, $scope.cluster.cluster_type);
             $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+            $scope.clusterStatusTextClass =  clusterStatusTextClass();
+
             $scope.nodeStatusCount = $scope.statusMgr.nodeStatusCount[$stateParams.clusterId];
 
         });
@@ -57,8 +59,18 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     function updateClusterStatus() {
         $scope.clusterStatus = $scope.cluster.clusterStatus;
         $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+        $scope.clusterStatusTextClass =  clusterStatusTextClass();
     }
 
+    function clusterStatusTextClass() {
+        var classes = {
+            running: 'text-success',
+            installing: 'text-info',
+            abnormal: 'text-danger',
+            unknow: 'text-warning'
+        };
+        return classes[$scope.clusterStatus];
+    }
 }
 
 clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus'];
