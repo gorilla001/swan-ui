@@ -925,7 +925,7 @@ a.remove {
 	color: #AAA;
 	list-style: none;
 }
-.server-detail .server-info li div {
+.server-detail .server-info li > div {
 	display: inline-block;
 	width: 70px;
 }
