@@ -384,8 +384,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.multiOpen = function(lableIdList){
+        //set appLableList empty
+        $scope.appLableList = [];
         $scope.selectLabelIdList = lableIdList.map(function(item){return item.id});
-        console.log($scope.selectLabelIdList);
         if(!$scope.selectLabelIdList.length){
             $scope.appLableList = $scope.creatAppNodeList;
         }else {
