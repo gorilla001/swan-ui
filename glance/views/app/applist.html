@@ -25,7 +25,9 @@
                     <td data-title="'所属集群'" sortable="'clusterId'"><a href="#"
                                                                       data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a>
                     </td>
-                    <td data-title="'容器个数'" sortable="'containerNum'">{/app.containerNum/}</td>
+                    <td data-title="'容器个数'" sortable="'containerNum'"><span ng-show="app.tasks">{/app.tasks/}/{/app.containerNum/}</span>
+                        <span ng-show="!app.tasks">{/app.containerNum/}</span>
+                    </td>
                     <td data-title="'操作'">
                         <button type="button"
                                 data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"
