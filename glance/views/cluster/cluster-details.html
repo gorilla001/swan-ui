@@ -14,7 +14,16 @@
 <section class="cluster-detail">
     <div class="main-container cluster-title">
         <div class="main-container-body">
-            <h3>{/cluster.name/} <small>主机数量: {/cluster.nodes.length/}</small></h3>
+            <h3>
+                {/cluster.name/}
+                <small>主机数量: {/cluster.nodes.length/}</small>
+                &nbsp;&nbsp;&nbsp;
+                <small>
+                  集群状态：<span data-ng-class="clusterStatusTextClass">
+                    {/clusterStatusText/}
+                  </span>
+                </small>
+            </h3>
             <div class="btn-group btn-group-toggle">
                 <button type="button"
                   class="btn btn-default dropdown-toggle"

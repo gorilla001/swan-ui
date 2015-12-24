@@ -38,6 +38,7 @@ module.exports = function(config) {
         'bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js',
         'bower_components/echarts/src/echarts-dataman.js',
         'bower_components/angularjs-slider/dist/rzslider.min.js',
+        'bower_components/ng-table/dist/ng-table.js',
 
         'bower_components/angular-mocks/angular-mocks.js',
 

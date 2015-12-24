@@ -1,4 +1,12 @@
-function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr) {
+function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr, clusterStatus) {
+    'use strict';
+
+    var clusterStatusTexts = {
+        running: '运行正常',
+        installing: '初始化中',
+        abnormal: '异常',
+        unknow: '未知'
+    };
 
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.upgradeFailedNodes = {};
@@ -21,6 +29,13 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
                 $scope.contentPage = $scope.contentPage.concat($scope.concatObjtoArr(val));
             });
             $scope.contentCurPage = $scope.contentPage.slice(0, $scope.pageLength);
+
+            $scope.clusterStatus = clusterStatus.getClusterStatus($scope.cluster.nodes, $scope.cluster.cluster_type);
+            $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+            $scope.clusterStatusTextClass =  clusterStatusTextClass();
+
+            $scope.nodeStatusCount = $scope.statusMgr.nodeStatusCount[$stateParams.clusterId];
+
         });
     }
     getCurCluster();
@@ -30,8 +45,33 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
             $scope.upgradeFailedNodes = {};
         });
     };
-    
+
+    $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+        updateClusterStatus();
+    });
+
+    $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+        updateClusterStatus();
+    });
+
+    function updateClusterStatus() {
+        $scope.clusterStatus = $scope.cluster.clusterStatus;
+        $scope.clusterStatusText = clusterStatusTexts[$scope.clusterStatus];
+        $scope.clusterStatusTextClass =  clusterStatusTextClass();
+    }
+
+    function clusterStatusTextClass() {
+        var classes = {
+            running: 'text-success',
+            installing: 'text-info',
+            abnormal: 'text-danger',
+            unknow: 'text-warning'
+        };
+        return classes[$scope.clusterStatus];
+    }
 }
 
-clusterDetailsCtrl.$inject = ["$rootScope", "$scope", "$stateParams", "glanceHttp", "Notification", "ClusterStatusMgr"];
-glanceApp.controller("clusterDetailsCtrl", clusterDetailsCtrl);
+clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus'];
+glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);
