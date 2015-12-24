@@ -84,7 +84,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         if (!afterCopy) {
             labelService.tearLabel(label, $scope);
         } else {
-            Notification.error('安装命令已生成，标签无法修改，可从该主机的主机详情页面修改。');
+            Notification.warning('安装命令已生成，标签无法修改，可从该主机的主机详情页面修改。');
         }
     };
 
