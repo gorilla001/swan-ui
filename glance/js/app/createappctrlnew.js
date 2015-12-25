@@ -81,7 +81,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "主机 (默认全选)"
+        nothingSelected: "主机 (默认随机)"
     };
     $scope.lableMultiConfig = {
         selectAll: "全部选择",
