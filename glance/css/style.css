@@ -1694,4 +1694,9 @@ rzslider .rz-bubble {
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+rzslider .rz-pointer {
+	background-color: #5bc0de!important;
+}
+rzslider .rz-bar.rz-selection {
+	background-color: #5bc0de!important;
 }

@@ -1,8 +1,8 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -18,6 +18,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.creatAppLableList = [];
     $scope.appLableList = [];
     $scope.selectLabelIdList = [];
+
+    //ajax cluster.nodeLabelList's params
+    $scope.ajaxParams = {
+        labels:[]
+    };
 
     $scope.portInfo = {};
     $scope.portInfos = [];
@@ -72,13 +77,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         network: "BRIDGE"    //defalut network for radio box
     };
 
-    $scope.multiTranConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "All"
-    };
+    $scope.nodeMultiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "主机 (默认随机)");
+    $scope.lableMultiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "标签");
 
     $scope.defaultEles = [];    //defalut constraints
     $scope.hostEles = ["hostname", "UNIQUE"];
@@ -283,13 +283,14 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.getChangeData = function (clusterId) {
-        //empty multi-select collection
-        $scope.selectLables = [];
-        $scope.selectNodes = [];
-        $scope.creatAppLableList = [];
-        $scope.appLableList = [];
+        //empty ajaxParams.labels
+        $scope.ajaxParams.labels = [];
 
         $scope.getNode(clusterId);
+        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+            item.ticked = false;
+            return item;
+        });
         //get lable List of cluster
         getClusterLables.listClusterLabels(clusterId, $scope);
         glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
@@ -353,7 +354,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
      nodesSelect: Multi Select List
      elements: defalut constraints
      attribute: if Node Multi Select Type is 'node' attribute='ip',
-     if Node Multi Select Type is 'lable' attribute='lableName'
+                if Node Multi Select Type is 'lable' attribute='lableName'
      */
     $scope.makeConstraints = function (nodesSelect, elements, attribute) {
         if (attribute === 'ip') {
@@ -391,23 +392,56 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         });
     };
 
-    $scope.multiOpen = function (lableIdList) {
-        //set appLableList empty
-        $scope.appLableList = [];
-
-        $scope.ajaxParams = {};
-        $scope.selectLabelIdList = lableIdList.map(function (item) {
-            return item.id
-        });
-        if (!$scope.selectLabelIdList.length) {
-            $scope.appLableList = $scope.creatAppNodeList;
+    $scope.funcClick = function (data) {
+        if (data.ticked) {
+            $scope.ajaxParams.labels.push(data.id);
         } else {
-            $scope.ajaxParams.labels = $scope.selectLabelIdList;
-            glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
-                $scope.appLableList = data.data;
-            }, $scope.ajaxParams, function (data) {
-
-            });
+            var index = $scope.ajaxParams.labels.indexOf(data.id);
+            $scope.ajaxParams.labels.splice(index, 1);
         }
+
+        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+            $scope.appLableList = data.data;
+            if($scope.appLableList.length){
+                $scope.appLableList.map(function(item){
+                    item.ticked = true;
+                    return item;
+                })
+            }else {
+                $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+                    item.ticked = false;
+                    return item;
+                });
+            }
+
+        }, $scope.ajaxParams, function (data) {
+
+        });
+
+    };
+
+    $scope.funcSelectAll = function(){
+        $scope.ajaxParams.labels = [];
+        angular.forEach($scope.creatAppLableList, function(lable){
+            $scope.ajaxParams.labels.push(lable.id)
+        });
+
+        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+            $scope.appLableList = data.data;
+            $scope.appLableList.map(function(item){
+                item.ticked = true;
+                return item;
+            })
+        }, $scope.ajaxParams, function (data) {
+
+        });
+    };
+
+    $scope.funcSelectNone = function(){
+        $scope.ajaxParams.labels = [];
+        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+            item.ticked = false;
+            return item;
+        });
     }
 }

@@ -106,7 +106,10 @@
                                 tick-property="ticked"
                                 helper-elements="all none filter"
                                 max-height="200px"
-                                translation="multiTranConfig"
+                                translation="lableMultiConfig"
+                                on-item-click="funcClick( data )"
+                                on-select-all="funcSelectAll()"
+                                on-select-none="funcSelectNone()"
                         >
                         </isteven-multi-select>
                     </div>
@@ -120,8 +123,7 @@
                                 tick-property="ticked"
                                 helper-elements="all none filter"
                                 max-height="200px"
-                                translation="multiTranConfig"
-                                on-open="multiOpen(selectLables)"
+                                translation="nodeMultiConfig"
                         >
                         </isteven-multi-select>
                     </div>
