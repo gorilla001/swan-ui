@@ -294,9 +294,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.getChangeData = function (clusterId) {
-        //empty multi-select collection
-        $scope.creatAppLableList = [];
-        $scope.appLableList = [];
+        //empty ajaxParams.labels
+        $scope.ajaxParams.labels = []
 
         $scope.getNode(clusterId);
         $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
@@ -423,7 +422,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
                 $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
                     item.ticked = false;
                     return item;
-                });;
+                });
             }
 
         }, $scope.ajaxParams, function (data) {
@@ -454,6 +453,6 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
             item.ticked = false;
             return item;
-        });;
+        });
     }
 }
