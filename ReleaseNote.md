@@ -1,21 +1,10 @@
-Release Note
-=============
+### v0.1.122505
 
-这个文件将会记录:
+features
+* 组件更新
+* 应用列表支持查询和排序
+* 日志上下文
 
-- 下次release运维需要更新的配置
-- 重大的bug fix
-- 重大的feature
-
-##Pending release changes
-
-###需要运维更新
-
-sed -i "s#APIURL#$APIURL#g" glance/js/confdev.js
-sed -i "s#APIURL#$APIURL#g" user/js/conf.js
-
-### bug fix
-
-
-### feature
-
+bug fix
+* 日志收集遗漏
+* 修复应用实例数显示
