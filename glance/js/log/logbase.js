@@ -3,20 +3,14 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$filter', '$timeout','$interval'];
+logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig'];
 
-function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $filter, $timeout, $interval) {
+function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
     var clusterIdTemp;
 
-    $scope.multiConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "ALL"
-    };
+    $scope.multiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "ALL");
 
     $scope.inputNodesInfo = [];
 

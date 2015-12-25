@@ -1,8 +1,8 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -19,9 +19,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.appLableList = [];
     $scope.selectLabelIdList = [];
 
+    //ajax cluster.nodeLabelList's params
     $scope.ajaxParams = {
         labels:[]
-    }
+    };
 
     $scope.portInfo = {};
     $scope.portInfos = [];
@@ -76,20 +77,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         network: "BRIDGE"    //defalut network for radio box
     };
 
-    $scope.nodeMultiConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "主机 (默认随机)"
-    };
-    $scope.lableMultiConfig = {
-        selectAll: "全部选择",
-        selectNone: "清空",
-        reset: "恢复",
-        search: "查询匹配词",
-        nothingSelected: "标签"
-    };
+    $scope.nodeMultiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "主机 (默认随机)");
+    $scope.lableMultiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "标签");
 
     $scope.defaultEles = [];    //defalut constraints
     $scope.hostEles = ["hostname", "UNIQUE"];
@@ -295,7 +284,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     $scope.getChangeData = function (clusterId) {
         //empty ajaxParams.labels
-        $scope.ajaxParams.labels = []
+        $scope.ajaxParams.labels = [];
 
         $scope.getNode(clusterId);
         $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
@@ -365,7 +354,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
      nodesSelect: Multi Select List
      elements: defalut constraints
      attribute: if Node Multi Select Type is 'node' attribute='ip',
-     if Node Multi Select Type is 'lable' attribute='lableName'
+                if Node Multi Select Type is 'lable' attribute='lableName'
      */
     $scope.makeConstraints = function (nodesSelect, elements, attribute) {
         if (attribute === 'ip') {
