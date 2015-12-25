@@ -6,6 +6,7 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
     $scope.allLabelNames = [];
+    $scope.labelForm = {};
 
     $scope.isConected = false;
 
@@ -76,8 +77,8 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         labelService.labelledNode(label, $scope);
     };
 
-    $scope.createLabel = function(newLabelName) {
-        labelService.createLabel(newLabelName, $scope);
+    $scope.createLabel = function() {
+        labelService.createLabel($scope);
     };
 
     $scope.tearLabel = function(label, afterCopy) {

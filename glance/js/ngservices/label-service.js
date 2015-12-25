@@ -38,13 +38,16 @@
         }
 
         // 新建标签
-        function createLabel(newLabelName, $scope) {
-            return glanceHttp.ajaxPost(['cluster.label'], {'name': newLabelName},
+        function createLabel($scope) {
+            return glanceHttp.ajaxPost(['cluster.label'], {'name': $scope.labelForm.newLabelName},
                 function() {}, undefined, function() {})
                 .then(function(resp) {
                     labelledNode(resp.data.data, $scope);
                     $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
                     $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+                    
+                    $scope.labelForm.label.$setPristine();
+                    $scope.labelForm.newLabelName = '';
                 }, function(resp) {
                     Notification.error(resp.data.errors.name);
             });
