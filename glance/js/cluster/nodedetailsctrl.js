@@ -9,6 +9,11 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unselectedLabels = [];
     $scope.selectedLabels = [];
 
+    $scope.form = {
+        newLabelName : ''
+    };
+    $scope.labelForm = {};
+
     $scope.serviceViews = [];
     $('.charts').hide();
     
@@ -150,8 +155,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             });
     };
 
-    $scope.createLabel = function(newLabelName) {
-        labelService.createLabel(newLabelName, $scope)
+    $scope.createLabel = function() {
+        labelService.createLabel($scope)
             .then(function() {
                 confirmNodeLabel();
             });
