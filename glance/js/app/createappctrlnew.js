@@ -81,7 +81,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         selectNone: "清空",
         reset: "恢复",
         search: "查询匹配词",
-        nothingSelected: "主机"
+        nothingSelected: "主机 (默认全选)"
     };
     $scope.lableMultiConfig = {
         selectAll: "全部选择",
@@ -299,7 +299,10 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.appLableList = [];
 
         $scope.getNode(clusterId);
-        $scope.appLableList = $scope.creatAppNodeList;
+        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+            item.ticked = false;
+            return item;
+        });
         //get lable List of cluster
         getClusterLables.listClusterLabels(clusterId, $scope);
         glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
@@ -405,16 +408,24 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         if (data.ticked) {
             $scope.ajaxParams.labels.push(data.id);
         } else {
-            var index = $scope.ajaxParams.labels.indexOf(data.id)
+            var index = $scope.ajaxParams.labels.indexOf(data.id);
             $scope.ajaxParams.labels.splice(index, 1);
         }
 
         glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
             $scope.appLableList = data.data;
-            $scope.appLableList.map(function(item){
-                item.ticked = true;
-                return item;
-            })
+            if($scope.appLableList.length){
+                $scope.appLableList.map(function(item){
+                    item.ticked = true;
+                    return item;
+                })
+            }else {
+                $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+                    item.ticked = false;
+                    return item;
+                });;
+            }
+
         }, $scope.ajaxParams, function (data) {
 
         });
@@ -440,6 +451,9 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     $scope.funcSelectNone = function(){
         $scope.ajaxParams.labels = [];
-        $scope.appLableList = $scope.creatAppNodeList;
+        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+            item.ticked = false;
+            return item;
+        });;
     }
 }
