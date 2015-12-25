@@ -7,7 +7,7 @@
             </a>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                     data-ng-disabled="!checkedNodes.value.length">删除主机
-            </button>
+            </button>&nbsp;
             <div class="btn-group btn-dropdown-info" data-ng-show="!statusMgr.nodeStatusCount[cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[cluster.id].total">
                   <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)">升级服务
                         <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
