@@ -68,10 +68,12 @@
                    <div ng-repeat="appMon in cluster.appMonitors" class="app-info">
                         <h5>{/appMon.appName/}</h5>
                         <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
-                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2" error-code="errorCode">
+                                    use-color="#68d1f2" show-text="CPU使用" text-color="#68d1f2" error-code="errorCode"
+                                  status="appMon.status">
                         </piechart>
                         <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare" radius="[45, 55]"
-                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494" error-code="errorCode">
+                                    use-color="#ff9494" show-text="内存使用" text-color="#ff9494" error-code="errorCode"
+                                  status="appMon.status">
                         </piechart>
                    </div>
                 </div>
