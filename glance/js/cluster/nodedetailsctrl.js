@@ -4,7 +4,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.node = {};
     $scope.showCharts = false;
 
-    $scope.hideLabelTrash = true;
     $scope.allLabelNames = [];
     $scope.allLabels = [];
     $scope.unselectedLabels = [];
