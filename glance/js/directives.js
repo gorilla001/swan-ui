@@ -202,7 +202,8 @@ glanceApp.directive('piechart', function () {
             radius: '=radius',
             showText: '@showText',
             textcolor: '@textColor',
-            errorText: '=errorCode'
+            errorCode: '=errorCode',
+            statusText: '=status'
 
         },
         link: function (scope, elem, attrs, ctrl) {
@@ -271,14 +272,27 @@ glanceApp.directive('piechart', function () {
                             data: [
                                 {
                                     name: function () {
-                                                if(scope.errorText != undefined){
-                                                    if (scope.total && scope.used) {
-                                                        return (scope.used / scope.total * 100).toFixed(2) + '%'
-                                                    } else if (scope.used == undefined || !scope.total) {
-                                                        return '异常'
-                                                    } else {
-                                                        return '0.00%'
+                                                if(scope.errorCode != undefined){
+                                                    if(scope.statusText == 1){
+                                                        return '部署中'
+                                                    }else if(scope.statusText == 3){
+                                                        return '已停止'
+                                                    }else if(scope.statusText == 4){
+                                                        return '停止中'
+                                                    }else if(scope.statusText == 5){
+                                                        return '删除中'
+                                                    }else if(scope.statusText == 6){
+                                                        return '扩展中'
+                                                    }else {
+                                                        if (scope.total && scope.used) {
+                                                            return (scope.used / scope.total * 100).toFixed(2) + '%'
+                                                        } else if (scope.used == undefined || !scope.total) {
+                                                            return '异常'
+                                                        } else {
+                                                            return '0.00%'
+                                                        }
                                                     }
+
                                                 }else {
                                                     return '加载中'
                                                 }
@@ -334,7 +348,7 @@ glanceApp.directive('piechart', function () {
             }, true);
 
             scope.$watch(function () {
-                return scope.errorText;
+                return scope.errorCode;
             }, function (newValue, oldValue) {
                 if (newValue !== oldValue) {
                     clusterChart.setOption(createOption());
