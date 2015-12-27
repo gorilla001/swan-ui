@@ -36,6 +36,8 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
 
             $scope.nodeStatusCount = $scope.statusMgr.nodeStatusCount[$stateParams.clusterId];
 
+            listen2UpdateClusterStatus();
+
         });
     }
     getCurCluster();
@@ -46,15 +48,19 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         });
     };
 
-    $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
-        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
-        updateClusterStatus();
-    });
+    function listen2UpdateClusterStatus() {
+        $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+            clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+            updateClusterStatus();
+        });
 
-    $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
-        clusterStatus.updateClusterStatus(data, [$scope.cluster]);
-        updateClusterStatus();
-    });
+        $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+            clusterStatus.updateClusterStatus(data, [$scope.cluster]);
+            updateClusterStatus();
+        });
+    }
+
+    
 
     function updateClusterStatus() {
         $scope.clusterStatus = $scope.cluster.clusterStatus;
