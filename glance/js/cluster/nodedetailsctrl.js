@@ -3,6 +3,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     'use strict';
     $scope.node = {};
     $scope.showCharts = false;
+    $scope.showPageNav = false;
+    $scope.disablePreNav = false;
+    $scope.disableNextNav = false;
 
     $scope.allLabelNames = [];
     $scope.allLabels = [];
@@ -137,6 +140,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 {'method': 'reset'});
     };
 
+    //labels
     $scope.changeLabels = function() {
         labelService.changeLabels($scope)
             .then(function() {
@@ -199,6 +203,52 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             nodeLabels[i].name = labels[i].label.name;
         }
         return nodeLabels;
+    }
+
+    // 主机导航
+    (function listNodesIds() {
+        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}])
+            .then(function(resp) {
+                var nodes = resp.data.data.nodes;
+                if (nodes.length > 1) {
+                    $scope.showPageNav = true;
+                    getPreAndNextNodeIds(nodes, $stateParams.nodeId);
+                }
+            });
+    })();
+
+    $scope.goPreNode = function() {
+        $state.go('cluster.nodedetails', {clusterId: $stateParams.clusterId, nodeId: $scope.preNodeId}, {reload: true});
+    };
+
+    $scope.goNextNode = function() {
+        $state.go('cluster.nodedetails', {clusterId: $stateParams.clusterId, nodeId: $scope.nextNodeId}, {reload: true});
+    }
+
+    function getPreAndNextNodeIds(nodes, nodeId) {
+        $scope.nextNodeId = $stateParams.nodeId;
+        $scope.preNodeId = $stateParams.nodeId;
+        
+        var currentNodeIndex;
+        for(var i = 0; i < nodes.length; i++) {
+            if(nodes[i].id === nodeId) {
+                currentNodeIndex = i;
+                break;
+            }
+        }
+
+        if (currentNodeIndex === 0) {
+            $scope.disablePreNav = true;
+        } else if (currentNodeIndex === nodes.length - 1) {
+            $scope.disableNextNav = true;
+        }
+
+        if (nodes[currentNodeIndex - 1]) {
+            $scope.preNodeId = nodes[currentNodeIndex - 1].id;
+        }
+        if (nodes[currentNodeIndex + 1]) {
+            $scope.nextNodeId = nodes[currentNodeIndex + 1].id;
+        }
     }
 
 }
