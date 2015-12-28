@@ -15,7 +15,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     //promise.then($scope.listApp);
     // app list table object
     $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
-            counts: [5, 10, 20], // custom page count
+            counts: [10, 20, 50], // custom page count
             total: 0,
             paginationMaxBlocks: 13,
             paginationMinBlocks: 2,

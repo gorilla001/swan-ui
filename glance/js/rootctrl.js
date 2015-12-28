@@ -1,6 +1,6 @@
 function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp) {
     glanceUser.init();
-    $scope.myConfirm = function (msg, callback) {
+    $rootScope.myConfirm = function (msg, callback) {
         $scope._confirmMsg = msg;
         $scope._confirmCallback = callback;
         $('#confirmModal').modal("show");

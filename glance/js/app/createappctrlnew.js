@@ -1,17 +1,21 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig'];
+createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig',
+    'openModule'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
     var SELECT_HTTP = '2';
     var HAS_DOMAIN = '1';
     var NO_DOMAIN = '2';
-
-    var HOST_MODEL = 'HOST';
-    var BRIDGE_MODEL = 'BRIDGE';
+    var DIR_MODULE = "/views/app/createDirModule.html";
+    var DIR_CONTROLLER = "ModalDirCtrl";
+    var PATH_MODULE = "/views/app/createPathModule.html";
+    var PATH_CONTROLLER = "ModalPathCtrl";
+    var PORT_MODULE = "/views/app/createPortModule.html";
+    var PORT_CONTROLLER = "ModalPortCtrl";
 
     //defalut select Node Type is 'node'
     $scope.selectNodeType = 'node';
@@ -21,7 +25,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     //ajax cluster.nodeLabelList's params
     $scope.ajaxParams = {
-        labels:[]
+        labels: []
     };
 
     $scope.portInfo = {};
@@ -287,7 +291,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.ajaxParams.labels = [];
 
         $scope.getNode(clusterId);
-        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+        $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
             item.ticked = false;
             return item;
         });
@@ -313,48 +317,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     var promise = $scope.getAppName();
     promise.then($scope.listCluster);
 
-    // createPortModule
-    $scope.openPortModule = function (size) {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: '../../views/app/createPortModule.html',
-            controller: 'ModalPortCtrl',
-            size: size,
-            scope: $scope,
-            backdrop: 'static'
-        });
-
-        modalInstance.result.then(function () {
-            $scope.portInfo = {};
-        }, function () {
-            $scope.portInfo = {};
-        });
-    };
-
-    // createPathModule
-    $scope.openPathModule = function (size) {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: '../../views/app/createPathModule.html',
-            controller: 'ModalPathCtrl',
-            size: size,
-            scope: $scope,
-            backdrop: 'static'
-        });
-
-        modalInstance.result.then(function () {
-            $scope.pathInfo = {};
-        }, function () {
-            $scope.pathInfo = {};
-        });
-    };
-
-
     /*
      nodesSelect: Multi Select List
      elements: defalut constraints
      attribute: if Node Multi Select Type is 'node' attribute='ip',
-                if Node Multi Select Type is 'lable' attribute='lableName'
+     if Node Multi Select Type is 'lable' attribute='lableName'
      */
     $scope.makeConstraints = function (nodesSelect, elements, attribute) {
         if (attribute === 'ip') {
@@ -374,25 +341,46 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.deployinfo.constraints = elements;
     };
 
-    // createDirModule
-    $scope.openDirModule = function (size) {
-
-        var modalInstance = $uibModal.open({
-            templateUrl: '../../views/app/createDirModule.html',
-            controller: 'ModalDirCtrl',
-            size: size,
-            scope: $scope,
-            backdrop: 'static'
-        });
-
-        modalInstance.result.then(function () {
-            $scope.dirInfo = {};
-        }, function () {
-            $scope.dirInfo = {};
-        });
+    // createPortModule
+    $scope.openPortModule = function () {
+        openModule.open(undefined, $scope, PORT_MODULE, PORT_CONTROLLER, portOkcallback, portCancelcallback);
     };
 
-    $scope.funcClick = function (data) {
+    function portOkcallback() {
+        $scope.portInfo = {};
+    }
+
+    function portCancelcallback() {
+        $scope.portInfo = {};
+    }
+
+    // createPathModule
+    $scope.openPathModule = function () {
+        openModule.open(undefined, $scope, PATH_MODULE, PATH_CONTROLLER, pathOkcallback, pathCancelcallback);
+    };
+
+    function pathOkcallback() {
+        $scope.pathInfo = {};
+    }
+
+    function pathCancelcallback() {
+        $scope.pathInfo = {};
+    }
+
+    // createDirModule
+    $scope.openDirModule = function () {
+        openModule.open(undefined, $scope, DIR_MODULE, DIR_CONTROLLER, dirOkcallback, dirCancelcallback);
+    };
+
+    function dirOkcallback() {
+        $scope.dirInfo = {};
+    }
+
+    function dirCancelcallback() {
+        $scope.dirInfo = {};
+    }
+
+    $scope.labelClick = function (data) {
         if (data.ticked) {
             $scope.ajaxParams.labels.push(data.id);
         } else {
@@ -400,46 +388,41 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.ajaxParams.labels.splice(index, 1);
         }
 
-        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+        getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
             $scope.appLableList = data.data;
-            if($scope.appLableList.length){
-                $scope.appLableList.map(function(item){
+            if ($scope.appLableList.length) {
+                $scope.appLableList.map(function (item) {
                     item.ticked = true;
                     return item;
                 })
-            }else {
-                $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+            } else {
+                $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
                     item.ticked = false;
                     return item;
                 });
             }
-
-        }, $scope.ajaxParams, function (data) {
-
+        }).error(function (data) {
         });
-
     };
 
-    $scope.funcSelectAll = function(){
+    $scope.labelSelectAll = function () {
         $scope.ajaxParams.labels = [];
-        angular.forEach($scope.creatAppLableList, function(lable){
+        angular.forEach($scope.creatAppLableList, function (lable) {
             $scope.ajaxParams.labels.push(lable.id)
         });
-
-        glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: $scope.clusterid})], function (data) {
+        getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
             $scope.appLableList = data.data;
-            $scope.appLableList.map(function(item){
+            $scope.appLableList.map(function (item) {
                 item.ticked = true;
                 return item;
             })
-        }, $scope.ajaxParams, function (data) {
-
+        }).error(function (data) {
         });
     };
 
-    $scope.funcSelectNone = function(){
+    $scope.labelSelectNone = function () {
         $scope.ajaxParams.labels = [];
-        $scope.appLableList = $scope.creatAppNodeList.map(function(item) {
+        $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
             item.ticked = false;
             return item;
         });
