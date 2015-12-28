@@ -81,8 +81,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     };
 
     $scope.upContainNum = function (appId, containerNum, appName) {
-        appCurd.setUpdateAppInfo(appId, containerNum, appName);
-        appCurd.updateOpenModal($scope);
+        appCurd.updateOpenModal($scope, appId, containerNum, appName);
     };
 
     $scope.getNode = function (clusterId) {

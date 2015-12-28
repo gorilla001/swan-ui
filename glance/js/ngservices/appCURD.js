@@ -103,7 +103,8 @@
             }
         }
 
-        function updateOpenModal(scope) {
+        function updateOpenModal(scope, appId, containerNum, appName) {
+            setUpdateAppInfo(appId, containerNum, appName);
             openModule.open(undefined, scope, CONTAINER_MODULE, CONTAINER_CONTROLLER, undefined, undefined,
                 getUpdateAppInfo)
         }
