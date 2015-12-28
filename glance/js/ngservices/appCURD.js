@@ -1,0 +1,112 @@
+/**
+ * Created by my9074 on 15/12/27.
+ */
+(function () {
+    'use strict';
+    angular.module('glance')
+        .factory('appCurd', appCurd);
+
+    appCurd.$inject = ['glanceHttp', 'Notification', '$state', 'openModule', '$rootScope'];
+
+    function appCurd(glanceHttp, Notification, $state, openModule, $rootScope) {
+        var CONTAINER_MODULE = "/views/app/updateContainerModule.html";
+        var CONTAINER_CONTROLLER = "ModalContainerCtrl";
+        var addCode = {
+            100: "应用名称冲突",
+            101: "端口冲突",
+            102: "版本冲突",
+            103: "应用被锁定",
+            104: "撤销失败，应用扩展已完成",
+            999: "网络异常"
+        };
+
+        var updateContainerInfo = {};
+
+        return {
+            stop: stop,
+            start: start,
+            deleteApp: deleteApp,
+            undoApp: undoApp,
+            updateOpenModal: updateOpenModal,
+            updateAjax: updateAjax,
+            getUpdateAppInfo: getUpdateAppInfo,
+            setUpdateAppInfo: setUpdateAppInfo
+        };
+
+        function stop(appId, appName) {
+            glanceHttp.ajaxGet(['app.stop', {app_id: parseInt(appId)}], function (data) {
+                if (data.data.stopState == 0) {
+                    Notification.success('应用' + appName + ' 停止中...');
+                    $state.reload();
+                }
+            }, undefined, null, function (data) {
+                Notification.error('应用 ' + appName + ' 停止失败:' + addCode[data.code]);
+            });
+        }
+
+        function start(appId, appName) {
+            glanceHttp.ajaxGet(['app.start', {app_id: parseInt(appId)}], function (data) {
+                if (data.data.startState == 0) {
+                    Notification.success('应用 ' + appName + ' 启动中...');
+                    $state.reload();
+                }
+            }, undefined, null, function (data) {
+                Notification.error('应用 ' + appName + ' 启动失败: ' + addCode[data.code]);
+            });
+        }
+
+        function deleteApp(appId, appName) {
+            $rootScope.myConfirm("您确定要删除应用吗？", function () {
+                glanceHttp.ajaxGet(['app.deleteApp', {app_id: parseInt(appId)}], function (data) {
+                    if (data.data.deletState == 0) {
+                        Notification.success('应用 ' + appName + ' 删除中...');
+                        $state.go('app.applist', {reload: true});
+                    }
+                }, undefined, null, function (data) {
+                    Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
+                });
+            });
+        }
+
+        function undoApp(appId, appName) {
+            $rootScope.myConfirm("您确定要撤销扩展中的应用吗？", function () {
+                glanceHttp.ajaxGet(['app.undoScaling', {app_id: parseInt(appId)}], function (data) {
+                    Notification.success('应用 ' + appName + ' 撤销中...');
+                    $state.reload();
+                }, undefined, null, function (data) {
+                    Notification.error('应用 ' + appName + ' 撤销失败: ' + $scope.addCode[data.code]);
+                });
+            });
+        }
+
+        function updateAjax(appId, containerNum, appName) {
+            var _expandConNum = parseInt(containerNum);
+            var containDate = {
+                "updateContainerNum": _expandConNum,
+                "appId": appId.toString()
+            };
+
+            return glanceHttp.ajaxPost(['app.upContainerNum'], containDate, function (data) {
+            }, undefined, null, function (data) {
+            });
+        }
+
+        function getUpdateAppInfo() {
+            return updateContainerInfo
+        }
+
+        function setUpdateAppInfo(appId, containerNum, appName) {
+            updateContainerInfo = {
+                appId: appId,
+                containerNum: containerNum,
+                appName: appName
+            }
+        }
+
+        function updateOpenModal(scope) {
+            openModule.open(undefined, scope, CONTAINER_MODULE, CONTAINER_CONTROLLER, undefined, undefined,
+                getUpdateAppInfo)
+        }
+
+    }
+})();

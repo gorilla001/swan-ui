@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification', '$q'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification', '$q', 'appCurd'];
 
-function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q) {
+function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd) {
     $rootScope.show = "application";
 
     $scope.clusterNameMap = {};
@@ -65,79 +65,24 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     };
 
     $scope.stopApp = function (appId, appName){
-        glanceHttp.ajaxGet(['app.stop',{app_id: parseInt(appId)}], function (data) {
-            if(data.data.stopState == 0){
-                Notification.success('应用' + appName +' 停止中...');
-                $state.reload();
-            }
-        },undefined, null, function(data){
-            Notification.error('应用 ' + appName+' 停止失败:' + $scope.addCode[data.code]);
-        });
+        appCurd.stop(appId, appName);
     };
 
     $scope.startApp = function (appId, appName){
-        glanceHttp.ajaxGet(['app.start',{app_id: parseInt(appId)}], function (data) {
-            if(data.data.startState == 0){
-                Notification.success('应用 '+ appName +' 启动中...');
-                $state.reload();
-            }
-        },undefined, null, function(data){
-            Notification.error('应用 '+ appName +' 启动失败: ' + $scope.addCode[data.code]);
-        });
+        appCurd.start(appId, appName);
     };
 
     $scope.deleteApp = function (appId, appName) {
-        $scope.myConfirm("您确定要删除应用吗？", function () {
-            glanceHttp.ajaxGet(['app.deleteApp',{app_id: parseInt(appId)}], function (data) {
-                if(data.data.deletState == 0){
-                    Notification.success('应用 ' + appName + ' 删除中...');
-                        $state.go('app.applist',{reload : true});
-                }
-            },undefined, null, function(data){
-                Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
-            });
-        });
+        appCurd.deleteApp(appId, appName)
     };
 
     $scope.undoApp = function (appId, appName) {
-        $scope.myConfirm("您确定要撤销扩展中的应用吗？", function () {
-            glanceHttp.ajaxGet(['app.undoScaling',{app_id: parseInt(appId)}], function (data) {
-                    Notification.success('应用 ' + appName + ' 撤销中...');
-                    $state.reload();
-            },undefined, null, function(data){
-                Notification.error('应用 ' + appName + ' 撤销失败: ' + $scope.addCode[data.code]);
-            });
-        });
+        appCurd.undoApp(appId, appName);
     };
 
     $scope.upContainNum = function (appId, containerNum, appName) {
-        $('#expandConNumModal').modal("show");
-        $scope.tempNum = containerNum;
-        $scope._expandConNum = containerNum;
-        $scope._expandAppId = appId;
-        $scope._appName = appName;
-    };
-    
-    $scope.ensureExpandConNumCallback = function (appId) {
-        $scope.containDate = {
-                "updateContainerNum": $scope._expandConNum,
-                "appId": $scope._expandAppId.toString()
-        };
-        if($scope.tempNum > $scope._expandConNum){
-            $scope.updateContainerText = " 缩容中...";
-            $scope.updateContainerErrorText = " 缩容失败 "
-        }else{
-            $scope.updateContainerText = " 扩容中...";
-            $scope.updateContainerErrorText = " 扩容失败 "
-        }
-        glanceHttp.ajaxPost(['app.upContainerNum'],$scope.containDate,function(data){
-                $timeout(function () {
-                    Notification.success('应用 '+ $scope._appName +$scope.updateContainerText);
-                    $state.reload();
-                }, 200, true);
-        },undefined, null, function(data){
-            Notification.error( '应用 '+ $scope._appName + $scope.updateContainerErrorText + $scope.addCode[data.code]);
-        });
+        appCurd.setUpdateAppInfo(appId, containerNum, appName);
+        appCurd.updateOpenModal($scope);
     };
 
     $scope.getNode = function (clusterId) {

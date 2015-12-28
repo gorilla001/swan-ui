@@ -10,7 +10,8 @@
 
     function getClusterLables(glanceHttp, Notification) {
         return {
-            listClusterLabels: listClusterLabels
+            listClusterLabels: listClusterLabels,
+            getNodesIdList: getNodesIdList
         };
 
         function listClusterLabels(clusterId, scope) {
@@ -40,5 +41,12 @@
             return lableArray;
 
         }
+
+        function getNodesIdList(clusterId, params){
+            return glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: clusterId})], function(data){},
+                    params, function(data){});
+        }
+
+
     }
 })();
