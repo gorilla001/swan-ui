@@ -13,7 +13,7 @@
   <div class="main-container-body">
     <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="createClusterFormCtrl" novalidate>
       <div class="form-group" data-ng-class="{ 'has-error' : staticForm.name.$invalid && !staticForm.name.$pristine }">
-        <label class="col-md-2 control-label">集群名称</label>
+        <label class="col-md-2 control-label required">集群名称</label>
         <div class="col-md-8">
           <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required" data-name-repaet-validator />
           <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
