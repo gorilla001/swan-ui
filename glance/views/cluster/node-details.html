@@ -83,7 +83,7 @@
                                 data-ng-click="resetService(service)">重置</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
-                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1]"></span>
+                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
                         </li>
                     </ul>
                 </div>
