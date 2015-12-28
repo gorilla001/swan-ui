@@ -1700,3 +1700,9 @@ rzslider .rz-pointer {
 rzslider .rz-bar.rz-selection {
 	background-color: #5bc0de!important;
 }
+
+.required:after {
+	content: ' *';
+	color: #e32;
+	display: inline;
+}
