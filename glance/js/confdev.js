@@ -26,7 +26,7 @@ AGENT_CONFIG = {
     AGENT_CONFIG.dmHost = '';
   }
   
-  if (!AGENT_CONFIG.installUrl || AGENT_CONFIG.installUrl === 'AGENT_URL') {
+  if (!AGENT_CONFIG.installUrl || AGENT_CONFIG.installUrl.slice(0, 5) === 'AGENT') {
       AGENT_CONFIG.installUrl = "https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-agent.sh";
   }
 })();
