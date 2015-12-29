@@ -20,6 +20,20 @@
                     {/ node.name /}<a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})" class="modify-name" title="修改名称"><img src="../pics/ico-edit.svg" width="12"></a>
                     <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span><span class="label label-info" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                   </h2>
+
+                  <div class="btn-group pull-right" role="group" data-ng-show="showPageNav">
+                    <button type="button" class="btn btn-default btn-xs"
+                      title="上一台主机" data-ng-disabled="disablePreNav"
+                      data-ng-click="goPreNode()">
+                      <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    <button type="button" class="btn btn-default btn-xs"
+                      title="下一台主机" data-ng-disabled="disableNextNav"
+                      data-ng-click="goNextNode()">
+                      <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                  </div>
+
                   </header>
             </div>
         </div>
