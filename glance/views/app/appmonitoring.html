@@ -24,7 +24,7 @@
                     <td>{/appMonitor.app.appId/}</td>
                     <td style="width: 30%;">
                         <uib-progressbar class="progress-striped active" id="instanceCpu" type="info"
-                                         max="appMonitor.cpuShareCores" value="appMonitor.cpuUsedCores"><span>{/appMonitor.cpuUsedCores/} / {/appMonitor.cpuShareCores/}</span>
+                                         max="appMonitor.cpuShareCores" value="appMonitor.cpuUsedCores"><span>{/appMonitor.cpuUsedCores.toFixed(2)/} / {/appMonitor.cpuShareCores/}</span>
                         </uib-progressbar>
                     </td>
                     <td style="width: 30%;">
