@@ -24,39 +24,39 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
             getData: function ($defer, params) {
                 $rootScope.appListParams = $scope.appListTable.parameters();
                 glanceHttp.ajaxGet(['app.list'], function (res) {
-                        //If you remove when the current application of only one application,
-                        //set new Page and Switch back page
-                        if (!res.data.App.length && $rootScope.appListParams.page > 1) {
-                            $rootScope.appListParams.page = $rootScope.appListParams.page - 1
-                        }
-                        var total = res.data.TotalNumber;
-                        $scope.applist = res.data.App;
-                        params.total(total);
-                        if (total > 0) {
-                            $defer.resolve(res.data.App);
-                        }
-                        //// every 5 seconds reload app list to refresh app list
-                        $timeout.cancel(listAppPromise);
-                        listAppPromise = $timeout(function () {
-                            $scope.appListTable.reload()
-                        }, appListReloadInterval);
+                    //If you remove when the current application of only one application,
+                    //set new Page and Switch back page
+                    if (!res.data.App.length && $rootScope.appListParams.page > 1) {
+                        $rootScope.appListParams.page = $rootScope.appListParams.page - 1
+                    }
+                    var total = res.data.TotalNumber;
+                    $scope.applist = res.data.App;
+                    params.total(total);
+                    if (total > 0) {
+                        $defer.resolve(res.data.App);
+                    }
 
-                    }, params.url(), function (errorRes) {
+                    //ajax get getAppsStatus
+                    glanceHttp.ajaxGet(['app.getAppsStatus'], function (res) {
+                        $scope.appListStatus = res.data;
+                    }, undefined, undefined, undefined, false);
 
-                        // on error every 5 seconds reload app list to refresh app list
-                        $timeout.cancel(listAppPromise);
-                        listAppPromise = $timeout(function () {
-                            $scope.appListTable.reload()
-                        }, appListReloadInterval);
-                    }, undefined, false)
-                    .then(
-                        glanceHttp.ajaxGet(['app.getAppsStatus'], function (res) {
-                            $scope.appListStatus = res.data;
-                        }, undefined, undefined, undefined, false)
-                    );
+                    reloadTable();
+                }, params.url(), function (errorRes) {
+
+                    reloadTable();
+                }, undefined, false)
             }
         }
     );
+
+    function reloadTable(){
+        // every 5 seconds reload app list to refresh app list
+        $timeout.cancel(listAppPromise);
+        listAppPromise = $timeout(function () {
+            $scope.appListTable.reload()
+        }, appListReloadInterval);
+    }
 
     ////app list params is change ,reload app list
     //$scope.$watch('appListParams',function(newValue,oldValue){
