@@ -30,7 +30,9 @@
             updateOpenModal: updateOpenModal,
             updateAjax: updateAjax,
             getUpdateAppInfo: getUpdateAppInfo,
-            setUpdateAppInfo: setUpdateAppInfo
+            setUpdateAppInfo: setUpdateAppInfo,
+            getListCluster: getListCluster,
+            getAppNameList: getAppNameList
         };
 
         function stop(appId, appName) {
@@ -60,7 +62,7 @@
                 glanceHttp.ajaxGet(['app.deleteApp', {app_id: parseInt(appId)}], function (data) {
                     if (data.data.deletState == 0) {
                         Notification.success('应用 ' + appName + ' 删除中...');
-                        $state.go('app.applist', {reload: true});
+                        $state.go('app.applist',null, {reload: true});
                     }
                 }, undefined, null, function (data) {
                     Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
@@ -107,6 +109,34 @@
             setUpdateAppInfo(appId, containerNum, appName);
             openModule.open(undefined, scope, CONTAINER_MODULE, CONTAINER_CONTROLLER, undefined, undefined,
                 getUpdateAppInfo)
+        }
+
+        function getListCluster(scope, isUsedNameMap) {
+            return glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
+                scope.clusters = data.data;
+                if (isUsedNameMap) {
+                    angular.forEach(data.data, function (cluster) {
+                        scope.clusterNameMap[cluster.id] = cluster.name;
+                    });
+                }
+
+            }, null, function (data, status) {
+                console.log("request failed (" + status + ")");
+            }, function (data) {
+                console.log(data.errors);
+            });
+        }
+
+        function getAppNameList(scope) {
+            scope.allAppNames = [];
+            return glanceHttp.ajaxGet(['app.allList'], function (data) {
+                if (data.data && data.data.App) {
+                    scope.allAppList = data.data.App;
+                    angular.forEach(scope.allAppList, function (value, index) {
+                        scope.allAppNames.push(value.appName);
+                    });
+                }
+            });
         }
 
     }
