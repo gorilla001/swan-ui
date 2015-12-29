@@ -15,14 +15,11 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
     $scope.getConfig = function () {
         glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}], function (data) {
             $scope.config = data.data;
-            //appdetail status depend on config, so when config changed,you should call getAppInfo
-            $scope.getAppInfo($stateParams.appId);
 
             if ($scope.config.ClusterId) {
                 $scope.getNode($scope.config.ClusterId);
             }
         });
     };
-    var promise = $scope.listCluster();
-    promise.then($scope.getConfig);
+    $scope.listCluster().then($scope.getConfig);
 }

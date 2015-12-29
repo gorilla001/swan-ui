@@ -3,7 +3,7 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp','Notification', '$q', 'appCurd'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp', 'Notification', '$q', 'appCurd'];
 
 function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd) {
     $rootScope.show = "application";
@@ -12,19 +12,22 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
     $scope.clusters = [];
     $scope.curAppNames = [];
 
-    $scope.gateWays= [];
+    $scope.gateWays = [];
     $scope.proxyNodes = [];
     $scope.creatAppNodeList = [];
 
     $scope.allAppNames = [];
 
     $scope.appstate = {
+        'undefined': "加载中",
         '1': "部署中",
         '2': "运行中",
         '3': "已停止",
         '4': "停止中 ",
         '5': "删除中",
-        '6': "扩展中"
+        '6': "扩展中",
+        '7': "启动中",
+        '8': "撤销中"
     };
 
     $scope.portType = {
@@ -46,29 +49,15 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         999: "网络异常"
     };
 
-    $scope.listCluster = function () {
-        var deferred = $q.defer();
-
-        glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
-            $scope.clusters = data.data;
-            angular.forEach(data.data, function (cluster) {
-                $scope.clusterNameMap[cluster.id] = cluster.name;
-            });
-            deferred.resolve();
-        }, null, function(data, status){
-            console.log("request failed (" + status + ")");
-        }, function(data){
-            console.log(data.errors);
-        });
-
-        return deferred.promise;
+    $scope.listCluster = function (isUsedNameMap) {
+        return appCurd.getListCluster($scope, isUsedNameMap);
     };
 
-    $scope.stopApp = function (appId, appName){
+    $scope.stopApp = function (appId, appName) {
         appCurd.stop(appId, appName);
     };
 
-    $scope.startApp = function (appId, appName){
+    $scope.startApp = function (appId, appName) {
         appCurd.start(appId, appName);
     };
 
@@ -105,7 +94,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
                     }
 
                     if ($scope.clusters[index].nodes[i].status === 'running') {
-                        if($scope.clusters[index].cluster_type === '1_master' || $scope.clusters[index].nodes[i].role !== 'master'){
+                        if ($scope.clusters[index].cluster_type === '1_master' || $scope.clusters[index].nodes[i].role !== 'master') {
                             $scope.creatAppNodeList.push($scope.clusters[index].nodes[i]);
                         }
 
@@ -116,20 +105,4 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
             }
         }
     };
-
-    // get all app list to Check repeat
-    $scope.getAppName = function () {
-        var deferred = $q.defer();
-        $scope.allAppNames = [];
-        glanceHttp.ajaxGet(['app.allList'], function (data) {
-            if (data.data && data.data.App) {
-                $scope.allAppList = data.data.App;
-                angular.forEach($scope.allAppList, function (value, index) {
-                    $scope.allAppNames.push(value.appName);
-                });
-            }
-            deferred.resolve();
-        });
-        return deferred.promise;
-    }
 }

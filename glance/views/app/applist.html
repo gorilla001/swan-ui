@@ -11,43 +11,50 @@
                 <div class="input-group">
                     <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord"
                            placeholder="输入应用名称进行搜索" my-enter="doSearch(searchKeyWord)">
-                    <div class="input-group-addon" ng-click="doSearch(searchKeyWord)"><i class="icon icon-search"></i>搜索</div>
+                    <div class="input-group-addon" ng-click="doSearch(searchKeyWord)"><i class="icon icon-search"></i>搜索
+                    </div>
                 </div><!-- /input-group -->
             </div>
-            <table ng-table="appListTable" template-pagination="/views/common/ngTablePage.html" class="table table-striped" ng-table-columns-binding="boundCols">
+            <table ng-table="appListTable" template-pagination="/views/common/ngTablePage.html"
+                   class="table table-striped" ng-table-columns-binding="boundCols">
                 <tbody>
                 <tr ng-repeat="app in applist">
                     <td data-title="'应用名称'" sortable="'name'"><a href="#"
                                                                  data-ui-sref="app.appdetail.config({appId:app.appId})">{/app.appName/}</a>
                     </td>
-                    <td data-title="'当前状态'">{/appstate[app.appStatus]/}</td>
+                    <td data-title="'当前状态'">{/appstate[appListStatus[app.appId].status]/}</td>
                     <td data-title="'更新时间'" sortable="'update'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                     <td data-title="'所属集群'" sortable="'clusterId'"><a href="#"
                                                                       data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a>
                     </td>
-                    <td data-title="'容器个数'" sortable="'containerNum'"><span ng-show="app.tasks">{/app.tasks/}/{/app.containerNum/}</span>
-                        <span ng-show="!app.tasks">{/app.containerNum/}</span>
+                    <td data-title="'容器个数'" sortable="'containerNum'"><span
+                            ng-show="appListStatus[app.appId].tasks && appListStatus[app.appId].tasks != app.containerNum">{/appListStatus[app.appId].tasks/}/{/app.containerNum/}</span>
+                        <span ng-show="appListStatus[app.appId].tasks == app.containerNum || !appListStatus[app.appId].tasks">{/app.containerNum/}</span>
                     </td>
                     <td data-title="'操作'">
                         <button type="button"
-                                data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"
+                                data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='3' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 data-ng-click="upContainNum(app.appId, app.containerNum, app.appName)"
                                 class="btn btn-default btn-xs">扩展
                         </button>
                         <button type="button"
-                                data-ng-disabled="app.appStatus == '1' || app.appStatus=='3' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"
+                                data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='3' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 class="btn btn-default btn-xs"
-                                data-ng-click="stopApp(app.appId, app.appName)" data-ng-show="app.appStatus!='3'">停止
+                                data-ng-click="stopApp(app.appId, app.appName)"
+                                data-ng-show="appListStatus[app.appId].status!='3'">停止
                         </button>
                         <button type="button"
-                                data-ng-disabled="app.appStatus == '1' || app.appStatus=='2' || app.appStatus=='4'|| app.appStatus=='5' || !app.appStatus"
+                                data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='2' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 class="btn btn-default btn-xs"
-                                data-ng-click="startApp(app.appId, app.appName)" data-ng-show="app.appStatus == '3'">启动
+                                data-ng-click="startApp(app.appId, app.appName)"
+                                data-ng-show="appListStatus[app.appId].status == '3'">启动
                         </button>
                         <button type="button" class="btn btn-default btn-xs"
-                                data-ng-click="undoApp(app.appId, app.appName)" data-ng-show="app.appStatus == '6'">撤销
+                                data-ng-click="undoApp(app.appId, app.appName)"
+                                data-ng-show="appListStatus[app.appId].status == '6'">撤销
                         </button>
-                        <button type="button" data-ng-disabled="app.appStatus == '5' || !app.appStatus"
+                        <button type="button"
+                                data-ng-disabled="appListStatus[app.appId].status == '5' || !appListStatus[app.appId].status"
                                 data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs">删除
                         </button>
                     </td>

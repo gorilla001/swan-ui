@@ -8,11 +8,13 @@ appListCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$timeout', 'Notifi
 
 function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngTableParams) {
 
-    var listClusterPromise = $scope.listCluster(),listAppPromise;
+    var listAppPromise;
     var appListReloadInterval = 5000;
+    var NEED_NAMEMAP = true;
+
+    $scope.listCluster(NEED_NAMEMAP);
     $scope.applist = [];
     $rootScope.appListParams.searchKeyWord = "";
-    //promise.then($scope.listApp);
     // app list table object
     $scope.appListTable = new ngTableParams( $rootScope.appListParams, {
             counts: [10, 20, 50], // custom page count
@@ -33,20 +35,36 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                     if (total > 0) {
                         $defer.resolve(res.data.App);
                     }
-                    // every 5 seconds reload app list to refresh app list
-                    $timeout.cancel(listAppPromise);
-                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+                    //// every 5 seconds reload app list to refresh app list
+                    //$timeout.cancel(listAppPromise);
+                    //listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
 
                 }, params.url(),function(errorRes){
 
                     // on error every 5 seconds reload app list to refresh app list
-                    $timeout.cancel(listAppPromise);
-                    listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
-                }, undefined, false);
+                    //$timeout.cancel(listAppPromise);
+                    //listAppPromise = $timeout(function(){$scope.appListTable.reload()}, appListReloadInterval);
+                }, undefined, false)
+                    //.then(
+                    //glanceHttp.ajaxGet(['app.getAppsStatus'], function(res){
+                    //    $scope.appListStatus = res.data;
+                    //}, undefined, undefined, undefined, false)
+                //);
             }
         }
     );
 
+    function getAppStatusList(){
+        glanceHttp.ajaxGet(['app.getAppsStatus'], null, null, null, null, false).then(function(res){
+            $scope.appListStatus = res.data;
+            $timeout.cancel(listAppPromise);
+            listAppPromise = $timeout(getAppStatusList, appListReloadInterval)
+        },function(res){
+            $timeout.cancel(listAppPromise);
+            listAppPromise = $timeout(getAppStatusList, appListReloadInterval)
+        })
+    }
+    getAppStatusList();
 
     ////app list params is change ,reload app list
     //$scope.$watch('appListParams',function(newValue,oldValue){
@@ -61,7 +79,6 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
 
     //
     $scope.$on('$destroy', function () {
-        $timeout.cancel(listClusterPromise);
         $timeout.cancel(listAppPromise);
     });
 

@@ -1,9 +1,9 @@
 glanceApp.controller("createappCtrlNew", createappCtrl);
 
 createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig',
-    'openModule'];
+    'openModule', 'appCurd'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule) {
+function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule, appCurd) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -314,8 +314,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         })
     };
 
-    var promise = $scope.getAppName();
-    promise.then($scope.listCluster);
+    appCurd.getAppNameList($scope).then($scope.listCluster);
 
     /*
      nodesSelect: Multi Select List
