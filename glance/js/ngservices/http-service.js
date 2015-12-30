@@ -70,7 +70,9 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
                 $rootScope.$destroy();
             } else if (status == 403) {
                 Notification.error("您没有权限进行此操作");
-            }else if(errorCallback){
+            } else if(status === 404) {
+                $state.go('404');
+            } else if(errorCallback){
                 errorCallback(data, status);
             } else {
                 console.log("request failed (" + status + ")");

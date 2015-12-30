@@ -1,4 +1,4 @@
-function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp) {
+function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
     glanceUser.init();
     $rootScope.myConfirm = function (msg, callback) {
         $scope._confirmMsg = msg;
@@ -49,7 +49,12 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp) {
             window.location.href = USER_URL;
         });
     };
+
+    $scope.goBack = function() {
+        $window.history.back();
+    };
+
 }
 
-rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "glanceHttp"];
+rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "glanceHttp", "$window"];
 glanceApp.controller("rootCtrl", rootCtrl);
