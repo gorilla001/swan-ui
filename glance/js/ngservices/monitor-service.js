@@ -57,15 +57,14 @@ function monitor($rootScope, ngSocket) {
                 if(val) {
                     yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
                     yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
-                    yAxis.disk[index] = getDefaultRatio(calRatio(val.diskUsed, val.diskTotal));
+                    yAxis.disk[index] = getDiskRatio(val);
                 }
             });
 
-            chartsData = {
+            return {
                 xAxis: xAxis,
                 yAxis: yAxis
             };
-            return chartsData;
         }
 
     };
@@ -134,6 +133,18 @@ function monitor($rootScope, ngSocket) {
             }
         }
         return ratio;
+    }
+
+    function getDiskRatio(val) {
+        if (!val.disks && val.diskUsed && val.diskTotal) {
+            return getDefaultRatio(calRatio(val.diskUsed, val.diskTotal));
+        } else if (val.disks && $.isArray(val.disks)) {
+            var diskPercent = [];
+            for (var i = 0; i < val.disks.length; i++) {
+                diskPercent[i] = getDefaultRatio(calRatio(val.disks[i].used, val.disks[i].total));
+            }
+            return diskPercent;
+        }
     }
     
 
