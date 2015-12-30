@@ -371,3 +371,32 @@ glanceApp.directive('myEnter', function () {
         });
     };
 });
+
+glanceApp.directive('demoDisable', demoDisable);
+function demoDisable() {
+    return {
+        priority: -1,
+        restrict: 'A',
+        link: function (scope, elem, attrs, ctrl) {
+            if (scope.isDemo) {
+                elem.attr('data-toggle', 'popover');
+                elem.attr('data-trigger', 'focus');
+                elem.attr('data-content', '当前用户为 DEMO 用户，无法使用该功能；请注册数人云账号，使用该功能。');
+                var placement = 'top';
+                if (attrs.demoDisable) {
+                    placement = attrs.demoDisable;
+                }
+                elem.attr('data-placement', placement);
+                elem.removeAttr('onclick');
+                elem.attr('href', '#');
+                elem.bind('click', function (e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    e.stopPropagation();
+                    return false;
+                });
+                elem.popover();
+            }
+        }
+    };
+}

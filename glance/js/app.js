@@ -242,15 +242,6 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                     }
                 }
             })
-            .state('admin', {
-                url: '/admin',
-                views: {
-                    '': {
-                        templateUrl: '/views/admin/admin.html',
-                        controller: 'adminCtrl'
-                    }
-                }
-            })
             .state('modifyPassword', {
                 url: '/modifypassword',
                 views: {
@@ -274,3 +265,31 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
 }]);
+
+glanceApp.run(glanceInit);
+
+glanceInit.$inject = ['glanceUser', 'glanceHttp', '$rootScope'];
+function glanceInit(glanceUser, glanceHttp, $rootScope) {
+    glanceUser.init();
+    glanceHttp.ajaxGet(["auth.user"], function (data) {
+        $rootScope.userName = data.data["userName"];
+        $rootScope.userId = data.data["userId"];
+        $rootScope.isSuperuser = data.data["isSuperuser"];
+        $rootScope.latestVersion = data.data["latestVersion"];
+        $rootScope.isDemo = data.data["isDemo"];
+        //GrowingIO
+        if (RUNNING_ENV === "prod") {
+            (function(){ 
+                _vds.push(['setAccountId', '0edf12ee248505950b0a77b02d47c537']); 
+                _vds.push(['setCS1', 'user_id',  data.data["userId"].toString()]);
+                (function() {
+                    var vds = document.createElement('script'); 
+                    vds.type='text/javascript'; vds.async = true;
+                    vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(vds, s);
+                })();
+            })();
+        }
+    });
+}
