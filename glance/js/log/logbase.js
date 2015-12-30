@@ -63,9 +63,20 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.isDisablelteDate = function(curDate, mode) {
         return curDate < $scope.gte;
     };
-    
+
     $scope.getLog = function () {
         $scope.showContextUI = false;
+
+        //set timeRange when click Button
+        if ($scope.timeRange === undefined) {
+            //defualt 3 min ago
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - 3 * 60 * 1000);
+        } else if ($scope.timeRange !== 'other') {
+            $scope.lte = new Date();
+            $scope.gte = new Date((new Date()).getTime() - $scope.timeRange * 60 * 1000);
+        }
+
         $scope.searchData = {
             'gte': $scope.gte,
             'lte': $scope.lte,
@@ -122,14 +133,10 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.showMeridian = false;
 
     $scope.$watch('timeRange', function () {
-        if($scope.timeRange === undefined){
-            //defualt 3 min ago
+        //set precise time
+        if($scope.timeRange === 'other'){
             $scope.lte = new Date();
-            $scope.gte = new Date((new Date()).getTime() - 3 * 60 * 1000);
-        }else if($scope.timeRange !== 'other'){
-            $scope.lte = new Date();
-            $scope.gte = new Date((new Date()).getTime() - $scope.timeRange * 60 * 1000);
+            $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
         }
-
     });
 }
