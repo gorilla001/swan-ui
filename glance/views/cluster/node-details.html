@@ -1,7 +1,7 @@
 <div class="page-header">
     <div>
         <h1 class="pull-left">主机详情</h1>
-        <a data-ui-sref="cluster.createcluster" class="btn btn-success">新建集群</a>
+        <a data-ui-sref="cluster.createcluster" class="btn btn-success" data-demo-disable="left">新建集群</a>
     </div>
 </div>
 <ol class="breadcrumb">
@@ -81,7 +81,7 @@
                     <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
                 </div>
             </div>
-            <button class="btn btn-danger btn-block" data-ng-click="deleNode(node.id)">删除主机</button>
+            <button class="btn btn-danger btn-block" data-ng-click="deleNode(node.id)" data-demo-disable>删除主机</button>
         </div>
         <div class="col-md-8">
         
@@ -94,7 +94,7 @@
                                 <button class="btn btn-xs btn-warning" 
                                 data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
                                     (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
-                                data-ng-click="resetService(service)">重置</button>
+                                data-ng-click="resetService(service)" data-demo-disable>重置</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
                             <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>

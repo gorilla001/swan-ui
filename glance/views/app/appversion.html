@@ -12,8 +12,8 @@
             <td>{/appversion.imageVersion/} <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span><span data-ng-show="appversion.status === 0">[正在部署中]</span></span></td>
             <td>{/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</td>
             <td>
-                <button data-ng-show="!appversion.currentDeploy && appversion.status" type="button" data-ng-click="verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs">部署</button>
-                <button data-ng-show="appversion.status === 0" type="button" data-ng-click="cancelDeploy()" class="btn btn-default btn-xs">撤销</button>
+                <button data-ng-show="!appversion.currentDeploy && appversion.status" type="button" data-ng-click="verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
+                <button data-ng-show="appversion.status === 0" type="button" data-ng-click="cancelDeploy()" class="btn btn-default btn-xs" data-demo-disable>撤销</button>
             </td>
         </tr>
         </tbody>
