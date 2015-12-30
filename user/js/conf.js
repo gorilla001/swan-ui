@@ -18,5 +18,6 @@ CONFIG = {
       frontend: "omega-frontend",
       metrics: "omega-metrics"
     }
-  }
+  },
+  demoUser: "DEMO_USER"
 };
