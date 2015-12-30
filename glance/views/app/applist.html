@@ -2,7 +2,7 @@
     <h1>应用管理</h1>
     <small>应用管理功能主要负责部署应用和管理应用的生命周期。<br>可以添加、删除、启动、停止应用，还可以弹性扩展应用实例数量。<br><a
             href="http://doc.shurenyun.com/practice/wordpress.html" target="_blank">如何搭建 Wordpress 个人博客</a></small>
-    <a data-ui-sref="app.createapp" class="btn btn-success">新建应用</a>
+    <a data-ui-sref="app.createapp" class="btn btn-success" data-demo-disable="left">新建应用</a>
 </div>
 <section>
     <div class="main-container">
@@ -35,27 +35,27 @@
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='3' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 data-ng-click="upContainNum(app.appId, app.containerNum, app.appName)"
-                                class="btn btn-default btn-xs">扩展
+                                class="btn btn-default btn-xs" data-demo-disable>扩展
                         </button>
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='3' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 class="btn btn-default btn-xs"
                                 data-ng-click="stopApp(app.appId, app.appName)"
-                                data-ng-show="appListStatus[app.appId].status!='3'">停止
+                                data-ng-show="appListStatus[app.appId].status!='3'" data-demo-disable>停止
                         </button>
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status == '1' || appListStatus[app.appId].status=='2' || appListStatus[app.appId].status=='4'|| appListStatus[app.appId].status=='5' || !appListStatus[app.appId].status"
                                 class="btn btn-default btn-xs"
                                 data-ng-click="startApp(app.appId, app.appName)"
-                                data-ng-show="appListStatus[app.appId].status == '3'">启动
+                                data-ng-show="appListStatus[app.appId].status == '3'" data-demo-disable>启动
                         </button>
                         <button type="button" class="btn btn-default btn-xs"
                                 data-ng-click="undoApp(app.appId, app.appName)"
-                                data-ng-show="appListStatus[app.appId].status == '6'">撤销
+                                data-ng-show="appListStatus[app.appId].status == '6'" data-demo-disable>撤销
                         </button>
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status == '5' || !appListStatus[app.appId].status"
-                                data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs">删除
+                                data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs" data-demo-disable>删除
                         </button>
                     </td>
                 </tr>

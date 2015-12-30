@@ -1,10 +1,20 @@
-### v0.1.122505
+Release Note
+=============
 
-features
-* 组件更新
-* 应用列表支持查询和排序
-* 日志上下文
+这个文件将会记录:
 
-bug fix
-* 日志收集遗漏
-* 修复应用实例数显示
+- 下次release运维需要更新的配置
+- 重大的bug fix
+- 重大的feature
+
+##Pending release changes
+
+###需要运维更新
+1.user/js/conf.js加入demoUser配置
+  需要把DEMO_USER替换成demo用户的邮箱地址
+
+
+### bug fix
+
+### feature
+1.支持demo用户

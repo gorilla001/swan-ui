@@ -1,8 +1,8 @@
 <div class="page-header">
     <h1 class="pull-left" >集群管理</h1>
-    <a data-ui-sref="cluster.createcluster"><button class="btn btn-success">新建集群</button></a>
+    <a class="btn btn-success" data-ui-sref="cluster.createcluster" role="button" data-demo-disable="left">新建集群</a>
 </div>
-<a data-ui-sref="cluster.createcluster" data-ng-show="clusters.length === 0" class="btn-add-cluster">
+<a data-ui-sref="cluster.createcluster" data-ng-show="clusters.length === 0" class="btn-add-cluster" data-demo-disable>
     <img src="../pics/ico-add-cluster.svg" width="42px"><br>新建集群
 </a>
 
@@ -91,7 +91,7 @@
                         <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">查看集群</a>
                     </li>
                     <li>
-                    <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.infos.id/}" >删除集群</a>
+                    <a href="#" class="demoClick" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.infos.id/}" data-demo-disable>删除集群</a>
                     </li>
                 </ul>
             </div>

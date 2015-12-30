@@ -1,7 +1,7 @@
 <div class="page-header">
     <div>
         <h1 class="pull-left">集群详情</h1>
-        <a data-ui-sref="cluster.createcluster" class="btn btn-success">新建集群</a>
+        <a data-ui-sref="cluster.createcluster" class="btn btn-success" data-demo-disable="left">新建集群</a>
     </div>
 </div>
 <ol class="breadcrumb">
@@ -32,10 +32,10 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})">编辑集群</a>
+                        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable>编辑集群</a>
                     </li>
                     <li>
-                        <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm">删除集群</a>
+                        <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm" data-demo-disable>删除集群</a>
                     </li>
                 </ul>
             </div>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="deleteCluster(cluster.id, cluster.name)">确定</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="deleteCluster(cluster.id, cluster.name)" data-demo-disable>确定</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
                 </div>
             </div>

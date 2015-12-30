@@ -8,7 +8,7 @@
       <div class="modal-body">
         <ul>
           <li data-ng-repeat="selectedLabel in selectedLabels">
-            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
+            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签" data-demo-disable>
               {/selectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
@@ -16,12 +16,12 @@
           </li>
 
           <li data-ng-repeat="unselectedLabel in unselectedLabels">
-            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签">
+            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签" data-demo-disable>
               {/unselectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
             </span>
-            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel)">
+            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel)" data-demo-disable>
               <span class="glyphicon glyphicon-trash"></span>
             </a>
           </li>
@@ -38,7 +38,7 @@
                   data-samename data-name-list="allLabelNames">
                 <button type="submit" class="btn btn-sm btn-success"
                   data-ng-click="createLabel()"
-                  data-ng-disabled="labelForm.label.newLabelName.$invalid">新建标签</button>
+                  data-ng-disabled="labelForm.label.newLabelName.$invalid" data-demo-disable>新建标签</button>
               </div>
               <p data-ng-show="labelForm.label.newLabelName.$error.samename" class="help-block text-left">
                 <small>标签名已存在</small>
