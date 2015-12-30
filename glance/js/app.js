@@ -259,7 +259,15 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                         controller: 'modifyPasswordCtrl'
                     }
                 }
+            })
+            .state('404', {
+                views: {
+                    '': {
+                        templateUrl: '/views/common/notFound.html'
+                    }
+                }
             });
+
 
         $locationProvider.html5Mode(true);
 
