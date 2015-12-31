@@ -378,26 +378,36 @@ function demoDisable() {
         priority: -1,
         restrict: 'A',
         link: function (scope, elem, attrs, ctrl) {
-            if (scope.isDemo) {
-                elem.attr('data-toggle', 'popover');
-                elem.attr('data-trigger', 'focus');
-                elem.attr('data-content', '当前用户为 DEMO 用户，无法使用该功能；请<a href="'+USER_URL+'/index.html?register=true">注册</a>数人云账号，使用该功能。');
-                var placement = 'top';
-                if (attrs.demoDisable) {
-                    placement = attrs.demoDisable;
+            elem.addClass('ng-hide');
+            scope.$watch('isDemo', function (value) {
+                if (value != undefined) {
+                    elem.removeClass('ng-hide');
+                    if (value){
+                        elem.attr('data-toggle', 'popover');
+                        elem.attr('data-trigger', 'focus');
+                        elem.attr('tabindex', '-1');
+                        elem.attr('data-content', '当前用户为 DEMO 用户，无法使用该功能；请<a href="'+USER_URL+'/index.html?register=true">注册</a>数人云账号，使用该功能。');
+                        var placement = 'top';
+                        if (attrs.demoDisable) {
+                            placement = attrs.demoDisable;
+                        }
+                        elem.attr('data-placement', placement);
+                        elem.removeAttr('onclick');
+                        elem.attr('href', '#');
+                        elem.off('click');
+                        elem.unbind('click');
+                        elem.bind('click', function (e) {
+                            e.preventDefault();
+                            e.stopImmediatePropagation();
+                            e.stopPropagation();
+                            return false;
+                        });
+                        elem.popover({html: true,
+                            delay: { "hide": 200 },
+                            container: 'body'});
+                    }
                 }
-                elem.attr('data-placement', placement);
-                elem.removeAttr('onclick');
-                elem.attr('href', '#');
-                elem.bind('click', function (e) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    e.stopPropagation();
-                    return false;
-                });
-                elem.popover({html: true,
-                    delay: { "hide": 200 }});
-            }
+          });
         }
     };
 }
