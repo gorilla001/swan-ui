@@ -15,8 +15,8 @@
             </dl>
             <dl>
                 <dt>容器个数：</dt>
-                <dd ng-show="config.taskNum">{/config.taskNum/}/{/config.containerNum/}<span ng-show="config.unique"> (主机只能运行一个当前应用容器)</span></dd>
-                <dd ng-show="!config.taskNum">{/config.containerNum/}<span ng-show="config.unique"> (主机只能运行一个当前应用容器)</span></dd>
+                <dd ng-show="config.taskNum">{/config.taskNum/}/{/config.containerNum/}<span ng-show="config.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
+                <dd ng-show="!config.taskNum">{/config.containerNum/}<span ng-show="config.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
             </dl>
             <dl>
                 <dt>应用模式：</dt>
