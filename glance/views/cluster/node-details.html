@@ -60,7 +60,7 @@
                             <div>创建时间</div><em>{/ node.created_at /}</em>
                         </li>
                         <li>
-                            <div>CPU</div><em>{/ nodeInfo.cpuNumber /}<sub>核</sub></em>
+                            <div>CPU</div><em>{/ nodeInfo.cpuNumber /}<sub data-ng-show="nodeInfo.cpuNumber">核</sub></em>
                         </li>
                         <li>
                             <div>内存</div><em>{/ unitConversion.convertMem(nodeInfo.memTotal).num /}<sub>{/unitConversion.convertMem(nodeInfo.memTotal).unit/}</sub></em>
