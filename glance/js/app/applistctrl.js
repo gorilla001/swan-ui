@@ -52,10 +52,13 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
 
     function reloadTable(){
         // every 5 seconds reload app list to refresh app list
-        $timeout.cancel(listAppPromise);
-        listAppPromise = $timeout(function () {
-            $scope.appListTable.reload()
-        }, appListReloadInterval);
+        if (!$scope.isDestroy){
+            $timeout.cancel(listAppPromise);
+            
+            listAppPromise = $timeout(function () {
+                $scope.appListTable.reload()
+            }, appListReloadInterval);
+        }
     }
 
     ////app list params is change ,reload app list
@@ -71,6 +74,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
 
     //
     $scope.$on('$destroy', function () {
+        $scope.isDestroy = true;
         $timeout.cancel(listAppPromise);
     });
 
