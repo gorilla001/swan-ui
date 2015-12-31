@@ -1706,3 +1706,7 @@ rzslider .rz-bar.rz-selection {
 	color: #e32;
 	display: inline;
 }
+
+.demo-hide {
+	display: none !important;
+}

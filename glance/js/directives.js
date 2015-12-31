@@ -378,10 +378,10 @@ function demoDisable() {
         priority: -1,
         restrict: 'A',
         link: function (scope, elem, attrs, ctrl) {
-            elem.addClass('ng-hide');
+            elem.addClass('demo-hide');
             scope.$watch('isDemo', function (value) {
                 if (value != undefined) {
-                    elem.removeClass('ng-hide');
+                    elem.removeClass('demo-hide');
                     if (value){
                         elem.attr('data-toggle', 'popover');
                         elem.attr('data-trigger', 'focus');
