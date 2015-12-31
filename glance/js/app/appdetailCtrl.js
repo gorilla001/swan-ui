@@ -12,7 +12,6 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
         var deferred = $q.defer();
         glanceHttp.ajaxGet(['app.info', {app_id: appId}], function (data) {
             $scope.appInfo = data.data;
-            $scope.appState = $stateParams.appStatus;
 
             $scope.configObject = {
                 "clusterId": $scope.appInfo.clusterId,
@@ -20,6 +19,8 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
                 "appName": $scope.appInfo.name
             };
             deferred.resolve();
+        }, null, null, function(data){
+            Notification.error($scope.addCode[data.code]);
         });
         return deferred.promise;
     };
@@ -50,7 +51,7 @@ function appdetailCtrl($scope, $state, $stateParams, glanceHttp, ngDialog, $time
                 $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
             }
         }, undefined, null, function(data) {
-
+            Notification.error($scope.addCode[data.code]);
         });
     };
 
