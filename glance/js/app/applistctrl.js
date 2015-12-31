@@ -45,7 +45,9 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                 }, params.url(), function (errorRes) {
 
                     reloadTable();
-                }, undefined, false)
+                }, function(res) {
+                    Notification.error($scope.addCode[data.code]);
+                }, false)
             }
         }
     );
