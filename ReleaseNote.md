@@ -1,20 +1,13 @@
-Release Note
-=============
+### v0.1.123001
 
-这个文件将会记录:
+config
+* config.conf
 
-- 下次release运维需要更新的配置
-- 重大的bug fix
-- 重大的feature
+   可以配置demo账号:
+   属性名为demo_user,值为用户邮箱地址
 
-##Pending release changes
+features
+* 支持demo用户
 
-###需要运维更新
-1.user/js/conf.js加入demoUser配置
-  需要把DEMO_USER替换成demo用户的邮箱地址
-
-
-### bug fix
-
-### feature
-1.支持demo用户
+bug fix
+* 从redis读取node service status后检查是否和预定义的格式相匹配
