@@ -400,6 +400,7 @@ function demoDisable() {
                             e.preventDefault();
                             e.stopImmediatePropagation();
                             e.stopPropagation();
+                            elem.focus();
                             return false;
                         });
                         elem.popover({html: true,
