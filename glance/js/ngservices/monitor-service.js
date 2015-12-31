@@ -1,107 +1,4 @@
 function monitor($rootScope, ngSocket) {
-    var wsMonitor = {
-        frequency: 60,
-        interval: 1 * 60,
-        nodesNumber: 180,
-        nodes: {},
-        times: {},
-        initialTimes: function(data, nodeId) {
-            if(!this.times[nodeId]) {
-                this.times[nodeId] = [];
-            }
-            if(this.times[nodeId].length === 0) {
-                this.times[nodeId][0] = data.timestamp;
-                this.times[nodeId][1] = this.times[nodeId][0] + (this.frequency-1) * this.interval;
-            }
-        },
-        updateTimes: function(data) {
-            var nodeId = data.nodeId;
-            this.initialTimes(data, nodeId);
-            var timestamp = data.timestamp;
-            if (timestamp > this.times[nodeId][1]) {
-                var delta = Math.floor((timestamp - this.times[nodeId][1]) / this.interval);
-                this.times[nodeId][0] += delta * this.interval;
-                this.times[nodeId][1] += delta * this.interval;
-            }
-        },
-        getxAxisTimes: function(nodeId) {
-            var xAxisTimes = {
-                seconds: [],
-                hourMin: [],
-            };
-
-            for (var i = 0; i < this.frequency; i++) {
-                xAxisTimes.seconds[i] = this.times[nodeId][0] + i * this.interval;
-                xAxisTimes.hourMin[i] =  calHourMin(xAxisTimes.seconds[i]);
-            }
-            return xAxisTimes;
-        },
-        getRatios: function(ratios, data, xAxisTimes) {
-            var cpuPercent = [];
-            $.each(data.cpuPercent, function(index, percent) {
-                cpuPercent.push(percent.toFixed(2));
-            });
-
-            var timestamp = calHourMin(data.timestamp);
-            
-            var leftMargin;
-            var rightMargin;
-            for (var i = 0; i < this.frequency; i++) {
-                leftMargin = calHourMin(xAxisTimes.seconds[i]);
-                rightMargin = calHourMin(xAxisTimes.seconds[i] + this.interval);
-                if(timestamp >= leftMargin && timestamp < rightMargin) {
-                    ratios.cpu[i] = cpuPercent;
-                    ratios.memory[i] = calRatio(data.memUsed, data.memTotal);
-                    ratios.disk[i] = calRatio(data.diskUsed, data.diskTotal);
-                    break;
-                }
-            }
-
-            return ratios;
-        },
-        updateNodes: function(data) {
-            var nodeId = data.nodeId;
-            if (!this.nodes[nodeId]) {
-                this.nodes[nodeId] = [];
-            }
-            this.updateTimes(data);
-            if (data.timestamp < this.times[nodeId][0] - this.interval) {
-                return;
-            }
-            this.nodes[nodeId].push(data);
-            if (this.nodes[nodeId].length > this.nodesNumber) {
-                this.nodes[nodeId].shift();
-            }
-        },
-        getChartsData: function(nodeId) {
-            if(!this.nodes.hasOwnProperty(nodeId)) {
-                return;
-            }
-            var nodeArray = this.nodes[nodeId];
-            xAxisTimes = this.getxAxisTimes(nodeId);
-            var ratios = {
-                cpu: [],
-                memory: [],
-                disk: []
-            };
-            for (var i = 0; i < nodeArray.length; i++) {
-                ratios = this.getRatios(ratios, nodeArray[i], xAxisTimes);
-            }
-            xAxis = xAxisTimes.hourMin;
-            yAxis = {
-                    cpu: ratios.cpu,
-                    memory: ratios.memory,
-                    disk: ratios.disk
-            };
-            
-            chartsData = {
-                    xAxis: xAxis,
-                    yAxis: yAxis
-            }
-            return chartsData;
-        }
-    };
-
     var httpMonitor = {
         getxAxisTimes: function(timestamp, frequency, interval) {
             var times = {
@@ -146,8 +43,10 @@ function monitor($rootScope, ngSocket) {
 
             var frequency = 60;
             var interval = 1 * 60;
-            var xAxis = this.getDataInhour(data, frequency, interval).xAxis;
-            var yAxisDataInhour = this.getDataInhour(data, frequency, interval).yAxis;
+            var dataInhour = this.getDataInhour(data, frequency, interval);
+
+            var xAxis = dataInhour.xAxis;
+            var yAxisDataInhour = dataInhour.yAxis;
             var yAxis = {
                 cpu: [],
                 memory: [],
@@ -158,15 +57,14 @@ function monitor($rootScope, ngSocket) {
                 if(val) {
                     yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
                     yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
-                    yAxis.disk[index] = getDefaultRatio(calRatio(val.diskUsed, val.diskTotal));
+                    yAxis.disk[index] = getDiskRatio(val);
                 }
             });
 
-            chartsData = {
+            return {
                 xAxis: xAxis,
                 yAxis: yAxis
             };
-            return chartsData;
         }
 
     };
@@ -236,10 +134,21 @@ function monitor($rootScope, ngSocket) {
         }
         return ratio;
     }
+
+    function getDiskRatio(val) {
+        if (!val.disks && val.diskUsed && val.diskTotal) {
+            return getDefaultRatio(calRatio(val.diskUsed, val.diskTotal));
+        } else if (val.disks && $.isArray(val.disks)) {
+            var diskPercent = [];
+            for (var i = 0; i < val.disks.length; i++) {
+                diskPercent[i] = getDefaultRatio(calRatio(val.disks[i].used, val.disks[i].total));
+            }
+            return diskPercent;
+        }
+    }
     
 
     return {
-        wsMonitor: wsMonitor,
         httpMonitor: httpMonitor,
         calHourMin: calHourMin,
         calRatio: calRatio,
