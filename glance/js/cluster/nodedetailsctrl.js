@@ -92,10 +92,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                         return;
                     }
                 }
-                nodeInfo = getNodeInfo(data);
-                if (nodeInfo) {
-                    $scope.nodeInfo = nodeInfo;
-                }
+                $scope.nodeInfo = getNodeInfo(data, true);
     
                 nodesData.splice(0, 0, data);
                 if (nodesData.length > maxNodesNumber) {
@@ -107,19 +104,29 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         });
     }
 
-    function getNodeInfo(data) {
-        var nodeInfo, keys, key, i;
-        nodeInfo = {};
-        keys = ['cpuPercent', 'osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
-        for (i = 0; i < keys.length; i += 1) {
+    function getNodeInfo(data, isUpdate) {
+        var nodeInfo = {};
+        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
+        
+        var key;
+        for (var i = 0; i < keys.length; i++) {
             key = keys[i];
+
             if (data[key]) {
                 nodeInfo[key] = data[key];
+            } else if(isUpdate){
+                return $scope.nodeInfo;
             } else {
-                return false;
+                nodeInfo[key] = '未知';
             }
         }
-        nodeInfo.cpuNumber = nodeInfo.cpuPercent.length;
+
+        if(data.cpuPercent && angular.isArray(data.cpuPercent)) {
+            nodeInfo.cpuNumber = data.cpuPercent.length;
+        } else {
+            nodeInfo.cpuNumber = '未知';
+        }
+
         return nodeInfo;
     }
 
