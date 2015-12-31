@@ -94,54 +94,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.hostEles = ["hostname", "UNIQUE"];
 
     $scope.deployApp = function () {
-        //if ($scope.portInfos.length) {
-        //    $scope.deployinfo.containerPortsInfo = $scope.portInfos;
-        //} else {
-        //    delete $scope.deployinfo.containerPortsInfo;
-        //}
-        //
-        //if ($scope.pathsInfo.length) {
-        //    $scope.deployinfo.envs = $scope.pathsInfo;
-        //} else {
-        //    delete $scope.deployinfo.envs;
-        //}
-        //
-        //if ($scope.cmdInput) {
-        //    $scope.deployinfo.cmd = $scope.cmdInput;
-        //} else {
-        //    delete $scope.deployinfo.cmd;
-        //}
-        //
-        ////add dirsInfo
-        //if ($scope.dirsInfo.length) {
-        //    $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
-        //} else {
-        //    delete $scope.deployinfo.containerVolumesInfo;
-        //}
-        //
-        ////Constraints of node
-        //if ($scope.selectNodes.length) {
-        //    $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
-        //} else {
-        //    $scope.deployinfo.constraints = $scope.defaultEles;
-        //}
-        ////Constraints if checked HOST and checked single
-        //if ($scope.single) {
-        //    $scope.deployinfo.constraints.push($scope.hostEles)
-        //}
-        //
-        //
-        //$scope.deployinfo.clusterId = $scope.config.ClusterId.toString();
-        //$scope.deployinfo.containerNum = $scope.containerNum.toString();
-        //$scope.deployinfo.containerCpuSize = $scope.cpuSize;
-        //$scope.deployinfo.containerMemSize = $scope.memSize;
-        //$scope.deployinfo.imageversion = $scope.imageversion;
-        //glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
-        //    Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-        //    $state.go('app.appdetail.config', {appId: data.data}, {reload: true});
-        //}, undefined, null, function (data) {
-        //    Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + $scope.addCode[data.code]);
-        //});
 
         //Constraints of node
         if ($scope.selectNodes.length) {
@@ -156,7 +108,13 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.config.appId = $stateParams.appId;
         //set clusterId string
         $scope.config.clusterId = $scope.config.clusterId.toString();
-        appCurd.updateVersion($scope, $stateParams.appId);
+        appCurd.isDeploy($stateParams.appId).then(function(res){
+            if(!res.data.data.isdeploying){
+                Notification.warning('该应用正在更新中,无法再次更新');
+            }else{
+                appCurd.updateVersion($scope, $stateParams.appId);
+            }
+        });
         console.log($scope.config)
     };
 
