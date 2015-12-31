@@ -2,9 +2,12 @@
     <div class="tab-pane active cluster-nodes" id="service-list" data-ng-show="cluster.nodes.length">
         <div>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
-            <a href="#" data-ui-sref="cluster.nodesource({clusterId:cluster.id})">
-                <button type="button" class="btn btn-default btn-sm">添加主机</button>
-            </a>
+            
+            <button type="button" class="btn btn-default btn-sm"
+                data-ui-sref="cluster.nodesource({clusterId:cluster.id})">
+              添加主机
+            </button>
+            
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                     data-ng-disabled="!checkedNodes.value.length" data-demo-disable>删除主机
             </button>&nbsp;

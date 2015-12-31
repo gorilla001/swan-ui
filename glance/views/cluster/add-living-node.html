@@ -1,6 +1,15 @@
 <div class="page-header">
     <h1 class="pull-left">添加主机</h1>
-	<small><br><br><a href="http://v.youku.com/v_show/id_XMTM5MTI1NTc2NA" target="_blank">如何添加一台主机</a></small>
+    <small>
+      数人云可以助您轻松接入遍布各地的计算资源，
+      <br>
+      无论主机的操作系统和网络环境。
+      <br>
+      <a href="http://v.youku.com/v_show/id_XMTM5MTI1NTc2NA" target="_blank">如何添加一台主机</a>
+    </small>
+    <a href="#" class="btn btn-success" 
+      data-ui-sref="cluster.createcluster"
+      data-demo-disable="left">新建集群</a>
 </div>
 
 <ol class="breadcrumb">
@@ -11,7 +20,6 @@
     <a data-ui-sref="cluster.nodesource({clusterId: clusterId})">添加主机</a>
   </li>
   <li>添加现有主机</li>
-
 </ol>
 
 <section class="add-node" data-ng-controller="addNodeFormCtrl">
@@ -20,7 +28,7 @@
             <div class="alert alert-info">
                 <h4>
                     <a href="#" ng-click="isCollapsed = !isCollapsed">
-                        在您添加主机之前，请检查以确保您的环境满足下述条件：
+                        在您添加主机之前，请检查以确保您的环境满足下述条件（点击查看）：
                     </a>
                 </h4>
                 <div uib-collapse="isCollapsed">
