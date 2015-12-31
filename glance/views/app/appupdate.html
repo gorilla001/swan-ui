@@ -1,0 +1,303 @@
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">应用更新</h1>
+    </div>
+</div>
+<section>
+    <div class="main-container new-app">
+        <div class="main-container-body">
+            <form class="form-horizontal" name="staticForm" data-ng-submit="deployApp()">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">应用名称</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="appName" ng-model="config.appName"
+                               ng-disabled="true">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">所属集群</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="cluster"
+                               ng-model="clusterNameMap[config.clusterId]" ng-disabled="true">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>镜像地址</label>
+
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
+                        <input type="text" class="form-control" name="imageurl" data-ng-model="config.imageURI"
+                               data-required="required">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.imageurl.$invalid && !staticForm.imageurl.$pristine}">
+                        <p data-ng-show="staticForm.imageurl.$error.required && !staticForm.imageurl.$pristine"
+                           class="help-block">镜像地址不能为空</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>镜像版本</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="config.imageversion"
+                               data-required="required"
+                               placeholder="版本号">
+                        <span class="help-block">注:尽量不要使用 latest 作为版本号</span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>网络模式</label>
+
+                    <div class="col-md-5">
+                        <label class="checkbox-inline">
+                            <input type="radio" ng-model="config.network" value="BRIDGE" data-required="required">
+                            网桥模式
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" ng-model="config.network" value="HOST" data-required="required">
+                            HOST 模式
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">选择主机</label>
+
+                    <div class="col-md-2">
+                        <isteven-multi-select
+                                input-model="creatAppLableList"
+                                output-model="selectLables"
+                                button-label="name"
+                                item-label="name"
+                                tick-property="ticked"
+                                helper-elements="all none filter"
+                                max-height="200px"
+                                translation="lableMultiConfig"
+                                on-item-click="labelClick( data )"
+                                on-select-all="labelSelectAll()"
+                                on-select-none="labelSelectNone()"
+                        >
+                        </isteven-multi-select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <isteven-multi-select
+                                input-model="appLableList"
+                                output-model="selectNodes"
+                                button-label="ip"
+                                item-label="ip"
+                                tick-property="ticked"
+                                helper-elements="all none filter"
+                                max-height="200px"
+                                translation="nodeMultiConfig"
+                        >
+                        </isteven-multi-select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">主机/容器目录</label>
+
+                    <div class="col-md-5">
+                        <button type="button" class="btn btn-info btn-sm"
+                                data-ng-click="openDirModule()">
+                            添加目录
+                        </button>
+
+                        <table class="table table-striped table-bordered"
+                               data-ng-show="config.containerVolumesInfo.length">
+                            <thead>
+                            <tr>
+                                <th>数据挂载目录</th>
+                                <th>容器目录</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr data-ng-repeat="dir in config.containerVolumesInfo">
+                                <td>{/dir.hostPath/}</td>
+                                <td>{/dir.containerPath/}</td>
+                                <td>
+                                    <button type="button" data-ng-click="deletCurDir($index)"
+                                            class="btn btn-default btn-xs">删除
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>容器规格</label>
+
+                    <div class="col-md-5">
+                        <rzslider
+                                rz-slider-model="cpuSlider.min"
+                                rz-slider-options="cpuSlider.options" style="width: 70%; float: left;"></rzslider>
+                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;"><strong
+                                style="font-size: 30px;">{/config.containerCpuSize/}</strong></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-5 col-md-offset-2">
+                        <rzslider
+                                rz-slider-model="memSlider.min"
+                                rz-slider-options="memSlider.options" style="width: 70%; float: left;"></rzslider>
+                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;"><strong
+                                style="font-size: 30px;">{/config.containerMemSize/}</strong> <sub>MB</sub></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">* </span>容器个数</label>
+
+                    <div class="col-md-2"
+                         data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
+                        <input type="number" class="form-control" name="containerNum"
+                               data-ng-model="config.containerNum"
+                               min="1" data-required="required">
+                        <div data-ng-class="{ 'has-error' : staticForm.containerNum.$invalid && !staticForm.containerNum.$pristine }">
+                            <p data-ng-show="staticForm.containerNum.$error.min && !staticForm.containerNum.$pristine"
+                               class="help-block">容器个数必须大于 1 </p>
+
+                            <p data-ng-show="staticForm.containerNum.$error.required && !staticForm.containerNum.$pristine"
+                               class="help-block">容器个数不能为空 </p>
+                        </div>
+                    </div>
+                    <label style="margin-top: 7px; font-weight: normal;" uib-popover="每个主机只能运行一个当前应用的容器"
+                           popover-trigger="mouseenter">
+                        <input type="checkbox" ng-model="config.unique">
+                        1容器:1主机
+                    </label>
+                </div>
+
+                <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+                   aria-controls="collapseExample" class="col-md-offset-2 ad-set">高级设置 <span class="caret"></span></a>
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+                        <div class="item-header">
+                            <h4>应用地址</h4>
+                        </div>
+                        <div class="form-inline" style="margin-bottom: 15px;">
+                            <button type="button" class="btn btn-info btn-sm" data-ng-click="openPortModule()"> 添加应用地址
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered"
+                                   data-ng-show="config.containerPortsInfo.length">
+                                <thead>
+                                <tr>
+                                    <th>应用端口</th>
+                                    <th>类型</th>
+                                    <th>协议</th>
+                                    <th>地址</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="info in config.containerPortsInfo">
+                                    <td>{/info.appPort/}</td>
+                                    <td>{/portType[info.type]/}</td>
+                                    <td>{/protocolType[info.protocol]/}</td>
+                                    <td>
+                                        <p ng-show="info.protocol == '1' && info.type == '1'"
+                                           ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && info.isUri == '2'"
+                                           ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && info.isUri == '1'">
+                                            {/info.uri/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '1'"
+                                           ng-repeat="proxyNode in proxyNodes">
+                                            http://{/proxyNode.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '2' && info.isUri == '1'">
+                                            http://{/info.uri/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '2' && info.isUri == '2'"
+                                           ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && !info.isUri "
+                                           ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/info.mapPort/}</p>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default btn-xs"
+                                                data-ng-click="deletCurPort($index)">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="item-header">
+                            <h4>环境变量
+                                <small>自定义环境变量</small>
+                            </h4>
+                        </div>
+
+                        <div class="form-inline">
+                            <button type="button" class="btn btn-info btn-sm"
+                                    data-ng-click="openPathModule()">
+                                添加环境变量
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" data-ng-show="config.envs.length">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="info in config.envs">
+                                    <td>{/info.key/}</td>
+                                    <td>{/info.value/}</td>
+                                    <td>
+                                        <button type="button" data-ng-click="deletCurPath($index)"
+                                                class="btn btn-default btn-xs">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="item-header">
+                            <h4> CMD </h4>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" data-ng-model="config.cmd"
+                                       placeholder="输入需要运行的命令">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-3">
+                        <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="staticForm.$invalid">
+                            更 新
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

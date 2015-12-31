@@ -26,13 +26,13 @@
             stop: stop,
             start: start,
             deleteApp: deleteApp,
+            updateVersion: updateVersion,
             undoApp: undoApp,
             updateOpenModal: updateOpenModal,
             updateAjax: updateAjax,
-            getUpdateAppInfo: getUpdateAppInfo,
-            setUpdateAppInfo: setUpdateAppInfo,
             getListCluster: getListCluster,
-            getAppNameList: getAppNameList
+            getAppNameList: getAppNameList,
+            isDeploy: isDeploy
         };
 
         function stop(appId, appName) {
@@ -62,11 +62,27 @@
                 glanceHttp.ajaxGet(['app.deleteApp', {app_id: parseInt(appId)}], function (data) {
                     if (data.data.deletState == 0) {
                         Notification.success('应用 ' + appName + ' 删除中...');
-                        $state.go('app.applist',null, {reload: true});
+                        $state.go('app.applist', null, {reload: true});
                     }
                 }, undefined, null, function (data) {
                     Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
                 });
+            });
+        }
+
+        function updateVersion(scope, appId) {
+            glanceHttp.ajaxPost(['app.updateVersion'], scope.config, function (data) {
+                scope.config = {};
+                Notification.success('应用 ' + scope.config.appName + ' 更新中...');
+                $state.go('app.appdetail.version', {appId: appId}, {reload: true});
+            }, undefined, function (res, status) {
+                //reset constraints flag
+                scope.config.constraints = [];
+                console.log("request failed (" + status + ")");
+            }, function (data) {
+                //reset constraints flag
+                scope.config.constraints = [];
+                Notification.error('应用 ' + scope.config.appName + ' 更新失败: ' + scope.addCode[data.code]);
             });
         }
 
@@ -137,6 +153,10 @@
                     });
                 }
             });
+        }
+
+        function isDeploy(appId) {
+            return glanceHttp.ajaxGet(['app.isdeploying', {app_id: appId}]);
         }
 
     }

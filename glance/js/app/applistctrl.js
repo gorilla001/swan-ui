@@ -39,7 +39,9 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                     //ajax get getAppsStatus
                     glanceHttp.ajaxGet(['app.getAppsStatus'], function (res) {
                         $scope.appListStatus = res.data;
-                    }, undefined, undefined, undefined, false);
+                    }, undefined, function(res, status){
+                        console.log("request failed (" + status + ")");
+                    }, function(res){}, false);
 
                     reloadTable();
                 }, params.url(), function (errorRes) {

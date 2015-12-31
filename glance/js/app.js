@@ -216,11 +216,16 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('app.update', {
-                url: '/update/:appId?clustername&appname&clusterId',
+                url: '/update/:appId',
                 views: {
                     'first': {
-                        templateUrl: '/views/app/updateapp.html',
-                        controller: 'updateAppCtrl'
+                        templateUrl: '/views/app/appupdate.html',
+                        controller: 'appUpdateCtrl'
+                    }
+                },
+                resolve:{
+                    getAppConfig: function(glanceHttp, $stateParams){
+                        return glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}])
                     }
                 }
             })
