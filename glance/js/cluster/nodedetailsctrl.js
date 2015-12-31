@@ -17,6 +17,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     };
     $scope.labelForm = {};
 
+    $scope.nodeInfo = {};
+
     $scope.serviceViews = [];
     $('.charts').hide();
     
@@ -64,6 +66,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.getNodeMetricData = function (nodeId) {
         glanceHttp.ajaxGet(['cluster.nodeMonitor', {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
+            setDefalutNodeInfos();
+
             if (data.data.length) {
                 $scope.nodeInfo = getNodeInfo(data.data[0]);
             }
@@ -92,7 +96,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                         return;
                     }
                 }
-                $scope.nodeInfo = getNodeInfo(data, true);
+                $scope.nodeInfo = getNodeInfo(data);
     
                 nodesData.splice(0, 0, data);
                 if (nodesData.length > maxNodesNumber) {
@@ -104,7 +108,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         });
     }
 
-    function getNodeInfo(data, isUpdate) {
+    function getNodeInfo(data) {
         var nodeInfo = {};
         var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
         
@@ -114,20 +118,27 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
             if (data[key]) {
                 nodeInfo[key] = data[key];
-            } else if(isUpdate){
-                return $scope.nodeInfo;
             } else {
-                nodeInfo[key] = '未知';
+                return $scope.nodeInfo;
             }
         }
 
         if(data.cpuPercent && angular.isArray(data.cpuPercent)) {
             nodeInfo.cpuNumber = data.cpuPercent.length;
         } else {
-            nodeInfo.cpuNumber = '未知';
+            return $scope.nodeInfo;
         }
 
         return nodeInfo;
+    }
+
+    function setDefalutNodeInfos() {
+        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion', 'cpuNumber'];
+        var key;
+        for (var i = 0; i < keys; i++) {
+            key = keys[i];
+            $scope.nodeInfo[key] = '未知';
+        }
     }
 
     $scope.deleNode = function(id){
