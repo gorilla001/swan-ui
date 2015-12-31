@@ -16,8 +16,8 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
         glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}], function (data) {
             $scope.config = data.data;
 
-            if ($scope.config.ClusterId) {
-                $scope.getNode($scope.config.ClusterId);
+            if ($scope.config.clusterId) {
+                $scope.getNode($scope.config.clusterId);
             }
         });
     };

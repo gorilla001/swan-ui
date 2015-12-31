@@ -14,7 +14,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
                 $scope.versions = data.data;
                 $scope.totalItems = $scope.versions.length;
                 $scope.pageLength = 10;
-                $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
+                $scope.showPagination = ($scope.totalItems > $scope.pageLength);
                 $scope.contentCurPage = $scope.versions.slice(0, $scope.pageLength);
             }
         }, undefined, null, function(data) {
