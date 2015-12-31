@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appConfigCtrl", appConfigCtrl);
 
-appConfigCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp'];
+appConfigCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', 'Notification'];
 
-function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp) {
+function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp, Notification) {
     $rootScope.appTabFlag = "appConfig";
     $scope.networkText = {
         BRIDGE: "网桥模式",
