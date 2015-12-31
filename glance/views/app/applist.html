@@ -54,7 +54,7 @@
                                 data-ng-show="appListStatus[app.appId].status == '6'" data-demo-disable>撤销
                         </button>
                         <button type="button"
-                                data-ng-disabled="appListStatus[app.appId].status == '5' || !appListStatus[app.appId].status"
+                                data-ng-disabled="appListStatus[app.appId].status == '5'"
                                 data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs" data-demo-disable>删除
                         </button>
                     </td>
