@@ -23,8 +23,8 @@
             <select class="form-control" data-ng-model="portInfo.type"
                     ng-change="changeType(portInfo.type)">
                 <option value="">选择类型</option>
-                <option value="1"> 对内</option>
-                <option value="2"> 对外</option>
+                <option value="1" ng-show="proxyNodes.length"> 对内</option>
+                <option value="2" ng-show="gateWays.length"> 对外</option>
             </select>
         </div>
 
