@@ -8,8 +8,8 @@ appVersionCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', 
 function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification, $state, appCurd) {
     $rootScope.appTabFlag = "appVersion";
     var promise;
-    var IS_NOT_DEPLOYING = 0;
-    var IS_DEPLOYING = 1;
+    var IS_NOT_DEPLOYED = 0;
+    var IS_DEPLOYED = 1;
     $scope.counter = 0;
 
     $scope.getImageVersions = function () {
@@ -20,7 +20,6 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
                 $scope.pageLength = 10;
                 $scope.showPagination = ($scope.totalItems > $scope.pageLength);
                 $scope.contentCurPage = $scope.versions.slice(0, $scope.pageLength);
-                console.log($scope.contentCurPage)
             }
         }, undefined, null, function (data) {
             Notification.error('获取镜像列表失败: ' + $scope.addCode[data.code]);
@@ -31,7 +30,6 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         glanceHttp.ajaxGet(['app.cancelDeploy', {app_id: $stateParams.appId}], function (data) {
             if (data.code == 0) {
                 $scope.getImageVersions();
-                $scope.counter = 0;
                 Notification.success('取消部署成功');
             }
         }, undefined, null, function (data) {
@@ -41,6 +39,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
 
     $scope.verisonDeploy = function (versionId) {
         glanceHttp.ajaxGet(['app.versionDeploy', {app_versionId: versionId}], function (data) {
+            $scope.counter = 0;
             $scope.isDeploy()
         }, undefined, null, function (data) {
             Notification.error('部署失败: ' + $scope.addCode[data.code]);
@@ -50,14 +49,14 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
     $scope.isDeploy = function(){
         glanceHttp.ajaxGet(['app.isdeploying',{app_id: $stateParams.appId}], function (data) {
             $scope.isDeployState = data.data.isdeploying;
-            if($scope.isDeployState === IS_NOT_DEPLOYING){
+            if($scope.isDeployState === IS_NOT_DEPLOYED){
                 $scope.counter += 1;
                 if(data.data.info !== "" && $scope.counter > 1){
                     Notification.warning("更新失败: 镜像未找到");
                 }
                 promise = $timeout($scope.isDeploy, 10000);
-            }else if($scope.isDeployState === IS_DEPLOYING){
-                $state.go('app.appdetail.version',{appId: $scope.configObject.appId},{reload : true});
+            }else if($scope.isDeployState === IS_DEPLOYED){
+                $state.reload();
             }
         }, undefined, null, function(data) {
 
@@ -72,19 +71,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         $scope.contentCurPage = $scope.versions.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
     };
 
-    $scope.getAppInfoPromise.then($scope.getImageVersions).then(function () {
-        appCurd.isDeploy($stateParams.appId).then(function(res){
-            $scope.isDeployState = res.data.data.isdeploying;
-            if($scope.isDeployState === IS_NOT_DEPLOYING){
-                $scope.counter += 1;
-                if(res.data.data.info !== "" && $scope.counter > 1){
-                    Notification.warning("更新失败: 镜像未找到");
-                }
-                promise = $timeout($scope.isDeploy, 10000);
-            }else if($scope.isDeployState === IS_DEPLOYING){
-            }
-        })
-    });
+    $scope.getAppInfoPromise.then($scope.getImageVersions);
 
     $scope.$on('$destroy', function () {
         $timeout.cancel(promise);
