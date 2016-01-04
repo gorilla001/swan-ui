@@ -29,7 +29,7 @@
                             <li data-ng-show="appInfo.status == '3'"><a href="#"
                                                                         data-ng-click="startApp(appInfo.appId, appInfo.name)"
                                                                         data-demo-disable>启动</a></li>
-                            <li data-ng-show="appInfo.status !='3' && appInfo.status !='4'"><a href="#"
+                            <li data-ng-show="appInfo.status !='3' && appInfo.status !='4' && appInfo.status !='7'"><a href="#"
                                                                       data-ng-click="stopApp(appInfo.appId, appInfo.name)"
                                                                       data-demo-disable>停止</a></li>
                             <li data-ng-disabled="appInfo.status == '5'"><a
