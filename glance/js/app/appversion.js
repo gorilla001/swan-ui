@@ -7,13 +7,9 @@ appVersionCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', 
 
 function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification, $state, appCurd) {
     $rootScope.appTabFlag = "appVersion";
-    var promise;
-    var IS_NOT_DEPLOYED = 0;
-    var IS_DEPLOYED = 1;
-    $scope.counter = 0;
 
     $scope.getImageVersions = function () {
-        glanceHttp.ajaxGet(['app.imageVersions', {app_id: $stateParams.appId}], function (data) {
+        return glanceHttp.ajaxGet(['app.imageVersions', {app_id: $stateParams.appId}], function (data) {
             if (data && data.data && data.data.length !== 0) {
                 $scope.versions = data.data;
                 $scope.totalItems = $scope.versions.length;
@@ -39,28 +35,12 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
 
     $scope.verisonDeploy = function (versionId) {
         glanceHttp.ajaxGet(['app.versionDeploy', {app_versionId: versionId}], function (data) {
-            $scope.counter = 0;
-            $scope.isDeploy()
+            $scope.getImageVersions().then(function(res){
+                $scope.isDeploy($stateParams.appId, function(){$scope.getImageVersions()})
+            });
         }, undefined, null, function (data) {
             Notification.error('部署失败: ' + $scope.addCode[data.code]);
         })
-    };
-
-    $scope.isDeploy = function(){
-        glanceHttp.ajaxGet(['app.isdeploying',{app_id: $stateParams.appId}], function (data) {
-            $scope.isDeployState = data.data.isdeploying;
-            if($scope.isDeployState === IS_NOT_DEPLOYED){
-                $scope.counter += 1;
-                if(data.data.info !== "" && $scope.counter > 1){
-                    Notification.warning("更新失败: 镜像未找到");
-                }
-                promise = $timeout($scope.isDeploy, 10000);
-            }else if($scope.isDeployState === IS_DEPLOYED){
-                $state.reload();
-            }
-        }, undefined, null, function(data) {
-
-        });
     };
 
     $scope.setPage = function (pageNo) {
@@ -72,8 +52,4 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
     };
 
     $scope.getAppInfoPromise.then($scope.getImageVersions);
-
-    $scope.$on('$destroy', function () {
-        $timeout.cancel(promise);
-    });
 }

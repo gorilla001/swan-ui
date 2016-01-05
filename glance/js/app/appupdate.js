@@ -1,9 +1,9 @@
 glanceApp.controller("appUpdateCtrl", appUpdateCtrl);
 
 appUpdateCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig',
-    'openModule', 'appCurd', 'getAppConfig', '$stateParams'];
+    'openModule', 'appCurd', 'getAppConfig', '$stateParams', '$timeout'];
 
-function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule, appCurd, getAppConfig, $stateParams) {
+function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule, appCurd, getAppConfig, $stateParams, $timeout) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -94,7 +94,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.hostEles = ["hostname", "UNIQUE"];
 
     $scope.deployApp = function () {
-
         //Constraints of node
         if ($scope.selectNodes.length) {
             $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
@@ -112,10 +111,20 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             if(!res.data.data.isdeploying){
                 Notification.warning('该应用正在更新中,无法再次更新');
             }else{
-                appCurd.updateVersion($scope, $stateParams.appId);
+                glanceHttp.ajaxPost(['app.updateVersion'], $scope.config, function (data) {
+                    $scope.$emit("checkIsDeploy", $stateParams.appId);
+                    $state.go('app.appdetail.version',{appId: $stateParams.appId},{reload : true});
+                }, undefined, function (res, status) {
+                    //reset constraints flag
+                    $scope.config.constraints = [];
+                    console.log("request failed (" + status + ")");
+                }, function (data) {
+                    //reset constraints flag
+                    $scope.config.constraints = [];
+                    Notification.error('应用 ' + $scope.config.appName + ' 更新失败: ' + $scope.addCode[data.code]);
+                });
             }
         });
-        console.log($scope.config)
     };
 
     $scope.deletCurPort = function (index) {

@@ -26,7 +26,6 @@
             stop: stop,
             start: start,
             deleteApp: deleteApp,
-            updateVersion: updateVersion,
             undoApp: undoApp,
             updateOpenModal: updateOpenModal,
             updateAjax: updateAjax,
@@ -67,22 +66,6 @@
                 }, undefined, null, function (data) {
                     Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
                 });
-            });
-        }
-
-        function updateVersion(scope, appId) {
-            glanceHttp.ajaxPost(['app.updateVersion'], scope.config, function (data) {
-                scope.config = {};
-                Notification.success('应用 ' + scope.config.appName + ' 更新中...');
-                $state.go('app.appdetail.version', {appId: appId}, {reload: true});
-            }, undefined, function (res, status) {
-                //reset constraints flag
-                scope.config.constraints = [];
-                console.log("request failed (" + status + ")");
-            }, function (data) {
-                //reset constraints flag
-                scope.config.constraints = [];
-                Notification.error('应用 ' + scope.config.appName + ' 更新失败: ' + scope.addCode[data.code]);
             });
         }
 

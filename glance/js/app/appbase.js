@@ -3,10 +3,14 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp', 'Notification', '$q', 'appCurd'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp', 'Notification', '$q', 'appCurd', '$stateParams'];
 
-function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd) {
+function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd, $stateParams) {
     $rootScope.show = "application";
+    var promise;
+    var IS_NOT_DEPLOYED = 0;
+    var IS_DEPLOYED = 1;
+    $scope.counter = 0;
 
     $scope.clusterNameMap = {};
     $scope.clusters = [];
@@ -72,6 +76,33 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
 
     $scope.upContainNum = function (appId, containerNum, appName) {
         appCurd.updateOpenModal($scope, appId, containerNum, appName);
+    };
+
+    $scope.$on("checkIsDeploy", function (event ,data) {
+        $scope.isDeploy(data)
+    });
+
+    $scope.isDeploy = function(appId, compeletCallBack){
+        console.log("counter",$scope.counter);
+        glanceHttp.ajaxGet(['app.isdeploying',{app_id: appId}], function (data) {
+            $scope.isDeployState = data.data.isdeploying;
+            if($scope.isDeployState === IS_NOT_DEPLOYED){
+                $scope.counter += 1;
+                if(data.data.info !== "" && $scope.counter > 1){
+                    Notification.warning("更新失败");
+                }
+                promise = $timeout(function(){$scope.isDeploy(appId, compeletCallBack)}, 10000);
+            }else if($scope.isDeployState === IS_DEPLOYED){
+                $scope.counter = 0;
+                if(compeletCallBack){
+                    compeletCallBack();
+                    return
+                }
+                $state.go('app.appdetail.version',{appId: appId},{reload : true});
+            }
+        }, undefined, null, function(data) {
+            Notification.error($scope.addCode[data.code]);
+        });
     };
 
     $scope.getNode = function (clusterId) {
