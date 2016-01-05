@@ -179,15 +179,23 @@ function buildCharts(monitor) {
         var chart = echarts.init(document.getElementById(indicator.domId));
         chart.setOption(option);
     }
+    
+    function listDiskNames(diskNames) {
+        var names = [];
+        for (var i = 0; i < diskNames.length; i++) {
+            names[i] = diskNames[i] + '使用率';
+        }
+        return names;
+    }
 
-    var lineCharts = function(chartsData, DOMs, kind, seriesNames) {
+    var lineCharts = function(chartsData, DOMs, kind) {
         var cpu = {
             key: 'cpu',
             domId: DOMs.cpu,
             descriptions: {
                 title: 'CPU监控',
                 subtitle: '一小时内变化',
-                seriesName: seriesNames.cpu
+                seriesName: 'CPU使用率'
             },
             styles: {
                 lineWidth: 3,
@@ -201,7 +209,7 @@ function buildCharts(monitor) {
             descriptions: {
                 title: '内存监控',
                 subtitle: '一小时内变化',
-                seriesName: seriesNames.memory
+                seriesName: '内存使用率'
             },
             styles: {
                 lineColor: '#68d1f2',
@@ -216,7 +224,7 @@ function buildCharts(monitor) {
             descriptions: {
                 title: '磁盘监控',
                 subtitle: '一小时内变化',
-                seriesName: seriesNames.disk
+                seriesName: listDiskNames(chartsData.diskNames)
             },
             styles: {
                 lineWidth: 3,

@@ -53,17 +53,21 @@ function monitor($rootScope, ngSocket) {
                 disk: []
             };
 
+            var diskNames = [];
             $.each(yAxisDataInhour, function(index, val) {
                 if(val) {
                     yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
                     yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
-                    yAxis.disk[index] = getDiskRatio(val);
+                    //兼容老版本的格式
+                    var disk = getDisksFromData(val)
+                    yAxis.disk[index] = getDiskRatio(disk, diskNames);
                 }
             });
 
             return {
                 xAxis: xAxis,
-                yAxis: yAxis
+                yAxis: yAxis,
+                diskNames: diskNames
             };
         }
 
@@ -134,17 +138,27 @@ function monitor($rootScope, ngSocket) {
         }
         return ratio;
     }
-
-    function getDiskRatio(val) {
-        if (!val.disks && val.diskUsed && val.diskTotal) {
-            return getDefaultRatio(calRatio(val.diskUsed, val.diskTotal));
-        } else if (val.disks && $.isArray(val.disks)) {
-            var diskPercent = [];
-            for (var i = 0; i < val.disks.length; i++) {
-                diskPercent[i] = getDefaultRatio(calRatio(val.disks[i].used, val.disks[i].total));
-            }
-            return diskPercent;
+    
+    function getDisksFromData(data) {
+        var disks;
+        if (data.disks != undefined){
+            disks = data.disks;
+        } else {
+            disks = [{iNodesUsed: data.diskUsed, iNodesTotal: data.diskTotal, path: ''}]
         }
+        return disks;
+    }
+
+
+    function getDiskRatio(disks, diskNames) {
+        var diskPercent = [];
+        $.each(disks, function(_index, disk) {
+            if (diskNames.indexOf(disk.path) < 0) {
+                diskNames.push(disk.path);
+            }
+            diskPercent[diskNames.indexOf(disk.path)] = getDefaultRatio(calRatio(disk.used, disk.total));
+        });
+        return diskPercent;
     }
     
 

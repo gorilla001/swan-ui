@@ -19,12 +19,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.serviceViews = [];
     $('.charts').hide();
-
-    var seriesNames = {
-        cpu: 'CPU使用率',
-        memory: '内存使用率',
-        disk: ''
-    };
     
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.getCurNode = function () {
@@ -76,8 +70,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             $('.charts').show();
             $scope.showCharts = true;
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
-            seriesNames.disk = listDiskNames(data.data[0].disks, seriesNames.disk);
-            buildCharts.lineCharts(chartsData, $scope.DOMs, 'node', seriesNames);
+            buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
             
             addMetricData(data);
         });
@@ -108,26 +101,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                     nodesData.pop();
                 }
                 chartsData = monitor.httpMonitor.getChartsData(nodesData);
-                seriesNames.disk = listDiskNames(data.disks, seriesNames.disk);
-                
-                buildCharts.lineCharts(chartsData, $scope.DOMs, 'node', seriesNames);
+                buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
             }
         });
-    }
-
-    function listDiskNames(disks, disk) {
-        if (disk !== '') {
-            return disk;
-        }
-        var names = [];
-        if (disks && angular.isArray(disks)) {
-            for (var i = 0; i < disks.length; i++) {
-                names[i] = disks[i].path ? disks[i].path + '使用率' : '使用率';
-            }
-            return names;
-        } else {
-            return '磁盘使用率';
-        }
     }
 
     function getNodeInfo(data) {
