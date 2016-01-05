@@ -144,7 +144,7 @@ function monitor($rootScope, ngSocket) {
         if (data.disks != undefined){
             disks = data.disks;
         } else {
-            disks = [{iNodesUsed: data.diskUsed, iNodesTotal: data.diskTotal, path: ''}]
+            disks = [{used: data.diskUsed, total: data.diskTotal, path: ''}]
         }
         return disks;
     }
