@@ -112,8 +112,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
                 Notification.warning('该应用正在更新中,无法再次更新');
             }else{
                 glanceHttp.ajaxPost(['app.updateVersion'], $scope.config, function (data) {
-                    $scope.$emit("checkIsDeploy", $stateParams.appId);
-                    $state.go('app.appdetail.version',{appId: $stateParams.appId},{reload : true});
+                    $state.go('app.appdetail.version',{appId: $stateParams.appId, flag: true},{reload : true});
                 }, undefined, function (res, status) {
                     //reset constraints flag
                     $scope.config.constraints = [];

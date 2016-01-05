@@ -8,7 +8,17 @@ appVersionCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', 
 function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification, $state, appCurd) {
     $rootScope.appTabFlag = "appVersion";
 
+    var urlParam = $stateParams.flag;
+    var getImageVersionsFlag = false;
+    var cycPromise;
+    var IS_NOT_DEPLOYED = 0;
+    var IS_DEPLOYED = 1;
+    var DEPLOYED_ABNORMAL = 2;
+
+    $scope.counter = 0;
+
     $scope.getImageVersions = function () {
+        getImageVersionsFlag = true;
         return glanceHttp.ajaxGet(['app.imageVersions', {app_id: $stateParams.appId}], function (data) {
             if (data && data.data && data.data.length !== 0) {
                 $scope.versions = data.data;
@@ -35,8 +45,10 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
 
     $scope.verisonDeploy = function (versionId) {
         glanceHttp.ajaxGet(['app.versionDeploy', {app_versionId: versionId}], function (data) {
-            $scope.getImageVersions().then(function(res){
-                $scope.isDeploy($stateParams.appId, function(){$scope.getImageVersions()})
+            $scope.getImageVersions().then(function (res) {
+                $scope.isDeploy($stateParams.appId, function () {
+                    $scope.getImageVersions()
+                })
             });
         }, undefined, null, function (data) {
             Notification.error('部署失败: ' + $scope.addCode[data.code]);
@@ -51,5 +63,48 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         $scope.contentCurPage = $scope.versions.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
     };
 
-    $scope.getAppInfoPromise.then($scope.getImageVersions);
+    $scope.isDeploy = function () {
+        glanceHttp.ajaxGet(['app.isdeploying', {app_id: $stateParams.appId}], function (data) {
+            $scope.isDeployState = data.data.isdeploying;
+            console.log($scope.isDeployState);
+            switch ($scope.isDeployState) {
+                case IS_NOT_DEPLOYED:
+                    $scope.counter += 1;
+                    if (data.data.info !== "" && $scope.counter > 1) {
+                        Notification.warning("更新失败");
+                    }
+                    cycPromise = $timeout(function () {
+                        $scope.isDeploy()
+                    }, 10000);
+                    break;
+                case IS_DEPLOYED:
+                    $scope.counter = 0;
+                    $scope.getImageVersions();
+                    break;
+                case DEPLOYED_ABNORMAL:
+                    Notification.warning("1111");
+                    break;
+                default :
+            }
+
+            if (!getImageVersionsFlag) {
+                $scope.getImageVersions();
+            }
+        }, undefined, null, function (data) {
+            Notification.error($scope.addCode[data.code]);
+        });
+    };
+
+    $scope.getAppInfoPromise.then(function(){
+        if(urlParam){
+            $scope.isDeploy();
+        }else {
+            $scope.getImageVersions();
+        }
+    });
+
+    $scope.$on("$destroy",function(){
+        $timeout.cancel(cycPromise)
+    })
+
 }
