@@ -26,12 +26,12 @@
                 <dt>所在主机地址：</dt>
                 <dd><span ng-repeat="ip in config.iplist">{/ip/} &nbsp; </span></dd>
             </dl>
-            <h4 ng-show="config.containerVolumesInfo.length"><span>挂载目录</span></h4>
+            <h4 ng-show="config.containerVolumesInfo.length"><span>挂载路径</span></h4>
             <table class="table table-striped table-bordered" ng-show="config.containerVolumesInfo.length">
                 <thead>
                 <tr>
-                    <th>数据目录</th>
-                    <th>容器目录</th>
+                    <th>数据路径</th>
+                    <th>容器路径</th>
                 </tr>
                 </thead>
                 <tbody>
