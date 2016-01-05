@@ -83,12 +83,8 @@ function buildCharts(monitor) {
                 formatter: function(params){
                     var res = '';
                     for (var i = 0, l = params.length; i < l; i++) {
-                        if(params[i].seriesName === 'CPU使用率'){
-                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
-                        }else if(params[i].seriesName === '内存使用率'){
-                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
-                        }else if(params[i].seriesName === '磁盘使用率'){
-                            res += params[i].seriesName + ':' + params[i].data + '%' + '<br/>'
+                        if (params[i].seriesName !== '') {
+                            res += params[i].seriesName + '：' + params[i].data + '%' + '<br/>';
                         }
                     }
                     return res;
@@ -98,9 +94,15 @@ function buildCharts(monitor) {
         return option;
     }
 
-    function setSeriesStyles(indicator) {
+    function setSeriesStyles(indicator, i) {
+        var name;
+        if ($.isArray(indicator.descriptions.seriesName)) {
+            name = indicator.descriptions.seriesName[i];
+        } else {
+            name = indicator.descriptions.seriesName;
+        }
         var seriesStyle = {
-            name: indicator.descriptions.seriesName,
+            name: name,
             type: 'line',
             itemStyle: {
                 normal: {
@@ -155,17 +157,16 @@ function buildCharts(monitor) {
             });
         });
 
-        var seriesStyle = setSeriesStyles(indicator);
         var seriesData = ($.isArray(yAxis[yAxis.length-1])) ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
         var lineNumber = 1;
         if ($.isArray(seriesData[0])) {
             lineNumber = seriesData.length;
             for (var i = 0; i < lineNumber; i++) {
-                option.series[i] = setSeriesStyles(indicator);
+                option.series[i] = setSeriesStyles(indicator, i);
                 option.series[i].data = seriesData[i];
             }
         } else {
-            option.series[0] = seriesStyle;
+            option.series[0] = setSeriesStyles(indicator);
             option.series[0].data = seriesData;
         }
         option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
@@ -177,6 +178,14 @@ function buildCharts(monitor) {
         var option = getChatrsOption(indicator, xAxis, yAxis, alarmingLines);
         var chart = echarts.init(document.getElementById(indicator.domId));
         chart.setOption(option);
+    }
+    
+    function listDiskNames(diskNames) {
+        var names = [];
+        for (var i = 0; i < diskNames.length; i++) {
+            names[i] = diskNames[i] + '使用率';
+        }
+        return names;
     }
 
     var lineCharts = function(chartsData, DOMs, kind) {
@@ -215,10 +224,9 @@ function buildCharts(monitor) {
             descriptions: {
                 title: '磁盘监控',
                 subtitle: '一小时内变化',
-                seriesName: '磁盘使用率'
+                seriesName: listDiskNames(chartsData.diskNames)
             },
             styles: {
-                lineColor: '#7268f2',
                 lineWidth: 3,
                 axesColor: '#9B9B9B',
                 axiesFontsize: '11px'

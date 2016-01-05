@@ -69,7 +69,6 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             }
             $('.charts').show();
             $scope.showCharts = true;
-
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
             
