@@ -1,15 +1,15 @@
 <form class="form-horizontal" name="dirForm" data-ng-submit="ok()">
     <div class="modal-header">
-        <h3 class="modal-title">主机/容器目录配置</h3>
+        <h3 class="modal-title">挂载路径配置</h3><span>(挂载是双向的，文件和目录均可挂载)</span>
     </div>
 
     <div class="modal-body">
         <div class="form-group">
-            <label class="col-md-2 control-label">主机目录</label>
+            <label class="col-md-2 control-label">主机路径</label>
 
             <div class="col-md-5"
                  data-ng-class="{ 'has-error' : dirForm.dateDir.$invalid && !dirForm.dateDir.$pristine}">
-                <input type="text" name="dateDir" class="form-control" placeholder="宿主机路径"
+                <input type="text" name="dateDir" class="form-control"
                        data-ng-model="dirInfo.hostPath" data-required="required">
             </div>
 
@@ -20,11 +20,11 @@
         </div>
 
         <div class="form-group">
-            <label class="col-md-2 control-label">容器目录</label>
+            <label class="col-md-2 control-label">容器路径</label>
 
             <div class="col-md-5"
                  data-ng-class="{ 'has-error' : dirForm.containerDir.$invalid && !dirForm.containerDir.$pristine}">
-                <input type="text" name="containerDir" class="form-control" placeholder="容器内部目录"
+                <input type="text" name="containerDir" class="form-control"
                        data-ng-model="dirInfo.containerPath" data-required="required">
             </div>
 
