@@ -108,7 +108,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.config.appId = $stateParams.appId;
         //set clusterId string
         $scope.config.clusterId = $scope.config.clusterId.toString();
-        console.log($scope.config)
         appCurd.isDeploy($stateParams.appId).then(function(res){
             if(!res.data.data.isdeploying){
                 Notification.warning('该应用正在更新中,无法再次更新');
@@ -319,7 +318,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
                     $scope.domains = data.data.Domains;
                 }
             }
-        })
+        },{ appId: $stateParams.appId })
     };
 
     /*

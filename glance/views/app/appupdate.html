@@ -52,15 +52,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger">* </span>网络模式</label>
+                    <label class="col-md-2 control-label">网络模式</label>
 
                     <div class="col-md-5">
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="config.network" value="BRIDGE" data-required="required">
+                            <input type="radio" ng-model="config.network" value="BRIDGE" data-required="required" ng-disabled="true">
                             网桥模式
                         </label>
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="config.network" value="HOST" data-required="required">
+                            <input type="radio" ng-model="config.network" value="HOST" data-required="required" ng-disabled="true">
                             HOST 模式
                         </label>
                     </div>

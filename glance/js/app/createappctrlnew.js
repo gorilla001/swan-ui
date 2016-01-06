@@ -126,7 +126,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
 
         $scope.deployinfo.clusterId = $scope.clusterid.toString();
-        $scope.deployinfo.containerNum = $scope.containerNum.toString();
+        $scope.deployinfo.containerNum = $scope.containerNum;
         $scope.deployinfo.containerCpuSize = $scope.cpuSize;
         $scope.deployinfo.containerMemSize = $scope.memSize;
         $scope.deployinfo.imageversion = $scope.imageversion;
