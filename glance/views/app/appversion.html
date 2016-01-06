@@ -17,6 +17,7 @@
             <td>
                 <button data-ng-show="!appversion.currentDeploy && appversion.status == 1" type="button" data-ng-click="verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
                 <button data-ng-show="appversion.status === 0" type="button" data-ng-click="cancelDeploy()" class="btn btn-default btn-xs" data-demo-disable>撤销</button>
+                <button data-ng-show="!appversion.currentDeploy" type="button" data-ng-click="deleteVersion(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>删除</button>
             </td>
         </tr>
         </tbody>
