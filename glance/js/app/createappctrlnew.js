@@ -410,17 +410,19 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     $scope.labelSelectAll = function () {
         $scope.ajaxParams.labels = [];
-        angular.forEach($scope.creatAppLableList, function (lable) {
-            $scope.ajaxParams.labels.push(lable.id)
-        });
-        getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
-            $scope.appLableList = data.data;
-            $scope.appLableList.map(function (item) {
-                item.ticked = true;
-                return item;
-            })
-        }).error(function (data) {
-        });
+        if($scope.creatAppLableList.length){
+            angular.forEach($scope.creatAppLableList, function (lable) {
+                $scope.ajaxParams.labels.push(lable.id)
+            });
+            getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
+                $scope.appLableList = data.data;
+                $scope.appLableList.map(function (item) {
+                    item.ticked = true;
+                    return item;
+                })
+            }).error(function (data) {
+            });
+        }
     };
 
     $scope.labelSelectNone = function () {
