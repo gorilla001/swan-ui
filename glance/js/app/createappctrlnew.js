@@ -287,31 +287,34 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.getChangeData = function (clusterId) {
-        //empty ajaxParams.labels
-        $scope.ajaxParams.labels = [];
+        if(clusterId != undefined){
+            //empty ajaxParams.labels
+            $scope.ajaxParams.labels = [];
 
-        $scope.getNode(clusterId);
-        $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
-            item.ticked = false;
-            return item;
-        });
-        //get lable List of cluster
-        getClusterLables.listClusterLabels(clusterId, $scope);
-        glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
-            if (data.data) {
-                if (data.data.OuterPorts && data.data.OuterPorts.length) {
-                    $scope.outerPorts = data.data.OuterPorts;
-                }
+            $scope.getNode(clusterId);
+            $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
+                item.ticked = false;
+                return item;
+            });
+            //get lable List of cluster
+            getClusterLables.listClusterLabels(clusterId, $scope);
+            glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
+                if (data.data) {
+                    if (data.data.OuterPorts && data.data.OuterPorts.length) {
+                        $scope.outerPorts = data.data.OuterPorts;
+                    }
 
-                if (data.data.InnerPorts && data.data.InnerPorts.length) {
-                    $scope.innerPorts = data.data.InnerPorts;
-                }
+                    if (data.data.InnerPorts && data.data.InnerPorts.length) {
+                        $scope.innerPorts = data.data.InnerPorts;
+                    }
 
-                if (data.data.Domains && data.data.Domains.length) {
-                    $scope.domains = data.data.Domains;
+                    if (data.data.Domains && data.data.Domains.length) {
+                        $scope.domains = data.data.Domains;
+                    }
                 }
-            }
-        })
+            })
+        }
+
     };
 
     appCurd.getAppNameList($scope).then($scope.listCluster);
