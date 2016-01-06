@@ -18,6 +18,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     var PORT_CONTROLLER = "ModalPortCtrl";
 
     $scope.config = getAppConfig.data.data;
+    console.log($scope.config);
     appCurd.getListCluster($scope.$parent, true)
         .then(function (data) {
             getClusterLables.listClusterLabels($scope.config.clusterId, $scope);
@@ -107,6 +108,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.config.appId = $stateParams.appId;
         //set clusterId string
         $scope.config.clusterId = $scope.config.clusterId.toString();
+        console.log($scope.config)
         appCurd.isDeploy($stateParams.appId).then(function(res){
             if(!res.data.data.isdeploying){
                 Notification.warning('该应用正在更新中,无法再次更新');
@@ -128,15 +130,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
 
     $scope.deletCurPort = function (index) {
         $scope.config.containerPortsInfo.splice(index, 1);
-    };
-
-    $scope.addPortInfo = function (portInfo) {
-        if (isDisableAddList(portInfo, $scope.config.containerPortsInfo, ['type', 'mapPort', 'uri'])) {
-            Notification.error('添加的应用地址已存在');
-        } else {
-            $scope.config.containerPortsInfo.push(portInfo);
-            $scope.portInfo = {};
-        }
     };
 
     /*
@@ -176,6 +169,30 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.dirInfo = {};
         }
     };
+
+    $scope.addPortInfo = function (portInfo) {
+        if (isDisableAddList(portInfo, parsePortsInfo($scope.config.containerPortsInfo), ['type', 'mapPort', 'uri'])) {
+            Notification.error('添加的应用地址已存在');
+        } else {
+            $scope.config.containerPortsInfo.push(portInfo);
+            $scope.portInfo = {};
+        }
+    };
+
+    function parsePortsInfo(containerPortsInfo){
+        containerPortsInfo.map(function(item){
+            if(item.uri === ""){
+                delete item.uri
+            }
+
+            item.type = item.type.toString();
+
+            return item;
+        });
+
+        return containerPortsInfo;
+
+    }
 
     function isDisableAddList(info, infoArray, attrnames) {
         function equal(info1, info2) {
