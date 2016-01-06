@@ -96,7 +96,9 @@ BACKEND_URL = {
         getNodePorts: "api/v1/applications/$clusterId/get-appnodes-port?cluster_id=$cluster_id&app_name=$app_name",
         event: "api/v1/applications/$app_id/events?page=$page",
         ports: "api/v1/applications/$cluster_id/ports",
-        getAppsStatus: "api/v1/applications/0/appStatus"
+        getAppsStatus: "api/v1/applications/0/appStatus",
+        getVersionConfig:"api/v1/applications/$app_versionId/version-config",
+        deleteVersion:"api/v1/applications/$app_versionId/version-delete"
     }
         
 };

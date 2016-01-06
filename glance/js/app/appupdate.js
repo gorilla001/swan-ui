@@ -38,10 +38,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.portInfo = {};
-    $scope.portInfos = [];
-
     $scope.pathInfo = {};
-    $scope.pathsInfo = [];
 
     $scope.outerPorts = [];
     $scope.innerPorts = [];

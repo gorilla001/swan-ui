@@ -56,14 +56,18 @@
 
                     <div class="col-md-5">
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="config.network" value="BRIDGE" data-required="required" ng-disabled="true">
+                            <input type="radio" ng-model="config.network" value="BRIDGE" data-required="required"
+                                   data-ng-disabled="true">
                             网桥模式
                         </label>
                         <label class="checkbox-inline">
-                            <input type="radio" ng-model="config.network" value="HOST" data-required="required" ng-disabled="true">
+                            <input type="radio" ng-model="config.network" value="HOST" data-required="required"
+                                   data-ng-disabled="true">
                             HOST 模式
                         </label>
+                        <span class="text-danger checkbox-inline" data-ng-show="config.network === 'HOST'">(HOST 模式暂不支持更新)</span>
                     </div>
+
                 </div>
 
                 <div class="form-group">
@@ -177,6 +181,8 @@
                         <input type="checkbox" ng-model="config.unique">
                         1容器:1主机
                     </label>
+
+                    <span class="text-danger" data-ng-show="config.unique">( 1容器:1主机暂不支持更新)</span>
                 </div>
 
                 <a role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
@@ -292,7 +298,8 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <button type="submit" class="btn btn-primary btn-block" data-ng-disabled="staticForm.$invalid">
+                        <button type="submit" class="btn btn-primary btn-block"
+                                data-ng-disabled="staticForm.$invalid || config.unique || config.network === 'HOST'">
                             更 新
                         </button>
                     </div>

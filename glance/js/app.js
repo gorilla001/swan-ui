@@ -207,7 +207,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('app.appdetail.version', {
-                url: '/version?flag',
+                url: '/version',
                 views: {
                     'tabdetail': {
                         templateUrl: '/views/app/appversion.html',
