@@ -227,9 +227,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                     }
                 },
                 resolve:{
-                    getAppConfig: function(glanceHttp, $stateParams){
-                        return glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}])
-                    }
+                    getAppConfig: updateConfig
                 }
             })
             .state('log', {
@@ -279,6 +277,11 @@ function getAppInfo(gHttp, $stateParams, Notification) {
     return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get({ignoreErrorcodes: 'all'}).catch(function(code) {
         Notification.error(APP_CODE[code]);
     });
+}
+
+updateConfig.$inject = ['glanceHttp', '$stateParams'];
+function updateConfig(glanceHttp, $stateParams) {
+    return glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}]);
 }
 
 glanceApp.run(glanceInit);
