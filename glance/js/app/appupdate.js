@@ -388,7 +388,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.ajaxParams.labels.splice(index, 1);
         }
 
-        getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
+        getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
             $scope.appLableList = data.data;
             if ($scope.appLableList.length) {
                 $scope.appLableList.map(function (item) {
@@ -406,18 +406,20 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.labelSelectAll = function () {
-        $scope.ajaxParams.labels = [];
-        angular.forEach($scope.creatAppLableList, function (lable) {
-            $scope.ajaxParams.labels.push(lable.id)
-        });
-        getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
-            $scope.appLableList = data.data;
-            $scope.appLableList.map(function (item) {
-                item.ticked = true;
-                return item;
-            })
-        }).error(function (data) {
-        });
+        if ($scope.creatAppLableList.length) {
+            $scope.ajaxParams.labels = [];
+            angular.forEach($scope.creatAppLableList, function (lable) {
+                $scope.ajaxParams.labels.push(lable.id)
+            });
+            getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
+                $scope.appLableList = data.data;
+                $scope.appLableList.map(function (item) {
+                    item.ticked = true;
+                    return item;
+                })
+            }).error(function (data) {
+            });
+        }
     };
 
     $scope.labelSelectNone = function () {
