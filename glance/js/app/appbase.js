@@ -3,9 +3,9 @@
  */
 glanceApp.controller("appBaseCtrl", appBaseCtrl);
 
-appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp', 'Notification', '$q', 'appCurd'];
+appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp', 'Notification', '$q', 'appCurd', '$stateParams'];
 
-function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd) {
+function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd, $stateParams) {
     $rootScope.show = "application";
 
     $scope.clusterNameMap = {};
@@ -47,6 +47,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         102: "版本冲突",
         103: "应用被锁定",
         104: "撤销失败，应用扩展已完成",
+        105: "更新已完成,",
         999: "网络异常"
     };
 

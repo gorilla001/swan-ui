@@ -19,9 +19,9 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp, Notificatio
             if ($scope.config.clusterId) {
                 $scope.getNode($scope.config.clusterId);
             }
-        }, null, function(data, status){
+        }, null, function (data, status) {
             console.log("request failed (" + status + ")");
-        }, function(data){
+        }, function (data) {
             Notification.error('获取配置失败 ' + $scope.addCode[data.code]);
         }, false);
     };

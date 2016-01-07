@@ -29,10 +29,9 @@
             undoApp: undoApp,
             updateOpenModal: updateOpenModal,
             updateAjax: updateAjax,
-            getUpdateAppInfo: getUpdateAppInfo,
-            setUpdateAppInfo: setUpdateAppInfo,
             getListCluster: getListCluster,
-            getAppNameList: getAppNameList
+            getAppNameList: getAppNameList,
+            isDeploy: isDeploy
         };
 
         function stop(appId, appName) {
@@ -62,7 +61,7 @@
                 glanceHttp.ajaxGet(['app.deleteApp', {app_id: parseInt(appId)}], function (data) {
                     if (data.data.deletState == 0) {
                         Notification.success('应用 ' + appName + ' 删除中...');
-                        $state.go('app.applist',null, {reload: true});
+                        $state.go('app.applist', null, {reload: true});
                     }
                 }, undefined, null, function (data) {
                     Notification.error('应用 ' + appName + ' 删除失败: ' + $scope.addCode[data.code]);
@@ -137,6 +136,10 @@
                     });
                 }
             });
+        }
+
+        function isDeploy(appId) {
+            return glanceHttp.ajaxGet(['app.isdeploying', {app_id: appId}]);
         }
 
     }

@@ -25,7 +25,8 @@ function appEventCtrl($scope, $rootScope, $stateParams, glanceHttp) {
         UpdateApp: "应用更新",
         UpdateAppNum: "应用扩展",
         CancelScale: "取消应用扩展",
-        CancelDeployment: "取消应用部署"
+        CancelDeployment: "取消应用部署",
+        RestartApplication: "应用重启"
     };
     $scope.eventTypeText = {
         status_update_event: "实例状态更新",

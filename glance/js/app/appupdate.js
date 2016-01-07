@@ -1,9 +1,9 @@
-glanceApp.controller("createappCtrlNew", createappCtrl);
+glanceApp.controller("appUpdateCtrl", appUpdateCtrl);
 
-createappCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig',
-    'openModule', 'appCurd'];
+appUpdateCtrl.$inject = ['$scope', '$state', 'glanceHttp', 'Notification', '$uibModal', 'getClusterLables', 'multiSelectConfig',
+    'openModule', 'appCurd', 'getAppConfig', '$stateParams', '$timeout'];
 
-function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule, appCurd) {
+function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getClusterLables, multiSelectConfig, openModule, appCurd, getAppConfig, $stateParams, $timeout) {
     var INNER = '1';
     var OUTER = '2';
     var SELECT_TCP = '1';
@@ -17,6 +17,14 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     var PORT_MODULE = "/views/app/createPortModule.html";
     var PORT_CONTROLLER = "ModalPortCtrl";
 
+    $scope.config = getAppConfig.data.data;
+    appCurd.getListCluster($scope.$parent, true)
+        .then(function (data) {
+            getClusterLables.listClusterLabels($scope.config.clusterId, $scope);
+        }).then(function () {
+        $scope.getChangeData($scope.config.clusterId);
+    });
+
     //defalut select Node Type is 'node'
     $scope.selectNodeType = 'node';
     $scope.creatAppLableList = [];
@@ -29,10 +37,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.portInfo = {};
-    $scope.portInfos = [];
-
     $scope.pathInfo = {};
-    $scope.pathsInfo = [];
 
     $scope.outerPorts = [];
     $scope.innerPorts = [];
@@ -44,13 +49,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
     $scope.dirsInfo = [];
 
-    $scope.cpuSize = 0.1;
-    $scope.memSize = 16;
-    $scope.containerNum = 1;
-    $scope.imageversion = "";
+    $scope.cpuSize = $scope.config.containerCpuSize;
+    $scope.memSize = $scope.config.containerMemSize;
 
     $scope.cpuSlider = {
-        min: 1,
+        min: $scope.config.containerCpuSize * 10,
         max: 10,
         options: {
             step: 1,
@@ -58,13 +61,13 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             ceil: 10,
             showSelectionBar: true,
             translate: function (value) {
-                return $scope.cpuSize = value / 10.0;
+                return $scope.config.containerCpuSize = value / 10.0;
             }
         }
     };
 
     $scope.memSlider = {
-        min: 4,
+        min: Math.log($scope.config.containerMemSize) / Math.log(2),
         max: 12,
         options: {
             step: 1,
@@ -72,7 +75,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             ceil: 12,
             showSelectionBar: true,
             translate: function (rawValue) {
-                return $scope.memSize = Math.pow(2, rawValue);
+                return $scope.config.containerMemSize = Math.pow(2, rawValue);
             }
         }
     };
@@ -88,67 +91,40 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.hostEles = ["hostname", "UNIQUE"];
 
     $scope.deployApp = function () {
-        if ($scope.portInfos.length) {
-            $scope.deployinfo.containerPortsInfo = $scope.portInfos;
-        } else {
-            $scope.deployinfo.containerPortsInfo = [];
-        }
-
-        if ($scope.pathsInfo.length) {
-            $scope.deployinfo.envs = $scope.pathsInfo;
-        } else {
-            $scope.deployinfo.envs = [];
-        }
-
-        if ($scope.cmdInput) {
-            $scope.deployinfo.cmd = $scope.cmdInput;
-        } else {
-            delete $scope.deployinfo.cmd;
-        }
-
-        //add dirsInfo
-        if ($scope.dirsInfo.length) {
-            $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
-        } else {
-            $scope.deployinfo.containerVolumesInfo = [];
-        }
-
         //Constraints of node
         if ($scope.selectNodes.length) {
             $scope.makeConstraints($scope.selectNodes, $scope.defaultEles, 'ip');
         } else {
-            $scope.deployinfo.constraints = $scope.defaultEles;
+            $scope.config.constraints = $scope.defaultEles;
         }
-        //Constraints if checked HOST and checked single
-        if ($scope.single) {
-            $scope.deployinfo.constraints.push($scope.hostEles)
+        if ($scope.config.unique) {
+            $scope.config.constraints.push($scope.hostEles)
         }
 
-
-        $scope.deployinfo.clusterId = $scope.clusterid.toString();
-        $scope.deployinfo.containerNum = $scope.containerNum;
-        $scope.deployinfo.containerCpuSize = $scope.cpuSize;
-        $scope.deployinfo.containerMemSize = $scope.memSize;
-        $scope.deployinfo.imageversion = $scope.imageversion;
-        glanceHttp.ajaxPost(['app.deploy'], $scope.deployinfo, function (data) {
-            Notification.success('应用' + $scope.deployinfo.appName + '创建中...');
-            $state.go('app.appdetail.config', {appId: data.data}, {reload: true});
-        }, undefined, null, function (data) {
-            Notification.error('应用' + $scope.deployinfo.appName + '创建失败: ' + $scope.addCode[data.code]);
+        $scope.config.appId = $stateParams.appId;
+        //set clusterId string
+        $scope.config.clusterId = $scope.config.clusterId.toString();
+        appCurd.isDeploy($stateParams.appId).then(function (res) {
+            if (!res.data.data.isdeploying) {
+                Notification.warning('该应用正在更新中,无法再次更新');
+            } else {
+                glanceHttp.ajaxPost(['app.updateVersion'], $scope.config, function (data) {
+                    $state.go('app.appdetail.version', {appId: $stateParams.appId, flag: true}, {reload: true});
+                }, undefined, function (res, status) {
+                    //reset constraints flag
+                    $scope.config.constraints = [];
+                    console.log("request failed (" + status + ")");
+                }, function (data) {
+                    //reset constraints flag
+                    $scope.config.constraints = [];
+                    Notification.error('应用 ' + $scope.config.appName + ' 更新失败: ' + $scope.addCode[data.code]);
+                });
+            }
         });
     };
 
     $scope.deletCurPort = function (index) {
-        $scope.portInfos.splice(index, 1);
-    };
-
-    $scope.addPortInfo = function (portInfo) {
-        if (isDisableAddList(portInfo, $scope.portInfos, ['type', 'mapPort', 'uri'])) {
-            Notification.error('添加的应用地址已存在');
-        } else {
-            $scope.portInfos.push(portInfo);
-            $scope.portInfo = {};
-        }
+        $scope.config.containerPortsInfo.splice(index, 1);
     };
 
     /*
@@ -172,22 +148,46 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.addPathInfo = function (pathInfo) {
-        if (isDisableAddList(pathInfo, $scope.pathsInfo, ['key'])) {
+        if (isDisableAddList(pathInfo, $scope.config.envs, ['key'])) {
             Notification.error('添加的环境变量的 KEY 不能重复');
         } else {
-            $scope.pathsInfo.push(pathInfo);
+            $scope.config.envs.push(pathInfo);
             $scope.pathInfo = {};
         }
     };
 
     $scope.addDirInfo = function (dirInfo) {
-        if (isDisableAddList(dirInfo, $scope.dirsInfo, ['containerPath'])) {
+        if (isDisableAddList(dirInfo, $scope.config.containerVolumesInfo, ['containerPath'])) {
             Notification.error('无法映射主机的多个目录到同一个容器目录');
         } else {
-            $scope.dirsInfo.push(dirInfo);
+            $scope.config.containerVolumesInfo.push(dirInfo);
             $scope.dirInfo = {};
         }
     };
+
+    $scope.addPortInfo = function (portInfo) {
+        if (isDisableAddList(portInfo, parsePortsInfo($scope.config.containerPortsInfo), ['type', 'mapPort', 'uri'])) {
+            Notification.error('添加的应用地址已存在');
+        } else {
+            $scope.config.containerPortsInfo.push(portInfo);
+            $scope.portInfo = {};
+        }
+    };
+
+    function parsePortsInfo(containerPortsInfo) {
+        containerPortsInfo.map(function (item) {
+            if (item.uri === "") {
+                delete item.uri
+            }
+
+            item.type = item.type.toString();
+
+            return item;
+        });
+
+        return containerPortsInfo;
+
+    }
 
     function isDisableAddList(info, infoArray, attrnames) {
         function equal(info1, info2) {
@@ -208,11 +208,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     }
 
     $scope.deletCurDir = function (index) {
-        $scope.dirsInfo.splice(index, 1);
+        $scope.config.containerVolumesInfo.splice(index, 1);
     };
 
     $scope.deletCurPath = function (index) {
-        $scope.pathsInfo.splice(index, 1);
+        $scope.config.envs.splice(index, 1);
     };
 
     $scope.changeType = function (portInfoType) {
@@ -287,37 +287,35 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.getChangeData = function (clusterId) {
-        if(clusterId != undefined){
-            //empty ajaxParams.labels
-            $scope.ajaxParams.labels = [];
+        //empty ajaxParams.labels
+        $scope.ajaxParams.labels = [];
 
-            $scope.getNode(clusterId);
-            $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
+        $scope.getNode(clusterId);
+        $scope.appLableList = $scope.creatAppNodeList.map(function (item) {
+            if (angular.isArray($scope.config.iplist) && $scope.config.iplist.indexOf(item.ip) != -1) {
+                item.ticked = true;
+            } else {
                 item.ticked = false;
-                return item;
-            });
-            //get lable List of cluster
-            getClusterLables.listClusterLabels(clusterId, $scope);
-            glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
-                if (data.data) {
-                    if (data.data.OuterPorts && data.data.OuterPorts.length) {
-                        $scope.outerPorts = data.data.OuterPorts;
-                    }
 
-                    if (data.data.InnerPorts && data.data.InnerPorts.length) {
-                        $scope.innerPorts = data.data.InnerPorts;
-                    }
-
-                    if (data.data.Domains && data.data.Domains.length) {
-                        $scope.domains = data.data.Domains;
-                    }
+            }
+            return item;
+        });
+        glanceHttp.ajaxGet(['app.ports', ({cluster_id: clusterId})], function (data) {
+            if (data.data) {
+                if (data.data.OuterPorts && data.data.OuterPorts.length) {
+                    $scope.outerPorts = data.data.OuterPorts;
                 }
-            })
-        }
 
+                if (data.data.InnerPorts && data.data.InnerPorts.length) {
+                    $scope.innerPorts = data.data.InnerPorts;
+                }
+
+                if (data.data.Domains && data.data.Domains.length) {
+                    $scope.domains = data.data.Domains;
+                }
+            }
+        }, {appId: $stateParams.appId})
     };
-
-    appCurd.getAppNameList($scope).then($scope.listCluster);
 
     /*
      nodesSelect: Multi Select List
@@ -340,15 +338,11 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             temp.push(regular);
             elements.push(temp);
         }
-        $scope.deployinfo.constraints = elements;
+        $scope.config.constraints = elements;
     };
 
     // createPortModule
     $scope.openPortModule = function () {
-        if (!$scope.proxyNodes.length && !$scope.gateWays.length) {
-            Notification.warning('集群中没有网关和代理节点，无法添加应用地址，请增加网关/代理节点后重试');
-            return
-        }
         openModule.open(undefined, $scope, PORT_MODULE, PORT_CONTROLLER, portOkcallback, portCancelcallback);
     };
 
@@ -394,7 +388,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.ajaxParams.labels.splice(index, 1);
         }
 
-        getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
+        getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
             $scope.appLableList = data.data;
             if ($scope.appLableList.length) {
                 $scope.appLableList.map(function (item) {
@@ -412,12 +406,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.labelSelectAll = function () {
-        $scope.ajaxParams.labels = [];
-        if($scope.creatAppLableList.length){
+        if ($scope.creatAppLableList.length) {
+            $scope.ajaxParams.labels = [];
             angular.forEach($scope.creatAppLableList, function (lable) {
                 $scope.ajaxParams.labels.push(lable.id)
             });
-            getClusterLables.getNodesIdList($scope.clusterid, $scope.ajaxParams).success(function (data) {
+            getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
                 $scope.appLableList = data.data;
                 $scope.appLableList.map(function (item) {
                     item.ticked = true;
