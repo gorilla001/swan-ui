@@ -29,10 +29,11 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         glanceHttp.ajaxGet(['app.cancelDeploy', {app_id: $stateParams.appId}], function (data) {
             if (data.code == 0) {
                 $scope.getImageVersions();
-                Notification.success('取消部署成功');
+                Notification.success('撤销成功');
             }
         }, undefined, null, function (data) {
-            Notification.error('取消部署失败');
+            $scope.getImageVersions();
+            Notification.error($scope.addCode[data.code] + '撤销失败');
         });
     };
 

@@ -91,13 +91,13 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         if ($scope.portInfos.length) {
             $scope.deployinfo.containerPortsInfo = $scope.portInfos;
         } else {
-            delete $scope.deployinfo.containerPortsInfo;
+            $scope.deployinfo.containerPortsInfo = [];
         }
 
         if ($scope.pathsInfo.length) {
             $scope.deployinfo.envs = $scope.pathsInfo;
         } else {
-            delete $scope.deployinfo.envs;
+            $scope.deployinfo.envs = [];
         }
 
         if ($scope.cmdInput) {
@@ -110,7 +110,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         if ($scope.dirsInfo.length) {
             $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
         } else {
-            delete $scope.deployinfo.containerVolumesInfo;
+            $scope.deployinfo.containerVolumesInfo = [];
         }
 
         //Constraints of node
