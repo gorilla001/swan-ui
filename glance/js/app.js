@@ -168,6 +168,9 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                         templateUrl: '/views/app/appdetail.html',
                         controller: 'appdetailCtrl'
                     }
+                },
+                resolve: {
+                   appObj: getAppInfo
                 }
             })
             .state('app.appdetail.instance', {
@@ -270,6 +273,13 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
 }]);
+
+getAppInfo.$inject = ['gHttp', '$stateParams', 'Notification'];
+function getAppInfo(gHttp, $stateParams, Notification) {
+    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get({ignoreErrorcodes: 'all'}).catch(function(code) {
+        Notification.error(APP_CODE[code]);
+    });
+}
 
 glanceApp.run(glanceInit);
 

@@ -3,44 +3,28 @@
  */
 glanceApp.controller("appInstanceCtrl", appInstanceCtrl);
 
-appInstanceCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout','Notification'];
+appInstanceCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp','Notification'];
 
-function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification) {
+function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, Notification) {
     $rootScope.appTabFlag = "appInstance";
     $scope.appstate = {
         '1': "运行中",
         '2': "部署中"
     };
+    
+    initInstances();
+    $scope.$on('refreshAppData', function() {
+        initInstances(false);
+    });
 
-    var promise;
-    (function appInstances() {
+    function initInstances(loading) {
         glanceHttp.ajaxGet(['app.instances',{app_id: $stateParams.appId}], function (data) {
-            $scope.instances = data.data;
-
-            if (isDeploying(data)) {
-                promise = $timeout(appInstances, 5000);
-            }
             $scope.instances = hideStartTime(data.data);
         }, undefined, null, function(data) {
             Notification.error('获取实例失败: ' + $scope.addCode[data.code]);
-        })
+        }, loading)
 
-    })();
-
-    function isDeploying(data){
-        var result = false;
-        if (!data.data.length) {
-            result = true;
-        } else {
-            for (var i = 0; i < data.data.length; i++) {
-                if(data.data[i].instancdStatus === 2) {
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
+    };
 
     function hideStartTime(instances) {
         var hideTime = "0001-01-01T00:00:00Z";
@@ -51,11 +35,5 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout,
         }
         return instances;
     }
-
-
-
-    $scope.$on('$destroy', function(){
-        $timeout.cancel(promise);
-    });
 
 }
