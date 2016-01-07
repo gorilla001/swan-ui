@@ -18,7 +18,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     var PORT_CONTROLLER = "ModalPortCtrl";
 
     $scope.config = getAppConfig.data.data;
-    console.log($scope.config);
     appCurd.getListCluster($scope.$parent, true)
         .then(function (data) {
             getClusterLables.listClusterLabels($scope.config.clusterId, $scope);
@@ -105,12 +104,12 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         $scope.config.appId = $stateParams.appId;
         //set clusterId string
         $scope.config.clusterId = $scope.config.clusterId.toString();
-        appCurd.isDeploy($stateParams.appId).then(function(res){
-            if(!res.data.data.isdeploying){
+        appCurd.isDeploy($stateParams.appId).then(function (res) {
+            if (!res.data.data.isdeploying) {
                 Notification.warning('该应用正在更新中,无法再次更新');
-            }else{
+            } else {
                 glanceHttp.ajaxPost(['app.updateVersion'], $scope.config, function (data) {
-                    $state.go('app.appdetail.version',{appId: $stateParams.appId, flag: true},{reload : true});
+                    $state.go('app.appdetail.version', {appId: $stateParams.appId, flag: true}, {reload: true});
                 }, undefined, function (res, status) {
                     //reset constraints flag
                     $scope.config.constraints = [];
@@ -175,9 +174,9 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         }
     };
 
-    function parsePortsInfo(containerPortsInfo){
-        containerPortsInfo.map(function(item){
-            if(item.uri === ""){
+    function parsePortsInfo(containerPortsInfo) {
+        containerPortsInfo.map(function (item) {
+            if (item.uri === "") {
                 delete item.uri
             }
 
@@ -315,7 +314,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
                     $scope.domains = data.data.Domains;
                 }
             }
-        },{ appId: $stateParams.appId })
+        }, {appId: $stateParams.appId})
     };
 
     /*

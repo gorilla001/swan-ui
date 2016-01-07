@@ -10,8 +10,6 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
 
     var getImageVersionsFlag = false;
 
-    $scope.counter = 0;
-
     $scope.getImageVersions = function () {
         getImageVersionsFlag = true;
         return glanceHttp.ajaxGet(['app.imageVersions', {app_id: $stateParams.appId}], function (data) {
@@ -46,12 +44,14 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         })
     };
 
-    $scope.deleteVersion= function (versionId) {
-        glanceHttp.ajaxGet(['app.deleteVersion', {app_versionId: versionId}], function (data) {
-            $scope.getImageVersions()
-        }, undefined, null, function (data) {
-            Notification.error('删除失败: ' + $scope.addCode[data.code]);
-        })
+    $scope.deleteVersion = function (versionId) {
+        $rootScope.myConfirm("您确定要删除该版本吗？", function () {
+            glanceHttp.ajaxGet(['app.deleteVersion', {app_versionId: versionId}], function (data) {
+                $scope.getImageVersions()
+            }, undefined, null, function (data) {
+                Notification.error('删除失败: ' + $scope.addCode[data.code]);
+            });
+        });
     };
 
     $scope.queryConfig = function (versionId) {
