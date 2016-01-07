@@ -1,4 +1,4 @@
-function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS) {
+function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS, gHttp) {
     var token;
     
     var init = function() {
@@ -6,6 +6,7 @@ function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS) {
         if (token) {
             glanceHttp.init(token, clear);
             glanceWS.init(token);
+            gHttp.setToken(token);
         } else {
             window.location.href = USER_URL;
             $rootScope.$destroy();
@@ -24,5 +25,5 @@ function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS) {
     };
 }
 
-glanceUser.$inject = ["$cookieStore", "$rootScope", "glanceHttp", "glanceWS"]
+glanceUser.$inject = ["$cookieStore", "$rootScope", "glanceHttp", "glanceWS", "gHttp"]
 glanceApp.factory('glanceUser', glanceUser);

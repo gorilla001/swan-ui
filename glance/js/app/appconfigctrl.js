@@ -12,18 +12,22 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp, Notificatio
         HOST: "HOST 模式"
     };
 
-    $scope.getConfig = function () {
+    $scope.listCluster().then(function() {
+        $scope.getNode(parseInt($scope.configObject.clusterId));
+    });
+    
+    initConfig();
+    $scope.$on('refreshAppData', function(){
+        initConfig(false);
+    });
+    
+    function initConfig(loading) {
         glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}], function (data) {
             $scope.config = data.data;
-
-            if ($scope.config.clusterId) {
-                $scope.getNode($scope.config.clusterId);
-            }
-        }, null, function (data, status) {
+        }, null, function(data, status){
             console.log("request failed (" + status + ")");
         }, function (data) {
             Notification.error('获取配置失败 ' + $scope.addCode[data.code]);
-        }, false);
+        }, loading);
     };
-    $scope.listCluster().then($scope.getConfig);
 }

@@ -6,16 +6,19 @@
  */
 glanceApp.controller("appMonitorCtrl", appMonitorCtrl);
 
-appMonitorCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'glanceHttp'];
+appMonitorCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp'];
 
-function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
+function appMonitorCtrl($scope, $rootScope, glanceHttp) {
     "use strict";
     $rootScope.appTabFlag = "appMonitor";
     $scope.appMonitors = {};
+    
+    initMonitor();
+    $scope.$on('refreshAppData', function() {
+        initMonitor(false);
+    });
 
-    var successPromise, errorPromise;
-
-    function initMonitor() {
+    function initMonitor(loading) {
         glanceHttp.ajaxGet(['metrics.appmonit', {
             clusterID: $scope.appInfo.clusterId,
             appName: $scope.appInfo.name
@@ -34,19 +37,9 @@ function appMonitorCtrl($scope, $rootScope, $timeout, glanceHttp) {
                     $scope.memoryTotal += appMonitor.memoryTotal;
                 })
             }
-            successPromise = $timeout(initMonitor, 3000);
         }, undefined, null, function (data) {
             $scope.errorCode = data.code;
-            if (data.code === 1) {
-                errorPromise = $timeout(initMonitor, 3000);
-            }
-        }, false);
+        }, loading);
     }
 
-    $scope.$on('$destroy', function () {
-        $timeout.cancel(successPromise);
-        $timeout.cancel(errorPromise);
-    });
-
-    $scope.getAppInfoPromise.then(initMonitor);
 }

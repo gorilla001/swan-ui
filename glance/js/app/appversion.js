@@ -8,10 +8,7 @@ appVersionCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', 
 function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification, $state, appCurd) {
     $rootScope.appTabFlag = "appVersion";
 
-    var getImageVersionsFlag = false;
-
-    $scope.getImageVersions = function () {
-        getImageVersionsFlag = true;
+    $scope.getImageVersions = function (loading) {
         return glanceHttp.ajaxGet(['app.imageVersions', {app_id: $stateParams.appId}], function (data) {
             if (data && data.data && data.data.length !== 0) {
                 $scope.versions = data.data;
@@ -22,7 +19,7 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
             }
         }, undefined, null, function (data) {
             Notification.error('获取镜像列表失败: ' + $scope.addCode[data.code]);
-        })
+        }, loading)
     };
 
     $scope.cancelDeploy = function () {
@@ -70,6 +67,10 @@ function appVersionCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, 
         $scope.contentCurPage = $scope.versions.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
     };
 
-    $scope.getAppInfoPromise.then($scope.getImageVersions);
+    $scope.getImageVersions();
+    
+    $scope.$on('refreshAppData', function(){
+        $scope.getImageVersions(false);
+    });
 
 }

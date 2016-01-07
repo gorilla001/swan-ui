@@ -61,5 +61,5 @@ function appEventCtrl($scope, $rootScope, $stateParams, glanceHttp) {
         });
     }
 
-    $scope.getAppInfoPromise.then($scope.appEvent);
+    $scope.appEvent();
 }

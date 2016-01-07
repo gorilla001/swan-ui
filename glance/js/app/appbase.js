@@ -7,7 +7,7 @@ appBaseCtrl.$inject = ['$scope', '$rootScope', '$state', '$timeout', 'glanceHttp
 
 function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notification, $q, appCurd, $stateParams) {
     $rootScope.show = "application";
-
+    
     $scope.clusterNameMap = {};
     $scope.clusters = [];
     $scope.curAppNames = [];
@@ -41,15 +41,7 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         "2": "HTTP"
     };
 
-    $scope.addCode = {
-        100: "应用名称冲突",
-        101: "端口冲突",
-        102: "版本冲突",
-        103: "应用被锁定",
-        104: "撤销失败，应用扩展已完成",
-        105: "更新已完成,",
-        999: "网络异常"
-    };
+    $scope.addCode = APP_CODE;
 
     $scope.listCluster = function (isUsedNameMap) {
         return appCurd.getListCluster($scope, isUsedNameMap);
