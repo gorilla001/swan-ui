@@ -29,5 +29,5 @@ function appConfigCtrl($scope, $rootScope, $stateParams, glanceHttp, Notificatio
         }, function (data) {
             Notification.error('获取配置失败 ' + $scope.addCode[data.code]);
         }, loading);
-    };
+    }
 }

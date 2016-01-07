@@ -24,14 +24,14 @@ function appInstanceCtrl($scope, $rootScope, $stateParams, glanceHttp, Notificat
             Notification.error('获取实例失败: ' + $scope.addCode[data.code]);
         }, loading)
 
-    };
+    }
 
     function hideStartTime(instances) {
         var hideTime = "0001-01-01T00:00:00Z";
         var startTime;
         for (var i = 0; i < instances.length; i++) {
             startTime = instances[i].startTime;
-            instances[i].hideStartTime = (startTime === hideTime) ? true : false;
+            instances[i].hideStartTime = (startTime === hideTime);
         }
         return instances;
     }
