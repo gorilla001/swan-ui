@@ -1710,3 +1710,156 @@ rzslider .rz-bar.rz-selection {
 .demo-hide {
 	display: none !important;
 }
+
+.ico-app-status {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  position: relative;
+  text-align: center;
+}
+.ico-app-status.status-download {
+  background-color: #2ecd71;
+}
+
+.ico-app-status.status-download .arrow-download {
+  height: 8px;
+  width: 8px;
+  background: white;
+  margin: 0 auto;
+  position: relative;
+  top: 0px;
+  animation:myfirst 4s infinite;
+  -moz-animation:myfirst 4s infinite; /* Firefox */
+  -webkit-animation:myfirst 4s infinite; /* Safari and Chrome */
+  -o-animation:myfirst 4s infinite; /* Opera */
+}
+
+@keyframes myfirst
+{
+0%   {top: 0px;}
+50%  {background:white;}
+100% {background:transparent; top:8px;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+0%   {top: 0px;}
+50%  {background:white;}
+100% {background:transparent; top:8px;}
+}
+
+@-webkit-keyframes myfirst /* Safari and Chrome */
+{
+0%   {top: 0px;}
+50%  {background:white;}
+100% {background:transparent; top:8px;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+0%   {top: 0px;}
+50%  {background:white;}
+100% {background:transparent; top:8px;}
+}
+
+
+
+
+.ico-app-status.status-download .arrow-download:before {
+  content:"";
+  position: absolute;
+  top: 8px;
+  left: -5px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 8px solid white;
+  animation:arrow 4s infinite;
+  -moz-animation:arrow 4s infinite; /* Firefox */
+  -webkit-animation:arrow 4s infinite; /* Safari and Chrome */
+  -o-animation:arrow 4s infinite; /* Opera */ 
+}
+
+@keyframes arrow /* Firefox */
+{
+50%   {border-top-color:white;}
+100% {border-color:transparent;}
+}
+
+@-moz-keyframes arrow /* Firefox */
+{
+50%   {border-top-color:white;}
+100% {border-color:transparent;}
+}
+
+@-webkit-keyframes arrow /* Safari and Chrome */
+{
+50%   {border-top-color:white;}
+100% {border-color:transparent;}
+}
+
+@-o-keyframes arrow /* Opera */
+{
+50%   {border-top-color:white;}
+100% {border-color:transparent;}
+}
+
+.ico-app-status.status-download .service {
+  height: 5px;
+  width: 20px;
+  background: white;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 6px;
+  left: 5px
+}
+.ico-app-status.status-download .service:before {
+  content:"";
+  width: 3px;
+  height: 1px;
+  background: #2ecd71;
+  position: absolute;
+  right: 2px;
+  top: 1px;
+}
+
+.ico-app-status.status-reset {
+  background-color: #67b2e5;
+}
+.ico-app-status.status-reset .glyphicon-cog {
+  color: #FFF;
+  font-size: 20px;
+  position: relative;
+  top: 5px; 
+  animation: rotate 4s infinite;
+  -moz-animation: rotate 4s infinite; /* Firefox */
+  -webkit-animation: rotate 4s infinite; /* Safari and Chrome */
+  -o-animation: rotate 4s infinite; /* Opera */ 
+}
+
+
+@keyframes rotate /* Firefox */
+{
+from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+@-moz-keyframes rotate /* Firefox */
+{
+from {-moz-transform: rotate(0deg);}
+  to {-moz-transform: rotate(360deg);}
+}
+
+@-webkit-keyframes rotate /* Safari and Chrome */
+{
+from {-webkit-transform: rotate(0deg);}
+  to {-webkit-transform: rotate(360deg);}
+}
+
+@-o-keyframes rotate /* Opera */
+{
+from {-o-transform: rotate(0deg);}
+  to {-o-transform: rotate(360deg);}
+}

@@ -90,7 +90,15 @@
                     <ul class="clearfix server-app-status">
                         <li data-ng-repeat="service in serviceViews"> 
                             <div>
-                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30">
+                                <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
+                                  <div class="arrow-download"></div>
+                                  <div class="service"></div>
+                                </div>
+                                <div class="ico-app-status status-reset" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'installing'">
+                                  <span class="glyphicon glyphicon-cog"></span>
+                                </div>
+                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
+                                  data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
                                 <button class="btn btn-xs btn-warning" 
                                 data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
                                     (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
