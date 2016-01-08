@@ -22,7 +22,7 @@
             }
             for (var serviceName in this.nodes[nodeId].services) {
                 var serviceStatus = this.nodes[nodeId].services[serviceName].status;
-                if (serviceStatus == SERVICES_STATUS.installing) {
+                if (serviceStatus == SERVICES_STATUS.installing || serviceStatus == SERVICES_STATUS.pulling) {
                     return SERVICES_STATUS.installing;
                 } else if (serviceStatus == SERVICES_STATUS.failed || serviceStatus == SERVICES_STATUS.uninstalled){
                     if (checkServices.indexOf(serviceName) > -1) {

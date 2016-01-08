@@ -49,7 +49,8 @@ SERVICES_STATUS = {
     installing: 'installing',
     failed: 'failed',
     uninstalled: 'uninstalled',
-    uninstalling: "uninstalling"
+    uninstalling: "uninstalling",
+    pulling: "pulling"
 };
 
 BACKEND_URL = {
