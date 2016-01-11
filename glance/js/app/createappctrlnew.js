@@ -346,7 +346,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     // createPortModule
     $scope.openPortModule = function () {
         if (!$scope.proxyNodes.length && !$scope.gateWays.length) {
-            Notification.warning('没有选择集群或者集群中没有网关和代理节点，无法添加应用地址，请选择集群并增加网关/代理节点后重试');
+            Notification.warning('没有选择集群或集群中没有网关和代理节点，无法添加应用地址，请选择集群并增加网关/代理节点后重试');
             return
         }
         openModule.open(undefined, $scope, PORT_MODULE, PORT_CONTROLLER, portOkcallback, portCancelcallback);
