@@ -3,8 +3,8 @@
     
     angular.module('glance').factory('gHttp', gHttp);
     
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http']
-    function gHttp(utils, $q, $rootScope, $http) {
+    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification'];
+    function gHttp(utils, $q, $rootScope, $http, Notification) {
         var token;
         
         if (!$rootScope.loadings) {
@@ -123,13 +123,15 @@
                     Notification.error("您没有权限进行此操作");
                 } else if(status === 404) {
                     $state.go('404');
-                } else {
+                } else if(data){
                     if (this.options.ignoreErrorcodes!='all' && this.options.ignoreErrorcodes.indexOf(data.code) < 0) {
                         Notification.error("服务忙，请稍后再试");
                     }
                     deferred.reject(data.code, data.errors, status);
+                } else {
+                    Notification.error("服务忙，请稍后再试");
                 }
-            }
+            };
             
             return Resource;
         }
