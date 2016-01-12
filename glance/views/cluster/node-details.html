@@ -102,7 +102,7 @@
                                 <button class="btn btn-xs btn-warning" 
                                 data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
                                     (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
-                                data-ng-click="resetService(service)" data-demo-disable>重置</button>
+                                data-ng-click="openServiceRepair(service)" data-demo-disable>修复</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
                             <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
@@ -182,3 +182,32 @@
         </div>
     </div>
 </section>
+
+<div class="modal fade" id="repairService" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>修复服务</h3>
+            </div>
+            <div class="modal-body">
+                <div class="radio">
+                    <label>
+                        <input type="radio" data-ng-model="serviceRepairInfo.method" value="restart">
+                        重启，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" data-ng-model="serviceRepairInfo.method" value="reset">
+                        重置，重置会重新下载最新版的服务安装，重置bamboo会中断您部署的应用，其他服务重置不会中断应用。
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-ng-click="repairService()" data-dismiss="modal">修复</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
+            </div>
+        </div>
+    </div>
+</div>
