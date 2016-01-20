@@ -1,5 +1,5 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, gHttp) {
     'use strict';
     $scope.node = {};
     $scope.showCharts = false;
@@ -134,9 +134,15 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         });
     };
     
-    $scope.resetService = function (serviceName) {
-        glanceHttp.ajaxPost(['cluster.serviceStatus', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, service_name: serviceName}],
-                {'method': 'reset'});
+    $scope.openServiceRepair = function (serviceName) {
+        $scope.serviceRepairInfo = {serviceName: serviceName, method: 'restart'};
+        $('#repairService').modal("show");
+    }
+    
+    $scope.repairService = function () {
+        gHttp.Resource('cluster.serviceStatus', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, 
+                service_name: $scope.serviceRepairInfo.serviceName}).
+            post({'method': $scope.serviceRepairInfo.method});
     };
 
     //labels
@@ -252,5 +258,5 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
 }
 
-nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
+nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification', 'gHttp'];
 glanceApp.controller('nodeDetailsCtrl', nodeDetailsCtrl);
