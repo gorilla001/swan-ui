@@ -21,7 +21,7 @@ function appMonitorCtrl($scope, $rootScope, glanceHttp) {
     function initMonitor(loading) {
         glanceHttp.ajaxGet(['metrics.appmonit', {
             clusterID: $scope.appInfo.clusterId,
-            appName: $scope.appInfo.name
+            aliase: $scope.appInfo.aliase
         }], function (data) {
             $scope.errorCode = data.code;
             if (data.data) {
