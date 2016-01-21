@@ -4,7 +4,7 @@
             <piechart chart-used="clusterMonitors.masMetrics.cpuPercent" chart-total="100" radius="[75, 90]"
                       use-color="#68d1f2" show-text="CPU 占用" text-color="#68d1f2" error-code="errorCode">
             </piechart>
-            <h4>集群CPU: {/clusterMonitors.masMetrics.cpuShare/} / {/clusterMonitors.masMetrics.cpuTotal/}</h4>
+            <h4>集群CPU: {/clusterMonitors.masMetrics.cpuShare.toFixed(2)/} / {/clusterMonitors.masMetrics.cpuTotal/}</h4>
 
         </div>
 
