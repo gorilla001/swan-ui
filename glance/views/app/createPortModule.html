@@ -1,5 +1,6 @@
 <div class="modal-header">
     <h3 class="modal-title">应用地址配置</h3>
+    <span class="text-warning">(数人云保留端口:5000~5100, 10000~20000, 31000~32000)</span>
 </div>
 <div class="modal-body">
     <div class="form-inline" style="margin-bottom: 15px;">
@@ -26,6 +27,17 @@
                 <option value="1" ng-show="proxyNodes.length"> 对内</option>
                 <option value="2" ng-show="gateWays.length"> 对外</option>
             </select>
+        </div>
+
+        <div class="form-group" ng-show="portInfo.type == 2">
+            <label>&nbsp;对外占用端口:</label>
+            <span ng-repeat="outPort in outerPorts">{/outPort/} </span>
+
+        </div>
+
+        <div class="form-group" ng-show="portInfo.type == 1">
+            <label>&nbsp;对内占用端口:</label>
+            <span ng-repeat="innerPort in innerPorts">{/innerPort/} </span>
         </div>
 
     </div>
