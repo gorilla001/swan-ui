@@ -77,7 +77,7 @@ BACKEND_URL = {
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",
-        appmonit:"api/v1/metrics/cluster/$clusterID/app/$appName"
+        appmonit:"api/v1/metrics/cluster/$clusterID/app/$aliase"
     },
     ws: {
         subscribe: "streaming/glance/$token"

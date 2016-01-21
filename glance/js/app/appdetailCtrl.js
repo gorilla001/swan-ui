@@ -8,7 +8,8 @@ function appdetailCtrl($scope, $state, $stateParams, gHttp, $timeout, Notificati
     $scope.configObject = {
         "clusterId": $scope.appInfo.clusterId,
         "appId": parseInt($scope.appInfo.appId),
-        "appName": $scope.appInfo.name
+        "appName": $scope.appInfo.name,
+        "aliase": $scope.appInfo.aliase
     };
     
     var timeoutPromise = $timeout(refreshData, 5000);
