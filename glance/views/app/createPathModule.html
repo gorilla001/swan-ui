@@ -3,16 +3,22 @@
 </div>
 
 <div class="modal-body">
-    <div class="form-inline">
-        <div class="form-group">
-            <label>KEY</label>
-            <input type="text" class="form-control" placeholder="Path" data-ng-model="pathInfo.key">
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-md-3">KEY</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" data-ng-model="pathInfo.key">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3">&nbsp;VALUE</label>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" data-ng-model="pathInfo.value">
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>&nbsp;VALUE</label>
-            <input type="text" class="form-control" data-ng-model="pathInfo.value">
-        </div>
-    </div>
+    </form>
 </div>
 
 <div class="modal-footer">
