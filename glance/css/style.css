@@ -1863,3 +1863,20 @@ from {-webkit-transform: rotate(0deg);}
 from {-o-transform: rotate(0deg);}
   to {-o-transform: rotate(360deg);}
 }
+
+#createPortModule label.radio-inline {
+	width: 90px;
+	font-size: 14px;
+}
+#createPortModule span.ip {
+	display: inline-block;
+	width: 110px;
+}
+#createPortModule span.port {
+	display: inline-block;
+	width: 40px;
+}
+#createPortModule span.portrange {
+	display: inline-block;
+	width: 115px;
+}
