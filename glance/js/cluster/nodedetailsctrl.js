@@ -17,6 +17,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     };
     $scope.labelForm = {};
 
+    $scope.nodeInfo = {};
+
     $scope.serviceViews = [];
     $('.charts').hide();
     
@@ -64,6 +66,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.getNodeMetricData = function (nodeId) {
         glanceHttp.ajaxGet(['cluster.nodeMonitor', {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
+            setDefalutNodeInfos();
+
             if (data.data.length) {
                 $scope.nodeInfo = getNodeInfo(data.data[0]);
             }
@@ -91,10 +95,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                         return;
                     }
                 }
-                nodeInfo = getNodeInfo(data);
-                if (nodeInfo) {
-                    $scope.nodeInfo = nodeInfo;
-                }
+                $scope.nodeInfo = getNodeInfo(data);
     
                 nodesData.splice(0, 0, data);
                 if (nodesData.length > maxNodesNumber) {
@@ -107,19 +108,36 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     }
 
     function getNodeInfo(data) {
-        var nodeInfo, keys, key, i;
-        nodeInfo = {};
-        keys = ['cpuPercent', 'osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
-        for (i = 0; i < keys.length; i += 1) {
+        var nodeInfo = {};
+        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
+        
+        var key;
+        for (var i = 0; i < keys.length; i++) {
             key = keys[i];
+
             if (data[key]) {
                 nodeInfo[key] = data[key];
             } else {
-                return false;
+                return $scope.nodeInfo;
             }
         }
-        nodeInfo.cpuNumber = nodeInfo.cpuPercent.length;
+
+        if(data.cpuPercent && angular.isArray(data.cpuPercent)) {
+            nodeInfo.cpuNumber = data.cpuPercent.length;
+        } else {
+            return $scope.nodeInfo;
+        }
+
         return nodeInfo;
+    }
+
+    function setDefalutNodeInfos() {
+        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion', 'cpuNumber'];
+        var key;
+        for (var i = 0; i < keys; i++) {
+            key = keys[i];
+            $scope.nodeInfo[key] = '未知';
+        }
     }
 
     $scope.deleNode = function(id){
