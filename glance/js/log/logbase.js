@@ -32,9 +32,9 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         }
     });
 
-    $scope.getNodePorts = function (appName, clusterId) {
-        if (appName && clusterId) {
-            glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_name: appName}], function (data) {
+    $scope.getNodePorts = function (appAliase, clusterId) {
+        if (appAliase && clusterId) {
+            glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_aliase: appAliase}], function (data) {
                 $scope.nodes = data.data;
 
                 var tempNodesInfo = [];
