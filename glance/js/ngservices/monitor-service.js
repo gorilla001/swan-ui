@@ -56,10 +56,11 @@ function monitor($rootScope, ngSocket) {
             var diskNames = [];
             $.each(yAxisDataInhour, function(index, val) {
                 if(val) {
-                    yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
-                    yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
+                    yAxis.cpu[index] = setDefaultRatio2NaN(val.cpuPercent);
+                    yAxis.memory[index] = setDefaultRatio2NaN(calRatio(val.memUsed, val.memTotal));
                     //兼容老版本的格式
-                    yAxis.disk[index] = getDiskRatio(getDisksFromData(val), diskNames);
+                    yAxis.disk[index] = setDefaultRatio2NaN(calDiskPercent(val));
+                    diskNames = setDiskNames(val.disks, diskNames);
                 }
             });
 
@@ -87,11 +88,50 @@ function monitor($rootScope, ngSocket) {
         return hour + ':' + min;
     };
 
-    var calRatio = function(used, total) {
+    function calRatio(used, total) {
+        var ratio = [];
         if (typeof(used) === 'number' && typeof(total) === 'number' && total > 0) {
-            return (100 * used / total).toFixed(2);
+            ratio[0] = (100 * used / total).toFixed(2);
         }
-    };
+        return ratio;
+    }
+
+    function calDiskPercent(data) {
+        var diskPercents = [];
+        var disks = data.disks;
+        if (disks) {
+            angular.forEach(disks, function(val, index) {
+                diskPercents.push(calRatio(val.used, val.total)[0]);
+            });
+        } else {
+            diskPercents = calRatio(data.diskUsed, data.diskTotal);
+        }
+        return diskPercents;
+    }
+
+    function setDefaultRatio2NaN(ratio) {
+        var defaultRatio = '0.00';
+        if (!ratio.length) {
+            return [defaultRatio];
+        }
+        angular.forEach(ratio, function(val, index) {
+            if(!val) {
+                ratio[index] = defaultRatio;
+            }
+        });
+        return ratio;
+    }
+
+    function setDiskNames(disks, diskNames) {
+        if(!disks) {
+            diskNames = [''];
+        } else if (disks && (diskNames.length <= 1)) {
+            angular.forEach(disks, function(val, index) {
+                diskNames.push(val.path);
+            });
+        }
+        return diskNames;
+    }
 
     var getDefaultData = function() {
         var data = {
@@ -104,75 +144,27 @@ function monitor($rootScope, ngSocket) {
         };
         var frequency = 60;
         var interval = 1 * 60;
-
-        var initialyAxis = [];
-        var initialDiskyAxis = [];
+        var defaultVal = ['0.00'];
+        
         var now = (new Date()).getTime() / 1000;
-        var times = [];
+        var initialyAxis = [];
         
         for (var i = 0; i < frequency; i ++) {
-            times[i] = now + i * interval;
-            initialyAxis.push(0);
-            initialDiskyAxis.push([0]);
+            data.xAxis[i] = calHourMin(now + i * interval);
+            initialyAxis.push(defaultVal);
         }
-        $.each(times, function(index, val) {
-            data.xAxis[index] = calHourMin(val);
-        });
 
         $.each(data.yAxis, function(key, val) {
-            if(key === 'disk') {
-                data.yAxis[key] = initialDiskyAxis;
-            } else {
-                data.yAxis[key] = initialyAxis;
-            }
+            data.yAxis[key] = initialyAxis;
         });
 
         data.diskNames = [''];
         return data;
     };
 
-    function getDefaultRatio(ratio) {
-        if($.isArray(ratio)) {
-            $.each(ratio, function(index, val) {
-                if(!val) {
-                    ratio[index] = '0.00';
-                }
-            });
-        } else {
-            if(!ratio) {
-                ratio = '0.00';
-            }
-        }
-        return ratio;
-    }
-    
-    function getDisksFromData(data) {
-        var disks;
-        if (data.disks != undefined){
-            disks = data.disks;
-        } else {
-            disks = [{used: data.diskUsed, total: data.diskTotal, path: ''}]
-        }
-        return disks;
-    }
-
-
-    function getDiskRatio(disks, diskNames) {
-        var diskPercent = [];
-        $.each(disks, function(_index, disk) {
-            if (diskNames.indexOf(disk.path) < 0) {
-                diskNames.push(disk.path);
-            }
-            diskPercent[diskNames.indexOf(disk.path)] = getDefaultRatio(calRatio(disk.used, disk.total));
-        });
-        return diskPercent;
-    }
-    
-
     return {
         httpMonitor: httpMonitor,
         calHourMin: calHourMin,
-        calRatio: calRatio,
         getDefaultData: getDefaultData
     };
 };
