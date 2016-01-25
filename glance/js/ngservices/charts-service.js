@@ -233,16 +233,8 @@ function buildCharts(monitor) {
             }
         };
         
-        var xAxis;
-        var yAxis;
-        if (chartsData) {
-            xAxis = chartsData.xAxis;
-            yAxis = chartsData.yAxis;
-        } else {
-            var defaultData = monitor.getDefaultData();
-            yAxis = defaultData.yAxis;
-            xAxis = defaultData.xAxis;
-        }
+        var xAxis = chartsData.xAxis;
+        var yAxis = chartsData.yAxis;
 
         var cpuNumber = 1;
         if ($.isArray(yAxis.cpu[0])) {
