@@ -188,7 +188,7 @@ function buildCharts(monitor) {
         return names;
     }
 
-    var lineCharts = function(chartsData, DOMs, kind) {
+    var lineCharts = function(chartsData, DOMs) {
         var cpu = {
             key: 'cpu',
             domId: DOMs.cpu,
@@ -232,9 +232,7 @@ function buildCharts(monitor) {
                 axiesFontsize: '11px'
             }
         };
-        if (kind === 'cluster') {
-            cpu.styles.lineColor = '#39C7C8';
-        }
+        
         var xAxis;
         var yAxis;
         if (chartsData) {
