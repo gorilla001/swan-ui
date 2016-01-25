@@ -54,14 +54,12 @@ function monitor($rootScope, ngSocket) {
             };
 
             var diskNames = [];
-            var disk;
             $.each(yAxisDataInhour, function(index, val) {
                 if(val) {
                     yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
                     yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
                     //兼容老版本的格式
-                    disk = getDisksFromData(val)
-                    yAxis.disk[index] = getDiskRatio(disk, diskNames);
+                    yAxis.disk[index] = getDiskRatio(getDisksFromData(val), diskNames);
                 }
             });
 
