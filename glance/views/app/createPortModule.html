@@ -32,11 +32,11 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">类型</label>
                     <div class="col-sm-8">
-                        <label class="radio-inline" ng-show="proxyNodes.length">
+                        <label class="radio-inline" ng-if="proxyNodes.length">
                             <input type="radio" value="1" data-ng-model="portInfo.type"
                                    ng-change="changeType(portInfo.type)"> 对内
                         </label>
-                        <label class="radio-inline" ng-show="gateWays.length">
+                        <label class="radio-inline" ng-if="gateWays.length">
                             <input type="radio" value="2" data-ng-model="portInfo.type"
                                    ng-change="changeType(portInfo.type)"> 对外
                         </label>
