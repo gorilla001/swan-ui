@@ -54,12 +54,13 @@ function monitor($rootScope, ngSocket) {
             };
 
             var diskNames = [];
+            var disk;
             $.each(yAxisDataInhour, function(index, val) {
                 if(val) {
                     yAxis.cpu[index] = getDefaultRatio(val.cpuPercent);
                     yAxis.memory[index] = getDefaultRatio(calRatio(val.memUsed, val.memTotal));
                     //兼容老版本的格式
-                    var disk = getDisksFromData(val)
+                    disk = getDisksFromData(val)
                     yAxis.disk[index] = getDiskRatio(disk, diskNames);
                 }
             });
@@ -107,20 +108,28 @@ function monitor($rootScope, ngSocket) {
         var interval = 1 * 60;
 
         var initialyAxis = [];
+        var initialDiskyAxis = [];
         var now = (new Date()).getTime() / 1000;
         var times = [];
         
         for (var i = 0; i < frequency; i ++) {
             times[i] = now + i * interval;
             initialyAxis.push(0);
+            initialDiskyAxis.push([0]);
         }
         $.each(times, function(index, val) {
             data.xAxis[index] = calHourMin(val);
         });
 
         $.each(data.yAxis, function(key, val) {
-            data.yAxis[key] = initialyAxis;
+            if(key === 'disk') {
+                data.yAxis[key] = initialDiskyAxis;
+            } else {
+                data.yAxis[key] = initialyAxis;
+            }
         });
+
+        data.diskNames = [''];
         return data;
     };
 
