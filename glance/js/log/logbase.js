@@ -85,6 +85,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             'appName': $scope.appName,
             'logSearchKey': $scope.logSearchKey
         };
+
         clusterIdTemp = $scope.searchData.clusterId;
         $scope.clusterlogs.searchLogs($scope.searchData);
     };
@@ -96,10 +97,11 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         var taskid = logInfo.taskid[0];
 
         $scope.contextSearchData = {
-            counter:{
-                conterGte: (Number(logInfo.counter.join()) - 100) > 0 ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
-                conterLte: (Number(logInfo.counter.join()) + 100)
-            },
+            //counter:{
+            //    conterGte: (Number(logInfo.counter.join()) - 100) > 0 ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
+            //    conterLte: (Number(logInfo.counter.join()) + 100)
+            //},
+            counter: 100,
             instanceName: taskid,
             clusterId: clusterIdTemp,
             size: 200
