@@ -35,34 +35,18 @@ function monitor($rootScope, ngSocket) {
         },
         
         getChartsData: function(data) {
-            var chartsData = {};
             if(!data || !data.length) {
-                chartsData = getDefaultData();
-                return chartsData;
+                return setDefaultChartsData();
             }
 
             var frequency = 60;
             var interval = 1 * 60;
             var dataInhour = this.getDataInhour(data, frequency, interval);
-
             var xAxis = dataInhour.xAxis;
             var yAxisDataInhour = dataInhour.yAxis;
-            var yAxis = {
-                cpu: [],
-                memory: [],
-                disk: []
-            };
-
-            var diskNames = [];
-            $.each(yAxisDataInhour, function(index, val) {
-                if(val) {
-                    yAxis.cpu[index] = setDefaultRatio2NaN(val.cpuPercent);
-                    yAxis.memory[index] = setDefaultRatio2NaN(calRatio(val.memUsed, val.memTotal));
-                    //兼容老版本的格式
-                    yAxis.disk[index] = setDefaultRatio2NaN(calDiskPercent(val));
-                    diskNames = setDiskNames(val.disks, diskNames);
-                }
-            });
+            
+            var diskNames = setDiskNames(yAxisDataInhour[yAxisDataInhour.length-1].disks);
+            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency);
 
             return {
                 xAxis: xAxis,
@@ -70,7 +54,6 @@ function monitor($rootScope, ngSocket) {
                 diskNames: diskNames
             };
         }
-
     };
 
     var calHourMin = function(seconds) {
@@ -87,6 +70,54 @@ function monitor($rootScope, ngSocket) {
         }
         return hour + ':' + min;
     };
+
+    ///////////
+
+    function calyAxisDataInhour(yAxisDataInhour, frequency) {
+        var yAxis = {
+            cpu: [],
+            memory: [],
+            disk: []
+        };
+
+        var numbers = calLineNumbers(yAxisDataInhour[yAxisDataInhour.length-1]);
+        var defaultyAxis = setDefaultyAxis(numbers);
+
+        var val;
+        for(var i = 0; i < frequency; i++) {
+            val = yAxisDataInhour[i];
+            yAxis.cpu[i] = val ? setShowRatio(val.cpuPercent) : defaultyAxis.cpu;
+            yAxis.memory[i] = val ? setShowRatio(calRatio(val.memUsed, val.memTotal)) : defaultyAxis.memory;
+            yAxis.disk[i] = val ? setShowRatio(calDiskPercent(val)): defaultyAxis.disk;
+        }
+        return yAxis;
+    }
+
+    function calLineNumbers(lastItem) {
+        var defaultNumber = 1;
+        var numbers = {
+            cpu: lastItem.cpuPercent.length,
+            memory: defaultNumber,
+            disk: defaultNumber
+        };
+        numbers.disk = lastItem.disks ? lastItem.disks.length : defaultNumber;
+        return numbers;
+    }
+
+    function setDefaultyAxis(numbers) {
+        var defaultyAxis = {
+            cpu: [],
+            memory: [],
+            disk: []
+        };
+        var defaultRatio = '0.00';
+        angular.forEach(numbers, function(val, key) {
+            for(var i = 0; i < val; i++) {
+                defaultyAxis[key][i] = defaultRatio;
+            }
+        });
+        return defaultyAxis;
+    }
 
     function calRatio(used, total) {
         var ratio = [];
@@ -109,25 +140,22 @@ function monitor($rootScope, ngSocket) {
         return diskPercents;
     }
 
-    function setDefaultRatio2NaN(ratio) {
+    function setShowRatio(ratio) {
         var defaultRatio = '0.00';
         if (!ratio.length) {
             return [defaultRatio];
         }
         angular.forEach(ratio, function(val, index) {
-            if(val) {
-                ratio[index] = Number(val).toFixed(2);
-            } else {
-                ratio[index] = defaultRatio;
-            }
+            ratio[index] = val ? Number(val).toFixed(2) : defaultRatio;
         });
         return ratio;
     }
 
-    function setDiskNames(disks, diskNames) {
+    function setDiskNames(disks) {
+        var diskNames = [];
         if(!disks) {
-            diskNames = [''];
-        } else if (disks && (diskNames.length <= 1)) {
+            diskNames.push('');
+        } else {
             angular.forEach(disks, function(val, index) {
                 diskNames.push(val.path);
             });
@@ -135,7 +163,7 @@ function monitor($rootScope, ngSocket) {
         return diskNames;
     }
 
-    var getDefaultData = function() {
+    var setDefaultChartsData = function() {
         var data = {
             yAxis: {
                 memory: [],
@@ -166,8 +194,7 @@ function monitor($rootScope, ngSocket) {
 
     return {
         httpMonitor: httpMonitor,
-        calHourMin: calHourMin,
-        getDefaultData: getDefaultData
+        calHourMin: calHourMin
     };
 };
 
