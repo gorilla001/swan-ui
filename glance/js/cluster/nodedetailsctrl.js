@@ -74,7 +74,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             $('.charts').show();
             $scope.showCharts = true;
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
-            buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+            buildCharts.lineCharts(chartsData, $scope.DOMs);
             
             addMetricData(data);
         });
@@ -102,7 +102,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                     nodesData.pop();
                 }
                 chartsData = monitor.httpMonitor.getChartsData(nodesData);
-                buildCharts.lineCharts(chartsData, $scope.DOMs, 'node');
+                buildCharts.lineCharts(chartsData, $scope.DOMs);
             }
         });
     }

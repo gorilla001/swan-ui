@@ -119,26 +119,15 @@ function buildCharts(monitor) {
         return seriesStyle;
     }
 
-    function getCpuSeriesData(data) {
-        var cpuSeriesData = [];
-        var cpuNumber = data[data.length-1].length;
-        for (var i = 0; i < cpuNumber; i++) {
-            cpuSeriesData[i] = [];
-            for (var j = 0; j < data.length; j++) {
-                if (data[j] && data[j][i]) {
-                    cpuSeriesData[i][j] = Number(data[j][i]).toFixed(2);
-                } else {
-                    cpuSeriesData[i][j] = '0.00';
-                }
-            }
-        }
-        return cpuSeriesData;
-    }
-
-    function getMemoryDiskSeriesData(data) {
+    function getSeriesData(yAxis) {
         var seriesData = [];
-        $.each(data, function(index, val) {
-            seriesData[index] = val? val : '0.00';
+        angular.forEach(yAxis, function(percentArray, percentArrayIndex) {
+            angular.forEach(percentArray, function(percent, percentIndex) {
+                if(!seriesData[percentIndex]) {
+                    seriesData[percentIndex] = [];
+                }
+                seriesData[percentIndex].push(percentArray[percentIndex]);
+            });
         });
         return seriesData;
     }
@@ -157,18 +146,13 @@ function buildCharts(monitor) {
             });
         });
 
-        var seriesData = ($.isArray(yAxis[yAxis.length-1])) ? getCpuSeriesData(yAxis) : getMemoryDiskSeriesData(yAxis);
-        var lineNumber = 1;
-        if ($.isArray(seriesData[0])) {
-            lineNumber = seriesData.length;
-            for (var i = 0; i < lineNumber; i++) {
-                option.series[i] = setSeriesStyles(indicator, i);
-                option.series[i].data = seriesData[i];
-            }
-        } else {
-            option.series[0] = setSeriesStyles(indicator);
-            option.series[0].data = seriesData;
+        var seriesData = getSeriesData(yAxis);
+        var lineNumber = yAxis[yAxis.length-1].length;
+        for(var i = 0; i < lineNumber; i++) {
+            option.series[i] = setSeriesStyles(indicator, i);
+            option.series[i].data = seriesData[i];
         }
+
         option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
         option.series[lineNumber+1] = createMarkline(alarmingLines.frequency, alarmingLines.low.rate, alarmingLines.low.color);
         return option;
@@ -188,7 +172,7 @@ function buildCharts(monitor) {
         return names;
     }
 
-    var lineCharts = function(chartsData, DOMs, kind) {
+    var lineCharts = function(chartsData, DOMs) {
         var cpu = {
             key: 'cpu',
             domId: DOMs.cpu,
@@ -232,19 +216,9 @@ function buildCharts(monitor) {
                 axiesFontsize: '11px'
             }
         };
-        if (kind === 'cluster') {
-            cpu.styles.lineColor = '#39C7C8';
-        }
-        var xAxis;
-        var yAxis;
-        if (chartsData) {
-            xAxis = chartsData.xAxis;
-            yAxis = chartsData.yAxis;
-        } else {
-            var defaultData = monitor.getDefaultData();
-            yAxis = defaultData.yAxis;
-            xAxis = defaultData.xAxis;
-        }
+        
+        var xAxis = chartsData.xAxis;
+        var yAxis = chartsData.yAxis;
 
         var cpuNumber = 1;
         if ($.isArray(yAxis.cpu[0])) {
