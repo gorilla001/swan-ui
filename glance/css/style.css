@@ -1,4 +1,4 @@
-/*
+    /*
  * Base structure
  */
 body,html {
@@ -450,7 +450,8 @@ a.remove {
     margin: 0;
     list-style: none;
     text-align: center;
-    width: 16%
+    width: 16%;
+    height: 75px;
 }
 .server-detail .server-app-status div {
     width: 30px;
@@ -964,7 +965,7 @@ a.remove {
 	text-align: center;
 }
 .server-detail .server-app-status img {
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 
 
@@ -1684,8 +1685,6 @@ rzslider .rz-bubble {
 	margin-top: 20px;
 	padding: 10px; 
 	text-align: center;
-}.btn-dropdown-info .dropdown-menu {
-    min-width: 130px;
 }
 .btn-dropdown-info .dropdown-menu li {
     padding: 5px 20px;

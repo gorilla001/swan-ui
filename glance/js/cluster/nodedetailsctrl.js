@@ -39,13 +39,15 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     
     function createServiceViews() {
         if ($scope.isMasterFlag) {
-            $scope.serviceViews = ["master", "marathon", "zookeeper"];
+            $scope.serviceViews = ["master", "marathon", "zookeeper", "exhibitor"]
             if ($scope.node.cluster.cluster_type=='1_master') {
-                $scope.serviceViews.push("slave");
+                $scope.serviceViews.push("slave", "cadvisor");
             };
         } else {
-            $scope.serviceViews = ["slave"];
+            $scope.serviceViews = ["slave", "cadvisor"];
         }
+        $scope.serviceViews.push("logcollection");
+        
         angular.forEach($scope.node.attributes, function (attribute){
             if (attribute.attribute == "gateway") {
                 $scope.serviceViews.push("bamboo_gateway");
@@ -54,6 +56,10 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 $scope.serviceViews.push("bamboo_proxy");
             }
         });
+        
+        if ($scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0) {
+            $scope.serviceViews.push("chronos");
+        }
     }
 
     $scope.DOMs = {
