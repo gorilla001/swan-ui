@@ -19,9 +19,16 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     
     $scope.getServiceLabel = function(serviceName) {
         var labels = {
-            master: 'Mesos',
-            bamboo_gateway: 'Gateway',
-            bamboo_proxy: 'Proxy'
+            master: '主控组件',
+            marathon: '应用调度组件',
+            zookeeper: 'Zookeeper',
+            exhibitor: 'ZK监控组件',
+            slave: '节点组件',
+            cadvisor: '监控组件',
+            logcollection: '日志收集组件',
+            bamboo_gateway: '外部网关组件',
+            bamboo_proxy: '内部代理组件',
+            chronos: '定时任务组件'
         };
         if (labels[serviceName]) {
             return labels[serviceName];
