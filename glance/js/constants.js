@@ -84,7 +84,7 @@ BACKEND_URL = {
     },
     log: {
         search: "es/index",
-        searchContext: "es/jump"
+        searchContext: "es/context"
     },
     app: {
         list: "api/v1/applications/",

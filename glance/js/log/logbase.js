@@ -34,7 +34,11 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
 
     $scope.getNodePorts = function (appAliase, clusterId) {
         if (appAliase && clusterId) {
-            glanceHttp.ajaxGet(["app.getNodePorts", {cluster_id: clusterId, clusterId: clusterId, app_aliase: appAliase}], function (data) {
+            glanceHttp.ajaxGet(["app.getNodePorts", {
+                cluster_id: clusterId,
+                clusterId: clusterId,
+                app_aliase: appAliase
+            }], function (data) {
                 $scope.nodes = data.data;
 
                 var tempNodesInfo = [];
@@ -57,10 +61,10 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         });
     };
 
-    $scope.isDisableGteDate = function(curDate, mode) {
+    $scope.isDisableGteDate = function (curDate, mode) {
         return curDate > $scope.lte;
     };
-    $scope.isDisablelteDate = function(curDate, mode) {
+    $scope.isDisablelteDate = function (curDate, mode) {
         return curDate < $scope.gte;
     };
 
@@ -94,21 +98,18 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.getContextLog = function (logInfo, indexId) {
         $scope.curId = indexId;
         $scope.showContextUI = true;
-        var taskid = logInfo.taskid[0];
 
         $scope.contextSearchData = {
-            //counter:{
-            //    conterGte: (Number(logInfo.counter.join()) - 100) > 0 ? Number(logInfo.counter.join()) - 100: 1, //Query the log and one hundred data
-            //    conterLte: (Number(logInfo.counter.join()) + 100)
-            //},
-            counter: 100,
-            instanceName: taskid,
+            appName: $scope.appName,
+            counter: parseInt(logInfo.counter[0]),
+            timestamp: logInfo.timestamp[0],
+            ipport: logInfo.ipport[0],
             clusterId: clusterIdTemp,
             size: 200
         };
 
         $scope.contextlogs.searchLogs($scope.contextSearchData, function (logSize) {
-            $timeout(function(){
+            $timeout(function () {
                 var scrollHeight = 0;
                 var oDiv = document.getElementById("contextLog");
                 var oLi = document.getElementsByClassName("list-unstyled")[1].getElementsByTagName("li");
@@ -136,7 +137,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
 
     $scope.$watch('timeRange', function () {
         //set precise time
-        if($scope.timeRange === 'other'){
+        if ($scope.timeRange === 'other') {
             $scope.lte = new Date();
             $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
         }

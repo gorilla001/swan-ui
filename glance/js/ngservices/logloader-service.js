@@ -18,7 +18,9 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
 
         if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete || !this.data) return;
         this.isLoadingLogs = true;
-        this.data.from = this.curLogNum;
+        if (!contextCallBack) {
+            this.data.from = this.curLogNum;
+        }
 
         glanceHttp.ajaxPost(postUrl,
             this.data,
@@ -61,16 +63,22 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.clusterId = searchData.clusterId;
         this.data = {
             "userid": parseInt($rootScope.userId),
-            "clusterid": this.clusterId,
-            "from": this.curLogNum,
-            "size": function () {
+            "clusterid": this.clusterId
+        };
+
+        if (contextCallBack) {
+            this.data.timestamp = searchData.timestamp;
+            this.data.ipport = searchData.ipport;
+        } else {
+            this.data.from = this.curLogNum;
+            this.data.size = function () {
                 if (searchData.size !== undefined) {
                     return searchData.size
                 } else {
                     return 20
                 }
             }()
-        };
+        }
 
         if (angular.isDate(searchData.gte) && angular.isDate(searchData.lte)) {
             this.gte = $filter('date')(searchData.gte, 'yyyy-MM-ddTHH:mm:ss.sss+08:00');
@@ -113,7 +121,6 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             this.data.ipport = this.ipport;
         }
 
-        console.log(this.data);
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
