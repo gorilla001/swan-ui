@@ -91,7 +91,7 @@ function monitor($rootScope, ngSocket) {
     function calRatio(used, total) {
         var ratio = [];
         if (typeof(used) === 'number' && typeof(total) === 'number' && total > 0) {
-            ratio[0] = (100 * used / total).toFixed(2);
+            ratio[0] = (100 * used / total);
         }
         return ratio;
     }
@@ -115,7 +115,9 @@ function monitor($rootScope, ngSocket) {
             return [defaultRatio];
         }
         angular.forEach(ratio, function(val, index) {
-            if(!val) {
+            if(val) {
+                ratio[index] = Number(val).toFixed(2);
+            } else {
                 ratio[index] = defaultRatio;
             }
         });
