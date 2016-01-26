@@ -42,12 +42,12 @@ function monitor($rootScope, ngSocket) {
             var frequency = 60;
             var interval = 1 * 60;
             var defaultRatio = '0.00';
+            var diskNames = [];
             var dataInhour = this.getDataInhour(data, frequency, interval);
             var xAxis = dataInhour.xAxis;
             var yAxisDataInhour = dataInhour.yAxis;
             
-            var diskNames = setDiskNames(yAxisDataInhour[yAxisDataInhour.length-1].disks);
-            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio);
+            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio, diskNames);
 
             return {
                 xAxis: xAxis,
@@ -74,14 +74,14 @@ function monitor($rootScope, ngSocket) {
 
     ///////////
 
-    function calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio) {
+    function calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio, diskNames) {
         var yAxis = {
             cpu: [],
             memory: [],
             disk: []
         };
 
-        var numbers = calLineNumbers(yAxisDataInhour[yAxisDataInhour.length-1]);
+        var numbers = calLineNumbers(yAxisDataInhour);
         var defaultyAxis = setDefaultyAxis(numbers, defaultRatio);
 
         var val;
@@ -89,20 +89,31 @@ function monitor($rootScope, ngSocket) {
             val = yAxisDataInhour[i];
             yAxis.cpu[i] = val ? setShowRatio(val.cpuPercent, defaultRatio) : defaultyAxis.cpu;
             yAxis.memory[i] = val ? setShowRatio(calRatio(val.memUsed, val.memTotal), defaultRatio) : defaultyAxis.memory;
-            yAxis.disk[i] = val ? setShowRatio(calDiskPercent(val), defaultRatio): defaultyAxis.disk;
+            yAxis.disk[i] = val ? setShowRatio(calDiskRatio(val, diskNames), defaultRatio): defaultyAxis.disk;
         }
         return yAxis;
     }
 
-    function calLineNumbers(lastItem) {
+    function calLineNumbers(yAxisDataInhour) {
+        var lastItem = yAxisDataInhour[yAxisDataInhour.length-1];
         var defaultNumber = 1;
         var numbers = {
             cpu: lastItem.cpuPercent.length,
             memory: defaultNumber,
             disk: defaultNumber
         };
-        numbers.disk = lastItem.disks ? lastItem.disks.length : defaultNumber;
+        numbers.disk = lastItem.disks ? calMaxDiskNumber(yAxisDataInhour) : defaultNumber;
         return numbers;
+    }
+
+    function calMaxDiskNumber(yAxisDataInhour) {
+        var maxNumber = 0;
+        var tempNumber = 0;
+        angular.forEach(yAxisDataInhour, function(index, val) {
+            tempNumber = val.disks ? val.disks.length : 1;
+            maxNumber = (tempNumber > maxNumber) ? tempNumber: maxNumber;
+        });
+        return maxNumber;
     }
 
     function setDefaultyAxis(numbers, defaultRatio) {
@@ -127,15 +138,19 @@ function monitor($rootScope, ngSocket) {
         return ratio;
     }
 
-    function calDiskPercent(data) {
+    function calDiskRatio(data, diskNames) {
         var diskPercents = [];
-        var disks = data.disks;
-        if (disks) {
-            angular.forEach(disks, function(val, index) {
-                diskPercents.push(calRatio(val.used, val.total)[0]);
+
+        if (data.disks) {
+            angular.forEach(data.disks, function(disk, index) {
+                if (diskNames.indexOf(disk.path) === -1) {
+                    diskNames.push(disk.path);
+                }
+                diskPercents[diskNames.indexOf(disk.path)] = calRatio(disk.used, disk.total)[0];
             });
         } else {
             diskPercents = calRatio(data.diskUsed, data.diskTotal);
+            diskNames.push('');
         }
         return diskPercents;
     }
@@ -148,18 +163,6 @@ function monitor($rootScope, ngSocket) {
             ratio[index] = val ? Number(val).toFixed(2) : defaultRatio;
         });
         return ratio;
-    }
-
-    function setDiskNames(disks) {
-        var diskNames = [];
-        if(!disks) {
-            diskNames.push('');
-        } else {
-            angular.forEach(disks, function(val, index) {
-                diskNames.push(val.path);
-            });
-        }
-        return diskNames;
     }
 
     var setDefaultChartsData = function() {
