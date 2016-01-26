@@ -109,7 +109,7 @@ function monitor($rootScope, ngSocket) {
     function calMaxDiskNumber(yAxisDataInhour) {
         var maxNumber = 0;
         var tempNumber = 0;
-        angular.forEach(yAxisDataInhour, function(index, val) {
+        angular.forEach(yAxisDataInhour, function(val, index) {
             tempNumber = val.disks ? val.disks.length : 1;
             maxNumber = (tempNumber > maxNumber) ? tempNumber: maxNumber;
         });
