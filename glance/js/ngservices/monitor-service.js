@@ -41,12 +41,13 @@ function monitor($rootScope, ngSocket) {
 
             var frequency = 60;
             var interval = 1 * 60;
+            var defaultRatio = '0.00';
             var dataInhour = this.getDataInhour(data, frequency, interval);
             var xAxis = dataInhour.xAxis;
             var yAxisDataInhour = dataInhour.yAxis;
             
             var diskNames = setDiskNames(yAxisDataInhour[yAxisDataInhour.length-1].disks);
-            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency);
+            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio);
 
             return {
                 xAxis: xAxis,
@@ -73,7 +74,7 @@ function monitor($rootScope, ngSocket) {
 
     ///////////
 
-    function calyAxisDataInhour(yAxisDataInhour, frequency) {
+    function calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio) {
         var yAxis = {
             cpu: [],
             memory: [],
@@ -81,14 +82,14 @@ function monitor($rootScope, ngSocket) {
         };
 
         var numbers = calLineNumbers(yAxisDataInhour[yAxisDataInhour.length-1]);
-        var defaultyAxis = setDefaultyAxis(numbers);
+        var defaultyAxis = setDefaultyAxis(numbers, defaultRatio);
 
         var val;
         for(var i = 0; i < frequency; i++) {
             val = yAxisDataInhour[i];
-            yAxis.cpu[i] = val ? setShowRatio(val.cpuPercent) : defaultyAxis.cpu;
-            yAxis.memory[i] = val ? setShowRatio(calRatio(val.memUsed, val.memTotal)) : defaultyAxis.memory;
-            yAxis.disk[i] = val ? setShowRatio(calDiskPercent(val)): defaultyAxis.disk;
+            yAxis.cpu[i] = val ? setShowRatio(val.cpuPercent, defaultRatio) : defaultyAxis.cpu;
+            yAxis.memory[i] = val ? setShowRatio(calRatio(val.memUsed, val.memTotal), defaultRatio) : defaultyAxis.memory;
+            yAxis.disk[i] = val ? setShowRatio(calDiskPercent(val), defaultRatio): defaultyAxis.disk;
         }
         return yAxis;
     }
@@ -104,13 +105,12 @@ function monitor($rootScope, ngSocket) {
         return numbers;
     }
 
-    function setDefaultyAxis(numbers) {
+    function setDefaultyAxis(numbers, defaultRatio) {
         var defaultyAxis = {
             cpu: [],
             memory: [],
             disk: []
         };
-        var defaultRatio = '0.00';
         angular.forEach(numbers, function(val, key) {
             for(var i = 0; i < val; i++) {
                 defaultyAxis[key][i] = defaultRatio;
@@ -140,8 +140,7 @@ function monitor($rootScope, ngSocket) {
         return diskPercents;
     }
 
-    function setShowRatio(ratio) {
-        var defaultRatio = '0.00';
+    function setShowRatio(ratio, defaultRatio) {
         if (!ratio.length) {
             return [defaultRatio];
         }
