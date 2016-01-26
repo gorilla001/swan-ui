@@ -18,7 +18,7 @@
                 {/cluster.name/}
                 <small>主机数量: {/cluster.nodes.length/}</small>
                 &nbsp;&nbsp;&nbsp;
-                <small>
+                <small data-ng-show="cluster.nodes.length">
                   集群状态：<span data-ng-class="clusterStatusTextClass">
                     {/clusterStatusText/}
                   </span>
