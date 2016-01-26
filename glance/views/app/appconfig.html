@@ -77,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="envInfo  in config.envs">
+                <tr ng-repeat="envInfo  in config.envs | orderBy: 'key'">
                     <td>{/envInfo.key/}</td>
                     <td>{/envInfo.value/}</td>
                 </tr>
