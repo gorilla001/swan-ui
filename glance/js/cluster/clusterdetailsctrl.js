@@ -8,12 +8,18 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         unknow: '未知'
     };
 
+    $scope.showCreateNode = false;
+
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.upgradeFailedNodes = {};
     function getCurCluster() {
         glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
+
             $scope.totalItems = $scope.cluster.nodes.length;
+            if (!$scope.totalItems) {
+                $scope.showCreateNode = true;
+            }
             $scope.pageLength = 20;
             $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
 
