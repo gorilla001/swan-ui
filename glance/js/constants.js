@@ -110,7 +110,8 @@ BACKEND_URL = {
         ports: "api/v1/applications/$cluster_id/ports",
         getAppsStatus: "api/v1/applications/0/appStatus",
         getVersionConfig:"api/v1/applications/$app_versionId/version-config",
-        deleteVersion:"api/v1/applications/$app_versionId/version-delete"
+        deleteVersion:"api/v1/applications/$app_versionId/version-delete",
+        resend: "api/v1/applications/$app_id/redeploy"
     }
         
 };

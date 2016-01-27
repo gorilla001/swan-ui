@@ -63,6 +63,10 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         appCurd.undoApp(appId, appName);
     };
 
+    $scope.resend = function (appId, appName) {
+        appCurd.resend(appId, appName);
+    };
+
     $scope.upContainNum = function (appId, containerNum, appName) {
         appCurd.updateOpenModal($scope, appId, containerNum, appName);
     };
