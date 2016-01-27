@@ -37,6 +37,9 @@
                             <li data-ng-show="appInfo.status == '2' || appInfo.status == '3'"><a
                                     data-ng-click="upContainNum(appInfo.appId, appInfo.containerNum, appInfo.name)"
                                     href="#">扩展</a></li>
+                            <li data-ng-show="appInfo.status == '9'"><a
+                                    data-ng-click="resend(appInfo.appId, appInfo.name)"
+                                    href="#">恢复</a></li>
                             <li data-ng-show="appInfo.status == '2' || appInfo.status == '3'"><a
                                     data-ui-sref="app.update({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">更新</a>
                             </li>

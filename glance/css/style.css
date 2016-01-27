@@ -1879,3 +1879,7 @@ from {-o-transform: rotate(0deg);}
 	display: inline-block;
 	width: 115px;
 }
+
+#appTdCluster a.danger {
+	color: darkorange;
+}

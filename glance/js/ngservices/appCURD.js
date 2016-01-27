@@ -27,6 +27,7 @@
             start: start,
             deleteApp: deleteApp,
             undoApp: undoApp,
+            resend: resend,
             updateOpenModal: updateOpenModal,
             updateAjax: updateAjax,
             getListCluster: getListCluster,
@@ -77,6 +78,17 @@
                 }, undefined, null, function (data) {
                     Notification.error('应用 ' + appName + ' 撤销失败: ' + $scope.addCode[data.code]);
                 });
+            });
+        }
+
+        function resend(appId, appName) {
+            glanceHttp.ajaxGet(['app.resend', {app_id: parseInt(appId)}], function (data) {
+                if (data.data.startState == 0) {
+                    Notification.success('应用 ' + appName + ' 恢复中...');
+                    $state.reload();
+                }
+            }, undefined, null, function (data) {
+                Notification.error('应用 ' + appName + ' 恢复失败: ' + addCode[data.code]);
             });
         }
 
