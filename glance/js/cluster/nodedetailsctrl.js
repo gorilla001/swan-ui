@@ -57,7 +57,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             }
         });
         
-        if ($scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0) {
+        if ($scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status!="uninstalled") {
             $scope.serviceViews.push("chronos");
         }
     }
