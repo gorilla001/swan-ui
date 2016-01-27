@@ -24,8 +24,12 @@
                     </td>
                     <td data-title="'当前状态'">{/appstate[appListStatus[app.appId].status]/}</td>
                     <td data-title="'更新时间'" sortable="'update'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-                    <td data-title="'所属集群'" sortable="'clusterId'"><a href="#"
-                                                                      data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})">{/clusterNameMap[app.clusterId]/}</a>
+                    <td data-title="'所属集群'" sortable="'clusterId'" id="appTdCluster">
+                        <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.clusterId})"
+                           ng-class="{'danger': appListStatus[app.appId].status == '10'}"> <img
+                                data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
+                                ng-show="appListStatus[app.appId].status == '10'">{/clusterNameMap[app.clusterId]/}
+                        </a>
                     </td>
                     <td data-title="'容器个数'" sortable="'containerNum'"><span
                             ng-show="appListStatus[app.appId].tasks != app.containerNum && app.appStatus">{/appListStatus[app.appId].tasks/}/{/app.containerNum/}</span>
@@ -55,7 +59,8 @@
                         </button>
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status == '5' || appListStatus[app.appId].status == 'undefined'"
-                                data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs" data-demo-disable>删除
+                                data-ng-click="deleteApp(app.appId, app.appName)" class="btn btn-default btn-xs"
+                                data-demo-disable>删除
                         </button>
                         <button type="button"
                                 data-ng-disabled="appListStatus[app.appId].status != '9'"

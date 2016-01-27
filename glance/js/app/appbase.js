@@ -28,7 +28,8 @@ function appBaseCtrl($scope, $rootScope, $state, $timeout, glanceHttp, Notificat
         '6': "扩展中",
         '7': "启动中",
         '8': "撤销中",
-        '9': "失联"
+        '9': "失联",
+        '10': "异常"
     };
 
     $scope.portType = {
