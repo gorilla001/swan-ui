@@ -31,6 +31,12 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     $scope.pageChanged = function() {
         $scope.contentCurPage = $scope.contentPage.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
     };
+
+
+    // do search
+    $scope.doSearch = function (searchKey) {
+        console.log($scope.cluster.nodes)
+    };
 }
 
 clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor"];

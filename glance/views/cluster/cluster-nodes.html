@@ -1,5 +1,13 @@
 <div class="main-container-body tab-content">
     <div class="tab-pane active cluster-nodes" id="service-list" data-ng-show="cluster.nodes.length">
+        <div class="input-group col-xs-4 search-container">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord"
+                       placeholder="输入标签名称搜索主机" my-enter="doSearch(searchKeyWord)">
+                <div class="input-group-addon" ng-click="doSearch(searchKeyWord)"><i class="icon icon-search"></i>搜索
+                </div>
+            </div><!-- /input-group -->
+        </div>
         <div>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
             
