@@ -2,7 +2,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     $rootScope.clusterClass = 'clusterNode';
     $scope.unitConversion = unitConversion;
 
-    $scope.refresh = function(){
+    $scope.refresh = function () {
         $state.reload("cluster.clusterdetails");
     };
 
@@ -28,15 +28,36 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         $scope.currentPage = pageNo;
     };
 
-    $scope.pageChanged = function() {
-        $scope.contentCurPage = $scope.contentPage.slice(($scope.currentPage - 1) * $scope.pageLength,$scope.currentPage * $scope.pageLength);
+    $scope.pageChanged = function () {
+        $scope.contentCurPage = $scope.contentPage.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
     };
-
 
     // do search
     $scope.doSearch = function (searchKey) {
-        console.log($scope.cluster.nodes)
+        filterLabelNodes(searchKey)
     };
+
+    function filterLabelNodes(labelName) {
+        $scope.contentCurPage = [];
+
+        if (labelName) {
+            $scope.showPagination = false;
+            angular.forEach($scope.cluster.nodes, function (node, nodeIndex) {
+                angular.forEach(node.node_labels, function (label, labelIndex) {
+                    if (angular.equals(label.label.name, labelName)) {
+                        $scope.contentCurPage.push($scope.cluster.nodes[nodeIndex])
+                    }
+                })
+            });
+
+            if(!$scope.contentCurPage.length){
+
+            }
+        } else {
+            $scope.showPagination = $scope.totalItems > $scope.pageLength;
+            $scope.contentCurPage = $scope.contentPage.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
+        }
+    }
 }
 
 clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor"];
