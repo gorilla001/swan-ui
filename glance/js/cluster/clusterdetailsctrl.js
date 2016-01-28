@@ -21,7 +21,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
                 $scope.showCreateNode = true;
             }
             $scope.pageLength = 20;
-            $scope.showPagination = ($scope.totalItems > $scope.pageLength)? true: false;
+            $scope.showPagination = $scope.totalItems > $scope.pageLength;
 
             $scope.currentPage = 1;
             var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr);

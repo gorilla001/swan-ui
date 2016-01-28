@@ -1,13 +1,19 @@
 <div class="main-container-body tab-content">
     <div class="tab-pane active cluster-nodes" id="service-list" data-ng-show="cluster.nodes.length">
+        <div class="input-group col-xs-4 search-container">
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord"
+                       placeholder="输入标签名称搜索主机" my-enter="doSearch(searchKeyWord)">
+                <div class="input-group-addon" ng-click="doSearch(searchKeyWord)"><i class="icon icon-search"></i>搜索
+                </div>
+            </div>
+        </div>
         <div>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
-            
             <button type="button" class="btn btn-default btn-sm"
                 data-ui-sref="cluster.nodesource({clusterId:cluster.id})">
               添加主机
             </button>
-            
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                     data-ng-disabled="!checkedNodes.value.length" data-demo-disable>删除主机
             </button>&nbsp;
@@ -26,7 +32,7 @@
                   </ul>
             </div>
             <div class="btn-group btn-dropdown-info" data-ng-show="statusMgr.nodeStatusCount[cluster.id]['upgrading']">
-                  <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中 
+                  <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中
                       <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
                   </button>
                   <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -87,6 +93,9 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="alert alert-warning text-center" ng-show="!contentCurPage.length">
+                未查询到符合条件的主机
+            </div>
         </div>
 
         <uib-pagination total-items="totalItems" items-per-page="20" ng-model="currentPage" ng-change="pageChanged()" data-ng-show="showPagination" previous-text="上一页" next-text="下一页"></uib-pagination>

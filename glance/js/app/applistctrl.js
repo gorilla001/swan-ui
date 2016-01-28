@@ -15,6 +15,7 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
     $scope.listCluster(NEED_NAMEMAP);
     $scope.applist = [];
     $rootScope.appListParams.searchKeyWord = "";
+    $scope.showNothtingAlert = false;
     // app list table object
     $scope.appListTable = new ngTableParams($rootScope.appListParams, {
             counts: [10, 20, 50], // custom page count
@@ -31,6 +32,12 @@ function appListCtrl($scope, $rootScope, glanceHttp, $timeout, Notification, ngT
                     }
                     var total = res.data.TotalNumber;
                     $scope.applist = res.data.App;
+                    //Check whether show the warning dialog
+                    if(!$scope.applist.length){
+                        $scope.showNothtingAlert = true;
+                    }else {
+                        $scope.showNothtingAlert = false;
+                    }
                     params.total(total);
                     if (total > 0) {
                         $defer.resolve(res.data.App);

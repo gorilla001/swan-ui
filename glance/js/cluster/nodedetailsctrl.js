@@ -13,7 +13,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.selectedLabels = [];
 
     $scope.form = {
-        newLabelName : ''
+        newLabelName: ''
     };
     $scope.labelForm = {};
 
@@ -21,34 +21,38 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.serviceViews = [];
     $('.charts').hide();
-    
+
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.getCurNode = function () {
-        glanceHttp.ajaxGet(['cluster.nodeIns', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId}], function (data) {
+        glanceHttp.ajaxGet(['cluster.nodeIns', {
+            cluster_id: $stateParams.clusterId,
+            node_id: $stateParams.nodeId
+        }], function (data) {
             $scope.node = data.data;
             $scope.isMasterFlag = $scope.getIsMaster($scope.node);
             $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
             $scope.statusMgr.startListen($scope);
-            
+
             createServiceViews();
 
             $scope.selectedLabels = listNodeLabels(data.data.node_labels);
         });
     };
     $scope.getCurNode();
-    
+
     function createServiceViews() {
         if ($scope.isMasterFlag) {
             $scope.serviceViews = ["master", "marathon", "zookeeper", "exhibitor"]
-            if ($scope.node.cluster.cluster_type=='1_master') {
+            if ($scope.node.cluster.cluster_type == '1_master') {
                 $scope.serviceViews.push("slave", "cadvisor");
-            };
+            }
+            ;
         } else {
             $scope.serviceViews = ["slave", "cadvisor"];
         }
         $scope.serviceViews.push("logcollection");
-        
-        angular.forEach($scope.node.attributes, function (attribute){
+
+        angular.forEach($scope.node.attributes, function (attribute) {
             if (attribute.attribute == "gateway") {
                 $scope.serviceViews.push("bamboo_gateway");
             }
@@ -56,8 +60,8 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                 $scope.serviceViews.push("bamboo_proxy");
             }
         });
-        
-        if ($scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status!="uninstalled") {
+
+        if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 ) || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled") {
             $scope.serviceViews.push("chronos");
         }
     }
@@ -71,7 +75,10 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        glanceHttp.ajaxGet(['cluster.nodeMonitor', {cluster_id: $stateParams.clusterId, node_id: nodeId}], function (data) {
+        glanceHttp.ajaxGet(['cluster.nodeMonitor', {
+            cluster_id: $stateParams.clusterId,
+            node_id: nodeId
+        }], function (data) {
             setDefalutNodeInfos();
 
             if (data.data.length) {
@@ -81,7 +88,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             $scope.showCharts = true;
             var chartsData = monitor.httpMonitor.getChartsData(data.data);
             buildCharts.lineCharts(chartsData, $scope.DOMs);
-            
+
             addMetricData(data);
         });
     };
@@ -102,7 +109,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
                     }
                 }
                 $scope.nodeInfo = getNodeInfo(data);
-    
+
                 nodesData.splice(0, 0, data);
                 if (nodesData.length > maxNodesNumber) {
                     nodesData.pop();
@@ -116,7 +123,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     function getNodeInfo(data) {
         var nodeInfo = {};
         var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
-        
+
         var key;
         for (var i = 0; i < keys.length; i++) {
             key = keys[i];
@@ -128,7 +135,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             }
         }
 
-        if(data.cpuPercent && angular.isArray(data.cpuPercent)) {
+        if (data.cpuPercent && angular.isArray(data.cpuPercent)) {
             nodeInfo.cpuNumber = data.cpuPercent.length;
         } else {
             return $scope.nodeInfo;
@@ -146,61 +153,62 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         }
     }
 
-    $scope.deleNode = function(id){
+    $scope.deleNode = function (id) {
         var ids = [];
         ids.push(id);
         var toast = '您确定要移除主机吗？';
 
         $scope.myConfirm(toast, function () {
             glanceHttp.ajaxDelete(['cluster.nodes', {'cluster_id': $stateParams.clusterId}], function (data) {
-                $state.go('cluster.clusterdetails.nodes',{'clusterId': $stateParams.clusterId});
+                $state.go('cluster.clusterdetails.nodes', {'clusterId': $stateParams.clusterId});
             }, {'ids': ids})
         });
     };
-    
+
     $scope.openServiceRepair = function (serviceName) {
         $scope.serviceRepairInfo = {serviceName: serviceName, method: 'restart'};
         $('#repairService').modal("show");
     }
-    
+
     $scope.repairService = function () {
-        gHttp.Resource('cluster.serviceStatus', {cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId, 
-                service_name: $scope.serviceRepairInfo.serviceName}).
-            post({'method': $scope.serviceRepairInfo.method});
+        gHttp.Resource('cluster.serviceStatus', {
+            cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId,
+            service_name: $scope.serviceRepairInfo.serviceName
+        }).post({'method': $scope.serviceRepairInfo.method});
     };
 
     //labels
-    $scope.changeLabels = function() {
+    $scope.changeLabels = function () {
         labelService.changeLabels($scope)
-            .then(function() {
+            .then(function () {
                 $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
             });
-        
+
     };
 
-    $scope.labelledNode = function(label) {
+    $scope.labelledNode = function (label) {
         labelService.labelledNode(label, $scope);
         confirmNodeLabel()
-            .then(function() {
-                
-            }, function() {
+            .then(function () {
+
+            }, function () {
                 updateNodeLabels();
             });
     };
 
-    $scope.createLabel = function() {
+    $scope.createLabel = function () {
         labelService.createLabel($scope)
-            .then(function() {
+            .then(function () {
                 confirmNodeLabel();
             });
     };
 
-    $scope.tearLabel = function(label) {
+    $scope.tearLabel = function (label) {
         labelService.tearLabel(label, $scope);
         confirmNodeLabel();
     };
 
-    $scope.deleteLabel = function(label) {
+    $scope.deleteLabel = function (label) {
         labelService.deleteLabel(label, $scope);
     };
 
@@ -211,14 +219,17 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             labels: labelIds
         };
 
-        return glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function() {
-        }, undefined, function(resp) {
+        return glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function () {
+        }, undefined, function (resp) {
             Notification.error(resp.errors.labels);
         });
     }
 
     function updateNodeLabels() {
-        glanceHttp.ajaxGet(['cluster.nodeLabel', {'cluster_id': $stateParams.clusterId, 'node_id': $stateParams.nodeId}], function(resp) {
+        glanceHttp.ajaxGet(['cluster.nodeLabel', {
+            'cluster_id': $stateParams.clusterId,
+            'node_id': $stateParams.nodeId
+        }], function (resp) {
             $scope.selectedLabels = listNodeLabels(resp.data);
             $scope.changeLabels();
         });
@@ -237,7 +248,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     // 主机导航
     (function listNodesIds() {
         glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}])
-            .then(function(resp) {
+            .then(function (resp) {
                 var nodes = resp.data.data.nodes;
                 if (nodes.length > 1) {
                     $scope.showPageNav = true;
@@ -246,21 +257,24 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             });
     })();
 
-    $scope.goPreNode = function() {
+    $scope.goPreNode = function () {
         $state.go('cluster.nodedetails', {clusterId: $stateParams.clusterId, nodeId: $scope.preNodeId}, {reload: true});
     };
 
-    $scope.goNextNode = function() {
-        $state.go('cluster.nodedetails', {clusterId: $stateParams.clusterId, nodeId: $scope.nextNodeId}, {reload: true});
+    $scope.goNextNode = function () {
+        $state.go('cluster.nodedetails', {
+            clusterId: $stateParams.clusterId,
+            nodeId: $scope.nextNodeId
+        }, {reload: true});
     }
 
     function getPreAndNextNodeIds(nodes, nodeId) {
         $scope.nextNodeId = $stateParams.nodeId;
         $scope.preNodeId = $stateParams.nodeId;
-        
+
         var currentNodeIndex;
-        for(var i = 0; i < nodes.length; i++) {
-            if(nodes[i].id === nodeId) {
+        for (var i = 0; i < nodes.length; i++) {
+            if (nodes[i].id === nodeId) {
                 currentNodeIndex = i;
                 break;
             }
