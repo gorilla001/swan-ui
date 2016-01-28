@@ -42,10 +42,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
         if (labelName) {
             $scope.showPagination = false;
-            angular.forEach($scope.cluster.nodes, function (node, nodeIndex) {
+            angular.forEach($scope.contentPage, function (node, nodeIndex) {
                 angular.forEach(node.node_labels, function (label, labelIndex) {
                     if (angular.equals(label.label.name, labelName)) {
-                        $scope.contentCurPage.push($scope.cluster.nodes[nodeIndex])
+                        $scope.contentCurPage.push($scope.contentPage[nodeIndex])
                     }
                 })
             });
