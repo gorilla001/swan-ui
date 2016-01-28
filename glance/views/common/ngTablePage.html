@@ -4,7 +4,7 @@
                 ng-class="{'active':params.count()==count}" ng-click="params.count(count)" class="btn btn-default">
             <span ng-bind="count"></span></button>
     </div>
-    <ul class="pagination ng-table-pagination">
+    <ul class="pagination ng-table-pagination" ng-if="params.settings().counts.length && (params.total() > params.settings().counts[0])">
         <li ng-class="{'disabled': !page.active && !page.current, 'active': page.current}" ng-repeat="page in pages"
             ng-switch="page.type"><a ng-switch-when="prev" ng-click="params.page(page.number)" href="">前一页</a> <a
                 ng-switch-when="first" ng-click="params.page(page.number)" href=""><span
