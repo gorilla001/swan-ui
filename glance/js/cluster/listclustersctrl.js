@@ -39,6 +39,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
     $scope.close = function(clusterId, index, clusterStatus) {
         if (clusterStatus === CLUSTER_STATUS.installing) {
             $state.go('cluster.nodesource', {'clusterId': clusterId});
+        } else if (clusterStatus === CLUSTER_STATUS.abnormal) {
+            glanceHttp.ajaxPut(['cluster.clusterStatus', {'cluster_id': clusterId}], {"method": "repair"});
         } else {
             $scope.clustersBasicData[index].problemTips = null;
         }
@@ -332,7 +334,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
         tips[CLUSTER_STATUS.abnormal] = {
             headText: '集群无法正常工作',
             paragraphText: '以下主机出现问题，致使集群无法正常工作。',
-            firstButtonText: '知道了'
+            firstButtonText: '尝试自动修复',
+            secondButtonText: '知道了'
         };
         tips[CLUSTER_STATUS.unknow] = {
             headText: '集群状态未知',
