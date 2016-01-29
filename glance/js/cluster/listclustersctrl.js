@@ -1,4 +1,4 @@
-function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatusMgr) {
+function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatusMgr, $timeout) {
     var clusterTypes = {
         '1_master': 1,
         '3_masters': 3,
@@ -8,9 +8,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
     var clusterLeastNodesNumber = {
         '1_master': 1,
         '3_masters': 4,
-        '5_masters': 6,
+        '5_masters': 6
     };
-    
+
+    var repairPromise;
+
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     
     $scope.listCluster = function () {
@@ -28,7 +30,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
     $scope.filterSingleCluster = function(index, clickedStatus) {
         var cluster = $scope.clusters[index];
         $scope.clustersNodesData[index] = getClusterNodesData(cluster, clickedStatus);
-    }
+    };
 
     $scope.toggleShowMoreSlaves = function(index) {
         var basicInfos = $scope.clustersBasicData[index].infos;
@@ -36,13 +38,22 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
         basicInfos.showMore = !basicInfos.showMore;
     };
 
-    $scope.close = function(clusterId, index, clusterStatus) {
+    $scope.close = function (clusterId, index, clusterStatus) {
         if (clusterStatus === CLUSTER_STATUS.installing) {
             $state.go('cluster.nodesource', {'clusterId': clusterId});
+        } else if (clusterStatus === CLUSTER_STATUS.abnormal) {
+            $scope.clustersBasicData[index].problemTips.firstBtnDisable = true;
+            $scope.clustersBasicData[index].problemTips.firstButtonText = "正在修复中";
+            glanceHttp.ajaxPut(['cluster.clusterStatus', {'cluster_id': clusterId}], {"method": "repair"}, function (data) {
+                $timeout.cancel(repairPromise);
+                repairPromise = $timeout(function () {
+                    $state.reload();
+                }, 60000);
+            });
         } else {
             $scope.clustersBasicData[index].problemTips = null;
         }
-    }
+    };
 
     function countNodesAmount(nodesWithRoleAndStatus) {
         var amounts = {
@@ -332,7 +343,8 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
         tips[CLUSTER_STATUS.abnormal] = {
             headText: '集群无法正常工作',
             paragraphText: '以下主机出现问题，致使集群无法正常工作。',
-            firstButtonText: '知道了'
+            firstButtonText: '尝试自动修复',
+            secondButtonText: '知道了'
         };
         tips[CLUSTER_STATUS.unknow] = {
             headText: '集群状态未知',
@@ -359,7 +371,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
         return problemNodes;
     }
 
+    $scope.$on('$destroy', function () {
+        $timeout.cancel(repairPromise);
+    });
+
 }
 
-listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification", "ClusterStatusMgr"];
+listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification", "ClusterStatusMgr", "$timeout"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);

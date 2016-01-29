@@ -107,6 +107,7 @@
                     <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
                 </header>
                 <div class="cluster-status-content">
+                    <p data-ng-show="'abnormal' === cluster.clusterStatus">数人云是通过重启各组件快速恢复相应服务的。若仍有服务重启失效，需要去往主机详情页面重置该服务。修复过程大概需要一分钟。</p>
                     <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
                     <ul class="clearfix">
                         <li data-ng-repeat="node in cluster.problemNodes">
@@ -115,7 +116,7 @@
                     </ul>
                 </div>
                 <footer>
-                    <button class="btn btn-primary" data-ng-click="close(cluster.infos.id, $index, cluster.clusterStatus)">{/cluster.problemTips.firstButtonText/}</button>
+                    <button class="btn btn-primary" data-ng-click="close(cluster.infos.id, $index, cluster.clusterStatus)" data-ng-disabled="cluster.problemTips.firstBtnDisable">{/cluster.problemTips.firstButtonText/}</button>
                     <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText" data-ng-click="close(cluster.infos.id, $index)">{/cluster.problemTips.secondButtonText/}</button>
                 </footer>
             </div>
