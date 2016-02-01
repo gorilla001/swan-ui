@@ -36,7 +36,7 @@ a.btn {
 	color: #FFF;
 }
 .btn {
-	border-radius: 2;
+	border-radius: 4px;
 }
 .btn-default, a.btn-default {
 	background-color: #FFF;
