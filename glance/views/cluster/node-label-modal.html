@@ -27,7 +27,7 @@
           </li>
         </ul>
 
-        <form class="form-inline panel-create-tag" name="labelForm.label">
+        <form class="form-inline panel-create-tag" name="labelForm.label" data-ng-hide="label4Cluster">
           
             <div class="form-group" data-ng-class="{'has-error' : labelForm.label.newLabelName.$dirty && labelForm.label.newLabelName.$invalid}">
               <div>
@@ -50,8 +50,15 @@
         </form>
       </div>
 
-      <div class="modal-footer">
+      <div class="modal-footer" data-ng-hide="label4Cluster">
         <button type="button" class="btn btn-primary" data-dismiss="modal">完成</button>
+      </div>
+
+      <div class="modal-footer" data-ng-show="label4Cluster">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+            data-ng-click="labelledConfirm()">贴标签</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"
+            data-ng-click="tearConfirm()">撕标签</button>
       </div>
     </div>
   </div>
