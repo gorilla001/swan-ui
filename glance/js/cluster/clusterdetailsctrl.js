@@ -11,7 +11,6 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     $scope.showCreateNode = false;
 
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
-    $scope.upgradeFailedNodes = {};
     function getCurCluster() {
         glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
@@ -28,6 +27,9 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
 
             $scope.statusMgr.startListen($scope);
             $scope.$on(SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+                if (!$scope.upgradeFailedNodes) {
+                    $scope.upgradeFailedNodes = {};
+                }
                 $scope.upgradeFailedNodes[data.nodeId] = true;
             });
             $scope.contentPage = [];
@@ -48,11 +50,18 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     }
     getCurCluster();
     
+    $scope.isShowUpgradeFailedMsg = true;
+    
     $scope.upgradeNode = function (clusterId) {
         glanceHttp.ajaxPut(['cluster.cluster'], {'id': clusterId, 'isUpgrade': true}, function() {
-            $scope.upgradeFailedNodes = {};
+            $scope.upgradeFailedNodes = null;
+            $scope.isShowUpgradeFailedMsg = true;
         });
     };
+    
+    $scope.closeUpgradeFailedMsg = function () {
+        $scope.isShowUpgradeFailedMsg = false;
+    }
 
     function listen2UpdateClusterStatus() {
         $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
