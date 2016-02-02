@@ -32,8 +32,8 @@
                         </a>
                     </td>
                     <td data-title="'容器个数'" sortable="'containerNum'"><span
-                            ng-show="appListStatus[app.appId].tasks != app.containerNum && app.appStatus">{/appListStatus[app.appId].tasks/}/{/app.containerNum/}</span>
-                        <span ng-show="appListStatus[app.appId].tasks == app.containerNum || !app.appStatus">{/app.containerNum/}</span>
+                            ng-show="appListStatus[app.appId].tasks != undefined && appListStatus[app.appId].tasks != app.containerNum">{/appListStatus[app.appId].tasks/}/{/app.containerNum/}</span>
+                        <span ng-show="appListStatus[app.appId].tasks == app.containerNum">{/app.containerNum/}</span>
                     </td>
                     <td data-title="'操作'">
                         <button type="button"
