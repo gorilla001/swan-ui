@@ -46,6 +46,12 @@
                   </ul>
             </div>
         </div>
+        <div data-ng-show="isShowUpgradeFailedMsg && upgradeFailedNodes">
+            <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" aria-label="Close" data-ng-click="closeUpgradeFailedMsg()"><span aria-hidden="true">&times;</span></button>
+              有尚未升级成功的主机，您可以尝试再次升级，如果依然有组件未能成功升级，请联系数人云客服，发送邮件到 info@shurenyun.com 或 加入QQ交流群164868857，谢谢。
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
