@@ -58,7 +58,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     $scope.labelledConfirm = function() {
-        var postData = listAjaxData();
+        var postData = listRequestData();
         return glanceHttp.ajaxPost(
             ['cluster.nodeslabels', {'cluster_id': $stateParams.clusterId}],
             postData,
@@ -69,7 +69,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     $scope.tearConfirm = function() {
-        var deleteData = listAjaxData();
+        var deleteData = listRequestData();
         return glanceHttp.ajaxDelete(
             ['cluster.nodeslabels', {'cluster_id': $stateParams.clusterId}],
             function() {},
@@ -109,13 +109,13 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         return checkedNodesIds;
     }
 
-    function listAjaxData() {
+    function listRequestData() {
         var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
-        var axajData = {
+        var requsetData = {
             nodes: $scope.checkedNodesIds,
             labels: labelIds
         };
-        return axajData;
+        return requsetData;
     }
 }
 
