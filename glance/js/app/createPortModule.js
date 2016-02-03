@@ -7,6 +7,16 @@ ModalPortCtrl.$inject = ['$scope', '$uibModalInstance'];
 
 function ModalPortCtrl($scope, $uibModalInstance) {
 
+    /* set default value for portInfo.type and portInfo.protocol*/
+    if ($scope.proxyNodes.length) {
+        $scope.portInfo.type = "1"
+    } else if ($scope.gateWays.length) {
+        $scope.portInfo.type = "2"
+    }
+
+    $scope.portInfo.protocol = "1";
+
+
     var pattern = /500[1-9]|50[1-9][0-9]|5100|1[0-9][0-9][0-9][0-9]|20000|31[0-9][0-9][0-9]|32000/;
 
     $scope.invalidPort = function (portInfo) {
