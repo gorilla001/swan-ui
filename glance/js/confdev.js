@@ -12,6 +12,8 @@ RUNNING_ENV = "ENVIRONMENT"; //dev, demo, prod
 
 USER_URL = "MARKET";
 
+IS_OFFLINE = false;  //set online of offline
+
 AGENT_CONFIG = {
     dmHost: "LOCAL_DM_HOST",
     installUrl: "AGENT_URL"
