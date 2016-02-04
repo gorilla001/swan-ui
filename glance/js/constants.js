@@ -59,7 +59,8 @@ BACKEND_URL = {
         auth: "api/v2/auth",
         user: "api/v2/user",
         customerservice: "api/v2/customerservice",
-        password: 'api/v2/user/password'
+        password: 'api/v2/user/password',
+        notice: 'api/v2/notice'
         },
         
     cluster:  {

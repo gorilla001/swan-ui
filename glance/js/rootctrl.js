@@ -31,6 +31,13 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
         $window.history.back();
     };
 
+    //set Notice Alert if has notice
+    (function () {
+        glanceHttp.ajaxGet("auth.notice").success(function (res) {
+            $scope.noticeHtml = res.data.content;
+        })
+    })()
+
 }
 
 rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "glanceHttp", "$window"];
