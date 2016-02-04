@@ -33,9 +33,13 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
 
     //set Notice Alert if has notice
     (function () {
-        glanceHttp.ajaxGet("auth.notice").success(function (res) {
-            $scope.noticeHtml = res.data.content;
-        })
+        glanceHttp.ajaxGet("auth.notice")
+            .success(function (res) {
+                $scope.noticeHtml = res.data.content;
+            })
+            .error(function (res, status) {
+                console.log("Notice ajax error, request failed (" + status + ")")
+            })
     })()
 
 }
