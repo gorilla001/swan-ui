@@ -6,6 +6,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     $scope.allLabelNames = [];
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
+    $scope.checkedNodeLabels = [];
     $scope.labelForm = {};
 
     $scope.refresh = function () {
@@ -44,11 +45,19 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     // labels
-    $scope.changeLabels = function(checkedNodes) {
+    $scope.listAllLabels = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
         labelService.changeLabels($scope)
             .then(function() {
                 $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
+    };
+
+    $scope.listCheckedNodeLabels = function(checkedNodes) {
+        $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
+        labelService.listCheckedNodeLabels($scope.checkedNodesIds, $scope)
+            .then(function() {
+                $scope.selectedLabels = $scope.checkedNodeLabels;
             });
     };
 
@@ -69,7 +78,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     $scope.labelledConfirm = function() {
-        var postData = listRequestData();
+        var postData = listRequestData($scope.selectedLabels);
         return glanceHttp.ajaxPost(
             ['cluster.nodeslabels', {'cluster_id': $stateParams.clusterId}],
             postData,
@@ -80,7 +89,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     $scope.tearConfirm = function() {
-        var deleteData = listRequestData();
+        var deleteData = listRequestData($scope.unselectedLabels);
         return glanceHttp.ajaxDelete(
             ['cluster.nodeslabels', {'cluster_id': $stateParams.clusterId}],
             function() {},
@@ -120,14 +129,15 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         return checkedNodesIds;
     }
 
-    function listRequestData() {
-        var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
+    function listRequestData(labels) {
+        var labelIds = $scope.getAllNodeLabelIds(labels, 'id');
         var requsetData = {
             nodes: $scope.checkedNodesIds,
             labels: labelIds
         };
         return requsetData;
     }
+
 }
 
 clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];

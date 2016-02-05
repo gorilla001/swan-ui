@@ -31,10 +31,14 @@
                 <li>
                     <a href="#" data-toggle="modal"
                       data-target="#clusterAddLabel"
-                      data-ng-click="changeLabels(checkedNodes.value)">贴标签</a>
+                      data-ng-click="listAllLabels(checkedNodes.value)">贴标签</a>
                 </li>
                 <li>
-                    <a href="#" data-ng-click="" data-toggle="modal" data-target="#clusterTearLabel">撕标签</a>
+                    <a href="#" data-toggle="modal"
+                      data-target="#clusterTearLabel"
+                      data-ng-click="listCheckedNodeLabels(checkedNodes.value)">
+                      撕标签
+                    </a>
                 </li>
               </ul>
             </span>
@@ -136,4 +140,5 @@
     </div>
     <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
     <div data-ng-include="'/views/cluster/cluster-add-label.html'"></div>
+    <div data-ng-include="'/views/cluster/cluster-tear-label.html'"></div>
 </div>
