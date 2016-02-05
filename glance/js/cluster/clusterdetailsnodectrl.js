@@ -58,6 +58,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         labelService.listCheckedNodeLabels($scope.checkedNodesIds, $scope)
             .then(function() {
                 $scope.selectedLabels = $scope.checkedNodeLabels;
+                $scope.unselectedLabels = [];
             });
     };
 
