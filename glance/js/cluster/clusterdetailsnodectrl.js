@@ -6,7 +6,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     $scope.allLabelNames = [];
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
-    $scope.label4Cluster = true;
+    $scope.labelForm = {};
 
     $scope.refresh = function () {
         $state.reload("cluster.clusterdetails");
@@ -46,7 +46,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     // labels
     $scope.changeLabels = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
-        labelService.changeLabels($scope);
+        labelService.changeLabels($scope)
+            .then(function() {
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
     };
 
     $scope.labelledNode = function(label) {
@@ -55,6 +58,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
     $scope.tearLabel = function(label) {
         labelService.tearLabel(label, $scope);
+    };
+
+    $scope.createLabel = function() {
+        labelService.createLabel($scope);
     };
 
     $scope.labelledConfirm = function() {

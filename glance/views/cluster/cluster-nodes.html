@@ -29,7 +29,9 @@
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuNodeLabel">
                 <li>
-                    <a href="#" data-ng-click="" data-toggle="modal" data-target="#clusterAddLabel">贴标签</a>
+                    <a href="#" data-toggle="modal"
+                      data-target="#clusterAddLabel"
+                      data-ng-click="changeLabels(checkedNodes.value)">贴标签</a>
                 </li>
                 <li>
                     <a href="#" data-ng-click="" data-toggle="modal" data-target="#clusterTearLabel">撕标签</a>
@@ -133,4 +135,5 @@
         </h4>
     </div>
     <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
+    <div data-ng-include="'/views/cluster/cluster-add-label.html'"></div>
 </div>
