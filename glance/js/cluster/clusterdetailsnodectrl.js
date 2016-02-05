@@ -64,6 +64,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         labelService.createLabel($scope);
     };
 
+    $scope.deleteLabel = function(label) {
+        labelService.deleteLabel(label, $scope);
+    };
+
     $scope.labelledConfirm = function() {
         var postData = listRequestData();
         return glanceHttp.ajaxPost(
