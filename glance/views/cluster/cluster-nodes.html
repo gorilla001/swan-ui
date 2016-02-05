@@ -17,12 +17,26 @@
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                     data-ng-disabled="!checkedNodes.value.length" data-demo-disable>删除主机
             </button>
-            <button type="button" class="btn btn-default btn-sm"
-                    data-ng-disabled="!checkedNodes.value.length"
-                    data-toggle="modal" data-target="#addLabel2NodeModal"
-                    data-ng-click="changeLabels(checkedNodes.value)"
-                    data-demo-disable>主机标签
-            </button>&nbsp;
+
+            <span class="dropdown">
+              <button class="btn btn-default  btn-sm dropdown-toggle"
+                type="button" id="dropdownMenuNodeLabel"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                data-ng-disabled="!checkedNodes.value.length"
+                data-demo-disable>
+                主机标签
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuNodeLabel">
+                <li>
+                    <a href="#" data-ng-click="" data-toggle="modal" data-target="#clusterAddLabel">贴标签</a>
+                </li>
+                <li>
+                    <a href="#" data-ng-click="" data-toggle="modal" data-target="#clusterTearLabel">撕标签</a>
+                </li>
+              </ul>
+            </span>
+
             <div class="btn-group btn-dropdown-info" data-ng-show="!statusMgr.nodeStatusCount[cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[cluster.id].total">
                   <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)" data-demo-disable>升级服务
                         <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
