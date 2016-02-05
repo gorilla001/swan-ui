@@ -12,7 +12,8 @@
             labelledNode: labelledNode,
             createLabel: createLabel,
             tearLabel: tearLabel,
-            deleteLabel: deleteLabel
+            deleteLabel: deleteLabel,
+            listCheckedNodeLabels: listCheckedNodeLabels
         };
 
         // 查询用户所有标签
@@ -70,6 +71,20 @@
                 }, function(resp) {
                     Notification.error(resp.data.errors.labels);
                 });
+        }
+
+        // 查询给定主机id列表，查询这些主机所拥有标签的并集
+        function listCheckedNodeLabels(nodeIds, $scope) {
+            glanceHttp.ajaxGet(['cluster.checkedNodeLabels',{'cluster_id': $stateParams.clusterId}],
+                function() {},
+                {nodeIds: nodeIds},
+                function() {},
+                function() {}
+            ).then(function(resp) {
+                $scope.checkedNodeLabels = resp.data.data;
+            }, function(resp) {
+                Notification.error(resp.errors.labels);
+            });
         }
 
         function diffLabels(subtractor, minuend) {
