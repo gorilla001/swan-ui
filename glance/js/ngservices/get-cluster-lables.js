@@ -43,7 +43,7 @@
         }
 
         function getNodesIdList(clusterId, params){
-            return glanceHttp.ajaxGet(['cluster.nodeLabelList', ({cluster_id: clusterId})], function(data){},
+            return glanceHttp.ajaxGet(['cluster.clusterLabel', ({cluster_id: clusterId})], function(data){},
                     params, function(data){});
         }
 
