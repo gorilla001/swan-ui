@@ -77,7 +77,7 @@ BACKEND_URL = {
         label: "api/v2/label",
         nodeLabel: "api/v2/cluster/$cluster_id/node/$node_id/labels",
         nodeLabelList: "api/v2/cluster/$cluster_id/nodeslabels",
-        clusterLabel: "api/v2/cluster/$cluster_id/nodeslabels",
+        clusterLabels: "api/v2/cluster/$cluster_id/nodeslabels",
         checkedNodeLabels: "api/v2/cluster/$cluster_id/checkedNodeLabels"
     },
     metrics: {
