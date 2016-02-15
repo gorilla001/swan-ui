@@ -106,6 +106,12 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             delete $scope.deployinfo.cmd;
         }
 
+        if ($scope.forceImage) {
+            $scope.deployinfo.forceImage = $scope.forceImage;
+        } else {
+            delete $scope.deployinfo.forceImage;
+        }
+
         //add dirsInfo
         if ($scope.dirsInfo.length) {
             $scope.deployinfo.containerVolumesInfo = $scope.dirsInfo;
