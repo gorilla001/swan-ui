@@ -101,6 +101,10 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.config.constraints.push($scope.hostEles)
         }
 
+        if(!$scope.config.forceImage){
+            delete $scope.config.forceImage;
+        }
+
         $scope.config.appId = $stateParams.appId;
         //set clusterId string
         $scope.config.clusterId = $scope.config.clusterId.toString();
