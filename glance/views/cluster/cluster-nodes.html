@@ -59,11 +59,11 @@
                     <th><input type="checkbox" data-ckb-batch-all="checkedNodes"></th>
                     <th>名称</th>
                     <th>类型</th>
+                    <th>标签</th>
                     <th>IP地址</th>
                     <th>运行状态</th>
                     <th>Agent版本</th>
                     <th>创建时间</th>
-                    <th>更新时间</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,6 +82,9 @@
                         <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span><span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                     </td>
                     <td>
+                        <span class="bg-primary" data-ng-repeat="nodeLabel in node.node_labels">{/ nodeLabel.label.name /}</span>
+                    </td>
+                    <td>
                         {/ node.ip/}
                     </td>
                     <td>
@@ -92,9 +95,6 @@
                     </td>
                     <td>
                         {/ node.created_at /}
-                    </td>
-                    <td>
-                        {/ node.updated_at /}
                     </td>
                 </tr>
                 </tbody>
