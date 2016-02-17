@@ -13,7 +13,8 @@
             createLabel: createLabel,
             tearLabel: tearLabel,
             deleteLabel: deleteLabel,
-            listCheckedNodeLabels: listCheckedNodeLabels
+            listCheckedNodeLabels: listCheckedNodeLabels,
+            formatNodeLabels: formatNodeLabels
         };
 
         // 查询用户所有标签
@@ -85,6 +86,17 @@
             }, function(resp) {
                 Notification.error(resp.errors.labels);
             });
+        }
+
+        // 格式化后端返回的集群详情接口的标签数据
+        function formatNodeLabels(labels) {
+            var nodeLabels = [];
+            for (var i = 0; i < labels.length; i++) {
+                nodeLabels[i] = {};
+                nodeLabels[i].id = labels[i].label.id;
+                nodeLabels[i].name = labels[i].label.name;
+            }
+            return nodeLabels;
         }
 
         function diffLabels(subtractor, minuend) {
