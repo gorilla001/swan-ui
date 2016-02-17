@@ -13,7 +13,7 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
         //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
     };
 
-    if(IS_OFFLINE){
+    if(IS_OFF_LINE){
         $scope.userManualUrl = "http://offlinedoc.shurenyun.com/";
     }else{
         $scope.userManualUrl = "http://doc.shurenyun.com";
