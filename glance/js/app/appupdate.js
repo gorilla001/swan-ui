@@ -31,7 +31,7 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     $scope.appLableList = [];
     $scope.selectLabelIdList = [];
 
-    //ajax cluster.nodeLabelList's params
+    //ajax cluster.clusterLabel's params
     $scope.ajaxParams = {
         labels: []
     };
