@@ -67,7 +67,7 @@
           if (amounts.master > 0) {
               return true;
           }
-          return (amounts.slaves && amounts.slave === amounts.slaveAmount);
+          return (amounts.slave && amounts.slave === amounts.slaveAmount);
       }
 
       function isClusterInstalling(clusterServices, clusterType, clusterTypes) {
