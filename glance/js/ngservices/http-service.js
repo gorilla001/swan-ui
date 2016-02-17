@@ -1,7 +1,7 @@
 function glanceHttp($http, $state, $rootScope, utils, Notification) {
     var token;
     var clearCallback;
-    
+
     if (!$rootScope.loadings) {
         $rootScope.loadings = {};
     }
@@ -66,7 +66,8 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         }).error(function (data, status) {
             stopLoading(loading);
             if (status == 401) {
-                window.location.href = USER_URL;
+                var reloginUrl = USER_URL + "/?relogin=true&status=" + status + "&redirect_url=" + window.location.href;
+                window.location.href = reloginUrl;
                 $rootScope.$destroy();
             } else if (status == 403) {
                 Notification.error("您没有权限进行此操作");
