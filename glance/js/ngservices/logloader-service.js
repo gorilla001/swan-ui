@@ -130,6 +130,19 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
 
     };
 
+    LogLoader.prototype.downloadLogs = function () {
+        glanceHttp.ajaxPost(['log.download'], this.data, function (data) {
+            var dataString = angular.toJson(data);
+            var link = document.createElement('a');
+            link.href = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(dataString);
+            link.download = "Log-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
+            //link.innerHtml = 'Open the text file';
+            link.click();
+
+        }, undefined, null, function (data) {
+        });
+    };
+
     return LogLoader;
 }
 

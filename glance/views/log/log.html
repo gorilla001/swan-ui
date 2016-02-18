@@ -101,6 +101,10 @@
                                 <button type="submit" data-ng-disabled="staticForm.$invalid"
                                         class="btn btn-primary btn-sm" style=" width: 150px;">查询
                                 </button>
+
+                                <button type="button" ng-disabled="!clusterlogs.logs.length"
+                                        class="btn btn-sm" ng-click="pullLogs()">导出
+                                </button>
                             </div>
                         </div>
                     </form>

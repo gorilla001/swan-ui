@@ -87,6 +87,7 @@ BACKEND_URL = {
     },
     log: {
         search: "es/index",
+        download: "es/index/download/log.json",
         searchContext: "es/context"
     },
     app: {
