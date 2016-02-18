@@ -1,0 +1,36 @@
+<div class="modal fade modal-tag" id="clusterTearLabel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">撕标签</h4>
+      </div>
+
+      <div class="modal-body">
+        <ul>
+          <li data-ng-repeat="selectedLabel in selectedLabels">
+            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签" data-demo-disable>
+              {/selectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+          </li>
+
+          <li data-ng-repeat="unselectedLabel in unselectedLabels">
+            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签" data-demo-disable>
+              {/unselectedLabel.name/}
+              <em class="line-left"></em>
+              <em class="line-right"></em>
+            </span>
+          </li>
+        </ul>
+        <p data-ng-show="showNoLabelTip">所选主机尚无标签。</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+            data-ng-click="tearConfirm()">完成</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
