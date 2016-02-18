@@ -108,7 +108,7 @@
                         <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span><span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                     </td>
                     <td>
-                        <span class="bg-primary" data-ng-repeat="nodeLabel in node.node_labels">{/ nodeLabel.label.name /}</span>
+                        <span class="bg-primary" data-ng-repeat="nodeLabel in clusterLabels[node.id]">{/ nodeLabel.name /}</span>
                     </td>
                     <td>
                         {/ node.ip/}
