@@ -45,7 +45,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     };
 
     // labels
-    $scope.listAllLabels = function(checkedNodes) {
+    $scope.showAddLabelModal = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
         $scope.selectedLabels = [];
         labelService.changeLabels($scope)
