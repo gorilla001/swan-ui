@@ -47,19 +47,17 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
     // labels
     $scope.listAllLabels = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
+        $scope.selectedLabels = [];
         labelService.changeLabels($scope)
             .then(function() {
                 $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
             });
     };
 
-    $scope.listCheckedNodeLabels = function(checkedNodes) {
+    $scope.showTearLabelModal = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
-        labelService.listCheckedNodeLabels($scope.checkedNodesIds, $scope)
-            .then(function() {
-                $scope.selectedLabels = $scope.checkedNodeLabels;
-                $scope.unselectedLabels = [];
-            });
+        $scope.selectedLabels = $scope.listCheckedNodeLables($scope.checkedNodesIds);
+        $scope.unselectedLabels = [];
     };
 
     $scope.labelledNode = function(label) {
