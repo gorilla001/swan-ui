@@ -81,10 +81,15 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         return glanceHttp.ajaxPost(
             ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
             postData,
-            function () {},
-            undefined, function (resp) {
-                Notification.error(resp.errors.labels);
-            });
+            angular.noop(),
+            undefined,
+            angular.noop(),
+            angular.noop()
+        ).then(function() {
+            updateClusterLabels($stateParams.clusterId);
+        }, function(resp) {
+            Notification.error(resp.errors.labels);
+        });
     };
 
     $scope.tearConfirm = function() {
@@ -135,6 +140,13 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
             labels: labelIds
         };
         return requsetData;
+    }
+
+    function updateClusterLabels(clusterId) {
+        labelService.listClusterLabels(clusterId)
+            .then(function(resp) {
+                $scope.clusterLabels = $scope.collectClusterLabels(resp.data.data.nodes);
+            });
     }
 
 }

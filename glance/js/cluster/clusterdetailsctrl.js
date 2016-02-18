@@ -16,7 +16,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     function getCurCluster() {
         glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
-            $scope.clusterLabels = collectClusterLabels(data.data.nodes);
+            $scope.clusterLabels = $scope.collectClusterLabels(data.data.nodes);
 
             $scope.totalItems = $scope.cluster.nodes.length;
             if (!$scope.totalItems) {
@@ -104,7 +104,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         return classes[$scope.clusterStatus];
     }
 
-    function collectClusterLabels(nodes) {
+    $scope.collectClusterLabels = function (nodes) {
         var clusterLabels = {};
 
         angular.forEach(nodes, function(node, index) {

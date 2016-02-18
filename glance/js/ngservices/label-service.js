@@ -14,7 +14,8 @@
             tearLabel: tearLabel,
             deleteLabel: deleteLabel,
             listCheckedNodeLabels: listCheckedNodeLabels,
-            formatNodeLabels: formatNodeLabels
+            formatNodeLabels: formatNodeLabels,
+            listClusterLabels: listClusterLabels
         };
 
         // 查询用户所有标签
@@ -86,6 +87,16 @@
             }, function(resp) {
                 Notification.error(resp.errors.labels);
             });
+        }
+
+        // 查询集群所有标签
+        function listClusterLabels(clusterId) {
+            return  glanceHttp.ajaxGet(
+                ["cluster.clusterIns", {cluster_id: clusterId}],
+                angular.noop(),
+                undefined,
+                angular.noop()
+            );
         }
 
         // 格式化后端返回的集群详情接口的标签数据
