@@ -1,4 +1,4 @@
-function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr, clusterStatus) {
+function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
     'use strict';
 
     var clusterStatusTexts = {
@@ -10,10 +10,13 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
 
     $scope.showCreateNode = false;
 
+    $scope.clusterLabels = {};
+
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     function getCurCluster() {
         glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
             $scope.cluster = data.data;
+            $scope.clusterLabels = $scope.collectClusterLabels(data.data.nodes);
 
             $scope.totalItems = $scope.cluster.nodes.length;
             if (!$scope.totalItems) {
@@ -61,7 +64,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     
     $scope.closeUpgradeFailedMsg = function () {
         $scope.isShowUpgradeFailedMsg = false;
-    }
+    };
 
     function listen2UpdateClusterStatus() {
         $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
@@ -74,8 +77,6 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
             updateClusterStatus();
         });
     }
-
-    
 
     function updateClusterStatus() {
         $scope.clusterStatus = $scope.cluster.clusterStatus;
@@ -92,7 +93,16 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         };
         return classes[$scope.clusterStatus];
     }
+
+    $scope.collectClusterLabels = function (nodes) {
+        var clusterLabels = {};
+
+        angular.forEach(nodes, function(node, index) {
+            clusterLabels[node.id] = labelService.formatNodeLabels(node.node_labels);
+        });
+        return clusterLabels;
+    }
 }
 
-clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus'];
+clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
 glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);

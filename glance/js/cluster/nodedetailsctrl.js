@@ -35,7 +35,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
             createServiceViews();
 
-            $scope.selectedLabels = listNodeLabels(data.data.node_labels);
+            $scope.selectedLabels = labelService.formatNodeLabels(data.data.node_labels);
         });
     };
     $scope.getCurNode();
@@ -230,19 +230,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             'cluster_id': $stateParams.clusterId,
             'node_id': $stateParams.nodeId
         }], function (resp) {
-            $scope.selectedLabels = listNodeLabels(resp.data);
+            $scope.selectedLabels = labelService.formatNodeLabels(resp.data);
             $scope.changeLabels();
         });
-    }
-
-    function listNodeLabels(labels) {
-        var nodeLabels = [];
-        for (var i = 0; i < labels.length; i++) {
-            nodeLabels[i] = {};
-            nodeLabels[i].id = labels[i].label.id;
-            nodeLabels[i].name = labels[i].label.name;
-        }
-        return nodeLabels;
     }
 
     // 主机导航

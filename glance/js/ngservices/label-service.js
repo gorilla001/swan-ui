@@ -12,7 +12,9 @@
             labelledNode: labelledNode,
             createLabel: createLabel,
             tearLabel: tearLabel,
-            deleteLabel: deleteLabel
+            deleteLabel: deleteLabel,
+            formatNodeLabels: formatNodeLabels,
+            listClusterLabels: listClusterLabels
         };
 
         // 查询用户所有标签
@@ -70,6 +72,27 @@
                 }, function(resp) {
                     Notification.error(resp.data.errors.labels);
                 });
+        }
+
+        // 查询集群所有标签
+        function listClusterLabels(clusterId) {
+            return  glanceHttp.ajaxGet(
+                ["cluster.clusterIns", {cluster_id: clusterId}],
+                angular.noop(),
+                undefined,
+                angular.noop()
+            );
+        }
+
+        // 格式化后端返回的集群详情接口的标签数据
+        function formatNodeLabels(labels) {
+            var nodeLabels = [];
+            for (var i = 0; i < labels.length; i++) {
+                nodeLabels[i] = {};
+                nodeLabels[i].id = labels[i].label.id;
+                nodeLabels[i].name = labels[i].label.name;
+            }
+            return nodeLabels;
         }
 
         function diffLabels(subtractor, minuend) {

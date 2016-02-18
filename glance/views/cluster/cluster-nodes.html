@@ -16,7 +16,33 @@
             </button>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
                     data-ng-disabled="!checkedNodes.value.length" data-demo-disable>删除主机
-            </button>&nbsp;
+            </button>
+
+            <span class="dropdown">
+              <button class="btn btn-default  btn-sm dropdown-toggle"
+                type="button" id="dropdownMenuNodeLabel"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                data-ng-disabled="!checkedNodes.value.length"
+                data-demo-disable>
+                主机标签
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuNodeLabel">
+                <li>
+                    <a href="#" data-toggle="modal"
+                      data-target="#clusterAddLabel"
+                      data-ng-click="showAddLabelModal(checkedNodes.value)">贴标签</a>
+                </li>
+                <li>
+                    <a href="#" data-toggle="modal"
+                      data-target="#clusterTearLabel"
+                      data-ng-click="showTearLabelModal(checkedNodes.value)">
+                      撕标签
+                    </a>
+                </li>
+              </ul>
+            </span>
+
             <div class="btn-group btn-dropdown-info" data-ng-show="!statusMgr.nodeStatusCount[cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[cluster.id].total">
                   <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)" data-demo-disable>升级服务
                         <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
@@ -82,7 +108,7 @@
                         <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span><span class="bg-primary" data-ng-repeat="attr in node.attributes">{/ nodeAttributes[attr.attribute] /}</span>
                     </td>
                     <td>
-                        <span class="bg-primary" data-ng-repeat="nodeLabel in node.node_labels">{/ nodeLabel.label.name /}</span>
+                        <span class="bg-primary" data-ng-repeat="nodeLabel in clusterLabels[node.id]">{/ nodeLabel.name /}</span>
                     </td>
                     <td>
                         {/ node.ip/}
@@ -112,4 +138,7 @@
             <a data-ui-sref="cluster.nodesource({clusterId:cluster.id})">添加主机</a>
         </h4>
     </div>
+    <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
+    <div data-ng-include="'/views/cluster/cluster-add-label.html'"></div>
+    <div data-ng-include="'/views/cluster/cluster-tear-label.html'"></div>
 </div>

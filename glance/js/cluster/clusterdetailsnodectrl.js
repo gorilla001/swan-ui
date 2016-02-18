@@ -1,6 +1,13 @@
-function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, glanceHttp, unitConversion, utils, monitor) {
+function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, glanceHttp, unitConversion, utils, monitor, labelService, Notification) {
     $rootScope.clusterClass = 'clusterNode';
     $scope.unitConversion = unitConversion;
+
+    $scope.allLabels = [];
+    $scope.allLabelNames = [];
+    $scope.selectedLabels = [];
+    $scope.unselectedLabels = [];
+    $scope.checkedNodeLabels = [];
+    $scope.labelForm = {};
 
     $scope.refresh = function () {
         $state.reload("cluster.clusterdetails");
@@ -37,6 +44,71 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         filterLabelNodes(searchKey)
     };
 
+    // labels
+    $scope.showAddLabelModal = function(checkedNodes) {
+        $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
+        $scope.selectedLabels = [];
+        labelService.changeLabels($scope)
+            .then(function() {
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
+    };
+
+    $scope.showTearLabelModal = function(checkedNodes) {
+        $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
+        $scope.selectedLabels = listCheckedNodeLables($scope.checkedNodesIds);
+        $scope.unselectedLabels = [];
+        $scope.showNoLabelTip = $scope.selectedLabels.length ? false : true;
+    };
+
+    $scope.labelledNode = function(label) {
+        labelService.labelledNode(label, $scope);
+    };
+
+    $scope.tearLabel = function(label) {
+        labelService.tearLabel(label, $scope);
+    };
+
+    $scope.createLabel = function() {
+        labelService.createLabel($scope);
+    };
+
+    $scope.deleteLabel = function(label) {
+        labelService.deleteLabel(label, $scope);
+    };
+
+    $scope.labelledConfirm = function() {
+        var postData = listRequestData($scope.selectedLabels);
+        return glanceHttp.ajaxPost(
+            ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
+            postData,
+            angular.noop(),
+            undefined,
+            angular.noop(),
+            angular.noop()
+        ).then(function() {
+            updateClusterLabels($stateParams.clusterId);
+        }, function(resp) {
+            Notification.error(resp.errors.labels);
+        });
+    };
+
+    $scope.tearConfirm = function() {
+        var deleteData = listRequestData($scope.unselectedLabels);
+        return glanceHttp.ajaxDelete(
+            ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
+            angular.noop(),
+            deleteData,
+            undefined,
+            angular.noop(),
+            angular.noop()
+        ).then(function() {
+            updateClusterLabels($stateParams.clusterId);
+        }, function(resp) {
+            Notification.error(resp.errors.labels);
+        });
+    };
+
     function filterLabelNodes(labelName) {
         $scope.contentCurPage = [];
 
@@ -58,7 +130,54 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
             $scope.contentCurPage = $scope.contentPage.slice(($scope.currentPage - 1) * $scope.pageLength, $scope.currentPage * $scope.pageLength);
         }
     }
+
+    function listChcekNodesIds(checkedNodes) {
+        var checkedNodesIds = [];
+        angular.forEach(checkedNodes, function(node, index) {
+            checkedNodesIds.push(node.id);
+        });
+        return checkedNodesIds;
+    }
+
+    function listRequestData(labels) {
+        var labelIds = $scope.getAllNodeLabelIds(labels, 'id');
+        var requsetData = {
+            nodes: $scope.checkedNodesIds,
+            labels: labelIds
+        };
+        return requsetData;
+    }
+
+    function updateClusterLabels(clusterId) {
+        labelService.listClusterLabels(clusterId)
+            .then(function(resp) {
+                $scope.clusterLabels = $scope.collectClusterLabels(resp.data.data.nodes);
+            });
+    }
+
+    function listCheckedNodeLables(checkedNodeIds) {
+        var checkedNodeLables = [];
+        var labelIds = [];
+        angular.forEach(checkedNodeIds, function(nodeId, index) {
+            checkedNodeLables = checkedNodeLables.concat($scope.clusterLabels[nodeId]);
+        });
+        checkedNodeLables = removeReduplicateLabels(checkedNodeLables);
+        return checkedNodeLables;
+    };
+
+    function removeReduplicateLabels(allLabels) {
+        var labels = [];
+        var labelIds = [];
+        angular.forEach(allLabels, function(label, index) {
+            if(labelIds.indexOf(label.id) === -1) {
+                labelIds.push(label.id);
+                labels.push(label);
+            }
+        });
+        return labels;
+    }
+
 }
 
-clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor"];
+clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
 glanceApp.controller("clusterNodesCtrl", clusterNodesCtrl);
