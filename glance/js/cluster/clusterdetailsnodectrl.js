@@ -56,7 +56,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
     $scope.showTearLabelModal = function(checkedNodes) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
-        $scope.selectedLabels = $scope.listCheckedNodeLables($scope.checkedNodesIds);
+        $scope.selectedLabels = listCheckedNodeLables($scope.checkedNodesIds);
         $scope.unselectedLabels = [];
     };
 
@@ -96,11 +96,16 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         var deleteData = listRequestData($scope.unselectedLabels);
         return glanceHttp.ajaxDelete(
             ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
-            function() {},
+            angular.noop(),
             deleteData,
-            undefined, function(resp) {
-                Notification.error(resp.errors.labels);
-            });
+            undefined,
+            angular.noop(),
+            angular.noop()
+        ).then(function() {
+            updateClusterLabels($stateParams.clusterId);
+        }, function(resp) {
+            Notification.error(resp.errors.labels);
+        });
     };
 
     function filterLabelNodes(labelName) {
@@ -147,6 +152,28 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
             .then(function(resp) {
                 $scope.clusterLabels = $scope.collectClusterLabels(resp.data.data.nodes);
             });
+    }
+
+    function listCheckedNodeLables(checkedNodeIds) {
+        var checkedNodeLables = [];
+        var labelIds = [];
+        angular.forEach(checkedNodeIds, function(nodeId, index) {
+            checkedNodeLables = checkedNodeLables.concat($scope.clusterLabels[nodeId]);
+        });
+        checkedNodeLables = removeReduplicateLabels(checkedNodeLables);
+        return checkedNodeLables;
+    };
+
+    function removeReduplicateLabels(allLabels) {
+        var labels = [];
+        var labelIds = [];
+        angular.forEach(allLabels, function(label, index) {
+            if(labelIds.indexOf(label.id) === -1) {
+                labelIds.push(label.id);
+                labels.push(label);
+            }
+        });
+        return labels;
     }
 
 }

@@ -66,16 +66,6 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
         $scope.isShowUpgradeFailedMsg = false;
     };
 
-    $scope.listCheckedNodeLables = function (checkedNodeIds) {
-        var checkedNodeLables = [];
-        var labelIds = [];
-        angular.forEach(checkedNodeIds, function(nodeId, index) {
-            checkedNodeLables = checkedNodeLables.concat($scope.clusterLabels[nodeId]);
-        });
-        checkedNodeLables = removeReduplicateLabels(checkedNodeLables);
-        return checkedNodeLables;
-    };
-
     function listen2UpdateClusterStatus() {
         $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
             clusterStatus.updateClusterStatus(data, [$scope.cluster]);
@@ -111,18 +101,6 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
             clusterLabels[node.id] = labelService.formatNodeLabels(node.node_labels);
         });
         return clusterLabels;
-    }
-
-    function removeReduplicateLabels(allLabels) {
-        var labels = [];
-        var labelIds = [];
-        angular.forEach(allLabels, function(label, index) {
-            if(labelIds.indexOf(label.id) === -1) {
-                labelIds.push(label.id);
-                labels.push(label);
-            }
-        });
-        return labels;
     }
 }
 
