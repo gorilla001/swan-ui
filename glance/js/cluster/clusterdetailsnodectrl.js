@@ -58,6 +58,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
         $scope.selectedLabels = listCheckedNodeLables($scope.checkedNodesIds);
         $scope.unselectedLabels = [];
+        $scope.showNoLabelTip = $scope.selectedLabels.length ? false : true;
     };
 
     $scope.labelledNode = function(label) {
