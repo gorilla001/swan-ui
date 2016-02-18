@@ -86,7 +86,8 @@ BACKEND_URL = {
         subscribe: "streaming/glance/$token"
     },
     log: {
-        search: "logstash-$userId-*/_search"
+        search: "es/index",
+        searchContext: "es/context"
     },
     app: {
         list: "api/v1/applications/",

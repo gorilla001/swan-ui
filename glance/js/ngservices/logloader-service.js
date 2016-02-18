@@ -10,20 +10,25 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.logSize = 0;
     };
 
-    LogLoader.prototype.getlogs = function (callback) {
+    LogLoader.prototype.getlogs = function (contextCallBack) {
+        var postUrl = "log.search";
+        if (contextCallBack) {
+            postUrl = "log.searchContext"
+        }
+
         if (this.isLoadingLogs || this.tryTimes < 0 || this.isComplete || !this.data) return;
         this.isLoadingLogs = true;
-        this.data.from = this.curLogNum;
+        if (!contextCallBack) {
+            this.data.from = this.curLogNum;
+        }
 
-        glanceHttp.ajaxBase("post",
-            ["log.search", {"userId": $rootScope.userId}],
+        glanceHttp.ajaxPost(postUrl,
             this.data,
-            {"pretty": true},
             function (data) {
                 for (var i = 0; i < data.hits.hits.length; i++) {
                     var msg;
                     (data.hits.hits[i].highlight) ? msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].highlight.msg[0]) :
-                       msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].fields.msg[0]);
+                        msg = $sce.trustAsHtml(data.hits.hits[i].fields.ip[0] + " : " + data.hits.hits[i].fields.msg[0]);
                     this.logs.push(msg);
                     this.logsId.push(data.hits.hits[i]._id);
                     this.logInfo.push(data.hits.hits[i].fields);
@@ -35,8 +40,8 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 }
                 this.logSize = data.hits.total;
                 this.curLogNum += data.hits.hits.length;
-                if(callback){
-                    callback(this.logSize)
+                if (contextCallBack) {
+                    contextCallBack(this.logSize)
                 }
             }.bind(this),
             function (data, status) {
@@ -50,139 +55,78 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         );
     };
 
-    LogLoader.prototype.searchLogs = function (searchData,callback) {
+    LogLoader.prototype.searchLogs = function (searchData, contextCallBack) {
         this.logs = [];
         this.logInfo = [];
         this.logsId = [];
         this.nodeId = searchData.nodeId;
         this.clusterId = searchData.clusterId;
         this.data = {
-            "query": {
-                "bool": {
-                    "must": [
-                        {
-                            "term": {
-                                "clusterid": this.clusterId
-                            }
-                        }
-                    ]
-                }
-            },
-            "sort": {
-                "timestamp.sort": "asc"
-            },
-            "from": this.curLogNum,
-            "size": function(){
-                if(searchData.size !== undefined){
-                    return searchData.size
-                }else{
-                    return 20
-                }
-            }(),
-            "fields": [
-                "timestamp",
-                "msg",
-                "ipport",
-                "ip",
-                "taskid",
-                "counter"
-            ],
-            "highlight": {
-                "require_field_match": "true",
-                "fields": {
-                    "msg": {
-                        "pre_tags": [
-                            "<em style=\"color:red;\">"
-                        ],
-                        "post_tags": [
-                            "</em>"
-                        ]
-                    }
-                },
-                "fragment_size": -1
-            }
+            "userid": parseInt($rootScope.userId),
+            "clusterid": this.clusterId
         };
 
-        if(angular.isDate(searchData.gte )&& angular.isDate(searchData.lte)){
-            this.gte = $filter('date')(searchData.gte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
-            this.lte = $filter('date')(searchData.lte,'yyyy-MM-ddTHH:mm:ss.sss+08:00');
-            this.timeRange = {
-                "range": {
-                    "timestamp": {
-                        "gte": this.gte,
-                        "lte": this.lte
-                    }
+        if (contextCallBack) {
+            this.data.timestamp = searchData.timestamp;
+            this.data.ipport = searchData.ipport;
+        } else {
+            this.data.from = this.curLogNum;
+            this.data.size = function () {
+                if (searchData.size !== undefined) {
+                    return searchData.size
+                } else {
+                    return 20
                 }
-            };
-
-            this.data.query.bool.must.push(this.timeRange);
+            }()
         }
 
-        if(searchData.counter){
-            this.contextCounter = {
-                "range": {
-                    "counter": {
-                        "gte": this.conterGte = searchData.counter.conterGte,
-                        "lte": this.conterLte = searchData.counter.conterLte
+        if (angular.isDate(searchData.gte) && angular.isDate(searchData.lte)) {
+            this.gte = $filter('date')(searchData.gte, 'yyyy-MM-ddTHH:mm:ss.sss+08:00');
+            this.lte = $filter('date')(searchData.lte, 'yyyy-MM-ddTHH:mm:ss.sss+08:00');
 
-                    }
-                }
-            };
-            this.data.query.bool.must.push(this.contextCounter);
+            this.data.start = this.gte;
+            this.data.end = this.lte;
         }
+
+        if (searchData.counter) {
+            this.data.counter = searchData.counter;
+        }
+
         if (searchData.logSearchKey) {
-            this.query_json = {
-                "match": {
-                    "msg": {
-                        "query": searchData.logSearchKey,
-                        "analyzer": "ik"
-                    }
-                }
-            };
-            this.data.query.bool.must.push(this.query_json);
+            this.data.keyword = searchData.logSearchKey;
         }
-        if (searchData.instanceName) {
-            this.taskid_json = {
-                "term": {
-                    "taskid": searchData.instanceName
-                }
-            };
-            this.data.query.bool.must.push(this.taskid_json);
-        }
+
         if (searchData.appName) {
             this.typename_json = {
                 "term": {
                     "typename": searchData.appName
                 }
             };
-            this.data.query.bool.must.push(this.typename_json);
+            this.data.appname = searchData.appName;
         }
-        if (searchData.nodeId && searchData.nodeId.length) {
-            this.nodeid_json = {
-                "terms": {
-                    "ipport": function () {
-                        var nodesIp = [];
-                        for (var i = 0; i < searchData.nodeId.length; i++) {
-                            if(searchData.nodeId[i].hasOwnProperty('maker')){
-                                nodesIp.push(searchData.nodeId[i].maker)
-                            }else{
-                                nodesIp.push(searchData.nodeId[i])
-                            }
 
-                        }
-                        return nodesIp;
-                    }(),
-                    "minimum_match": 1
+        if (searchData.nodeId && searchData.nodeId.length) {
+            this.ipport = function () {
+                var nodesIp = [];
+                for (var i = 0; i < searchData.nodeId.length; i++) {
+                    if (searchData.nodeId[i].hasOwnProperty('maker')) {
+                        nodesIp.push(searchData.nodeId[i].maker)
+                    } else {
+                        nodesIp.push(searchData.nodeId[i])
+                    }
+
                 }
-            };
-            this.data.query.bool.must.push(this.nodeid_json);
+                return nodesIp;
+            }();
+            this.data.ipport = this.ipport;
         }
+
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
 
-        this.getlogs(callback);
+        this.getlogs(contextCallBack);
 
     };
 
