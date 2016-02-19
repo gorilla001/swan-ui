@@ -102,8 +102,12 @@
                                         class="btn btn-primary btn-sm" style=" width: 150px;">查询
                                 </button>
 
-                                <button type="button" ng-disabled="!clusterlogs.logs.length"
-                                        class="btn btn-sm" ng-click="pullLogs()">导出
+                                <button type="button" ng-disabled="!clusterlogs.logs.length" ng-hide="showContextUI"
+                                        class="btn btn-sm" ng-click="downloadSearchLogs()">导出
+                                </button>
+
+                                <button type="button" ng-disabled="!clusterlogs.logs.length" ng-show="showContextUI"
+                                        class="btn btn-sm" ng-click="downloadContextLogs()">导出上下文
                                 </button>
                             </div>
                         </div>

@@ -130,12 +130,25 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
 
     };
 
-    LogLoader.prototype.downloadLogs = function () {
-        glanceHttp.ajaxPost(['log.download'], this.data, function (data) {
+    LogLoader.prototype.downloadSearchLogs = function () {
+        glanceHttp.ajaxPost(['log.downloadSearch'], this.data, function (data) {
             var dataString = angular.toJson(data);
             var link = document.createElement('a');
             link.href = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(dataString);
-            link.download = "Log-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
+            link.download = "LogSearch-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
+            //link.innerHtml = 'Open the text file';
+            link.click();
+
+        }, undefined, null, function (data) {
+        });
+    };
+
+    LogLoader.prototype.downloadContextLogs = function () {
+        glanceHttp.ajaxPost(['log.downloadContext'], this.data, function (data) {
+            var dataString = angular.toJson(data);
+            var link = document.createElement('a');
+            link.href = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(dataString);
+            link.download = "LogContext-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
             //link.innerHtml = 'Open the text file';
             link.click();
 

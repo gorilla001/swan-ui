@@ -94,8 +94,12 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         $scope.clusterlogs.searchLogs($scope.searchData);
     };
 
-    $scope.pullLogs = function(){
-        $scope.clusterlogs.downloadLogs();
+    $scope.downloadSearchLogs = function(){
+        $scope.clusterlogs.downloadSearchLogs();
+    };
+
+    $scope.downloadContextLogs = function(){
+        $scope.contextlogs.downloadContextLogs();
     };
 
 
