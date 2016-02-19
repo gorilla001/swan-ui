@@ -1,13 +1,13 @@
 function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
     var LogLoader = function () {
-        this.logs = [];
-        this.logInfo = [];
+        this.logs = [];     //logs array
+        this.logInfo = [];  //logs array for data.hits.hits[i].fields
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
-        this.logsId = [];
-        this.logSize = 0;
+        this.logsId = [];   //id of logs array for hits.hits[i]._id
+        this.logSize = 0;   //logs total
     };
 
     LogLoader.prototype.getlogs = function (contextCallBack) {
@@ -129,6 +129,29 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.getlogs(contextCallBack);
 
     };
+
+    LogLoader.prototype.downloadSearchLogs = function () {
+        glanceHttp.ajaxPost(['log.downloadSearch'], this.data, function (data) {
+            downloadLogAction(data);
+        }, undefined, null, function (data) {
+        });
+    };
+
+    LogLoader.prototype.downloadContextLogs = function () {
+        glanceHttp.ajaxPost(['log.downloadContext'], this.data, function (data) {
+            downloadLogAction(data);
+        }, undefined, null, function (data) {
+        });
+    };
+
+    function downloadLogAction(data) {
+        var dataString = angular.toJson(data);
+        var link = document.createElement('a');
+        link.href = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(dataString);
+        link.download = "Log-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
+        //link.innerHtml = 'Open the text file';
+        link.click();
+    }
 
     return LogLoader;
 }

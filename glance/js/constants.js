@@ -87,7 +87,9 @@ BACKEND_URL = {
     },
     log: {
         search: "es/index",
-        searchContext: "es/context"
+        downloadSearch: "es/index/download",
+        searchContext: "es/context",
+        downloadContext: "es/context/download"
     },
     app: {
         list: "api/v1/applications/",
