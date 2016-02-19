@@ -103,11 +103,13 @@
                                 </button>
 
                                 <button type="button" ng-disabled="!clusterlogs.logs.length" ng-hide="showContextUI"
-                                        class="btn btn-sm" ng-click="downloadSearchLogs()">导出
+                                        class="btn btn-sm"  data-toggle="modal"
+                                        data-target="#downloadLogsModal" data-demo-disable>导出
                                 </button>
 
                                 <button type="button" ng-disabled="!clusterlogs.logs.length" ng-show="showContextUI"
-                                        class="btn btn-sm" ng-click="downloadContextLogs()">导出上下文
+                                        class="btn btn-sm" data-toggle="modal"
+                                        data-target="#downloadLogsModal" data-demo-disable>导出上下文
                                 </button>
                             </div>
                         </div>
@@ -144,4 +146,33 @@
                 </div>
         </div>
     </section>
+
+    <div class="modal fade" id="downloadLogsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>日志导出</h4>
+                    <div class="delete-cluster">
+                        <ul>
+                            <li ng-hide="showContextUI">当前查询出的日志总数: {/clusterlogs.logSize/} 条</li>
+                            <li ng-show="showContextUI">当前查询出的日志总数: {/contextlogs.logSize/} 条</li>
+                            <li>导出日志的条数目前限制为一万条,超过的话请缩小查询范围</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-hide="showContextUI"
+                            data-ng-click="downloadSearchLogs()" data-demo-disable>确定
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="showContextUI"
+                            data-ng-click="downloadContextLogs()" data-demo-disable>确定
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

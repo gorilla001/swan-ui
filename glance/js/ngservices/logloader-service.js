@@ -1,13 +1,13 @@
 function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
     var LogLoader = function () {
-        this.logs = [];
-        this.logInfo = [];
+        this.logs = [];     //logs array
+        this.logInfo = [];  //logs array for data.hits.hits[i].fields
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
         this.isComplete = false;
-        this.logsId = [];
-        this.logSize = 0;
+        this.logsId = [];   //id of logs array for hits.hits[i]._id
+        this.logSize = 0;   //logs total
     };
 
     LogLoader.prototype.getlogs = function (contextCallBack) {
