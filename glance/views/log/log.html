@@ -163,7 +163,7 @@
                     <h4>日志导出</h4>
                     <div class="delete-cluster">
                         <ul>
-                            <li ng-show="clusterlogs.logSize < 10000">当前查询出的日志总数:
+                            <li ng-show="clusterlogs.logSize <= 10000">当前查询出的日志总数:
                                 <span ng-show="!showContextUI">{/clusterlogs.logSize/}
                                 </span>
                                 <span ng-show="showContextUI">{/contextlogs.logSize/}
