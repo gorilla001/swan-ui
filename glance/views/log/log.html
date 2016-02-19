@@ -156,8 +156,13 @@
                     <h4>日志导出</h4>
                     <div class="delete-cluster">
                         <ul>
-                            <li ng-hide="showContextUI">当前查询出的日志总数: {/clusterlogs.logSize/} 条</li>
-                            <li ng-show="showContextUI">当前查询出的日志总数: {/contextlogs.logSize/} 条</li>
+                            <li>当前查询出的日志总数:
+                                <span ng-hide="showContextUI" ng-class="{'text-danger': clusterlogs.logSize > 10000}">{/clusterlogs.logSize/}
+                                </span>
+                                <span ng-show="showContextUI" ng-class="{'text-danger': clusterlogs.logSize > 10000}">{/contextlogs.logSize/}
+                                </span>
+                                条
+                            </li>
                             <li>导出日志的条数目前限制为一万条,超过的话请缩小查询范围</li>
 
                         </ul>
