@@ -96,20 +96,27 @@
                                     </datetimepicker>
                                 </div>
                             </div>
+                            
                             <div style="display: inline-block; margin-left: 20px;">
                                 <label></label>
                                 <button type="submit" data-ng-disabled="staticForm.$invalid"
                                         class="btn btn-primary btn-sm" style=" width: 150px;">查询
                                 </button>
+                            </div>
 
+                            <div style="display: inline-block; margin-left: 20px;">
                                 <button type="button" ng-disabled="!clusterlogs.logs.length" ng-hide="showContextUI"
-                                        class="btn btn-sm"  data-toggle="modal"
-                                        data-target="#downloadLogsModal" data-demo-disable>导出
+                                        class="btn btn-sm"
+                                        ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
+                                        data-toggle="modal"
+                                        data-target="#downloadLogsModal" data-demo-disable>导出日志
                                 </button>
 
                                 <button type="button" ng-disabled="!clusterlogs.logs.length" ng-show="showContextUI"
-                                        class="btn btn-sm" data-toggle="modal"
-                                        data-target="#downloadLogsModal" data-demo-disable>导出上下文
+                                        class="btn btn-sm"
+                                        ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
+                                        data-toggle="modal"
+                                        data-target="#downloadLogsModal" data-demo-disable>导出日志
                                 </button>
                             </div>
                         </div>
@@ -156,24 +163,24 @@
                     <h4>日志导出</h4>
                     <div class="delete-cluster">
                         <ul>
-                            <li>当前查询出的日志总数:
-                                <span ng-hide="showContextUI" ng-class="{'text-danger': clusterlogs.logSize > 10000}">{/clusterlogs.logSize/}
+                            <li ng-show="clusterlogs.logSize < 10000">当前查询出的日志总数:
+                                <span ng-show="!showContextUI">{/clusterlogs.logSize/}
                                 </span>
-                                <span ng-show="showContextUI" ng-class="{'text-danger': clusterlogs.logSize > 10000}">{/contextlogs.logSize/}
+                                <span ng-show="showContextUI">{/contextlogs.logSize/}
                                 </span>
                                 条
                             </li>
-                            <li>导出日志的条数目前限制为一万条,超过的话请缩小查询范围</li>
+                            <li ng-show="clusterlogs.logSize > 10000">当前日志记录已经超出一万条，您可以选择直接导出前一万条记录或者缩小查询范围</li>
 
                         </ul>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal" ng-hide="showContextUI"
-                            data-ng-click="downloadSearchLogs()" data-demo-disable>确定
+                            data-ng-click="downloadSearchLogs()" data-demo-disable>导出
                     </button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" ng-show="showContextUI"
-                            data-ng-click="downloadContextLogs()" data-demo-disable>确定
+                            data-ng-click="downloadContextLogs()" data-demo-disable>导出
                     </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 </div>
