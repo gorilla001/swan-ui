@@ -274,7 +274,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
 
 getAppInfo.$inject = ['gHttp', '$stateParams', 'Notification'];
 function getAppInfo(gHttp, $stateParams, Notification) {
-    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get({ignoreErrorcodes: 'all'}).catch(function(code) {
+    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get().catch(function(code) {
         Notification.error(APP_CODE[code]);
     });
 }

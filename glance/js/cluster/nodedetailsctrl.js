@@ -168,7 +168,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.openServiceRepair = function (serviceName) {
         $scope.serviceRepairInfo = {serviceName: serviceName, method: 'restart'};
         $('#repairService').modal("show");
-    }
+    };
 
     $scope.repairService = function () {
         gHttp.Resource('cluster.serviceStatus', {
@@ -256,7 +256,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
             clusterId: $stateParams.clusterId,
             nodeId: $scope.nextNodeId
         }, {reload: true});
-    }
+    };
 
     function getPreAndNextNodeIds(nodes, nodeId) {
         $scope.nextNodeId = $stateParams.nodeId;
