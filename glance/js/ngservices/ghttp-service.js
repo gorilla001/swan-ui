@@ -31,8 +31,7 @@
                 this.url = utils.buildFullURL(urlName, params);
                 this.options = {
                     isAuth: true,
-                    loading: 'default',
-                    ignoreErrorcodes: []
+                    loading: 'default'
                 }
             }
             
@@ -82,17 +81,14 @@
                 var deferred = $q.defer();
                 $http(req).success(function (data) {
                     this._stopLoading(this.options.loading);
-                    if (data && (data.code == undefined || data.code === MESSAGE_CODE.success)) {
-                        if (data.data) {
-                            data = data.data;
-                        }
-                        deferred.resolve(data);
+                    if (data.code) {
+                        deferred.reject(data.code, data.data)
                     } else {
-                        this._handleErrors(200, data, deferred);
+                        deferred.resolve(data.data);
                     }
                 }.bind(this)).error(function (data, status) {
                     this._stopLoading(this.options.loading);
-                    this._handleErrors(status, data, deferred);
+                    this._handleErrors(status);
                 }.bind(this));
                 
                 return deferred.promise;
@@ -114,20 +110,13 @@
                     $rootScope.loadings[loading] -= 1;
                 }
             };
-            
-            Resource.prototype._handleErrors = function(status, data, deferred) {
+
+            Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
                     window.location.href = USER_URL;
                     $rootScope.$destroy();
-                } else if (status == 403) {
-                    Notification.error("您没有权限进行此操作");
-                } else if(status === 404) {
+                } else if (status == 404) {
                     $state.go('404');
-                } else if(data){
-                    if (this.options.ignoreErrorcodes!='all' && this.options.ignoreErrorcodes.indexOf(data.code) < 0) {
-                        Notification.error("服务忙，请稍后再试");
-                    }
-                    deferred.reject(data.code, data.errors, status);
                 } else {
                     Notification.error("服务忙，请稍后再试");
                 }

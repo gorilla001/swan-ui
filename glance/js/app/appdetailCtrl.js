@@ -16,7 +16,7 @@ function appdetailCtrl($scope, $state, $stateParams, gHttp, $timeout, Notificati
     
     function refreshData(){
         if (!$scope.isDestroy){
-            gHttp.Resource('app.info', {app_id: $stateParams.appId}).get({loading: '', ignoreErrorcodes: 'all'}).then(
+            gHttp.Resource('app.info', {app_id: $stateParams.appId}).get({loading: ''}).then(
                     function(data) {
                         $scope.appInfo = data;
                         timeoutPromise = $timeout(refreshData, 5000);
