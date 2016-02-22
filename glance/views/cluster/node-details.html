@@ -69,9 +69,6 @@
                             <div>系统版本</div><em>{/ nodeInfo.osVersion /}</em>
                         </li> 
                         <li>
-                            <div>容器版本</div><em>{/ nodeInfo.dockerVersion /}</em>
-                        </li> 
-                        <li>
                             <div>agent 版本</div><em>{/ nodeInfo.agentVersion /}</em>
                         </li>
                         <li data-ng-show="node.updated_at">
@@ -88,7 +85,7 @@
             <div class="main-container">
                 <div class="main-container-body">
                     <ul class="clearfix server-app-status">
-                        <li data-ng-repeat="service in serviceViews"> 
+                        <li data-ng-repeat="service in serviceViews" data-ng-show="statusMgr.nodes[node.id].services[service]"> 
                             <div>
                                 <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
                                   <div class="arrow-download"></div>
@@ -105,7 +102,8 @@
                                 data-ng-click="openServiceRepair(service)" data-demo-disable>修复</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
-                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
+                            <span class="version" data-ng-if="service !== 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
+                            <span class="version" data-ng-if="service === 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version"></span>
                         </li>
                     </ul>
                 </div>
@@ -194,10 +192,10 @@
                 <div class="radio">
                     <label>
                         <input type="radio" data-ng-model="serviceRepairInfo.method" value="restart">
-                        重启，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。
+                        重启<span data-ng-show="serviceRepairInfo.serviceName!='docker'">，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。</span>
                     </label>
                 </div>
-                <div class="radio">
+                <div class="radio" data-ng-show="serviceRepairInfo.serviceName!='docker'">
                     <label>
                         <input type="radio" data-ng-model="serviceRepairInfo.method" value="reset">
                         重置，重置会重新下载最新版的服务安装，重置 Gateway 或者 Proxy 会中断您部署的应用，其他服务重置不会中断应用。
