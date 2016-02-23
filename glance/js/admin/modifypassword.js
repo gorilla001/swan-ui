@@ -1,4 +1,4 @@
-function modifyPasswordCtrl($scope, $rootScope, glanceHttp, $window, Notification) {
+function modifyPasswordCtrl($scope, $rootScope, $window, Notification, gHttp) {
     $rootScope.show = '';
     $scope.form = {
         old_password: '',
@@ -8,8 +8,7 @@ function modifyPasswordCtrl($scope, $rootScope, glanceHttp, $window, Notificatio
     $scope.message_error_info = {};
 
     $scope.modifyPassword = function(){
-        glanceHttp.ajaxFormPut($scope, ["auth.password"], function() {
-            // Notification.success('密码修改成功！');
+        gHttp.Resource("auth.password").put($scope.form, {"form": $scope.staticForm}).then(function () {
             alert('密码修改成功！');
             $window.history.back();
         });
@@ -19,5 +18,5 @@ function modifyPasswordCtrl($scope, $rootScope, glanceHttp, $window, Notificatio
         $window.history.back();
     }
 }
-modifyPasswordCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$window', 'Notification'];
+modifyPasswordCtrl.$inject = ['$scope', '$rootScope', '$window', 'Notification', 'gHttp'];
 glanceApp.controller('modifyPasswordCtrl', modifyPasswordCtrl);

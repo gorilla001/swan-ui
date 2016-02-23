@@ -1,9 +1,6 @@
 MESSAGE_CODE = {
     success:0,
-    dataInvalid:1,
-    tokenInvalid:2,
-    notLogin:3,
-    noPermission:4
+    dataInvalid:10001
 };
 
 APP_CODE = {
@@ -56,11 +53,11 @@ SERVICES_STATUS = {
 
 BACKEND_URL = {
     auth: {
-        auth: "api/v2/auth",
-        user: "api/v2/user",
-        customerservice: "api/v2/customerservice",
-        password: 'api/v2/user/password',
-        notice: 'api/v2/notice'
+        auth: "api/v3/auth",
+        user: "api/v3/user",
+        customerservice: "api/v3/customerservice_url",
+        password: 'api/v3/user/password',
+        notice: 'api/v3/notice'
         },
         
     cluster:  {

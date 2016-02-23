@@ -1,4 +1,4 @@
-function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
+function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window) {
     $rootScope.myConfirm = function (msg, callback) {
         $scope._confirmMsg = msg;
         $scope._confirmCallback = callback;
@@ -21,13 +21,13 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
     
     $scope.getCSUrl = function () {
         var w = window.open();
-        glanceHttp.ajaxGet("auth.customerservice", function(data){
-            w.location = data.data.url;
-        });
+        gHttp.Resource("auth.customerservice").get().then(function (data) {
+            w.location = data.url;
+        })
     };
     
     $scope.logout = function(){
-        glanceHttp.ajaxDelete(["auth.auth"], function(data){
+        gHttp.Resource("auth.auth").delete().then(function(){
             glanceUser.clear();
             window.location.href = USER_URL;
         });
@@ -39,18 +39,16 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, glanceHttp, $window) {
 
     //set Notice Alert if has notice
     (function () {
-        glanceHttp.ajaxGet("auth.notice")
-            .success(function (res) {
-                if(res.data && res.data.content){
-                    $scope.noticeHtml = res.data.content;
-                }
-            })
-            .error(function (res, status) {
-                console.log("Notice ajax error, request failed (" + status + ")")
-            })
+        gHttp.Resource("auth.notice").get().then(function (data) {
+            if(data){
+                $scope.noticeHtml = data.content;
+            }
+        }).catch(function() {
+            console.log("Notice ajax error");
+        })
     })()
 
 }
 
-rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "glanceHttp", "$window"];
+rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window"];
 glanceApp.controller("rootCtrl", rootCtrl);
