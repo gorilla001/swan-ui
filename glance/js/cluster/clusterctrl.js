@@ -28,7 +28,8 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
             logcollection: '日志收集组件',
             bamboo_gateway: '外部网关组件',
             bamboo_proxy: '内部代理组件',
-            chronos: '定时任务组件'
+            chronos: '定时任务组件',
+            docker: 'Docker'
         };
         if (labels[serviceName]) {
             return labels[serviceName];

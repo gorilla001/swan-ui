@@ -41,14 +41,14 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.getCurNode();
 
     function createServiceViews() {
+        $scope.serviceViews = ["docker"]
         if ($scope.isMasterFlag) {
-            $scope.serviceViews = ["master", "marathon", "zookeeper", "exhibitor"]
+            $scope.serviceViews.push("master", "marathon", "zookeeper", "exhibitor");
             if ($scope.node.cluster.cluster_type == '1_master') {
                 $scope.serviceViews.push("slave", "cadvisor");
-            }
-            ;
+            };
         } else {
-            $scope.serviceViews = ["slave", "cadvisor"];
+            $scope.serviceViews.push("slave", "cadvisor");
         }
         $scope.serviceViews.push("logcollection");
 
@@ -122,7 +122,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     function getNodeInfo(data) {
         var nodeInfo = {};
-        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion'];
+        var keys = ['osVersion', 'agentVersion', 'memTotal'];
 
         var key;
         for (var i = 0; i < keys.length; i++) {
@@ -145,7 +145,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     }
 
     function setDefalutNodeInfos() {
-        var keys = ['osVersion', 'agentVersion', 'memTotal', 'dockerVersion', 'cpuNumber'];
+        var keys = ['osVersion', 'agentVersion', 'memTotal', 'cpuNumber'];
         var key;
         for (var i = 0; i < keys; i++) {
             key = keys[i];
