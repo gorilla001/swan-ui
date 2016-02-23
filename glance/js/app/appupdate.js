@@ -236,6 +236,9 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
     };
 
     $scope.changeProtocol = function () {
+        //Empty the port mapping when change Protocol
+        delete $scope.portInfo.mapPort;
+
         if ($scope.portInfo.protocol === SELECT_HTTP && $scope.portInfo.type === OUTER) {
             $scope.portInfo.isUri = HAS_DOMAIN;
             $scope.portInfo.mapPort = 80;
