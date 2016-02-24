@@ -5,9 +5,9 @@
     'use strict';
     glanceApp.controller('dynamicBaseCtrl', dynamicBaseCtrl);
 
-    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$q', 'ClusterStatusMgr'];
+    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$q', 'ClusterStatusMgr', 'gHttp'];
 
-    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, $q, ClusterStatusMgr) {
+    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, $q, ClusterStatusMgr, gHttp) {
         $rootScope.show = 'home';
 
         $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
@@ -16,14 +16,13 @@
 
         function listAllClusters() {
             var deferred = $q.defer();
-            glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
-                if (data && data.data) {
+            gHttp.Resource('cluster.clusters').get().then(function (data) {
+                if (data) {
                     listClusterDataGetFromBackend = data.data;
-                    $scope.clusterList = collectClusterList(data.data);
+                    $scope.clusterList = collectClusterList(data);
+                    deferred.resolve();
                 }
-                deferred.resolve();
             });
-
             return deferred.promise;
         }
 

@@ -3,9 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig'];
+logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp'];
 
-function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig) {
+function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig, gHttp) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
     var clusterIdTemp;
@@ -18,11 +18,11 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.contextlogs = new LogLoader();
 
     $scope.listCluster = function () {
-        glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
-            if (data && data.data && data.data.length !== 0) {
-                $scope.clusters = data.data;
+        gHttp.Resource('cluster.clusters').get().then(function (data) {
+            if (data && data.length !== 0) {
+                $scope.clusters = data;
             }
-        });
+        })
     };
     $scope.listCluster();
 

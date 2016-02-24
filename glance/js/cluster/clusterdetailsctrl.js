@@ -1,4 +1,4 @@
-function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
+function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
     'use strict';
 
     var clusterStatusTexts = {
@@ -14,9 +14,9 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
 
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     function getCurCluster() {
-        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}], function (data) {
-            $scope.cluster = data.data;
-            $scope.clusterLabels = $scope.collectClusterLabels(data.data.nodes);
+        gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
+            $scope.cluster = data;
+            $scope.clusterLabels = $scope.collectClusterLabels(data.nodes);
 
             $scope.totalItems = $scope.cluster.nodes.length;
             if (!$scope.totalItems) {
@@ -56,10 +56,10 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     $scope.isShowUpgradeFailedMsg = true;
     
     $scope.upgradeNode = function (clusterId) {
-        glanceHttp.ajaxPut(['cluster.cluster'], {'id': clusterId, 'isUpgrade': true}, function() {
+        gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({'method': 'upgrade'}).then(function () {
             $scope.upgradeFailedNodes = null;
             $scope.isShowUpgradeFailedMsg = true;
-        });
+        })
     };
     
     $scope.closeUpgradeFailedMsg = function () {
@@ -104,5 +104,5 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, Notifi
     }
 }
 
-clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
+clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
 glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);

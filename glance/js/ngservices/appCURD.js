@@ -6,9 +6,9 @@
     angular.module('glance')
         .factory('appCurd', appCurd);
 
-    appCurd.$inject = ['glanceHttp', 'Notification', '$state', 'openModule', '$rootScope'];
+    appCurd.$inject = ['glanceHttp', 'Notification', '$state', 'openModule', '$rootScope', 'gHttp'];
 
-    function appCurd(glanceHttp, Notification, $state, openModule, $rootScope) {
+    function appCurd(glanceHttp, Notification, $state, openModule, $rootScope, gHttp) {
         var CONTAINER_MODULE = "/views/app/updateContainerModule.html";
         var CONTAINER_CONTROLLER = "ModalContainerCtrl";
         var addCode = {
@@ -123,18 +123,13 @@
         }
 
         function getListCluster(scope, isUsedNameMap) {
-            return glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
-                scope.clusters = data.data;
+            return gHttp.Resource('cluster.clusters').get().then(function (data) {
+                scope.clusters = data;
                 if (isUsedNameMap) {
-                    angular.forEach(data.data, function (cluster) {
+                    angular.forEach(data, function (cluster) {
                         scope.clusterNameMap[cluster.id] = cluster.name;
                     });
                 }
-
-            }, null, function (data, status) {
-                console.log("request failed (" + status + ")");
-            }, function (data) {
-                console.log(data.errors);
             });
         }
 

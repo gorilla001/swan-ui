@@ -1,4 +1,4 @@
-function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, glanceHttp, unitConversion, utils, monitor, labelService, Notification) {
+function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification) {
     $rootScope.clusterClass = 'clusterNode';
     $scope.unitConversion = unitConversion;
 
@@ -25,9 +25,9 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
         }
 
         $scope.myConfirm(toast, function () {
-            glanceHttp.ajaxDelete(["cluster.nodes", {"cluster_id": $stateParams.clusterId}], function (data) {
+            gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data':nodeIds}).then(function () {
                 $state.reload("cluster.clusterdetails");
-            }, {"ids": nodeIds})
+            });
         });
     };
 
@@ -79,34 +79,22 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
     $scope.labelledConfirm = function() {
         var postData = listRequestData($scope.selectedLabels);
-        return glanceHttp.ajaxPost(
-            ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
-            postData,
-            angular.noop(),
-            undefined,
-            angular.noop(),
-            angular.noop()
-        ).then(function() {
-            updateClusterLabels($stateParams.clusterId);
-        }, function(resp) {
-            Notification.error(resp.errors.labels);
-        });
+        return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId}).
+            post(postData).then(function() {
+                updateClusterLabels($stateParams.clusterId);
+            }, function(data) {
+                Notification.error(data.data.labels);
+            });
     };
 
     $scope.tearConfirm = function() {
         var deleteData = listRequestData($scope.unselectedLabels);
-        return glanceHttp.ajaxDelete(
-            ['cluster.clusterLabels', {'cluster_id': $stateParams.clusterId}],
-            angular.noop(),
-            deleteData,
-            undefined,
-            angular.noop(),
-            angular.noop()
-        ).then(function() {
-            updateClusterLabels($stateParams.clusterId);
-        }, function(resp) {
-            Notification.error(resp.errors.labels);
-        });
+        return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId})
+            .delete({'data': deleteData}).then(function() {
+                updateClusterLabels($stateParams.clusterId);
+            }, function(resp) {
+                Notification.error(resp.data.labels);
+            });
     };
 
     function filterLabelNodes(labelName) {
@@ -150,8 +138,8 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
     function updateClusterLabels(clusterId) {
         labelService.listClusterLabels(clusterId)
-            .then(function(resp) {
-                $scope.clusterLabels = $scope.collectClusterLabels(resp.data.data.nodes);
+            .then(function(data) {
+                $scope.clusterLabels = $scope.collectClusterLabels(data.nodes);
             });
     }
 
@@ -179,5 +167,5 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gla
 
 }
 
-clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "glanceHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
+clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
 glanceApp.controller("clusterNodesCtrl", clusterNodesCtrl);

@@ -5,7 +5,6 @@ function modifyPasswordCtrl($scope, $rootScope, $window, Notification, gHttp) {
         new_password: '',
         new_password_compare: ''
     };
-    $scope.message_error_info = {};
 
     $scope.modifyPassword = function(){
         gHttp.Resource("auth.password").put($scope.form, {"form": $scope.staticForm}).then(function () {

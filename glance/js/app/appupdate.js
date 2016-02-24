@@ -399,8 +399,8 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.ajaxParams.labels.splice(index, 1);
         }
 
-        getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
-            $scope.appLableList = data.data;
+        getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams.labels).then(function (data) {
+            $scope.appLableList = data;
             if ($scope.appLableList.length) {
                 $scope.appLableList.map(function (item) {
                     item.ticked = true;
@@ -412,7 +412,6 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
                     return item;
                 });
             }
-        }).error(function (data) {
         });
     };
 
@@ -422,13 +421,12 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             angular.forEach($scope.creatAppLableList, function (lable) {
                 $scope.ajaxParams.labels.push(lable.id)
             });
-            getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams).success(function (data) {
-                $scope.appLableList = data.data;
+            getClusterLables.getNodesIdList($scope.config.clusterId, $scope.ajaxParams.labels).then(function (data) {
+                $scope.appLableList = data;
                 $scope.appLableList.map(function (item) {
                     item.ticked = true;
                     return item;
                 })
-            }).error(function (data) {
             });
         }
     };
