@@ -15,9 +15,9 @@
         };
 
         function listClusterLabels(clusterId, scope) {
-            gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get(function (data) {
+            gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get().then(function (data) {
                 scope.creatAppLableList = getLables(data);
-            })
+            });
         }
 
         function getLables(data) {
@@ -37,7 +37,7 @@
         }
 
         function getNodesIdList(clusterId, params){
-            return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({'params': {'by_label_ids': params}});
+            return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({'params': {'label_ids': params.join(',')}});
         }
 
 
