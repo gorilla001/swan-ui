@@ -57,14 +57,14 @@
             <form name="staticForm" class="form-horizontal" role="form">
 
                 <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
-                  (message_error_info.name && staticForm.name.$pristine)}">
+                  (staticForm.message_error_info.name && staticForm.name.$pristine)}">
                   <label class="col-md-2 control-label">主机名称</label>
 
                   <div class="col-md-8">
                     <input type="text" name="name" class="form-control" data-ng-model="form.name" data-ng-disabled="afterCopy">
 
                     <p data-ng-show="staticForm.name.$pristine" class="help-block">
-                    {/message_error_info["name"]/}</p>
+                    {/staticForm.message_error_info["name"]/}</p>
                   </div>
                 </div>
 

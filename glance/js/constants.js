@@ -1,9 +1,6 @@
 MESSAGE_CODE = {
     success:0,
-    dataInvalid:1,
-    tokenInvalid:2,
-    notLogin:3,
-    noPermission:4
+    dataInvalid:10001
 };
 
 APP_CODE = {
@@ -56,27 +53,24 @@ SERVICES_STATUS = {
 
 BACKEND_URL = {
     auth: {
-        auth: "api/v2/auth",
-        user: "api/v2/user",
-        customerservice: "api/v2/customerservice",
-        password: 'api/v2/user/password',
-        notice: 'api/v2/notice'
+        auth: "api/v3/auth",
+        user: "api/v3/user",
+        customerservice: "api/v3/customerservice_url",
+        password: 'api/v3/user/password',
+        notice: 'api/v3/notice'
         },
         
     cluster:  {
-        nodeId: "api/v2/cluster/$cluster_id/node/identifier",
-        node: "api/v2/cluster/$cluster_id/node",
-        nodeIns: "api/v2/cluster/$cluster_id/node/$node_id",
-        cluster: "api/v2/cluster",
-        clusterIns: "api/v2/cluster/$cluster_id",
-        clusterStatus: "api/v2/cluster/$cluster_id/status",
-        clusters: "api/v2/clusters",
-        nodes: "api/v2/cluster/$cluster_id/nodes",
-        nodeMonitor: "api/v2/cluster/$cluster_id/node/$node_id/metrics",
-        serviceStatus: "api/v2/cluster/$cluster_id/node/$node_id/service/$service_name/status",
-        label: "api/v2/label",
-        nodeLabel: "api/v2/cluster/$cluster_id/node/$node_id/labels",
-        clusterLabels: "api/v2/cluster/$cluster_id/nodeslabels"
+        clusters: "api/v3/clusters",
+        cluster: "api/v3/clusters/$cluster_id",
+        nodeId: "api/v3/clusters/$cluster_id/new_node_identifier",
+        nodes: "api/v3/clusters/$cluster_id/nodes",
+        node: "api/v3/clusters/$cluster_id/nodes/$node_id",
+        nodeMonitor: "api/v3/clusters/$cluster_id/nodes/$node_id/metrics",
+        service: "api/v3/clusters/$cluster_id/nodes/$node_id/services/$service_name",
+        
+        labels: "api/v3/labels",
+        nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels"
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",

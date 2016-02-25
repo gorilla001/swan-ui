@@ -1,4 +1,4 @@
-function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
+function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
     $rootScope.show = 'cluster';
 
     $scope.clusterNames = [];
@@ -42,7 +42,8 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
         $('#confirmDeleteCluster'+ clusterId).hide();
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
-        glanceHttp.ajaxDelete(['cluster.clusterIns', {cluster_id: clusterId}], function () {
+        
+        gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
             Notification.success('集群' + name + '删除成功');
             $state.go('cluster.listclusters', null, {reload: true});
         });
@@ -116,5 +117,5 @@ function clusterCtrl($scope, $state, $rootScope, glanceHttp, Notification) {
     
 }
 
-clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'glanceHttp', 'Notification'];
+clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'gHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);

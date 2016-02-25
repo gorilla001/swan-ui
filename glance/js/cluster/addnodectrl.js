@@ -1,12 +1,12 @@
-function addNodeCtrl($scope, $stateParams, glanceHttp) {
+function addNodeCtrl($scope, $stateParams, gHttp) {
   $scope.clusterId = $stateParams.clusterId;
   var init = function() {
-    glanceHttp.ajaxGet(["cluster.nodeId", {cluster_id: $stateParams.clusterId}], function(data){
-      $scope.nodeId = data.data.identifier;
-    });
+    gHttp.Resource("cluster.nodeId", {cluster_id: $stateParams.clusterId}).get().then(function(data){
+        $scope.nodeId = data.identifier;
+    })
   };
   init();
 }
 
-addNodeCtrl.$inject = ['$scope', '$stateParams', 'glanceHttp'];
+addNodeCtrl.$inject = ['$scope', '$stateParams', 'gHttp'];
 glanceApp.controller("addNodeCtrl", addNodeCtrl);

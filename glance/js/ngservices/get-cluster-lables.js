@@ -6,24 +6,18 @@
     angular.module('glance')
         .factory('getClusterLables', getClusterLables);
 
-    getClusterLables.$inject = ['glanceHttp', 'Notification'];
+    getClusterLables.$inject = ['gHttp', 'Notification'];
 
-    function getClusterLables(glanceHttp, Notification) {
+    function getClusterLables(gHttp, Notification) {
         return {
             listClusterLabels: listClusterLabels,
             getNodesIdList: getNodesIdList
         };
 
         function listClusterLabels(clusterId, scope) {
-            glanceHttp.ajaxGet(['cluster.clusterIns', ({cluster_id: clusterId})], function () {
-                }, undefined, function () {
-                })
-                .success(function (data) {
-                    scope.creatAppLableList = getLables(data.data)
-                })
-                .error(function (data, status) {
-
-                })
+            gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get(function (data) {
+                scope.creatAppLableList = getLables(data);
+            })
         }
 
         function getLables(data) {
@@ -43,8 +37,7 @@
         }
 
         function getNodesIdList(clusterId, params){
-            return glanceHttp.ajaxGet(['cluster.clusterLabels', ({cluster_id: clusterId})], function(data){},
-                    params, function(data){});
+            return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({'params': {'by_label_ids': params}});
         }
 
 

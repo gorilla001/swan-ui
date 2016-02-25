@@ -1,4 +1,4 @@
-function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatusMgr, $timeout) {
+function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeout, gHttp) {
     var clusterTypes = {
         '1_master': 1,
         '3_masters': 3,
@@ -16,13 +16,11 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     
     $scope.listCluster = function () {
-        glanceHttp.ajaxGet(['cluster.clusters'], function (data) {
-            if (data && data.data) {
-                $scope.getClusterNames(data.data);
-                $scope.clusters = data.data;
-                $scope.clustersBasicData = getAllClustersBasicData();
-                $scope.clustersNodesData = getAllClustersNodesData();
-            }
+        gHttp.Resource("cluster.clusters").get().then(function (data) {
+            $scope.getClusterNames(data);
+            $scope.clusters = data;
+            $scope.clustersBasicData = getAllClustersBasicData();
+            $scope.clustersNodesData = getAllClustersNodesData();
         });
     };
     $scope.listCluster();
@@ -44,7 +42,7 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
         } else if (clusterStatus === CLUSTER_STATUS.abnormal) {
             $scope.clustersBasicData[index].problemTips.firstBtnDisable = true;
             $scope.clustersBasicData[index].problemTips.firstButtonText = "正在修复中";
-            glanceHttp.ajaxPut(['cluster.clusterStatus', {'cluster_id': clusterId}], {"method": "repair"}, function (data) {
+            gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({"method": "repair"}).then(function(){
                 $timeout.cancel(repairPromise);
                 repairPromise = $timeout(function () {
                     $state.reload();
@@ -377,5 +375,5 @@ function listClustersCtrl($scope, glanceHttp, $state, Notification, ClusterStatu
 
 }
 
-listClustersCtrl.$inject = ["$scope", "glanceHttp", "$state", "Notification", "ClusterStatusMgr", "$timeout"];
+listClustersCtrl.$inject = ["$scope", "$state", "Notification", "ClusterStatusMgr", "$timeout", "gHttp"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);

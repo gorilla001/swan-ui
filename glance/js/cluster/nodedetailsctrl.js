@@ -1,5 +1,5 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, gHttp) {
+function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
     'use strict';
     $scope.node = {};
     $scope.showCharts = false;
@@ -24,19 +24,17 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
     $scope.getCurNode = function () {
-        glanceHttp.ajaxGet(['cluster.nodeIns', {
-            cluster_id: $stateParams.clusterId,
-            node_id: $stateParams.nodeId
-        }], function (data) {
-            $scope.node = data.data;
-            $scope.isMasterFlag = $scope.getIsMaster($scope.node);
-            $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
-            $scope.statusMgr.startListen($scope);
-
-            createServiceViews();
-
-            $scope.selectedLabels = labelService.formatNodeLabels(data.data.node_labels);
-        });
+        gHttp.Resource('cluster.node', {cluster_id: $stateParams.clusterId,node_id: $stateParams.nodeId}).
+            get().then(function (data) {
+                $scope.node = data;
+                $scope.isMasterFlag = $scope.getIsMaster($scope.node);
+                $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
+                $scope.statusMgr.startListen($scope);
+                
+                createServiceViews();
+                
+                $scope.selectedLabels = labelService.formatNodeLabels(data.node_labels);
+            });
     };
     $scope.getCurNode();
 
@@ -75,18 +73,15 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        glanceHttp.ajaxGet(['cluster.nodeMonitor', {
-            cluster_id: $stateParams.clusterId,
-            node_id: nodeId
-        }], function (data) {
+        gHttp.Resource('cluster.nodeMonitor', {cluster_id: $stateParams.clusterId,node_id: nodeId}).get().then(function (data) {
             setDefalutNodeInfos();
 
-            if (data.data.length) {
-                $scope.nodeInfo = getNodeInfo(data.data[0]);
+            if (data.length) {
+                $scope.nodeInfo = getNodeInfo(data[0]);
             }
             $('.charts').show();
             $scope.showCharts = true;
-            var chartsData = monitor.httpMonitor.getChartsData(data.data);
+            var chartsData = monitor.httpMonitor.getChartsData(data);
             buildCharts.lineCharts(chartsData, $scope.DOMs);
 
             addMetricData(data);
@@ -97,7 +92,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
     function addMetricData(data) {
         var nodesData, maxNodesNumber, nodeInfo, chartsData, wsTime, chartsTime;
-        nodesData = data.data;
+        nodesData = data;
         $scope.$on(SUB_INFOTYPE.nodeMetric, function (event, data) {
             if (data.nodeId == $stateParams.nodeId) {
                 maxNodesNumber = 180;
@@ -159,9 +154,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
         var toast = '您确定要移除主机吗？';
 
         $scope.myConfirm(toast, function () {
-            glanceHttp.ajaxDelete(['cluster.nodes', {'cluster_id': $stateParams.clusterId}], function (data) {
+            gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data':ids}).then(function () {
                 $state.go('cluster.clusterdetails.nodes', {'clusterId': $stateParams.clusterId});
-            }, {'ids': ids})
+            });
         });
     };
 
@@ -171,10 +166,10 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     };
 
     $scope.repairService = function () {
-        gHttp.Resource('cluster.serviceStatus', {
+        gHttp.Resource('cluster.service', {
             cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId,
             service_name: $scope.serviceRepairInfo.serviceName
-        }).post({'method': $scope.serviceRepairInfo.method});
+        }).patch({'method': $scope.serviceRepairInfo.method});
     };
 
     //labels
@@ -215,36 +210,32 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
     function confirmNodeLabel() {
         var labelIds = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
         var putData = {
-            id: $stateParams.nodeId,
             labels: labelIds
         };
 
-        return glanceHttp.ajaxPut(['cluster.node', {'cluster_id': $stateParams.clusterId}], putData, function () {
-        }, undefined, function (resp) {
-            Notification.error(resp.errors.labels);
-        });
+        return gHttp.Resource('cluster.node', {'cluster_id': $stateParams.clusterId, "node_id": $stateParams.nodeId}).
+            put(putData).catch(function (data) {
+                Notification.error(data.data.labels);
+            })
     }
 
     function updateNodeLabels() {
-        glanceHttp.ajaxGet(['cluster.nodeLabel', {
-            'cluster_id': $stateParams.clusterId,
-            'node_id': $stateParams.nodeId
-        }], function (resp) {
-            $scope.selectedLabels = labelService.formatNodeLabels(resp.data);
-            $scope.changeLabels();
-        });
+        gHttp.Resource('cluster.node', {'cluster_id': $stateParams.clusterId,'node_id': $stateParams.nodeId})
+            .get().then(function (data) {
+                $scope.selectedLabels = labelService.formatNodeLabels(data);
+                $scope.changeLabels();
+            });
     }
 
     // 主机导航
     (function listNodesIds() {
-        glanceHttp.ajaxGet(["cluster.clusterIns", {cluster_id: $stateParams.clusterId}])
-            .then(function (resp) {
-                var nodes = resp.data.data.nodes;
-                if (nodes.length > 1) {
-                    $scope.showPageNav = true;
-                    getPreAndNextNodeIds(nodes, $stateParams.nodeId);
-                }
-            });
+        gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
+            var nodes = data.nodes;
+            if (nodes.length > 1) {
+                $scope.showPageNav = true;
+                getPreAndNextNodeIds(nodes, $stateParams.nodeId);
+            }
+        })
     })();
 
     $scope.goPreNode = function () {
@@ -286,5 +277,5 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, glanceHttp, unitConve
 
 }
 
-nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'glanceHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification', 'gHttp'];
+nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
 glanceApp.controller('nodeDetailsCtrl', nodeDetailsCtrl);

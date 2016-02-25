@@ -14,12 +14,12 @@
   <div class="main-container-body">
     <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="updateClusterFormCtrl">
       <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
-        (message_error_info.name && staticForm.name.$pristine)}">
+        (staticForm.message_error_info.name && staticForm.name.$pristine)}">
         <label class="col-md-3 control-label">集群名称</label>
         <div class="col-md-8">
           <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required" />
           <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
-          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/message_error_info["name"]/}</p>
+          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/staticForm.message_error_info["name"]/}</p>
         </div>
       </div>
 

@@ -3,9 +3,9 @@
     angular.module('glance')
         .factory('labelService', labelService);
 
-    labelService.$inject = ['glanceHttp', 'Notification'];
+    labelService.$inject = ['gHttp', 'Notification'];
 
-    function labelService(glanceHttp, Notification) {
+    function labelService(gHttp, Notification) {
         return {
             listAllLabels: listAllLabels,
             changeLabels: changeLabels,
@@ -19,15 +19,15 @@
 
         // 查询用户所有标签
         function listAllLabels() {
-            return glanceHttp.ajaxGet(['cluster.label'], function(){}, undefined, function() {});
+            return gHttp.Resource('cluster.labels').get();
         }
 
         // 展开标签的操作
         function changeLabels($scope) {
             return listAllLabels()
-                .then(function(resp) {
-                    $scope.allLabels = resp.data.data;
-                    $scope.unselectedLabels = diffLabels($scope.selectedLabels, resp.data.data);
+                .then(function(data) {
+                    $scope.allLabels = data;
+                    $scope.unselectedLabels = diffLabels($scope.selectedLabels, data);
                 }, function() {
                     Notification.error('服务器忙，请稍后再试。');
                 });
@@ -41,17 +41,13 @@
 
         // 新建标签
         function createLabel($scope) {
-            return glanceHttp.ajaxPost(['cluster.label'], {'name': $scope.labelForm.newLabelName},
-                function() {}, undefined, function() {})
-                .then(function(resp) {
-                    labelledNode(resp.data.data, $scope);
-                    $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
-                    $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
-                    
-                    $scope.labelForm.label.$setPristine();
-                    $scope.labelForm.newLabelName = '';
-                }, function(resp) {
-                    Notification.error(resp.data.errors.name);
+            return gHttp.Resource('cluster.labels').post({'name': $scope.labelForm.newLabelName}).then(function (data) {
+                labelledNode(data, $scope);
+                $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+                
+                $scope.labelForm.label.$setPristine();
+                $scope.labelForm.newLabelName = '';
             });
         }
 
@@ -63,25 +59,17 @@
 
         // 删标签
         function deleteLabel(label, $scope) {
-            glanceHttp.ajaxDelete(['cluster.label'], function(){}, {'labels': [label.id]}, undefined, function() {})
-                .then(function() {
-                    spliceLabel(label, $scope.selectedLabels);
-                    spliceLabel(label, $scope.unselectedLabels);
-                    $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
-                    $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
-                }, function(resp) {
-                    Notification.error(resp.data.errors.labels);
-                });
+            gHttp.Resource('cluster.labels').delete({"data": [label.id]}).then(function () {
+                spliceLabel(label, $scope.selectedLabels);
+                spliceLabel(label, $scope.unselectedLabels);
+                $scope.allLabels = $scope.selectedLabels.concat($scope.unselectedLabels);
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+            });
         }
 
         // 查询集群所有标签
         function listClusterLabels(clusterId) {
-            return  glanceHttp.ajaxGet(
-                ["cluster.clusterIns", {cluster_id: clusterId}],
-                angular.noop(),
-                undefined,
-                angular.noop()
-            );
+            return gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get();
         }
 
         // 格式化后端返回的集群详情接口的标签数据

@@ -1,4 +1,4 @@
-function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, Notification, labelService) {
+function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notification, labelService) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
@@ -23,7 +23,6 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
   
     $scope.msgstate = "等待主机链接......";
 
-    $scope.message_error_info = {};
     $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
       if(data['nodeId'] == $scope.nodeId && data['status'] != 'terminated') {
         $scope.isConected = true;
@@ -54,9 +53,9 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
         if (!$scope.afterCopy) {
             getFromAttributes();
             $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
-            glanceHttp.ajaxFormPost($scope, ['cluster.node', {'cluster_id': $stateParams.clusterId}], function () {
+            gHttp.Resource('cluster.nodes', {'cluster_id': $stateParams.clusterId}).post($scope.form, {'form': $scope.staticForm}).then(function () {
                 $scope.afterCopy = true;
-            });
+            })
         }
     };
 
@@ -94,5 +93,5 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, glanceHttp, N
     };
 }
 
-addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'glanceHttp', 'Notification', 'labelService'];
+addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);

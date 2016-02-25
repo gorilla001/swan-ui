@@ -1,12 +1,12 @@
-function updateNodeFormCtrl($scope, $state, $stateParams, glanceHttp) {
-    $scope.form = {"name": $stateParams.name, "id":$stateParams.nodeId};
-    $scope.message_error_info = {};
+function updateNodeFormCtrl($scope, $state, $stateParams, gHttp) {
+    $scope.form = {"name": $stateParams.name};
     $scope.updateNode = function() {
-        glanceHttp.ajaxFormPut($scope, ['cluster.node', {"cluster_id": $stateParams.clusterId}], function() {
-            $state.go("cluster.nodedetails", {"nodeId": $stateParams.nodeId, "clusterId": $stateParams.clusterId});
-        });
+        gHttp.Resource('cluster.node', {"cluster_id": $stateParams.clusterId, "node_id": $stateParams.nodeId}).
+            put($scope.form, {'form': $scope.staticForm}).then(function () {
+                $state.go("cluster.nodedetails", {"nodeId": $stateParams.nodeId, "clusterId": $stateParams.clusterId});
+            });
     };
 }
 
-updateNodeFormCtrl.$inject = ["$scope", "$state", "$stateParams", "glanceHttp"];
+updateNodeFormCtrl.$inject = ["$scope", "$state", "$stateParams", "gHttp"];
 glanceApp.controller("updateNodeFormCtrl", updateNodeFormCtrl);
