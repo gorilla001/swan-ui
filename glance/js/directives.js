@@ -386,7 +386,7 @@ function demoDisable() {
                         elem.attr('data-toggle', 'popover');
                         elem.attr('data-trigger', 'focus');
                         elem.attr('tabindex', '-1');
-                        elem.attr('data-content', '当前用户为 DEMO 用户，无法使用该功能；请<a href="'+USER_URL+'/index.html?register=true">注册</a>数人云账号，使用该功能。');
+                        elem.attr('data-content', '当前用户为 DEMO 用户，无法使用该功能；请<a href="'+USER_URL+'/user/register">注册</a>数人云账号，使用该功能。');
                         var placement = 'top';
                         if (attrs.demoDisable) {
                             placement = attrs.demoDisable;
