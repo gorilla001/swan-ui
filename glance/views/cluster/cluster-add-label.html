@@ -34,7 +34,7 @@
                 <input type="text" class="form-control input-sm"
                   placeholder="标签名称" name="newLabelName"
                   data-ng-model="labelForm.newLabelName" data-ng-trim="true"
-                  data-required="required" data-ng-pattern="/^[A-Za-z0-9_.\-]{1,}$/"
+                  data-required="required" data-ng-pattern="/^[A-Za-z0-9-]{1,}$/"
                   data-samename data-name-list="allLabelNames">
                 <button type="submit" class="btn btn-sm btn-success"
                   data-ng-click="createLabel()"
@@ -44,7 +44,7 @@
                 <small>标签名已存在</small>
               </p>
               <p data-ng-show="labelForm.label.newLabelName.$error.pattern" class="help-block text-left">
-                <small>标签名只可包含数字、字母、点号、横线、下划线、斜杠和反斜杠。</small>
+                <small>标签名只可包含数字、字母或横线。</small>
               </p>
           </div>
         </form>
