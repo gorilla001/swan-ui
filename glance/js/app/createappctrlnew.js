@@ -101,7 +101,7 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
         }
 
         if ($scope.logDirInput) {
-            $scope.deployinfo.logDir = $scope.logDirInput;
+            $scope.deployinfo.logDir = $scope.logDirInput.split(';');
         }
 
         if ($scope.cmdInput) {
