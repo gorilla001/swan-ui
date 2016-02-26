@@ -309,11 +309,21 @@
                             <h4> 日志目录 </h4>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-5">
-                                <input type="text" class="form-control" data-ng-model="logDirInput"
-                                       placeholder="应用的日志文件目录，如 &quot/var/log/app1/&quot">
+                            <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.logDir.$invalid && staticForm.logDir.$dirty}">
+                                <input type="text" class="form-control"
+                                  name="logDir"
+                                  data-ng-model="logDirInput"
+                                  placeholder="应用的日志文件目录，如 &quot/var/log/app1/&quot"
+                                  ng-pattern="/^\/[^\u4e00-\u9fa5]*$/">
+                            </div>
+
+                            <div data-ng-class="{ 'has-error' : staticForm.logDir.$invalid && staticForm.logDir.$dirty}">
+                                <p data-ng-show="staticForm.logDir.$invalid && staticForm.logDir.$dirty"
+                                   class="help-block">路径不能包含中文，且必须为绝对路径。</p>
                             </div>
                         </div>
+
+
 
                         <div class="item-header">
                             <h4> CMD </h4>
