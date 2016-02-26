@@ -86,7 +86,7 @@
                 <div class="main-container-body">
                     <ul class="clearfix server-app-status">
                         <li data-ng-repeat="service in serviceViews" data-ng-show="statusMgr.nodes[node.id].services[service]"> 
-                            <div>
+                            <div data-ng-if="service !== 'docker'">
                                 <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
                                   <div class="arrow-download"></div>
                                   <div class="service"></div>
@@ -100,6 +100,20 @@
                                 data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
                                     (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
                                 data-ng-click="openServiceRepair(service)" data-demo-disable>修复</button>
+                            </div> 
+                            <div data-ng-if="service === 'docker'">
+                                <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
+                                  <div class="arrow-download"></div>
+                                  <div class="service"></div>
+                                </div>
+                                <div class="ico-app-status status-reset" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'installing'">
+                                  <span class="glyphicon glyphicon-cog"></span>
+                                </div>
+                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
+                                  data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
+                                <button class="btn btn-xs btn-warning" 
+                                data-ng-show="statusMgr.nodes[node.id].status!==='terminated'"
+                                data-ng-click="repairService(service, 'restart')" data-demo-disable>重启</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
                             <span class="version" data-ng-if="service !== 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
@@ -192,7 +206,7 @@
                 <div class="radio">
                     <label>
                         <input type="radio" data-ng-model="serviceRepairInfo.method" value="restart">
-                        重启<span data-ng-show="serviceRepairInfo.serviceName!='docker'">，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。</span>
+                        重启，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。
                     </label>
                 </div>
                 <div class="radio" data-ng-show="serviceRepairInfo.serviceName!='docker'">

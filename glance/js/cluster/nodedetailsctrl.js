@@ -165,11 +165,15 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
         $('#repairService').modal("show");
     };
 
-    $scope.repairService = function () {
+    $scope.repairService = function (serviceName, method) {
+        if (!serviceName) {
+            serviceName = $scope.serviceRepairInfo.serviceName;
+            method = $scope.serviceRepairInfo.method;
+        }
         gHttp.Resource('cluster.service', {
             cluster_id: $stateParams.clusterId, node_id: $stateParams.nodeId,
-            service_name: $scope.serviceRepairInfo.serviceName
-        }).patch({'method': $scope.serviceRepairInfo.method});
+            service_name: serviceName
+        }).patch({'method': method});
     };
 
     //labels
