@@ -5,7 +5,7 @@ function createClusterFormCtrl($scope, $state, gHttp) {
     $scope.createCluster = function (isAddNode) {
         gHttp.Resource('cluster.clusters').post($scope.form, {'form': $scope.staticForm}).then(function () {
             if (isAddNode) {
-                $state.go('cluster.nodesource', {'clusterId': data.data.id});
+                $state.go('cluster.nodesource', {'clusterId': data.id});
             } else {
                 $state.go('cluster.listclusters');
             }
