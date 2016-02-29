@@ -10,14 +10,14 @@
             <div class="col-md-5"
                  data-ng-class="{ 'has-error' : dirForm.dateDir.$invalid && !dirForm.dateDir.$pristine}">
                 <input type="text" name="dateDir" class="form-control"
-                       data-ng-model="dirInfo.hostPath" data-required="required" ng-pattern="/^\/[^\u4e00-\u9fa5]*$/">
+                       data-ng-model="dirInfo.hostPath" data-required="required" ng-pattern="/^[^\u4e00-\u9fa5]*$/">
             </div>
 
             <div data-ng-class="{ 'has-error' : dirForm.dateDir.$invalid && !dirForm.dateDir.$pristine}">
                 <p data-ng-show="dirForm.dateDir.$error.required && !dirForm.dateDir.$pristine"
-                   class="help-block">不能为空</p>
+                   class="help-block">数据目录必须有数据</p>
                 <p data-ng-show="dirForm.dateDir.$error.pattern && !dirForm.dateDir.$pristine"
-                   class="help-block">路径不能包含中文，且必须为绝对路径。</p>
+                   class="help-block">路径不能包含中文</p>
             </div>
         </div>
 
@@ -28,14 +28,14 @@
                  data-ng-class="{ 'has-error' : dirForm.containerDir.$invalid && !dirForm.containerDir.$pristine}">
                 <input type="text" name="containerDir" class="form-control"
                        data-ng-model="dirInfo.containerPath" data-required="required"
-                       ng-pattern="/^\/[^\u4e00-\u9fa5]*$/">
+                       ng-pattern="/^[^\u4e00-\u9fa5]*$/">
             </div>
 
             <div data-ng-class="{ 'has-error' : dirForm.containerDir.$invalid && !dirForm.containerDir.$pristine}">
                 <p data-ng-show="dirForm.containerDir.$error.required  && !dirForm.containerDir.$pristine"
-                   class="help-block">不能为空</p>
+                   class="help-block">容器目录必须有数据</p>
                 <p data-ng-show="dirForm.containerDir.$error.pattern && !dirForm.containerDir.$pristine"
-                   class="help-block">路径不能包含中文，且必须为绝对路径。</p>
+                   class="help-block">路径不能包含中文</p>
             </div>
         </div>
 
