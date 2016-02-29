@@ -3,7 +3,7 @@ function createClusterFormCtrl($scope, $state, gHttp) {
         clusterType: '1_master'
     };
     $scope.createCluster = function (isAddNode) {
-        gHttp.Resource('cluster.clusters').post($scope.form, {'form': $scope.staticForm}).then(function () {
+        gHttp.Resource('cluster.clusters').post($scope.form, {'form': $scope.staticForm}).then(function (data) {
             if (isAddNode) {
                 $state.go('cluster.nodesource', {'clusterId': data.id});
             } else {
