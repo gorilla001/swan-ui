@@ -25,5 +25,5 @@ function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS, gHttp) {
     };
 }
 
-glanceUser.$inject = ["$cookieStore", "$rootScope", "glanceHttp", "glanceWS", "gHttp"]
+glanceUser.$inject = ["$cookieStore", "$rootScope", "glanceHttp", "glanceWS", "gHttp"];
 glanceApp.factory('glanceUser', glanceUser);

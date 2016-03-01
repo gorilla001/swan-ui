@@ -1,7 +1,23 @@
-var glanceApp = angular.module('glance', ['ngCookies', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'ngSocket','infinite-scroll','ngSanitize','isteven-multi-select', 'ui.bootstrap.datetimepicker', 'ui-notification', 'ngDialog', 'rzModule','ngTable']);
+var glanceApp = angular.module('glance',
+    [
+        'ngCookies',
+        'ui.router',
+        'ngAnimate',
+        'ui.bootstrap',
+        'ngSocket',
+        'infinite-scroll',
+        'ngSanitize',
+        'isteven-multi-select',
+        'ui.bootstrap.datetimepicker',
+        'ui-notification', 'ngDialog',
+        'rzModule',
+        'ngTable',
+        'glance.utils',
+        'glance.app'
+    ]);
 
-glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider','$locationProvider',
-    function($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
+glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider',
+    function ($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
         $urlRouterProvider.otherwise('/home');
         $stateProvider
             .state("cluster", {
@@ -60,7 +76,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('cluster.iaasqcloud', {
-              url: '/:clusterId/iaasqcloud/:nodeId',
+                url: '/:clusterId/iaasqcloud/:nodeId',
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/iaas-qcloud.html',
@@ -69,7 +85,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('cluster.addlivingnode', {
-              url: '/:clusterId/addlivingnode/:nodeId',
+                url: '/:clusterId/addlivingnode/:nodeId',
                 views: {
                     'first': {
                         templateUrl: '/views/cluster/add-living-node.html',
@@ -96,7 +112,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                 }
             })
             .state('cluster.clusterdetails', {
-                url:'/:clusterId',
+                url: '/:clusterId',
                 abstract: true,
                 views: {
                     'first': {
@@ -170,7 +186,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                     }
                 },
                 resolve: {
-                   appObj: getAppInfo
+                    appObj: getAppInfo
                 }
             })
             .state('app.appdetail.instance', {
@@ -226,7 +242,7 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
                         controller: 'appUpdateCtrl'
                     }
                 },
-                resolve:{
+                resolve: {
                     getAppConfig: updateConfig
                 }
             })
@@ -270,11 +286,11 @@ glanceApp.config(['$stateProvider',  '$urlRouterProvider','$interpolateProvider'
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
-}]);
+    }]);
 
 getAppInfo.$inject = ['gHttp', '$stateParams', 'Notification'];
 function getAppInfo(gHttp, $stateParams, Notification) {
-    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get().catch(function(code) {
+    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get().catch(function (code) {
         Notification.error(APP_CODE[code]);
     });
 }
@@ -296,12 +312,13 @@ function glanceInit(glanceUser, glanceHttp, $rootScope, gHttp) {
         $rootScope.isDemo = data["isDemo"];
         //GrowingIO
         if (RUNNING_ENV === "prod") {
-            (function(){ 
-                _vds.push(['setAccountId', '0edf12ee248505950b0a77b02d47c537']); 
-                _vds.push(['setCS1', 'user_id',  data["userId"].toString()]);
-                (function() {
-                    var vds = document.createElement('script'); 
-                    vds.type='text/javascript'; vds.async = true;
+            (function () {
+                _vds.push(['setAccountId', '0edf12ee248505950b0a77b02d47c537']);
+                _vds.push(['setCS1', 'user_id', data["userId"].toString()]);
+                (function () {
+                    var vds = document.createElement('script');
+                    vds.type = 'text/javascript';
+                    vds.async = true;
                     vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';
                     var s = document.getElementsByTagName('script')[0];
                     s.parentNode.insertBefore(vds, s);
