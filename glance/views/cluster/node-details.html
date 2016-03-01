@@ -112,7 +112,7 @@
                                 <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
                                   data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
                                 <button class="btn btn-xs btn-warning" 
-                                data-ng-show="statusMgr.nodes[node.id].status!==='terminated'"
+                                data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
                                 data-ng-click="repairService(service, 'restart')" data-demo-disable>重启</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
