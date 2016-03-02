@@ -346,7 +346,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         };
         tips[CLUSTER_STATUS.unknow] = {
             headText: '集群状态未知',
-            paragraphText: '以下主机失联，请连接主机查看。',
+            paragraphText: '以下主机不能正常工作，请连接主机查看。',
             firstButtonText: '知道了'
         };
         return tips[clusterStatus];
