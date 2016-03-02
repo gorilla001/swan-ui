@@ -10,7 +10,7 @@
     function dynamicBaseCtrl($scope, $rootScope, glanceHttp, $q, ClusterStatusMgr, gHttp) {
         $rootScope.show = 'home';
 
-        $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
+        $scope.statusMgr = new ClusterStatusMgr();
 
         var listClusterDataGetFromBackend;
 

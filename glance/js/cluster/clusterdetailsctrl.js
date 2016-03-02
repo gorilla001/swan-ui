@@ -11,8 +11,8 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
     $scope.showCreateNode = false;
 
     $scope.clusterLabels = {};
-
-    $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
+    
+    
     function getCurCluster() {
         gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
             $scope.cluster = data;
@@ -51,7 +51,12 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
 
         });
     }
-    getCurCluster();
+    
+    gHttp.Resource('cluster.versions').get().then(function (data) {
+        var latestVersion = data;
+        $scope.statusMgr = new ClusterStatusMgr(latestVersion);
+        getCurCluster();
+    })
     
     $scope.isShowUpgradeFailedMsg = true;
     

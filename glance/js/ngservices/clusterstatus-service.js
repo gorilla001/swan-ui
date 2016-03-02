@@ -81,7 +81,9 @@
             angular.forEach(this.clusters[clusterId].nodes, function(_val, nodeId) {
                 var node = this.nodes[nodeId];
                 this._nodeStatusInc(clusterId, node);
-                this._nodeOldVersionInc(clusterId, node);
+                if (this.latestVersion) {
+                    this._nodeOldVersionInc(clusterId, node);
+                }
             }.bind(this));
         }
         

@@ -13,7 +13,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
 
     var repairPromise;
 
-    $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
+    $scope.statusMgr = new ClusterStatusMgr();
     
     $scope.listCluster = function () {
         gHttp.Resource("cluster.clusters").get().then(function (data) {
