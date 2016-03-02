@@ -22,7 +22,7 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
     $scope.serviceViews = [];
     $('.charts').hide();
 
-    $scope.statusMgr = new ClusterStatusMgr($scope.latestVersion);
+    $scope.statusMgr = new ClusterStatusMgr();
     $scope.getCurNode = function () {
         gHttp.Resource('cluster.node', {cluster_id: $stateParams.clusterId,node_id: $stateParams.nodeId}).
             get().then(function (data) {

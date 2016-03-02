@@ -293,7 +293,6 @@ function glanceInit(glanceUser, glanceHttp, $rootScope, gHttp) {
         $rootScope.userName = data["userName"];
         $rootScope.userId = data["userId"];
         $rootScope.isSuperuser = data["isSuperuser"];
-        $rootScope.latestVersion = data["latestVersion"];
         $rootScope.isDemo = data["isDemo"];
         //GrowingIO
         if (RUNNING_ENV === "prod") {

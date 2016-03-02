@@ -62,6 +62,7 @@ BACKEND_URL = {
         
     cluster:  {
         clusters: "api/v3/clusters",
+        versions: "api/v3/clusters/versions",
         cluster: "api/v3/clusters/$cluster_id",
         nodeId: "api/v3/clusters/$cluster_id/new_node_identifier",
         nodes: "api/v3/clusters/$cluster_id/nodes",
