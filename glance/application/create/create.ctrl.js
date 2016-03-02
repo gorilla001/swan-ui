@@ -8,7 +8,7 @@
 
     CreateAppCtrl.$inject = [];
 
-    function ConfigAppCtrl() {
+    function CreateAppCtrl() {
         var self = this;
         ///
     }

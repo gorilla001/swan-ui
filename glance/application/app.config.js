@@ -5,7 +5,7 @@
 
     configure.$inject = ['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider'];
 
-    function configure($urlRouterProvider, $stateProvider, $locationProvider, $interpolateProvider) {
+    function configure($stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider) {
 
         $stateProvider
             .state('createapp', {
@@ -26,7 +26,7 @@
                     }
                 },
                 resolve: {
-                    listObj: listApps
+                    listObj: 'listApps'
                 }
             })
             .state('detail', {
@@ -39,7 +39,7 @@
                     }
                 },
                 resolve: {
-                    appObj: getApp
+                    appObj: 'getApp'
                 }
             })
             .state('detail.instance', {
@@ -86,7 +86,7 @@
                         controller: 'VersionAppCtrl as versionappctrl'
                     }
                 }
-            })
+            });
 
     }
 })();
