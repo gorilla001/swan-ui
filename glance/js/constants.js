@@ -91,12 +91,12 @@ BACKEND_URL = {
         downloadContext: "es/context/download"
     },
     app: {
-        userApps: '/api/v3/apps',
-        clusterApps: '/api/v3/clusters/$cluster_id/apps',
-        clusterApp: '/api/v3/clusters/$cluster_id/apps/$app_id',
-        appEvent: '/api/v3/clusters/$cluster_id/apps/$app_id/events',
-        appVersions: '/api/v3/clusters/$cluster_id/apps/$app_id/versions',
-        appVersion: '/api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id'
+        userApps: 'api/v3/apps',
+        clusterApps: 'api/v3/clusters/$cluster_id/apps',
+        clusterApp: 'api/v3/clusters/$cluster_id/apps/$app_id',
+        appEvent: 'api/v3/clusters/$cluster_id/apps/$app_id/events',
+        appVersions: 'api/v3/clusters/$cluster_id/apps/$app_id/versions',
+        appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id'
     }
         
 };
