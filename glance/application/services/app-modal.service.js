@@ -25,7 +25,7 @@
                 }
             })
             
-            return modalInstance;
+            return modalInstance.result;
         }
         
         _UpContainerCtrl.$inject = ['$uibModalInstance', 'instanceNum', 'clusterId', 'appId'];
@@ -33,13 +33,13 @@
         function _UpContainerCtrl($uibModalInstance, instanceNum, clusterId, appId) {
             var self = this;
             self.instanceNum = instanceNum;
-            this.updateContainer = function () {
+            self.updateContainer = function () {
                 appcurd.updateContainer({instances: self.instanceNum}, clusterId, appId).then(function () {
                 });
                 $uibModalInstance.close();
             };
             
-            this.cancel = function () {
+            self.cancel = function () {
                 $uibModalInstance.close();
             }
             

@@ -106,7 +106,7 @@
            删除操作
          */
         self.delete = function (clusterId, appId) {
-            appcurd.del(clusterId, appId)
+            appcurd.del(clusterId, appId);
         };
 
         /*
