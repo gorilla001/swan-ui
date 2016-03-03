@@ -19,11 +19,13 @@
             updateVersion: updateVersion,
             stopDeploy: stopDeploy,
             stopScaling: stopScaling,
+            reDeploy: reDeploy,
             updateContainerNum: updateContainerNum,
             modifyApp: modifyApp,
             listAppEvents: listAppEvents,
             listAppVersions: listAppVersions,
-            deleteAppVersion: deleteAppVersion
+            deleteAppVersion: deleteAppVersion,
+            listAppsStatus: listAppsStatus
 
         };
 
@@ -83,8 +85,14 @@
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
+        function reDeploy(data, clusterId, appId){
+            data.method = 'redeploy';
+
+            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
+        }
+
         function updateContainerNum(data, clusterId, appId){
-            data.method = 'update_container_num';
+            data.method = 'scale';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
@@ -103,6 +111,10 @@
 
         function deleteAppVersion(clusterId, appId, versionId){
             return gHttp.Resource('app.appVersion', {cluster_id: clusterId, app_id: appId, version_id: versionId}).delete();
+        }
+
+        function listAppsStatus(){
+            return gHttp.Resource('app.getAppsStatus').get();
         }
 
 

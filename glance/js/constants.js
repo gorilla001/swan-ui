@@ -96,7 +96,8 @@ BACKEND_URL = {
         clusterApp: 'api/v3/clusters/$cluster_id/apps/$app_id',
         appEvent: 'api/v3/clusters/$cluster_id/apps/$app_id/events',
         appVersions: 'api/v3/clusters/$cluster_id/apps/$app_id/versions',
-        appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id'
+        appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id',
+        getAppsStatus: "api/v3/apps/status"
     }
         
 };

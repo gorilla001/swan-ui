@@ -26,7 +26,7 @@
                     }
                 },
                 resolve: {
-                    listObj: 'listApps'
+                    listClusters: listClusters
                 }
             })
             .state('detail', {
@@ -88,5 +88,10 @@
                 }
             });
 
+    }
+
+    listClusters.$inject = ['gHttp'];
+    function listClusters(gHttp) {
+        return gHttp.Resource('cluster.clusters').get()
     }
 })();
