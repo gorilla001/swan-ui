@@ -28,6 +28,8 @@ APP_STATUS = {
     '10': "异常"
 };
 
+APP_INS_STATUS = APP_STATUS;
+
 APP_EVENTS_MSG = {
     ScaleApplication: "应用扩展操作",
     StartApplication: "应用部署操作",
@@ -141,8 +143,9 @@ BACKEND_URL = {
         appEvent: 'api/v3/clusters/$cluster_id/apps/$app_id/events',
         appVersions: 'api/v3/clusters/$cluster_id/apps/$app_id/versions',
         appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id',
-        listAppsStatus: "api/v3/apps/status",
-        getAppStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status"
+        appsStatus: "api/v3/apps/status",
+        appStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status",
+        appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks"
     }
 
 };

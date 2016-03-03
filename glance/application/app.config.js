@@ -48,7 +48,7 @@
                 views: {
                     'tabdetail': {
                         templateUrl: '/application/detail/instance.html',
-                        controller: 'InstanceAppCtrl as instanceappctrl'
+                        controller: 'InstanceAppCtrl as instanceAppCtrl'
                     }
                 }
             })

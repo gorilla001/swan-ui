@@ -26,7 +26,8 @@
             listAppVersions: listAppVersions,
             deleteAppVersion: deleteAppVersion,
             listAppsStatus: listAppsStatus,
-            getAppStatus: getAppStatus
+            getAppStatus: getAppStatus,
+            listAppInstances: listAppInstances
 
         };
 
@@ -115,11 +116,15 @@
         }
 
         function listAppsStatus(){
-            return gHttp.Resource('app.listAppsStatus').get({"loading": ""});
+            return gHttp.Resource('app.appsStatus').get({"loading": ""});
         }
 
         function getAppStatus(cluserId, appId){
-            return gHttp.Resource('app.getAppStatus', {cluster_id: cluserId, app_id: appId}).get();
+            return gHttp.Resource('app.appStatus', {cluster_id: cluserId, app_id: appId}).get();
+        }
+        
+        function listAppInstances(cluserId, appId){
+            return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get();
         }
 
 

@@ -1,0 +1,19 @@
+<div class="main-container-body">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>实例名称</th>
+            <th>状态</th>
+            <th>启动时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="instance in instanceAppCtrl.instances">
+            <td>实例{/$index + 1/} ({/instance.taskId/})</td>
+            <td>{/instanceAppCtrl.APP_INS_STATUS[instance.taskStatus]/}</td>
+            <td data-ng-if="instance.startTime!=='0001-01-01T00:00:00Z'">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td data-ng-if="instance.startTime==='0001-01-01T00:00:00Z'"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
