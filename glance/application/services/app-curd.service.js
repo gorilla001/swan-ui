@@ -47,7 +47,7 @@
         }
 
         function updateContainer(data, clusterId, appId) {
-            appservice.updateContainerNum(data, clusterId, appId)
+            return appservice.updateContainerNum(data, clusterId, appId)
                 .then(function (data) {
                     $state.reload();
                 })

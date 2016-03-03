@@ -37,14 +37,6 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
         $window.history.back();
     };
 
-    /*
-        扩展实例(公用)
-     */
-    $scope.upContainNum = function (instances) {
-        var data = {instances: instances};
-        appcurd.updateContainer(data, $rootScope.upContainerAppInfo.cluster_id, $rootScope.upContainerAppInfo.app_id)
-    };
-
     //set Notice Alert if has notice
     (function () {
         gHttp.Resource("auth.notice").get().then(function (data) {
