@@ -57,13 +57,13 @@
                     <td>{/configAppCtrl.portType[portInfo.type]/}</td>
                     <td>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
                     <td>
-                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 1" ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/portInfo.mapPort/}</p>
-                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 1" ng-repeat="proxyNode in configAppCtrl.proxyNodes">{/proxyNode.ip/}:{/portInfo.bindPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in configAppCtrl.gateWays">{/gateWay.ip/}:{/portInfo.bindPort/}</p>
                         <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 1">{/portInfo.uri/}</p>
-                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 1"  ng-repeat="proxyNode in proxyNodes">http://{/proxyNode.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 1"  ng-repeat="proxyNode in configAppCtrl.proxyNodes">http://{/proxyNode.ip/}:{/portInfo.bindPort/}</p>
                         <p ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 1">http://{/portInfo.uri/}</p>
-                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/portInfo.mapPort/}</p>
-                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && !portInfo.isUri "  ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in configAppCtrl.gateWays">http://{/gateWay.ip/}:{/portInfo.bindPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && !portInfo.isUri "  ng-repeat="gateWay in configAppCtrl.gateWays">{/gateWay.ip/}:{/portInfo.bindPort/}</p>
                     </td>
                 </tr>
                 </tbody>

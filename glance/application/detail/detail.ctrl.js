@@ -6,18 +6,17 @@
     angular.module('glance.app')
         .controller('DetailAppCtrl', DetailAppCtrl);
 
-    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd'];
+    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appModal', '$scope'];
 
-    function DetailAppCtrl(appInfo, appStatus, appcurd) {
+    function DetailAppCtrl(appInfo, appStatus, appcurd, appModal, $scope) {
         var self = this;
         ///
 
         self.APP_STATUS = APP_STATUS;
 
-        console.log("appInfo:",appInfo);
-        console.log("appStatus:",appStatus);
         self.appInfo = appInfo;
         self.appStatus = appStatus;
+        $scope.appStatus = appStatus;
 
         /*
          停止操作
@@ -48,6 +47,10 @@
          */
         self.delete = function (clusterId, appId) {
             appcurd.del(clusterId, appId)
+        };
+
+        self.openUpContainerModal = function (clusterId, appId, instanceNum) {
+            appModal.openUpContainerModal(instanceNum, clusterId, appId);
         };
 
     }
