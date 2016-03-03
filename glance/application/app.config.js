@@ -12,8 +12,8 @@
                 url: '/createapp',
                 views: {
                     '': {
-                        templateUrl: '/application/create/creat.html',
-                        controller: 'CreateAppCtrl as createappctrl'
+                        templateUrl: '/application/create/create.html',
+                        controller: 'CreateAppCtrl as createAppCtrl'
                     }
                 }
             })
