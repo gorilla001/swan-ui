@@ -16,7 +16,9 @@
 
         self.appInfo = appInfo;
         self.appStatus = appStatus;
+
         $scope.appStatus = appStatus;
+        $scope.appInfo = appInfo;
 
         var refreshInterval = 5000;
         var timeoutPromise = $timeout(refreshData, refreshInterval);
@@ -64,8 +66,10 @@
             if (!self.isDestroy) {
                 appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
                     self.appStatus = data;
+                    $scope.appStatus = data;
                     appservice.getApp($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
                         self.appInfo = data;
+                        $scope.appInfo = data;
                     });
                     $scope.$broadcast('refreshAppData');
                     timeoutPromise = $timeout(refreshData, refreshInterval);

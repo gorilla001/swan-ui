@@ -57,7 +57,7 @@
                 views: {
                     'tabdetail': {
                         templateUrl: '/application/detail/monitoring.html',
-                        controller: 'MonitorAppCtrl as monitorappctrl'
+                        controller: 'MonitorAppCtrl as monitorAppCtrl'
                     }
                 }
             })
