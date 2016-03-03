@@ -84,7 +84,7 @@
                 views: {
                     'tabdetail': {
                         templateUrl: '/application/detail/version.html',
-                        controller: 'VersionAppCtrl as versionappctrl'
+                        controller: 'VersionAppCtrl as versionAppCtrl'
                     }
                 }
             });

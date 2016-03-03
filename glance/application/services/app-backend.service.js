@@ -107,8 +107,9 @@
             return gHttp.Resource('app.appEvent', {cluster_id: clusterId, app_id: appId}).get({params: params});
         }
 
-        function listAppVersions(params, clusterId, appId){
-            return gHttp.Resource('app.appVersions', {cluster_id: clusterId, app_id: appId}).get({params: params});
+        function listAppVersions(params, clusterId, appId, loading){
+            return gHttp.Resource('app.appVersions', {cluster_id: clusterId, app_id: appId})
+                .get({params: params, 'loading': loading});
         }
 
         function deleteAppVersion(clusterId, appId, versionId){
