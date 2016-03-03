@@ -30,8 +30,8 @@
 
         };
 
-        function listApps(params){
-            return gHttp.Resource('app.userApps').get({params : params});
+        function listApps(params, loading){
+            return gHttp.Resource('app.userApps').get({params : params, "loading": loading});
         }
 
         function listClusterApps(params, clusterId){
@@ -115,7 +115,7 @@
         }
 
         function listAppsStatus(){
-            return gHttp.Resource('app.listAppsStatus').get();
+            return gHttp.Resource('app.listAppsStatus').get({"loading": ""});
         }
 
         function getAppStatus(cluserId, appId){

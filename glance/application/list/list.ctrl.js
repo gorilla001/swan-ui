@@ -20,6 +20,8 @@
         self.applist = [];
         self.showNothtingAlert = false;     //应用列表空标记
         self.APP_STATUS = APP_STATUS;
+        
+        self.isFirstLoad = true;
 
         self.appListTable = new ngTableParams($rootScope.appListParams, {
                 counts: [20, 50, 100], // custom page count
@@ -29,8 +31,11 @@
                 getData: function ($defer, params) {
 
                     $rootScope.appListParams = self.appListTable.parameters();
-
-                    appservice.listApps(dealParams(params.url()))
+                    var loading = "";
+                    if (self.isFirstLoad) {
+                        loading = "default";
+                    }
+                    appservice.listApps(dealParams(params.url()), loading)
                         .then(function (data) {
                             //If you remove when the current application of only one application,
                             //set new Page and Switch back page
@@ -56,7 +61,9 @@
                             }, function (res) {
 
                             });
-
+                            
+                            self.isFirstLoad = false;
+                            
                             reloadTable();
 
                         }, function (res) {
