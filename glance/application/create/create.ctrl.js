@@ -6,9 +6,25 @@
     angular.module('glance.app')
         .controller('CreateAppCtrl', CreateAppCtrl);
 
-    CreateAppCtrl.$inject = ['appservice', 'Notification', 'multiSelectConfig', '$scope', 'clusterBackendService'];
+    CreateAppCtrl.$inject = [
+        'appservice', 
+        'Notification', 
+        'multiSelectConfig', 
+        '$scope', 
+        'clusterBackendService', 
+        'appLabelService',
+        'appModal'
+    ];
 
-    function CreateAppCtrl(appservice, Notification, multiSelectConfig, $scope, clusterBackendService) {
+    function CreateAppCtrl(
+        appservice, 
+        Notification, 
+        multiSelectConfig, 
+        $scope, 
+        clusterBackendService, 
+        appLabelService,
+        appModal
+    ) {
         var self = this;
 
         self.form = {
@@ -23,6 +39,7 @@
             envs: [],
             imageName: '',
             imageVersion: '',
+            forceImage: false,
             netWork: '',
             constraints: []
         };
@@ -32,6 +49,56 @@
         listApps();
         listClusters();
 
+        self.multiSelect = {
+            labels: [],
+            selectedLabels: [],
+            nodes: [],
+            selectedNodes: [],
+            nodesWithLabels: {},
+            ip: [],
+            config: {
+                label: multiSelectConfig.setMultiConfig('全部选择', '清空', '恢复', '查询匹配词', '标签'),
+                node: multiSelectConfig.setMultiConfig('全部选择', '清空', '恢复', '查询匹配词', '主机 (默认随机)')
+            }
+        };
+
+        self.fetchClusterLabels = function() {
+            clusterBackendService.listCluster(self.form.cluster_id)
+                .then(function(cluster) {
+                    self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
+                    self.multiSelect.nodes = cluster.nodes;
+                });
+        };
+
+        // 标签主机多选框
+        self.tickItem = function(data) {
+            listNodesBySelectedLabels();
+        };
+
+        self.tickAllLabels = function() {
+            angular.extend(self.multiSelect.selectedLabels, self.multiSelect.labels);
+            self.multiSelect.selectedNodes = [];
+            self.multiSelect.nodes = [];
+            listNodesBySelectedLabels();
+        };
+
+        self.clearLabels = function() {
+            self.multiSelect.selectedLabels = [];
+            self.multiSelect.selectedNodes = [];
+            setTick(self.multiSelect.nodes, undefined);
+        };
+
+        self.tickAllNodes = function() {
+            angular.extend(self.multiSelect.selectedNodes, self.multiSelect.nodes);
+            setTick(self.multiSelect.selectedNodes, true);
+        };
+
+        self.clearNode = function() {
+            self.multiSelect.selectedNodes = [];
+            setTick(self.multiSelect.selectedNodes, true);
+        };
+
+        // 挂载点
         $scope.pushVolume = function() {
             var volume = {
                 hostPath: this.hostPath,
@@ -85,11 +152,15 @@
             self.form[key].splice(index, 1);
         };
 
-        self.create = function () {
+        // // 应用地址
+
+        self.createApp = function () {
             if(self.constraint) {
                 self.form.constraints = ['hostname', 'UNIQUE'];
             }
-            
+
+            var selectedNodesIps = listSelectedNodesIps();
+
             return appservice.createApp(self.form, self.form.cluster_id)
                 .then(function () {
                     Notification.success('应用' + self.form.name + '创建中！');
@@ -114,6 +185,29 @@
                         self.clusters.push({id: cluster.id, name: cluster.name});
                     });
                 });
+        }
+
+        function listNodesBySelectedLabels() {
+            return appLabelService.listNodesByLabelIds(self.multiSelect.selectedLabels, self.form.cluster_id)
+                .then(function(nodes) {
+                    self.multiSelect.nodes = nodes;
+                    self.multiSelect.selectedNodes = nodes;
+                    setTick(self.multiSelect.selectedNodes, true);
+                });
+        }
+
+        function listSelectedNodesIps() {
+            var ips = [];
+            angular.forEach(self.multiSelect.selectedNodes, function(node, index) {
+                ips.push(node.ip);
+            });
+            return ips;
+        }
+
+        function setTick(items, value) {
+            angular.forEach(items, function(item, index) {
+                item.tick = value;
+            });
         }
 
     }

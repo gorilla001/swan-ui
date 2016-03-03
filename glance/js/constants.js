@@ -123,6 +123,9 @@ BACKEND_URL = {
         labels: "api/v3/labels",
         nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels"
     },
+    label: {
+        nodes: "api/v3/clusters/$cluster_id/nodes"
+    },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",
         appmonit: "api/v1/metrics/cluster/$clusterID/app/$aliase"

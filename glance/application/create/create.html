@@ -21,7 +21,7 @@
 <section>
     <div class="main-container new-app">
         <div class="main-container-body">
-            <form class="form-horizontal" name="staticForm" data-ng-submit="createAppCtrl.create()">
+            <form class="form-horizontal" name="staticForm" data-ng-submit="createAppCtrl.createApp()">
                 <!-- 应用名称 -->
                 <div class="form-group">
                     <label class="col-md-2 control-label">
@@ -66,7 +66,7 @@
                                 data-ng-model="createAppCtrl.form.cluster_id"
                                 data-ng-options="cluster.id as cluster.name for cluster in createAppCtrl.clusters"
                                 data-required="required"
-                                data-ng-change="createAppCtrl.fetchClusterLabelsAndNodesIps()"
+                                data-ng-change="createAppCtrl.fetchClusterLabels()"
                                 >
                             <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
                             <option data-ng-repeat="cluster in createAppCtrl.clusters">{/cluster.name/}</option>
@@ -105,11 +105,11 @@
                             data-required="required"
                             placeholder="版本号"
                         >
-                        <!-- <label style="margin-top: 12px; font-weight: normal;" uib-popover="每次重启应用都会获取最新镜像"
+                        <label style="margin-top: 12px; font-weight: normal;" uib-popover="每次重启应用都会获取最新镜像"
                                popover-trigger="mouseenter" popover-placement="right">
-                            <input type="checkbox" data-ng-model="forceImage">
+                            <input type="checkbox" data-ng-model="createAppCtrl.form.forceImage">
                             强制拉取镜像
-                        </label> -->
+                        </label>
                     </div>
 
                     <div data-ng-class="{ 'has-error' : staticForm.imageVersion.$invalid && !staticForm.imageVersion.$pristine}">
@@ -146,33 +146,33 @@
 
                     <div class="col-md-2">
                         <isteven-multi-select
-                                input-model="createAppCtrl.multiData.labels"
-                                output-model="createAppCtrl.multiData.selectedLables"
+                                input-model="createAppCtrl.multiSelect.labels"
+                                output-model="createAppCtrl.multiSelect.selectedLabels"
                                 button-label="name"
                                 item-label="name"
                                 tick-property="tick"
                                 helper-elements="all none filter"
                                 max-height="200px"
-                                translation="createAppCtrl.multiData.config.label"
+                                translation="createAppCtrl.multiSelect.config.label"
                                 on-item-click="createAppCtrl.tickItem(data)"
                                 on-select-all="createAppCtrl.tickAllLabels()"
-                                on-select-none="createAppCtrl.tickNoLabel()"
+                                on-select-none="createAppCtrl.clearLabels()"
                                 max-labels="2"
                         >
                         </isteven-multi-select>
                     </div>
                     <div class="col-md-3">
                         <isteven-multi-select
-                                input-model="createAppCtrl.multiData.nodes"
-                                output-model="createAppCtrl.multiData.selectedNodes"
+                                input-model="createAppCtrl.multiSelect.nodes"
+                                output-model="createAppCtrl.multiSelect.selectedNodes"
                                 button-label="ip"
                                 item-label="ip"
                                 tick-property="tick"
                                 helper-elements="all none filter"
                                 max-height="200px"
-                                translation="createAppCtrl.multiData.config.node"
+                                translation="createAppCtrl.multiSelect.config.node"
                                 on-select-all="createAppCtrl.tickAllNodes()"
-                                on-select-none="createAppCtrl.tickNoItems()"
+                                on-select-none="createAppCtrl.clearNode()"
                                 max-labels="2"
                         >
                         </isteven-multi-select>
@@ -284,11 +284,13 @@
                 <div class="collapse" id="advancedSettings">
                     <div class="well">
                         <!-- 应用地址 -->
-                        <!-- <div class="item-header">
+                        <div class="item-header">
                             <h4>应用地址</h4>
                         </div>
                         <div class="form-inline" style="margin-bottom: 15px;">
-                            <button type="button" class="btn btn-info btn-sm" data-ng-click="showAppAdressModal()"> 添加应用地址 </button>
+                            <button type="button" class="btn btn-info btn-sm"
+                            data-ng-click="createAppCtrl.openPortModule()"
+                            > 添加应用地址 </button>
                         </div>
 
                         <div class="table-responsive">
@@ -338,7 +340,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div> -->
+                        </div>
 
                         <!-- 环境变量 -->
                         <div class="item-header">
