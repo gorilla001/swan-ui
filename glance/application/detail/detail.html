@@ -17,7 +17,7 @@
                     <h3 class="ng-binding">{/detailAppCtrl.appInfo.appName/}</h3>
                     <dl>
                         <dt>最近更新时间：</dt>
-                        <dd>{/detailAppCtrl.appInfo.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
+                        <dd>{/detailAppCtrl.appStatus.updated_at | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
                         <dt>应用状态：</dt>
                         <dd>{/detailAppCtrl.APP_STATUS[detailAppCtrl.appStatus.status]/}</dd>
                     </dl>
@@ -51,7 +51,7 @@
         <header class="clearfix main-container-header">
             <ul class="nav nav-tabs">
                 <li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a
-                        data-ui-sref="detail.config({appId:appInfo.appId})"
+                        data-ui-sref="detail.config({cluster_id: detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})"
                         data-ui-sref-opts="{reload: true}">配置</a></li>
                 <li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a
                         data-ui-sref="detail.version({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">版本</a>
@@ -63,7 +63,7 @@
                         data-ui-sref="detail.instance({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">实例</a>
                 </li>
                 <li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a
-                        data-ui-sref="detail.event({appId:appInfo.appId})"
+                        data-ui-sref="detail.event({cluster_id: detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})"
                         data-ui-sref-opts="{reload: true}">事件</a></li>
             </ul>
         </header>

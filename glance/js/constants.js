@@ -1,6 +1,6 @@
 MESSAGE_CODE = {
-    success:0,
-    dataInvalid:10001
+    success: 0,
+    dataInvalid: 10001
 };
 
 APP_CODE = {
@@ -26,6 +26,36 @@ APP_STATUS = {
     '8': "撤销中",
     '9': "失联",
     '10': "异常"
+};
+
+APP_EVENTS_MSG = {
+    ScaleApplication: "应用扩展操作",
+    StartApplication: "应用部署操作",
+    StopApplication: "应用停止操作",
+    TASK_RUNNING: "实例正在运行",
+    TASK_FINISHED: "实例运行成功",
+    TASK_FAILED: "实例启动失败",
+    TASK_KILLED: "实例已被杀死",
+    TASK_STAGING: "实例启动中",
+    TASK_LOST: "实例已经丢失",
+    StartApp: "应用启动",
+    StopApp: "应用停止",
+    DeployApp: "应用部署",
+    UpdateApp: "应用更新",
+    UpdateAppNum: "应用扩展",
+    CancelScale: "取消应用扩展",
+    CancelDeployment: "取消应用部署",
+    RestartApplication: "应用重启",
+    Redeploy: "应用重新部署"
+};
+
+APP_EVENTS_TYPE = {
+    status_update_event: "实例状态更新",
+    deployment_success: "部署成功",
+    deployment_failed: "部署失败",
+    deployment_step_success: "部署操作成功",
+    deployment_step_failure: "部署操作失败",
+    AppOperation: "应用操作"
 };
 
 SUB_INFOTYPE = {
@@ -76,9 +106,9 @@ BACKEND_URL = {
         customerservice: "api/v3/customerservice_url",
         password: 'api/v3/user/password',
         notice: 'api/v3/notice'
-        },
-        
-    cluster:  {
+    },
+
+    cluster: {
         clusters: "api/v3/clusters",
         versions: "api/v3/clusters/versions",
         cluster: "api/v3/clusters/$cluster_id",
@@ -87,13 +117,13 @@ BACKEND_URL = {
         node: "api/v3/clusters/$cluster_id/nodes/$node_id",
         nodeMonitor: "api/v3/clusters/$cluster_id/nodes/$node_id/metrics",
         service: "api/v3/clusters/$cluster_id/nodes/$node_id/services/$service_name",
-        
+
         labels: "api/v3/labels",
         nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels"
     },
     metrics: {
         getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",
-        appmonit:"api/v1/metrics/cluster/$clusterID/app/$aliase"
+        appmonit: "api/v1/metrics/cluster/$clusterID/app/$aliase"
     },
     ws: {
         subscribe: "streaming/glance/$token"
@@ -114,5 +144,5 @@ BACKEND_URL = {
         listAppsStatus: "api/v3/apps/status",
         getAppStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status"
     }
-        
+
 };

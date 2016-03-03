@@ -75,7 +75,7 @@
                 views: {
                     'tabdetail': {
                         templateUrl: '/application/detail/event.html',
-                        controller: 'EventAppCtrl as eventappctrl'
+                        controller: 'EventAppCtrl as eventAppCtrl'
                     }
                 }
             })

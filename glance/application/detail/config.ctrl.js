@@ -29,23 +29,25 @@
             HOST: "HOST 模式"
         };
 
-        gHttp.Resource('cluster.cluster', {cluster_id: $scope.appStatus.cid}).get().then(function (data) {
-            for (var i = 0; i < data.nodes.length; i++) {
-                if (data.nodes[i].attributes.length) {
-                    for (var j = 0; j < data.nodes[i].attributes.length; j++) {
-                        if (data.nodes[i].attributes[j].attribute === 'gateway') {
-                            self.gateWays.push(data.nodes[i]);
-                        }
+        listGateAndProxy();
 
-                        if (data.nodes[i].attributes[j].attribute === 'proxy') {
-                            self.proxyNodes.push(data.nodes[i]);
+        function listGateAndProxy() {
+            gHttp.Resource('cluster.cluster', {cluster_id: $scope.appStatus.cid}).get().then(function (data) {
+                for (var i = 0; i < data.nodes.length; i++) {
+                    if (data.nodes[i].attributes.length) {
+                        for (var j = 0; j < data.nodes[i].attributes.length; j++) {
+                            if (data.nodes[i].attributes[j].attribute === 'gateway') {
+                                self.gateWays.push(data.nodes[i]);
+                            }
+
+                            if (data.nodes[i].attributes[j].attribute === 'proxy') {
+                                self.proxyNodes.push(data.nodes[i]);
+                            }
                         }
                     }
                 }
-            }
+            })
+        }
 
-            console.log(self.proxyNodes);
-            console.log(self.gateWays)
-        })
     }
 })();
