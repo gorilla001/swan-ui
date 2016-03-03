@@ -3,8 +3,8 @@
 
     angular.module('glance.utils').factory('gHttp', gHttp);
 
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification'];
-    function gHttp(utils, $q, $rootScope, $http, Notification) {
+    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state'];
+    function gHttp(utils, $q, $rootScope, $http, Notification, $state) {
         var token;
 
         if (!$rootScope.loadings) {

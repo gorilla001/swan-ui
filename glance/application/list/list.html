@@ -21,7 +21,7 @@
                 <tbody>
                 <tr ng-repeat="app in listappctrl.applist">
                     <td data-title="'应用名称'" sortable="'name'"><a href="#"
-                                                                 data-ui-sref="app.appdetail.config({appId:app.id})">{/app.appName/}</a>
+                                                                 data-ui-sref="detail.config({cluster_id: app.cid ,app_id: app.id})">{/app.appName/}</a>
                     </td>
                     <td data-title="'当前状态'">{/listappctrl.APP_STATUS[listappctrl.appListStatus[app.id].status]/}</td>
                     <td data-title="'更新时间'" sortable="'updated'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>

@@ -1,0 +1,93 @@
+<div class="main-container-body server-detail app-config">
+    <div class="form-horizontal">
+        <div>
+            <dl>
+                <dt>镜像地址：</dt>
+                <dd>{/detailAppCtrl.appInfo.imageName/} <span data-ng-show="detailAppCtrl.appInfo.forceImage">(强制拉取镜像)</span></dd>
+            </dl>
+            <dl>
+                <dt>镜像版本：</dt>
+                <dd>{/detailAppCtrl.appInfo.imageVersion/}</dd>
+            </dl>
+            <dl>
+                <dt>容器规格：</dt>
+                <dd>CPU: {/detailAppCtrl.appInfo.cpus/} 内存: {/detailAppCtrl.appInfo.mem/}MB</dd>
+            </dl>
+            <dl>
+                <dt>容器个数：</dt>
+                <dd ng-show="detailAppCtrl.appInfo.tasks && detailAppCtrl.appInfo.tasks != detailAppCtrl.appInfo.instances">{/detailAppCtrl.appInfo.tasks/}/{/detailAppCtrl.appInfo.instances/}<span ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
+                <dd ng-show="!detailAppCtrl.appInfo.tasks || detailAppCtrl.appInfo.tasks == detailAppCtrl.appInfo.instances">{/detailAppCtrl.appInfo.instances/}<span ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
+            </dl>
+            <dl>
+                <dt>应用模式：</dt>
+                <dd>{/configAppCtrl.networkText[detailAppCtrl.appInfo.network]/}</dd>
+            </dl>
+            <dl ng-show="detailAppCtrl.appInfo.iplist.length">
+                <dt>所在主机地址：</dt>
+                <dd><span ng-repeat="ip in detailAppCtrl.appInfo.iplist">{/ip/} &nbsp; </span></dd>
+            </dl>
+            <h4 ng-show="detailAppCtrl.appInfo.volumes.length"><span>挂载路径</span></h4>
+            <table class="table table-striped table-bordered" ng-show="detailAppCtrl.appInfo.volumes.length">
+                <thead>
+                <tr>
+                    <th>主机路径</th>
+                    <th>容器路径</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="volumeInfo in detailAppCtrl.appInfo.volumes">
+                    <td>{/volumeInfo.hostPath/}</td>
+                    <td>{/volumeInfo.containerPath/}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 ng-show="detailAppCtrl.appInfo.ports.length"><span>应用地址</span></h4>
+            <table class="table table-striped table-bordered" ng-show="detailAppCtrl.appInfo.ports.length">
+                <thead>
+                <tr>
+                    <th>应用端口</th>
+                    <th>类型</th>
+                    <th>协议</th>
+                    <th>地址</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="portInfo in detailAppCtrl.appInfo.ports">
+                    <td>{/portInfo.appPort/}</td>
+                    <td>{/configAppCtrl.portType[portInfo.type]/}</td>
+                    <td>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
+                    <td>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 1" ng-repeat="proxyNode in proxyNodes">{/proxyNode.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && portInfo.isUri === 1">{/portInfo.uri/}</p>
+                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 1"  ng-repeat="proxyNode in proxyNodes">http://{/proxyNode.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 1">http://{/portInfo.uri/}</p>
+                        <p ng-show="portInfo.protocol === 2 && portInfo.type === 2 && portInfo.isUri === 2" ng-repeat="gateWay in gateWays">http://{/gateWay.ip/}:{/portInfo.mapPort/}</p>
+                        <p ng-show="portInfo.protocol === 1 && portInfo.type === 2 && !portInfo.isUri "  ng-repeat="gateWay in gateWays">{/gateWay.ip/}:{/portInfo.mapPort/}</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 ng-show=" detailAppCtrl.appInfo.envs.length"><span>环境变量</span></h4>
+            <table class="table table-striped table-bordered" ng-show=" detailAppCtrl.appInfo.envs.length">
+                <thead>
+                <tr>
+                    <th>KEY</th>
+                    <th>VALUE</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="envInfo  in  detailAppCtrl.appInfo.envs | orderBy: 'key'">
+                    <td>{/envInfo.key/}</td>
+                    <td>{/envInfo.value/}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4 ng-show=" detailAppCtrl.appInfo.cmd"><span>启动命令</span></h4>
+            <dl ng-show=" detailAppCtrl.appInfo.cmd">
+                <dt>启动命令：</dt>
+                <dd>{/ detailAppCtrl.appInfo.cmd/}</dd>
+            </dl>
+        </div>
+    </div>
+</div>

@@ -35,11 +35,12 @@
                 views: {
                     '': {
                         templateUrl: '/application/detail/detail.html',
-                        controller: 'DetailAppCtrl as detailappctrl'
+                        controller: 'DetailAppCtrl as detailAppCtrl'
                     }
                 },
                 resolve: {
-                    appObj: 'getApp'
+                    appInfo: getAppInfo,
+                    appStatus: getAppStatus
                 }
             })
             .state('detail.instance', {
@@ -65,7 +66,7 @@
                 views: {
                     'tabdetail': {
                         templateUrl: '/application/detail/config.html',
-                        controller: 'ConfigAppCtrl as configappctrl'
+                        controller: 'ConfigAppCtrl as configAppCtrl'
                     }
                 }
             })
@@ -93,5 +94,15 @@
     listClusters.$inject = ['gHttp'];
     function listClusters(gHttp) {
         return gHttp.Resource('cluster.clusters').get()
+    }
+
+    getAppInfo.$inject = ['appservice', '$stateParams'];
+    function getAppInfo(appservice, $stateParams) {
+        return appservice.getApp($stateParams.cluster_id, $stateParams.app_id)
+    }
+
+    getAppStatus.$inject = ['appservice', '$stateParams'];
+    function getAppStatus(appservice, $stateParams) {
+        return appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id)
     }
 })();

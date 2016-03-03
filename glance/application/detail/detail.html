@@ -1,0 +1,73 @@
+<div class="page-header">
+    <h1 class="pull-left">应用详情</h1>
+</div>
+<ol class="breadcrumb">
+    <li>
+        <a data-ui-sref="list">应用管理</a>
+    </li>
+    <li>
+        应用详情
+    </li>
+</ol>
+<section>
+    <div>
+        <div class="app-detail-header">
+            <div class="main-container">
+                <div class="main-container-body">
+                    <h3 class="ng-binding">{/detailAppCtrl.appInfo.appName/}</h3>
+                    <dl>
+                        <dt>最近更新时间：</dt>
+                        <dd>{/detailAppCtrl.appInfo.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
+                        <dt>应用状态：</dt>
+                        <dd>{/detailAppCtrl.APP_STATUS[detailAppCtrl.appStatus.status]/}</dd>
+                    </dl>
+                    <div class="btn-group btn-group-toggle">
+                        <button data-ng-disabled="!detailAppCtrl.appStatus.status" aria-expanded="false" aria-haspopup="true"
+                                data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li data-ng-show="detailAppCtrl.appStatus.status == '3'"><a href="#"
+                                                                        data-ng-click="detailAppCtrl.start(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">启动</a>
+                            </li>
+                            <li data-ng-show="detailAppCtrl.appStatus.status =='2'"><a href="#"
+                                                                       data-ng-click="detailAppCtrl.stop(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">停止</a>
+                            </li>
+                            <li data-ng-hide="detailAppCtrl.appStatus.status == 'undefined' || detailAppCtrl.appStatus.status == '5'"><a
+                                    data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)" href="#">删除</a></li>
+                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a
+                                    href="#">扩展</a></li>
+                            <li data-ng-show="detailAppCtrl.appStatus.status == '9'"><a
+                                    data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
+                                    href="#">恢复</a></li>
+                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a>更新</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container"> <!-- Only required for left/right tabs -->
+        <header class="clearfix main-container-header">
+            <ul class="nav nav-tabs">
+                <li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a
+                        data-ui-sref="detail.config({appId:appInfo.appId})"
+                        data-ui-sref-opts="{reload: true}">配置</a></li>
+                <li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a
+                        data-ui-sref="detail.version({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">版本</a>
+                </li>
+                <li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a
+                        data-ui-sref="detail.monitoring({appId:appInfo.appId})"
+                        data-ui-sref-opts="{reload: true}">监控</a></li>
+                <li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a
+                        data-ui-sref="detail.instance({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">实例</a>
+                </li>
+                <li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a
+                        data-ui-sref="detail.event({appId:appInfo.appId})"
+                        data-ui-sref-opts="{reload: true}">事件</a></li>
+            </ul>
+        </header>
+        <div data-ui-view="tabdetail" class="tab-content">
+        </div>
+    </div>
+</section>

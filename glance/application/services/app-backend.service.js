@@ -25,7 +25,8 @@
             listAppEvents: listAppEvents,
             listAppVersions: listAppVersions,
             deleteAppVersion: deleteAppVersion,
-            listAppsStatus: listAppsStatus
+            listAppsStatus: listAppsStatus,
+            getAppStatus: getAppStatus
 
         };
 
@@ -114,7 +115,11 @@
         }
 
         function listAppsStatus(){
-            return gHttp.Resource('app.getAppsStatus').get();
+            return gHttp.Resource('app.listAppsStatus').get();
+        }
+
+        function getAppStatus(cluserId, appId){
+            return gHttp.Resource('app.getAppStatus', {cluster_id: cluserId, app_id: appId}).get();
         }
 
 
