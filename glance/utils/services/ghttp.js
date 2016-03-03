@@ -76,7 +76,11 @@
             };
 
             Resource.prototype.req = function (method, options) {
-                angular.extend(this.options, options);
+                angular.forEach(options, function (value, key) {
+                    if (value !== undefined) {
+                        this.options[key] = value;
+                    }
+                }.bind(this));
                 var headers = {
                     'Content-Type': 'application/json; charset=UTF-8'
                 };

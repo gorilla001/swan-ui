@@ -33,7 +33,7 @@
                     $rootScope.appListParams = self.appListTable.parameters();
                     var loading = "";
                     if (self.isFirstLoad) {
-                        loading = "default";
+                        loading = undefined;
                     }
                     appservice.listApps(dealParams(params.url()), loading)
                         .then(function (data) {

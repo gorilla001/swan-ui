@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('DetailAppCtrl', DetailAppCtrl);
 
-    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appModal', '$scope'];
+    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', 'appModal', '$scope', "$stateParams", "$timeout"];
 
-    function DetailAppCtrl(appInfo, appStatus, appcurd, appModal, $scope) {
+    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, appModal, $scope, $stateParams, $timeout) {
         var self = this;
         ///
 
@@ -18,6 +18,13 @@
         self.appStatus = appStatus;
         $scope.appStatus = appStatus;
 
+        var refreshInterval = 5000;
+        var timeoutPromise = $timeout(refreshData, refreshInterval);
+        
+        $scope.$on('$destroy', function () {
+            self.isDestroy = true;
+            $timeout.cancel(timeoutPromise);
+        });
         /*
          停止操作
          */
@@ -52,6 +59,21 @@
         self.openUpContainerModal = function (clusterId, appId, instanceNum) {
             appModal.openUpContainerModal(instanceNum, clusterId, appId);
         };
+        
+        function refreshData() {
+            if (!self.isDestroy) {
+                appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
+                    self.appStatus = data;
+                    appservice.getApp($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
+                        self.appInfo = data;
+                    });
+                    $scope.$broadcast('refreshAppData');
+                    timeoutPromise = $timeout(refreshData, refreshInterval);
+                }).catch(function() {
+                    timeoutPromise = $timeout(refreshData, refreshInterval);
+                })
+            }
+        }
 
     }
 })();

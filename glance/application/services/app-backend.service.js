@@ -47,8 +47,8 @@
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).delete();
         }
 
-        function getApp(clusterId, appId){
-            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).get();
+        function getApp(clusterId, appId, loading){
+            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
 
         function rollbackApp(data, clusterId, appId){
@@ -119,12 +119,12 @@
             return gHttp.Resource('app.appsStatus').get({"loading": ""});
         }
 
-        function getAppStatus(cluserId, appId){
-            return gHttp.Resource('app.appStatus', {cluster_id: cluserId, app_id: appId}).get();
+        function getAppStatus(cluserId, appId, loading){
+            return gHttp.Resource('app.appStatus', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
         
-        function listAppInstances(cluserId, appId){
-            return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get();
+        function listAppInstances(cluserId, appId, loading){
+            return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
 
 

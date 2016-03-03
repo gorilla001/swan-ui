@@ -15,14 +15,14 @@
         
         $rootScope.appTabFlag = "appInstance";
         
-        initInstances();
+        refreshInstances();
         
         $scope.$on('refreshAppData', function() {
-            initInstances();
+            refreshInstances("");
         });
 
-        function initInstances() {
-            appservice.listAppInstances($stateParams.cluster_id, $stateParams.app_id).then(function(data){
+        function refreshInstances(loading) {
+            appservice.listAppInstances($stateParams.cluster_id, $stateParams.app_id, loading).then(function(data){
                 self.instances = data;
             }).catch(function (data) {
 //                Notification.error('获取实例失败: ' + $scope.addCode[data.code]);
