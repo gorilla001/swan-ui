@@ -14,6 +14,20 @@ APP_CODE = {
     999: "网络异常"
 };
 
+APP_STATUS = {
+    'undefined': "加载中",
+    '1': "部署中",
+    '2': "运行中",
+    '3': "已停止",
+    '4': "停止中 ",
+    '5': "删除中",
+    '6': "扩展中",
+    '7': "启动中",
+    '8': "撤销中",
+    '9': "失联",
+    '10': "异常"
+};
+
 SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",
     nodeMetric: "NodeMetric",
