@@ -12,7 +12,7 @@
                 url: '/app/create',
                 views: {
                     '': {
-                        templateUrl: '/application/create/create.html',
+                        templateUrl: '/application/createupdate/create-update.html',
                         controller: 'CreateAppCtrl as createAppCtrl'
                     }
                 },
@@ -25,7 +25,7 @@
                 url: '/app/:cluster_id/:app_id/update',
                 views: {
                     '': {
-                        templateUrl: '/application/create/create.html',
+                        templateUrl: '/application/createupdate/create-update.html',
                         controller: 'CreateAppCtrl as createAppCtrl',
                     }
                 },
