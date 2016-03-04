@@ -28,7 +28,10 @@ APP_STATUS = {
     '10': "异常"
 };
 
-APP_INS_STATUS = APP_STATUS;
+APP_INS_STATUS = {
+    '1': "运行中",
+    '2': "部署中"
+};;
 
 APP_EVENTS_MSG = {
     ScaleApplication: "应用扩展操作",
@@ -147,6 +150,7 @@ BACKEND_URL = {
         appsStatus: "api/v3/apps/status",
         appStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status",
         appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks",
+        ports: "api/v3/clusters/$cluster_id/ports"
     }
 
 };
