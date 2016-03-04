@@ -1,19 +1,19 @@
 (function () {
     'use strict';
     angular.module('glance.utils')
-        .factory('utilsModal', utilsModal);
+        .factory('confirmModal', confirmModal);
 
-    utilsModal.$inject = ['$uibModal'];
+    confirmModal.$inject = ['$uibModal'];
 
-    function utilsModal($uibModal) {
+    function confirmModal($uibModal) {
         
         return {
-            openConfirmModal: openConfirmModal
+            open: open
         }
         
-        function openConfirmModal(content) {
+        function open(content) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/utils/common_views/confirmModal.html',
+                templateUrl: '/utils/modals/confirm.html',
                 controller: _ConfirmCtrl,
                 controllerAs: 'confirmCtrl',
                 resolve: {

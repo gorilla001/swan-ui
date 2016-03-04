@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('VersionAppCtrl', VersionAppCtrl);
 
-    VersionAppCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Notification', 'utilsModal', 'appservice'];
+    VersionAppCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'Notification', 'confirmModal', 'appservice'];
 
-    function VersionAppCtrl($rootScope, $scope, $stateParams, Notification, utilsModal, appservice) {
+    function VersionAppCtrl($rootScope, $scope, $stateParams, Notification, confirmModal, appservice) {
         var self = this;
         ///
         $rootScope.appTabFlag = 'appVersion';
@@ -36,7 +36,7 @@
         };
 
         self.deleteVersion = function (versionId) {
-            utilsModal.openConfirmModal('您确定要删除该版本吗？').then(function () {
+            confirmModal.open('您确定要删除该版本吗？').then(function () {
                 appservice.deleteAppVersion($stateParams.cluster_id, $stateParams.app_id, versionId)
                     .then(function() {
                         getImageVersions()

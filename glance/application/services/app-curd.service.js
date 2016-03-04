@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .factory('appcurd', appcurd);
 
-    appcurd.$inject = ['Notification', 'appservice', '$state', 'utilsModal'];
+    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal'];
 
-    function appcurd(Notification, appservice, $state, utilsModal) {
+    function appcurd(Notification, appservice, $state, confirmModal) {
         return {
             stop: stop,
             start: start,
@@ -33,7 +33,7 @@
         }
 
         function del(clusterId, appId) {
-            utilsModal.openConfirmModal("是否确认删除应用？").then(function () {
+            confirmModal.open("是否确认删除应用？").then(function () {
                 appservice.deleteApp(clusterId, appId)
                 .then(function (data) {
                     $state.go('list', null, {reload: true});

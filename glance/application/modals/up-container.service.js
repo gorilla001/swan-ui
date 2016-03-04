@@ -4,18 +4,18 @@
 (function () {
     'use strict';
     angular.module('glance.app')
-        .factory('appModal', appModal);
+        .factory('upContainerModal', upContainerModal);
 
-    appModal.$inject = ['$uibModal', 'appcurd'];
+    upContainerModal.$inject = ['$uibModal', 'appcurd'];
 
-    function appModal($uibModal, appcurd) {
+    function upContainerModal($uibModal, appcurd) {
         return {
-            openUpContainerModal: openUpContainerModal
+            open: open
         };
 
-        function openUpContainerModal(instanceNum, clusterId, appId) {
+        function open(instanceNum, clusterId, appId) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/application/common_app_views/upContainerModal.html',
+                templateUrl: '/application/modals/up-container.html',
                 controller: _UpContainerCtrl,
                 controllerAs: 'upContainerCtrl',
                 resolve: {
