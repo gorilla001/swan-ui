@@ -137,8 +137,8 @@ BACKEND_URL = {
         nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels"
     },
     metrics: {
-        getClusterMonitor: "api/v1/metrics/cluster/$cluster_id",
-        appmonit: "api/v1/metrics/cluster/$clusterID/app/$aliase"
+        getClusterMonitor: "api/v3/metrics/clusters/$cluster_id",
+        appmonit: "api/v3/metrics/clusters/$clusterID/apps/$aliase"
     },
     ws: {
         subscribe: "streaming/glance/$token"

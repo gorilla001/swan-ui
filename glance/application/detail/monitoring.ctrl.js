@@ -23,7 +23,7 @@
         function initMonitor() {
             gHttp.Resource('metrics.appmonit', {
                 clusterID: $scope.appInfo.cid,
-                aliase: $scope.appInfo.aliase
+                aliase: $scope.appInfo.alias
             }).get({loading: ''}).then(function (data) {
                 self.errorCode = 0;
                 self.cpuUsedCores = 0;
