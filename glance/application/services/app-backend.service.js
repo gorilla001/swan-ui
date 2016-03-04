@@ -27,7 +27,8 @@
             deleteAppVersion: deleteAppVersion,
             listAppsStatus: listAppsStatus,
             getAppStatus: getAppStatus,
-            listAppInstances: listAppInstances
+            listAppInstances: listAppInstances,
+            listClusterAllApps: listClusterAllApps
 
         };
 
@@ -126,6 +127,10 @@
         
         function listAppInstances(cluserId, appId, loading){
             return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
+        }
+
+        function listClusterAllApps(cluserId, loading){
+            return gHttp.Resource('app.clusterAllApps', {cluster_id: cluserId}).get({'loading': loading});
         }
 
 

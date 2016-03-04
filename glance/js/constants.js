@@ -139,13 +139,14 @@ BACKEND_URL = {
     app: {
         userApps: 'api/v3/apps',
         clusterApps: 'api/v3/clusters/$cluster_id/apps',
+        clusterAllApps: "api/v3/clusters/$cluster_id/allapps",
         clusterApp: 'api/v3/clusters/$cluster_id/apps/$app_id',
         appEvent: 'api/v3/clusters/$cluster_id/apps/$app_id/events',
         appVersions: 'api/v3/clusters/$cluster_id/apps/$app_id/versions',
         appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id',
         appsStatus: "api/v3/apps/status",
         appStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status",
-        appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks"
+        appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks",
     }
 
 };

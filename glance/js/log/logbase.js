@@ -3,9 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp'];
+logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice'];
 
-function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig, gHttp) {
+function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig, gHttp, appservice) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
     $scope.logDownloadToplimit = LOG.logDownloadToplimit;
@@ -33,21 +33,18 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         }
     });
 
-    $scope.getNodePorts = function (appAliase, clusterId) {
-        if (appAliase && clusterId) {
-            glanceHttp.ajaxGet(["app.getNodePorts", {
-                cluster_id: clusterId,
-                clusterId: clusterId,
-                app_aliase: appAliase
-            }], function (data) {
-                $scope.nodes = data.data;
+    $scope.getNodePorts = function (appId, clusterId) {
+        if (appId && clusterId) {
+            appservice.listAppInstances(clusterId, appId, '').then(function(data){
+                console.log(data);
+                $scope.nodes = data;
 
                 var tempNodesInfo = [];
                 angular.forEach($scope.nodes, function (data, index, array) {
                     tempNodesInfo.push({
-                        ip: data.Ip,
-                        maker: data.Ip,
-                        name: "实例" + (index + 1) + "(" + data.Ip + ")",
+                        ip: data.taskId,
+                        maker: data.taskId,
+                        name: "实例" + (index + 1) + "(" + data.taskId + ")",
                         ticked: false
                     });
                 });
@@ -57,8 +54,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     };
 
     $scope.getAppOptions = function (clusterId) {
-        glanceHttp.ajaxGet(['app.options', {cluster_id: clusterId}], function (data) {
-            $scope.options = data.data;
+        appservice.listClusterAllApps(clusterId, '').then(function(data){
+            $scope.options = data;
         });
     };
 
