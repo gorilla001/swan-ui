@@ -13,7 +13,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
     $scope.clusterLabels = {};
     
     
-    function getCurCluster() {
+    $scope.getCurCluster = function () {
         gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
             $scope.cluster = data;
             $scope.clusterLabels = $scope.collectClusterLabels(data.nodes);
@@ -24,6 +24,7 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
             }
             $scope.pageLength = 20;
             $scope.showPagination = $scope.totalItems > $scope.pageLength;
+
 
             $scope.currentPage = 1;
             var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr);
@@ -48,15 +49,14 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
             $scope.nodeStatusCount = $scope.statusMgr.nodeStatusCount[$stateParams.clusterId];
 
             listen2UpdateClusterStatus();
-
         });
-    }
-    
+    };
+
     gHttp.Resource('cluster.versions').get().then(function (data) {
         var latestVersion = data;
         $scope.statusMgr = new ClusterStatusMgr(latestVersion);
-        getCurCluster();
-    })
+        $scope.getCurCluster();
+    });
     
     $scope.isShowUpgradeFailedMsg = true;
     
