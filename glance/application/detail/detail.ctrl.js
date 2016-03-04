@@ -6,11 +6,12 @@
     angular.module('glance.app')
         .controller('DetailAppCtrl', DetailAppCtrl);
 
-    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', 'upContainerModal', '$scope', "$stateParams", "$timeout"];
+    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', 'upContainerModal', '$scope', "$stateParams", "$timeout", "$rootScope"];
 
-    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, upContainerModal, $scope, $stateParams, $timeout) {
+    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, upContainerModal, $scope, $stateParams, $timeout, $rootScope) {
         var self = this;
-        ///
+        
+        $rootScope.show = "application";
 
         self.APP_STATUS = APP_STATUS;
 

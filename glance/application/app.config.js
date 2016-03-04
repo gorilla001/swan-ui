@@ -8,8 +8,8 @@
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider) {
 
         $stateProvider
-            .state('createapp', {
-                url: '/createapp',
+            .state('appcreate', {
+                url: '/app/create',
                 views: {
                     '': {
                         templateUrl: '/application/create/create.html',
@@ -21,8 +21,8 @@
                     app: function () {return null}
                 }
             })
-            .state('updateapp', {
-                url: '/update/:cluster_id/:app_id/',
+            .state('appupdate', {
+                url: '/app/:cluster_id/:app_id/update',
                 views: {
                     '': {
                         templateUrl: '/application/create/create.html',
@@ -34,8 +34,8 @@
                     app: getAppInfo
                 }
             })
-            .state('list', {
-                url: '/listapp',
+            .state('applist', {
+                url: '/apps',
                 views: {
                     '': {
                         templateUrl: '/application/list/list.html',
@@ -46,8 +46,8 @@
                     listClusters: listClusters
                 }
             })
-            .state('detail', {
-                url: '/detail/:cluster_id/:app_id',
+            .state('appdetails', {
+                url: '/app/:cluster_id/:app_id',
                 abstract: true,
                 views: {
                     '': {
@@ -60,7 +60,7 @@
                     appStatus: getAppStatus
                 }
             })
-            .state('detail.instance', {
+            .state('appdetails.instance', {
                 url: '/instance',
                 views: {
                     'tabdetail': {
@@ -69,7 +69,7 @@
                     }
                 }
             })
-            .state('detail.monitoring', {
+            .state('appdetails.monitoring', {
                 url: '/monitoring',
                 views: {
                     'tabdetail': {
@@ -78,7 +78,7 @@
                     }
                 }
             })
-            .state('detail.config', {
+            .state('appdetails.config', {
                 url: '/config',
                 views: {
                     'tabdetail': {
@@ -87,7 +87,7 @@
                     }
                 }
             })
-            .state('detail.event', {
+            .state('appdetails.event', {
                 url: '/event',
                 views: {
                     'tabdetail': {
@@ -96,7 +96,7 @@
                     }
                 }
             })
-            .state('detail.version', {
+            .state('appdetails.version', {
                 url: '/version',
                 views: {
                     'tabdetail': {
