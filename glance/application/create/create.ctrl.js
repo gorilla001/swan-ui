@@ -95,7 +95,7 @@
 
         self.clearNode = function() {
             self.multiSelect.selectedNodes = [];
-            setTick(self.multiSelect.selectedNodes, true);
+            setTick(self.multiSelect.selectedNodes, undefined);
         };
 
         // 挂载点

@@ -29,7 +29,7 @@
 
         function  listNodesByLabelIds(selectedLables, clusterId) {
             var labelIds = collectIds(selectedLables);
-            var labelIdsString = concatString(labelIds);
+            var labelIdsString = labelIds.join(',');
             return clusterBackendService.listNodesByLabelIds(clusterId, labelIdsString);
         }
         
@@ -42,15 +42,6 @@
             });
             return ids;
         }
-
-        function concatString(array) {
-            var string = '';
-            angular.forEach(array, function(item, index) {
-                string += item + ',';
-            });
-            return string;
-        }
-
 
         
     }

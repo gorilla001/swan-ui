@@ -27,7 +27,7 @@
                 cluster_id: clusterId,
                 label_ids: labelIdsString
             };
-            return gHttp.Resource('label.nodes', {cluster_id: clusterId}).get({params: params});
+            return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({params: params});
         }
 
 
