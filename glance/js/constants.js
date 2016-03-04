@@ -51,6 +51,10 @@ SERVICES_STATUS = {
     pulling: "pulling"
 };
 
+LOG = {
+    logDownloadToplimit: 5000
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
