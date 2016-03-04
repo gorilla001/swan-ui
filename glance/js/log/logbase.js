@@ -36,7 +36,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.getNodePorts = function (appId, clusterId) {
         if (appId && clusterId) {
             appservice.listAppInstances(clusterId, appId, '').then(function(data){
-                console.log(data);
                 $scope.nodes = data;
 
                 var tempNodesInfo = [];
@@ -54,8 +53,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     };
 
     $scope.getAppOptions = function (clusterId) {
-        appservice.listClusterAllApps(clusterId, '').then(function(data){
-            $scope.options = data;
+        appservice.listClusterAllApps(clusterId).then(function(data){
+            $scope.options = data.App;
         });
     };
 

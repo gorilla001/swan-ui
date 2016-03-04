@@ -129,8 +129,13 @@
             return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
 
-        function listClusterAllApps(cluserId, loading){
-            return gHttp.Resource('app.clusterAllApps', {cluster_id: cluserId}).get({'loading': loading});
+        function listClusterAllApps(cluserId){
+            var params = {
+                page: 1,
+                per_page: 10000
+            };
+
+            return gHttp.Resource('app.clusterApps', {cluster_id: cluserId}).get({params : params});
         }
 
 
