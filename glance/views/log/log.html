@@ -18,8 +18,8 @@
                         <div class="form-group col-md-2">
                             <label>应用名 <span class="text-danger">* </span></label>
                             <select class="form-control input-sm"
-                                    data-ng-options=" option.aliase as option.name for option in options"
-                                    data-ng-model="appName" data-required="required" ng-change="getNodePorts(appName,clusterId)">
+                                    data-ng-options=" option.id as option.name for option in options"
+                                    data-ng-model="appId" data-required="required" ng-change="getNodePorts(appId,clusterId)">
                                 <option value=""></option>
                             </select>
                         </div>

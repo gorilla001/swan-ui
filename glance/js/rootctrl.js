@@ -1,4 +1,4 @@
-function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window) {
+function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcurd) {
     $rootScope.myConfirm = function (msg, callback) {
         $scope._confirmMsg = msg;
         $scope._confirmCallback = callback;
@@ -9,7 +9,7 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window) {
     $rootScope.appListParams = {
         searchKeyWord:'',
         page: 1,  //current page index
-        count: 10, // current count
+        count: 20, // current count
         //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
     };
 
@@ -25,7 +25,7 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window) {
             w.location = data.url;
         })
     };
-    
+
     $scope.logout = function(){
         gHttp.Resource("auth.auth").delete().then(function(){
             glanceUser.clear();
@@ -50,5 +50,5 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window) {
 
 }
 
-rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window"];
+rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window", "appcurd"];
 glanceApp.controller("rootCtrl", rootCtrl);

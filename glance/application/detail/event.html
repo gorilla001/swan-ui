@@ -1,0 +1,22 @@
+<div class="main-container-body">
+    <ul id="timeline">
+        <li class="work" ng-repeat="event in eventAppCtrl.events">
+            <div class="relative">
+                <span class="date">{/event.timestamp/}</span>
+                <span class="circle"></span>
+            </div>
+            <div class="content">
+                <p>
+                    <span ng-show="event.name">应用名称：<em>{/event.name/}</em></span>
+                    <span ng-show="event.taskId">实例名称：<em>{/event.taskId/}</em></span>
+                    <span ng-show="event.currentType">事件类型：<em>{/eventAppCtrl.currentTypeText[event.currentType]/}</em></span>
+                    <span ng-show="event.eventType">事件结果：<em>{/eventAppCtrl.eventTypeText[event.eventType]/}</em></span>
+                </p>
+            </div>
+        </li>
+    </ul>
+    <uib-pagination total-items="eventAppCtrl.totalItems" items-per-page="eventAppCtrl.pageLength" ng-model="currentPage"
+                    ng-change="eventAppCtrl.pageChanged(currentPage)" data-ng-show="eventAppCtrl.showPagination" previous-text="上一页"
+                    next-text="下一页" max-size="5" rotate="false" boundary-links="true"
+                    first-text="首页" last-text="末页"></uib-pagination>
+</div>

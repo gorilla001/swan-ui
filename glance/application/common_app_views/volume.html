@@ -1,0 +1,66 @@
+<div class="modal fade modal-tag" id="app-volumes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">挂载路径配置</h3>
+        <span>(挂载是双向的，文件和目录均可挂载)</span>
+      </div>
+
+      <div class="modal-body">
+        <form class="form-horizontal" name="volumesForm">
+    
+          <div class="form-group">
+              <label class="col-md-2 control-label">主机路径</label>
+
+              <div class="col-md-5"
+                   data-ng-class="{ 'has-error' : volumesForm.hostPath.$invalid && !volumesForm.hostPath.$pristine}">
+                  <input type="text" name="hostPath" class="form-control"
+                         data-ng-model="hostPath"
+                         data-required="required"
+                         value="hh0-1"
+                         ng-pattern="/^[^\u4e00-\u9fa5]*$/">
+              </div>
+
+              <div data-ng-class="{ 'has-error' : volumesForm.hostPath.$invalid && !volumesForm.hostPath.$pristine}">
+                  <p data-ng-show="volumesForm.hostPath.$error.required && !volumesForm.hostPath.$pristine"
+                     class="help-block">不能为空</p>
+                  <p data-ng-show="volumesForm.hostPath.$error.pattern && !volumesForm.hostPath.$pristine"
+                     class="help-block">路径不能包含中文</p>
+              </div>
+          </div>
+
+          <div class="form-group">
+              <label class="col-md-2 control-label">容器路径</label>
+
+              <div class="col-md-5"
+                   data-ng-class="{ 'has-error' : volumesForm.containerPath.$invalid && !volumesForm.containerPath.$pristine}">
+                  <input type="text" name="containerPath" class="form-control"
+                         data-ng-model="containerPath" data-required="required"
+                         ng-pattern="/^[^\u4e00-\u9fa5]*$/">
+              </div>
+
+              <div data-ng-class="{ 'has-error' : volumesForm.containerPath.$invalid && !volumesForm.containerPath.$pristine}">
+                  <p data-ng-show="volumesForm.containerPath.$error.required  && !volumesForm.containerPath.$pristine"
+                     class="help-block">不能为空</p>
+                  <p data-ng-show="volumesForm.containerPath.$error.pattern && !volumesForm.containerPath.$pristine"
+                     class="help-block">路径不能包含中文</p>
+              </div>
+          </div>
+          
+        </form>
+      </div>
+
+      <div class="modal-footer">
+          <button class="btn btn-primary" style="width: 150px;"
+              data-dismiss="modal"
+              data-ng-disabled="volumesForm.$invalid"
+              data-ng-click="pushVolume()">
+              添 加
+          </button>
+          <button class="btn btn-default" style="width: 75px;"
+              data-ng-click="cancel()"
+              data-dismiss="modal">取 消</button>
+      </div>
+    </div>
+  </div>
+</div>

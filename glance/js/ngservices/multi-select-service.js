@@ -3,7 +3,7 @@
  */
 (function () {
     'use strict';
-    angular.module('glance')
+    angular.module('glance.app')
         .factory('multiSelectConfig', multiSelectConfig);
 
     multiSelectConfig.$inject = [];
