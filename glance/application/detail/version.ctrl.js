@@ -26,7 +26,7 @@
         };
 
         self.verisonDeploy = function (versionId) {
-            appservice.reDeploy({}, $stateParams.cluster_id, $stateParams.app_id).
+            appservice.updateVersion({versionId: versionId}, $stateParams.cluster_id, $stateParams.app_id).
                 then(function(data) {
                     getImageVersions()
                 }, function(data) {
