@@ -100,8 +100,8 @@ function createappCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.deployinfo.envs = [];
         }
 
-        if ($scope.logDirInput) {
-            $scope.deployinfo.logDir = $scope.logDirInput.split(';');
+        if ($scope.logPathsInput) {
+            $scope.deployinfo.logPaths = $scope.logPathsInput.split(';');
         }
 
         if ($scope.cmdInput) {

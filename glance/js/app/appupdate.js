@@ -101,8 +101,8 @@ function appUpdateCtrl($scope, $state, glanceHttp, Notification, $uibModal, getC
             $scope.config.constraints.push($scope.hostEles)
         }
 
-        if ($scope.config.logDir) {
-            $scope.config.logDir = $scope.config.logDir.split(';');
+        if ($scope.config.logPaths) {
+            $scope.config.logPaths = $scope.config.logPaths.split(';');
         }
 
         if(!$scope.config.forceImage){
