@@ -33,6 +33,5 @@
                     self.pagination.showPagination = Boolean(self.pagination.totalItems > self.pagination.itemPerPage);
                 });
         }
-
     }
 })();

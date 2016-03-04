@@ -30,7 +30,7 @@
                 }
             })
             .state('imageDetail', {
-                url: '/image/detail/:projectId',
+                url: '/image/detail/:image_id',
                 abstract: true,
                 views: {
                     '': {
@@ -73,10 +73,10 @@
     }
 
     listProjectsName.$inject = ['imageservice'];
-    function listProjectsName(imageservice){
+    function listProjectsName(imageservice) {
         var listProjectsName = [];
-        return imageservice.listProjects().then(function(data){
-            angular.forEach(data, function(value, index){
+        return imageservice.listProjects().then(function (data) {
+            angular.forEach(data, function (value, index) {
                 listProjectsName.push(value.name)
             });
             return listProjectsName;
@@ -84,10 +84,8 @@
 
     }
 
-    getProject.$inject = ['$stateParams','imageservice'];
+    getProject.$inject = ['$stateParams', 'imageservice'];
     function getProject($stateParams, imageservice) {
         return imageservice.getProject($stateParams.projectId);
     }
-
-
 })();
