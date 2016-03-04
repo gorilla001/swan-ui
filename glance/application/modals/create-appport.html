@@ -1,0 +1,161 @@
+<div class="modal-header">
+    <h3 class="modal-title">应用地址配置</h3>
+</div>
+<div class="modal-body" id="createPortModule">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">应用端口</label>
+                    <div class="col-sm-6">
+                        <input type="number" class="form-control" id="inputEmail3" placeholder="端口号"
+                               data-toggle="tooltip" data-placement="bottom" data-trigger="focus"
+                               title="Tooltip on bottom" name="curPort" min="1" max="65535"
+                               data-ng-model="createAppPortCtrl.portInfo.appPort">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">协议</label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline">
+                            <input type="radio" value="1"
+                                   data-ng-model="createAppPortCtrl.portInfo.protocol" ng-change="createAppPortCtrl.changeProtocol()"> TCP
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" value="2"
+                                   data-ng-model="createAppPortCtrl.portInfo.protocol" ng-change="createAppPortCtrl.changeProtocol()"> HTTP
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">类型</label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline" ng-if="createAppPortCtrl.proxyNodes.length">
+                            <input type="radio" value="1" data-ng-model="createAppPortCtrl.portInfo.type"
+                                   ng-change="createAppPortCtrl.changeType()"> 对内
+                        </label>
+                        <label class="radio-inline" ng-if="createAppPortCtrl.gateWays.length">
+                            <input type="radio" value="2" data-ng-model="createAppPortCtrl.portInfo.type"
+                                   ng-change="createAppPortCtrl.changeType()"> 对外
+                        </label>
+                    </div>
+                </div>
+                <hr ng-show="createAppPortCtrl.portInfo.type && createAppPortCtrl.portInfo.protocol">
+                <div class="form-group" data-ng-show="createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.protocol === '2'">
+                    <label class="col-sm-3 control-label"> </label>
+                    <div class="col-sm-8">
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" value="1" ng-change="createAppPortCtrl.isURI()">
+                            有域名
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" value="2" ng-change="createAppPortCtrl.isURI()">
+                            无域名
+                        </label>
+                    </div>
+                </div>
+
+                <div data-ng-show="createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.isUri === '1' && createAppPortCtrl.portInfo.protocol === '2'">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">域名</label>
+                        <div class="col-sm-6" ng-class="{'has-error' : createAppPortCtrl.uriOccupied()}">
+                            <input type="text" class="form-control" placeholder="域名地址" data-ng-model="createAppPortCtrl.portInfo.uri">
+                        </div>
+                        <span ng-show="createAppPortCtrl.uriOccupied(portInfo)" class="text-danger"
+                              style="display: inline-block; margin-top: 10px;"> 域名被占用</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">映射端口</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" placeholder="端口号" data-ng-model="createAppPortCtrl.portInfo.mapPort"
+                                   ng-disabled="true">
+                        </div>
+                    </div>
+                </div>
+
+                <div data-ng-show="(createAppPortCtrl.portInfo.protocol === '1' && createAppPortCtrl.portInfo.type === '1' && !createAppPortCtrl.portInfo.isUri) || (createAppPortCtrl.portInfo.protocol === '2' && createAppPortCtrl.portInfo.type === '1' )">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">代理节点</label>
+                        <div class="col-sm-8">
+                            <p ng-show="!createAppPortCtrl.proxyNodes.length" class="form-control-static">无节点 <span
+                                    class="text-danger">(请在集群中添加代理节点)</span></p>
+
+                            <p class="form-control-static"><span class="ip" ng-repeat="proxyNode in createAppPortCtrl.proxyNodes">{/proxyNode.ip/}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error' : createAppPortCtrl.invalidPort()}">
+                        <label class="col-sm-3 control-label">映射端口</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" min="1" max="65535"
+                                   data-ng-model="createAppPortCtrl.portInfo.mapPort">
+                        </div>
+                        <span ng-show="createAppPortCtrl.invalidPort()" class="text-danger"
+                              style="display: inline-block; margin-top: 10px;"> 端口被占用</span>
+                    </div>
+                </div>
+
+                <div data-ng-show=" (createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.isUri !== '1') || (createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.protocol === '1')">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">网关节点</label>
+                        <div class="col-sm-8">
+                            <p ng-show="!createAppPortCtrl.gateWays.length" class="form-control-static"
+                               style="word-wrap: break-word; ">
+                                无节点 <span class="text-danger">(请在集群中添加网关节点)</span></p>
+
+                            <p class="form-control-static" style="word-wrap: break-word; ">
+                                <span class="ip" ng-repeat="gateWay in createAppPortCtrl.gateWays">{/gateWay.ip/}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error' : createAppPortCtrl.invalidPort()}">
+                        <label class="col-sm-3 control-label">映射端口</label>
+                        <div class="col-sm-6">
+                            <input type="number" class="form-control" min="1" max="65535"
+                                   data-ng-model="createAppPortCtrl.portInfo.mapPort">
+                        </div>
+                        <span ng-show="createAppPortCtrl.invalidPort()" class="text-danger"
+                              style="display: inline-block; margin-top: 10px;"> 端口被占用</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-5">
+
+            <div class="alert alert-info" role="alert" ng-class="{'alert-danger' : createAppPortCtrl.invalidPort()}">
+                <h5>不可用端口</h5>
+                <hr>
+                <div>
+                    <strong>数人云保留端口: </strong><br> <span class="portrange">5000 ~ 5100</span><span class="portrange">10000 ~ 20000</span><span
+                        class="portrange">31000 ~ 32000</span><br><br>
+                </div>
+
+                <div ng-show="createAppPortCtrl.portInfo.type == 1">
+                    <strong>对内占用端口: </strong><br> <span ng-repeat="innerPort in createAppPortCtrl.innerPorts "
+                                                        class="port">{/innerPort/} </span><br><br>
+                </div>
+
+                <div ng-show="createAppPortCtrl.portInfo.type == 2">
+                    <strong>对外占用端口: </strong><br> <span ng-repeat="outPort in createAppPortCtrl.outerPorts"
+                                                        class="port">{/outPort/} </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button"
+            data-ng-disabled="createAppPortCtrl.isAddPortDisable(portInfo) || createAppPortCtrl.invalidPort(portInfo) || uriOccupied(portInfo)"
+            data-ng-click="createAppPortCtrl.ok()" style="width: 150px;">添 加
+    </button>
+    <button class="btn btn-default" type="button" ng-click="createAppPortCtrl.cancel()" style="width: 75px;">取 消</button>
+</div>

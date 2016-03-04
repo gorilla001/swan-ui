@@ -28,7 +28,8 @@
             listAppsStatus: listAppsStatus,
             getAppStatus: getAppStatus,
             listAppInstances: listAppInstances,
-            listClusterAllApps: listClusterAllApps
+            listClusterAllApps: listClusterAllApps,
+            listAppPorts: listAppPorts
 
         };
 
@@ -138,6 +139,12 @@
             return gHttp.Resource('app.clusterApps', {cluster_id: cluserId}).get({params : params});
         }
 
+        function listAppPorts(clusterId, appId) {
+            if (appId) {
+                var params = {"appId":appId};
+            }
+            return gHttp.Resource('app.ports', {cluster_id: clusterId}).get({'params': params});
+        }
 
     }
 })();

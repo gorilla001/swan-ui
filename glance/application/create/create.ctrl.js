@@ -13,7 +13,8 @@
         '$scope', 
         'clusterBackendService', 
         'appLabelService',
-        'appModal'
+        'createAppPortModal',
+        '$state'
     ];
 
     function CreateAppCtrl(
@@ -23,14 +24,18 @@
         $scope, 
         clusterBackendService, 
         appLabelService,
-        appModal
+        createAppPortModal,
+        $state
     ) {
         var self = this;
+        self.gateWays = [];
+        self.proxyNodes = [];
+        var existPorts;
 
         self.form = {
             cluster_id: '',
             name: '',
-            instances: 0,
+            instances: 1,
             volumes: [],
             portMappings: [],
             cpus: 0,
@@ -40,12 +45,14 @@
             imageName: '',
             imageVersion: '',
             forceImage: false,
-            netWork: '',
+            network: 'BRIDGE',
             constraints: []
         };
 
         self.appNames = [];
         self.clusters = [];
+        self.APP_PORT_TYPE = APP_PORT_TYPE;
+        self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
         listApps();
         listClusters();
 
@@ -62,13 +69,34 @@
             }
         };
 
-        self.fetchClusterLabels = function() {
-            clusterBackendService.listCluster(self.form.cluster_id)
+        self.refresClusterData = function() {
+            clusterBackendService.getCluster(self.form.cluster_id)
                 .then(function(cluster) {
                     self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
                     self.multiSelect.nodes = cluster.nodes;
+                    setGatewayAndProxy(cluster.nodes);
                 });
+            appservice.listAppPorts(self.form.cluster_id).then(function (data) {
+                existPorts = data;
+            })
         };
+        
+        function setGatewayAndProxy(nodes) {
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].attributes.length) {
+                    for (var j = 0; j < nodes[i].attributes.length; j++) {
+                        if (nodes[i].attributes[j].attribute === 'gateway') {
+                            self.gateWays.push(nodes[i]);
+                        }
+
+                        if (nodes[i].attributes[j].attribute === 'proxy') {
+                            self.proxyNodes.push(nodes[i]);
+                        }
+                    }
+                }
+            }
+
+        }
 
         // 标签主机多选框
         self.tickItem = function(data) {
@@ -104,7 +132,11 @@
                 hostPath: this.hostPath,
                 containerPath: this.containerPath
             };
-            self.form.volumes.push(volume);
+            if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
+                Notification.error('无法映射主机的多个目录到同一个容器目录');
+            } else {
+                self.form.volumes.push(volume);
+            }
         };
 
         self.deletVolume = function(index) {
@@ -145,7 +177,11 @@
                 key: this.pathKey,
                 value: this.pathValue
             };
-            self.form.envs.push(path);
+            if (isDisableAddList(path, self.form.envs, ['key'])) {
+                Notification.error('添加的环境变量的 KEY 不能重复');
+            } else {
+                self.form.envs.push(path);
+            }
         };
 
         self.deleteConfig = function (index, key) {
@@ -153,17 +189,28 @@
         };
 
         // // 应用地址
+        
+        self.openPortModule = function () {
+            if (!self.proxyNodes.length && !self.gateWays.length) {
+                Notification.warning('没有选择集群或集群中没有网关和代理节点，无法添加应用地址，请选择集群并增加网关/代理节点后重试');
+                return
+            }
+            createAppPortModal.open(existPorts, self.proxyNodes, self.gateWays).then(function (portInfo) {
+                if (isDisableAddList(portInfo, self.form.portMappings, ['type', 'mapPort', 'uri'])) {
+                    Notification.error('添加的应用地址已存在');
+                } else {
+                    self.form.portMappings.push(portInfo);
+                }
+            });
+        }
 
         self.createApp = function () {
-            if(self.constraint) {
-                self.form.constraints = ['hostname', 'UNIQUE'];
-            }
-
-            var selectedNodesIps = listSelectedNodesIps();
+            setConstraints();
 
             return appservice.createApp(self.form, self.form.cluster_id)
-                .then(function () {
+                .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
+                    $state.go('detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 }, function (resp) {
                     Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
                 });
@@ -196,19 +243,60 @@
                 });
         }
 
-        function listSelectedNodesIps() {
-            var ips = [];
-            angular.forEach(self.multiSelect.selectedNodes, function(node, index) {
-                ips.push(node.ip);
-            });
-            return ips;
-        }
-
         function setTick(items, value) {
             angular.forEach(items, function(item, index) {
                 item.tick = value;
             });
         }
+        
+        function isDisableAddList(info, infoArray, attrnames) {
+            function equal(info1, info2) {
+                for (var i = 0; i < attrnames.length; i++) {
+                    if (info1[attrnames[i]] != info2[attrnames[i]]) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            for (var i = 0; i < infoArray.length; i++) {
+                if (equal(info, infoArray[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function setConstraints() {
+            var defaultEles = [];
+            var hostEles = ["hostname", "UNIQUE"];
+            if (self.multiSelect.selectedNodes) {
+                self.form.constraints = getConstraintsByNode(self.multiSelect.selectedNodes, defaultEles, 'ip');
+            } else {
+                self.form.constraints = defaultEles;
+            }
+            if (self.single) {
+                self.form.constraints.push(hostEles)
+            }
+        }
+        
+        function getConstraintsByNode(nodesSelect, elements, attribute) {
+            if (attribute === 'ip') {
+                var temp = ["ip", "LIKE"];
+            } else if (attribute === 'lableName') {
+                var temp = ["lable", "LIKE"];
+            }
+
+            var regular = nodesSelect.map(function (item) {
+                return item[attribute]
+            }).join('|');
+
+            if (nodesSelect.length) {
+                temp.push(regular);
+                elements.push(temp);
+            }
+            return elements;
+        };
 
     }
 })();

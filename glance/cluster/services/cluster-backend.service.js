@@ -8,7 +8,7 @@
     function clusterBackendService(gHttp) {
         return {
             listClusters: listClusters,
-            listCluster: listCluster,
+            getCluster: getCluster,
             listNodesByLabelIds: listNodesByLabelIds
         };
 
@@ -18,7 +18,7 @@
             return gHttp.Resource('cluster.clusters').get();
         }
 
-        function listCluster(clusterId) {
+        function getCluster(clusterId) {
             return gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get();
         }
 

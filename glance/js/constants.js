@@ -63,6 +63,16 @@ APP_EVENTS_TYPE = {
     AppOperation: "应用操作"
 };
 
+APP_PORT_TYPE = {
+    "1": "对内",
+    "2": "对外"
+};
+
+APP_PROTOCOL_TYPE = {
+    "1": "TCP",
+    "2": "HTTP"
+};
+
 SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",
     nodeMetric: "NodeMetric",
