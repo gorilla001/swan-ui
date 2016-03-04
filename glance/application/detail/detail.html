@@ -39,7 +39,7 @@
                             <li data-ng-show="detailAppCtrl.appStatus.status == '9'"><a
                                     data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
                                     href="#">恢复</a></li>
-                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a>更新</a>
+                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a data-ui-sref="updateapp({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})">更新</a>
                             </li>
                         </ul>
                     </div>
@@ -60,7 +60,7 @@
                         data-ui-sref="detail.monitoring"
                         data-ui-sref-opts="{reload: true}">监控</a></li>
                 <li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a
-                        data-ui-sref="detail.instance({appId:appInfo.appId})" data-ui-sref-opts="{reload: true}">实例</a>
+                        data-ui-sref="detail.instance" data-ui-sref-opts="{reload: true}">实例</a>
                 </li>
                 <li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a
                         data-ui-sref="detail.event"

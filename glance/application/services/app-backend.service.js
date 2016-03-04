@@ -11,6 +11,7 @@
             listApps: listApps,
             listClusterApps: listClusterApps,
             createApp: createApp,
+            updateApp: updateApp,
             deleteApp: deleteApp,
             getApp: getApp,
             rollbackApp: rollbackApp,
@@ -45,6 +46,10 @@
             return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).post(data);
         }
 
+        function updateApp(data, clusterId, appId) {
+            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).put(data);
+        }
+        
         function deleteApp(clusterId, appId){
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).delete();
         }

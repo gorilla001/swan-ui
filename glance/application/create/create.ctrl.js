@@ -14,7 +14,9 @@
         'clusterBackendService', 
         'appLabelService',
         'createAppPortModal',
-        '$state'
+        '$state',
+        'target',
+        'app',
     ];
 
     function CreateAppCtrl(
@@ -25,29 +27,53 @@
         clusterBackendService, 
         appLabelService,
         createAppPortModal,
-        $state
+        $state,
+        target,
+        app
     ) {
         var self = this;
+        self.target = target;
+        
         self.gateWays = [];
         self.proxyNodes = [];
+        
         var existPorts;
-
-        self.form = {
-            cluster_id: '',
-            name: '',
-            instances: 1,
-            volumes: [],
-            portMappings: [],
-            cpus: 0,
-            mem: 0,
-            cmd: '',
-            envs: [],
-            imageName: '',
-            imageVersion: '',
-            forceImage: false,
-            network: 'BRIDGE',
-            constraints: []
-        };
+        if (self.target === 'create') {
+            self.form = {
+                    cluster_id: '',
+                    name: '',
+                    instances: 1,
+                    volumes: [],
+                    portMappings: [],
+                    cpus: 0,
+                    mem: 0,
+                    cmd: '',
+                    envs: [],
+                    imageName: '',
+                    imageVersion: '',
+                    forceImage: false,
+                    network: 'BRIDGE',
+                    constraints: []
+            };
+        } else {
+            self.form = {
+                cluster_id: app.cid,
+                name: app.name,
+                instances: app.instances,
+                volumes: app.volumes,
+                portMappings: app.ports,
+                cpus: app.cpus,
+                mem: app.mem,
+                cmd: app.cmd,
+                envs: app.envs,
+                imageName: app.imageName,
+                imageVersion: app.imageVersion,
+                forceImage: false,
+                network: app.network
+            };
+            refresClusterData(app.cid, app.id);
+            self.single = app.unique;
+        }
 
         self.appNames = [];
         self.clusters = [];
@@ -69,14 +95,20 @@
             }
         };
 
-        self.refresClusterData = function() {
-            clusterBackendService.getCluster(self.form.cluster_id)
+        self.refresClusterData = refresClusterData; 
+        
+        function refresClusterData(cluster_id, app_id) {
+            if (!cluster_id) {
+                cluster_id = self.form.cluster_id;
+            }
+            clusterBackendService.getCluster(cluster_id)
                 .then(function(cluster) {
                     self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
                     self.multiSelect.nodes = cluster.nodes;
                     setGatewayAndProxy(cluster.nodes);
+                    self.clusterName = cluster.name;
                 });
-            appservice.listAppPorts(self.form.cluster_id).then(function (data) {
+            appservice.listAppPorts(cluster_id, app_id).then(function (data) {
                 existPorts = data;
             })
         };
@@ -212,7 +244,18 @@
                     Notification.success('应用' + self.form.name + '创建中！');
                     $state.go('detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 }, function (resp) {
-                    Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
+//                    Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
+                });
+        };
+        
+        self.updateApp = function () {
+            setConstraints();
+            delete self.form.cluster_id;
+            return appservice.updateApp(self.form, app.cid, app.id)
+                .then(function (data) {
+                    $state.go('detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
+                }, function (resp) {
+//                    Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
                 });
         };
 

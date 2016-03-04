@@ -1,5 +1,5 @@
 <div class="page-header">
-    <div>
+    <div data-ng-if="createAppCtrl.target==='create'">
         <h1 class="pull-left">新建应用</h1>
         <small>
             <br>
@@ -9,8 +9,11 @@
             </a>
         </small>
     </div>
+    <div data-ng-if="createAppCtrl.target==='update'">
+        <h1 class="pull-left">应用更新</h1>
+    </div>
 </div>
-<ol class="breadcrumb">
+<ol class="breadcrumb" data-ng-if="createAppCtrl.target==='create'">
   <li>
     <a data-ui-sref="app.applist">应用管理</a>
   </li>
@@ -21,11 +24,11 @@
 <section>
     <div class="main-container new-app">
         <div class="main-container-body">
-            <form class="form-horizontal" name="staticForm" data-ng-submit="createAppCtrl.createApp()">
+            <form class="form-horizontal" name="staticForm">
                 <!-- 应用名称 -->
                 <div class="form-group">
                     <label class="col-md-2 control-label">
-                        <span class="text-danger">* </span>
+                        <span class="text-danger" data-ng-if="createAppCtrl.target==='create'">* </span>
                         应用名称
                     </label>
 
@@ -38,7 +41,8 @@
                                data-ng-maxlength="16"
                                data-ng-trim="true"
                                data-samename
-                               data-name-list="createAppCtrl.appNames">
+                               data-name-list="createAppCtrl.appNames"
+                               data-ng-disabled="createAppCtrl.target==='update'">
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
                         <p data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine"
@@ -56,7 +60,7 @@
                 </div>
 
                 <!-- 选择集群 -->
-                <div class="form-group">
+                <div class="form-group" data-ng-if="createAppCtrl.target==='create'">
                     <label class="col-md-2 control-label">
                         <span class="text-danger">* </span>
                         选择集群
@@ -71,6 +75,15 @@
                             <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
                             <option data-ng-repeat="cluster in createAppCtrl.clusters">{/cluster.name/}</option>
                         </select>
+                    </div>
+                </div>
+                
+                <div class="form-group" data-ng-if="createAppCtrl.target==='update'">
+                    <label class="col-md-2 control-label">所属集群</label>
+
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" name="clusterName"
+                               ng-model="createAppCtrl.clusterName" ng-disabled="true">
                     </div>
                 </div>
 
@@ -120,7 +133,7 @@
 
                 <!-- 网络模式 -->
                 <div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger">* </span>网络模式</label>
+                    <label class="col-md-2 control-label"><span class="text-danger" data-ng-if="createAppCtrl.target == 'create'">* </span>网络模式</label>
 
                     <div class="col-md-5">
                         <label class="checkbox-inline">
@@ -272,7 +285,7 @@
                     <label style="margin-top: 7px; font-weight: normal;"
                         uib-popover="每个主机只能运行一个当前应用的容器"
                         popover-trigger="mouseenter">
-                        <input type="checkbox" data-ng-model="createAppCtrl.single">
+                        <input type="checkbox" data-ng-model="createAppCtrl.single" data-ng-disabled="createAppCtrl.target==='update'">
                         1容器:1主机
                     </label>
                 </div>
@@ -394,9 +407,14 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-3">
-                        <button type="submit" class="btn btn-primary btn-block"
-                             data-ng-disabled="staticForm.$invalid" data-demo-disable>
+                        <button type="submit" class="btn btn-primary btn-block" data-ng-click="createAppCtrl.createApp()"
+                             data-ng-disabled="staticForm.$invalid" data-demo-disable data-ng-if="createAppCtrl.target==='create'">
                             创 建
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-block" data-ng-click="createAppCtrl.updateApp()"
+                             data-ng-disabled="staticForm.$invalid|| createAppCtrl.single || createAppCtrl.form.network === 'HOST'" 
+                             data-demo-disable data-ng-if="createAppCtrl.target==='update'">
+                            更 新
                         </button>
                     </div>
                 </div>

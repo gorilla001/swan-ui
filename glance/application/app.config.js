@@ -15,6 +15,23 @@
                         templateUrl: '/application/create/create.html',
                         controller: 'CreateAppCtrl as createAppCtrl'
                     }
+                },
+                resolve: {
+                    target: function () {return 'create'},
+                    app: function () {return null}
+                }
+            })
+            .state('updateapp', {
+                url: '/update/:cluster_id/:app_id/',
+                views: {
+                    '': {
+                        templateUrl: '/application/create/create.html',
+                        controller: 'CreateAppCtrl as createAppCtrl',
+                    }
+                },
+                resolve: {
+                    target: function () {return 'update'},
+                    app: getAppInfo
                 }
             })
             .state('list', {
