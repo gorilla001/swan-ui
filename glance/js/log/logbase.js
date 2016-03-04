@@ -8,6 +8,7 @@ logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$time
 function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig, gHttp) {
     $rootScope.show = "log";
     $scope.showContextUI = false;
+    $scope.logDownloadToplimit = LOG.logDownloadToplimit;
     var clusterIdTemp;
 
     $scope.multiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "ALL");

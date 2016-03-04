@@ -163,14 +163,14 @@
                     <h4>日志导出</h4>
                     <div class="delete-cluster">
                         <ul>
-                            <li ng-show="clusterlogs.logSize <= 10000">当前查询出的日志总数:
+                            <li ng-show="clusterlogs.logSize <= logDownloadToplimit">当前查询出的日志总数:
                                 <span ng-show="!showContextUI">{/clusterlogs.logSize/}
                                 </span>
                                 <span ng-show="showContextUI">{/contextlogs.logSize/}
                                 </span>
                                 条
                             </li>
-                            <li ng-show="clusterlogs.logSize > 10000">当前日志记录已经超出一万条，您可以选择直接导出前一万条记录或者缩小查询范围</li>
+                            <li ng-show="clusterlogs.logSize > logDownloadToplimit">当前日志记录已经超出一万条，您可以选择直接导出前5000条记录或者缩小查询范围</li>
 
                         </ul>
                     </div>
