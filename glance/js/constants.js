@@ -1,6 +1,7 @@
 MESSAGE_CODE = {
     success: 0,
-    dataInvalid: 10001
+    dataInvalid: 10001,
+    noExist: 10009
 };
 
 APP_CODE = {

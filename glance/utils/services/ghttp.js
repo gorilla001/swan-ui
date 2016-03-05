@@ -101,10 +101,12 @@
                 var deferred = $q.defer();
                 $http(req).success(function (data) {
                     this._stopLoading(this.options.loading);
-                    if (data.code) {
-                        deferred.reject(data);
-                    } else {
+                    if (data.code === MESSAGE_CODE.success) {
                         deferred.resolve(data.data);
+                    } else if (data.code === MESSAGE_CODE.noExist){
+                        $state.go('404');
+                    } else {
+                        deferred.reject(data);
                     }
                 }.bind(this)).error(function (data, status) {
                     this._stopLoading(this.options.loading);
