@@ -180,6 +180,7 @@ BACKEND_URL = {
         groupMemberships: 'api/v3/groups/$group_id/memberships',
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships'
     },
+
     image: {
         projects: 'api/v3/projects',
         project: 'api/v3/projects/$project_id',
