@@ -48,7 +48,7 @@
                         </li>
 
                         <li data-ng-class="{'active': show=='application'}" title="应用管理">
-                            <a data-ui-sref="list" data-ui-sref-opts="{reload: true}">
+                            <a data-ui-sref="applist" data-ui-sref-opts="{reload: true}">
                                 <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span><span class="text">应用管理</span>
                             </a>
                         </li>
@@ -159,7 +159,7 @@
 
         <script src="js/app.js" type="text/javascript"></script>
 
-        <script src="application/create/create.ctrl.js" type="text/javascript"></script>
+        <script src="application/createupdate/create-update.ctrl.js" type="text/javascript"></script>
         <script src="application/list/list.ctrl.js" type="text/javascript"></script>
         <script src="application/detail/detail.ctrl.js" type="text/javascript"></script>
         <script src="application/detail/config.ctrl.js" type="text/javascript"></script>
@@ -223,10 +223,12 @@
         <script src="js/app/appupdate.js" type="text/javascript"></script>
         <script src="js/dynamic/dynamicbase.js" type="text/javascript"></script>
 
+        <!--endbuild-->
+        
+        <!--build:js js/template.js-->
         <!-- inject:template.js -->
         <!-- angular templates will be automatically converted in js and inserted here -->
         <!-- endinject -->
-
         <!--endbuild-->
 
         <!-- baidu -->

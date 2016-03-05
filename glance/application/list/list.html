@@ -2,7 +2,7 @@
     <h1>应用管理</h1>
     <small>应用管理功能主要负责部署应用和管理应用的生命周期。<br>可以添加、删除、启动、停止应用，还可以弹性扩展应用实例数量。<br><a
             href="http://doc.shurenyun.com/practice/wordpress.html" target="_blank">如何搭建 Wordpress 个人博客</a></small>
-    <a data-ui-sref="createapp" class="btn btn-success" data-demo-disable="left">新建应用</a>
+    <a data-ui-sref="appcreate" class="btn btn-success" data-demo-disable="left">新建应用</a>
 </div>
 <section>
     <div class="main-container">
@@ -21,7 +21,7 @@
                 <tbody>
                 <tr ng-repeat="app in listappctrl.applist">
                     <td data-title="'应用名称'" sortable="'name'"><a href="#"
-                                                                 data-ui-sref="detail.config({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a>
+                                                                 data-ui-sref="appdetails.config({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a>
                     </td>
                     <td data-title="'当前状态'">{/listappctrl.APP_STATUS[listappctrl.appListStatus[app.id].status]/}</td>
                     <td data-title="'更新时间'" sortable="'updated'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>

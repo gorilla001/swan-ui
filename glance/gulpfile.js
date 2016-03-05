@@ -46,8 +46,38 @@ gulp.task('copy-swf', ['copy-fonts'], function() {
 //        .pipe(gulp.dest('build/views'));
 //});
 
+
+//utils html to js
+gulp.task('template-min-utils', function () {
+    return gulp.src('utils/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlUtils.js', {
+            module: 'glance.utils',
+            root: '/utils'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
+//application html to js
+gulp.task('template-min-app', ['template-min-utils'], function () {
+    return gulp.src('application/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlApp.js', {
+            module: 'glance.app',
+            root: '/application'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
 // views html to js
-gulp.task('template-min', function () {
+gulp.task('template-min', ['template-min-app'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,
@@ -63,7 +93,7 @@ gulp.task('template-min', function () {
 
 gulp.task('html-replace', ['template-min'], function() {
 
-    var templateInjectFile = gulp.src('build/js/templateCacheHtml.js', { read: false });
+    var templateInjectFile = gulp.src('build/js/templateCacheHtml*.js', { read: false });
     var templatenjectOptions = {
         starttag: '<!-- inject:template.js  -->',
         addRootSlash: false
@@ -93,7 +123,8 @@ gulp.task('html-rename', ['html-replace'], function() {
 
 gulp.task('clean', ['html-rename'], function() {
     var sources = [
-      'build/index.**.html'
+      'build/index.**.html',
+      'build/js/templateCacheHtml*.js'
     ];
     return gulp.src(sources, {read: false})
         .pipe(clean());

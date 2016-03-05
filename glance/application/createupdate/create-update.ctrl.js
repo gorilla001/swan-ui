@@ -17,6 +17,7 @@
         '$state',
         'target',
         'app',
+        '$rootScope'
     ];
 
     function CreateAppCtrl(
@@ -29,8 +30,12 @@
         createAppPortModal,
         $state,
         target,
-        app
+        app,
+        $rootScope
     ) {
+        
+        $rootScope.show = "application";
+        
         var self = this;
         self.target = target;
         
