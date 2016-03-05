@@ -50,8 +50,8 @@
                     instances: 1,
                     volumes: [],
                     portMappings: [],
-                    cpus: 0,
-                    mem: 0,
+                    cpus: 0.1,
+                    mem: 16,
                     cmd: '',
                     envs: [],
                     imageName: '',
@@ -208,6 +208,8 @@
                 }
             }
         };
+        self.cpuSlideValue = self.form.cpus * 10;
+        self.memSlideValue = Math.log(self.form.mem)/Math.LN2;
 
         $scope.addPath = function () {
             var path = {
