@@ -14,6 +14,7 @@
         'clusterBackendService', 
         'appLabelService',
         'createAppPortModal',
+        'formModal',
         '$state',
         'target',
         'app',
@@ -28,6 +29,7 @@
         clusterBackendService, 
         appLabelService,
         createAppPortModal,
+        formModal,
         $state,
         target,
         app,
@@ -164,21 +166,16 @@
         };
 
         // 挂载点
-        $scope.pushVolume = function() {
-            var volume = {
-                hostPath: this.hostPath,
-                containerPath: this.containerPath
-            };
-            if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
-                Notification.error('无法映射主机的多个目录到同一个容器目录');
-            } else {
-                self.form.volumes.push(volume);
-            }
+        self.openVolumeModule = function () {
+            formModal.open('/application/createupdate/modals/create-volume.html').then(function (volume) {
+                if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
+                    Notification.error('无法映射主机的多个目录到同一个容器目录');
+                } else {
+                    self.form.volumes.push(volume);
+                }
+            })
         };
 
-        self.deletVolume = function(index) {
-            self.form.volumes.splice(index, 1);
-        };
 
         self.containerConfig = {
             cpu: {
@@ -209,16 +206,14 @@
             }
         };
 
-        $scope.addPath = function () {
-            var path = {
-                key: this.pathKey,
-                value: this.pathValue
-            };
-            if (isDisableAddList(path, self.form.envs, ['key'])) {
-                Notification.error('添加的环境变量的 KEY 不能重复');
-            } else {
-                self.form.envs.push(path);
-            }
+        self.openPathModule = function () {
+            formModal.open('/application/createupdate/modals/create-path.html').then(function (path) {
+                if (isDisableAddList(path, self.form.envs, ['key'])) {
+                    Notification.error('添加的环境变量的 KEY 不能重复');
+                } else {
+                    self.form.envs.push(path);
+                }
+            })
         };
 
         self.deleteConfig = function (index, key) {

@@ -200,7 +200,7 @@
 
                     <div class="col-md-5">
                         <button type="button" class="btn btn-info btn-sm"
-                            data-toggle="modal" data-target="#app-volumes">
+                            data-ng-click="createAppCtrl.openVolumeModule()">
                             添加挂载路径
                         </button>
 
@@ -366,7 +366,7 @@
 
                         <div class="form-inline">
                             <button type="button" class="btn btn-info btn-sm"
-                                data-toggle="modal" data-target="#app-path">
+                                data-ng-click="createAppCtrl.openPathModule()">
                                 添加环境变量
                             </button>
                         </div>
@@ -424,5 +424,3 @@
         </div>
     </div>
 </section>
-<div data-ng-include="'/application/common_app_views/volume.html'" data-include-replace></div>
-<div data-ng-include="'/application/common_app_views/path.html'" data-include-replace></div>

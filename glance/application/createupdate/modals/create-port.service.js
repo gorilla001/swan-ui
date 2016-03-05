@@ -15,7 +15,7 @@
 
         function open(ports, proxyNodes, gateWays) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/application/modals/create-appport.html',
+                templateUrl: '/application/createupdate/modals/create-port.html',
                 controller: _CreateAppPortCtrl,
                 controllerAs: 'createAppPortCtrl',
                 size: 'lg',
