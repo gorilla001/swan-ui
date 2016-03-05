@@ -247,7 +247,7 @@
             return appservice.createApp(self.form, self.form.cluster_id)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
-                    $state.go('detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
+                    $state.go('appdetails.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 }, function (resp) {
                     Notification.error('应用' + self.form.name + '创建失败:' + getCodeMessage(resp.code));
                 });
@@ -258,7 +258,7 @@
             delete self.form.cluster_id;
             return appservice.updateApp(self.form, app.cid, app.id)
                 .then(function (data) {
-                    $state.go('detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
+                    $state.go('appdetails.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
                 }, function (resp) {
                     Notification.error('应用' + app.name + '跟新失败:' + getCodeMessage(resp.code));
                 });
