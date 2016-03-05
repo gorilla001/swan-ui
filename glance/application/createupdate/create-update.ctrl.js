@@ -60,7 +60,8 @@
                     imageVersion: '',
                     forceImage: false,
                     network: 'BRIDGE',
-                    constraints: []
+                    constraints: [],
+                    logPaths: []
             };
         } else {
             self.form = {
@@ -76,8 +77,12 @@
                 imageName: app.imageName,
                 imageVersion: app.imageVersion,
                 forceImage: false,
-                network: app.network
+                network: app.network,
+                logPaths: app.logPaths
             };
+            if (!self.form.logPaths) {
+                self.form.logPaths = [];
+            }
             refresClusterData(app.cid, app.id);
             self.single = app.unique;
         }
@@ -235,6 +240,17 @@
                 }
             });
         }
+        
+        //日志路径
+        self.openLogPathModule = function () {
+            formModal.open('/application/createupdate/modals/create-logpath.html', undefined, 'path').then(function (path) {
+                if (isDisableAddList(path, self.form.logPaths)) {
+                    Notification.error('添加的日志路径不能重复');
+                } else {
+                    self.form.logPaths.push(path);
+                }
+            })
+        }
 
         self.createApp = function () {
             setConstraints();
@@ -294,12 +310,16 @@
         
         function isDisableAddList(info, infoArray, attrnames) {
             function equal(info1, info2) {
-                for (var i = 0; i < attrnames.length; i++) {
-                    if (info1[attrnames[i]] != info2[attrnames[i]]) {
-                        return false;
+                if (attrnames) {
+                    for (var i = 0; i < attrnames.length; i++) {
+                        if (info1[attrnames[i]] != info2[attrnames[i]]) {
+                            return false;
+                        }
                     }
+                    return true;
+                } else {
+                    return info1 === info2
                 }
-                return true;
             }
 
             for (var i = 0; i < infoArray.length; i++) {
