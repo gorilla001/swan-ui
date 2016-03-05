@@ -30,8 +30,7 @@
                 then(function(data) {
                     getImageVersions()
                 }, function(data) {
-                    //Notification.error('部署失败: ' + self.addCode[data.code]);
-                    Notification.error('部署失败');
+                    Notification.error('部署失败: ' + getCodeMessage(data.code));
                 });
         };
 
@@ -41,8 +40,7 @@
                     .then(function() {
                         getImageVersions()
                     }, function() {
-                        //Notification.error('删除失败: ' + self.addCode[data.code]);
-                        Notification.error('删除失败');
+                        Notification.error('删除失败: ' + getCodeMessage(data.code));
                     });
             });
         };
@@ -72,8 +70,7 @@
                         self.contentCurPage = self.versions.slice(0, self.pageLength);
                     }
                 }, function(data) {
-                    //Notification.error('获取镜像列表失败: ' + self.addCode[data.code]);
-                    Notification.error('获取镜像列表失败');
+                    Notification.error('获取镜像列表失败: ' + getCodeMessage(data.code));
                 }
             );
         };

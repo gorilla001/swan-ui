@@ -249,7 +249,7 @@
                     Notification.success('应用' + self.form.name + '创建中！');
                     $state.go('detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 }, function (resp) {
-//                    Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
+                    Notification.error('应用' + self.form.name + '创建失败:' + getCodeMessage(resp.code));
                 });
         };
         
@@ -260,7 +260,7 @@
                 .then(function (data) {
                     $state.go('detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
                 }, function (resp) {
-//                    Notification.error('应用' + self.form.name + '创建失败' + resp.data.message)
+                    Notification.error('应用' + app.name + '跟新失败:' + getCodeMessage(resp.code));
                 });
         };
 
