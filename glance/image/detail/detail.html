@@ -1,1 +1,48 @@
-<p></p>
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">查看镜像</h1>
+        <a href="#" class="btn btn-success">创建新应用</a>
+    </div>
+</div>
+<section class="app-detail">
+    <div class="main-container app-title">
+        <div class="main-container-body">
+            <div class="btn-group-vertical pull-right" role="group">
+                <button type="button" class="btn btn-default">部署最新镜像</button>
+                <button type="button" class="btn btn-default">删除项目</button>
+            </div>
+            <h3>Project1
+                <small>最新版本构建于 2月前</small>
+            </h3>
+            <ul>
+                <li><label>部署公钥：</label>ee:f6:94:20:0d:6f:bd:d3:46:16:c7:e0:99:66:f0:84 <a href="#"><i
+                        class="fa fa-files-o"></i></a></li>
+                <li><label>代码源：</label><a href="#">https://github.com/shurenyun/spring-demo.git</a></li>
+                <li><label>拉取镜像：</label>docker pull shurenyun.com/spring-demo/project1:V 1.1 <a href="#"><i
+                        class="fa fa-files-o"></i></a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="main-container"> <!-- Only required for left/right tabs -->
+        <header class="clearfix main-container-header">
+            <ul class="nav nav-tabs">
+                <li data-ng-class="{'active': imageTabFlag ==='appConfig'}" data-toggle="tab"><a
+                        data-ui-sref="appdetails.config"
+                        data-ui-sref-opts="{reload: true}">版本</a></li>
+                <li data-ng-class="{'active': imageTabFlag ==='appVersion'}" data-toggle="tab"><a
+                        data-ui-sref="appdetails.version" data-ui-sref-opts="{reload: true}">说明</a>
+                </li>
+                <li data-ng-class="{'active': imageTabFlag ==='appMonitor'}" data-toggle="tab"><a
+                        data-ui-sref="appdetails.monitoring"
+                        data-ui-sref-opts="{reload: true}">设置</a></li>
+                <li data-ng-class="{'active': imageTabFlag ==='appInstance'}" data-toggle="tab"><a
+                        data-ui-sref="appdetails.instance" data-ui-sref-opts="{reload: true}">事件</a>
+                </li>
+            </ul>
+        </header>
+        <div data-ui-view="imageDetailTab" class="tab-content">
+        </div>
+    </div>
+</section>

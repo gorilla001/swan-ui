@@ -39,7 +39,7 @@
             .state('imageDetail.version', {
                 url: '/version',
                 views: {
-                    'detail': {
+                    'imageDetailTab': {
                         templateUrl: '/image/detail/version.html',
                         controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
                     }
@@ -48,7 +48,7 @@
             .state('imageDetail.brief', {
                 url: '/brief',
                 views: {
-                    'detail': {
+                    'imageDetailTab': {
                         templateUrl: '/image/detail/brief.html',
                         controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
                     }
@@ -57,7 +57,7 @@
             .state('imageDetail.setting', {
                 url: '/setting',
                 views: {
-                    'detail': {
+                    'imageDetailTab': {
                         templateUrl: '/image/detail/setting.html',
                         controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
                     }
@@ -66,7 +66,7 @@
             .state('imageDetail.event', {
                 url: '/event',
                 views: {
-                    'detail': {
+                    'imageDetailTab': {
                         templateUrl: '/image/detail/event.html',
                         controller: 'ImageDetailEventCtrl as imageDetailEventCtrl'
                     }
