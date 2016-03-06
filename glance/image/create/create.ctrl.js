@@ -19,6 +19,7 @@
         };
 
         self.periodList = [
+
             {
                 name: '5 分钟',
                 value: 5
