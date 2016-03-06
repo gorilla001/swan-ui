@@ -243,7 +243,7 @@
         
         //日志路径
         self.openLogPathModule = function () {
-            formModal.open('/application/createupdate/modals/create-logpath.html', undefined, 'path').then(function (path) {
+            formModal.open('/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
                 if (isDisableAddList(path, self.form.logPaths)) {
                     Notification.error('添加的日志路径不能重复');
                 } else {

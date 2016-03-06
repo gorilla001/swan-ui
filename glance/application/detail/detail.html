@@ -35,7 +35,7 @@
                             <li data-ng-hide="detailAppCtrl.appStatus.status == 'undefined' || detailAppCtrl.appStatus.status == '5'"><a
                                     data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)" href="#">删除</a></li>
                             <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a
-                                    href="#" data-ng-click="detailAppCtrl.openUpContainerModal(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">扩展</a></li>
+                                    href="#" data-ng-click="detailAppCtrl.upContainerModal(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">扩展</a></li>
                             <li data-ng-show="detailAppCtrl.appStatus.status == '9'"><a
                                     data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
                                     href="#">恢复</a></li>

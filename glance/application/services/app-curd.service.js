@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .factory('appcurd', appcurd);
 
-    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal'];
+    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal', 'formModal'];
 
-    function appcurd(Notification, appservice, $state, confirmModal) {
+    function appcurd(Notification, appservice, $state, confirmModal, formModal) {
         return {
             stop: stop,
             start: start,
@@ -48,11 +48,14 @@
                 })
         }
 
-        function updateContainer(data, clusterId, appId) {
-            return appservice.updateContainerNum(data, clusterId, appId)
-                .then(function (data) {
-                    $state.reload();
-                })
+        function updateContainer(curInsNmu, clusterId, appId) {
+            formModal.open('/application/modals/up-container.html', 
+                    {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
+                        var data = {instances: self.instanceNum};
+                        appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
+                            $state.reload();
+                        });
+                    });
         }
 
         function redeploy(data, clusterId, appId) {

@@ -13,30 +13,40 @@
             open: open
         };
 
-        function open(templateUrl, size, dataName) {
+        //options: size,dataName,initData,ctrlName
+        function open(templateUrl, options) {
+            if (!options) {
+                options = {};
+            }
+            if (!options.dataName) {
+                options.dataName = 'form';
+            }
+            if (!options.ctrlName) {
+                options.ctrlName = 'formCtrl';
+            }
             var modalInstance = $uibModal.open({
                 templateUrl: templateUrl,
                 controller: FormModalCtrl,
-                controllerAs: 'formCtrl',
-                size: size,
+                controllerAs: options.ctrlName,
+                size: options.size,
                 resolve: {
                     dataName: function () {
-                            if (dataName) {
-                                return dataName
-                            } else {
-                                return 'form'
-                            }
-                        }
+                        return options.dataName
+                    },
+                    initData: function () {
+                        return options.initData
+                    }
                 }
             })
             
             return modalInstance.result;
         }
         
-        FormModalCtrl.$inject = ['$uibModalInstance', 'dataName'];
+        FormModalCtrl.$inject = ['$uibModalInstance', 'dataName', 'initData'];
         
-        function FormModalCtrl($uibModalInstance, dataName) {
+        function FormModalCtrl($uibModalInstance, dataName, initData) {
             self = this;
+            self[dataName] = initData;
             
             self.ok = function () {
                 $uibModalInstance.close(self[dataName]);

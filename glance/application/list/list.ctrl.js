@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('ListAppCtrl', ListAppCtrl);
 
-    ListAppCtrl.$inject = ['ngTableParams', 'upContainerModal', 'listClusters', '$rootScope', '$timeout', '$scope', 'appcurd', 'appservice'];
+    ListAppCtrl.$inject = ['ngTableParams', 'listClusters', '$rootScope', '$timeout', '$scope', 'appcurd', 'appservice'];
 
-    function ListAppCtrl(ngTableParams, upContainerModal, listClusters, $rootScope, $timeout, $scope, appcurd, appservice) {
+    function ListAppCtrl(ngTableParams, listClusters, $rootScope, $timeout, $scope, appcurd, appservice) {
         var self = this;
         var listAppPromise;
         var appListReloadInterval = 5000;
@@ -117,8 +117,8 @@
             appcurd.redeploy(data, clusterId, appId)
         };
 
-        self.openUpContainerModal = function (clusterId, appId, instanceNum) {
-            upContainerModal.open(instanceNum, clusterId, appId);
+        self.upContainerModal = function (clusterId, appId, instanceNum) {
+            appcurd.updateContainer(instanceNum, clusterId, appId);
         };
 
         $scope.$on('$destroy', function () {

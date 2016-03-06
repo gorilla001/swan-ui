@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('DetailAppCtrl', DetailAppCtrl);
 
-    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', 'upContainerModal', '$scope', "$stateParams", "$timeout", "$rootScope"];
+    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', '$scope', "$stateParams", "$timeout", "$rootScope"];
 
-    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, upContainerModal, $scope, $stateParams, $timeout, $rootScope) {
+    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, $scope, $stateParams, $timeout, $rootScope) {
         var self = this;
         
         $rootScope.show = "application";
@@ -59,8 +59,8 @@
             appcurd.del(clusterId, appId)
         };
 
-        self.openUpContainerModal = function (clusterId, appId, instanceNum) {
-            upContainerModal.open(instanceNum, clusterId, appId);
+        self.upContainerModal = function (clusterId, appId, instanceNum) {
+            appcurd.updateContainer(instanceNum, clusterId, appId);
         };
         
         function refreshData() {
