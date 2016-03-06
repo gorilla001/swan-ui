@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h1>构建镜像</h1>
+    <a data-ui-sref="imageCreate" class="btn btn-success" data-demo-disable="left">新建项目</a>
+</div>
+<section>
+    <div class="main-container">
+        <div class="main-container-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>状态</th>
+                        <th>镜像名称</th>
+                        <th>最近构建时间</th>
+                        <th>最新版本</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="project in imageHomeCtrl.projects">
+                        <td><a href="#">{/project.name/}</a></td>
+                        <td><span class="text-success"><i class="fa fa-check-circle"></i> {/project.triggerType/}</span></td>
+                        <td>{/project.repoUri/}</td>
+                        <td>2016.02.25</td>
+                        <td>{/project.versions/}</td>
+                        <td>
+                            <button class="btn btn-default btn-xs" data-ui-sref="appcreate">部署</button>
+                            <button class="btn btn-danger btn-xs" data-ng-click="deleteProject(project.id)">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="alert alert-warning text-center" data-ng-show="false">
+            未查询到任何项目
+        </div>
+    </div>
+    </div>
+</section>
