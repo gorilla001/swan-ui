@@ -163,7 +163,8 @@ BACKEND_URL = {
         appsStatus: "api/v3/apps/status",
         appStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status",
         appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks",
-        ports: "api/v3/clusters/$cluster_id/ports"
+        ports: "api/v3/clusters/$cluster_id/ports",
+        logPaths: "api/v3/clusters/$cluster_id/apps/$app_id/logpaths"
     }
 
 };

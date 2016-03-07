@@ -17,6 +17,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
 
     $scope.clusterlogs = new LogLoader();
     $scope.contextlogs = new LogLoader();
+    $scope.inputLogPaths = [];
 
     $scope.listCluster = function () {
         gHttp.Resource('cluster.clusters').get().then(function (data) {
@@ -49,6 +50,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
                 });
                 $scope.inputNodesInfo = tempNodesInfo;
             });
+            fetchLogPathes();
         }
     };
 
@@ -66,6 +68,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     };
 
     $scope.getLog = function () {
+        var source = abstractValues($scope.logPaths, 'logpath');
         $scope.showContextUI = false;
 
         //set timeRange when click Button
@@ -84,7 +87,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             'clusterId': $scope.clusterId,
             'nodeId': $scope.nodeId,
             'appName': $scope.appName,
-            'logSearchKey': $scope.logSearchKey
+            'logSearchKey': $scope.logSearchKey,
+            'source':  source
         };
 
         clusterIdTemp = $scope.searchData.clusterId;
@@ -147,4 +151,32 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             $scope.gte = new Date((new Date()).getTime() - 60 * 60 * 1000);
         }
     });
+
+    function fetchLogPathes() {
+        listLogPathes($scope.clusterId, $scope.appId)
+            .then(function(data) {
+                $scope.inputLogPaths = data;
+            });
+    };
+
+    function listLogPathes(clusterId, appId) {
+        var urlParams = {
+            cluster_id: clusterId,
+            app_id: appId
+        };
+        return gHttp.Resource('app.logPaths', urlParams).get();
+    }
+
+    function abstractValues(array, keywords) {
+        var values = [];
+        angular.forEach(array, function(item, index) {
+            angular.forEach(item, function(value, key) {
+                if (keywords === key) {
+                    values.push(value);
+                }
+            });
+        });
+        return values;
+    }
+   
 }
