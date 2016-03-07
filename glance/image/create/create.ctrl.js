@@ -3,27 +3,22 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice'];
+    ImageCreateCtrl.$inject = ['imageservice', '$rootScope'];
 
-    function ImageCreateCtrl(imageservice) {
+    function ImageCreateCtrl(imageservice, $rootScope) {
         var self = this;
         ///
         self.form = {
-            uid: 0,
+            uid: $rootScope.userId,
             id: 0,
-            parentId: 0,
             name: "",
             repoUri: "",
             triggerType: 0,
             active: true,
-            versions: 0,
-            autoBuild: 'true',
-            tag: true,
-            branch: false,
-            autoTime: 5
+            period: 5
         };
 
-        self.options = [
+        self.periodList = [
             {
                 name: '5 分钟',
                 value: 5
@@ -35,6 +30,8 @@
         ];
 
         self.triggerCount = 1;
+        self.tag = true;
+        self.branch = false;
 
         self.createProject = function (fromData) {
             console.log(self.form);
@@ -50,5 +47,15 @@
                 self.triggerCount--;
             }
         };
+
+        self.triggerRules = function(){
+            if(self.tag && self.branch){
+                self.form.triggerType = 3
+            } else if(self.tag){
+                self.form.triggerType = 1
+            } else if(self.branch){
+                self.form.triggerType = 2
+            }
+        }
     }
 })();

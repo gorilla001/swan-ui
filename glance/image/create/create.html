@@ -43,41 +43,41 @@
                     <label class="col-sm-2 control-label">自动构建</label>
                     <div class="col-sm-2">
                         <label class="radio-inline">
-                            <input type="radio" data-ng-model="imageCreateCtrl.form.autoBuild" value="true"> 是
+                            <input type="radio" data-ng-model="imageCreateCtrl.form.active" ng-value="true"> 是
                         </label>
 
                     </div>
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input type="radio" data-ng-model="imageCreateCtrl.form.autoBuild" value="false"> 否
+                            <input type="radio" data-ng-model="imageCreateCtrl.form.active" ng-value="false"> 否
                         </label>
                     </div>
                 </div>
 
-                <div class="form-group" data-ng-show="imageCreateCtrl.form.autoBuild === 'true'">
+                <div class="form-group" data-ng-show="imageCreateCtrl.form.active">
                     <label class="col-sm-2 control-label">自动构建时间</label>
                     <div class="col-md-5">
                         <select class="form-control"
-                                data-ng-options=" option.value as option.name for option in imageCreateCtrl.options"
-                                data-ng-model="imageCreateCtrl.form.autoTime"
-                                data-required="imageCreateCtrl.form.autoBuild === 'true'">
+                                data-ng-options=" period.value as period.name for period in imageCreateCtrl.periodList"
+                                data-ng-model="imageCreateCtrl.form.period"
+                                data-required="imageCreateCtrl.form.active">
                         </select>
                     </div>
                 </div>
 
-                <div class="form-group" data-ng-show="imageCreateCtrl.form.autoBuild === 'true'">
+                <div class="form-group" data-ng-show="imageCreateCtrl.form.active">
                     <label class="col-sm-2 control-label">触发规则</label>
                     <div class="col-sm-2">
                         <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="imageCreateCtrl.form.tag"
-                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.form.tag)"
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.tag" ng-change="imageCreateCtrl.triggerRules()"
+                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.tag)"
                             > Tag 更新
                         </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="imageCreateCtrl.form.branch"
-                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.form.branch)"
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.branch" ng-change="imageCreateCtrl.triggerRules()"
+                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.branch)"
                             > 代码分支更新
                         </label>
                     </div>
