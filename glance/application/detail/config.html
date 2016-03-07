@@ -83,6 +83,19 @@
                 </tr>
                 </tbody>
             </table>
+            <h4 ng-show=" detailAppCtrl.appInfo.logPaths.length"><span>日志目录</span></h4>
+            <table class="table table-striped table-bordered" ng-show=" detailAppCtrl.appInfo.logPaths.length">
+                <thead>
+                <tr>
+                    <th>目录</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="logPath  in  detailAppCtrl.appInfo.logPaths">
+                    <td>{/logPath/}</td>
+                </tr>
+                </tbody>
+            </table>
             <h4 ng-show=" detailAppCtrl.appInfo.cmd"><span>启动命令</span></h4>
             <dl ng-show=" detailAppCtrl.appInfo.cmd">
                 <dt>启动命令：</dt>
