@@ -200,7 +200,7 @@
 
                     <div class="col-md-5">
                         <button type="button" class="btn btn-info btn-sm"
-                            data-toggle="modal" data-target="#app-volumes">
+                            data-ng-click="createAppCtrl.openVolumeModule()">
                             添加挂载路径
                         </button>
 
@@ -366,7 +366,7 @@
 
                         <div class="form-inline">
                             <button type="button" class="btn btn-info btn-sm"
-                                data-toggle="modal" data-target="#app-path">
+                                data-ng-click="createAppCtrl.openPathModule()">
                                 添加环境变量
                             </button>
                         </div>
@@ -386,6 +386,41 @@
                                     <td>{/env.value/}</td>
                                     <td>
                                         <button type="button" data-ng-click="createAppCtrl.deleteConfig($index, 'envs')"
+                                                class="btn btn-default btn-xs">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 日志目录 -->
+                        <div class="item-header">
+                            <h4>日志目录
+                                <small>应用的日志文件目录，如'/var/log/app1/'</small>
+                            </h4>
+                        </div>
+
+                        <div class="form-inline">
+                            <button type="button" class="btn btn-info btn-sm"
+                                data-ng-click="createAppCtrl.openLogPathModule()">
+                                添加日志目录
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" data-ng-show="createAppCtrl.form.logPaths.length">
+                                <thead>
+                                <tr>
+                                    <th>路径</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="logPath in createAppCtrl.form.logPaths">
+                                    <td>{/logPath/}</td>
+                                    <td>
+                                        <button type="button" data-ng-click="createAppCtrl.deleteConfig($index, 'logPaths')"
                                                 class="btn btn-default btn-xs">删除
                                         </button>
                                     </td>
@@ -424,5 +459,3 @@
         </div>
     </div>
 </section>
-<div data-ng-include="'/application/common_app_views/volume.html'" data-include-replace></div>
-<div data-ng-include="'/application/common_app_views/path.html'" data-include-replace></div>

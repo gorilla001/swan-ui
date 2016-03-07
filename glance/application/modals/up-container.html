@@ -5,16 +5,16 @@
 <form class="form-horizontal" name="volumesForm">
     <div class="modal-body">
         <div class="form-inline" data-ng-class="{ 'has-error' : volumesForm.containerNum.$invalid && !volumesForm.containerNum.$pristine}">
-            <input type="number" class="form-control" data-ng-model="upContainerCtrl.instanceNum" min="1" name="containerNum" data-required>
+            <input type="number" class="form-control" data-ng-model="formCtrl.instanceNum" min="1" name="containerNum" data-required>
             <p data-ng-show="volumesForm.containerNum.$error.required && !volumesForm.containerNum.$pristine" class="help-block">扩展数不能为空</p>
             <p data-ng-show="volumesForm.containerNum.$error.min && !volumesForm.containerNum.$pristine" class="help-block">扩展数最小值为1</p>
         </div>
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" data-ng-disabled="volumesForm.$invalid" data-ng-click="upContainerCtrl.updateContainer()" data-demo-disable>
+        <button class="btn btn-primary" type="submit" data-ng-disabled="volumesForm.$invalid" data-ng-click="formCtrl.ok()">
             确定
         </button>
-        <button class="btn btn-default" type="button" data-ng-click="upContainerCtrl.cancel()">取消</button>
+        <button class="btn btn-default" type="button" data-ng-click="formCtrl.cancel()">取消</button>
     </div>
 </form>

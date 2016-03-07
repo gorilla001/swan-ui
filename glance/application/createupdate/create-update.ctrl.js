@@ -14,6 +14,7 @@
         'clusterBackendService', 
         'appLabelService',
         'createAppPortModal',
+        'formModal',
         '$state',
         'target',
         'app',
@@ -28,6 +29,7 @@
         clusterBackendService, 
         appLabelService,
         createAppPortModal,
+        formModal,
         $state,
         target,
         app,
@@ -58,7 +60,8 @@
                     imageVersion: '',
                     forceImage: false,
                     network: 'BRIDGE',
-                    constraints: []
+                    constraints: [],
+                    logPaths: []
             };
         } else {
             self.form = {
@@ -74,8 +77,12 @@
                 imageName: app.imageName,
                 imageVersion: app.imageVersion,
                 forceImage: false,
-                network: app.network
+                network: app.network,
+                logPaths: app.logPaths
             };
+            if (!self.form.logPaths) {
+                self.form.logPaths = [];
+            }
             refresClusterData(app.cid, app.id);
             self.single = app.unique;
         }
@@ -164,21 +171,16 @@
         };
 
         // 挂载点
-        $scope.pushVolume = function() {
-            var volume = {
-                hostPath: this.hostPath,
-                containerPath: this.containerPath
-            };
-            if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
-                Notification.error('无法映射主机的多个目录到同一个容器目录');
-            } else {
-                self.form.volumes.push(volume);
-            }
+        self.openVolumeModule = function () {
+            formModal.open('/application/createupdate/modals/create-volume.html').then(function (volume) {
+                if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
+                    Notification.error('无法映射主机的多个目录到同一个容器目录');
+                } else {
+                    self.form.volumes.push(volume);
+                }
+            })
         };
 
-        self.deletVolume = function(index) {
-            self.form.volumes.splice(index, 1);
-        };
 
         self.containerConfig = {
             cpu: {
@@ -211,16 +213,14 @@
         self.cpuSlideValue = self.form.cpus * 10;
         self.memSlideValue = Math.log(self.form.mem)/Math.LN2;
 
-        $scope.addPath = function () {
-            var path = {
-                key: this.pathKey,
-                value: this.pathValue
-            };
-            if (isDisableAddList(path, self.form.envs, ['key'])) {
-                Notification.error('添加的环境变量的 KEY 不能重复');
-            } else {
-                self.form.envs.push(path);
-            }
+        self.openPathModule = function () {
+            formModal.open('/application/createupdate/modals/create-path.html').then(function (path) {
+                if (isDisableAddList(path, self.form.envs, ['key'])) {
+                    Notification.error('添加的环境变量的 KEY 不能重复');
+                } else {
+                    self.form.envs.push(path);
+                }
+            })
         };
 
         self.deleteConfig = function (index, key) {
@@ -241,6 +241,17 @@
                     self.form.portMappings.push(portInfo);
                 }
             });
+        }
+        
+        //日志路径
+        self.openLogPathModule = function () {
+            formModal.open('/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
+                if (isDisableAddList(path, self.form.logPaths)) {
+                    Notification.error('添加的日志路径不能重复');
+                } else {
+                    self.form.logPaths.push(path);
+                }
+            })
         }
 
         self.createApp = function () {
@@ -301,12 +312,16 @@
         
         function isDisableAddList(info, infoArray, attrnames) {
             function equal(info1, info2) {
-                for (var i = 0; i < attrnames.length; i++) {
-                    if (info1[attrnames[i]] != info2[attrnames[i]]) {
-                        return false;
+                if (attrnames) {
+                    for (var i = 0; i < attrnames.length; i++) {
+                        if (info1[attrnames[i]] != info2[attrnames[i]]) {
+                            return false;
+                        }
                     }
+                    return true;
+                } else {
+                    return info1 === info2
                 }
-                return true;
             }
 
             for (var i = 0; i < infoArray.length; i++) {
