@@ -53,6 +53,10 @@
             return gHttp.Resource('image.projectApps', {project_id: projectId}).get();
         }
 
+        function listProjectApps(projectId) {
+            return gHttp.Resource('image.projectApps', {project_id: projectId}).get();
+        }
+
         function buildImage(projectId, data) {
             return gHttp.Resource('image.projectImages', {project_id: projectId}).post(data);
         }
