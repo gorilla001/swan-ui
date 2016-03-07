@@ -62,15 +62,6 @@
                         controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
                     }
                 }
-            })
-            .state('imageDetail.event', {
-                url: '/event',
-                views: {
-                    'imageDetailTab': {
-                        templateUrl: '/image/detail/event.html',
-                        controller: 'ImageDetailEventCtrl as imageDetailEventCtrl'
-                    }
-                }
             });
 
     }
