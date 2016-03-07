@@ -33,7 +33,6 @@
         self.branch = false;
 
         self.createProject = function (fromData) {
-            console.log(self.form);
             imageservice.createProject(fromData).then(function (data) {
                 $state.go('imageHome')
             })

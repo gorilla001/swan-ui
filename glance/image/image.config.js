@@ -69,9 +69,9 @@
 
     }
 
-    project.$inject = ['gHttp', '$state'];
-    function project(gHttp, $state) {
-        return imageservice.getProject($state.params.projectId);
+    getProject.$inject = ['$stateParams','imageservice'];
+    function getProject($stateParams, imageservice) {
+        return imageservice.getProject($stateParams.projectId);
     }
 
 
