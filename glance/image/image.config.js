@@ -34,6 +34,9 @@
                         templateUrl: '/image/detail/detail.html',
                         controller: 'ImageDetailCtrl as imageDetailCtrl'
                     }
+                },
+                resolve: {
+                    project: getProject
                 }
             })
             .state('imageDetail.version', {
@@ -65,5 +68,11 @@
             });
 
     }
+
+    project.$inject = ['gHttp', '$state'];
+    function project(gHttp, $state) {
+        return imageservice.getProject($state.params.projectId);
+    }
+
 
 })();

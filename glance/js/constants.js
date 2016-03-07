@@ -174,11 +174,11 @@ BACKEND_URL = {
         groupMemberships: 'api/v3/groups/$group_id/memberships',
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships'
     },
-
     image: {
         projects: 'api/v3/projects',
         project: 'api/v3/projects/$project_id',
         projectImages: 'api/v3/projects/$project_id/images',
+        projectApps: 'api/v3/projects/$project_id/apps',
         deleteImage: 'api/v3/projects/$project_id/images/$image_id',
         imageLog: 'api/v3/projects/$project_id/images/$image_id/logs'
     }

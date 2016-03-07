@@ -14,6 +14,7 @@
             getProject: getProject,
             updateProject: updateProject,
             listProjectImages: listProjectImages,
+            listProjectApps: listProjectApps,
             buildImage: buildImage,
             deleteImage: deleteImage,
             imageLog: imageLog
@@ -42,6 +43,10 @@
 
         function listProjectImages(projectId) {
             return gHttp.Resource('image.projectImages', {project_id: projectId}).get();
+        }
+
+        function listProjectApps(projectId) {
+            return gHttp.Resource('image.projectApps', {project_id: projectId}).get();
         }
 
         function buildImage(projectId, data) {
