@@ -82,6 +82,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHt
         return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId}).
             post(postData).then(function() {
                 updateClusterLabels($stateParams.clusterId);
+                updateContentPage();
             }, function(data) {
                 Notification.error(data.data.labels);
             });
@@ -92,6 +93,7 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHt
         return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId})
             .delete({'data': deleteData}).then(function() {
                 updateClusterLabels($stateParams.clusterId);
+                updateContentPage();
             }, function(resp) {
                 Notification.error(resp.data.labels);
             });
@@ -163,6 +165,10 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHt
             }
         });
         return labels;
+    }
+
+    function updateContentPage() {
+        $scope.getCurCluster();
     }
 
 }
