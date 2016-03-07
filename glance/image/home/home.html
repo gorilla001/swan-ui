@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                     <tr data-ng-repeat="project in imageHomeCtrl.projects">
-                        <td><a href="#">{/project.name/}</a></td>
+                        <td><a href="#" data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a></td>
                         <td><span class="text-success"><i class="fa fa-check-circle"></i> {/project.triggerType/}</span></td>
                         <td>{/project.repoUri/}</td>
                         <td>2016.02.25</td>

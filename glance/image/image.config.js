@@ -27,7 +27,7 @@
                 }
             })
             .state('imageDetail', {
-                url: '/image/detail/:image_id',
+                url: '/image/detail/:projectId',
                 abstract: true,
                 views: {
                     '': {

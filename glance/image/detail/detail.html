@@ -11,49 +11,53 @@
                 <button type="button" class="btn btn-default">部署最新镜像</button>
                 <button type="button" class="btn btn-default">删除项目</button>
             </div>
-            <h3>Project1
-                <small>最新版本构建于 2月前</small>
+            <h3>
+                {/imageDetailCtrl.project.name/}
+                <small>最新版本构建于{/imageDetailCtrl.project.createTime/}月前</small>
             </h3>
             <ul>
                 <li>
                     <label>部署公钥：</label>
-                    ee:f6:94:20:0d:6f:bd:d3:46:16:c7:e0:99:66:f0:84
+                    {/imageDetailCtrl.project.pubKey/}
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                     </a>
                 </li>
                 <li>
                     <label>代码源：</label>
-                    <a href="https://github.com/shurenyun/spring-demo.git" target="_blank">
-                        https://github.com/shurenyun/spring-demo.git
+                    <a href={/imageDetailCtrl.project.repoUri/} target="_blank">
+                        {/imageDetailCtrl.project.repoUri/}
                     </a>
                 </li>
                 <li>
                     <label>拉取镜像：</label>
-                    <span id="imageAddress">docker pull shurenyun.com/spring-demo/project1:V 1.1</span>
+                    <span id="latestImage">
+                        docker pull {/imageDetailCtrl.project.latestImage/}
+                    </span>
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                     </a>
-                    <button class="copy" data-clipboard-target="imageAddress">拷贝</button>
+                    <button class="copy" data-clipboard-target="latestImage">
+                        拷贝
+                    </button>
                 </li>
             </ul>
 
         </div>
     </div>
-
     <div class="main-container"> <!-- Only required for left/right tabs -->
         <header class="clearfix main-container-header">
             <ul class="nav nav-tabs">
-                <li data-ng-class="{'active': imageTabFlag ==='appConfig'}" data-toggle="tab">
-                    <a data-ui-sref="appdetails.config"
+                <li data-toggle="tab">
+                    <a href="#" data-ui-sref="imageDetail.version"
                         data-ui-sref-opts="{reload: true}">版本</a>
                 </li>
-                <li data-ng-class="{'active': imageTabFlag ==='appVersion'}" data-toggle="tab">
-                    <a data-ui-sref="appdetails.version"
+                <li data-toggle="tab">
+                    <a href="#" data-ui-sref="imageDetail.brief"
                         data-ui-sref-opts="{reload: true}">说明</a>
                 </li>
-                <li data-ng-class="{'active': imageTabFlag ==='appMonitor'}" data-toggle="tab">
-                    <a data-ui-sref="appdetails.monitoring"
+                <li data-toggle="tab">
+                    <a href="#" data-ui-sref="imageDetail.setting"
                         data-ui-sref-opts="{reload: true}">设置</a>
                 </li>
             </ul>
