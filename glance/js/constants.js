@@ -1,18 +1,21 @@
 MESSAGE_CODE = {
     success: 0,
-    dataInvalid: 10001
+    dataInvalid: 10001,
+    noExist: 10009
 };
 
-APP_CODE = {
-    100: "应用名称冲突",
-    101: "端口冲突",
-    102: "版本冲突",
-    103: "应用被锁定",
-    104: "撤销失败，应用扩展已完成",
-    105: "更新已完成,",
-    106: "环境变量命名不合法",
-    999: "网络异常"
-};
+CODE_MESSAGE = {
+        
+}
+
+function getCodeMessage (code) {
+    if (CODE_MESSAGE[code]) {
+        return CODE_MESSAGE[code]
+    } else {
+        return ''
+    }
+}
+
 
 APP_STATUS = {
     'undefined': "加载中",

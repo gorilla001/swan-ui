@@ -25,7 +25,7 @@
             appservice.listAppInstances($stateParams.cluster_id, $stateParams.app_id, loading).then(function(data){
                 self.instances = data;
             }).catch(function (data) {
-//                Notification.error('获取实例失败: ' + $scope.addCode[data.code]);
+                Notification.error('获取实例失败: ' + getCodeMessage(data.code));
             });
         }
     }

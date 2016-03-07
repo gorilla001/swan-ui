@@ -190,18 +190,6 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
         $interpolateProvider.endSymbol('/}');
     }]);
 
-getAppInfo.$inject = ['gHttp', '$stateParams', 'Notification'];
-function getAppInfo(gHttp, $stateParams, Notification) {
-    return gHttp.Resource('app.info', {app_id: $stateParams.appId}).get().catch(function (code) {
-        Notification.error(APP_CODE[code]);
-    });
-}
-
-updateConfig.$inject = ['glanceHttp', '$stateParams'];
-function updateConfig(glanceHttp, $stateParams) {
-    return glanceHttp.ajaxGet(['app.config', {app_id: $stateParams.appId}]);
-}
-
 glanceApp.run(glanceInit);
 
 glanceInit.$inject = ['glanceUser', 'glanceHttp', '$rootScope', 'gHttp'];
