@@ -41,8 +41,7 @@
     "ng-dialog": "0.3.7",
     "angular-ui-bootstrap-datetimepicker": "~0.14.0",
     "angularjs-slider": "~2.0.0",
-    "ng-table": "~0.8.3",
-    "font-awesome": "~4.5.0"
+    "ng-table": "~0.8.3"
   },
   "resolutions": {
     "angular": ">= 1.0.8"
