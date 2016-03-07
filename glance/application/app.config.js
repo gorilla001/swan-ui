@@ -9,7 +9,7 @@
 
         $stateProvider
             .state('appcreate', {
-                url: '/app/create',
+                url: '/app/create?url&version',
                 views: {
                     '': {
                         templateUrl: '/application/createupdate/create-update.html',

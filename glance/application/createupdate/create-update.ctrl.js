@@ -18,7 +18,8 @@
         '$state',
         'target',
         'app',
-        '$rootScope'
+        '$rootScope',
+        '$stateParams'
     ];
 
     function CreateAppCtrl(
@@ -33,7 +34,8 @@
         $state,
         target,
         app,
-        $rootScope
+        $rootScope,
+        $stateParams
     ) {
         
         $rootScope.show = "application";
@@ -55,8 +57,8 @@
                     mem: 16,
                     cmd: '',
                     envs: [],
-                    imageName: '',
-                    imageVersion: '',
+                    imageName: $stateParams.url,
+                    imageVersion: $stateParams.version,
                     forceImage: false,
                     network: 'BRIDGE',
                     constraints: [],

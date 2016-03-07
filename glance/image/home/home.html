@@ -23,10 +23,10 @@
                         <td><span class="text-success"><i class="fa fa-check-circle"></i> {/project.triggerType/}</span></td>
                         <td>{/project.repoUri/}</td>
                         <td>2016.02.25</td>
-                        <td>{/project.versions/}</td>
+                        <td>{/project.latestImage/}</td>
                         <td>
-                            <button class="btn btn-default btn-xs" data-ui-sref="appcreate">部署</button>
-                            <button class="btn btn-danger btn-xs" data-ng-click="deleteProject(project.id)">删除</button>
+                            <button class="btn btn-default btn-xs" data-ui-sref="appcreate({url:project.repoUri,version: 'latest'})">部署</button>
+                            <button class="btn btn-danger btn-xs" data-ng-click="imageHomeCtrl.deleteProject(project.id)">删除</button>
                         </td>
                     </tr>
                     </tbody>

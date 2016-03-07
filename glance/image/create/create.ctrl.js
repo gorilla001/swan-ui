@@ -3,17 +3,16 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice', '$rootScope'];
+    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state'];
 
-    function ImageCreateCtrl(imageservice, $rootScope) {
+    function ImageCreateCtrl(imageservice, $rootScope, $state) {
         var self = this;
         ///
         self.form = {
-            uid: $rootScope.userId,
-            id: 0,
+            uid: parseInt($rootScope.userId),
             name: "",
             repoUri: "",
-            triggerType: 0,
+            triggerType: 1,
             active: true,
             period: 5
         };
@@ -35,9 +34,9 @@
 
         self.createProject = function (fromData) {
             console.log(self.form);
-            //imageservice.createProject(fromData).then(function (data) {
-            //    ////
-            //})
+            imageservice.createProject(fromData).then(function (data) {
+                $state.go('imageHome')
+            })
         };
 
         self.triggerCheck = function (checkValue) {
@@ -48,12 +47,12 @@
             }
         };
 
-        self.triggerRules = function(){
-            if(self.tag && self.branch){
+        self.triggerRules = function () {
+            if (self.tag && self.branch) {
                 self.form.triggerType = 3
-            } else if(self.tag){
+            } else if (self.tag) {
                 self.form.triggerType = 1
-            } else if(self.branch){
+            } else if (self.branch) {
                 self.form.triggerType = 2
             }
         }
