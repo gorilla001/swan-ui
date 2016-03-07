@@ -13,7 +13,8 @@ var glanceApp = angular.module('glance',
         'rzModule',
         'ngTable',
         'glance.utils',
-        'glance.app'
+        'glance.app',
+        'glance.user'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider',
