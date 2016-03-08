@@ -178,5 +178,4 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         });
         return values;
     }
-   
 }
