@@ -1,0 +1,48 @@
+<div class="main-container-body">
+    <div class="tab-content">
+        <div class="tab-pane active" id="version">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Build Number</th>
+                            <th>分支</th>
+                            <th>Tag/Commit</th>
+                            <th>时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="image in imageDetailVersionCtrl.projectImages">
+                            <td>
+                                {/image.id/}
+                                <span class="label label-info" data-ng-show="image.latest">latest</span>
+                            </td>
+                            <td>{/image.branch/}</td>
+                            <td>{/image.vsn/}</td>
+                            <td>{/image.created/}</td>
+                            <td>
+                                <button class="btn btn-default btn-xs">拷贝pull命令</button> <button class="btn btn-default btn-xs">部署镜像</button> <button class="btn btn-default btn-xs">日志</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <uib-pagination
+                data-ng-show="imageDetailVersionCtrl.pagination.showPagination"
+                total-items="imageDetailVersionCtrl.pagination.totalItems"
+                ng-model="imageDetailVersionCtrl.pagination.currentPage"
+                class="pagination-sm"
+                boundary-links="true"
+                items-per-page="imageDetailVersionCtrl.pagination.itemPerPage"
+                previous-text="上一页"
+                next-text="下一页"
+                first-text="第一页"
+                last-text="最后一页"
+                max-size="imageDetailVersionCtrl.pagination.maxSize"
+                data-ng-change="imageDetailVersionCtrl.pageChange()"
+                >
+            </uib-pagination>
+        </div>
+    </div>
+</div>

@@ -41,8 +41,12 @@
             return gHttp.Resource('image.project', {project_id: projectId}).put(data);
         }
 
-        function listProjectImages(projectId) {
-            return gHttp.Resource('image.projectImages', {project_id: projectId}).get();
+        function listProjectImages(projectId, page, itemPerPage) {
+            var params = {
+                page: page,
+                per_page: itemPerPage
+            };
+            return gHttp.Resource('image.projectImages', {project_id: projectId}).get({params: params});
         }
 
         function listProjectApps(projectId) {
