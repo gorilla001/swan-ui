@@ -2260,3 +2260,8 @@ rzslider .rz-bar.rz-selection {
     border-left: 1px solid #e4e4e4;
     border-right: 1px solid #d9d9d9;
 }
+.multiSelect .buttonLabel {
+    font-size: 12px;
+    padding: 4px 0;
+
+}
