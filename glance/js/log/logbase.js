@@ -86,7 +86,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             'lte': $scope.lte,
             'clusterId': $scope.clusterId,
             'nodeId': $scope.nodeId,
-            'appName': $scope.app.name,
+            'appName': $scope.app.alias,
             'logSearchKey': $scope.logSearchKey,
             'source':  source
         };
@@ -109,7 +109,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         $scope.showContextUI = true;
 
         $scope.contextSearchData = {
-            appName: $scope.app.name,
+            appName: $scope.app.alias,
             counter: parseInt(logInfo.counter[0]),
             timestamp: logInfo.timestamp[0],
             ipport: logInfo.ipport[0],
