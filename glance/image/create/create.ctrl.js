@@ -3,18 +3,19 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state'];
+    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting'];
 
-    function ImageCreateCtrl(imageservice, $rootScope, $state) {
+    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting) {
         var self = this;
         ///
         self.form = {
             uid: parseInt($rootScope.userId),
             name: "",
             repoUri: "",
-            triggerType: 1,
+            triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
             active: true,
-            period: 5
+            period: 5,
+            description: ""
         };
 
         self.periodList = [
@@ -25,6 +26,10 @@
             {
                 name: '10 分钟',
                 value: 10
+            },
+            {
+                name: '半小时',
+                value: 30
             }
         ];
 
@@ -32,28 +37,22 @@
         self.tag = true;
         self.branch = false;
 
-        self.createProject = function (fromData) {
+        self.createProject = createProject;
+        self.triggerCheck = triggerCheck;
+        self.triggerRules = triggerRules;
+
+        function createProject(fromData) {
             imageservice.createProject(fromData).then(function (data) {
                 $state.go('imageHome')
             })
-        };
+        }
 
-        self.triggerCheck = function (checkValue) {
-            if (checkValue) {
-                self.triggerCount++;
-            } else {
-                self.triggerCount--;
-            }
-        };
+        function triggerCheck(checkValue) {
+            self.triggerCount = imageBuildSetting.triggerCheck(checkValue, self.triggerCount)
+        }
 
-        self.triggerRules = function () {
-            if (self.tag && self.branch) {
-                self.form.triggerType = 3
-            } else if (self.tag) {
-                self.form.triggerType = 1
-            } else if (self.branch) {
-                self.form.triggerType = 2
-            }
+        function triggerRules() {
+            self.form.triggerType = imageBuildSetting.triggerRules(self.tag, self.branch);
         }
     }
 })();

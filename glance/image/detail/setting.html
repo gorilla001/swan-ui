@@ -1,0 +1,59 @@
+<div class="main-container-body">
+    <div class="form-horizontal">
+        <form class="form-horizontal" name="staticForm">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">自动构建</label>
+                <div class="col-sm-2">
+                    <label class="radio-inline">
+                        <input type="radio" data-ng-model="imageDetailSettingCtrl.form.active" ng-value="true"> 是
+                    </label>
+
+                </div>
+                <div class="col-sm-4">
+                    <label class="radio-inline">
+                        <input type="radio" data-ng-model="imageDetailSettingCtrl.form.active" ng-value="false"> 否
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-show="imageDetailSettingCtrl.form.active">
+                <label class="col-sm-2 control-label">自动构建时间</label>
+                <div class="col-md-5">
+                    <select class="form-control"
+                            data-ng-options=" period.value as period.name for period in imageDetailSettingCtrl.periodList"
+                            data-ng-model="imageDetailSettingCtrl.form.period"
+                            data-required="imageDetailSettingCtrl.form.active">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" data-ng-show="imageDetailSettingCtrl.form.active">
+                <label class="col-sm-2 control-label">触发规则</label>
+                <div class="col-sm-2">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-ng-model="imageDetailSettingCtrl.tag" ng-change="imageDetailSettingCtrl.triggerRules()"
+                               ng-click="imageDetailSettingCtrl.triggerCheck(imageDetailSettingCtrl.tag)"
+                        > Tag 更新
+                    </label>
+                </div>
+                <div class="col-sm-4">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" data-ng-model="imageDetailSettingCtrl.branch" ng-change="imageDetailSettingCtrl.triggerRules()"
+                               ng-click="imageDetailSettingCtrl.triggerCheck(imageDetailSettingCtrl.branch)"
+                        > 代码分支更新
+                    </label>
+                </div>
+            </div>
+
+            <hr>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-5">
+                    <button type="submit" class="btn btn-success btn-block"
+                            ng-disabled="staticForm.$invalid || imageDetailSettingCtrl.triggerCount == 0"
+                            data-ng-click="imageDetailSettingCtrl.saveSetting(imageDetailSettingCtrl.form)">保存配置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

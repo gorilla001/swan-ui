@@ -58,6 +58,12 @@ APP_EVENTS_MSG = {
     Redeploy: "应用重新部署"
 };
 
+IMAGE_TRIGGER_TYPE = {
+    SELECT_TAG: 1,
+    SELECT_BRANCH: 2,
+    SELECT_ALL: 3
+};
+
 APP_EVENTS_TYPE = {
     status_update_event: "实例状态更新",
     deployment_success: "部署成功",
