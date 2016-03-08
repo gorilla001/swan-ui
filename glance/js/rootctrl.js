@@ -13,6 +13,11 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
         //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
     };
 
+    $rootScope.groupListParams = {
+        page: 1,
+        count: 20
+    };
+
     if(IS_OFF_LINE){
         $scope.userManualUrl = "http://offlinedoc.shurenyun.com/";
     }else{

@@ -1,0 +1,33 @@
+<div class="main-container-body">
+    <button class="btn btn-success">创建租户</button>
+    <hr>
+    <table ng-table="listGroupCtrl.groupListTable" template-pagination="/views/common/ngTablePage.html"
+           class="table table-striped" ng-table-columns-binding="boundCols">
+        <tbody>
+        <tr ng-repeat="group in listGroupCtrl.grouplist">
+            <td data-title="'租户名称'" sortable="'name'"><a href="#"
+                                                          data-ui-sref="#">{/group.name/}</a>
+            </td>
+            <td data-title="'用户身份'">{/listGroupCtrl.roleMapping[group.users[0].role.name]/}</td>
+            <td data-title="'建立时间'" sortable="'created_at'">{/group.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td data-title="'操作'">
+                <button type="button"
+                        data-ng-disabled="group.users[0].role.id != 1"
+                        class="btn btn-default btn-xs"
+                        data-ng-click="listGroupCtrl.deleteGroup(group.id)"
+                        data-ng-show="group.users[0].role.id == 1" data-demo-disable>删除租户
+                </button>
+                <button type="button"
+                        data-ng-disabled="group.users[0].role.id != 2"
+                        class="btn btn-default btn-xs"
+                        data-ng-click="listGroupCtrl.leaveGroup(group.id)"
+                        data-ng-show="group.users[0].role.id == 2" data-demo-disable>离开租户
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="showNothtingAlert">
+        未查询到应用数据
+    </div>
+</div>
