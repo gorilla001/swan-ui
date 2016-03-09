@@ -8,10 +8,11 @@
     <div class="main-container app-title">
         <div class="main-container-body">
             <div class="btn-group-vertical pull-right" role="group">
-                <button type="button" class="btn btn-default" data-ui-sref="appcreate">
+                <button type="button" class="btn btn-default" data-ui-sref="appcreate({url:imageDetailCtrl.project.repoUri,version: 'latest'})">
                     部署最新镜像
                 </button>
-                <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.deleteProject()">删除项目</button>
+                <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
+                </button>
             </div>
             <h3>
                 {/imageDetailCtrl.project.name/}
@@ -50,17 +51,14 @@
     <div class="main-container"> <!-- Only required for left/right tabs -->
         <header class="clearfix main-container-header">
             <ul class="nav nav-tabs">
-                <li data-toggle="tab">
-                    <a href="#" data-ui-sref="imageDetail.version"
-                        data-ui-sref-opts="{reload: true}">版本</a>
+                <li data-toggle="tab" class="active">
+                    <a href="#" data-ui-sref="imageDetail.version">版本</a>
                 </li>
                 <li data-toggle="tab">
-                    <a href="#" data-ui-sref="imageDetail.brief"
-                        data-ui-sref-opts="{reload: true}">说明</a>
+                    <a href="#" data-ui-sref="imageDetail.brief">说明</a>
                 </li>
                 <li data-toggle="tab">
-                    <a href="#" data-ui-sref="imageDetail.setting"
-                        data-ui-sref-opts="{reload: true}">设置</a>
+                    <a href="#" data-ui-sref="imageDetail.setting">设置</a>
                 </li>
             </ul>
         </header>
