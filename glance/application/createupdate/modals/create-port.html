@@ -19,11 +19,11 @@
                     <label class="col-sm-3 control-label">协议</label>
                     <div class="col-sm-8">
                         <label class="radio-inline">
-                            <input type="radio" value="1"
+                            <input type="radio" ng-value="1"
                                    data-ng-model="createAppPortCtrl.portInfo.protocol" ng-change="createAppPortCtrl.changeProtocol()"> TCP
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" value="2"
+                            <input type="radio" ng-value="2"
                                    data-ng-model="createAppPortCtrl.portInfo.protocol" ng-change="createAppPortCtrl.changeProtocol()"> HTTP
                         </label>
                     </div>
@@ -33,31 +33,31 @@
                     <label class="col-sm-3 control-label">类型</label>
                     <div class="col-sm-8">
                         <label class="radio-inline" ng-if="createAppPortCtrl.proxyNodes.length">
-                            <input type="radio" value="1" data-ng-model="createAppPortCtrl.portInfo.type"
+                            <input type="radio" ng-value="1" data-ng-model="createAppPortCtrl.portInfo.type"
                                    ng-change="createAppPortCtrl.changeType()"> 对内
                         </label>
                         <label class="radio-inline" ng-if="createAppPortCtrl.gateWays.length">
-                            <input type="radio" value="2" data-ng-model="createAppPortCtrl.portInfo.type"
+                            <input type="radio" ng-value="2" data-ng-model="createAppPortCtrl.portInfo.type"
                                    ng-change="createAppPortCtrl.changeType()"> 对外
                         </label>
                     </div>
                 </div>
                 <hr ng-show="createAppPortCtrl.portInfo.type && createAppPortCtrl.portInfo.protocol">
-                <div class="form-group" data-ng-show="createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.protocol === '2'">
+                <div class="form-group" data-ng-show="createAppPortCtrl.portInfo.type == '2' && createAppPortCtrl.portInfo.protocol == '2'">
                     <label class="col-sm-3 control-label"> </label>
                     <div class="col-sm-8">
                         <label class="radio-inline">
-                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" value="1" ng-change="createAppPortCtrl.isURI()">
+                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" ng-value="1" ng-change="createAppPortCtrl.isURI()">
                             有域名
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" value="2" ng-change="createAppPortCtrl.isURI()">
+                            <input type="radio" ng-model="createAppPortCtrl.portInfo.isUri" ng-value="2" ng-change="createAppPortCtrl.isURI()">
                             无域名
                         </label>
                     </div>
                 </div>
 
-                <div data-ng-show="createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.isUri === '1' && createAppPortCtrl.portInfo.protocol === '2'">
+                <div data-ng-show="createAppPortCtrl.portInfo.type == '2' && createAppPortCtrl.portInfo.isUri == '1' && createAppPortCtrl.portInfo.protocol == '2'">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">域名</label>
                         <div class="col-sm-6" ng-class="{'has-error' : createAppPortCtrl.uriOccupied()}">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div data-ng-show="(createAppPortCtrl.portInfo.protocol === '1' && createAppPortCtrl.portInfo.type === '1' && !createAppPortCtrl.portInfo.isUri) || (createAppPortCtrl.portInfo.protocol === '2' && createAppPortCtrl.portInfo.type === '1' )">
+                <div data-ng-show="(createAppPortCtrl.portInfo.protocol == '1' && createAppPortCtrl.portInfo.type == '1' && !createAppPortCtrl.portInfo.isUri) || (createAppPortCtrl.portInfo.protocol == '2' && createAppPortCtrl.portInfo.type == '1' )">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">代理节点</label>
                         <div class="col-sm-8">
@@ -99,7 +99,7 @@
                     </div>
                 </div>
 
-                <div data-ng-show=" (createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.isUri !== '1') || (createAppPortCtrl.portInfo.type === '2' && createAppPortCtrl.portInfo.protocol === '1')">
+                <div data-ng-show=" (createAppPortCtrl.portInfo.type == '2' && createAppPortCtrl.portInfo.isUri != '1') || (createAppPortCtrl.portInfo.type == '2' && createAppPortCtrl.portInfo.protocol == '1')">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">网关节点</label>
                         <div class="col-sm-8">

@@ -41,12 +41,12 @@
         
         function CreateAppPortCtrl($uibModalInstance, proxyNodes, gateWays, ports) {
             
-            var INNER = '1';
-            var OUTER = '2';
-            var SELECT_TCP = '1';
-            var SELECT_HTTP = '2';
-            var HAS_DOMAIN = '1';
-            var NO_DOMAIN = '2';
+            var INNER = 1;
+            var OUTER = 2;
+            var SELECT_TCP = 1;
+            var SELECT_HTTP = 2;
+            var HAS_DOMAIN = 1;
+            var NO_DOMAIN = 2;
             
             var self = this;
             
@@ -56,12 +56,12 @@
             self.innerPorts = ports.innerPorts;
             self.outerPorts = ports.outerPorts;
             self.domains = ports.domains;
-            self.portInfo.protocol = "1";
+            self.portInfo.protocol = 1;
             
             if (self.proxyNodes.length) {
-                self.portInfo.type = "1"
+                self.portInfo.type = 1
             } else if (self.gateWays.length) {
-                self.portInfo.type = "2"
+                self.portInfo.type = 2
             }
 
             self.invalidPort = invalidPort;
