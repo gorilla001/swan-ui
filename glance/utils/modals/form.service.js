@@ -9,6 +9,9 @@
     formModal.$inject = ['$uibModal'];
 
     function formModal($uibModal) {
+        
+        FormModalCtrl.$inject = ['$uibModalInstance', 'dataName', 'initData'];
+        
         return {
             open: open
         };
@@ -42,10 +45,9 @@
             return modalInstance.result;
         }
         
-        FormModalCtrl.$inject = ['$uibModalInstance', 'dataName', 'initData'];
         
         function FormModalCtrl($uibModalInstance, dataName, initData) {
-            self = this;
+            var self = this;
             self[dataName] = initData;
             
             self.ok = function () {

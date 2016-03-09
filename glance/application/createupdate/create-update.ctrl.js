@@ -273,7 +273,7 @@
                 .then(function (data) {
                     $state.go('appdetails.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
                 }, function (resp) {
-                    Notification.error('应用' + app.name + '跟新失败:' + getCodeMessage(resp.code));
+                    Notification.error('应用' + app.name + '更新失败:' + getCodeMessage(resp.code));
                 });
         };
 
