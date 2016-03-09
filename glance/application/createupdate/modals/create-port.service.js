@@ -9,6 +9,9 @@
     createAppPortModal.$inject = ['$uibModal', 'appservice', 'Notification'];
 
     function createAppPortModal($uibModal, appservice, Notification) {
+        
+        CreateAppPortCtrl.$inject = ['$uibModalInstance', 'proxyNodes', 'gateWays', 'ports'];
+        
         return {
             open: open
         };
@@ -16,7 +19,7 @@
         function open(ports, proxyNodes, gateWays) {
             var modalInstance = $uibModal.open({
                 templateUrl: '/application/createupdate/modals/create-port.html',
-                controller: _CreateAppPortCtrl,
+                controller: CreateAppPortCtrl,
                 controllerAs: 'createAppPortCtrl',
                 size: 'lg',
                 resolve: {
@@ -35,9 +38,8 @@
             return modalInstance.result;
         }
         
-        _CreateAppPortCtrl.$inject = ['$uibModalInstance', 'instanceNum'];
         
-        function _CreateAppPortCtrl($uibModalInstance, proxyNodes, gateWays, ports) {
+        function CreateAppPortCtrl($uibModalInstance, proxyNodes, gateWays, ports) {
             
             var INNER = '1';
             var OUTER = '2';

@@ -7,6 +7,8 @@
 
     function confirmModal($uibModal) {
         
+        ConfirmCtrl.$inject = ['$uibModalInstance', 'content'];
+        
         return {
             open: open
         }
@@ -14,7 +16,7 @@
         function open(content) {
             var modalInstance = $uibModal.open({
                 templateUrl: '/utils/modals/confirm.html',
-                controller: _ConfirmCtrl,
+                controller: ConfirmCtrl,
                 controllerAs: 'confirmCtrl',
                 resolve: {
                     content: function () {return content}
@@ -24,9 +26,8 @@
             return modalInstance.result;
         }
         
-        _ConfirmCtrl.$inject = ['$uibModalInstance', 'content'];
         
-        function _ConfirmCtrl($uibModalInstance, content) {
+        function ConfirmCtrl($uibModalInstance, content) {
             var self = this;
             self.content = content;
             self.ok = function () {
