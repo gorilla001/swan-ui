@@ -153,11 +153,11 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     });
 
     function fetchLogPathes() {
-        listLogPathes($scope.clusterId, $scope.appId)
+        listLogPathes($scope.clusterId, $scope.app.id)
             .then(function(data) {
                 $scope.inputLogPaths = data;
             });
-    };
+    }
 
     function listLogPathes(clusterId, appId) {
         var urlParams = {
