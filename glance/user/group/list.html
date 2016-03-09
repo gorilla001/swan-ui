@@ -12,16 +12,16 @@
             <td data-title="'建立时间'" sortable="'created_at'">{/group.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</td>
             <td data-title="'操作'">
                 <button type="button"
-                        data-ng-disabled="group.users[0].role.id != 1"
+                        data-ng-disabled="group.role.id != 1"
                         class="btn btn-default btn-xs"
                         data-ng-click="listGroupCtrl.deleteGroup(group.id)"
-                        data-ng-show="group.users[0].role.id == 1" data-demo-disable>删除租户
+                        data-ng-show="group.role.id == 1" data-demo-disable>删除租户
                 </button>
                 <button type="button"
-                        data-ng-disabled="group.users[0].role.id != 2"
+                        data-ng-disabled="group.role.id == 1"
                         class="btn btn-default btn-xs"
                         data-ng-click="listGroupCtrl.leaveGroup(group.id)"
-                        data-ng-show="group.users[0].role.id == 2" data-demo-disable>离开租户
+                        data-ng-show="group.role.id != 1" data-demo-disable>离开租户
                 </button>
             </td>
         </tr>

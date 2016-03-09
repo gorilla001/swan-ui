@@ -169,6 +169,7 @@ BACKEND_URL = {
     },
     user: {
         groups: 'api/v3/groups',
-        group: 'api/v3/group/$group_id'
+        group: 'api/v3/groups/$group_id',
+        groupMemberships: 'api/v3/groups/$group_id/memberships'
     }
 };

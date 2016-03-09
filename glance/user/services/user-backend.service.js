@@ -20,8 +20,8 @@
             return gHttp.Resource('user.group', {group_id: groupId}).delete();
         }
 
-        function leaveGroup(data, groupId) {
-            return gHttp.Resource('user.group', {group_id: groupId}).patch(data);
+        function leaveGroup(groupId) {
+            return gHttp.Resource('user.groupMemberships', {group_id: groupId}).delete();
         }
     }
 })();

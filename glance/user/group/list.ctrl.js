@@ -3,9 +3,9 @@
     angular.module('glance.user')
         .controller('ListGroupCtrl', ListGroupCtrl);
 
-    ListGroupCtrl.$inject = ['$rootScope', 'ngTableParams', 'userBackend'];
+    ListGroupCtrl.$inject = ['$rootScope', '$state', 'Notification', 'ngTableParams', 'userBackend'];
 
-    function ListGroupCtrl($rootScope, ngTableParams, userBackend) {
+    function ListGroupCtrl($rootScope, $state, Notification, ngTableParams, userBackend) {
         $rootScope.userTabFlag = 'groups';
         var self = this;
 
@@ -56,12 +56,20 @@
 
         /* 删除租户 */
         self.deleteGroup = function(groupId) {
-            userBackend.deleteGroup(groupId);
+            userBackend.deleteGroup(groupId).then(function (data) {
+                $state.reload();
+            }, function(res) {
+                Notification.error(res.data.group);
+            });
         };
 
         /* 离开租户 */
         self.leaveGroup = function(groupId) {
-            userBackend.leaveGroup(groupId);
+            userBackend.leaveGroup(groupId).then(function (data) {
+                $state.reload();
+            }, function(res) {
+                Notification.error(res.data.group);
+            });
         };
 
         /*
