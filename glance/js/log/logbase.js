@@ -36,15 +36,16 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
 
     $scope.getNodePorts = function (appId, clusterId) {
         if (appId && clusterId) {
-            appservice.listAppInstances(clusterId, appId, '').then(function(data){
+            appservice.listAppNodes(clusterId, appId, '').then(function(data){
                 $scope.nodes = data;
+                console.log($scope.nodes)
 
                 var tempNodesInfo = [];
                 angular.forEach($scope.nodes, function (data, index, array) {
                     tempNodesInfo.push({
-                        ip: data.taskId,
-                        maker: data.taskId,
-                        name: "实例" + (index + 1) + "(" + data.taskId + ")",
+                        ip: data.Ip,
+                        maker: data.Ip,
+                        name: "实例" + (index + 1) + "(" + data.Ip + ")",
                         ticked: false
                     });
                 });

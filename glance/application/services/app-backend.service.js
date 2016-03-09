@@ -30,7 +30,8 @@
             getAppStatus: getAppStatus,
             listAppInstances: listAppInstances,
             listClusterAllApps: listClusterAllApps,
-            listAppPorts: listAppPorts
+            listAppPorts: listAppPorts,
+            listAppNodes: listAppNodes
 
         };
 
@@ -149,6 +150,10 @@
                 var params = {"appId":appId};
             }
             return gHttp.Resource('app.ports', {cluster_id: clusterId}).get({'params': params});
+        }
+
+        function listAppNodes(clusterId, appId, loading) {
+            return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
 
     }
