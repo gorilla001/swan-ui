@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageHomeCtrl', ImageHomeCtrl);
 
-    ImageHomeCtrl.$inject = ['$rootScope', 'imageservice', 'confirmModal', '$state', 'imageCurd'];
+    ImageHomeCtrl.$inject = ['$rootScope', 'imageservice', 'imageCurd'];
 
-    function ImageHomeCtrl($rootScope, imageservice, confirmModal, $state, imageCurd) {
+    function ImageHomeCtrl($rootScope, imageservice, imageCurd) {
         var self = this;
 
         $rootScope.show = 'image';

@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting'];
+    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting', 'listProjectsName'];
 
-    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting) {
+    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting, listProjectsName) {
         var self = this;
         ///
         self.form = {
@@ -33,6 +33,7 @@
             }
         ];
 
+        self.projectsName = listProjectsName;
         self.triggerCount = 1;
         self.tag = true;
         self.branch = false;

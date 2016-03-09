@@ -24,6 +24,9 @@
                         templateUrl: '/image/create/create.html',
                         controller: 'ImageCreateCtrl as imageCreateCtrl'
                     }
+                },
+                resolve: {
+                    listProjectsName: listProjectsName
                 }
             })
             .state('imageDetail', {
@@ -66,6 +69,18 @@
                     }
                 }
             });
+
+    }
+
+    listProjectsName.$inject = ['imageservice'];
+    function listProjectsName(imageservice){
+        var listProjectsName = [];
+        return imageservice.listProjects().then(function(data){
+            angular.forEach(data, function(value, index){
+                listProjectsName.push(value.name)
+            });
+            return listProjectsName;
+        })
 
     }
 
