@@ -17,6 +17,12 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
         page: 1,
         count: 20
     };
+    
+    // image list request params
+    $rootScope.imageListParams = {
+        page: 1,  //current page index
+        count: 20, // current count
+    };
 
     if(IS_OFF_LINE){
         $scope.userManualUrl = "http://offlinedoc.shurenyun.com/";

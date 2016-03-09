@@ -21,8 +21,8 @@
 
         };
 
-        function listProjects() {
-            return gHttp.Resource('image.projects').get();
+        function listProjects(params) {
+            return gHttp.Resource('image.projects').get({params : params});
         }
 
         function createProject(data) {
