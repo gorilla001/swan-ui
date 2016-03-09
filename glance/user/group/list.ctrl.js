@@ -3,9 +3,9 @@
     angular.module('glance.user')
         .controller('ListGroupCtrl', ListGroupCtrl);
 
-    ListGroupCtrl.$inject = ['$rootScope', '$state', 'Notification', 'ngTableParams', 'userBackend'];
+    ListGroupCtrl.$inject = ['$rootScope', '$state', 'Notification', 'formModal', 'ngTableParams', 'userBackend'];
 
-    function ListGroupCtrl($rootScope, $state, Notification, ngTableParams, userBackend) {
+    function ListGroupCtrl($rootScope, $state, Notification, formModal, ngTableParams, userBackend) {
         $rootScope.userTabFlag = 'groups';
         var self = this;
 
@@ -43,7 +43,7 @@
                             self.showNothtingAlert = !self.grouplist.length;
                             params.total(total);
                             if (total > 0) {
-                                $defer.resolve(data);
+                                $defer.resolve(data.groups);
                             }
 
                             self.isFirstLoad = false;
@@ -69,6 +69,20 @@
                 $state.reload();
             }, function(res) {
                 Notification.error(res.data.group);
+            });
+        };
+
+        /* 打开创建租户modal */
+        self.openCreateGroupModule = function () {
+            formModal.open('/user/group/modals/create-group.html').then(function (data) {
+                console.log(data)
+                userBackend.createGroup(data).then(function(data) {
+                    $state.reload()
+                }, function(res) {
+                    Notification.error(res.data.group);
+                });
+                return false;
+            }, function(data) {
             });
         };
 

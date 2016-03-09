@@ -1,5 +1,5 @@
 <div class="main-container-body">
-    <button class="btn btn-success">创建租户</button>
+    <button class="btn btn-success" data-ng-click="listGroupCtrl.openCreateGroupModule()">创建租户</button>
     <hr>
     <table ng-table="listGroupCtrl.groupListTable" template-pagination="/views/common/ngTablePage.html"
            class="table table-striped" ng-table-columns-binding="boundCols">
@@ -8,7 +8,7 @@
             <td data-title="'租户名称'" sortable="'name'"><a href="#"
                                                           data-ui-sref="#">{/group.name/}</a>
             </td>
-            <td data-title="'用户身份'">{/listGroupCtrl.roleMapping[group.users[0].role.name]/}</td>
+            <td data-title="'用户身份'">{/listGroupCtrl.roleMapping[group.role.name]/}</td>
             <td data-title="'建立时间'" sortable="'created_at'">{/group.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</td>
             <td data-title="'操作'">
                 <button type="button"

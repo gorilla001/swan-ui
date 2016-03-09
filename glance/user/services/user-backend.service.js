@@ -9,7 +9,8 @@
         return {
             listGroups: listGroups,
             deleteGroup: deleteGroup,
-            leaveGroup: leaveGroup
+            leaveGroup: leaveGroup,
+            createGroup: createGroup
         };
 
         function listGroups(params, loading) {
@@ -22,6 +23,10 @@
 
         function leaveGroup(groupId) {
             return gHttp.Resource('user.groupMemberships', {group_id: groupId}).delete();
+        }
+
+        function createGroup(data){
+            return gHttp.Resource('user.groups').post(data);
         }
     }
 })();
