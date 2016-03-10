@@ -29,8 +29,8 @@
                 url: '/password',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/user/group/list.html',
-                        controller: 'ListGroupCtrl as listGroupCtrl'
+                        templateUrl: '/user/password/update.html',
+                        controller: 'UpdatePasswordCtrl as updatePasswordCtrl'
                     }
                 }
             })
