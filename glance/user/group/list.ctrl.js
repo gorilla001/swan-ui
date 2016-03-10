@@ -3,9 +3,16 @@
     angular.module('glance.user')
         .controller('ListGroupCtrl', ListGroupCtrl);
 
-    ListGroupCtrl.$inject = ['$rootScope', '$state', 'Notification', 'formModal', 'ngTableParams', 'userBackend'];
+    ListGroupCtrl.$inject = [
+        '$rootScope',
+        '$state',
+        'Notification',
+        'ngTableParams',
+        'confirmModal',
+        'userBackend'
+    ];
 
-    function ListGroupCtrl($rootScope, $state, Notification, formModal, ngTableParams, userBackend) {
+    function ListGroupCtrl($rootScope, $state, Notification, ngTableParams, confirmModal, userBackend) {
         $rootScope.userTabFlag = 'groups';
         var self = this;
 
@@ -76,19 +83,23 @@
 
         /* 删除组 */
         self.deleteGroup = function(groupId) {
-            userBackend.deleteGroup(groupId).then(function (data) {
-                $state.reload();
-            }, function(res) {
-                Notification.error(res.data.group);
+            confirmModal.open('您确定要删除该用户吗？').then(function () {
+                userBackend.deleteGroup(groupId).then(function (data) {
+                    $state.reload();
+                }, function (res) {
+                    Notification.error(res.data.group);
+                });
             });
         };
 
         /* 离开组 */
         self.leaveGroup = function(groupId) {
-            userBackend.leaveGroup(groupId).then(function (data) {
-                $state.reload();
-            }, function(res) {
-                Notification.error(res.data.group);
+            confirmModal.open('您确定要离开该用户组吗？').then(function () {
+                userBackend.leaveGroup(groupId).then(function (data) {
+                    $state.reload();
+                }, function (res) {
+                    Notification.error(res.data.group);
+                });
             });
         };
 
@@ -96,7 +107,7 @@
         self.createGroup = function() {
             userBackend.createGroup(self.createGroupForm).then(function(data) {
                 self.isCollapsed = true;
-                $state.reload()
+                $state.reload();
             }, function(res) {
                 Notification.error(res.data.group);
             });
@@ -108,13 +119,24 @@
             if(!emailStr) {
                 Notification.error('邮箱地址不能为空');
             } else {
-                var emails = self.inviteForm.emails.split(',');
-                for (var email in emails) {
-                    email = email.trim();
+                var _emails = self.inviteForm.emails.split(',');
+                var emails = [];
+                for(var i=0; i < _emails.length; i++) {
+                    emails.push(_emails[i].trim());
                 }
-                console.log(emails)
                 userBackend.sendInviteEmail({emails: emails}, groupId)
             }
+        };
+
+        self.deleteGroupUser = function(groupId, userId) {
+            confirmModal.open('您确定要驱逐该用户吗？').then(function () {
+                userBackend.deleteGroupUsers({users: [userId]}, groupId).then(function (data) {
+                    self.isCollapsed = true;
+                    $state.reload()
+                }, function (res) {
+                    Notification.error(res.data.group);
+                });
+            });
         };
 
         /* 打开用户详情 */
