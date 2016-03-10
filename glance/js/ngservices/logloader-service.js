@@ -121,6 +121,10 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
             this.data.ipport = this.ipport;
         }
 
+        if(searchData.source){
+            this.data.source = searchData.source;
+        }
+
         this.curLogNum = 0;
         this.isLoadingLogs = false;
         this.tryTimes = 3;
