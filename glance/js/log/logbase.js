@@ -38,7 +38,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         if (appId && clusterId) {
             appservice.listAppNodes(clusterId, appId, '').then(function(data){
                 $scope.nodes = data;
-                console.log($scope.nodes)
 
                 var tempNodesInfo = [];
                 angular.forEach($scope.nodes, function (data, index, array) {
@@ -115,7 +114,8 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             timestamp: logInfo.timestamp[0],
             ipport: logInfo.ipport[0],
             clusterId: clusterIdTemp,
-            size: 200
+            size: 200,
+            source: logInfo.source[0]
         };
 
         $scope.contextlogs.searchLogs($scope.contextSearchData, function (logSize) {
