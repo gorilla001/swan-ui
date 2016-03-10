@@ -65,6 +65,11 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
                         templateUrl: '/views/cluster/node-source.html',
                         controller: 'addNodeCtrl'
                     }
+                },
+                resolve: {
+                    nodeInfo:  ['gHttp', '$stateParams', function(gHttp, $stateParams){
+                            return gHttp.Resource("cluster.nodeId", {cluster_id: $stateParams.clusterId}).get()
+                        }]
                 }
             })
             .state('cluster.iaasprovider', {
