@@ -124,7 +124,17 @@
                 for(var i=0; i < _emails.length; i++) {
                     emails.push(_emails[i].trim());
                 }
-                userBackend.sendInviteEmail({emails: emails}, groupId)
+                userBackend.sendInviteEmail({emails: emails}, groupId).then(function(data) {
+                    if(data.error_emails.length) {
+                        var errMsg = '下列用户不存在:<br>';
+                        for (var i = 0; i < data.error_emails.length; i++) {
+                            errMsg += data.error_emails[i] + '<br>'
+                        }
+                        Notification.warning(errMsg);
+                    } else {
+                        Notification.success("邀请邮件发送成功");
+                    }
+                });
             }
         };
 
