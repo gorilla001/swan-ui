@@ -153,12 +153,12 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         };
 
         if (contextFlag) {
-            this.downloadHref = 'es/context/' + url.userid + '/' + url.clusterid + '/' + url.ipport + '/' +
-                url.source + '/' + url.counter + '/'+ url.appname + '/log';
+            this.downloadHref = 'es/context/log?userid=' + url.userid + '&clusterid=' + url.clusterid + '&ipport=' + url.ipport + '&source=' +
+                url.source + '&counter=' + url.counter + '&appname='+ url.appname;
         } else {
-            this.downloadHref = 'es/index/' + url.userid + '/' + url.clusterid + '/' + url.keyword +
-                '/' + url.start + '/' + url.end + '/' + url.ipport + '/' +
-                url.source + '/' + url.appname + '/log';
+            this.downloadHref = 'es/index/log?userid=' + url.userid + '&clusterid=' + url.clusterid + '&keyword=' + url.keyword +
+                '&start=' + url.start + '&end=' + url.end + '&ipport=' + url.ipport + '&source=' +
+                url.source + '&appname=' + url.appname;
         }
     }
 
