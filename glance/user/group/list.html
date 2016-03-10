@@ -1,30 +1,88 @@
 <div class="main-container-body">
-    <button class="btn btn-success" data-ng-click="listGroupCtrl.openCreateGroupModule()">创建租户</button>
+    <button class="btn btn-success" type="button"
+            ng-click="listGroupCtrl.isCollapsed = !listGroupCtrl.isCollapsed">创建用户组</button>
+    <div id="create-usergroup-panel" uib-collapse="listGroupCtrl.isCollapsed">
+        <div class="well well-sm">
+            <form class="form-inline">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="用户组名称"
+                           data-ng-model="listGroupCtrl.createGroupForm.name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="用户组描述"
+                           data-ng-model="listGroupCtrl.createGroupForm.description">
+                </div>
+                <button type="submit" class="btn btn-success"
+                        data-ng-click="listGroupCtrl.createGroup()">创建</button>
+                <button type="submit" class="btn btn-default"
+                        ng-click="listGroupCtrl.isCollapsed = !listGroupCtrl.isCollapsed">取消</button>
+            </form>
+        </div>
+    </div>
     <hr>
     <table ng-table="listGroupCtrl.groupListTable" template-pagination="/views/common/ngTablePage.html"
            class="table table-striped" ng-table-columns-binding="boundCols">
         <tbody>
-        <tr ng-repeat="group in listGroupCtrl.grouplist">
-            <td data-title="'租户名称'" sortable="'name'"><a href="#"
-                                                          data-ui-sref="#">{/group.name/}</a>
-            </td>
-            <td data-title="'用户身份'">{/listGroupCtrl.roleMapping[group.role.name]/}</td>
-            <td data-title="'建立时间'" sortable="'created_at'">{/group.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-            <td data-title="'操作'">
-                <button type="button"
-                        data-ng-disabled="group.role.id != 1"
-                        class="btn btn-default btn-xs"
-                        data-ng-click="listGroupCtrl.deleteGroup(group.id)"
-                        data-ng-show="group.role.id == 1" data-demo-disable>删除租户
-                </button>
-                <button type="button"
-                        data-ng-disabled="group.role.id == 1"
-                        class="btn btn-default btn-xs"
-                        data-ng-click="listGroupCtrl.leaveGroup(group.id)"
-                        data-ng-show="group.role.id != 1" data-demo-disable>离开租户
-                </button>
-            </td>
-        </tr>
+            <tr ng-repeat-start="group in listGroupCtrl.grouplist">
+                <td data-title="'用户组'" sortable="'name'">
+                    <h5>{/group.name/}</h5>
+                    <p>{/group.description/}<em data-ng-show="group.role.id != 1">{/group.owner.email/}</em></p>
+                </td>
+                <td data-title="'角色'">{/listGroupCtrl.roleMapping[group.role.name]/}</td>
+                <td data-title="'用户数量'">{/group.user_count/}</td>
+                <td data-title="'建立时间'" sortable="'created_at'">{/group.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+                <td data-title="'操作'">
+                    <button class="btn btn-default btn-xs" type="button"
+                            data-ng-disabled="group.role.id != 1"
+                            data-ng-click="listGroupCtrl.showManagePanel(group.id)"
+                            data-ng-show="group.role.id == 1" data-demo-disable>管理用户</button>
+                    <button class="btn btn-danger btn-xs" type="button"
+                            data-ng-disabled="group.role.id != 1"
+                            data-ng-click="listGroupCtrl.deleteGroup(group.id)"
+                            data-ng-show="group.role.id == 1" data-demo-disable>删除用户组</button>
+                    <button type="button"
+                            data-ng-disabled="group.role.id == 1"
+                            class="btn btn-default btn-xs"
+                            data-ng-click="listGroupCtrl.leaveGroup(group.id)"
+                            data-ng-show="group.role.id != 1" data-demo-disable>离开用户组
+                    </button>
+                </td>
+            </tr>
+            <tr data-ng-show="group.role.id == 1"
+                uib-collapse="listGroupCtrl.isCollapsedGroupMapping[group.id]" ng-repeat-end>
+                <td colspan="5">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3" data-ng-show="!listGroupCtrl.isOpenInvite[group.id]"
+                             data-ng-click="listGroupCtrl.isOpenInvite[group.id]=!listGroupCtrl.isOpenInvite[group.id]">
+                            <div class="well well-sm text-center usergroup-user-card">
+                                <span><i class="fa fa-plus"></i> 邀请用户</span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-lg-6" data-ng-show="listGroupCtrl.isOpenInvite[group.id]">
+                            <div class="well well-sm">
+                                <div class="input-group">
+                                    <span class="input-group-addon">邀请用户</span>
+                                    <input type="text" class="form-control" placeholder="mail1, mail2, ..."
+                                            data-ng-model="listGroupCtrl.inviteForm.emails">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button"
+                                                data-ng-click="listGroupCtrl.sendInviteEmail(group.id)"> 添加 </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-3" data-ng-repeat="user in listGroupCtrl.groupUserMapping[group.id]">
+                            <div class="well well-sm usergroup-user-card">
+                                <h5>nli@dataman-inc.com</h5>
+                                <div>
+                                    <time>2016-01-01 10:24</time>
+                                </div>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
     <div class="alert alert-warning text-center" data-ng-show="showNothtingAlert">

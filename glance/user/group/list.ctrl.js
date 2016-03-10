@@ -9,10 +9,25 @@
         $rootScope.userTabFlag = 'groups';
         var self = this;
 
+        self.isCollapsed = true;
+        self.isCollapsedGroupMapping = {};
+        self.isOpenInvite = {};
+
         self.roleMapping = {
             'super_user': '管理员',
             'common': '成员'
         };
+
+        self.createGroupForm = {
+            name: '',
+            description: ''
+        };
+
+        self.inviteForm = {
+            emails: ''
+        };
+
+        self.groupUserMapping = {};
         
         self.grouplist = [];
         self.showNothtingAlert = false;     //应用列表空标记
@@ -39,6 +54,11 @@
                             }
                             var total = data.total;
                             self.grouplist = data.groups;
+                            for(var g in self.grouplist) {
+                                self.isCollapsedGroupMapping[self.grouplist[g].id] = true;
+                                self.isOpenInvite[self.grouplist[g].id] = false;
+                            }
+
                             //Check whether show the warning dialog
                             self.showNothtingAlert = !self.grouplist.length;
                             params.total(total);
@@ -54,7 +74,7 @@
             }
         );
 
-        /* 删除租户 */
+        /* 删除组 */
         self.deleteGroup = function(groupId) {
             userBackend.deleteGroup(groupId).then(function (data) {
                 $state.reload();
@@ -63,7 +83,7 @@
             });
         };
 
-        /* 离开租户 */
+        /* 离开组 */
         self.leaveGroup = function(groupId) {
             userBackend.leaveGroup(groupId).then(function (data) {
                 $state.reload();
@@ -72,18 +92,43 @@
             });
         };
 
-        /* 打开创建租户modal */
-        self.openCreateGroupModule = function () {
-            formModal.open('/user/group/modals/create-group.html').then(function (data) {
-                console.log(data)
-                userBackend.createGroup(data).then(function(data) {
-                    $state.reload()
-                }, function(res) {
+        /* 打开创建组 */
+        self.createGroup = function() {
+            userBackend.createGroup(self.createGroupForm).then(function(data) {
+                self.isCollapsed = true;
+                $state.reload()
+            }, function(res) {
+                Notification.error(res.data.group);
+            });
+        };
+
+        /* 发送邀请邮件 */
+        self.sendInviteEmail = function(groupId) {
+            var emailStr = self.inviteForm.emails.trim();
+            if(!emailStr) {
+                Notification.error('邮箱地址不能为空');
+            } else {
+                var emails = self.inviteForm.emails.split(',');
+                for (var email in emails) {
+                    email = email.trim();
+                }
+                console.log(emails)
+                userBackend.sendInviteEmail({emails: emails}, groupId)
+            }
+        };
+
+        /* 打开用户详情 */
+        self.showManagePanel = function(groupId) {
+            if(!self.isCollapsedGroupMapping[groupId]) {
+                self.isCollapsedGroupMapping[groupId] = true;
+            } else {
+                userBackend.listGroupUser(groupId).then(function (data) {
+                    self.isCollapsedGroupMapping[groupId] = false;
+                    self.groupUserMapping[groupId] = data;
+                }, function (res) {
                     Notification.error(res.data.group);
                 });
-                return false;
-            }, function(data) {
-            });
+            }
         };
 
         /*
