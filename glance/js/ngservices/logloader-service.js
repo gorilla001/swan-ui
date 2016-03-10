@@ -43,9 +43,9 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 this.curLogNum += data.hits.hits.length;
                 if (contextCallBack) {
                     contextCallBack(this.logSize);
-                    enCodeUrl(this.data, contextCallBack)
+                    this.enCodeUrl(this.data, contextCallBack)
                 }else{
-                    enCodeUrl(this.data)
+                    this.enCodeUrl(this.data)
                 }
             }.bind(this),
             function (data, status) {
@@ -139,7 +139,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
 
     };
 
-    function enCodeUrl(data, contextFlag) {
+    LogLoader.prototype.enCodeUrl = function(data, contextFlag) {
         var url = {
             userid: data.userid,
             clusterid: data.clusterid,
