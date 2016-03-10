@@ -95,15 +95,6 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
         $scope.clusterlogs.searchLogs($scope.searchData);
     };
 
-    $scope.downloadSearchLogs = function(){
-        $scope.clusterlogs.downloadSearchLogs();
-    };
-
-    $scope.downloadContextLogs = function(){
-        $scope.contextlogs.downloadContextLogs();
-    };
-
-
     $scope.getContextLog = function (logInfo, indexId) {
         $scope.curId = indexId;
         $scope.showContextUI = true;

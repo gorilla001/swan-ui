@@ -8,6 +8,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.isComplete = false;
         this.logsId = [];   //id of logs array for hits.hits[i]._id
         this.logSize = 0;   //logs total
+        this.downloadHref = "";
     };
 
     LogLoader.prototype.getlogs = function (contextCallBack) {
@@ -41,7 +42,10 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
                 this.logSize = data.hits.total;
                 this.curLogNum += data.hits.hits.length;
                 if (contextCallBack) {
-                    contextCallBack(this.logSize)
+                    contextCallBack(this.logSize);
+                    enCodeUrl(this.data, contextCallBack)
+                }else{
+                    enCodeUrl(this.data)
                 }
             }.bind(this),
             function (data, status) {
@@ -61,6 +65,7 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         this.logsId = [];
         this.nodeId = searchData.nodeId;
         this.clusterId = searchData.clusterId;
+        this.downloadHref= "";
         this.data = {
             "userid": parseInt($rootScope.userId),
             "clusterid": this.clusterId
@@ -134,27 +139,27 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
 
     };
 
-    LogLoader.prototype.downloadSearchLogs = function () {
-        glanceHttp.ajaxPost(['log.downloadSearch'], this.data, function (data) {
-            downloadLogAction(data);
-        }, undefined, null, function (data) {
-        });
-    };
+    function enCodeUrl(data, contextFlag) {
+        var url = {
+            userid: data.userid,
+            clusterid: data.clusterid,
+            keyword: data.keyword ? encodeURI(data.keyword).replace(new RegExp('/', 'gm'), '%2F') : '',
+            start: data.start ? encodeURI(data.start) : '',
+            end: data.end ? encodeURI(data.end) : '',
+            source: data.source ? encodeURI(data.source.join(',')).replace(new RegExp('/', 'gm'), '%2F'): '',
+            appname: data.appname ? encodeURI(data.appname).replace(new RegExp('/', 'gm'), '%2F') : '',
+            counter: data.counter ? data.counter : '',
+            ipport: data.ipport ? encodeURI(data.ipport.join(',')) : ''
+        };
 
-    LogLoader.prototype.downloadContextLogs = function () {
-        glanceHttp.ajaxPost(['log.downloadContext'], this.data, function (data) {
-            downloadLogAction(data);
-        }, undefined, null, function (data) {
-        });
-    };
-
-    function downloadLogAction(data) {
-        var dataString = angular.toJson(data);
-        var link = document.createElement('a');
-        link.href = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(dataString);
-        link.download = "Log-" + $filter('date')(new Date(), 'yyyy-MM-ddTHH:mm:ss') + ".txt";
-        //link.innerHtml = 'Open the text file';
-        link.click();
+        if (contextFlag) {
+            this.downloadHref = 'es/context/' + url.userid + '/' + url.clusterid + '/' + url.ipport + '/' +
+                url.source + '/' + url.counter + '/'+ url.appname + '/log';
+        } else {
+            this.downloadHref = 'es/index/' + url.userid + '/' + url.clusterid + '/' + url.keyword +
+                '/' + url.start + '/' + url.end + '/' + url.ipport + '/' +
+                url.source + '/' + url.appname + '/log';
+        }
     }
 
     return LogLoader;
