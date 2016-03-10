@@ -22,7 +22,7 @@
                             <td>{/image.vsn/}</td>
                             <td>{/image.created/}</td>
                             <td>
-                                <button class="btn btn-default btn-xs">拷贝pull命令</button> <button class="btn btn-default btn-xs">部署镜像</button> <button class="btn btn-default btn-xs">日志</button>
+                                <button class="btn btn-default btn-xs">拷贝pull命令</button> <button class="btn btn-default btn-xs">部署镜像</button> <button class="btn btn-default btn-xs" data-ng-click="imageDetailVersionCtrl.openLogModal(image.id)">日志</button>
                             </td>
                         </tr>
                     </tbody>

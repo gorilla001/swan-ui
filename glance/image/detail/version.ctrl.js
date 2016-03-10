@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageDetailVersionCtrl', ImageDetailVersionCtrl);
 
-    ImageDetailVersionCtrl.$inject = ['imageservice', '$state'];
+    ImageDetailVersionCtrl.$inject = ['imageservice', '$state', 'imageLogModal', '$stateParams'];
 
-    function ImageDetailVersionCtrl(imageservice, $state) {
+    function ImageDetailVersionCtrl(imageservice, $state, imageLogModal, $stateParams) {
         var self = this;
         
 
@@ -20,6 +20,11 @@
         };
 
         self.pageChange = pageChange;
+        self.openLogModal = openLogModal;
+
+        function openLogModal(imageId){
+            imageLogModal.open($stateParams.projectId, imageId);
+        }
 
         function pageChange() {
             listPageImages(self.pagination.currentPage, self.pagination.itemPerPage);
