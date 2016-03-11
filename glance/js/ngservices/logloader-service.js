@@ -1,4 +1,4 @@
-function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
+function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification, utils) {
     var LogLoader = function () {
         this.logs = [];     //logs array
         this.logInfo = [];  //logs array for data.hits.hits[i].fields
@@ -153,17 +153,17 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification) {
         };
 
         if (contextFlag) {
-            this.downloadHref = BACKEND_URL_BASE.log + 'es/context/log?userid=' + url.userid + '&clusterid=' + url.clusterid + '&ipport=' + url.ipport + '&source=' +
+            this.downloadHref = utils.buildFullURL('log.downloadContext') + '?userid=' + url.userid + '&clusterid=' + url.clusterid + '&ipport=' + url.ipport + '&source=' +
                 url.source + '&counter=' + url.counter + '&appname='+ url.appname;
         } else {
-            this.downloadHref = BACKEND_URL_BASE.log + 'es/index/log?userid=' + url.userid + '&clusterid=' + url.clusterid + '&keyword=' + url.keyword +
+            this.downloadHref =  utils.buildFullURL('log.downloadSearch') + '?userid=' + url.userid + '&clusterid=' + url.clusterid + '&keyword=' + url.keyword +
                 '&start=' + url.start + '&end=' + url.end + '&ipport=' + url.ipport + '&source=' +
                 url.source + '&appname=' + url.appname;
         }
-    }
+    };
 
     return LogLoader;
 }
 
-LogLoader.$inject = ["$filter", "$rootScope", "glanceHttp", "$sce", "Notification"];
+LogLoader.$inject = ["$filter", "$rootScope", "glanceHttp", "$sce", "Notification", "utils"];
 glanceApp.factory('LogLoader', LogLoader);
