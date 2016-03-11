@@ -83,7 +83,9 @@
             if (!self.form.logPaths) {
                 self.form.logPaths = [];
             }
-            refresClusterData(app.cid, app.id);
+            refresClusterData(app.cid, app.id).then(function(){
+                setSelectNodes(app.iplist);
+            });
             self.single = app.unique;
         }
 
@@ -113,16 +115,16 @@
             if (!cluster_id) {
                 cluster_id = self.form.cluster_id;
             }
-            clusterBackendService.getCluster(cluster_id)
-                .then(function(cluster) {
-                    self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
-                    self.multiSelect.nodes = cluster.nodes;
-                    setGatewayAndProxy(cluster.nodes);
-                    self.clusterName = cluster.name;
-                });
             appservice.listAppPorts(cluster_id, app_id).then(function (data) {
                 existPorts = data;
             })
+            return clusterBackendService.getCluster(cluster_id)
+                    .then(function(cluster) {
+                        self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
+                        self.multiSelect.nodes = cluster.nodes;
+                        setGatewayAndProxy(cluster.nodes);
+                        self.clusterName = cluster.name;
+                    });
         };
         
         function setGatewayAndProxy(nodes) {
@@ -362,6 +364,15 @@
             }
             return elements;
         };
+        
+        function setSelectNodes(iplist){
+            angular.forEach(self.multiSelect.nodes, function(node){
+                if (iplist.indexOf(node.ip) > -1) {
+                    self.multiSelect.selectedNodes.push(node);
+                }
+            });
+            setTick(self.multiSelect.selectedNodes, true);
+        }
 
     }
 })();
