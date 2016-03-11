@@ -148,9 +148,9 @@ BACKEND_URL = {
     },
     log: {
         search: "es/index",
-        downloadSearch: "es/index/download",
+        downloadSearch: "es/index/log",
         searchContext: "es/context",
-        downloadContext: "es/context/download"
+        downloadContext: "es/context/log"
     },
     app: {
         userApps: 'api/v3/apps',
