@@ -135,7 +135,7 @@
 
             Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
-                    window.location.href = USER_URL+"user/login?return_to="+window.location.href+"?timestamp="+new Date().getTime();
+                    window.location.href = USER_URL+"/user/login?return_to="+window.location.href+"?timestamp="+new Date().getTime();
                     $rootScope.$destroy();
                 } else if (status == 404) {
                     $state.go('404');

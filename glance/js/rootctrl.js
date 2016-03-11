@@ -29,7 +29,7 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
     $scope.logout = function(){
         gHttp.Resource("auth.auth").delete().then(function(){
             glanceUser.clear();
-            window.location.href = USER_URL+"?timestamp="+new Date().getTime();;
+            window.location.href = USER_URL+"/?timestamp="+new Date().getTime();;
         });
     };
 
