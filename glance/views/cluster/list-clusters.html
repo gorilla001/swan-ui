@@ -17,6 +17,10 @@
                 <small data-ng-show="cluster.amounts.total">
                     主机数量：{/cluster.amounts.total/}
                 </small>
+                &nbsp;&nbsp;
+                <small data-ng-if="cluster.infos.group_name">
+                    用户组：{/cluster.infos.group_name/}
+                </small>
             </h2>
         </header>
         <div class="main-container-body">
