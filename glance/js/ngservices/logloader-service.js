@@ -140,22 +140,32 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification, utils) {
     };
 
     LogLoader.prototype.enCodeUrl = function(data, contextFlag) {
-        var url = {
-            userid: data.userid,
-            clusterid: data.clusterid,
-            keyword: data.keyword ? encodeURIComponent(data.keyword): '',
-            start: data.start ? encodeURIComponent(data.start) : '',
-            end: data.end ? encodeURIComponent(data.end) : '',
-            source: data.source ? encodeURIComponent(data.source.join(',')): '',
-            appname: data.appname ? encodeURIComponent(data.appname): '',
-            counter: data.counter ? data.counter : '',
-            ipport: data.ipport ? encodeURIComponent(data.ipport.join(',')) : ''
-        };
-
         if (contextFlag) {
+            var url = {
+                    userid: data.userid,
+                    clusterid: data.clusterid,
+                    keyword: data.keyword ? encodeURIComponent(data.keyword): '',
+                    start: data.start ? encodeURIComponent(data.start) : '',
+                    end: data.end ? encodeURIComponent(data.end) : '',
+                    source: data.source ? encodeURIComponent(data.source): '',
+                    appname: data.appname ? encodeURIComponent(data.appname): '',
+                    counter: data.counter ? data.counter : '',
+                    ipport: data.ipport ? encodeURIComponent(data.ipport) : ''
+                };
             this.downloadHref = utils.buildFullURL('log.downloadContext') + '?userid=' + url.userid + '&clusterid=' + url.clusterid + '&ipport=' + url.ipport + '&source=' +
                 url.source + '&counter=' + url.counter + '&appname='+ url.appname;
         } else {
+            var url = {
+                    userid: data.userid,
+                    clusterid: data.clusterid,
+                    keyword: data.keyword ? encodeURIComponent(data.keyword): '',
+                    start: data.start ? encodeURIComponent(data.start) : '',
+                    end: data.end ? encodeURIComponent(data.end) : '',
+                    source: data.source ? encodeURIComponent(data.source.join(',')): '',
+                    appname: data.appname ? encodeURIComponent(data.appname): '',
+                    counter: data.counter ? data.counter : '',
+                    ipport: data.ipport ? encodeURIComponent(data.ipport.join(',')) : ''
+                };
             this.downloadHref =  utils.buildFullURL('log.downloadSearch') + '?userid=' + url.userid + '&clusterid=' + url.clusterid + '&keyword=' + url.keyword +
                 '&start=' + url.start + '&end=' + url.end + '&ipport=' + url.ipport + '&source=' +
                 url.source + '&appname=' + url.appname;

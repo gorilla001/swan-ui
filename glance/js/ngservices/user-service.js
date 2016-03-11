@@ -8,7 +8,7 @@ function glanceUser($cookieStore, $rootScope, glanceHttp, glanceWS, gHttp) {
             glanceWS.init(token);
             gHttp.setToken(token);
         } else {
-            window.location.href = USER_URL+"?timestamp="+new Date().getTime();;
+            window.location.href = USER_URL+"/?timestamp="+new Date().getTime();;
             $rootScope.$destroy();
         }
     };
