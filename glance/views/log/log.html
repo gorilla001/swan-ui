@@ -125,19 +125,19 @@
                             </div>
 
                             <div style="display: inline-block; margin-left: 20px;">
-                                <button type="button" ng-disabled="!clusterlogs.logs.length" ng-hide="showContextUI"
-                                        class="btn btn-sm"
-                                        ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
-                                        data-toggle="modal"
-                                        data-target="#downloadLogsModal" data-demo-disable>导出日志
-                                </button>
-
-                                <button type="button" ng-disabled="!clusterlogs.logs.length" ng-show="showContextUI"
-                                        class="btn btn-sm"
-                                        ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
-                                        data-toggle="modal"
-                                        data-target="#downloadLogsModal" data-demo-disable>导出日志
-                                </button>
+                                <a class="btn btn-sm" ng-disabled="!clusterlogs.logs.length" 
+                                    ng-href="{/clusterlogs.downloadHref/}" 
+                                    ng-hide="showContextUI" 
+                                    ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
+                                    data-demo-disable>导出日志
+                                </a>
+                                <a class="btn btn-sm"" ng-disabled="!clusterlogs.logs.length" 
+                                    ng-href="{/contextlogs.downloadHref/}"
+                                    ng-show="showContextUI"
+                                    ng-class="{'btn-primary': clusterlogs.logs.length, 'btn-default': !clusterlogs.logs.length}"
+                                    data-demo-disable>导出日志
+                                </a>
+                                <span class="text-warning" data-ng-show="clusterlogs.logs.length && clusterlogs.logs.length>logDownloadToplimit">(日志记录过大，只能导出前{/logDownloadToplimit/}条)</span>
                             </div>
                         </div>
                     </form>
@@ -173,34 +173,4 @@
                 </div>
         </div>
     </section>
-
-    <div class="modal fade" id="downloadLogsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4>日志导出</h4>
-                    <div class="delete-cluster">
-                        <ul>
-                            <li ng-show="clusterlogs.logSize <= logDownloadToplimit">当前查询出的日志总数:
-                                <span ng-show="!showContextUI">{/clusterlogs.logSize/}
-                                </span>
-                                <span ng-show="showContextUI">{/contextlogs.logSize/}
-                                </span>
-                                条
-                            </li>
-                            <li ng-show="clusterlogs.logSize > logDownloadToplimit">当前日志记录已经超出五千条，您可以选择直接导出前5000条记录或者缩小查询范围</li>
-
-                        </ul>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a class="btn btn-primary" ng-href="{/clusterlogs.downloadHref/}" data-dismiss="modal" ng-hide="showContextUI" data-demo-disable>导出</a>
-                    <a class="btn btn-primary" ng-href="{/contextlogs.downloadHref/}" data-dismiss="modal" ng-show="showContextUI" data-demo-disable>导出</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
