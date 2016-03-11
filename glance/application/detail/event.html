@@ -2,7 +2,7 @@
     <ul id="timeline">
         <li class="work" ng-repeat="event in eventAppCtrl.events">
             <div class="relative">
-                <span class="date">{/event.timestamp/}</span>
+                <span class="date">{/event.timestamp | date: 'yyyy-MM-dd HH:mm:ss'/}</span>
                 <span class="circle"></span>
             </div>
             <div class="content">
