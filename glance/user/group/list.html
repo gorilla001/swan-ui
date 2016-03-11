@@ -21,7 +21,7 @@
     </div>
     <hr>
     <table ng-table="listGroupCtrl.groupListTable" template-pagination="/views/common/ngTablePage.html"
-           class="table table-striped" ng-table-columns-binding="boundCols">
+           class="table usergroup-tablelist" ng-table-columns-binding="boundCols">
         <tbody>
             <tr ng-repeat-start="group in listGroupCtrl.grouplist">
                 <td data-title="'用户组'" sortable="'name'">
@@ -52,7 +52,7 @@
                 uib-collapse="listGroupCtrl.isCollapsedGroupMapping[group.id]" ng-repeat-end>
                 <td colspan="5">
                     <div class="row">
-                        <div class="col-md-4 col-lg-3" data-ng-show="!listGroupCtrl.isOpenInvite[group.id]"
+                        <div class="col-md-4 col-lg-3 btn-show-invite" data-ng-show="!listGroupCtrl.isOpenInvite[group.id]"
                              data-ng-click="listGroupCtrl.isOpenInvite[group.id]=!listGroupCtrl.isOpenInvite[group.id]">
                             <div class="well well-sm text-center usergroup-user-card">
                                 <span><i class="fa fa-plus"></i> 邀请用户</span>
