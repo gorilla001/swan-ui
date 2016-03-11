@@ -143,13 +143,13 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification, utils) {
         var url = {
             userid: data.userid,
             clusterid: data.clusterid,
-            keyword: data.keyword ? encodeURI(data.keyword).replace(new RegExp('/', 'gm'), '%2F') : '',
-            start: data.start ? encodeURI(data.start) : '',
-            end: data.end ? encodeURI(data.end) : '',
-            source: data.source ? encodeURI(data.source.join(',')).replace(new RegExp('/', 'gm'), '%2F'): '',
-            appname: data.appname ? encodeURI(data.appname).replace(new RegExp('/', 'gm'), '%2F') : '',
+            keyword: data.keyword ? encodeURIComponent(data.keyword): '',
+            start: data.start ? encodeURIComponent(data.start) : '',
+            end: data.end ? encodeURIComponent(data.end) : '',
+            source: data.source ? encodeURIComponent(data.source.join(',')): '',
+            appname: data.appname ? encodeURIComponent(data.appname): '',
             counter: data.counter ? data.counter : '',
-            ipport: data.ipport ? encodeURI(data.ipport.join(',')) : ''
+            ipport: data.ipport ? encodeURIComponent(data.ipport.join(',')) : ''
         };
 
         if (contextFlag) {
