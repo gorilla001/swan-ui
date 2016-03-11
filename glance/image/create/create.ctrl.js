@@ -15,7 +15,8 @@
             triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
             active: true,
             period: 5,
-            description: ""
+            description: "",
+            branch: ""
         };
 
         self.periodList = [

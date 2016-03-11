@@ -43,6 +43,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 分支名称</label>
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
+                        <input type="text" class="form-control" data-required="required" name="branchName"
+                               data-ng-model="imageCreateCtrl.form.branch">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
+                        <p data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine"
+                           class="help-block">分支名称不能为空</p>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-md-2 control-label">项目说明</label>
                     <div class="col-md-5">
                         <textarea class="form-control" rows="3" data-ng-model="imageCreateCtrl.description"></textarea>
