@@ -66,17 +66,15 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.isDisablelteDate = function (curDate, mode) {
         return curDate < $scope.gte;
     };
+    
+    $scope.timeRange="3";
 
     $scope.getLog = function () {
         var source = abstractValues($scope.logPaths, 'logpath');
         $scope.showContextUI = false;
 
         //set timeRange when click Button
-        if ($scope.timeRange === undefined) {
-            //defualt 3 min ago
-            $scope.lte = new Date();
-            $scope.gte = new Date((new Date()).getTime() - 3 * 60 * 1000);
-        } else if ($scope.timeRange !== 'other') {
+        if ($scope.timeRange !== 'other') {
             $scope.lte = new Date();
             $scope.gte = new Date((new Date()).getTime() - $scope.timeRange * 60 * 1000);
         }
