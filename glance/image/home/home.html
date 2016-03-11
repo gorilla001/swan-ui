@@ -10,21 +10,26 @@
                    class="table table-striped" ng-table-columns-binding="boundCols">
                 <tbody>
                 <tr ng-repeat="project in imageHomeCtrl.projects">
-                    <td data-title="'项目名称'" sortable="'name'"><a href="#"
-                                                                 data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a>
+                    <td data-title="'项目名称'"><a href="#"
+                                               data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a>
                     </td>
                     <td data-title="'状态'">{/project.triggerType/}</td>
-                    <td data-title="'镜像名称'">{/project.repoUri/}</td>
-                    <td data-title="'最近构建时间'">2016.02.25</td>
-                    <td data-title="'最新版本'">{/project.latestImage/}</td>
+                    <td data-title="'镜像名称'" sortable="'name'">{/project.repoUri | filterVersion: 'url'/}</td>
+                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-ddHH:mm:ss' /}
+                    </td>
+                    <td data-title="'最新版本'">{/project.repoUri | filterVersion: 'version'/}</td>
                     <td data-title="'操作'">
-                        <button class="btn btn-default btn-xs" data-ui-sref="appcreate({url:project.repoUri,version: 'latest'})">部署</button>
-                        <button class="btn btn-danger btn-xs" data-ng-click="imageHomeCtrl.deleteProject(project.id)">删除</button>
+                        <button class="btn btn-default btn-xs"
+                                data-ui-sref="appcreate({url:project.repoUri,version: 'latest'})">部署
+                        </button>
+                        <button class="btn btn-danger btn-xs" data-ng-click="imageHomeCtrl.deleteProject(project.id)">
+                            删除
+                        </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="alert alert-warning text-center" data-ng-show="false">
+            <div class="alert alert-warning text-center" data-ng-show="imageHomeCtrl.showNothtingAlert">
                 未查询到应用数据
             </div>
         </div>

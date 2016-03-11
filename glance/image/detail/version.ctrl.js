@@ -7,9 +7,8 @@
 
     function ImageDetailVersionCtrl(imageservice, $state, imageLogModal, $stateParams) {
         var self = this;
-        
 
-        listPageImages();
+        listPageImages(1, 20);
 
         self.pagination = {
             showPagination: false,
@@ -32,7 +31,7 @@
 
         function listPageImages(page, itemPerPage) {
             return imageservice.listProjectImages($state.params.projectId, page, itemPerPage)
-                .then(function(data) {
+                .then(function (data) {
                     self.projectImages = data.images;
                     self.pagination.totalItems = data.total;
                     self.pagination.showPagination = Boolean(self.pagination.totalItems > self.pagination.itemPerPage);

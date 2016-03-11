@@ -8,7 +8,8 @@
     <div class="main-container app-title">
         <div class="main-container-body">
             <div class="btn-group-vertical pull-right" role="group">
-                <button type="button" class="btn btn-default" data-ui-sref="appcreate({url:imageDetailCtrl.project.repoUri,version: 'latest'})">
+                <button type="button" class="btn btn-default"
+                        data-ui-sref="appcreate({url:imageDetailCtrl.project.repoUri,version: 'latest'})">
                     部署最新镜像
                 </button>
                 <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
@@ -21,7 +22,7 @@
             <ul>
                 <li>
                     <label>部署公钥：</label>
-                    {/imageDetailCtrl.project.pubKey/}
+                    {/imageDetailCtrl.project.pubkey/}
                     <a href="#">
                         <i class="fa fa-files-o"></i>
                     </a>

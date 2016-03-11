@@ -28,13 +28,13 @@
                         .then(function (data) {
                             //If you remove when the current projects of only one project,
                             //set new Page and Switch back page
-                            if (!data.length && $rootScope.imageListParams.page > 1) {
+                            if (!data.Project.length && $rootScope.imageListParams.page > 1) {
                                 $rootScope.imageListParams.page = $rootScope.imageListParams.page - 1
                             }
 
-                            self.projects = data;
+                            self.projects = data.Project;
 
-                            var total = 100;
+                            var total = data.Count;
                             //Check whether show the warning dialog
                             if (!self.projects.length) {
                                 self.showNothtingAlert = true;
@@ -43,7 +43,7 @@
                             }
                             params.total(total);
                             if (total > 0) {
-                                $defer.resolve(data);
+                                $defer.resolve(data.Project);
                             }
 
                             reloadTable();

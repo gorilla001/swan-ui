@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting', 'listProjectsName'];
+    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting', 'listProjectsName', 'Notification'];
 
-    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting, listProjectsName) {
+    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting, listProjectsName, Notification) {
         var self = this;
         ///
         self.form = {
@@ -44,7 +44,8 @@
 
         function createProject(fromData) {
             imageservice.createProject(fromData).then(function (data) {
-                $state.go('imageHome')
+                Notification.success('项目创建成功');
+                $state.go('imageDetail.version',({projectId: data.id}))
             })
         }
 
