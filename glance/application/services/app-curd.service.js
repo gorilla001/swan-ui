@@ -51,7 +51,7 @@
         function updateContainer(curInsNmu, clusterId, appId) {
             formModal.open('/application/modals/up-container.html', 
                     {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
-                        var data = {instances: self.instanceNum};
+                        var data = {instances: instanceNum};
                         appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
                             $state.reload();
                         });
