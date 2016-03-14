@@ -22,9 +22,11 @@
             <ul>
                 <li>
                     <label>部署公钥：</label>
-                    {/imageDetailCtrl.project.pubkey/}
+                    <span id="publicKey">
+                        {/imageDetailCtrl.project.pubkey/}
+                    </span>
                     <a href="#">
-                        <i class="fa fa-files-o"></i>
+                        <i class="fa fa-files-o copy" data-clipboard-target="publicKey"></i>
                     </a>
                 </li>
                 <li>
@@ -39,11 +41,8 @@
                         docker pull {/imageDetailCtrl.project.latestImage/}
                     </span>
                     <a href="#">
-                        <i class="fa fa-files-o"></i>
+                        <i class="fa fa-files-o copy" data-clipboard-target="latestImage"></i>
                     </a>
-                    <button class="copy" data-clipboard-target="latestImage">
-                        拷贝
-                    </button>
                 </li>
             </ul>
 

@@ -17,7 +17,7 @@
         function listImages() {
             return imageservice.listProjectImages($state.params.projectId)
                 .then(function (data) {
-                    self.projectImages = data.Builds;
+                    self.projectImages = data;
                 });
         }
     }

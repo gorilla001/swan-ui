@@ -17,7 +17,7 @@
             period: 5,
             description: "",
             branch: "",
-            image: ""
+            imageName: ""
         };
 
         self.periodList = [

@@ -6,6 +6,8 @@
                     <thead>
                     <tr>
                         <th>Build Number</th>
+                        <th>镜像地址</th>
+                        <th>状态</th>
                         <th>分支</th>
                         <th>Tag/Commit</th>
                         <th>时间</th>
@@ -14,17 +16,19 @@
                     </thead>
                     <tbody>
                     <tr data-ng-repeat="image in imageDetailVersionCtrl.projectImages">
+                        <td>{/image.number/}</td>
+                        <td>{/image.image/}</td>
+                        <td>{/image.status/}</td>
+                        <td>{/image.branch/}</td>
+                        <td>{/image.commit/}</td>
+                        <td>{/image.timestamp * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
                         <td>
-                            {/image.Id/}
-                            <span class="label label-info" data-ng-show="image.latest">latest</span>
-                        </td>
-                        <td>{/image.Branch/}</td>
-                        <td>{/image.Commit/}</td>
-                        <td>{/image.Created_at * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
-                        <td>
-                            <button class="btn btn-default btn-xs">拷贝pull命令</button>
+                            <span ng-show="false" id="imageUrl{/$index/}">docker pull {/image.image/}</span>
+                            <a href="#">
+                                <i class="btn btn-default btn-xs copy" data-clipboard-target="imageUrl{/$index/}">拷贝pull命令</i>
+                            </a>
                             <button class="btn btn-default btn-xs">部署镜像</button>
-                            <button class="btn btn-default btn-xs" ng-click="imageDetailVersionCtrl.openLogModal(image.Number)">日志</button>
+                            <button class="btn btn-default btn-xs" ng-click="imageDetailVersionCtrl.openLogModal(image.number)">日志</button>
                         </td>
                     </tr>
                     </tbody>
