@@ -43,6 +43,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 镜像名称</label>
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
+                        <input type="text" class="form-control" data-required="required" name="image"
+                               data-ng-model="imageCreateCtrl.form.image">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
+                        <p data-ng-show="staticForm.image.$error.required && !staticForm.image.$pristine"
+                           class="help-block">镜像名称不能为空</p>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-md-2 control-label"><span class="text-danger">*</span> 分支名称</label>
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">

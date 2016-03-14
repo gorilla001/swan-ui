@@ -8,33 +8,16 @@
     function ImageDetailVersionCtrl(imageservice, $state, imageLogModal, $stateParams) {
         var self = this;
 
-        listPageImages(1, 20);
+        listImages();
 
-        self.pagination = {
-            showPagination: false,
-            totalItems: undefined,
-            currentPage: 1,
-            itemPerPage: 10,
-            maxSize: 5
+        self.openLogModal = function (imageId) {
+            imageLogModal.open($stateParams.projectId, imageId);
         };
 
-        self.pageChange = pageChange;
-        self.openLogModal = openLogModal;
-
-        function openLogModal(imageId){
-            imageLogModal.open($stateParams.projectId, imageId);
-        }
-
-        function pageChange() {
-            listPageImages(self.pagination.currentPage, self.pagination.itemPerPage);
-        }
-
-        function listPageImages(page, itemPerPage) {
-            return imageservice.listProjectImages($state.params.projectId, page, itemPerPage)
+        function listImages() {
+            return imageservice.listProjectImages($state.params.projectId)
                 .then(function (data) {
-                    self.projectImages = data.images;
-                    self.pagination.totalItems = data.total;
-                    self.pagination.showPagination = Boolean(self.pagination.totalItems > self.pagination.itemPerPage);
+                    self.projectImages = data.Builds;
                 });
         }
     }

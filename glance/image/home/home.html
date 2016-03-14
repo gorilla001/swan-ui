@@ -22,7 +22,7 @@
                         </span>
                     </td>
                     <td data-title="'镜像名称'" sortable="'name'">{/project.repoUri | filterVersion: 'url'/}</td>
-                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-ddHH:mm:ss'
+                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'
                         /}
                     </td>
                     <td data-title="'最新版本'">{/project.repoUri | filterVersion: 'version'/}</td>
