@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('MonitorAppCtrl', MonitorAppCtrl);
 
-    MonitorAppCtrl.$inject = ['$rootScope', 'gHttp', '$scope', 'glanceHttp'];
+    MonitorAppCtrl.$inject = ['$rootScope', 'gHttp', '$scope', 'glanceHttp', '$sce'];
 
-    function MonitorAppCtrl($rootScope, gHttp, $scope, glanceHttp) {
+    function MonitorAppCtrl($rootScope, gHttp, $scope, glanceHttp, $sce) {
         var self = this;
         ///
         $rootScope.appTabFlag = "appMonitor";
@@ -19,6 +19,27 @@
         $scope.$on('refreshAppData', function () {
             initMonitor();
         });
+
+        $scope.metrics = {
+            1: {"id": 1, "desc": "CPU Usage"},
+            2: {"id": 2, "desc": "Mem Usage"},
+            3: {"id": 3, "desc": "Network I/O"},
+            4: {"id": 4, "desc": "Disk I/O"},
+        };
+
+        $scope.metricUrls = {};
+        $scope.appIframeUrls = [];
+        function setIframeUrls() {
+            if (!($scope.appInfo.alias in $scope.metricUrls)) {
+                angular.forEach($scope.metrics, function (metric) {
+                    $scope.iframeUrl = GRAFANA_CONFIG.baseUrl + "/dashboard-solo/db/app?panelId=" + metric.id + "&fullscreen&var-app_uuid_t=" + $scope.appInfo.alias + "&theme=light"
+                    $scope.appIframeUrls.push($sce.trustAsResourceUrl($scope.iframeUrl));
+                })
+                $scope.metricUrls[$scope.appInfo.alias] = $scope.appIframeUrls;
+            } else {
+            $scope.appIframeUrls = $scope.metricUrls[$scope.appInfo.alias];
+            }
+        };
 
         function initMonitor() {
             gHttp.Resource('metrics.appmonit', {
@@ -37,6 +58,9 @@
                     self.memoryUsed += appMonitor.memoryUsed;
                     self.memoryTotal += appMonitor.memoryTotal;
                 })
+                if (typeof GRAFANA_CONFIG !== 'undefined') {
+                    setIframeUrls();
+                }
             }, function (res) {
                 self.errorCode = res.code;
             });
