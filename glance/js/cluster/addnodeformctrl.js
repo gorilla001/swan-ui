@@ -11,16 +11,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notifi
     $scope.isConected = false;
 
     $scope.form = {
-      attributes: {
-        'gateway': false,
-        'proxy': false,
-      },
       id: $scope.nodeId,
       labels: []
     };
 
-    $scope.attribute = 'noAttribute';
-  
     $scope.msgstate = "等待主机链接......";
 
     $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
@@ -51,19 +45,12 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notifi
     $scope.nodeInstallScript = cmdArray.join(' ');
     $scope.clickToCopy = function() {
         if (!$scope.afterCopy) {
-            getFromAttributes();
             $scope.form.labels = $scope.getAllNodeLabelIds($scope.selectedLabels, 'id');
             gHttp.Resource('cluster.nodes', {'cluster_id': $stateParams.clusterId}).post($scope.form, {'form': $scope.staticForm}).then(function () {
                 $scope.afterCopy = true;
             })
         }
     };
-
-    function getFromAttributes() {
-        if ($scope.attribute !== 'noAttribute') {
-            $scope.form.attributes[$scope.attribute] = true;
-        }
-    }
 
     $scope.changeLabels = function() {
         labelService.changeLabels($scope)
