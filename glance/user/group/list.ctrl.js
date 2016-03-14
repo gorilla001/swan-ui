@@ -105,12 +105,18 @@
 
         /* 打开创建组 */
         self.createGroup = function() {
-            userBackend.createGroup(self.createGroupForm).then(function(data) {
-                self.isCollapsed = true;
-                $state.reload();
-            }, function(res) {
-                Notification.error(res.data.group);
-            });
+            if(!self.createGroupForm.name) {
+                Notification.error('用户组名不能为空');
+            } else {
+                userBackend.createGroup(self.createGroupForm).then(function(data) {
+                    self.isCollapsed = true;
+                    $state.reload();
+                }, function(res) {
+                    angular.forEach(res.data, function(value, key) {
+                        Notification.error(value);
+                    })
+                });
+            }
         };
 
         /* 发送邀请邮件 */

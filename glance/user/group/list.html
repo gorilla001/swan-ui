@@ -1,12 +1,12 @@
 <div class="main-container-body">
     <button class="btn btn-success" type="button"
-            ng-click="listGroupCtrl.isCollapsed = !listGroupCtrl.isCollapsed">创建用户组</button>
+            ng-click="listGroupCtrl.isCollapsed = !listGroupCtrl.isCollapsed" data-demo-disable>创建用户组</button>
     <div id="create-usergroup-panel" uib-collapse="listGroupCtrl.isCollapsed">
         <div class="well well-sm">
-            <form class="form-inline">
+            <form class="form-inline" name="staticForm">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="用户组名称"
-                           data-ng-model="listGroupCtrl.createGroupForm.name">
+                           data-ng-model="listGroupCtrl.createGroupForm.name" data-required>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="用户组描述"
