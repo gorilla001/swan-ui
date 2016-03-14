@@ -1,7 +1,8 @@
 MESSAGE_CODE = {
     success: 0,
     dataInvalid: 10001,
-    noExist: 10009
+    noExist: 10009,
+    noPermission: 10010
 };
 
 CODE_MESSAGE = {
@@ -166,5 +167,11 @@ BACKEND_URL = {
         ports: "api/v3/clusters/$cluster_id/ports",
         logPaths: "api/v3/clusters/$cluster_id/apps/$app_id/logpaths",
         appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes"
+    },
+    user: {
+        groups: 'api/v3/groups',
+        group: 'api/v3/groups/$group_id',
+        groupMemberships: 'api/v3/groups/$group_id/memberships',
+        groupMyMemberships: 'api/v3/groups/$group_id/mymemberships'
     }
 };

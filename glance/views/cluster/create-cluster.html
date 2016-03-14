@@ -22,6 +22,21 @@
           <p data-ng-show="staticForm.name.$pristine" class="help-block">{/ staticForm.message_error_info["name"] /}</p>
         </div>
       </div>
+      
+      <!-- 选择集群 -->
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            选择组
+        </label>
+        <div class="col-md-5">
+            <select class="form-control"
+                    data-ng-model="form.groupId"
+                    data-ng-options="group.id as group.name for group in groups"
+                    >
+                <option value="">无</option>
+            </select>
+        </div>
+    </div>
 
       <div class="form-group">
         <label class="col-md-2 control-label">集群规模</label>

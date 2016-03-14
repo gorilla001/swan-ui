@@ -123,7 +123,11 @@
                         self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
                         self.multiSelect.nodes = cluster.nodes;
                         setGatewayAndProxy(cluster.nodes);
-                        self.clusterName = cluster.name;
+                        if (cluster.group_name) {
+                            self.clusterName = cluster.group_name + ":" + cluster.name;
+                        } else {
+                            self.clusterName = cluster.name;
+                        }
                     });
         };
         
@@ -292,7 +296,11 @@
             clusterBackendService.listClusters()
                 .then(function(clusters) {
                     angular.forEach(clusters, function(cluster, index) {
-                        self.clusters.push({id: cluster.id, name: cluster.name});
+                        if (cluster.group_name){
+                            self.clusters.push({id: cluster.id, name: cluster.group_name+":"+cluster.name});
+                        } else {
+                            self.clusters.push({id: cluster.id, name: cluster.name});
+                        }
                     });
                 });
         }

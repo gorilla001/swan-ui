@@ -1,0 +1,38 @@
+<div class="main-container-body">
+    <form name="staticForm"  class="form-horizontal" novalidate>
+        <div class="form-group">
+            <label class="col-md-3 control-label">旧密码</label>
+            <div class="col-md-4" data-ng-class="{'has-error' : (staticForm.message_error_info.old_password && staticForm.old_password.$pristine) || (staticForm.old_password.$invalid && staticForm.old_password.$dirty)}">
+                    <input type="password" name="old_password" class="form-control" data-ng-model="updatePasswordCtrl.form.old_password" data-required="required">
+                    <p data-ng-show="staticForm.old_password.$error.required && !staticForm.old_password.$pristine" class="help-block"><small>密码不能为空</small></p>
+                    <p data-ng-show="staticForm.old_password.$pristine" class="help-block">{/ staticForm.message_error_info.old_password /}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">新密码</label>
+            <div class="col-md-4" data-ng-class="{'has-error' : staticForm.new_password.$invalid && staticForm.new_password.$dirty}">
+                <input type="password" name="new_password" id="newPassword" class="form-control" data-regex-validator data-ng-model="updatePasswordCtrl.form.new_password" data-required="required">
+                <p class="help-block">
+                    <small>密码只能包含英文字母、数字、标点符号且必须包含大写字母，长度为8-16位。
+                    </small>
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">重新输入新密码</label>
+            <div class="col-md-4" data-ng-class="{'has-error' : staticForm.new_password_compare.$invalid && staticForm.new_password_compare.$dirty}">
+                <input type="password" name="new_password_compare" id="newPasswordCompare" data-value-match="#newPassword" class="form-control" data-ng-model="updatePasswordCtrl.form.new_password_compare" data-required="required">
+                <p class="help-block" data-ng-show="staticForm.new_password_compare.$invalid && staticForm.new_password_compare.$dirty">
+                    两次输入密码不一致
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <button type="submit" class="btn btn-success" data-ng-click="updatePasswordCtrl.modifyPassword()" data-ng-disabled="staticForm.$invalid" data-demo-disable>完 成</button>
+                <button class="btn btn-default" data-ng-click="updatePasswordCtrl.goBack()">取 消</button>
+            </div>
+        </div>
+    </form>
+</div>

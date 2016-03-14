@@ -13,7 +13,8 @@ var glanceApp = angular.module('glance',
         'rzModule',
         'ngTable',
         'glance.utils',
-        'glance.app'
+        'glance.app',
+        'glance.user'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider',
@@ -64,6 +65,11 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
                         templateUrl: '/views/cluster/node-source.html',
                         controller: 'addNodeCtrl'
                     }
+                },
+                resolve: {
+                    nodeInfo:  ['gHttp', '$stateParams', function(gHttp, $stateParams){
+                            return gHttp.Resource("cluster.nodeId", {cluster_id: $stateParams.clusterId}).get()
+                        }]
                 }
             })
             .state('cluster.iaasprovider', {

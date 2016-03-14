@@ -105,6 +105,8 @@
                         deferred.resolve(data.data);
                     } else if (data.code === MESSAGE_CODE.noExist){
                         $state.go('404');
+                    } else if (data.code === MESSAGE_CODE.noPermission) {
+                        Notification.error("您没有权限进行此操作");
                     } else {
                         deferred.reject(data);
                     }

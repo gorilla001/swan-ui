@@ -1,0 +1,82 @@
+body {
+	background-color: #f3f5f7;
+	color: #3D3D3D;
+	font-family: 'PingHei', 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizelegibility;
+}
+body, html {
+	height: 100%;
+}
+.btn:focus, .btn:active {
+	box-shadow: none;
+	outline: none;
+}
+.app-title ul, .app-title li {
+	font-size: 14px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.app-title ul {
+	margin-top: 20px;
+}
+
+.usergroup-tablelist h5, .usergroup-tablelist p  {
+	margin: 0;
+}
+.usergroup-tablelist #panel-invite {
+	display: none;
+}
+.usergroup-tablelist p  {
+	color: #999;
+	font-size: 12px;
+	padding-top: 3px;
+}
+.usergroup-tablelist tr.collapse {
+	margin-top: -1px;
+}
+.usergroup-tablelist tr.collapse td {
+	border-top: 1px solid #FFF;
+}
+.usergroup-tablelist tr.collapse .row {
+	min-height: 75px;
+	max-height: 150px;
+	overflow-y: auto;
+}
+.usergroup-user-card {
+	height: 54px;
+	position: relative;
+}
+.usergroup-user-card h5 {
+	font-size: 12px;
+}
+.usergroup-user-card time {
+	color: #999;
+	display: inline-block;
+	font-size: 11px;
+}
+.usergroup-user-card .btn {
+	border-radius: 0 4px 0 0;
+	display: none;
+	position: absolute;
+	top: -1px;
+	right: -1px;
+}
+.usergroup-user-card:hover .btn {
+	display: block;
+}
+.btn-show-invite {
+	cursor: pointer;
+}
+.btn-show-invite span {
+	color: #3d3d3d;
+	display: block;
+	margin-top: 8px;
+}
+.btn-show-invite:hover span {
+	color: #427fed;
+}
