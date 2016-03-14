@@ -13,17 +13,17 @@
             open: open
         };
 
-        function open(projectId, imageId) {
+        function open(projectId, buildNumber) {
             var modalInstance = $uibModal.open({
                 templateUrl: '/image/modals/get-image-log.html',
                 controller: ImageLogCtrl,
                 controllerAs: 'imageLogCtrl',
                 resolve: {
-                    projectId: function () {
-                        return projectId
-                    },
-                    imageId: function(){
-                        return imageId
+                    content: function () {
+                        return {
+                            projectId: projectId,
+                            buildNumber: buildNumber
+                        }
                     }
                 }
             });
@@ -32,15 +32,15 @@
         }
 
 
-        function ImageLogCtrl($uibModalInstance, projectId, imageId, imageservice) {
+        function ImageLogCtrl($uibModalInstance, content, imageservice) {
             var self = this;
-            self.projectId = projectId;
-            self.imageId = imageId;
+            var projectId = content.projectId;
+            var buildNumber = content.buildNumber;
 
             (function () {
-                imageservice.imageLog(self.projectId, self.imageId)
+                imageservice.imageLog(projectId, buildNumber)
                     .then(function (data) {
-                        //start websockt
+                        self.log = data
                     })
             })();
 

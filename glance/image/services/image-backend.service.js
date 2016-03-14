@@ -61,8 +61,8 @@
             return gHttp.Resource('image.deleteImage', {project_id: projectId, image_id: imageId}).delete();
         }
 
-        function imageLog(projectId, imageId) {
-            return gHttp.Resource('image.imageLog', {project_id: projectId, image_id: imageId}).get();
+        function imageLog(projectId, buildNumber) {
+            return gHttp.Resource('image.imageLog', {project_id: projectId, build_number: buildNumber}).get();
         }
     }
 })();
