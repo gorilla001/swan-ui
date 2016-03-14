@@ -43,6 +43,7 @@
         
         self.gateWays = [];
         self.proxyNodes = [];
+        self.cluster;
         
         var existPorts;
         if (self.target === 'create') {
@@ -121,8 +122,9 @@
             return clusterBackendService.getCluster(cluster_id)
                     .then(function(cluster) {
                         self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
-                        self.multiSelect.nodes = cluster.nodes;
-                        setGatewayAndProxy(cluster.nodes);
+                        self.multiSelect.nodes = [];
+                        self.cluster = cluster;
+                        setNodesAndGatewayAndProxy(cluster.nodes, cluster.cluster_type);
                         if (cluster.group_name) {
                             self.clusterName = cluster.group_name + ":" + cluster.name;
                         } else {
@@ -131,8 +133,11 @@
                     });
         };
         
-        function setGatewayAndProxy(nodes) {
+        function setNodesAndGatewayAndProxy(nodes, cluster_type) {
             for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i].role!='master'||cluster_type=='1_master') {
+                    self.multiSelect.nodes.push(nodes[i]);
+                }
                 if (nodes[i].attributes.length) {
                     for (var j = 0; j < nodes[i].attributes.length; j++) {
                         if (nodes[i].attributes[j].attribute === 'gateway') {
@@ -308,8 +313,14 @@
         function listNodesBySelectedLabels() {
             return appLabelService.listNodesByLabelIds(self.multiSelect.selectedLabels, self.form.cluster_id)
                 .then(function(nodes) {
-                    self.multiSelect.nodes = nodes;
-                    self.multiSelect.selectedNodes = nodes;
+                    self.multiSelect.nodes = [];
+                    self.multiSelect.selectedNodes = [];
+                    angular.forEach(nodes, function(node){
+                        if (node.role!='master'||self.cluster.cluster_type=='1_master') {
+                            self.multiSelect.nodes.push(node);
+                            self.multiSelect.selectedNodes.push(node);
+                        }
+                    });
                     setTick(self.multiSelect.selectedNodes, true);
                 });
         }
