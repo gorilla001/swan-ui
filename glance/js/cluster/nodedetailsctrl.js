@@ -67,7 +67,9 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
     $scope.DOMs = {
         cpu: 'node-cpu-chart',
         memory: 'node-memory-chart',
-        disk: 'node-disk-chart'
+        disk: 'node-disk-chart',
+        diskio: 'node-diskio-chart',
+        netio: 'node-netio-chart'
     };
 
     $scope.unitConversion = unitConversion;

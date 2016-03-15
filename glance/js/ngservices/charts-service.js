@@ -33,7 +33,7 @@ function buildCharts(monitor) {
         return markLine;
     }
 
-    function setBasicStyle(color) {
+    function setBasicStyle(color, postfix, max) {
         var option = {
             grid: {},
             xAxis: [],
@@ -56,7 +56,7 @@ function buildCharts(monitor) {
         option.yAxis[0] = {
             type: 'value',
             axisLabel: {
-                formatter: '{value} %'
+                formatter: '{value}' + postfix
             },
             splitLine: {
                 show: false
@@ -67,12 +67,12 @@ function buildCharts(monitor) {
                 }
             },
             min: 0,
-            max: 100
+            max: max
         };
         return option;
     }
 
-    function setBasicInfo(descriptions) {
+    function setBasicInfo(descriptions, postfix) {
         var option = {
             title: {
                 text: descriptions.title,
@@ -84,7 +84,7 @@ function buildCharts(monitor) {
                     var res = '';
                     for (var i = 0, l = params.length; i < l; i++) {
                         if (params[i].seriesName !== '') {
-                            res += params[i].seriesName + '：' + params[i].data + '%' + '<br/>';
+                            res += params[i].seriesName + '：' + params[i].data + postfix + '<br/>';
                         }
                     }
                     return res;
@@ -132,12 +132,12 @@ function buildCharts(monitor) {
         return seriesData;
     }
 
-    function getChatrsOption(indicator, xAxis, yAxis, alarmingLines) {
+    function getChatrsOption(indicator, xAxis, yAxis, postfix, max, alarmingLines) {
         var option = {};
         option.series = [];
-        var basicStyle = setBasicStyle(indicator.styles.axesColor);
+        var basicStyle = setBasicStyle(indicator.styles.axesColor, postfix, max);
         basicStyle.xAxis[0].data = xAxis;
-        var basicInfo = setBasicInfo(indicator.descriptions);
+        var basicInfo = setBasicInfo(indicator.descriptions, postfix);
         
         var keys = [basicStyle, basicInfo];
         $.each(keys, function(index, obj) {
@@ -152,16 +152,35 @@ function buildCharts(monitor) {
             option.series[i] = setSeriesStyles(indicator, i);
             option.series[i].data = seriesData[i];
         }
-
-        option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
-        option.series[lineNumber+1] = createMarkline(alarmingLines.frequency, alarmingLines.low.rate, alarmingLines.low.color);
+        if (alarmingLines) {
+            option.series[lineNumber] = createMarkline(alarmingLines.frequency, alarmingLines.high.rate, alarmingLines.high.color);
+            option.series[lineNumber+1] = createMarkline(alarmingLines.frequency, alarmingLines.low.rate, alarmingLines.low.color);
+        }
         return option;
     }
 
     function initCharts(indicator, xAxis, yAxis, alarmingLines) {
-        var option = getChatrsOption(indicator, xAxis, yAxis, alarmingLines);
+        var option = getChatrsOption(indicator, xAxis, yAxis, "%", 100, alarmingLines);
         var chart = echarts.init(document.getElementById(indicator.domId));
         chart.setOption(option);
+    }
+    
+    function initIOCharts(indicator, xAxis, yAxis) {
+        var option = getChatrsOption(indicator, xAxis, yAxis, "KB/s", getYAxisMax(yAxis));
+        var chart = echarts.init(document.getElementById(indicator.domId));
+        chart.setOption(option);
+    }
+    
+    function getYAxisMax(yAxis){
+        var max = 0;
+        angular.forEach(yAxis, function (item) {
+            angular.forEach(item, function (value) {
+                if (Number(value) > Number(max)) {
+                    max = Number(value).toFixed(0);
+                }
+            })
+        });
+        return max;
     }
     
     function listDiskNames(diskNames) {
@@ -216,6 +235,34 @@ function buildCharts(monitor) {
                 axiesFontsize: '11px'
             }
         };
+        var diskio = {
+                key: 'diskio',
+                domId: DOMs.diskio,
+                descriptions: {
+                    title: '磁盘I/O监控',
+                    subtitle: '一小时内变化',
+                    seriesName: ['磁盘读速率', '磁盘写速率']
+                },
+                styles: {
+                    lineWidth: 3,
+                    axesColor: '#9B9B9B',
+                    axiesFontsize: '11px'
+                }
+            };
+        var netio = {
+                key: 'netio',
+                domId: DOMs.netio,
+                descriptions: {
+                    title: '网络I/O监控',
+                    subtitle: '一小时内变化',
+                    seriesName: ['网路接收速率','网路发送速率']
+                },
+                styles: {
+                    lineWidth: 3,
+                    axesColor: '#9B9B9B',
+                    axiesFontsize: '11px'
+                }
+            };
         
         var xAxis = chartsData.xAxis;
         var yAxis = chartsData.yAxis;
@@ -240,6 +287,8 @@ function buildCharts(monitor) {
         initCharts(memory, xAxis, yAxis.memory, alarmingLines);
         initCharts(disk, xAxis, yAxis.disk, alarmingLines);
         initCharts(cpu, xAxis, yAxis.cpu, alarmingLines);
+        initIOCharts(diskio, xAxis, yAxis.diskio);
+        initIOCharts(netio, xAxis, yAxis.netio);
     };
 
     return {
