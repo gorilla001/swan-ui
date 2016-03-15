@@ -312,17 +312,39 @@
                                 <thead>
                                 <tr>
                                     <th>应用端口</th>
+                                    <th>类型</th>
                                     <th>协议</th>
-                                    <th>映射端口</th>
+                                    <th>地址</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="info in createAppCtrl.form.portMappings">
                                     <td>{/info.appPort/}</td>
+                                    <td>{/createAppCtrl.APP_PORT_TYPE[info.type]/}</td>
                                     <td>{/createAppCtrl.APP_PROTOCOL_TYPE[info.protocol]/}</td>
                                     <td>
-                                        {/info.mapPort/}
+                                        <p ng-show="info.protocol == '1' && info.type == '1'"
+                                           ng-repeat="proxyNode in createAppCtrl.proxyNodes">{/proxyNode.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && info.isUri == '2'"
+                                           ng-repeat="gateWay in createAppCtrl.gateWays">{/gateWay.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && info.isUri == '1'">
+                                            {/info.uri/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '1'"
+                                           ng-repeat="proxyNode in createAppCtrl.proxyNodes">
+                                            http://{/proxyNode.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '2' && info.isUri == '1'">
+                                            http://{/info.uri/}</p>
+
+                                        <p ng-show="info.protocol == '2' && info.type == '2' && info.isUri == '2'"
+                                           ng-repeat="gateWay in createAppCtrl.gateWays">http://{/gateWay.ip/}:{/info.mapPort/}</p>
+
+                                        <p ng-show="info.protocol == '1' && info.type == '2' && !info.isUri "
+                                           ng-repeat="gateWay in createAppCtrl.gateWays">{/gateWay.ip/}:{/info.mapPort/}</p>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-default btn-xs"
