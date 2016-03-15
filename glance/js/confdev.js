@@ -19,6 +19,10 @@ AGENT_CONFIG = {
     installUrl: "AGENT_URL"
 };
 
+GRAFANA_CONFIG = {
+    baseUrl: "GRAFANA",
+};
+
 (function() {
   if (RUNNING_ENV === 'dev' && AGENT_CONFIG.dmHost.slice(0, 5) === "LOCAL") {
     AGENT_CONFIG.dmHost = 'DM_HOST=ws://devstreaming.dataman-inc.net/';
