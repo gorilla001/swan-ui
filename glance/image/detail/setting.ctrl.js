@@ -15,7 +15,8 @@
             repoUri: self.projectInfo.repoUri,
             active: self.projectInfo.active,
             period: self.projectInfo.period,
-            triggerType: self.projectInfo.triggerType
+            triggerType: self.projectInfo.triggerType,
+            imageName: self.projectInfo.imageName
         };
 
         self.periodList = [

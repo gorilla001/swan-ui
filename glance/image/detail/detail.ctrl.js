@@ -3,11 +3,10 @@
     angular.module('glance.image')
         .controller('ImageDetailCtrl', ImageDetailCtrl);
 
-    ImageDetailCtrl.$inject = ['project', 'utils', 'imageCurd', '$stateParams'];
+    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams'];
 
-    function ImageDetailCtrl(project, utils, imageCurd, $stateParams) {
+    function ImageDetailCtrl(project, imageCurd, $stateParams) {
         var self = this;
-        utils.clickToCopy();
 
         self.project = project;
         self.projectVersion = spliceVersion(project.repoUri);

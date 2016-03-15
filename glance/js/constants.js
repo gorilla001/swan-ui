@@ -35,7 +35,17 @@ APP_STATUS = {
 APP_INS_STATUS = {
     '1': "运行中",
     '2': "部署中"
-};;
+};
+
+IMAGE_STATUS = {
+    'pending': "等待中",
+    'running': "执行中",
+    'success': "成功",
+    'skipped': "已忽略",
+    'failure': "失败",
+    'killed': "已停止",
+    'error': "失败"
+};
 
 APP_EVENTS_MSG = {
     ScaleApplication: "应用扩展操作",

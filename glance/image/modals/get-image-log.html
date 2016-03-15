@@ -4,6 +4,9 @@
 </div>
 
 <form class="form-horizontal" name="logForm">
+    <div class="alert alert-warning text-center" data-ng-hide="imageLogCtrl.log">
+        暂无日志
+    </div>
     <div class="modal-body">
         {/imageLogCtrl.log/}
     </div>
