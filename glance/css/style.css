@@ -1199,6 +1199,14 @@ a.remove {
     height: 300px;
 }
 
+#node-diskio-chart {
+    height: 300px;
+}
+
+#node-netio-chart {
+    height: 300px;
+}
+
 /*loading*/
 #main {
     position: relative;
