@@ -39,16 +39,25 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
     $scope.getCurNode();
 
     function createServiceViews() {
-        $scope.serviceViews = ["docker"];
+        $scope.serviceViews = ["docker"]
         if ($scope.isMasterFlag) {
             $scope.serviceViews.push("master", "marathon", "zookeeper", "exhibitor");
             if ($scope.node.cluster.cluster_type == '1_master') {
                 $scope.serviceViews.push("slave", "cadvisor");
-            }
+            };
         } else {
             $scope.serviceViews.push("slave", "cadvisor");
         }
         $scope.serviceViews.push("logcollection");
+
+        angular.forEach($scope.node.attributes, function (attribute) {
+            if (attribute.attribute == "gateway") {
+                $scope.serviceViews.push("bamboo_gateway");
+            }
+            if (attribute.attribute == "proxy") {
+                $scope.serviceViews.push("bamboo_proxy");
+            }
+        });
 
         if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 ) || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled") {
             $scope.serviceViews.push("chronos");

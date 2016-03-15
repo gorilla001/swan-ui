@@ -41,6 +41,8 @@
         var self = this;
         self.target = target;
         
+        self.gateWays = [];
+        self.proxyNodes = [];
         self.cluster;
         
         var existPorts;
@@ -116,25 +118,36 @@
             }
             appservice.listAppPorts(cluster_id, app_id).then(function (data) {
                 existPorts = data;
-            });
+            })
             return clusterBackendService.getCluster(cluster_id)
                     .then(function(cluster) {
                         self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
                         self.multiSelect.nodes = [];
                         self.cluster = cluster;
-                        setMultiSelect(cluster.nodes, cluster.cluster_type);
+                        setNodesAndGatewayAndProxy(cluster.nodes, cluster.cluster_type);
                         if (cluster.group_name) {
                             self.clusterName = cluster.group_name + ":" + cluster.name;
                         } else {
                             self.clusterName = cluster.name;
                         }
                     });
-        }
+        };
         
-        function setMultiSelect(nodes, cluster_type) {
+        function setNodesAndGatewayAndProxy(nodes, cluster_type) {
             for (var i = 0; i < nodes.length; i++) {
                 if (nodes[i].role!='master'||cluster_type=='1_master') {
                     self.multiSelect.nodes.push(nodes[i]);
+                }
+                if (nodes[i].attributes.length) {
+                    for (var j = 0; j < nodes[i].attributes.length; j++) {
+                        if (nodes[i].attributes[j].attribute === 'gateway') {
+                            self.gateWays.push(nodes[i]);
+                        }
+
+                        if (nodes[i].attributes[j].attribute === 'proxy') {
+                            self.proxyNodes.push(nodes[i]);
+                        }
+                    }
                 }
             }
 
@@ -228,18 +241,18 @@
         // // 应用地址
         
         self.openPortModule = function () {
-            if(!self.form.cluster_id){
+            if (!self.proxyNodes.length && !self.gateWays.length) {
                 Notification.warning('没有选择集群或集群中没有网关和代理节点，无法添加应用地址，请选择集群并增加网关/代理节点后重试');
                 return
             }
-            createAppPortModal.open(existPorts).then(function (portInfo) {
-                if (isDisableAddList(portInfo, self.form.portMappings, ['type', 'mapPort'])) {
+            createAppPortModal.open(existPorts, self.proxyNodes, self.gateWays).then(function (portInfo) {
+                if (isDisableAddList(portInfo, self.form.portMappings, ['type', 'mapPort', 'uri'])) {
                     Notification.error('添加的应用地址已存在');
                 } else {
                     self.form.portMappings.push(portInfo);
                 }
             });
-        };
+        }
         
         //日志路径
         self.openLogPathModule = function () {
@@ -250,7 +263,7 @@
                     self.form.logPaths.push(path);
                 }
             })
-        };
+        }
 
         self.createApp = function () {
             setConstraints();
@@ -369,7 +382,7 @@
                 elements.push(temp);
             }
             return elements;
-        }
+        };
         
         function setSelectNodes(iplist){
             angular.forEach(self.multiSelect.nodes, function(node){
