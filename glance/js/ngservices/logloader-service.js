@@ -67,9 +67,15 @@ function LogLoader($filter, $rootScope, glanceHttp, $sce, Notification, utils) {
         this.clusterId = searchData.clusterId;
         this.downloadHref= "";
         this.data = {
-            "userid": parseInt($rootScope.userId),
             "clusterid": this.clusterId
         };
+        if (searchData.groupId) {
+            this.data.usertype = "group";
+            this.data.userid = searchData.groupId;
+        } else {
+            this.data.usertype = "user";
+            this.data.userid = parseInt($rootScope.userId)
+        }
 
         if (contextCallBack) {
             this.data.timestamp = searchData.timestamp;

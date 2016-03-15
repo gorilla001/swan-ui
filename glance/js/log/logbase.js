@@ -18,11 +18,15 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
     $scope.clusterlogs = new LogLoader();
     $scope.contextlogs = new LogLoader();
     $scope.inputLogPaths = [];
+    $scope.clusterMapping = {};
 
     $scope.listCluster = function () {
         gHttp.Resource('cluster.clusters').get().then(function (data) {
             if (data && data.length !== 0) {
                 $scope.clusters = data;
+                angular.forEach($scope.clusters, function(cluster){
+                    $scope.clusterMapping[cluster.id] = cluster;
+                })
             }
         })
     };
@@ -83,6 +87,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             'gte': $scope.gte,
             'lte': $scope.lte,
             'clusterId': $scope.clusterId,
+            'groupId': $scope.clusterMapping[$scope.clusterId].group_id,
             'nodeId': $scope.nodeId,
             'appName': $scope.app.alias,
             'logSearchKey': $scope.logSearchKey,
@@ -103,6 +108,7 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             timestamp: logInfo.timestamp[0],
             ipport: logInfo.ipport[0],
             clusterId: clusterIdTemp,
+            groupId: $scope.clusterMapping[clusterIdTemp].group_id,
             size: 200,
             source: logInfo.source[0]
         };
