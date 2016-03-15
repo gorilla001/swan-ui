@@ -20,7 +20,7 @@ AGENT_CONFIG = {
 };
 
 GRAFANA_CONFIG = {
-    baseUrl: "GRAFANA",
+    baseUrl: "GF_BASE_URL",
 };
 
 (function() {
