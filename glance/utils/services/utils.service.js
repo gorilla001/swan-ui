@@ -6,8 +6,11 @@
     utils.$inject = ["Notification"];
 
     function utils(Notification) {
-        var clickToCopy = function () {
-            $(".copy").each(function () {
+        var clickToCopy = function (className) {
+            if (!className) {
+                className = ".copy";
+            }
+            $(className).each(function () {
                 var clip = new ZeroClipboard($(this), {
                     moviePath: "/bower_components/zeroclipboard/dist/ZeroClipboard.swf"
                 });
