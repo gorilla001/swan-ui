@@ -43,10 +43,10 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
         if ($scope.isMasterFlag) {
             $scope.serviceViews.push("master", "marathon", "zookeeper", "exhibitor");
             if ($scope.node.cluster.cluster_type == '1_master') {
-                $scope.serviceViews.push("slave", "cadvisor");
+                $scope.serviceViews.push("slave", "cadvisor", "bamboo", "haproxy");
             }
         } else {
-            $scope.serviceViews.push("slave", "cadvisor");
+            $scope.serviceViews.push("slave", "cadvisor", "bamboo", "haproxy");
         }
         $scope.serviceViews.push("logcollection");
 
