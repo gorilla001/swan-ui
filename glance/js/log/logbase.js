@@ -109,9 +109,12 @@ function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiS
             ipport: logInfo.ipport[0],
             clusterId: clusterIdTemp,
             groupId: $scope.clusterMapping[clusterIdTemp].group_id,
-            size: 200,
-            source: logInfo.source[0]
+            size: 200
         };
+
+        if(logInfo.hasOwnProperty('source')){
+            $scope.contextSearchData.source = logInfo.source[0]
+        }
 
         $scope.contextlogs.searchLogs($scope.contextSearchData, function (logSize) {
             $timeout(function () {
