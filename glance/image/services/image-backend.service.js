@@ -33,20 +33,16 @@
             return gHttp.Resource('image.project', {project_id: projectId}).delete();
         }
 
-        function getProject(projectId) {
-            return gHttp.Resource('image.project', {project_id: projectId}).get();
+        function getProject(projectId, loading) {
+            return gHttp.Resource('image.project', {project_id: projectId}).get({loading: loading});
         }
 
         function updateProject(projectId, data) {
             return gHttp.Resource('image.project', {project_id: projectId}).put(data);
         }
 
-        function listProjectImages(projectId, page, itemPerPage) {
-            var params = {
-                page: page,
-                per_page: itemPerPage
-            };
-            return gHttp.Resource('image.projectImages', {project_id: projectId}).get({params: params});
+        function listProjectImages(projectId, loading) {
+            return gHttp.Resource('image.projectImages', {project_id: projectId}).get({loading: loading});
         }
 
         function listProjectApps(projectId) {

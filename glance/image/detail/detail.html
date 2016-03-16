@@ -8,18 +8,19 @@
     <div class="main-container app-title">
         <div class="main-container-body">
             <div class="btn-group-vertical pull-right" role="group">
-                <button type="button" class="btn btn-default"
-                        data-ui-sref="appcreate({url:imageDetailCtrl.project.repoUri,version: 'latest'})">
+                <button type="button" class="btn btn-default" data-ng-disabled="imageDetailCtrl.project.status != 'success'"
+                        data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)"
+                >
                     部署最新镜像
                 </button>
-                <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
+                <button type="button" class="btn btn-danger" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
                 </button>
             </div>
             <h3>
                 {/imageDetailCtrl.project.name/}
-                <small>最新版本构建于{/imageDetailCtrl.project.createTime/}月前</small>
+                <small>最新版本构建于: {/imageDetailCtrl.project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</small>
             </h3>
-            <ul>
+            <ul class="list-text">
                 <li>
                     <label>部署公钥：</label>
                     <span id="publicKey">
@@ -37,10 +38,13 @@
                 </li>
                 <li>
                     <label>拉取镜像：</label>
-                    <span id="latestImage">
-                        docker pull {/imageDetailCtrl.project.latestImage/}
+                    <span id="latestImage" data-ng-show="imageDetailCtrl.project.image">
+                        docker pull {/imageDetailCtrl.project.image/}
                     </span>
-                    <a href="#">
+                    <span data-ng-hide="imageDetailCtrl.project.image">
+                        暂未生成
+                    </span>
+                    <a href="#" data-ng-show="imageDetailCtrl.project.image">
                         <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
                     </a>
                 </li>

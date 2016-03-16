@@ -35,7 +35,8 @@
             }
         ];
 
-        self.projectsName = listProjectsName;
+        self.projectsName = listProjectsName.projectsName;
+        self.projectsImagesName = listProjectsName.imagesName;
         self.triggerCount = 1;
         self.tag = true;
         self.branch = false;

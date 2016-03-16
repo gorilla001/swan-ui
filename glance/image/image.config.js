@@ -74,10 +74,14 @@
 
     listProjectsName.$inject = ['imageservice'];
     function listProjectsName(imageservice) {
-        var listProjectsName = [];
+        var listProjectsName = {
+            projectsName: [],
+            imagesName: []
+        };
         return imageservice.listProjects().then(function (data) {
-            angular.forEach(data, function (value, index) {
-                listProjectsName.push(value.name)
+            angular.forEach(data.Project, function (value, index) {
+                listProjectsName.projectsName.push(value.name);
+                listProjectsName.imagesName.push(value.imageName)
             });
             return listProjectsName;
         })

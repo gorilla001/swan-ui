@@ -18,7 +18,14 @@
                     <tr data-ng-repeat="image in imageDetailVersionCtrl.projectImages | orderBy: image.number">
                         <td>{/image.number/}</td>
                         <td>{/image.image/}</td>
-                        <td>{/imageDetailVersionCtrl.IMAGE_STATUS[image.status]/}</td>
+                        <td>
+                             <span data-ng-class="{'text-danger': image.status == 'failure' || image.status == 'error', 'text-success': image.status == 'success',
+                        'text-info': image.status == 'running' || image.status == 'pending'}">
+                            <i class="fa" data-ng-class="{'fa-times-circle': image.status == 'failure' || image.status == 'error', 'fa-check-circle': image.status == 'success',
+                            'fa-spinner': image.status == 'running' || image.status == 'pending', 'fa-spin': image.status == 'running' || image.status == 'pending'}"></i>
+                            {/imageDetailVersionCtrl.IMAGE_STATUS[image.status]/}
+                        </span>
+                        </td>
                         <td>{/image.branch/}</td>
                         <td>{/image.commit | limitTo: 7/}</td>
                         <td>{/image.timestamp * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
@@ -27,7 +34,9 @@
                             <button class="btn btn-default btn-xs" data-clipboard-target="imageUrl{/$index/}" dm-copy>
                                 拷贝pull命令
                             </button>
-                            <button class="btn btn-default btn-xs" data-ng-click="imageDetailVersionCtrl.goToCreateApp(image.image)">部署镜像</button>
+                            <button class="btn btn-default btn-xs" data-ng-show="image.status == 'success'"
+                                    data-ng-click="imageDetailVersionCtrl.goToCreateApp(image.image)">部署镜像
+                            </button>
                             <button class="btn btn-default btn-xs"
                                     ng-click="imageDetailVersionCtrl.openLogModal(image.number)">日志
                             </button>

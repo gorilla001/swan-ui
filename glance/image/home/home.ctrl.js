@@ -10,6 +10,9 @@
         var listProjectPromise;
         var imageListReloadInterval = 5000;
 
+        self.IMAGE_STATUS = IMAGE_STATUS;
+        self.goToCreateApp = goToCreateApp;
+
         $rootScope.show = 'image';
 
         self.deleteProject = function (projectId) {
@@ -24,6 +27,7 @@
                 getData: function ($defer, params) {
 
                     $rootScope.imageListParams = self.imageListTable.parameters();
+
                     imageservice.listProjects(dealParams(params.url()))
                         .then(function (data) {
                             //If you remove when the current projects of only one project,
@@ -45,9 +49,6 @@
                             if (total > 0) {
                                 $defer.resolve(data.Project);
                             }
-
-                            reloadTable();
-
                         }, function (res) {
 
                         });
@@ -98,6 +99,10 @@
                     self.imageListTable.reload()
                 }, imageListReloadInterval);
             }
+        }
+
+        function goToCreateApp(imageUrl) {
+            imageCurd.goToCreateApp(imageUrl)
         }
     }
 })();

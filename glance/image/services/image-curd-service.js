@@ -6,12 +6,13 @@
     angular.module('glance.image')
         .factory('imageCurd', imageCurd);
 
-    imageCurd.$inject = ['imageservice', 'confirmModal', 'Notification', '$state'];
+    imageCurd.$inject = ['imageservice', 'confirmModal', 'Notification', '$state', '$filter'];
 
-    function imageCurd(imageservice, confirmModal, Notification, $state) {
+    function imageCurd(imageservice, confirmModal, Notification, $state, $filter) {
         //////
         return {
-            deleteProjet: deleteProjet
+            deleteProjet: deleteProjet,
+            goToCreateApp: goToCreateApp
         };
 
         function deleteProjet(projectId) {
@@ -22,6 +23,12 @@
                     Notification.error('删除失败');
                 });
             })
+        }
+
+        function goToCreateApp(imageUrl) {
+            var url = $filter("filterVersion")(imageUrl, 'url');
+            var version = $filter("filterVersion")(imageUrl, 'version');
+            $state.go('appcreate', {url: url, version: version})
         }
     }
 })();

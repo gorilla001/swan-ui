@@ -14,21 +14,20 @@
                                                data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a>
                     </td>
                     <td data-title="'状态'">
-                        <span data-ng-class="{'text-danger': project.status == 3, 'text-success': project.status == 1,
-                        'text-info': project.status == 2}">
-                            <i class="fa" data-ng-class="{'fa-times-circle': project.status == 3, 'fa-check-circle': project.status == 1,
-                            'fa-spinner': project.status == 2, 'fa-spin': project.status == 2}"></i>
-                            正常
+                        <span data-ng-class="{'text-danger': project.status == 'failure' || project.status == 'error', 'text-success': project.status == 'success',
+                        'text-info': project.status == 'running' || project.status == 'pending'}">
+                            <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
+                            'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
+                            {/imageHomeCtrl.IMAGE_STATUS[project.status]/}
                         </span>
                     </td>
-                    <td data-title="'镜像名称'" sortable="'name'">{/project.repoUri | filterVersion: 'url'/}</td>
-                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'
-                        /}
+                    <td data-title="'镜像名称'" sortable="'name'">{/project.image | filterVersion: 'url'/}</td>
+                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}
                     </td>
-                    <td data-title="'最新版本'">{/project.repoUri | filterVersion: 'version'/}</td>
+                    <td data-title="'最新版本'">{/project.image | filterVersion: 'version'/}</td>
                     <td data-title="'操作'">
-                        <button class="btn btn-default btn-xs"
-                                data-ui-sref="appcreate({url:project.repoUri,version: 'latest'})">部署
+                        <button class="btn btn-default btn-xs" data-ng-show="project.status == 'success'"
+                                data-ng-click="imageHomeCtrl.goToCreateApp(project.image)">部署
                         </button>
                         <button class="btn btn-danger btn-xs" data-ng-click="imageHomeCtrl.deleteProject(project.id)">
                             删除
@@ -38,7 +37,7 @@
                 </tbody>
             </table>
             <div class="alert alert-warning text-center" data-ng-show="imageHomeCtrl.showNothtingAlert">
-                未查询到应用数据
+                未查询到项目数据
             </div>
         </div>
     </div>
