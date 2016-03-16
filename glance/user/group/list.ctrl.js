@@ -145,7 +145,7 @@
         };
 
         self.deleteGroupUser = function(groupId, userId) {
-            confirmModal.open('您确定要驱逐该用户吗？').then(function () {
+            confirmModal.open('您确定要移除该用户吗？').then(function () {
                 userBackend.deleteGroupUsers({users: [userId]}, groupId).then(function (data) {
                     self.isCollapsed = true;
                     $state.reload()
