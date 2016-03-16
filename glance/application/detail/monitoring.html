@@ -38,7 +38,7 @@
                 </tbody>
             </table>
         </div>
-           <div ng-repeat="metricUrl in appIframeUrls">
+           <div data-ng-if="monitorAppCtrl.withGrafana !== 'GF_BASE_URL'" ng-repeat="metricUrl in appIframeUrls">
               <iframe ng-src="{/metricUrl/}"
                  width="100%" height="250" frameborder="0" scrolling="no" style="overflow:hidden">
               </iframe>
