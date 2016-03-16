@@ -10,6 +10,7 @@
 
     function MonitorAppCtrl($rootScope, gHttp, $scope, glanceHttp, $sce) {
         var self = this;
+        self.withGrafana = GRAFANA_CONFIG.baseUrl;
         ///
         $rootScope.appTabFlag = "appMonitor";
         self.appMonitors = {};
