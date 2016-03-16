@@ -255,7 +255,7 @@ function buildCharts(monitor) {
                 descriptions: {
                     title: '网络I/O监控',
                     subtitle: '一小时内变化',
-                    seriesName: ['网路接收速率','网路发送速率']
+                    seriesName: ['网络接收速率','网络发送速率']
                 },
                 styles: {
                     lineWidth: 3,

@@ -11,11 +11,6 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
         installing: '主机初始化中',
         upgrading: '主机升级中'
     };
-
-    $scope.nodeAttributes = {
-        gateway: '外部网关',
-        proxy: '内部代理',
-    };
     
     $scope.getServiceLabel = function(serviceName) {
         var labels = {
@@ -26,8 +21,8 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
             slave: '节点组件',
             cadvisor: '监控组件',
             logcollection: '日志收集组件',
-            bamboo_gateway: '外部网关组件',
-            bamboo_proxy: '内部代理组件',
+            bamboo: '服务发现监控组件',
+            haproxy: '服务发现代理组件',
             chronos: '定时任务组件',
             docker: 'Docker'
         };
