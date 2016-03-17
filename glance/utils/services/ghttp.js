@@ -69,7 +69,7 @@
                     });
                 }
                 return promise;
-            }
+            };
 
             Resource.prototype.delete = function (options) {
                 return this.req('delete', options);

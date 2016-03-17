@@ -35,7 +35,17 @@ APP_STATUS = {
 APP_INS_STATUS = {
     '1': "运行中",
     '2': "部署中"
-};;
+};
+
+IMAGE_STATUS = {
+    'pending': "等待中",
+    'running': "执行中",
+    'success': "成功",
+    'skipped': "已忽略",
+    'failure': "失败",
+    'killed': "已停止",
+    'error': "失败"
+};
 
 APP_EVENTS_MSG = {
     ScaleApplication: "应用扩展操作",
@@ -56,6 +66,12 @@ APP_EVENTS_MSG = {
     CancelDeployment: "取消应用部署",
     RestartApplication: "应用重启",
     Redeploy: "应用重新部署"
+};
+
+IMAGE_TRIGGER_TYPE = {
+    SELECT_TAG: 1,
+    SELECT_BRANCH: 2,
+    SELECT_ALL: 3
 };
 
 APP_EVENTS_TYPE = {
@@ -173,5 +189,14 @@ BACKEND_URL = {
         group: 'api/v3/groups/$group_id',
         groupMemberships: 'api/v3/groups/$group_id/memberships',
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships'
+    },
+    
+    image: {
+        projects: 'api/v3/projects',
+        project: 'api/v3/projects/$project_id',
+        projectImages: 'api/v3/projects/$project_id/builds',
+        projectApps: 'api/v3/projects/$project_id/apps',
+        deleteImage: 'api/v3/projects/$project_id/images/$image_id',
+        imageLog: 'api/v3/projects/$project_id/builds/$build_number/logs'
     }
 };

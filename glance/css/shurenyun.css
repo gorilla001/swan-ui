@@ -80,3 +80,17 @@ body, html {
 .btn-show-invite:hover span {
 	color: #427fed;
 }
+
+.list-text label, .list-text span, .list-text a {
+	display: inline-block;
+	line-height: 1;
+}
+.list-text label {
+	width: 80px;
+}
+.list-text span#publicKey {
+	max-width: 400px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}

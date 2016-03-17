@@ -3,13 +3,13 @@
     angular.module('glance.app')
         .config(configure);
 
-    configure.$inject = ['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider'];
+    configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$interpolateProvider'];
 
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider) {
 
         $stateProvider
             .state('appcreate', {
-                url: '/app/create',
+                url: '/app/create?url&version',
                 views: {
                     '': {
                         templateUrl: '/application/createupdate/create-update.html',

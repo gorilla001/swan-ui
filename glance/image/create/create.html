@@ -1,0 +1,134 @@
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">新建项目</h1>
+    </div>
+</div>
+<section>
+    <div class="main-container">
+        <div class="main-container-body">
+            <div class="alert alert-info">
+                <p>
+                    代码构建是一种软件开发实践，在软件开发过程中每天都会发生很多次构建。如果每次构建都能通过自动化的构建（包括编译、打包、自动化测试、发布）来验证，从而通过自动化系统尽快地发现集成错误，会大大减轻开发运维团队的工作，提高软件开发的效率。</p>
+            </div>
+            <form class="form-horizontal" name="staticForm">
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 项目名称</label>
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
+                        <input type="text" class="form-control" data-required="required" name="projectName" data-samename
+                               data-name-list="imageCreateCtrl.projectsName"
+                               data-ng-model="imageCreateCtrl.form.name">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
+                        <p data-ng-show="staticForm.projectName.$error.required && !staticForm.projectName.$pristine"
+                           class="help-block">项目名称不能为空</p>
+
+                        <p data-ng-show="staticForm.projectName.$error.samename"
+                           class="help-block">项目名称已存在</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 代码地址</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-required="required" name="codeUri"
+                               data-ng-model="imageCreateCtrl.form.repoUri">
+                        <p class="help-block">
+                            您需要手动填写代码仓库 HTTPS/SSH 地址，现支持 Github、Bitbucket、Coding、Gitlab 私有代码仓库构建。<br>
+                            您需要手动添加部署公钥，具体操作请<a href="#">查看手册</a>。<br>
+                            如何编写 Yml 文件？<a role="button" data-toggle="collapse" href="#collapseExample"
+                                           aria-expanded="false" aria-controls="collapseExample">参考*****完成 Yml 文件</a>
+                        <div class="collapse" id="collapseExample">
+                            <pre>&lt;p&gt;Sample text here...&lt;/p&gt;</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 镜像名称</label>
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
+                        <input type="text" class="form-control" data-required="required" name="image" data-samename
+                               data-name-list="imageCreateCtrl.projectsImagesName"
+                               data-ng-model="imageCreateCtrl.form.imageName">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
+                        <p data-ng-show="staticForm.image.$error.required && !staticForm.image.$pristine"
+                           class="help-block">镜像名称不能为空</p>
+                        <p data-ng-show="staticForm.image.$error.samename"
+                           class="help-block">镜像名称已存在</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 分支名称</label>
+                    <div class="col-md-5"
+                         data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
+                        <input type="text" class="form-control" data-required="required" name="branchName"
+                               data-ng-model="imageCreateCtrl.form.branch">
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
+                        <p data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine"
+                           class="help-block">分支名称不能为空</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">项目说明</label>
+                    <div class="col-md-5">
+                        <textarea class="form-control" rows="3" data-ng-model="imageCreateCtrl.form.description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">自动构建</label>
+                    <div class="col-sm-2">
+                        <label class="radio-inline">
+                            <input type="radio" data-ng-model="imageCreateCtrl.form.active" ng-value="true"> 是
+                        </label>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" data-ng-model="imageCreateCtrl.form.active" ng-value="false"> 否
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-show="imageCreateCtrl.form.active">
+                    <label class="col-sm-2 control-label">自动构建时间</label>
+                    <div class="col-md-5">
+                        <select class="form-control"
+                                data-ng-options=" period.value as period.name for period in imageCreateCtrl.periodList"
+                                data-ng-model="imageCreateCtrl.form.period"
+                                data-required="imageCreateCtrl.form.active">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" data-ng-show="imageCreateCtrl.form.active">
+                    <label class="col-sm-2 control-label">触发规则</label>
+                    <div class="col-sm-2">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.tag" ng-change="imageCreateCtrl.triggerRules()"
+                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.tag)"
+                            > Tag 更新
+                        </label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.branch" ng-change="imageCreateCtrl.triggerRules()"
+                                   ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.branch)"
+                            > 代码分支更新
+                        </label>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-5">
+                        <button type="submit" class="btn btn-success btn-block"
+                                ng-disabled="staticForm.$invalid || imageCreateCtrl.triggerCount == 0"
+                                data-ng-click="imageCreateCtrl.createProject(imageCreateCtrl.form)">开始创建
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
