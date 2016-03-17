@@ -41,13 +41,12 @@ function monitor($rootScope, ngSocket) {
 
             var frequency = 60;
             var interval = 1 * 60;
-            var defaultRatio = '0.00';
             var diskNames = [];
             var dataInhour = this.getDataInhour(data, frequency, interval);
             var xAxis = dataInhour.xAxis;
             var yAxisDataInhour = dataInhour.yAxis;
             
-            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio, diskNames);
+            var yAxis = calyAxisDataInhour(yAxisDataInhour, frequency, diskNames);
 
             return {
                 xAxis: xAxis,
@@ -74,7 +73,7 @@ function monitor($rootScope, ngSocket) {
 
     ///////////
 
-    function calyAxisDataInhour(yAxisDataInhour, frequency, defaultRatio, diskNames) {
+    function calyAxisDataInhour(yAxisDataInhour, frequency, diskNames) {
         var yAxis = {
             cpu: [],
             memory: [],
@@ -84,64 +83,53 @@ function monitor($rootScope, ngSocket) {
         };
 
         var numbers = calLineNumbers(yAxisDataInhour);
-        var defaultyAxis = setDefaultyAxis(numbers, defaultRatio);
-
         var val;
         for(var i = 0; i < frequency; i++) {
             val = yAxisDataInhour[i];
-            yAxis.cpu[i] = val ? setShowRatio(val.cpuPercent, defaultRatio) : defaultyAxis.cpu;
-            yAxis.memory[i] = val ? setShowRatio(calRatio(val.memUsed, val.memTotal), defaultRatio) : defaultyAxis.memory;
-            yAxis.disk[i] = val ? setShowRatio(calDiskRatio(val, diskNames), defaultRatio): defaultyAxis.disk;
-            yAxis.diskio[i] = val ? setShowRatio(calDiskIO(val), defaultRatio): defaultyAxis.diskio;
-            yAxis.netio[i] = val ? setShowRatio(calNetIO(val), defaultRatio): defaultyAxis.netio;
+            if (!val) {
+                yAxis.cpu[i] = setShowRatio([], numbers.cpu);
+                yAxis.memory[i] = setShowRatio([], numbers.memory);
+                yAxis.disk[i] = setShowRatio([], numbers.disk);
+                yAxis.diskio[i] = setShowRatio([], numbers.diskio);
+                yAxis.netio[i] = setShowRatio([], numbers.netio);
+            } else {
+                yAxis.cpu[i] = setShowRatio(val.cpuPercent, numbers.cpu);
+                yAxis.memory[i] = setShowRatio(calRatio(val.memUsed, val.memTotal), numbers.memory);
+                yAxis.disk[i] = setShowRatio(calDiskRatio(val, diskNames), numbers.disk);
+                yAxis.diskio[i] = setShowRatio(calDiskIO(val), numbers.diskio);
+                yAxis.netio[i] = setShowRatio(calNetIO(val), numbers.netio);
+            }
         }
         return yAxis;
     }
 
     function calLineNumbers(yAxisDataInhour) {
-        var lastItem = yAxisDataInhour[yAxisDataInhour.length-1];
-        var defaultNumber = 1;
         var numbers = {
-            cpu: lastItem.cpuPercent.length,
-            memory: defaultNumber,
-            disk: defaultNumber,
+            memory: 1,
             netio: 2,
             diskio: 2
         };
-        numbers.disk = lastItem.disks ? calMaxDiskNumber(yAxisDataInhour) : defaultNumber;
+        numbers.cpu = calMaxNumber(yAxisDataInhour, 'cpuPercent');
+        numbers.disk = calMaxNumber(yAxisDataInhour, 'disks');
         return numbers;
     }
 
-    function calMaxDiskNumber(yAxisDataInhour) {
+    function calMaxNumber(yAxisDataInhour, name) {
         var maxNumber = 0;
         var tempNumber = 0;
         angular.forEach(yAxisDataInhour, function(val, index) {
-            tempNumber = val.disks ? val.disks.length : 1;
+            tempNumber = val[name] ? val[name].length : 0;
             maxNumber = (tempNumber > maxNumber) ? tempNumber: maxNumber;
         });
         return maxNumber;
-    }
-
-    function setDefaultyAxis(numbers, defaultRatio) {
-        var defaultyAxis = {
-            cpu: [],
-            memory: [],
-            disk: [],
-            diskio: [],
-            netio: []
-        };
-        angular.forEach(numbers, function(val, key) {
-            for(var i = 0; i < val; i++) {
-                defaultyAxis[key][i] = defaultRatio;
-            }
-        });
-        return defaultyAxis;
     }
 
     function calRatio(used, total) {
         var ratio = [];
         if (typeof(used) === 'number' && typeof(total) === 'number' && total > 0) {
             ratio[0] = (100 * used / total);
+        } else {
+            ratio[0] = undefined;
         }
         return ratio;
     }
@@ -179,13 +167,22 @@ function monitor($rootScope, ngSocket) {
         return netIO;
     }
 
-    function setShowRatio(ratio, defaultRatio) {
-        if (!ratio.length) {
-            return [defaultRatio];
+    function setShowRatio(ratio, lineNum) {
+        if (!ratio) {
+            ratio = [];
         }
         angular.forEach(ratio, function(val, index) {
-            ratio[index] = val ? Number(val).toFixed(2) : defaultRatio;
+            if (val) {
+                ratio[index] = Number(val).toFixed(2);
+            } else {
+                ratio[index] = val;
+            }
         });
+        for (var i=0; i<lineNum; i++) {
+            if (ratio[i] == undefined) {
+                ratio[i] = undefined;
+            }
+        }
         return ratio;
     }
 
@@ -200,7 +197,6 @@ function monitor($rootScope, ngSocket) {
         };
         var frequency = 60;
         var interval = 1 * 60;
-        var defaultVal = ['0.00'];
         
         var now = (new Date()).getTime() / 1000;
         var initialyAxis = [];
@@ -208,8 +204,8 @@ function monitor($rootScope, ngSocket) {
         
         for (var i = 0; i < frequency; i ++) {
             data.xAxis[i] = calHourMin(now + i * interval);
-            initialyAxis.push(defaultVal);
-            ioInitialyAxis.push(['0.00', '0.00'])
+            initialyAxis.push([undefined]);
+            ioInitialyAxis.push([undefined, undefined])
         }
 
         $.each(data.yAxis, function(key, val) {
