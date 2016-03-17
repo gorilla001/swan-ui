@@ -26,7 +26,8 @@
             <tr ng-repeat-start="group in listGroupCtrl.grouplist">
                 <td data-title="'用户组'" sortable="'name'">
                     <h5>{/group.name/}</h5>
-                    <p>{/group.description/} <em data-ng-show="group.role.id != 1">{/group.owner.email/}</em></p>
+                    <p><em data-ng-show="group.role.id != 1">{/group.owner.email/}</em></p>
+                    <p>{/group.description/}</p>
                 </td>
                 <td data-title="'角色'">{/listGroupCtrl.roleMapping[group.role.name]/}</td>
                 <td data-title="'用户数量'">{/group.user_count/}</td>
