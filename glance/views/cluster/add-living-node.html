@@ -1,25 +1,25 @@
 <div class="page-header">
     <h1 class="pull-left">添加主机</h1>
     <small>
-      数人云可以助您轻松接入遍布各地的计算资源，
-      <br>
-      无论主机的操作系统和网络环境。
-      <br>
-      <a href="http://v.youku.com/v_show/id_XMTM5MTI1NTc2NA" target="_blank">如何添加一台主机</a>
+        数人云可以助您轻松接入遍布各地的计算资源，
+        <br>
+        无论主机的操作系统和网络环境。
+        <br>
+        <a href="http://v.youku.com/v_show/id_XMTM5MTI1NTc2NA" target="_blank">如何添加一台主机</a>
     </small>
-    <a href="#" class="btn btn-success" 
-      data-ui-sref="cluster.createcluster"
-      data-demo-disable="left">新建集群</a>
+    <a href="#" class="btn btn-success"
+       data-ui-sref="cluster.createcluster"
+       data-demo-disable="left">新建集群</a>
 </div>
 
 <ol class="breadcrumb">
-  <li>
-    <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>
-    <a data-ui-sref="cluster.nodesource({clusterId: clusterId})">添加主机</a>
-  </li>
-  <li>添加现有主机</li>
+    <li>
+        <a data-ui-sref="cluster.listclusters">集群管理</a>
+    </li>
+    <li>
+        <a data-ui-sref="cluster.nodesource({clusterId: clusterId})">添加主机</a>
+    </li>
+    <li>添加现有主机</li>
 </ol>
 
 <section class="add-node" data-ng-controller="addNodeFormCtrl">
@@ -49,7 +49,7 @@
                             推荐 Ubuntu 使用 AUFS 或 CentOS 使用 Device Mapper 作为 Docker 文件系统(生产环境使用 Device Mapper)；
                         </li>
                         <li>CentOS 关闭 selinux；</li>
-                        <li>开启 iptables-nat。</li>
+                        <li>开启 iptables-nat <a href="https://dataman.kf5.com/posts/view/124302"> (如何开启 iptables)；</a></li>
                     </ol>
                 </div>
             </div>
@@ -58,69 +58,76 @@
 
                 <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
                   (staticForm.message_error_info.name && staticForm.name.$pristine)}">
-                  <label class="col-md-2 control-label">主机名称</label>
+                    <label class="col-md-2 control-label">主机名称</label>
 
-                  <div class="col-md-8">
-                    <input type="text" name="name" class="form-control" data-ng-model="form.name" data-ng-disabled="afterCopy">
+                    <div class="col-md-8">
+                        <input type="text" name="name" class="form-control" data-ng-model="form.name"
+                               data-ng-disabled="afterCopy">
 
-                    <p data-ng-show="staticForm.name.$pristine" class="help-block">
-                    {/staticForm.message_error_info["name"]/}</p>
-                  </div>
+                        <p data-ng-show="staticForm.name.$pristine" class="help-block">
+                            {/staticForm.message_error_info["name"]/}</p>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-md-2 control-label">主机标签</label>
-                  <div class="col-md-8" style="padding-top: 6px;">
-                    <span data-ng-include="'/views/cluster/node-label.html'"></span>
-                  </div>
+                    <label class="col-md-2 control-label">主机标签</label>
+                    <div class="col-md-8" style="padding-top: 6px;">
+                        <span data-ng-include="'/views/cluster/node-label.html'"></span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">连接主机</label>
 
                     <div class="col-md-8" data-ng-show="nodeInstallScript">
-                      <div class="copy-code-agent">
-                        <header class="clearfix">
-                          <button type="button" class="btn btn-primary copy" title="点击复制代码"
-                            data-clipboard-target="install-docker-code">
-                            <span class="glyphicon glyphicon-copy"></span>
-                            <em>点击复制</em>
-                          </button>
-                          <h5>
-                            1. 安装 Docker 
-                            <small class="help-block">主机已安装 Docker，请跳过。</small>
-                          </h5>
-                        </header>
-                        <code id="install-docker-code">curl -sSL https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-docker.sh | sh</code>
-                      </div>
+                        <div class="copy-code-agent">
+                            <header class="clearfix">
+                                <button type="button" class="btn btn-primary copy" title="点击复制代码"
+                                        data-clipboard-target="install-docker-code">
+                                    <span class="glyphicon glyphicon-copy"></span>
+                                    <em>点击复制</em>
+                                </button>
+                                <h5>
+                                    1. 安装 Docker
+                                    <small class="help-block">主机已安装 Docker，请跳过。</small>
+                                </h5>
+                            </header>
+                            <code id="install-docker-code">curl -sSL
+                                https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-docker.sh
+                                | sh</code>
+                        </div>
 
-                      <div class="copy-code-agent">
-                        <header class="clearfix">
-                          <button type="button" class="btn btn-primary copy " title="点击复制代码"
-                            data-clipboard-target="code" data-ng-click="clickToCopy()"
-                          data-demo-disable>
-                            <span class="glyphicon glyphicon-copy"></span>
-                            <em>点击生成命令</em>
-                          </button>
-                          <h5>
-                            2. 安装 Agent 
-                            <small class="help-block">
-                              请登录目标主机，运行以下命令，本操作需要 sudo 权限。依据组件不同，可能需要 
-                              <strong class="text-success">2~5G</strong>
-                              磁盘空间。
-                            </small>
-                          </h5>
-                        </header>
-                        <code id="code" data-ng-bind="nodeInstallScript" data-ng-show="afterCopy"></code>
-                      </div>
+                        <div class="copy-code-agent">
+                            <header class="clearfix">
+                                <button type="button" class="btn btn-primary copy " title="点击复制代码"
+                                        data-clipboard-target="code" data-ng-click="clickToCopy()"
+                                        data-demo-disable>
+                                    <span class="glyphicon glyphicon-copy"></span>
+                                    <em>点击生成命令</em>
+                                </button>
+                                <h5>
+                                    2. 安装 Agent
+                                    <small class="help-block">
+                                        请登录目标主机，运行以下命令，本操作需要 sudo 权限。依据组件不同，可能需要
+                                        <strong class="text-success">2~5G</strong>
+                                        磁盘空间。
+                                    </small>
+
+                                    <small class="help-block">
+                                        先加入集群的主机将作为集群的 master 安装主控组件，当集群中 master 数量足够之后加入集群的主机才作为计算节点。
+                                    </small>
+                                </h5>
+                            </header>
+                            <code id="code" data-ng-bind="nodeInstallScript" data-ng-show="afterCopy"></code>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="col-md-8 col-md-offset-2">
-                      <div data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
-                        {/msgstate/}
-                      </div>
+                        <div data-ng-class="{'connected-bar': isConected,'alert-process':!isConected}">
+                            {/msgstate/}
+                        </div>
                     </div>
                 </div>
 
@@ -131,7 +138,7 @@
                             完成
                         </button>
                         <a type="button" class="btn btn-default" data-ng-disabled="staticForm.$invalid"
-                          data-ng-click="addNode(true)">
+                           data-ng-click="addNode(true)">
                             完成并继续添加主机
                         </a>
                     </div>
