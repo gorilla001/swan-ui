@@ -229,7 +229,7 @@
         
         self.openPortModule = function () {
             if(!self.form.cluster_id){
-                Notification.warning('没有选择集群或集群中没有网关和代理节点，无法添加应用地址，请选择集群并增加网关/代理节点后重试');
+                Notification.warning('没有选择集群，无法添加应用地址，请选择集群后重试');
                 return
             }
             createAppPortModal.open(existPorts).then(function (portInfo) {
