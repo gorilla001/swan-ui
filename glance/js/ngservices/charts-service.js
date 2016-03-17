@@ -83,8 +83,14 @@ function buildCharts(monitor) {
                 formatter: function(params){
                     var res = '';
                     for (var i = 0, l = params.length; i < l; i++) {
+                        var dataStr;
+                        if (params[i].data != undefined) {
+                            dataStr = params[i].data + postfix;
+                        } else {
+                            dataStr = "无数据";
+                        }
                         if (params[i].seriesName !== '') {
-                            res += params[i].seriesName + '：' + params[i].data + postfix + '<br/>';
+                            res += params[i].seriesName + '：' + dataStr + '<br/>';
                         }
                     }
                     return res;
@@ -166,7 +172,7 @@ function buildCharts(monitor) {
     }
     
     function initIOCharts(indicator, xAxis, yAxis) {
-        var option = getChatrsOption(indicator, xAxis, yAxis, "KB/s", getYAxisMax(yAxis));
+        var option = getChatrsOption(indicator, xAxis, yAxis, "", getYAxisMax(yAxis));
         var chart = echarts.init(document.getElementById(indicator.domId));
         chart.setOption(option);
     }
@@ -180,6 +186,9 @@ function buildCharts(monitor) {
                 }
             })
         });
+        if (max < 0.1) {
+            max = 0.1;
+        }
         return max;
     }
     
@@ -240,7 +249,7 @@ function buildCharts(monitor) {
                 domId: DOMs.diskio,
                 descriptions: {
                     title: '磁盘I/O监控',
-                    subtitle: '一小时内变化',
+                    subtitle: '一小时内变化 (KB/s)',
                     seriesName: ['磁盘读速率', '磁盘写速率']
                 },
                 styles: {
@@ -254,7 +263,7 @@ function buildCharts(monitor) {
                 domId: DOMs.netio,
                 descriptions: {
                     title: '网络I/O监控',
-                    subtitle: '一小时内变化',
+                    subtitle: '一小时内变化 (KB/s)',
                     seriesName: ['网络接收速率','网络发送速率']
                 },
                 styles: {
