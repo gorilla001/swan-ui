@@ -24,7 +24,8 @@
             <ul class="list-text">
                 <li>
                     <label>部署公钥：</label>
-                    <span id="publicKey">
+                    <span id="publicKey" uib-popover-html="imageDetailCtrl.popoverContent" popover-trigger="mouseenter"
+                          popover-placement="right">
                         {/imageDetailCtrl.project.pubkey/}
                     </span>
                     <a href="#">
