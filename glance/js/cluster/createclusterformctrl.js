@@ -2,8 +2,13 @@ function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
     $scope.form = {
         clusterType: '1_master'
     };
+    $scope.groups = []
     userBackend.listGroups().then(function(data) {
-        $scope.groups=data.groups;
+        angular.forEach(data.groups, function (group) {
+            if (group.role.id == 1){
+                $scope.groups.push(group);
+            }
+        })
     });
     $scope.createCluster = function (isAddNode) {
         if (!$scope.form.groupId) {

@@ -70,7 +70,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
 
     function getClusterBasicInfos(cluster) {
          var basicInfos = {};
-         var keys = ['created_at', 'id', 'name', 'status', "updated_at", "group_name"];
+         var keys = ['created_at', 'id', 'name', 'status', "updated_at", "group_name", "group_role"];
          if(cluster) {
             $.each(keys, function(index, key) {
                 basicInfos[key] = cluster[key];

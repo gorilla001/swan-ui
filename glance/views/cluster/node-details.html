@@ -17,7 +17,10 @@
             <div class="main-container server-detail-title">
                   <header class="clearfix">
                   <h2>
-                    {/ node.name /}<a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})" class="modify-name" title="修改名称"><img src="../pics/ico-edit.svg" width="12"></a>
+                    {/ node.name /}<a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})" class="modify-name" title="修改名称"
+                                        data-dm-permit-click="1" 
+                                        data-dm-role="node.cluster.group_role"
+                                        data-dm-permit-msg="FRONTEND_MSG.no_group_admin"><img src="../pics/ico-edit.svg" width="12"></a>
                     <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
                   </h2>
 
@@ -78,7 +81,10 @@
                     <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
                 </div>
             </div>
-            <button class="btn btn-danger btn-block" data-ng-click="deleNode(node.id)" data-demo-disable>删除主机</button>
+            <button class="btn btn-danger btn-block" data-ng-click="deleNode(node.id)" data-demo-disable
+                data-dm-permit-click="1" 
+                data-dm-role="node.cluster.group_role"
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除主机</button>
         </div>
         <div class="col-md-8">
         
@@ -99,7 +105,10 @@
                                 <button class="btn btn-xs btn-warning" 
                                 data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
                                     (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
-                                data-ng-click="openServiceRepair(service)" data-demo-disable>修复</button>
+                                data-ng-click="openServiceRepair(service)" data-demo-disable
+                                data-dm-permit-click="1" 
+                                data-dm-role="node.cluster.group_role"
+                                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">修复</button>
                             </div> 
                             <div data-ng-if="service === 'docker'">
                                 <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
@@ -113,7 +122,10 @@
                                   data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
                                 <button class="btn btn-xs btn-warning" 
                                 data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
-                                data-ng-click="repairService(service, 'restart')" data-demo-disable>重启</button>
+                                data-ng-click="repairService(service, 'restart')" data-demo-disable
+                                data-dm-permit-click="1" 
+                                data-dm-role="node.cluster.group_role"
+                                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">重启</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
                             <span class="version" data-ng-if="service !== 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
