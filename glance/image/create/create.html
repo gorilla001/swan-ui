@@ -15,7 +15,8 @@
                     <label class="col-md-2 control-label"><span class="text-danger">*</span> 项目名称</label>
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
-                        <input type="text" class="form-control" data-required="required" name="projectName" data-samename
+                        <input type="text" class="form-control" data-required="required" name="projectName"
+                               data-samename
                                data-name-list="imageCreateCtrl.projectsName"
                                data-ng-model="imageCreateCtrl.form.name">
                     </div>
@@ -71,8 +72,13 @@
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">项目说明</label>
-                    <div class="col-md-5">
-                        <textarea class="form-control" rows="3" data-ng-model="imageCreateCtrl.form.description"></textarea>
+                    <div class="col-md-5" data-ng-class="{ 'has-error' : staticForm.description.$invalid && !staticForm.description.$pristine}">
+                        <textarea class="form-control" rows="3" data-ng-model="imageCreateCtrl.form.description"
+                                  name="description" ng-maxlength="256"></textarea>
+                    </div>
+                    <div data-ng-class="{ 'has-error' : staticForm.description.$invalid && !staticForm.description.$pristine}">
+                        <p data-ng-show="staticForm.description.$error.maxlength && !staticForm.description.$pristine"
+                           class="help-block">说明字数不能超过256个字符</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -105,14 +111,16 @@
                     <label class="col-sm-2 control-label">触发规则</label>
                     <div class="col-sm-2">
                         <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="imageCreateCtrl.tag" ng-change="imageCreateCtrl.triggerRules()"
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.tag"
+                                   ng-change="imageCreateCtrl.triggerRules()"
                                    ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.tag)"
                             > Tag 更新
                         </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="checkbox-inline">
-                            <input type="checkbox" data-ng-model="imageCreateCtrl.branch" ng-change="imageCreateCtrl.triggerRules()"
+                            <input type="checkbox" data-ng-model="imageCreateCtrl.branch"
+                                   ng-change="imageCreateCtrl.triggerRules()"
                                    ng-click="imageCreateCtrl.triggerCheck(imageCreateCtrl.branch)"
                             > 代码分支更新
                         </label>

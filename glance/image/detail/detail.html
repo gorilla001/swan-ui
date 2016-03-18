@@ -1,17 +1,18 @@
 <div class="page-header">
     <div>
         <h1 class="pull-left">查看镜像</h1>
-        <a href="#" class="btn btn-success" data-ui-sref="appcreate">创建新应用</a>
     </div>
 </div>
 <section class="app-detail">
     <div class="main-container app-title">
         <div class="main-container-body">
             <div class="btn-group-vertical pull-right" role="group">
-                <button type="button" class="btn btn-default" data-ng-disabled="imageDetailCtrl.project.status != 'success'"
+                <button type="button" class="btn btn-info" data-ng-disabled="imageDetailCtrl.project.status != 'success'"
                         data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)"
                 >
                     部署最新镜像
+                </button>
+                <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.manualBuild()">手动构建
                 </button>
                 <button type="button" class="btn btn-danger" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
                 </button>

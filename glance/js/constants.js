@@ -200,6 +200,7 @@ BACKEND_URL = {
         projectImages: 'api/v3/projects/$project_id/builds',
         projectApps: 'api/v3/projects/$project_id/apps',
         deleteImage: 'api/v3/projects/$project_id/images/$image_id',
-        imageLog: 'api/v3/projects/$project_id/builds/$build_number/logs'
+        imageLog: 'api/v3/projects/$project_id/builds/$build_number/1/logs',
+        manualBuild: 'api/v3/projects/$project_id/hook'
     }
 };

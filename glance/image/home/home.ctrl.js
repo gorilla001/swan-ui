@@ -12,6 +12,7 @@
 
         self.IMAGE_STATUS = IMAGE_STATUS;
         self.goToCreateApp = goToCreateApp;
+        self.manualBuild = manualBuild;
 
         $rootScope.show = 'image';
 
@@ -103,6 +104,21 @@
 
         function goToCreateApp(imageUrl) {
             imageCurd.goToCreateApp(imageUrl)
+        }
+
+        function manualBuild(project){
+            var postData = {
+                uid: project.uid,
+                name: project.name,
+                repoUri: project.repoUri,
+                triggerType: project.triggerType,
+                active: project.active,
+                period: project.period,
+                description: project.description,
+                branch: project.branch,
+                imageName: project.imageName
+            };
+            imageCurd.manualBuild(postData)
         }
     }
 })();
