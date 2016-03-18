@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageDetailCtrl', ImageDetailCtrl);
 
-    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams', '$scope', '$timeout', 'imageservice'];
+    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams', '$scope', '$timeout', 'imageservice', '$sce'];
 
-    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageservice) {
+    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageservice, $sce) {
         var self = this;
         var refreshInterval = 20000;
         var timeoutPromise = $timeout(refreshData, refreshInterval);
@@ -15,6 +15,7 @@
         self.project = project;
         self.deleteProject = deleteProject;
         self.manualBuild = manualBuild;
+        self.popoverContent = $sce.trustAsHtml('<div style="word-break: break-all">' + self.project.pubkey + '</div>');
 
         function deleteProject() {
             imageCurd.deleteProjet($stateParams.projectId)
