@@ -89,13 +89,19 @@
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})">添加主机</a>
+                        <a data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})" 
+                            data-dm-permit-click="1" 
+                            data-dm-role="cluster.infos.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">添加主机</a>
                     </li>
                     <li>
                         <a data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id, pageNum: 0})">查看集群</a>
                     </li>
                     <li>
-                    <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.infos.id/}" data-demo-disable>删除集群</a>
+                    <a href="#" data-toggle="modal" data-target="#confirmDeleteCluster{/cluster.infos.id/}" data-demo-disable
+                            data-dm-permit-click="1" 
+                            data-dm-role="cluster.infos.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除集群</a>
                     </li>
                 </ul>
             </div>

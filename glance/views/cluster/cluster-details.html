@@ -18,6 +18,8 @@
                 {/cluster.name/}
                 <small>主机数量: {/cluster.nodes.length/}</small>
                 &nbsp;&nbsp;&nbsp;
+                <small>用户组：{/cluster.group_name/}</small>
+                &nbsp;&nbsp;&nbsp;
                 <small data-ng-show="cluster.nodes.length">
                   集群状态：<span data-ng-class="clusterStatusTextClass">
                     {/clusterStatusText/}
@@ -32,10 +34,16 @@
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li>
-                        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable>编辑集群</a>
+                        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable
+                            data-dm-permit-click="1" 
+                            data-dm-role="cluster.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">编辑集群</a>
                     </li>
                     <li>
-                        <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm" data-demo-disable>删除集群</a>
+                        <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm" data-demo-disable
+                            data-dm-permit-click="1" 
+                            data-dm-role="cluster.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除集群</a>
                     </li>
                 </ul>
             </div>

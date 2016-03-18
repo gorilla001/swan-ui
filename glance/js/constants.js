@@ -17,6 +17,9 @@ function getCodeMessage (code) {
     }
 }
 
+FRONTEND_MSG = {
+    no_group_admin: "对不起，您不是用户组管理员，不能进行此操作!"
+}
 
 APP_STATUS = {
     'undefined': "加载中",

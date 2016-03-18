@@ -7,4 +7,7 @@ data-demo-disable>
 
 <button type="button" class="btn btn-info btn-add-tag" data-toggle="modal" 
   data-target="#addLabel2NodeModal" data-ng-disabled="afterCopy" 
-  data-ng-click="changeLabels(selectedLabels);" style="margin-bottom: 6px;" data-demo-disable>+</button>
+  data-ng-click="changeLabels(selectedLabels);" style="margin-bottom: 6px;" data-demo-disable
+  data-dm-permit-click="1" 
+  data-dm-role="node.cluster.group_role"
+  data-dm-permit-msg="FRONTEND_MSG.no_group_admin">+</button>

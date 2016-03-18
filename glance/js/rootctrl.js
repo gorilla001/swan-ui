@@ -58,6 +58,8 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
             console.log("Notice ajax error");
         })
     })()
+    
+    $scope.FRONTEND_MSG = FRONTEND_MSG;
 
 }
 

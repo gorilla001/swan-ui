@@ -11,11 +11,17 @@
         <div>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="refresh()">刷新</button>
             <button type="button" class="btn btn-default btn-sm"
-                data-ui-sref="cluster.nodesource({clusterId:cluster.id})">
+                data-ui-sref="cluster.nodesource({clusterId:cluster.id})"
+                data-dm-permit-click="1" 
+                data-dm-role="cluster.group_role"
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
               添加主机
             </button>
             <button type="button" class="btn btn-default btn-sm" data-ng-click="deleteNodes(checkedNodes.value)"
-                    data-ng-disabled="!checkedNodes.value.length" data-demo-disable>删除主机
+                    data-ng-disabled="!checkedNodes.value.length" data-demo-disable
+                    data-dm-permit-click="1" 
+                    data-dm-role="cluster.group_role"
+                    data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除主机
             </button>
 
             <span class="dropdown">
@@ -23,7 +29,10 @@
                 type="button" id="dropdownMenuNodeLabel"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
                 data-ng-disabled="!checkedNodes.value.length"
-                data-demo-disable>
+                data-demo-disable
+                data-dm-permit-click="1" 
+                data-dm-role="cluster.group_role"
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
                 主机标签
                 <span class="caret"></span>
               </button>
@@ -44,7 +53,10 @@
             </span>
 
             <div class="btn-group btn-dropdown-info" data-ng-show="!statusMgr.nodeStatusCount[cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[cluster.id].total">
-                  <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)" data-demo-disable>升级服务
+                  <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)" data-demo-disable
+                    data-dm-permit-click="1" 
+                    data-dm-role="cluster.group_role"
+                    data-dm-permit-msg="FRONTEND_MSG.no_group_admin">升级服务
                         <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
                   </button>
                   <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
