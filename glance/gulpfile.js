@@ -27,7 +27,7 @@ gulp.task('copy-pics', ['copy-confdev'], function() {
 });
 
 gulp.task('copy-fonts', ['copy-pics'], function() {
-    var sources = ['bower_components/bootstrap/dist/fonts/*'];
+    var sources = ['bower_components/bootstrap/dist/fonts/*', 'bower_components/font-awesome/fonts/*'];
     gulp.src(sources)
         .pipe(gulp.dest('build/fonts'));
 });
@@ -90,8 +90,23 @@ gulp.task('template-min-app', ['template-min-user'], function () {
         }))
         .pipe(gulp.dest('build/js/'));
 });
+
+//image html to js
+gulp.task('template-min-image', ['template-min-app'], function () {
+    return gulp.src('image/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlImage.js', {
+            module: 'glance.image',
+            root: '/image'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
 // views html to js
-gulp.task('template-min', ['template-min-app'], function () {
+gulp.task('template-min', ['template-min-image'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,
