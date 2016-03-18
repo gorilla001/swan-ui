@@ -17,7 +17,8 @@
             listProjectApps: listProjectApps,
             buildImage: buildImage,
             deleteImage: deleteImage,
-            imageLog: imageLog
+            imageLog: imageLog,
+            manualBuild: manualBuild
 
         };
 
@@ -59,6 +60,10 @@
 
         function imageLog(projectId, buildNumber) {
             return gHttp.Resource('image.imageLog', {project_id: projectId, build_number: buildNumber}).get();
+        }
+
+        function manualBuild(data) {
+            return gHttp.Resource('image.manualBuild').post(data);
         }
     }
 })();

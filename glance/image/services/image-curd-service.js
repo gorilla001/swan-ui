@@ -12,7 +12,8 @@
         //////
         return {
             deleteProjet: deleteProjet,
-            goToCreateApp: goToCreateApp
+            goToCreateApp: goToCreateApp,
+            manualBuild: manualBuild
         };
 
         function deleteProjet(projectId) {
@@ -29,6 +30,16 @@
             var url = $filter("filterVersion")(imageUrl, 'url');
             var version = $filter("filterVersion")(imageUrl, 'version');
             $state.go('appcreate', {url: url, version: version})
+        }
+
+        function manualBuild(project) {
+            imageservice.manualBuild(project)
+                .then(function(data){
+                    Notification.success('正在构建...');
+                    $state.reload();
+                }, function(res){
+                    Notification.error('构建失败');
+                })
         }
     }
 })();

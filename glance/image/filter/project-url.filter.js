@@ -18,7 +18,7 @@
                 if (index != -1) {
                     input = input.slice(index + 1)
                 } else {
-                    input = "latest"
+                    input = ""
                 }
             } else if (filterVersion === 'url') {
                 if (index != -1) {

@@ -14,6 +14,7 @@
 
         self.project = project;
         self.deleteProject = deleteProject;
+        self.manualBuild = manualBuild;
 
         function deleteProject() {
             imageCurd.deleteProjet($stateParams.projectId)
@@ -34,6 +35,21 @@
                         timeoutPromise = $timeout(refreshData, refreshInterval);
                     })
             }
+        }
+
+        function manualBuild() {
+            var postData = {
+                uid: project.uid,
+                name: project.name,
+                repoUri: project.repoUri,
+                triggerType: project.triggerType,
+                active: project.active,
+                period: project.period,
+                description: project.description,
+                branch: project.branch,
+                imageName: project.imageName
+            };
+            imageCurd.manualBuild(postData)
         }
 
         $scope.$on('$destroy', function () {
