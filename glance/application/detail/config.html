@@ -61,8 +61,7 @@
                     <td>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
                     <td>
                         <p ng-repeat="nodeIp in configAppCtrl.listNodesIp">
-                            <span data-ng-show="portInfo.protocol == 2">http://</span>
-                            {/nodeIp/}:{/portInfo.mapPort/}
+                            <span data-ng-show="portInfo.protocol == 2">http://</span>{/nodeIp/}:{/portInfo.mapPort/}
                         </p>
                     </td>
                 </tr>
