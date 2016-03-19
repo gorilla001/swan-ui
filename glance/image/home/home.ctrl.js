@@ -118,7 +118,7 @@
                 branch: project.branch,
                 imageName: project.imageName
             };
-            imageCurd.manualBuild(postData)
+            imageCurd.manualBuild(project.id, postData)
         }
     }
 })();

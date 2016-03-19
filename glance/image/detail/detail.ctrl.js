@@ -50,7 +50,7 @@
                 branch: project.branch,
                 imageName: project.imageName
             };
-            imageCurd.manualBuild(postData)
+            imageCurd.manualBuild($stateParams.projectId, postData)
         }
 
         $scope.$on('$destroy', function () {
