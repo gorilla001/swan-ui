@@ -62,8 +62,8 @@
             return gHttp.Resource('image.imageLog', {project_id: projectId, build_number: buildNumber}).get();
         }
 
-        function manualBuild(data) {
-            return gHttp.Resource('image.manualBuild').post(data);
+        function manualBuild(projectId, data) {
+            return gHttp.Resource('image.manualBuild', {project_id: projectId}).post(data);
         }
     }
 })();

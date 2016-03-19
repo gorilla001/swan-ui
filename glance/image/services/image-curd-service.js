@@ -32,8 +32,8 @@
             $state.go('appcreate', {url: url, version: version})
         }
 
-        function manualBuild(project) {
-            imageservice.manualBuild(project)
+        function manualBuild(projectId, project) {
+            imageservice.manualBuild(projectId, project)
                 .then(function(data){
                     Notification.success('正在构建...');
                     $state.reload();
