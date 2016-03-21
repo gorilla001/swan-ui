@@ -1,4 +1,4 @@
 (function () {
     'use strict';
-    angular.module('glance.cluster', []);
+    angular.module('glance.cluster', ['glance.utils']);
 })();
