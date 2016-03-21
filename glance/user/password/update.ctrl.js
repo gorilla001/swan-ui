@@ -7,7 +7,7 @@
 
     function UpdatePasswordCtrl($rootScope, $scope, gHttp){
         
-        self = this;
+        var self = this;
         $rootScope.show = '';
         $rootScope.userTabFlag = 'password';
         self.form = {
