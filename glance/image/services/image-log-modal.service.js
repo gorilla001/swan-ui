@@ -37,10 +37,16 @@
             var projectId = content.projectId;
             var buildNumber = content.buildNumber;
 
+            self.noLogsFlag = true;
+
+
             (function () {
                 imageservice.imageLog(projectId, buildNumber)
                     .then(function (data) {
-                        self.log = data
+                        self.log = data;
+                        self.noLogsFlag = false
+                    }, function(res){
+                        self.noLogsFlag = true
                     })
             })();
 
