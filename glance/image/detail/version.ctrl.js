@@ -10,6 +10,8 @@
         self.IMAGE_STATUS = IMAGE_STATUS;
         self.goToCreateApp = goToCreateApp;
 
+        $scope.$parent.activeTab = 'version';
+
         listImages();
 
         self.openLogModal = function (imageId) {

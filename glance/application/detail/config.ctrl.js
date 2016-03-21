@@ -27,8 +27,10 @@
         function listGateAndProxy() {
             gHttp.Resource('cluster.cluster', {cluster_id: $scope.appStatus.cid}).get().then(function (data) {
                 for (var i = 0; i < data.nodes.length; i++) {
-                    self.listNodesIp.push(data.nodes[i].ip);
-                    if (i == 1)return
+                    if (data.nodes[i].role != 'master' || data.cluster_type == '1_master') {
+                        self.listNodesIp.push(data.nodes[i].ip);
+                        if (self.listNodesIp.length > 1)return
+                    }
                 }
             })
         }

@@ -3,12 +3,13 @@
     angular.module('glance.image')
         .controller('ImageDetailSettingCtrl', ImageDetailSettingCtrl);
 
-    ImageDetailSettingCtrl.$inject = ['project', 'imageservice', 'Notification', 'imageBuildSetting'];
+    ImageDetailSettingCtrl.$inject = ['project', 'imageservice', 'Notification', 'imageBuildSetting', '$scope'];
 
-    function ImageDetailSettingCtrl(project, imageservice, Notification, imageBuildSetting) {
+    function ImageDetailSettingCtrl(project, imageservice, Notification, imageBuildSetting, $scope) {
         var self = this;
 
         self.projectInfo = project;
+        $scope.$parent.activeTab = 'setting';
 
         self.form = {
             name: self.projectInfo.name,
