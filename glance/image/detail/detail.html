@@ -54,16 +54,16 @@
 
         </div>
     </div>
-    <div class="main-container"> <!-- Only required for left/right tabs -->
+    <div class="main-container">
         <header class="clearfix main-container-header">
             <ul class="nav nav-tabs">
-                <li data-toggle="tab" class="active">
+                <li data-toggle="tab" data-ng-class="{'active': activeTab=='version'}">
                     <a href="#" data-ui-sref="imageDetail.version">版本</a>
                 </li>
-                <li data-toggle="tab">
+                <li data-toggle="tab" data-ng-class="{'active': activeTab=='brief'}">
                     <a href="#" data-ui-sref="imageDetail.brief">说明</a>
                 </li>
-                <li data-toggle="tab">
+                <li data-toggle="tab" data-ng-class="{'active': activeTab=='setting'}">
                     <a href="#" data-ui-sref="imageDetail.setting">设置</a>
                 </li>
             </ul>
