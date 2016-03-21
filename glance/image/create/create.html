@@ -17,7 +17,7 @@
                          data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
                         <input type="text" class="form-control" data-required="required" name="projectName"
                                data-samename
-                               data-name-list="imageCreateCtrl.projectsName"
+                               data-name-list="imageCreateCtrl.projectsNameList"
                                data-ng-model="imageCreateCtrl.form.name">
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
@@ -72,7 +72,7 @@ cache:
                     <div class="col-md-5"
                          data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
                         <input type="text" class="form-control" data-required="required" name="image" data-samename
-                               data-name-list="imageCreateCtrl.projectsImagesName"
+                               data-name-list="imageCreateCtrl.projectsImagesNameList"
                                data-ng-model="imageCreateCtrl.form.imageName">
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">

@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageDetailCtrl', ImageDetailCtrl);
 
-    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams', '$scope', '$timeout', 'imageservice', '$sce'];
+    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams', '$scope', '$timeout', 'imageBackend', '$sce'];
 
-    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageservice, $sce) {
+    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageBackend, $sce) {
         var self = this;
         var refreshInterval = 20000;
         var timeoutPromise = $timeout(refreshData, refreshInterval);
@@ -27,7 +27,7 @@
 
         function refreshData() {
             if (!self.isDestroy) {
-                imageservice.getProject($stateParams.projectId, '')
+                imageBackend.getProject($stateParams.projectId, '')
                     .then(function(data){
                         self.project = data;
                         $scope.$broadcast('refreshImageData');

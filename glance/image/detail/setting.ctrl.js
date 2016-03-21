@@ -3,9 +3,9 @@
     angular.module('glance.image')
         .controller('ImageDetailSettingCtrl', ImageDetailSettingCtrl);
 
-    ImageDetailSettingCtrl.$inject = ['project', 'imageservice', 'Notification', 'imageBuildSetting', '$scope'];
+    ImageDetailSettingCtrl.$inject = ['project', 'imageBackend', 'Notification', 'imageBuildSetting', '$scope'];
 
-    function ImageDetailSettingCtrl(project, imageservice, Notification, imageBuildSetting, $scope) {
+    function ImageDetailSettingCtrl(project, imageBackend, Notification, imageBuildSetting, $scope) {
         var self = this;
 
         self.projectInfo = project;
@@ -52,7 +52,7 @@
         }
 
         function saveSetting() {
-            imageservice.updateProject(self.projectInfo.id, self.form)
+            imageBackend.updateProject(self.projectInfo.id, self.form)
                 .then(function (data) {
                     Notification.success('设置保存成功');
                 })

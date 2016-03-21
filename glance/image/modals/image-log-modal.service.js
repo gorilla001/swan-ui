@@ -7,7 +7,7 @@
 
     function imageLogModal($uibModal) {
 
-        ImageLogCtrl.$inject = ['$uibModalInstance', 'content', 'imageservice'];
+        ImageLogCtrl.$inject = ['$uibModalInstance', 'content', 'imageBackend'];
 
         return {
             open: open
@@ -32,24 +32,26 @@
         }
 
 
-        function ImageLogCtrl($uibModalInstance, content, imageservice) {
+        function ImageLogCtrl($uibModalInstance, content, imageBackend) {
             var self = this;
             var projectId = content.projectId;
             var buildNumber = content.buildNumber;
 
             self.noLogsFlag = true;
 
+            activate();
 
-            (function () {
-                imageservice.imageLog(projectId, buildNumber)
+            function activate() {
+                imageBackend.getImageLog(projectId, buildNumber)
                     .then(function (data) {
                         self.log = data;
-                        self.noLogsFlag = false
-                    }, function(res){
+                        if (self.log) {
+                            self.noLogsFlag = false
+                        }
+                    }, function (res) {
                         self.noLogsFlag = true
                     })
-            })();
-
+            }
 
             self.ok = function () {
                 $uibModalInstance.close();

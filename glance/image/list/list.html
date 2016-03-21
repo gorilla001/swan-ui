@@ -6,10 +6,10 @@
 <section>
     <div class="main-container">
         <div class="main-container-body">
-            <table ng-table="imageHomeCtrl.imageListTable" template-pagination="/views/common/ngTablePage.html"
+            <table ng-table="imageListCtrl.imageListTable" template-pagination="/views/common/ngTablePage.html"
                    class="table table-striped" ng-table-columns-binding="boundCols">
                 <tbody>
-                <tr ng-repeat="project in imageHomeCtrl.projects">
+                <tr ng-repeat="project in imageListCtrl.projects">
                     <td data-title="'项目名称'"><a href="#"
                                                data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a>
                     </td>
@@ -18,7 +18,7 @@
                         'text-info': project.status == 'running' || project.status == 'pending'}">
                             <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
                             'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
-                            {/imageHomeCtrl.IMAGE_STATUS[project.status]/}
+                            {/imageListCtrl.IMAGE_STATUS[project.status]/}
                         </span>
                     </td>
                     <td data-title="'镜像名称'" sortable="'name'">{/project.image | filterVersion: 'url'/}</td>
@@ -27,19 +27,19 @@
                     <td data-title="'最新版本'">{/project.image | filterVersion: 'version'/}</td>
                     <td data-title="'操作'">
                         <button class="btn btn-default btn-xs" data-ng-show="project.status == 'success'"
-                                data-ng-click="imageHomeCtrl.goToCreateApp(project.image)">部署
+                                data-ng-click="imageListCtrl.goToCreateApp(project.image)">部署
                         </button>
                         <button class="btn btn-default btn-xs"
-                                data-ng-click="imageHomeCtrl.manualBuild(project)">构建
+                                data-ng-click="imageListCtrl.manualBuild(project)">构建
                         </button>
-                        <button class="btn btn-danger btn-xs" data-ng-click="imageHomeCtrl.deleteProject(project.id)">
+                        <button class="btn btn-danger btn-xs" data-ng-click="imageListCtrl.deleteProject(project.id)">
                             删除
                         </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="alert alert-warning text-center" data-ng-show="imageHomeCtrl.showNothtingAlert">
+            <div class="alert alert-warning text-center" data-ng-show="imageListCtrl.showNothtingAlert">
                 未查询到项目数据
             </div>
         </div>

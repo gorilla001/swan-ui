@@ -3,33 +3,37 @@
     angular.module('glance.image')
         .controller('ImageDetailVersionCtrl', ImageDetailVersionCtrl);
 
-    ImageDetailVersionCtrl.$inject = ['imageservice', '$state', 'imageLogModal', '$stateParams', 'imageCurd', '$scope'];
+    ImageDetailVersionCtrl.$inject = ['imageBackend', '$state', 'imageLogModal', '$stateParams', 'imageCurd', '$scope'];
 
-    function ImageDetailVersionCtrl(imageservice, $state, imageLogModal, $stateParams, imageCurd, $scope) {
+    function ImageDetailVersionCtrl(imageBackend, $state, imageLogModal, $stateParams, imageCurd, $scope) {
         var self = this;
         self.IMAGE_STATUS = IMAGE_STATUS;
         self.goToCreateApp = goToCreateApp;
 
         $scope.$parent.activeTab = 'version';
 
-        listImages();
+        activate();
 
         self.openLogModal = function (imageId) {
             imageLogModal.open($stateParams.projectId, imageId);
         };
+
+        function activate() {
+            listImages();
+        }
 
         function goToCreateApp(imageUrl) {
             imageCurd.goToCreateApp(imageUrl)
         }
 
         function listImages() {
-            return imageservice.listProjectImages($state.params.projectId, '')
+            return imageBackend.listProjectImages($state.params.projectId, '')
                 .then(function (data) {
                     self.projectImages = data;
                 });
         }
 
-        $scope.$on('refreshImageData', function(){
+        $scope.$on('refreshImageData', function () {
             listImages();
         });
     }

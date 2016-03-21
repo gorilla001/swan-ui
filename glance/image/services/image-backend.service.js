@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     angular.module('glance.image')
-        .factory('imageservice', imageservice);
+        .factory('imageBackend', imageBackend);
 
-    imageservice.$inject = ['gHttp'];
+    imageBackend.$inject = ['gHttp'];
 
-    function imageservice(gHttp) {
+    function imageBackend(gHttp) {
         //////
         return {
             listProjects: listProjects,
@@ -17,7 +17,7 @@
             listProjectApps: listProjectApps,
             buildImage: buildImage,
             deleteImage: deleteImage,
-            imageLog: imageLog,
+            getImageLog: getImageLog,
             manualBuild: manualBuild
 
         };
@@ -58,7 +58,7 @@
             return gHttp.Resource('image.deleteImage', {project_id: projectId, image_id: imageId}).delete();
         }
 
-        function imageLog(projectId, buildNumber) {
+        function getImageLog(projectId, buildNumber) {
             return gHttp.Resource('image.imageLog', {project_id: projectId, build_number: buildNumber}).get();
         }
 
