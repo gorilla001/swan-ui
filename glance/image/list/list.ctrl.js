@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     angular.module('glance.image')
-        .controller('ImageHomeCtrl', ImageHomeCtrl);
+        .controller('ImageListCtrl', ImageListCtrl);
 
-    ImageHomeCtrl.$inject = ['$rootScope', 'imageservice', 'imageCurd', 'ngTableParams', '$timeout', '$scope'];
+    ImageListCtrl.$inject = ['$rootScope', 'imageBackend', 'imageCurd', 'ngTableParams', '$timeout', '$scope'];
 
-    function ImageHomeCtrl($rootScope, imageservice, imageCurd, ngTableParams, $timeout, $scope) {
+    function ImageListCtrl($rootScope, imageBackend, imageCurd, ngTableParams, $timeout, $scope) {
         var self = this;
         var listProjectPromise;
         var imageListReloadInterval = 5000;
@@ -29,7 +29,7 @@
 
                     $rootScope.imageListParams = self.imageListTable.parameters();
 
-                    imageservice.listProjects(dealParams(params.url()))
+                    imageBackend.listProjects(dealParams(params.url()))
                         .then(function (data) {
                             //If you remove when the current projects of only one project,
                             //set new Page and Switch back page
@@ -106,7 +106,7 @@
             imageCurd.goToCreateApp(imageUrl)
         }
 
-        function manualBuild(project){
+        function manualBuild(project) {
             var postData = {
                 uid: project.uid,
                 name: project.name,

@@ -6,9 +6,9 @@
     angular.module('glance.image')
         .factory('imageCurd', imageCurd);
 
-    imageCurd.$inject = ['imageservice', 'confirmModal', 'Notification', '$state', '$filter'];
+    imageCurd.$inject = ['imageBackend', 'confirmModal', 'Notification', '$state', '$filter'];
 
-    function imageCurd(imageservice, confirmModal, Notification, $state, $filter) {
+    function imageCurd(imageBackend, confirmModal, Notification, $state, $filter) {
         //////
         return {
             deleteProjet: deleteProjet,
@@ -18,7 +18,7 @@
 
         function deleteProjet(projectId) {
             confirmModal.open('确定删除该项目吗?').then(function () {
-                imageservice.deleteProject(projectId).then(function (data) {
+                imageBackend.deleteProject(projectId).then(function (data) {
                     $state.go('imageHome', null, {reload: true});
                 }, function (res) {
                     Notification.error('删除失败');
@@ -33,7 +33,7 @@
         }
 
         function manualBuild(projectId, project) {
-            imageservice.manualBuild(projectId, project)
+            imageBackend.manualBuild(projectId, project)
                 .then(function(data){
                     Notification.success('正在构建...');
                     $state.reload();

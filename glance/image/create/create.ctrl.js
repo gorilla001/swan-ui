@@ -3,13 +3,13 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageservice', '$rootScope', '$state', 'imageBuildSetting', 'listProjectsName', 'Notification'];
+    ImageCreateCtrl.$inject = ['imageBackend', '$rootScope', '$state', 'imageBuildSetting', 'Notification'];
 
-    function ImageCreateCtrl(imageservice, $rootScope, $state, imageBuildSetting, listProjectsName, Notification) {
+    function ImageCreateCtrl(imageBackend, $rootScope, $state, imageBuildSetting, Notification) {
         var self = this;
         ///
         self.form = {
-            uid: parseInt($rootScope.userId),
+            uid: $rootScope.userId,
             name: "",
             repoUri: "",
             triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
@@ -35,8 +35,8 @@
             }
         ];
 
-        self.projectsName = listProjectsName.projectsName;
-        self.projectsImagesName = listProjectsName.imagesName;
+        self.projectsNameList = [];
+        self.projectsImagesNameList = [];
         self.triggerCount = 1;
         self.tag = true;
         self.branch = false;
@@ -45,8 +45,23 @@
         self.triggerCheck = triggerCheck;
         self.triggerRules = triggerRules;
 
+        activate();
+
+        function activate(){
+            listProjectsName()
+        }
+
+        function listProjectsName(){
+            imageBackend.listProjects().then(function (data) {
+                angular.forEach(data.Project, function (value, index) {
+                    self.projectsNameList.push(value.name);
+                    self.projectsImagesNameList.push(value.imageName)
+                });
+            })
+        }
+
         function createProject(fromData) {
-            imageservice.createProject(fromData).then(function (data) {
+            imageBackend.createProject(fromData).then(function (data) {
                 Notification.success('项目创建成功');
                 $state.go('imageDetail.version',({projectId: data.id}))
             })
