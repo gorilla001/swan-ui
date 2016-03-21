@@ -7,6 +7,10 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notifi
     $scope.unselectedLabels = [];
     $scope.allLabelNames = [];
     $scope.labelForm = {};
+    
+    $scope.node = {
+            cluster: {group_role: ''}
+         }
 
     $scope.isConected = false;
 
