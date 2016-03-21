@@ -2,6 +2,7 @@ function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
     $scope.form = {
         clusterType: '1_master'
     };
+    
     $scope.groups = []
     userBackend.listGroups().then(function(data) {
         angular.forEach(data.groups, function (group) {
@@ -20,7 +21,7 @@ function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
             if (isAddNode) {
                 $state.go('cluster.nodesource', {'clusterId': data.id});
             } else {
-                $state.go('cluster.listclusters');
+                $state.go('cluster.clusterdetails.nodes', {clusterId: data.id});
             }
         })
     };
