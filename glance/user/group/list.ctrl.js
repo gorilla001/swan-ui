@@ -169,6 +169,12 @@
             }
         };
 
+        self.joinDemoGroup = function () {
+              userBackend.joinDemoGroup().then(function(){
+                  $state.reload();
+              });
+        };
+
         /*
          修改 ngTable 默认的 params.url() 为数人云标准格式
          */

@@ -11,6 +11,7 @@ CODE_MESSAGE = {
     10009: "资源不存在",
     10010: "没有权限进行此操作",
     11005: "非激活用户",
+    11006: "已加入用户组",
     14003: "应用名称冲突",
     14004: "应用端口冲突",
     14005: "应用版本冲突",
@@ -206,7 +207,8 @@ BACKEND_URL = {
         groups: 'api/v3/groups',
         group: 'api/v3/groups/$group_id',
         groupMemberships: 'api/v3/groups/$group_id/memberships',
-        groupMyMemberships: 'api/v3/groups/$group_id/mymemberships'
+        groupMyMemberships: 'api/v3/groups/$group_id/mymemberships',
+        groupDemo: 'api/v3/groups/demo/mymemberships'
     },
     
     image: {
