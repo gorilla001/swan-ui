@@ -89,13 +89,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         $scope.$on(SUB_INFOTYPE.nodeMetric, function (event, data) {
             if (data.nodeId == $stateParams.nodeId) {
                 maxNodesNumber = 180;
-                if (nodesData.length) {
-                    wsTime = monitor.calHourMin(data.timestamp);
-                    chartsTime = monitor.calHourMin(nodesData[0].timestamp);
-                    if (wsTime < chartsTime) {
-                        return;
-                    }
-                }
+
                 $scope.nodeInfo = getNodeInfo(data);
 
                 nodesData.splice(0, 0, data);
