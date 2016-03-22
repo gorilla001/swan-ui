@@ -1,4 +1,4 @@
-function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notification, labelService) {
+function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labelService) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
@@ -84,5 +84,5 @@ function addNodeFormCtrl($rootScope, $scope, $state, $stateParams, gHttp, Notifi
     };
 }
 
-addNodeFormCtrl.$inject = ['$rootScope', '$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService'];
+addNodeFormCtrl.$inject = ['$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);

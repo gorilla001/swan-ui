@@ -6,10 +6,9 @@
     angular.module('glance.app')
         .controller('ConfigAppCtrl', ConfigAppCtrl);
 
-    ConfigAppCtrl.$inject = ['$rootScope', 'gHttp', '$scope'];
+    ConfigAppCtrl.$inject = ['gHttp', '$scope'];
 
-    function ConfigAppCtrl($rootScope, gHttp, $scope) {
-        $rootScope.appTabFlag = "appConfig";
+    function ConfigAppCtrl(gHttp, $scope) {
         var self = this;
         ///
         self.listNodesIp = [];

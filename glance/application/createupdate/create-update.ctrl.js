@@ -18,7 +18,6 @@
         '$state',
         'target',
         'app',
-        '$rootScope',
         '$stateParams'
     ];
 
@@ -34,12 +33,8 @@
         $state,
         target,
         app,
-        $rootScope,
         $stateParams
     ) {
-        
-        $rootScope.show = "application";
-        
         var self = this;
         self.target = target;
         

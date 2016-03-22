@@ -6,13 +6,11 @@
     angular.module('glance.app')
         .controller('MonitorAppCtrl', MonitorAppCtrl);
 
-    MonitorAppCtrl.$inject = ['$rootScope', 'gHttp', '$scope', 'glanceHttp', '$sce'];
+    MonitorAppCtrl.$inject = ['gHttp', '$scope', '$sce'];
 
-    function MonitorAppCtrl($rootScope, gHttp, $scope, glanceHttp, $sce) {
+    function MonitorAppCtrl(gHttp, $scope, $sce) {
         var self = this;
         self.withGrafana = GRAFANA_CONFIG.baseUrl;
-        ///
-        $rootScope.appTabFlag = "appMonitor";
         self.appMonitors = {};
 
         initMonitor();

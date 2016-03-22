@@ -6,14 +6,12 @@
     angular.module('glance.app')
         .controller('InstanceAppCtrl', InstanceAppCtrl);
 
-    InstanceAppCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'appservice'];
+    InstanceAppCtrl.$inject = ['$scope', '$stateParams', 'appservice'];
 
-    function InstanceAppCtrl($rootScope, $scope, $stateParams, appservice) {
+    function InstanceAppCtrl($scope, $stateParams, appservice) {
         var self = this;
         
         self.APP_INS_STATUS = APP_INS_STATUS;
-        
-        $rootScope.appTabFlag = "appInstance";
         
         refreshInstances();
         

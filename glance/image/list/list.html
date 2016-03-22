@@ -21,7 +21,7 @@
                             {/imageListCtrl.IMAGE_STATUS[project.status]/}
                         </span>
                     </td>
-                    <td data-title="'镜像名称'" sortable="'name'">{/project.image | filterVersion: 'url'/}</td>
+                    <td data-title="'镜像名称'" sortable="'name'">{/project.imageName/}</td>
                     <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}
                     </td>
                     <td data-title="'最新版本'">{/project.image | filterVersion: 'version'/}</td>

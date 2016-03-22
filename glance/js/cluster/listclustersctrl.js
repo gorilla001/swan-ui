@@ -2,7 +2,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
     var clusterTypes = {
         '1_master': 1,
         '3_masters': 3,
-        '5_masters': 5,
+        '5_masters': 5
     };
 
     var clusterLeastNodesNumber = {

@@ -1,7 +1,6 @@
-function clusterLogsCtrl($scope, $rootScope, LogLoader) {
-    $rootScope.clusterClass = "clusterLog";
+function clusterLogsCtrl($scope, LogLoader) {
     $scope.clusterlogs = new LogLoader("username", "clustername", "mesos_master_info");
 }
 
-clusterLogsCtrl.$inject = ["$scope", "$rootScope", "LogLoader"];
+clusterLogsCtrl.$inject = ["$scope", "LogLoader"];
 glanceApp.controller('clusterLogsCtrl', clusterLogsCtrl);

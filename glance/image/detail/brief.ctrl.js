@@ -3,12 +3,10 @@
     angular.module('glance.image')
         .controller('ImageDetailBriefCtrl', ImageDetailBriefCtrl);
 
-    ImageDetailBriefCtrl.$inject = ['project', '$scope'];
+    ImageDetailBriefCtrl.$inject = ['project'];
 
-    function ImageDetailBriefCtrl(project, $scope) {
+    function ImageDetailBriefCtrl(project) {
         var self = this;
         self.projectInfo = project;
-
-        $scope.$parent.activeTab = 'brief';
     }
 })();

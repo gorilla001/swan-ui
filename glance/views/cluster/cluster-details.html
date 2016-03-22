@@ -53,12 +53,12 @@
     <div class="main-container">
         <header class="clearfix main-container-header" data-ng-show="cluster.nodes.length">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" data-ng-class="{'active': clusterClass==='clusterNode'}">
+                <li role="presentation" ui-sref-active="active"">
                     <a data-ui-sref="cluster.clusterdetails.nodes" aria-controls="home" role="tab">
                         主机列表
                       </a>
                 </li>
-                <li role="presentation" data-ng-class="{'active': clusterClass==='clusterMonitor'}">
+                <li role="presentation" ui-sref-active="active"">
                     <a data-ui-sref="cluster.clusterdetails.monitoring" aria-controls="configuration" role="tab">
                         集群监控
                     </a>

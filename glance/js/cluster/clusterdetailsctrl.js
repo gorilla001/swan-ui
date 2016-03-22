@@ -1,4 +1,4 @@
-function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
+function clusterDetailsCtrl($scope, $stateParams, gHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
     'use strict';
 
     var clusterStatusTexts = {
@@ -109,5 +109,5 @@ function clusterDetailsCtrl($rootScope, $scope, $stateParams, gHttp, Notificatio
     }
 }
 
-clusterDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
+clusterDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
 glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);
