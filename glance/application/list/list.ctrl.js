@@ -13,7 +13,6 @@
         var listAppPromise;
         var appListReloadInterval = 5000;
 
-        $rootScope.show = "application";
         $rootScope.appListParams.searchKeyWord = "";
 
         self.clusterNameMap = listClusterMap(listClusters);

@@ -57,9 +57,29 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
         }).catch(function() {
             console.log("Notice ajax error");
         })
-    })()
+    })();
     
     $scope.FRONTEND_MSG = FRONTEND_MSG;
+
+    $rootScope.$on('$stateChangeStart',
+        function (event, toState, toParams, fromState, fromParams) {
+            switch (true) {
+                case toState.name.startsWith('app'):
+                    $rootScope.show = 'application';
+                    break;
+                case toState.name.startsWith('image'):
+                    $rootScope.show = 'image';
+                    break;
+                case toState.name.startsWith('log'):
+                    $rootScope.show = 'log';
+                    break;
+                case toState.name.startsWith('home'):
+                    $rootScope.show = 'home';
+                    break;
+                case toState.name.startsWith('cluster'):
+                    $rootScope.show = 'cluster';
+            }
+        })
 
 }
 

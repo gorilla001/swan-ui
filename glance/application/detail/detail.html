@@ -50,19 +50,19 @@
     <div class="main-container"> <!-- Only required for left/right tabs -->
         <header class="clearfix main-container-header">
             <ul class="nav nav-tabs">
-                <li data-ng-class="{'active': appTabFlag ==='appConfig'}" data-toggle="tab"><a
+                <li ui-sref-active="active"><a
                         data-ui-sref="appdetails.config"
                         data-ui-sref-opts="{reload: true}">配置</a></li>
-                <li data-ng-class="{'active': appTabFlag ==='appVersion'}" data-toggle="tab"><a
+                <li ui-sref-active="active"><a
                         data-ui-sref="appdetails.version" data-ui-sref-opts="{reload: true}">版本</a>
                 </li>
-                <li data-ng-class="{'active': appTabFlag ==='appMonitor'}" data-toggle="tab"><a
+                <li ui-sref-active="active"><a
                         data-ui-sref="appdetails.monitoring"
                         data-ui-sref-opts="{reload: true}">监控</a></li>
-                <li data-ng-class="{'active': appTabFlag ==='appInstance'}" data-toggle="tab"><a
+                <li ui-sref-active="active"><a
                         data-ui-sref="appdetails.instance" data-ui-sref-opts="{reload: true}">实例</a>
                 </li>
-                <li data-ng-class="{'active': appTabFlag ==='appEvent'}" data-toggle="tab"><a
+                <li ui-sref-active="active"><a
                         data-ui-sref="appdetails.event"
                         data-ui-sref-opts="{reload: true}">事件</a></li>
             </ul>

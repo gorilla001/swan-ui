@@ -1,5 +1,4 @@
-function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification) {
-    $rootScope.clusterClass = 'clusterNode';
+function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification) {
     $scope.unitConversion = unitConversion;
 
     $scope.allLabels = [];
@@ -173,5 +172,5 @@ function clusterNodesCtrl($scope, $rootScope, $stateParams, $state, $filter, gHt
 
 }
 
-clusterNodesCtrl.$inject = ["$scope", "$rootScope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
+clusterNodesCtrl.$inject = ["$scope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
 glanceApp.controller("clusterNodesCtrl", clusterNodesCtrl);

@@ -1,6 +1,4 @@
-function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
-    $rootScope.show = 'cluster';
-
+function clusterCtrl($scope, $state, gHttp, Notification) {
     $scope.clusterNames = [];
     $scope.allLabels = [];
 
@@ -31,7 +29,7 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
         } else {
             return serviceName[0].toUpperCase() + serviceName.substring(1);
         }
-    }
+    };
 
     $scope.deleteCluster = function(clusterId, name) {
         $('#confirmDeleteCluster'+ clusterId).hide();
@@ -62,7 +60,7 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
             arr = arr.concat(val);
         });
         return arr;
-    }
+    };
 
     $scope.groupNodesByRoleAndStatus = function(nodes, clusterId, statusMgr) {
         var cluster = {
@@ -78,12 +76,12 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
         });
 
         angular.forEach(nodes, function(node, index) {
-            statusMgr.addNode(clusterId, node)
+            statusMgr.addNode(clusterId, node);
             node.nodeStatus = statusMgr.nodes[node.id].status;
             $scope.getIsMaster(node)? cluster.masters[node.nodeStatus].push(node) : cluster.slaves[node.nodeStatus].push(node);
         });
         return cluster;
-    }
+    };
 
     $scope.getClusterNames = function(clusters) {
         $scope.clusterNames = [];
@@ -112,5 +110,5 @@ function clusterCtrl($scope, $state, $rootScope, gHttp, Notification) {
     
 }
 
-clusterCtrl.$inject = ['$scope', '$state', '$rootScope', 'gHttp', 'Notification'];
+clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);

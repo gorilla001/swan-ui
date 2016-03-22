@@ -5,11 +5,9 @@
     'use strict';
     glanceApp.controller('dynamicBaseCtrl', dynamicBaseCtrl);
 
-    dynamicBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', '$q', 'ClusterStatusMgr', 'gHttp'];
+    dynamicBaseCtrl.$inject = ['$scope', 'glanceHttp', '$q', 'ClusterStatusMgr', 'gHttp'];
 
-    function dynamicBaseCtrl($scope, $rootScope, glanceHttp, $q, ClusterStatusMgr, gHttp) {
-        $rootScope.show = 'home';
-
+    function dynamicBaseCtrl($scope, glanceHttp, $q, ClusterStatusMgr, gHttp) {
         $scope.statusMgr = new ClusterStatusMgr();
 
         var listClusterDataGetFromBackend;

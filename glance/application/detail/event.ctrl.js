@@ -6,12 +6,10 @@
     angular.module('glance.app')
         .controller('EventAppCtrl', EventAppCtrl);
 
-    EventAppCtrl.$inject = ['appservice', '$rootScope', '$stateParams'];
+    EventAppCtrl.$inject = ['appservice', '$stateParams'];
 
-    function EventAppCtrl(appservice, $rootScope, $stateParams) {
+    function EventAppCtrl(appservice, $stateParams) {
         var self = this;
-        ///
-        $rootScope.appTabFlag = "appEvent";
 
         self.events = [];
         self.currentTypeText = APP_EVENTS_MSG;

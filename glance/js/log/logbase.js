@@ -3,10 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', '$rootScope', 'glanceHttp', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice'];
+logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice'];
 
-function logBaseCtrl($scope, $rootScope, glanceHttp, LogLoader, $timeout, multiSelectConfig, gHttp, appservice) {
-    $rootScope.show = "log";
+function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice) {
     $scope.showContextUI = false;
     $scope.logDownloadToplimit = LOG.logDownloadToplimit;
     var clusterIdTemp;

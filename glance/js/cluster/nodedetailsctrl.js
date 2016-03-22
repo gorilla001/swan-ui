@@ -1,5 +1,5 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
+function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
     'use strict';
     $scope.node = {};
     $scope.showCharts = false;
@@ -274,5 +274,5 @@ function nodeDetailsCtrl($rootScope, $scope, $stateParams, gHttp, unitConversion
 
 }
 
-nodeDetailsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
+nodeDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
 glanceApp.controller('nodeDetailsCtrl', nodeDetailsCtrl);

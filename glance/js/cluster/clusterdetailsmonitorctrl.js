@@ -1,5 +1,4 @@
-function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeout, Notification) {
-    $rootScope.clusterClass = 'clusterMonitor';
+function clusterMonitorCtrl($scope, $stateParams, glanceHttp, $timeout, Notification) {
     $scope.showAppMetrics = false;
     var timeoutPromise;
 
@@ -39,5 +38,5 @@ function clusterMonitorCtrl($scope, $rootScope, $stateParams, glanceHttp, $timeo
     });
 }
 
-clusterMonitorCtrl.$inject = ['$scope', '$rootScope', '$stateParams', 'glanceHttp', '$timeout', 'Notification'];
+clusterMonitorCtrl.$inject = ['$scope', '$stateParams', 'glanceHttp', '$timeout', 'Notification'];
 glanceApp.controller("clusterMonitorCtrl", clusterMonitorCtrl);
