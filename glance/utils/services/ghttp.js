@@ -31,7 +31,8 @@
                 this.url = utils.buildFullURL(urlName, params);
                 this.options = {
                     isAuth: true,
-                    loading: 'default'
+                    loading: 'default',
+                    ignoreCodes: [] //忽略错误码对应通知的集合
                 }
             }
 
@@ -59,6 +60,9 @@
                 if (options.form) {
                     options.form.$setPristine();
                     options.form.message_error_info = {};
+
+                    options.ignoreCodes = options.ignoreCodes || [];
+                    options.ignoreCodes.push(MESSAGE_CODE.dataInvalid)
                 }
                 var promise = this.req(method, options);
                 if (options.form) {
@@ -103,11 +107,15 @@
                     this._stopLoading(this.options.loading);
                     if (data.code === MESSAGE_CODE.success) {
                         deferred.resolve(data.data);
-                    } else if (data.code === MESSAGE_CODE.noExist){
+                    } else if (data.code === MESSAGE_CODE.noExist) {
                         $state.go('404');
                     } else if (data.code === MESSAGE_CODE.noPermission) {
                         Notification.error("您没有权限进行此操作");
                     } else {
+                        if (!this.options.ignoreCodes.includes(data.code) && CODE_MESSAGE[data.code]) {
+                            Notification.error(CODE_MESSAGE[data.code]);
+                        }
+
                         deferred.reject(data);
                     }
                 }.bind(this)).error(function (data, status) {
@@ -137,7 +145,7 @@
 
             Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
-                    window.location.href = USER_URL+"/user/login?return_to="+window.location.href+"?timestamp="+new Date().getTime();
+                    window.location.href = USER_URL + "/user/login?return_to=" + window.location.href + "?timestamp=" + new Date().getTime();
                     $rootScope.$destroy();
                 } else if (status == 404) {
                     $state.go('404');
