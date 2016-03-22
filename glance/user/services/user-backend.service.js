@@ -13,7 +13,8 @@
             createGroup: createGroup,
             listGroupUser: listGroupUser,
             sendInviteEmail: sendInviteEmail,
-            deleteGroupUsers: deleteGroupUsers
+            deleteGroupUsers: deleteGroupUsers,
+            joinDemoGroup: joinDemoGroup
         };
 
         function listGroups(params, loading) {
@@ -42,6 +43,10 @@
 
         function deleteGroupUsers(data, groupId) {
             return gHttp.Resource('user.groupMemberships', {group_id: groupId}).delete({data: data});
+        }
+
+        function joinDemoGroup() {
+            return gHttp.Resource('user.groupDemo').post();
         }
     }
 })();
