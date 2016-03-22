@@ -172,8 +172,6 @@
         self.joinDemoGroup = function () {
               userBackend.joinDemoGroup().then(function(){
                   $state.reload();
-              }, function(res) {
-                  Notification.error(res.data.group)
               });
         };
 
