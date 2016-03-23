@@ -3,8 +3,8 @@
     angular.module('glance.image')
         .controller('ImageDetailCtrl', ImageDetailCtrl);
 
-    ImageDetailCtrl.$inject = ['project', 'imageCurd', '$stateParams', '$scope', '$timeout', 'imageBackend', '$sce'];
 
+    /* @ngInject */
     function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageBackend, $sce) {
         var self = this;
         var refreshInterval = 20000;

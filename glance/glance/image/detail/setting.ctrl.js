@@ -3,8 +3,7 @@
     angular.module('glance.image')
         .controller('ImageDetailSettingCtrl', ImageDetailSettingCtrl);
 
-    ImageDetailSettingCtrl.$inject = ['project', 'imageBackend', 'Notification', 'imageBuildSetting'];
-
+    /* @ngInject */
     function ImageDetailSettingCtrl(project, imageBackend, Notification, imageBuildSetting) {
         var self = this;
 

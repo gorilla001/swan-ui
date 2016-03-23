@@ -6,8 +6,8 @@
     angular.module('glance.image')
         .factory('imageCurd', imageCurd);
 
-    imageCurd.$inject = ['imageBackend', 'confirmModal', 'Notification', '$state', '$filter'];
 
+    /* @ngInject */
     function imageCurd(imageBackend, confirmModal, Notification, $state, $filter) {
         //////
         return {

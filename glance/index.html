@@ -142,18 +142,16 @@
         <script src="bower_components/echarts/src/echarts-dataman.js" type="text/javascript"></script>
         <script src="bower_components/angularjs-slider/dist/rzslider.min.js" type="text/javascript"></script>
         <script src="bower_components/ng-table/dist/ng-table.js" type="text/javascript"></script>
-
         <!--endbuild-->
-
-        <!--build:js js/main.js-->
-
+        
+        <!--build:js(build) js/main.js-->
+        
         <script src="glance/utils/utils.module.js" type="text/javascript"></script>
         <script src="glance/utils/services/utils.service.js" type="text/javascript"></script>
         <script src="glance/utils/services/ghttp.js" type="text/javascript"></script>
         <script src="glance/utils/modals/confirm.service.js" type="text/javascript"></script>
         <script src="glance/utils/modals/alert.service.js" type="text/javascript"></script>
         <script src="glance/utils/modals/form.service.js" type="text/javascript"></script>
-
         
         <script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
         <script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
@@ -164,12 +162,6 @@
         <script src="glance/application/services/app-backend.service.js" type="text/javascript"></script>
         <script src="glance/application/services/app-curd.service.js" type="text/javascript"></script>
         <script src="glance/application/services/app-label.service.js" type="text/javascript"></script>
-
-        <script src="js/app.js" type="text/javascript"></script>
-        
-        <script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
-        <script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
-
         <script src="glance/application/createupdate/create-update.ctrl.js" type="text/javascript"></script>
         <script src="glance/application/createupdate/modals/create-port.service.js" type="text/javascript"></script>
         <script src="glance/application/list/list.ctrl.js" type="text/javascript"></script>
@@ -201,7 +193,10 @@
         <script type="text/javascript" src="glance/image/detail/version.ctrl.js"></script>
         <script type="text/javascript" src="glance/image/detail/brief.ctrl.js"></script>
         <script type="text/javascript" src="glance/image/detail/setting.ctrl.js"></script>
-
+        <!--endbuild-->
+        
+        <!--build:js js/old-main.js-->
+        <script src="js/app.js" type="text/javascript"></script>
         <script src="js/constants.js" type="text/javascript"></script>
         <script src="js/directives.js" type="text/javascript"></script>
         <script src="js/directives/include-replace.js" type="text/javascript"></script>
@@ -240,7 +235,11 @@
         <script src="js/cluster/updatenodeformctrl.js" type="text/javascript"></script>
         <script src="js/log/logbase.js" type="text/javascript"></script>
         <script src="js/dynamic/dynamicbase.js" type="text/javascript"></script>
-
+        <!--endbuild-->
+        
+        <!--build:js(build) js/directive.js-->
+        <script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
+        <script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js js/template.js-->

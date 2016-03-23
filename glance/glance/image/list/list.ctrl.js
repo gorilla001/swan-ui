@@ -3,8 +3,8 @@
     angular.module('glance.image')
         .controller('ImageListCtrl', ImageListCtrl);
 
-    ImageListCtrl.$inject = ['$rootScope', 'imageBackend', 'imageCurd', 'ngTableParams', '$timeout', '$scope'];
 
+    /* @ngInject */
     function ImageListCtrl($rootScope, imageBackend, imageCurd, ngTableParams, $timeout, $scope) {
         var self = this;
         var listProjectPromise;

@@ -3,8 +3,8 @@
     angular.module('glance.image')
         .controller('ImageDetailVersionCtrl', ImageDetailVersionCtrl);
 
-    ImageDetailVersionCtrl.$inject = ['imageBackend', '$state', 'imageLogModal', '$stateParams', 'imageCurd', '$scope'];
 
+    /* @ngInject */
     function ImageDetailVersionCtrl(imageBackend, $state, imageLogModal, $stateParams, imageCurd, $scope) {
         var self = this;
         self.IMAGE_STATUS = IMAGE_STATUS;
