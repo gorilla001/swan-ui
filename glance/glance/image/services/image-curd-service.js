@@ -19,7 +19,7 @@
         function deleteProjet(projectId) {
             confirmModal.open('确定删除该项目吗?').then(function () {
                 imageBackend.deleteProject(projectId).then(function (data) {
-                    $state.go('imageHome', null, {reload: true});
+                    $state.go('imageList', null, {reload: true});
                 }, function (res) {
                     Notification.error('删除失败');
                 });

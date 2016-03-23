@@ -12,8 +12,8 @@
 
         activate();
 
-        self.openLogModal = function (imageId) {
-            imageLogModal.open($stateParams.projectId, imageId);
+        self.openLogModal = function (imageId, imageState) {
+            imageLogModal.open($stateParams.projectId, imageId, imageState);
         };
 
         function activate() {
