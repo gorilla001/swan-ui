@@ -20,8 +20,6 @@
             confirmModal.open('确定删除该项目吗?').then(function () {
                 imageBackend.deleteProject(projectId).then(function (data) {
                     $state.go('imageList', null, {reload: true});
-                }, function (res) {
-                    Notification.error('删除失败');
                 });
             })
         }
@@ -37,8 +35,6 @@
                 .then(function(data){
                     Notification.success('正在构建...');
                     $state.reload();
-                }, function(res){
-                    Notification.error('构建失败');
                 })
         }
     }
