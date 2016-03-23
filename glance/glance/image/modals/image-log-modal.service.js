@@ -7,13 +7,13 @@
 
     function imageLogModal($uibModal) {
 
-        ImageLogCtrl.$inject = ['$uibModalInstance', 'content', 'imageBackend'];
+        ImageLogCtrl.$inject = ['$uibModalInstance', 'content', 'imageBackend', '$rootScope', 'utils'];
 
         return {
             open: open
         };
 
-        function open(projectId, buildNumber) {
+        function open(projectId, buildNumber, imageState) {
             var modalInstance = $uibModal.open({
                 templateUrl: '/glance/image/modals/get-image-log.html',
                 controller: ImageLogCtrl,
@@ -22,7 +22,8 @@
                     content: function () {
                         return {
                             projectId: projectId,
-                            buildNumber: buildNumber
+                            buildNumber: buildNumber,
+                            imageState: imageState
                         }
                     }
                 }
@@ -32,25 +33,34 @@
         }
 
 
-        function ImageLogCtrl($uibModalInstance, content, imageBackend) {
+        function ImageLogCtrl($uibModalInstance, content, imageBackend, $rootScope, utils) {
             var self = this;
             var projectId = content.projectId;
             var buildNumber = content.buildNumber;
+            var imageState = content.imageState;
+            self.log = "";
 
             self.noLogsFlag = true;
 
             activate();
 
             function activate() {
-                imageBackend.getImageLog(projectId, buildNumber)
-                    .then(function (data) {
-                        self.log = data;
-                        if (self.log) {
-                            self.noLogsFlag = false
-                        }
-                    }, function (res) {
-                        self.noLogsFlag = true
-                    })
+                if (imageState === 'running') {
+                    Stream(projectId, buildNumber, function (out) {
+                        self.noLogsFlag = false;
+                        self.log += out;
+                    });
+                } else if (imageState !== "running" && imageState !== "pending") {
+                    imageBackend.getImageLog(projectId, buildNumber)
+                        .then(function (data) {
+                            self.log = data;
+                            if (self.log) {
+                                self.noLogsFlag = false
+                            }
+                        }, function (res) {
+                            self.noLogsFlag = true
+                        })
+                }
             }
 
             self.ok = function () {
@@ -58,6 +68,30 @@
             };
             self.cancel = function () {
                 $uibModalInstance.dismiss();
+            };
+
+            function Stream(projectId, buildNumber, _callback) {
+                var callback = _callback;
+                var url = utils.buildFullURL('image.streamLog', {
+                        project_id: projectId,
+                        build_number: buildNumber
+                    }) + '?authorization=' +
+                    $rootScope.token;
+
+                var events = new EventSource(url);
+                events.onmessage = function (event) {
+                    if (callback !== undefined) {
+                        callback(event.data);
+                    }
+                };
+                events.onerror = function (event) {
+                    callback = undefined;
+                    if (events !== undefined) {
+                        events.close();
+                        events = undefined;
+                    }
+                    console.log('user event stream closed due to error.', event);
+                };
             }
         }
     }
