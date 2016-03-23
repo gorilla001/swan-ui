@@ -18,7 +18,7 @@
 
         function open(ports) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/application/createupdate/modals/create-port.html',
+                templateUrl: '/glance/application/createupdate/modals/create-port.html',
                 controller: CreateAppPortCtrl,
                 controllerAs: 'createAppPortCtrl',
                 size: 'lg',

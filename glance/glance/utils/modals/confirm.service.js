@@ -15,7 +15,7 @@
         
         function open(content) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/utils/modals/confirm.html',
+                templateUrl: '/glance/utils/modals/confirm.html',
                 controller: ConfirmCtrl,
                 controllerAs: 'confirmCtrl',
                 resolve: {
