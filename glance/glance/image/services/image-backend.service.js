@@ -3,8 +3,8 @@
     angular.module('glance.image')
         .factory('imageBackend', imageBackend);
 
-    imageBackend.$inject = ['gHttp'];
 
+    /* @ngInject */
     function imageBackend(gHttp) {
         //////
         return {

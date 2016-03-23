@@ -15,6 +15,7 @@ var jslint = require('gulp-jslint-simple');
 var angularTemplatecache = require('gulp-angular-templatecache');
 var minifyHtml = require('gulp-minify-html');
 var inject = require('gulp-inject');
+var ngAnnotate = require('gulp-ng-annotate');
 
 gulp.task('copy-confdev', function() {
     gulp.src('js/confdev.js')
@@ -37,14 +38,6 @@ gulp.task('copy-swf', ['copy-fonts'], function() {
     return gulp.src(sources)
         .pipe(gulp.dest('build/js'));
 });
-
-//gulp.task('min-html', function() {
-//    var sources = 'views/**/*.html';
-//    var options = {collapseWhitespace: true};
-//    return gulp.src(sources)
-//        .pipe(htmlmin(options).on('error', gutil.log))
-//        .pipe(gulp.dest('build/views'));
-//});
 
 
 //utils html to js
@@ -120,19 +113,24 @@ gulp.task('template-min', ['template-min-image'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('html-replace', ['template-min'], function() {
+gulp.task('ng-annotate', ['template-min'], function(){
+    return gulp.src('glance/**/*.js')
+        .pipe(ngAnnotate({add: true}))
+        .pipe(gulp.dest('build/glance/'))
+})
+
+gulp.task('html-replace', ['ng-annotate'], function() {
 
     var templateInjectFile = gulp.src('build/js/templateCacheHtml*.js', { read: false });
-    var templatenjectOptions = {
+    var templateInjectOptions = {
         starttag: '<!-- inject:template.js  -->',
         addRootSlash: false
     };
 
     var assets = useref.assets();
-   // var options = {collapseWhitespace: true};
     var revAll = new RevAll();
     return gulp.src('index.html')
-        .pipe(inject(templateInjectFile, templatenjectOptions))
+        .pipe(inject(templateInjectFile, templateInjectOptions))
         .pipe(assets)
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
@@ -153,7 +151,8 @@ gulp.task('html-rename', ['html-replace'], function() {
 gulp.task('clean', ['html-rename'], function() {
     var sources = [
       'build/index.**.html',
-      'build/js/templateCacheHtml*.js'
+      'build/js/templateCacheHtml*.js',
+      'build/glance'
     ];
     return gulp.src(sources, {read: false})
         .pipe(clean());

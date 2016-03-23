@@ -3,11 +3,8 @@
     angular.module('glance.image')
         .factory('imageLogModal', imageLogModal);
 
-    imageLogModal.$inject = ['$uibModal'];
-
+    /* @ngInject */
     function imageLogModal($uibModal) {
-
-        ImageLogCtrl.$inject = ['$uibModalInstance', 'content', 'imageBackend', '$rootScope', 'utils'];
 
         return {
             open: open
@@ -32,7 +29,7 @@
             return modalInstance.result;
         }
 
-
+        /* @ngInject */
         function ImageLogCtrl($uibModalInstance, content, imageBackend, $rootScope, utils) {
             var self = this;
             var projectId = content.projectId;

@@ -3,8 +3,7 @@
     angular.module('glance.image')
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
-    ImageCreateCtrl.$inject = ['imageBackend', '$rootScope', '$state', 'imageBuildSetting', 'Notification'];
-
+    /* @ngInject */
     function ImageCreateCtrl(imageBackend, $rootScope, $state, imageBuildSetting, Notification) {
         var self = this;
         ///

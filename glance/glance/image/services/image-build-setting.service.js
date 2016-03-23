@@ -3,8 +3,7 @@
     angular.module('glance.image')
         .factory('imageBuildSetting', imageBuildSetting);
 
-    imageBuildSetting.$inject = [];
-
+    /* @ngInject */
     function imageBuildSetting() {
         //////
         return {
