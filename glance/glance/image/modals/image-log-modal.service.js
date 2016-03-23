@@ -15,7 +15,7 @@
 
         function open(projectId, buildNumber) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/image/modals/get-image-log.html',
+                templateUrl: '/glance/image/modals/get-image-log.html',
                 controller: ImageLogCtrl,
                 controllerAs: 'imageLogCtrl',
                 resolve: {

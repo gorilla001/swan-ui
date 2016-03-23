@@ -167,7 +167,7 @@
 
         // 挂载点
         self.openVolumeModule = function () {
-            formModal.open('/application/createupdate/modals/create-volume.html').then(function (volume) {
+            formModal.open('/glance/application/createupdate/modals/create-volume.html').then(function (volume) {
                 if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
                     Notification.error('无法映射主机的多个目录到同一个容器目录');
                 } else {
@@ -209,7 +209,7 @@
         self.memSlideValue = Math.log(self.form.mem)/Math.LN2;
 
         self.openPathModule = function () {
-            formModal.open('/application/createupdate/modals/create-path.html').then(function (path) {
+            formModal.open('/glance/application/createupdate/modals/create-path.html').then(function (path) {
                 if (isDisableAddList(path, self.form.envs, ['key'])) {
                     Notification.error('添加的环境变量的 KEY 不能重复');
                 } else {
@@ -240,7 +240,7 @@
         
         //日志路径
         self.openLogPathModule = function () {
-            formModal.open('/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
+            formModal.open('/glance/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
                 if (isDisableAddList(path, self.form.logPaths)) {
                     Notification.error('添加的日志路径不能重复');
                 } else {

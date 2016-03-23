@@ -15,7 +15,7 @@
         
         function open(content) {
             var modalInstance = $uibModal.open({
-                templateUrl: '/utils/modals/alert.html',
+                templateUrl: '/glance/utils/modals/alert.html',
                 controller: AlertCtrl,
                 controllerAs: 'alertCtrl',
                 resolve: {

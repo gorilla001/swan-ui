@@ -12,7 +12,7 @@
                 url: '/app/create?url&version',
                 views: {
                     '': {
-                        templateUrl: '/application/createupdate/create-update.html',
+                        templateUrl: '/glance/application/createupdate/create-update.html',
                         controller: 'CreateAppCtrl as createAppCtrl'
                     }
                 },
@@ -25,7 +25,7 @@
                 url: '/app/:cluster_id/:app_id/update',
                 views: {
                     '': {
-                        templateUrl: '/application/createupdate/create-update.html',
+                        templateUrl: '/glance/application/createupdate/create-update.html',
                         controller: 'CreateAppCtrl as createAppCtrl',
                     }
                 },
@@ -38,7 +38,7 @@
                 url: '/apps',
                 views: {
                     '': {
-                        templateUrl: '/application/list/list.html',
+                        templateUrl: '/glance/application/list/list.html',
                         controller: 'ListAppCtrl as listappctrl'
                     }
                 },
@@ -51,7 +51,7 @@
                 abstract: true,
                 views: {
                     '': {
-                        templateUrl: '/application/detail/detail.html',
+                        templateUrl: '/glance/application/detail/detail.html',
                         controller: 'DetailAppCtrl as detailAppCtrl'
                     }
                 },
@@ -64,7 +64,7 @@
                 url: '/instance',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/application/detail/instance.html',
+                        templateUrl: '/glance/application/detail/instance.html',
                         controller: 'InstanceAppCtrl as instanceAppCtrl'
                     }
                 }
@@ -73,7 +73,7 @@
                 url: '/monitoring',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/application/detail/monitoring.html',
+                        templateUrl: '/glance/application/detail/monitoring.html',
                         controller: 'MonitorAppCtrl as monitorAppCtrl'
                     }
                 }
@@ -82,7 +82,7 @@
                 url: '/config',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/application/detail/config.html',
+                        templateUrl: '/glance/application/detail/config.html',
                         controller: 'ConfigAppCtrl as configAppCtrl'
                     }
                 }
@@ -91,7 +91,7 @@
                 url: '/event',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/application/detail/event.html',
+                        templateUrl: '/glance/application/detail/event.html',
                         controller: 'EventAppCtrl as eventAppCtrl'
                     }
                 }
@@ -100,7 +100,7 @@
                 url: '/version',
                 views: {
                     'tabdetail': {
-                        templateUrl: '/application/detail/version.html',
+                        templateUrl: '/glance/application/detail/version.html',
                         controller: 'VersionAppCtrl as versionAppCtrl'
                     }
                 }
