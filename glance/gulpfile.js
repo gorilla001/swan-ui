@@ -49,7 +49,7 @@ gulp.task('copy-swf', ['copy-fonts'], function() {
 
 //utils html to js
 gulp.task('template-min-utils', function () {
-    return gulp.src('utils/**/*.html')
+    return gulp.src('glance/utils/**/*.html')
         .pipe(minifyHtml({
             empty: true,
             spare: true,
@@ -57,13 +57,13 @@ gulp.task('template-min-utils', function () {
         }))
         .pipe(angularTemplatecache('templateCacheHtmlUtils.js', {
             module: 'glance.utils',
-            root: '/utils'
+            root: '/glance/utils'
         }))
         .pipe(gulp.dest('build/js/'));
 });
 
 gulp.task('template-min-user', ['template-min-utils'], function () {
-    return gulp.src('user/**/*.html')
+    return gulp.src('glance/user/**/*.html')
         .pipe(minifyHtml({
             empty: true,
             spare: true,
@@ -71,14 +71,14 @@ gulp.task('template-min-user', ['template-min-utils'], function () {
         }))
         .pipe(angularTemplatecache('templateCacheHtmlUser.js', {
             module: 'glance.user',
-            root: '/user'
+            root: '/glance/user'
         }))
         .pipe(gulp.dest('build/js/'));
 });
 
 //application html to js
 gulp.task('template-min-app', ['template-min-user'], function () {
-    return gulp.src('application/**/*.html')
+    return gulp.src('glance/application/**/*.html')
         .pipe(minifyHtml({
             empty: true,
             spare: true,
@@ -86,14 +86,14 @@ gulp.task('template-min-app', ['template-min-user'], function () {
         }))
         .pipe(angularTemplatecache('templateCacheHtmlApp.js', {
             module: 'glance.app',
-            root: '/application'
+            root: '/glance/application'
         }))
         .pipe(gulp.dest('build/js/'));
 });
 
 //image html to js
 gulp.task('template-min-image', ['template-min-app'], function () {
-    return gulp.src('image/**/*.html')
+    return gulp.src('glance/image/**/*.html')
         .pipe(minifyHtml({
             empty: true,
             spare: true,
@@ -101,7 +101,7 @@ gulp.task('template-min-image', ['template-min-app'], function () {
         }))
         .pipe(angularTemplatecache('templateCacheHtmlImage.js', {
             module: 'glance.image',
-            root: '/image'
+            root: '/glance/image'
         }))
         .pipe(gulp.dest('build/js/'));
 });
