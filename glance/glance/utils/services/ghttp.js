@@ -109,8 +109,6 @@
                         deferred.resolve(data.data);
                     } else if (data.code === MESSAGE_CODE.noExist) {
                         $state.go('404');
-                    } else if (data.code === MESSAGE_CODE.noPermission) {
-                        Notification.error("您没有权限进行此操作");
                     } else {
                         if (!this.options.ignoreCodes.includes(data.code) && CODE_MESSAGE[data.code]) {
                             Notification.error(CODE_MESSAGE[data.code]);
@@ -145,7 +143,8 @@
 
             Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
-                    window.location.href = USER_URL + "/user/login?return_to=" + window.location.href + "?timestamp=" + new Date().getTime();
+                    window.location.href = USER_URL + "/user/login?return_to=" + encodeURIComponent(window.location.href) 
+                                            + "?timestamp=" + new Date().getTime();
                     $rootScope.$destroy();
                 } else if (status == 404) {
                     $state.go('404');
