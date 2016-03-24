@@ -30,7 +30,7 @@
         }
 
         function createGroup(data){
-            return gHttp.Resource('user.groups').post(data);
+            return gHttp.Resource('user.groups').post(data, {ignoreCodes: [10001]});
         }
 
         function listGroupUser(groupId) {
