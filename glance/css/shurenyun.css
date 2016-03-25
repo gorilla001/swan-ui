@@ -94,3 +94,37 @@ body, html {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
+
+#createSelectImage .modal-body .btn-default {
+	width: 150px;
+}
+#createSelectImage .modal-body span {
+	display: inline-block;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	position: relative;
+}
+#createSelectImage .modal-body span .btn-info {
+	border-radius: 0 4px 0 0;
+	display: none;
+	font-size: 12px;
+	height: 18px;
+	padding: 0;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 18px;
+	z-index: 10001;
+}
+#createSelectImage .modal-body span:hover .btn-info {
+	display: block;
+}
+#createSelectImage [data-toggle="buttons"] span > .btn input[type="radio"],
+#createSelectImage [data-toggle="buttons"] span > .btn-group > .btn input[type="radio"],
+#createSelectImage [data-toggle="buttons"] span > .btn input[type="checkbox"],
+#createSelectImage [data-toggle="buttons"] span > .btn-group > .btn input[type="checkbox"] {
+	clip: rect(0px, 0px, 0px, 0px);
+	pointer-events: none;
+	position: absolute;
+}

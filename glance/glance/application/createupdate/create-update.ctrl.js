@@ -7,57 +7,57 @@
         .controller('CreateAppCtrl', CreateAppCtrl);
 
     CreateAppCtrl.$inject = [
-        'appservice', 
-        'Notification', 
-        'multiSelectConfig', 
-        '$scope', 
-        'clusterBackendService', 
+        'appservice',
+        'Notification',
+        'multiSelectConfig',
+        'clusterBackendService',
         'appLabelService',
         'createAppPortModal',
         'formModal',
         '$state',
         'target',
         'app',
-        '$stateParams'
+        '$stateParams',
+        'selectImageModal',
+        '$filter'
     ];
 
-    function CreateAppCtrl(
-        appservice, 
-        Notification, 
-        multiSelectConfig, 
-        $scope, 
-        clusterBackendService, 
-        appLabelService,
-        createAppPortModal,
-        formModal,
-        $state,
-        target,
-        app,
-        $stateParams
-    ) {
+    function CreateAppCtrl(appservice,
+                           Notification,
+                           multiSelectConfig,
+                           clusterBackendService,
+                           appLabelService,
+                           createAppPortModal,
+                           formModal,
+                           $state,
+                           target,
+                           app,
+                           $stateParams,
+                           selectImageModal,
+                           $filter) {
         var self = this;
         self.target = target;
-        
+
         self.cluster;
-        
+
         var existPorts;
         if (self.target === 'create') {
             self.form = {
-                    cluster_id: '',
-                    name: '',
-                    instances: 1,
-                    volumes: [],
-                    portMappings: [],
-                    cpus: 0.1,
-                    mem: 16,
-                    cmd: '',
-                    envs: [],
-                    imageName:  $stateParams.url ? decodeURIComponent($stateParams.url) : '',
-                    imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
-                    forceImage: false,
-                    network: 'BRIDGE',
-                    constraints: [],
-                    logPaths: []
+                cluster_id: '',
+                name: '',
+                instances: 1,
+                volumes: [],
+                portMappings: [],
+                cpus: 0.1,
+                mem: 16,
+                cmd: '',
+                envs: [],
+                imageName: $stateParams.url ? decodeURIComponent($stateParams.url) : '',
+                imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
+                forceImage: false,
+                network: 'BRIDGE',
+                constraints: [],
+                logPaths: []
             };
         } else {
             self.form = {
@@ -79,7 +79,7 @@
             if (!self.form.logPaths) {
                 self.form.logPaths = [];
             }
-            refresClusterData(app.cid, app.id).then(function(){
+            refresClusterData(app.cid, app.id).then(function () {
                 setSelectNodes(app.iplist);
             });
             self.single = app.unique;
@@ -105,8 +105,9 @@
             }
         };
 
-        self.refresClusterData = refresClusterData; 
-        
+        self.refresClusterData = refresClusterData;
+        self.openImageModal = openImageModal;
+
         function refresClusterData(cluster_id, app_id) {
             if (!cluster_id) {
                 cluster_id = self.form.cluster_id;
@@ -115,22 +116,22 @@
                 existPorts = data;
             });
             return clusterBackendService.getCluster(cluster_id)
-                    .then(function(cluster) {
-                        self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
-                        self.multiSelect.nodes = [];
-                        self.cluster = cluster;
-                        setMultiSelect(cluster.nodes, cluster.cluster_type);
-                        if (cluster.group_name) {
-                            self.clusterName = cluster.group_name + ":" + cluster.name;
-                        } else {
-                            self.clusterName = cluster.name;
-                        }
-                    });
+                .then(function (cluster) {
+                    self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
+                    self.multiSelect.nodes = [];
+                    self.cluster = cluster;
+                    setMultiSelect(cluster.nodes, cluster.cluster_type);
+                    if (cluster.group_name) {
+                        self.clusterName = cluster.group_name + ":" + cluster.name;
+                    } else {
+                        self.clusterName = cluster.name;
+                    }
+                });
         }
-        
+
         function setMultiSelect(nodes, cluster_type) {
             for (var i = 0; i < nodes.length; i++) {
-                if (nodes[i].role!='master'||cluster_type=='1_master') {
+                if (nodes[i].role != 'master' || cluster_type == '1_master') {
                     self.multiSelect.nodes.push(nodes[i]);
                 }
             }
@@ -138,29 +139,29 @@
         }
 
         // 标签主机多选框
-        self.tickItem = function(data) {
+        self.tickItem = function (data) {
             listNodesBySelectedLabels();
         };
 
-        self.tickAllLabels = function() {
+        self.tickAllLabels = function () {
             angular.extend(self.multiSelect.selectedLabels, self.multiSelect.labels);
             self.multiSelect.selectedNodes = [];
             self.multiSelect.nodes = [];
             listNodesBySelectedLabels();
         };
 
-        self.clearLabels = function() {
+        self.clearLabels = function () {
             self.multiSelect.selectedLabels = [];
             self.multiSelect.selectedNodes = [];
             setTick(self.multiSelect.nodes, undefined);
         };
 
-        self.tickAllNodes = function() {
+        self.tickAllNodes = function () {
             angular.extend(self.multiSelect.selectedNodes, self.multiSelect.nodes);
             setTick(self.multiSelect.selectedNodes, true);
         };
 
-        self.clearNode = function() {
+        self.clearNode = function () {
             self.multiSelect.selectedNodes = [];
             setTick(self.multiSelect.selectedNodes, undefined);
         };
@@ -206,7 +207,7 @@
             }
         };
         self.cpuSlideValue = self.form.cpus * 10;
-        self.memSlideValue = Math.log(self.form.mem)/Math.LN2;
+        self.memSlideValue = Math.log(self.form.mem) / Math.LN2;
 
         self.openPathModule = function () {
             formModal.open('/glance/application/createupdate/modals/create-path.html').then(function (path) {
@@ -223,9 +224,9 @@
         };
 
         // // 应用地址
-        
+
         self.openPortModule = function () {
-            if(!self.form.cluster_id){
+            if (!self.form.cluster_id) {
                 Notification.warning('没有选择集群，无法添加应用地址，请选择集群后重试');
                 return
             }
@@ -237,7 +238,7 @@
                 }
             });
         };
-        
+
         //日志路径
         self.openLogPathModule = function () {
             formModal.open('/glance/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
@@ -258,7 +259,7 @@
                     $state.go('appdetails.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 });
         };
-        
+
         self.updateApp = function () {
             setConstraints();
             delete self.form.cluster_id;
@@ -270,8 +271,8 @@
 
         function listApps() {
             appservice.listApps()
-                .then(function(data) {
-                    angular.forEach(data.App, function(app, index) {
+                .then(function (data) {
+                    angular.forEach(data.App, function (app, index) {
                         self.appNames.push(app.appName);
                     });
                 });
@@ -279,10 +280,10 @@
 
         function listClusters() {
             clusterBackendService.listClusters()
-                .then(function(clusters) {
-                    angular.forEach(clusters, function(cluster, index) {
-                        if (cluster.group_name){
-                            self.clusters.push({id: cluster.id, name: cluster.group_name+":"+cluster.name});
+                .then(function (clusters) {
+                    angular.forEach(clusters, function (cluster, index) {
+                        if (cluster.group_name) {
+                            self.clusters.push({id: cluster.id, name: cluster.group_name + ":" + cluster.name});
                         } else {
                             self.clusters.push({id: cluster.id, name: cluster.name});
                         }
@@ -292,11 +293,11 @@
 
         function listNodesBySelectedLabels() {
             return appLabelService.listNodesByLabelIds(self.multiSelect.selectedLabels, self.form.cluster_id)
-                .then(function(nodes) {
+                .then(function (nodes) {
                     self.multiSelect.nodes = [];
                     self.multiSelect.selectedNodes = [];
-                    angular.forEach(nodes, function(node){
-                        if (node.role!='master'||self.cluster.cluster_type=='1_master') {
+                    angular.forEach(nodes, function (node) {
+                        if (node.role != 'master' || self.cluster.cluster_type == '1_master') {
                             self.multiSelect.nodes.push(node);
                             self.multiSelect.selectedNodes.push(node);
                         }
@@ -306,11 +307,11 @@
         }
 
         function setTick(items, value) {
-            angular.forEach(items, function(item, index) {
+            angular.forEach(items, function (item, index) {
                 item.tick = value;
             });
         }
-        
+
         function isDisableAddList(info, infoArray, attrnames) {
             function equal(info1, info2) {
                 if (attrnames) {
@@ -332,7 +333,7 @@
             }
             return false;
         }
-        
+
         function setConstraints() {
             var defaultEles = [];
             var hostEles = ["hostname", "UNIQUE"];
@@ -345,7 +346,7 @@
                 self.form.constraints.push(hostEles)
             }
         }
-        
+
         function getConstraintsByNode(nodesSelect, elements, attribute) {
             if (attribute === 'ip') {
                 var temp = ["ip", "LIKE"];
@@ -363,14 +364,21 @@
             }
             return elements;
         }
-        
-        function setSelectNodes(iplist){
-            angular.forEach(self.multiSelect.nodes, function(node){
+
+        function setSelectNodes(iplist) {
+            angular.forEach(self.multiSelect.nodes, function (node) {
                 if (iplist.indexOf(node.ip) > -1) {
                     self.multiSelect.selectedNodes.push(node);
                 }
             });
             setTick(self.multiSelect.selectedNodes, true);
+        }
+
+        function openImageModal() {
+            selectImageModal.open().then(function (data) {
+                self.form.imageName = $filter("filterVersion")(data.image, 'url');
+                self.form.imageVersion = $filter("filterVersion")(data.image, 'version');
+            });
         }
 
     }
