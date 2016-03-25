@@ -11,89 +11,20 @@
         <uib-tabset justified="true">
             <uib-tab heading="数人推荐镜像">
                 <div role="tabpanel" class="tab-pane active">
-                    <div data-toggle="buttons">
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['2048'])">
-                                <input type="radio" id="2048" autocomplete="off">2048
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['Mysql'])">
-                                <input type="radio" id="Mysql" autocomplete="off">Mysql
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['redis'])">
-                                <input type="radio" id="redis" autocomplete="off">redis
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['Wordpress'])">
-                                <input type="radio" id="Wordpress" autocomplete="off">Wordpress
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['nginx'])">
-                                <input type="radio" id="nginx" autocomplete="off">nginx
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['jenkins'])">
-                                <input type="radio" id="jenkins" autocomplete="off">jenkins
-                            </label>
-                        </span>
-
-                        <span>
-                            <a class="btn btn-info">
-                                <i class="fa fa-file-text-o"></i>
-                            </a>
-                            <label class="btn btn-default"
-                                   data-ng-click="selectImageCtrl.selectImage(selectImageCtrl.datamanImages['haproxy'])">
-                                <input type="radio" id="haproxy" autocomplete="off">haproxy
-                            </label>
-                        </span>
-                    </div>
+                    <span data-ng-repeat="datamanImage in selectImageCtrl.datamanImages">
+                        <a class="btn btn-info" ng-href="{/datamanImage.url/}" target="_blank">
+                            <i class="fa fa-file-text-o"></i>
+                        </a>
+                        <label class="btn btn-default" ng-model="selectImageCtrl.image"
+                               uib-btn-radio="datamanImage">{/datamanImage.name/}</label>
+                    </span>
                 </div>
             </uib-tab>
             <uib-tab heading="用户镜像列表(默认选择最新版本)">
                 <div role="tabpanel" class="tab-pane active">
-                    <div data-toggle="buttons">
                     <span data-ng-repeat="image in selectImageCtrl.imageList">
-                        <label class="btn btn-default" data-ng-click="selectImageCtrl.selectImage(image)">
-                            {/image.imageName/}
-                            <input type="radio" name="options" autocomplete="off">
-                        </label>
+                        <label class="btn btn-default" ng-model="selectImageCtrl.image" uib-btn-radio="image">{/image.imageName/}</label>
                     </span>
-                    </div>
                 </div>
             </uib-tab>
         </uib-tabset>

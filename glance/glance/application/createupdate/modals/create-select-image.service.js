@@ -33,30 +33,15 @@
 
             self.imageList = [];
             self.image = null;
-            self.datamanImages = {
-                2048: {image: 'blackicebird/2048:latest', url: 'http://doc.shurenyun.com/get-started/2048.html'},
-                Mysql: {
-                    image: 'index.shurenyun.com/mysql:5.6',
-                    url: 'http://doc.shurenyun.com/practice/wordpress.html'
-                },
-                Wordpress: {
-                    image: 'index.shurenyun.com/wordpress:4.4',
-                    url: 'http://doc.shurenyun.com/practice/wordpress.html'
-                },
-                redis: {image: 'index.shurenyun.com/redis:3', url: ''},
-                nginx: {image: 'index.shurenyun.com/nginx:1.9', url: ''},
-                jenkins: {
-                    image: 'index.shurenyun.com/centos7/mesos-0.23.0-jdk8-jenkins1.628-m:customer.v0.1',
-                    url: 'http://doc.shurenyun.com/practice/jenkins.html'
-                },
-                haproxy: {
-                    image: 'index.shurenyun.com/haproxy:1.6',
-                    url: ''
-            }
-
-            };
-
-            self.selectImage = selectImage;
+            self.datamanImages = [
+                {name: '2048' , image: 'blackicebird/2048:latest', url: 'http://doc.shurenyun.com/get-started/2048.html'},
+                {name: 'Mysql', image: 'index.shurenyun.com/mysql:5.6', url: 'http://doc.shurenyun.com/practice/wordpress.html'},
+                {name: 'Wordpress', image: 'index.shurenyun.com/wordpress:4.4', url: 'http://doc.shurenyun.com/practice/wordpress.html'},
+                {name: 'redis', image: 'index.shurenyun.com/redis:3', url: ''},
+                {name: 'nginx', image: 'index.shurenyun.com/nginx:1.9', url: ''},
+                {name: 'jenkins', image: 'index.shurenyun.com/centos7/mesos-0.23.0-jdk8-jenkins1.628-m:customer.v0.1', url: 'http://doc.shurenyun.com/practice/jenkins.html'},
+                {name: 'haproxy', image: 'index.shurenyun.com/haproxy:1.6', url: ''}
+            ];
 
             activate();
 
@@ -77,10 +62,6 @@
                     .then(function (data) {
                         self.imageList = data.Project;
                     })
-            }
-
-            function selectImage(image) {
-                self.image = image;
             }
         }
     }
