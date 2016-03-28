@@ -89,7 +89,6 @@
 
         self.appNames = [];
         self.clusters = [];
-        self.APP_PORT_TYPE = APP_PORT_TYPE;
         self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
         listApps();
         listClusters();
