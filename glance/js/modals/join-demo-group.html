@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title">免费试用公共集群</h4>
+</div>
+<div class="modal-body">
+    <br>
+    <p><strong>小编温馨提示：</strong></p>
+    <p>欢迎您试用数人云免费提供的公共集群！</p>
+    <p>使用前需要验证您的手机号，使用过程请注意及时备份您的应用和数据，我们会根据资源使用情况不定期清除数据，好产品离不开好用户的支持，试用愉快！</p>
+    <br>
+    <form class="form-horizontal alert alert-info">
+        <br>
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-3 control-label">手机号码</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" id="inputEmail3" placeholder="请输入您的手机号码"
+                       data-ng-model="joinDemoGroupCtrl.verifyPhoneForm.phone">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-3 control-label">短信验证码</label>
+            <div class="col-sm-7">
+                <div class="input-group">
+                    <input type="text" id="inputPassword3" class="form-control" placeholder="请输入短信验证码"
+                           data-ng-model="joinDemoGroupCtrl.verifyPhoneForm.code">
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" type="button"
+                                data-ng-disabled="!joinDemoGroupCtrl.verifyPhoneForm.phone || !joinDemoGroupCtrl.canResendSMS"
+                                data-ng-click="joinDemoGroupCtrl.sendSMS()">{/joinDemoGroupCtrl.sendButtonText/}</button>
+                      </span>
+                </div>
+            </div>
+        </div>
+        <br>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default"
+            data-ng-click="joinDemoGroupCtrl.cancel()">取消</button>
+    <button type="button" class="btn btn-primary"
+            data-ng-disabled="!joinDemoGroupCtrl.verifyPhoneForm.phone || !joinDemoGroupCtrl.verifyPhoneForm.code"
+            data-ng-click="joinDemoGroupCtrl.ok()">立即试用</button>
+</div>

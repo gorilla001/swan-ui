@@ -12,6 +12,9 @@ CODE_MESSAGE = {
     11005: "非激活用户",
     11006: "已加入用户组",
     11007: "该用户组有其它用户存在或有集群存在",
+    11008: "没有验证手机号",
+    11009: "已发送，请等待",
+    11010: "验证码错误",
     14003: "应用名称冲突",
     14004: "应用端口冲突",
     14005: "应用版本冲突",
@@ -156,13 +159,19 @@ LOG = {
     logDownloadToplimit: 5000
 };
 
+SMS = {
+    phoneCodeResendExpire: 60
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
         user: "api/v3/user",
         customerservice: "api/v3/customerservice_url",
         password: 'api/v3/user/password',
-        notice: 'api/v3/notice'
+        notice: 'api/v3/notice',
+        phoneCode: 'api/v3/auth/phone/code',
+        verifyPhone: 'api/v3/auth/phone/verification'
     },
 
     cluster: {
