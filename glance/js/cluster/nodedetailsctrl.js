@@ -1,5 +1,5 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
-function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification) {
+function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, confirmModal) {
     'use strict';
     $scope.node = {};
     $scope.showCharts = false;
@@ -140,8 +140,8 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         ids.push(id);
         var toast = '您确定要移除主机吗？';
 
-        $scope.myConfirm(toast, function () {
-            gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data':ids}).then(function () {
+        confirmModal.open(toast).then(function () {
+            gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data': ids}).then(function () {
                 $state.go('cluster.clusterdetails.nodes', {'clusterId': $stateParams.clusterId});
             });
         });
@@ -268,5 +268,5 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
 }
 
-nodeDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification'];
+nodeDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification', 'confirmModal'];
 glanceApp.controller('nodeDetailsCtrl', nodeDetailsCtrl);

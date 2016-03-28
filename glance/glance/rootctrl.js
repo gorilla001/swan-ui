@@ -1,9 +1,4 @@
 function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcurd, Notification, joinDemoGroupModal) {
-    $rootScope.myConfirm = function (msg, callback) {
-        $scope._confirmMsg = msg;
-        $scope._confirmCallback = callback;
-        $('#confirmModal').modal("show");
-    };
 
     $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
 

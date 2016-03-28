@@ -1,4 +1,4 @@
-function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification) {
+function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification, confirmModal) {
     $scope.unitConversion = unitConversion;
 
     $scope.allLabels = [];
@@ -23,7 +23,7 @@ function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConv
             }
         }
 
-        $scope.myConfirm(toast, function () {
+        confirmModal.open(toast).then(function () {
             gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data':nodeIds}).then(function () {
                 $state.reload("cluster.clusterdetails");
             });
@@ -172,5 +172,5 @@ function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConv
 
 }
 
-clusterNodesCtrl.$inject = ["$scope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification"];
+clusterNodesCtrl.$inject = ["$scope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification" , "confirmModal"];
 glanceApp.controller("clusterNodesCtrl", clusterNodesCtrl);
