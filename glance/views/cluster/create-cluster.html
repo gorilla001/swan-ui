@@ -16,9 +16,8 @@
                   (staticForm.message_error_info.name && staticForm.name.$pristine)}">
         <label class="col-md-2 control-label required">集群名称</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required" data-name-repaet-validator />
+          <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required"/>
           <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
-          <p data-ng-show="staticForm.name.$error.nameRepaetValidator" class="help-block">集群名已存在</p>
           <p data-ng-show="staticForm.name.$pristine" class="help-block">{/ staticForm.message_error_info["name"] /}</p>
         </div>
       </div>
