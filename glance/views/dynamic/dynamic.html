@@ -30,6 +30,12 @@
             </h2>
             <div class="dashboard-left">
                 <div class="dashboard-cluster">
+                    <div class="disable-cover" 
+                        data-ng-if="!(statusMgr.nodeStatusCount[clusterId].running + 
+                            statusMgr.nodeStatusCount[clusterId].failed + 
+                            statusMgr.nodeStatusCount[clusterId].installing + 
+                            statusMgr.nodeStatusCount[clusterId].upgrading)">
+                    </div>
                     <div>
                         <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[50, 65]"
                               use-color="#68d1f2" show-text="CPU占用" text-color="#68d1f2" error-code="errorCode">
@@ -66,6 +72,12 @@
             <div class="dashboard-right">
 
                 <div class="dashboard-app">
+                    <div class="disable-cover" 
+                        data-ng-if="!(statusMgr.nodeStatusCount[clusterId].running + 
+                            statusMgr.nodeStatusCount[clusterId].failed + 
+                            statusMgr.nodeStatusCount[clusterId].installing + 
+                            statusMgr.nodeStatusCount[clusterId].upgrading)">
+                    </div>
                    <div ng-repeat="appMon in cluster.appMonitors" class="app-info">
                         <h5>{/appMon.appName/}</h5>
                         <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare" radius="[45, 55]"
