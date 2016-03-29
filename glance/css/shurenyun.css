@@ -128,3 +128,14 @@ body, html {
 	pointer-events: none;
 	position: absolute;
 }
+
+.disable-cover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #3D3D3D;
+    z-index: 10;
+    opacity: 0.5;
+}

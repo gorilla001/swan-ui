@@ -87,7 +87,7 @@
                 data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除主机</button>
         </div>
         <div class="col-md-8">
-        
+            <div class="disable-cover" data-ng-if="statusMgr.nodes[node.id].status==='terminated'"></div>
             <div class="main-container">
                 <div class="main-container-body">
                     <ul class="clearfix server-app-status">

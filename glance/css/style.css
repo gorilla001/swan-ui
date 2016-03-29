@@ -1576,6 +1576,7 @@ rzslider .rz-bubble {
 
 .dashboard .dashboard-cluster {
     margin-bottom: 60px;
+    position: relative;
 }
 
 .dashboard .dashboard-cluster > div {
@@ -1599,6 +1600,7 @@ rzslider .rz-bubble {
 
 .dashboard .dashboard-app {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .dashboard .dashboard-app h5 {
