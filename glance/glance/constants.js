@@ -220,5 +220,12 @@ BACKEND_URL = {
         imageLog: 'api/v3/projects/$project_id/builds/$build_number/1/logs',
         manualBuild: 'api/v3/projects/$project_id/hook',
         streamLog: 'api/v3/projects/$project_id/builds/$build_number/1/stream'
+    },
+
+    repo: {
+        repositories: 'api/v3/repositories',
+        repository: 'api/v3/repositories/$project_name/$repository_name',
+        repositoryTags: 'api/v3/repositories/$project_name/$repository_name/tags',
+        repositoryCategories: 'api/v3/repositories/categories'
     }
 };
