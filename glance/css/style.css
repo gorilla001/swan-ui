@@ -1295,6 +1295,7 @@ a.remove {
     bottom: 40px;
     right: 0px;
     width: 35px;
+    z-index: 20;
 }
 
 .tab-rb-feedback a {
