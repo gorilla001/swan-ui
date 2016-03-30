@@ -8,6 +8,8 @@
     function RepoListCtrl() {
         var self = this;
 
+
+        self.markdown = '###Markdown directive *It works!*';
         self.fields =
             [
                 {
