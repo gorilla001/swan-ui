@@ -73,21 +73,12 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
                         }]
                 }
             })
-            .state('cluster.iaasprovider', {
-                url: '/:clusterId/iaasprovider/:nodeId',
+            .state('cluster.iaas', {
+                url: '/:clusterId/iaasprovider',
                 views: {
                     'first': {
-                        templateUrl: '/views/cluster/iaas-provider.html',
-                        controller: 'iaasProviderCtrl'
-                    }
-                }
-            })
-            .state('cluster.iaasqcloud', {
-                url: '/:clusterId/iaasqcloud/:nodeId',
-                views: {
-                    'first': {
-                        templateUrl: '/views/cluster/iaas-qcloud.html',
-                        controller: 'iaasQcloudCtrl'
+                        templateUrl: '/views/cluster/iaas-buy.html',
+                        controller: 'iaasCtrl'
                     }
                 }
             })
