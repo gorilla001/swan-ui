@@ -84,7 +84,9 @@ APP_EVENTS_MSG = {
     CancelScale: "取消应用扩展",
     CancelDeployment: "取消应用部署",
     RestartApplication: "应用重启",
-    Redeploy: "应用重新部署"
+    Redeploy: "应用重新部署",
+    PullImageError: "镜像拉取失败",
+    UnknownError: "未知错误"
 };
 
 IMAGE_TRIGGER_TYPE = {
@@ -99,7 +101,8 @@ APP_EVENTS_TYPE = {
     deployment_failed: "部署失败",
     deployment_step_success: "部署操作成功",
     deployment_step_failure: "部署操作失败",
-    AppOperation: "应用操作"
+    AppOperation: "应用操作",
+    FailureMessage: "部署失败消息"
 };
 
 APP_PORT_TYPE = {
