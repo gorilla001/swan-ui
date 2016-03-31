@@ -87,7 +87,6 @@
                 userBackend.deleteGroup(groupId).then(function (data) {
                     $state.reload();
                 }, function (res) {
-                    Notification.error(res.data.group);
                 });
             });
         };
@@ -98,7 +97,6 @@
                 userBackend.leaveGroup(groupId).then(function (data) {
                     $state.reload();
                 }, function (res) {
-                    Notification.error(res.data.group);
                 });
             });
         };
@@ -119,8 +117,8 @@
             }
         };
 
-        /* 发送邀请邮件 */
-        self.sendInviteEmail = function(groupId) {
+        /* 发送邀请 */
+        self.sendInvitation = function(groupId) {
             var emailStr = self.inviteForm.emails.trim();
             if(!emailStr) {
                 Notification.error('邮箱地址不能为空');
@@ -130,7 +128,7 @@
                 for(var i=0; i < _emails.length; i++) {
                     emails.push(_emails[i].trim());
                 }
-                userBackend.sendInviteEmail({emails: emails}, groupId).then(function(data) {
+                userBackend.sendInvitation({emails: emails}, groupId).then(function(data) {
                     if(data.error_emails.length) {
                         var errMsg = '下列用户不存在:<br>';
                         for (var i = 0; i < data.error_emails.length; i++) {
@@ -140,6 +138,7 @@
                     } else {
                         Notification.success("邀请邮件发送成功");
                     }
+                    self.showManagePanel(groupId);
                 });
             }
         };
@@ -150,29 +149,31 @@
                     self.isCollapsed = true;
                     $state.reload()
                 }, function (res) {
-                    Notification.error(res.data.group);
                 });
             });
         };
 
-        /* 打开用户详情 */
-        self.showManagePanel = function(groupId) {
+        self.collapseManagePanel = function(groupId) {
             if(!self.isCollapsedGroupMapping[groupId]) {
                 self.isCollapsedGroupMapping[groupId] = true;
             } else {
-                userBackend.listGroupUser(groupId).then(function (data) {
-                    self.isCollapsedGroupMapping[groupId] = false;
-                    self.groupUserMapping[groupId] = data;
-                }, function (res) {
-                    Notification.error(res.data.group);
-                });
+                self.showManagePanel(groupId);
             }
         };
 
-        self.joinDemoGroup = function () {
-              userBackend.joinDemoGroup().then(function(){
-                  $state.reload();
-              });
+        /* 打开用户详情 */
+        self.showManagePanel = function(groupId) {
+            userBackend.listGroupUser(groupId).then(function (data) {
+                self.isCollapsedGroupMapping[groupId] = false;
+                self.groupUserMapping[groupId] = data;
+            }, function (res) {
+            });
+        };
+
+        self.joinInvitedGroup = function(groupId) {
+            userBackend.joinInvitedGroup(groupId).then(function() {
+                $state.reload();
+            });
         };
 
         /*
