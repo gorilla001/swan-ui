@@ -1,5 +1,35 @@
-<form>
-    <div btf-markdown="repoListCtrl.markdown">
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">应用目录 </h1>
+        <small><br><br>提供丰富的应用可以直接部署</small>
     </div>
-    <dynamic-field field-data="fieldData" ng-repeat="fieldData in repoListCtrl.fields"></dynamic-field>
-</form>
+</div>
+<section id="app-index">
+    <div class="main-container">
+        <div class="main-container-body">
+            <form class="form-inline form-filter-top">
+                <select class="form-control" ng-options="category.name for category in repoListCtrl.categories track by category.id" ng-model="selected">
+                    <option value="">全部</option>
+                </select>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="exampleInputName2" placeholder="搜索">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <div class="row">
+                <div class="col-md-3" data-ng-repeat="repository in repoListCtrl.repositories">
+                    <div class="thumbnail">
+                        <img src="../pics/logo-shurenyun.png" alt="...">
+                        <div class="caption">
+                            <h4>{/repository.name/}</h4>
+                            <p>{/repository.description/}</p>
+                            <a href="#" class="btn btn-primary btn-sm" role="button"
+                               data-ui-sref="repositoryDetail">部署</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -5,55 +5,29 @@
 
 
     /* @ngInject */
-    function RepoListCtrl() {
+    function RepoListCtrl(repoBackend) {
         var self = this;
+        ////
 
+        activate();
 
-        self.markdown = '###Markdown directive *It works!*';
-        self.fields =
-            [
-                {
-                    type: 'string',
-                    default: '1111',
-                    label: 'Name',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'int',
-                    default: 300,
-                    label: '22222',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'boolean',
-                    default: true,
-                    label: 'Animal',
-                    descrition: 'boolean boolean'
-                },
-                {
-                    type: 'multiline',
-                    default: '1231332',
-                    label: 'textarea',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'enum',
-                    default: 'a',
-                    label: 'enum',
-                    descrition: 'demo demo',
-                    options: ['a', 'b']
-                },
-                {
-                    type: 'service',
-                    label: 'service',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'password',
-                    label: 'password',
-                    default: 1234123,
-                    descrition: 'demo demo'
-                }
-            ];
+        function activate() {
+            listRepository();
+            listCategories();
+        }
+
+        function listRepository() {
+            repoBackend.listRepositories()
+                .then(function (data) {
+                    self.repositories = data
+                })
+        }
+
+        function listCategories() {
+            repoBackend.listCategories()
+                .then(function (data) {
+                    self.categories = data
+                })
+        }
     }
 })();
