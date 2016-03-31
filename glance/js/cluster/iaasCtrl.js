@@ -4,7 +4,7 @@
         .controller('iaasCtrl', iaasCtrl);
 
 
-    /* @ngInject */
+    iaasCtrl.$inject = ["$stateParams", "$scope", "gHttp"];
     function iaasCtrl($stateParams, $scope, gHttp) {
 
         $scope.clusterId = $stateParams.clusterId;
