@@ -17,7 +17,7 @@
                     return '/glance/directives/dm-dynamic-fields/dynamic-field-' + type + '.html';
                 }
             },
-            template: '<div class="form-group col-md-6" ng-include="getTemplateUrl()"></div>'
+            template: '<div ng-include="getTemplateUrl()"></div>'
         };
     }
 })();

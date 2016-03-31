@@ -17,7 +17,7 @@
                 }
             })
             .state('repositoryDetail', {
-                url: '/repository/detail',
+                url: '/repository/detail/:projectName/:repositoryName',
                 views: {
                     '': {
                         templateUrl: '/glance/repository/detail/detail.html',

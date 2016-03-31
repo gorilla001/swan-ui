@@ -1,5 +1,48 @@
-<form>
-    <div btf-markdown="repoListCtrl.markdown">
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">应用部署</h1>
     </div>
-    <dynamic-field field-data="fieldData" ng-repeat="fieldData in repoDetailCtrl.fields"></dynamic-field>
-</form>
+</div>
+<section>
+    <div class="main-container new-app">
+        <div class="main-container-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><span class="text-danger">*</span> 应用名称</label>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" data-ng-model="repoDetailCtrl.repoDetail.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"> 应用详情</label>
+                    <div class="col-md-5">
+                        <div btf-markdown="repoDetailCtrl.markdown">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">应用版本</label>
+                    <div class="col-md-5">
+                        <select class="form-control" data-ng-options="tag.version as tag.version for tag in repoDetailCtrl.tags"
+                                data-ng-model="repoDetailCtrl.repoDetail.category_name">
+                            <option value="">--- 选择应用版本 ---</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">配置文件</label>
+                    <div class="col-md-5">
+                        <dynamic-field field-data="fieldData"
+                                       ng-repeat="fieldData in repoDetailCtrl.fields"></dynamic-field>
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-5">
+                        <button type="submit" class="btn btn-primary btn-block">部 署</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

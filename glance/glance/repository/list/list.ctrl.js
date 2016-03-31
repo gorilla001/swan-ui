@@ -7,6 +7,8 @@
     /* @ngInject */
     function RepoListCtrl(repoBackend) {
         var self = this;
+        self.repositories = [];
+        self.categories = [];
         ////
 
         activate();
@@ -26,7 +28,7 @@
         function listCategories() {
             repoBackend.listCategories()
                 .then(function (data) {
-                    self.categories = data
+                    self.categories = data;
                 })
         }
     }

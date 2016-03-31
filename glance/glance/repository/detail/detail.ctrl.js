@@ -5,8 +5,34 @@
 
 
     /* @ngInject */
-    function RepoDetailCtrl() {
+    function RepoDetailCtrl($stateParams, repoBackend) {
         var self = this;
+        var projectName = $stateParams.projectName;
+        var repositoryName = $stateParams.repositoryName;
+
+        self.repoDetail = {};
+        self.tags = [];
+
+        activate();
+
+        function activate() {
+            getRepoDetail(projectName, repositoryName);
+            listTags(projectName, repositoryName)
+        }
+
+        function getRepoDetail(projectName, repositoryName) {
+            repoBackend.getRepository(projectName, repositoryName)
+                .then(function (data) {
+                    self.repoDetail = data;
+                })
+        }
+
+        function listTags(projectName, repositoryName) {
+            repoBackend.listRepositoryTags(projectName, repositoryName)
+                .then(function (data) {
+                    self.tags = data;
+                })
+        }
 
         self.markdown = '###Markdown directive *It works!*';
         self.fields =

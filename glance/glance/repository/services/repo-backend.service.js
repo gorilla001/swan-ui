@@ -20,21 +20,21 @@
 
         function getRepository(proejctName, repositoryName) {
             return gHttp.Resource('repo.repository', {
-                proejct_name: proejctName,
+                project_name: proejctName,
                 repository_name: repositoryName
             }).get();
         }
 
         function updateRepository(proejctName, repositoryName, data) {
             return gHttp.Resource('repo.repository', {
-                proejct_name: proejctName,
+                project_name: proejctName,
                 repository_name: repositoryName
             }).put(data);
         }
 
         function listRepositoryTags(proejctName, repositoryName) {
             return gHttp.Resource('repo.repositoryTags', {
-                proejct_name: proejctName,
+                project_name: proejctName,
                 repository_name: repositoryName
             }).get();
         }
