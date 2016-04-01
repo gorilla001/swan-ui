@@ -2,11 +2,11 @@
 
 <div class="ember-view form-control-static">
     <label class="col-md-3 hand">
-        <input type="radio" data-ng-model="fieldData.default" ng-value="true"> True
+        <input type="radio" data-ng-model="fieldData.default" ng-value="true" ng-required="fieldData.required"> True
     </label>
 
     <label class="hand">
-        <input type="radio" data-ng-model="fieldData.default" ng-value="false"> False
+        <input type="radio" data-ng-model="fieldData.default" ng-value="false" ng-required="fieldData.required"> False
     </label>
 </div>
 <p class="help-block">{/fieldData.descrition/}</p>

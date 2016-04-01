@@ -1,7 +1,8 @@
 <label class="form-label form-control-static">{/fieldData.label/}</label>
 
 <div class="ember-view">
-    <select class="form-control r-mb10" ng-model="fieldData.default" ng-options="o as o for o in fieldData.options">
+    <select class="form-control r-mb10" ng-model="fieldData.default" ng-options="o as o for o in fieldData.options"
+            ng-required="fieldData.required">
         <option value="">-- Pick one --</option>
     </select>
 </div>

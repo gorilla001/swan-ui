@@ -47,7 +47,8 @@
                     type: 'int',
                     default: 300,
                     label: '22222',
-                    descrition: 'demo demo'
+                    descrition: 'demo demo',
+                    required: true
                 },
                 {
                     type: 'boolean',
@@ -66,7 +67,8 @@
                     default: 'a',
                     label: 'enum',
                     descrition: 'demo demo',
-                    options: ['a', 'b']
+                    options: ['a', 'b'],
+                    required: true
                 },
                 {
                     type: 'service',
