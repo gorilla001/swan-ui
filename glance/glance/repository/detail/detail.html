@@ -39,7 +39,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">配置文件</label>
+                                    <label class="col-md-2 control-label">配置</label>
                                     <div class="col-md-5">
                                         <dynamic-field field-data="fieldData"
                                                        ng-repeat="fieldData in repoDetailCtrl.fields"></dynamic-field>
@@ -49,7 +49,8 @@
                                 <div class="form-group">
                                     <div class="col-md-offset-2 col-md-5">
                                         <button type="submit" class="btn btn-primary btn-block"
-                                                ng-disabled="staticForm.$invalid">部 署
+                                                ng-disabled="staticForm.$invalid"
+                                                data-ng-click="repoDetailCtrl.deploy()">部 署
                                         </button>
                                     </div>
                                 </div>

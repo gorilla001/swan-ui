@@ -12,6 +12,7 @@
 
         self.repoDetail = {};
         self.tags = [];
+        self.deploy = deploy;
 
         activate();
 
@@ -35,52 +36,65 @@
                 })
         }
 
-        self.fields =
-            [
-                {
-                    type: 'string',
-                    default: '1111',
-                    label: 'Name',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'int',
-                    default: 300,
-                    label: '22222',
-                    descrition: 'demo demo',
-                    required: true
-                },
-                {
-                    type: 'boolean',
-                    default: true,
-                    label: 'Animal',
-                    descrition: 'boolean boolean'
-                },
-                {
-                    type: 'multiline',
-                    default: '1231332',
-                    label: 'textarea',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'enum',
-                    default: 'a',
-                    label: 'enum',
-                    descrition: 'demo demo',
-                    options: ['a', 'b'],
-                    required: true
-                },
-                {
-                    type: 'service',
-                    label: 'service',
-                    descrition: 'demo demo'
-                },
-                {
-                    type: 'password',
-                    label: 'password',
-                    default: 1234123,
-                    descrition: 'demo demo'
-                }
-            ];
+        function deploy(){
+            ///
+        }
+
+        self.fields = [
+            {
+                "variable": "remote_driver",
+                "type": "enum",
+                "required": true,
+                "label": "Remote Driver",
+                "description": "Remote Git and Auth scheme",
+                "options": [
+                    "github",
+                    "bitbucket",
+                    "gitlab",
+                    "gogs"
+                ]
+            },
+            {
+                "variable": "remote_config",
+                "type": "password",
+                "required": true,
+                "label": "Remote Config",
+                "description": "Must be the full connection string. see http://readme.drone.io/setup/overview/ for more info"
+            },
+            {
+                "variable": "public_port",
+                "type": "int",
+                "required": true,
+                "label": "Public Port",
+                "description": "Port that the load balancer will listen on. Must be accessible to remote driver for webhooks"
+            },
+            {
+                "variable": "database_driver",
+                "type": "enum",
+                "label": "Database Driver",
+                "description": "Database backend to use.",
+                "required": true,
+                "default": "sqlite3",
+                "options": [
+                    "sqlite3",
+                    "postgres",
+                    "mysql"
+                ]
+            },
+            {
+                "variable": "database_config",
+                "label": "Database Config",
+                "type": "password",
+                "required": true,
+                "description": "Must be full db string. The hostname for the DB will be 'database'. See http://readme.drone.io/setup/overview/ for more info"
+            },
+            {
+                "variable": "database_service",
+                "type": "service",
+                "label": "Database Service",
+                "description": "Service to link to for database. For instance if using the default Rancher Galera cluster select galera/galera-lb.",
+                "default": "drone-server"
+            }
+        ];
     }
 })();
