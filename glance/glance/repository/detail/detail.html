@@ -23,7 +23,7 @@
                                         应用名称</label>
                                     <div class="col-md-5">
                                         <input type="text" class="form-control"
-                                               data-ng-model="repoDetailCtrl.repoDetail.name" data-required="required">
+                                               data-ng-model="repoDetailCtrl.form.name" data-required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -32,17 +32,17 @@
                                     <div class="col-md-5">
                                         <select class="form-control"
                                                 data-ng-options="tag.version as tag.version for tag in repoDetailCtrl.tags"
-                                                data-ng-model="repoDetailCtrl.repoDetail.category_name"
+                                                data-ng-model="repoDetailCtrl.form.version"
                                                 data-required="required">
                                             <option value="">--- 选择应用版本 ---</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" data-ng-show="repoDetailCtrl.form.questions">
                                     <label class="col-md-2 control-label">配置</label>
                                     <div class="col-md-5">
                                         <dynamic-field field-data="fieldData"
-                                                       ng-repeat="fieldData in repoDetailCtrl.fields"></dynamic-field>
+                                                       ng-repeat="fieldData in repoDetailCtrl.form.questions"></dynamic-field>
                                     </div>
                                 </div>
                                 <hr>
@@ -60,7 +60,10 @@
                 </div>
 
                 <div class="tab-pane" id="detail">
-                    <div btf-markdown="repoDetailCtrl.repoDetail.markdown">
+                    <div class="alert alert-warning text-center" data-ng-if="!repoDetailCtrl.form.markdown">
+                        暂无详情
+                    </div>
+                    <div btf-markdown="repoDetailCtrl.markdown">
                     </div>
                 </div>
             </div>
