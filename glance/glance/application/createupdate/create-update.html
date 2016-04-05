@@ -147,7 +147,7 @@
                                    ng-model="createAppCtrl.form.network"
                                    value="BRIDGE"
                                    data-required="required"
-                                   data-ng-disabled="createAppCtrl.target==='update'">
+                                   data-ng-disabled="createAppCtrl.isNetworkDisable">
                             网桥模式
                         </label>
                         <label class="checkbox-inline">
@@ -155,7 +155,7 @@
                                    ng-model="createAppCtrl.form.network"
                                    value="HOST"
                                    data-required="required"
-                                   data-ng-disabled="createAppCtrl.target==='update'">
+                                   data-ng-disabled="createAppCtrl.isNetworkDisable">
                             HOST 模式
                         </label>
                     </div>

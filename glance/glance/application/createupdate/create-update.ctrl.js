@@ -59,6 +59,7 @@
                 constraints: [],
                 logPaths: []
             };
+            self.isNetworkDisable = false;
         } else {
             self.form = {
                 cluster_id: app.cid,
@@ -83,6 +84,7 @@
                 setSelectNodes(app.iplist);
             });
             self.single = app.unique;
+            self.isNetworkDisable = true;
         }
 
         self.appNames = [];
@@ -125,6 +127,12 @@
                         self.clusterName = cluster.group_name + ":" + cluster.name;
                     } else {
                         self.clusterName = cluster.name;
+                    }
+                    if (cluster.is_demo_group) {
+                        self.form.network = 'BRIDGE';
+                        self.isNetworkDisable = true;
+                    } else if (target === 'create'){
+                        self.isNetworkDisable = false;
                     }
                 });
         }
