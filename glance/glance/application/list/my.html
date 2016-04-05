@@ -66,6 +66,11 @@
                     data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20, appalias: app.alias, keywords: app.name})">
                 告警策略
             </button>
+            <button type="button"
+                    class="btn btn-default btn-xs"
+                    data-ui-sref="appupdate({cluster_id: app.cid, app_id: app.id, canaryRelease: true})"
+                    data-ng-show="myAppsCtrl.appListStatus[app.id].status =='2'" data-demo-disable>灰度发布
+            </button>
         </td>
     </tr>
     </tbody>

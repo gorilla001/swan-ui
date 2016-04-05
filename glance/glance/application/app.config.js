@@ -4,6 +4,5 @@
         .config(configure);
 
     function configure() {
-
     }
 })();

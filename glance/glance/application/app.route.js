@@ -25,11 +25,11 @@
                 }
             })
             .state('appupdate', {
-                url: '/app/:cluster_id/:app_id/update',
+                url: '/app/:cluster_id/:app_id/update?canaryRelease',
                 views: {
                     '': {
                         templateUrl: '/glance/application/createupdate/create-update.html',
-                        controller: 'CreateAppCtrl as createAppCtrl',
+                        controller: 'CreateAppCtrl as createAppCtrl'
                     }
                 },
                 resolve: {
