@@ -5,6 +5,8 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
         $('#confirmModal').modal("show");
     };
 
+    $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
+
     // app list request params
     $rootScope.appListParams = {
         searchKeyWord:'',
