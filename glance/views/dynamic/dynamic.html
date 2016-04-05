@@ -5,10 +5,10 @@
             <div class="news-hot">
                 <h4>新闻动态</h4>
                 <p>&nbsp&nbsp&nbsp&nbsp使用数人云管理的CentOS/RHEL主机暂不兼容1.10.1版本Docker，Ubuntu等其他操作系统主机不受影响。
-                    为了保障您的集群稳定，CentOS/RHEL用户请使用1.9版本Docker环境，在业务运行性能上没有任何差别。此兼容性问题将在下周产品更新时解决，给您带来了不便还请谅解。<a
+                    为了保障您的集群稳定，CentOS/RHEL用户请使用1.9版本Docker环境，在业务运行性能上没有任何差别。此兼容性问题将在下周产品更新时解决，给您带来了不便还请谅解。<a data-ng-if="!IS_OFF_FLAG" ng-cloak
                             href="https://raw.githubusercontent.com/Dataman-Cloud/agent-installer/master/install-docker.sh" target="_blank">1.9版本Docker安装脚本</a></p>
             </div>
-            <div class="news-list">
+            <div class="news-list" data-ng-if="!IS_OFF_FLAG" ng-cloak>
                 <ul>
                     <li><a href="http://open.shurenyun.com/article/10" target="_blank">Mesos Meetup 第三期干货PPT下载</a></li>
                     <li><a href="http://open.shurenyun.com/article/8" target="_blank">永洪BI也能在数人云上跳舞</a></li>
@@ -16,7 +16,7 @@
                     <li><a href="http://open.shurenyun.com/article/6" target="_blank">没有主机？用笔记本一样玩转数人云</a></li>
                 </ul>
             </div>
-            <div class="news-more">
+            <div class="news-more" data-ng-if="!IS_OFF_FLAG" ng-cloak>
                 <a href="http://open.shurenyun.com/" class="btn btn-success" target="_blank">数人之家 <span class="glyphicon glyphicon-arrow-right   "></span></a>
             </div>
         </div>

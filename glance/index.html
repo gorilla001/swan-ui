@@ -74,8 +74,8 @@
                         </div>
                     </div>
 
-                    <a data-ui-sref="home" class="sidebar-logo"></a>
-					<ul class="nav-sidebar-footer">
+                    <a data-ui-sref="home" ng-class="{'sidebar-logo': !IS_OFF_FLAG}"></a>
+					<ul class="nav-sidebar-footer" data-ng-if="!IS_OFF_FLAG" ng-cloak>
 						<li><a  ng-href="{/userManualUrl/}" title="用户手册" target="_blank"><div class="userdoc"><span>用户手册</span></div></a></li>
 						<li><a href="http://open.shurenyun.com" title="数人社区" target="_blank"><div class="bbs"><span>数人社区</span></div></a></li>
 					</ul>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-rb-feedback">
+        <div class="tab-rb-feedback" data-ng-if="!IS_OFF_FLAG" ng-cloak>
             <a href="#" data-ng-click="getCSUrl()">
                 <i class="glyphicon glyphicon-edit"></i>
                 <em>反馈</em>
