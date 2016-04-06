@@ -1,4 +1,4 @@
-function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcurd) {
+function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcurd, Notification, joinDemoGroupModal) {
     $rootScope.myConfirm = function (msg, callback) {
         $scope._confirmMsg = msg;
         $scope._confirmCallback = callback;
@@ -81,9 +81,46 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
                 case toState.name.startsWith('cluster'):
                     $rootScope.show = 'cluster';
             }
-        })
+        });
 
+    $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
+
+    if($rootScope.isFirstLogin) {
+        $scope.openJoinDemoGroupModal();
+        $rootScope.isFirstLogin = false;
+    }
+    $rootScope.$watch('isFirstLogin', function(newValue, oldValue) {
+        if(newValue !== oldValue) {
+            if($rootScope.isFirstLogin) {
+                $scope.openJoinDemoGroupModal();
+                $rootScope.isFirstLogin = false;
+            }
+        }
+    });
+
+    $scope.openJoinDemoGroupModal = function() {
+        if($rootScope.isPhoneVerified) {
+            joinDemoGroup().then(function() {
+                joinDemoGroupModalSuccess();
+            });
+        } else {
+            joinDemoGroupModal.open().then(function (res) {
+                joinDemoGroupModalSuccess();
+                $rootScope.isPhoneVerified = true;
+            });
+        }
+    };
+
+    function joinDemoGroupModalSuccess() {
+        $rootScope.notInDemoGroup = false;
+        $state.go('user.groups', null, {reload: true});
+        Notification.success("加入Demo用户组成功");
+    }
+
+    function joinDemoGroup(data) {
+        return gHttp.Resource('user.groupDemo').post(data);
+    }
 }
 
-rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window", "appcurd"];
+rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window", "appcurd", 'Notification', 'joinDemoGroupModal'];
 glanceApp.controller("rootCtrl", rootCtrl);

@@ -96,6 +96,9 @@
         self.leaveGroup = function(groupId) {
             confirmModal.open('您确定要离开该用户组吗？').then(function () {
                 userBackend.leaveGroup(groupId).then(function (data) {
+                    if(groupId == $rootScope.demoGroupId) {
+                        $rootScope.notInDemoGroup = true;
+                    }
                     $state.reload();
                 }, function (res) {
                     Notification.error(res.data.group);

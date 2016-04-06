@@ -198,6 +198,13 @@ function glanceInit(glanceUser, glanceHttp, $rootScope, gHttp) {
         $rootScope.userId = data["userId"];
         $rootScope.isSuperuser = data["isSuperuser"];
         $rootScope.isDemo = data["isDemo"];
+        $rootScope.isFirstLogin = data["isFirstLogin"];
+        $rootScope.phoneNumber = data["phoneNumber"];
+        // join demo group flow
+        $rootScope.isPhoneVerified = data["isPhoneVerified"];
+        // demo group button
+        $rootScope.notInDemoGroup = !data["isInDemoGroup"];
+        $rootScope.demoGroupId = data["demoGroupId"];
         //GrowingIO
         if (RUNNING_ENV === "prod") {
             (function () {
