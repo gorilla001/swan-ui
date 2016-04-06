@@ -8,11 +8,19 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
     $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
 
     // app list request params
-    $rootScope.appListParams = {
+    $rootScope.myAppListParams = {
         searchKeyWord:'',
         page: 1,  //current page index
         count: 20, // current count
         //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
+    };
+    
+    $rootScope.groupAppListParams = {
+            searchKeyWord:'',
+            page: 1,  //current page index
+            count: 20, // current count
+            clusterId: null,
+            groupId: null
     };
 
     $rootScope.groupListParams = {

@@ -39,8 +39,8 @@
             return gHttp.Resource('app.userApps').get({params : params, "loading": loading});
         }
 
-        function listClusterApps(params, clusterId){
-            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).get({params : params});
+        function listClusterApps(params, clusterId, loading){
+            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).get({params : params, loading: loading});
         }
 
         function createApp(data, clusterId){
@@ -124,8 +124,8 @@
             return gHttp.Resource('app.appVersion', {cluster_id: clusterId, app_id: appId, version_id: versionId}).delete();
         }
 
-        function listAppsStatus(){
-            return gHttp.Resource('app.appsStatus').get({"loading": ""});
+        function listAppsStatus(params){
+            return gHttp.Resource('app.appsStatus').get({params: params, loading: ""});
         }
 
         function getAppStatus(cluserId, appId, loading){
