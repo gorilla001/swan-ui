@@ -3,8 +3,8 @@
 
     angular.module('glance.utils').factory('gHttp', gHttp);
 
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state'];
-    function gHttp(utils, $q, $rootScope, $http, Notification, $state) {
+    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies'];
+    function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies) {
         var token;
 
         if (!$rootScope.loadings) {
@@ -143,6 +143,7 @@
 
             Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
+                    $cookies.remove('token');
                     window.location.href = USER_URL + "/user/login?return_to=" + encodeURIComponent(window.location.href) 
                                             + "?timestamp=" + new Date().getTime();
                     $rootScope.$destroy();
