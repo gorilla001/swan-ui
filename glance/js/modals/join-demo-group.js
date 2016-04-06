@@ -5,6 +5,7 @@
     joinDemoGroupModal.$inject = ['$rootScope', '$uibModal', '$interval', 'Notification'];
 
     function joinDemoGroupModal($rootScope, $uibModal, $interval, Notification) {
+        var phoneCodeResendInterval;
         JoinDemoGroupCtrl.$inject = ['$uibModalInstance', 'gHttp'];
 
         return {
@@ -13,7 +14,7 @@
 
         function open() {
             var modalInstance = $uibModal.open({
-                templateUrl: 'js/modals/join-demo-group.html',
+                templateUrl: '/views/modals/join-demo-group.html',
                 controller: JoinDemoGroupCtrl,
                 controllerAs: 'joinDemoGroupCtrl'
             });
@@ -23,12 +24,18 @@
 
         function JoinDemoGroupCtrl($uibModalInstance, gHttp) {
             var self = this;
-            var phoneCodeResendInterval;
-
             self.verifyPhoneForm = {
                 phone: $rootScope.phoneNumber,
                 code: ''
             };
+
+            self.sendButtonText = "发送验证码";
+            self.canResendSMS = true;
+
+            if(phoneCodeResendInterval) {
+                cancelSMSInterval();
+                sendSMSInterval();
+            }
 
             self.ok = function () {
                 verifyPhoneCode(self.verifyPhoneForm).then(function() {
@@ -42,20 +49,28 @@
                 $uibModalInstance.dismiss('cancel');
             };
 
-            self.sendButtonText = "发送验证码";
-            self.canResendSMS = true;
             self.sendSMS = function() {
                 sendPhoneCodeSMS({
                     phone: self.verifyPhoneForm.phone
                 }).then(function() {
 
                 });
+                sendSMSInterval();
+            };
+
+            function cancelSMSInterval() {
+                $interval.cancel(phoneCodeResendInterval);
+                phoneCodeResendInterval = undefined;
+            }
+
+            function sendSMSInterval() {
                 self.canResendSMS = false;
                 self.sendButtonText = "重新发送验证码(" + $rootScope.phoneCodeResendExpire + ")";
-                phoneCodeResendInterval = $interval(function() {
-                    $rootScope.phoneCodeResendExpire --;
-                    if($rootScope.phoneCodeResendExpire <= 0) {
-                        $interval.cancel(phoneCodeResendInterval);
+                cancelSMSInterval();
+                phoneCodeResendInterval = $interval(function () {
+                    $rootScope.phoneCodeResendExpire--;
+                    if ($rootScope.phoneCodeResendExpire <= 0) {
+                        cancelSMSInterval();
                         $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
                         self.canResendSMS = true;
                         self.sendButtonText = "发送验证码"
@@ -63,7 +78,7 @@
                         self.sendButtonText = "重新发送验证码(" + $rootScope.phoneCodeResendExpire + ")";
                     }
                 }, 1000);
-            };
+            }
 
             function joinDemoGroup(data) {
                 return gHttp.Resource('user.groupDemo').post(data);
