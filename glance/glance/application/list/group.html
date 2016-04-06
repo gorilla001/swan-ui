@@ -1,0 +1,104 @@
+<div data-ng-if='groupAppsCtrl.groups.length !== 0'>
+    <form class="form-inline search-container" name="searchForm">
+        <div class="form-group">
+            <select class="form-control"
+                    data-ng-model="groupAppsCtrl.searchForm.groupId"
+                    data-ng-options="group.id as group.name for group in groupAppsCtrl.groups"
+                    data-required="required"
+                    data-ng-change="groupAppsCtrl.groupChange()">
+                    <option value="">--- 选择搜索的用户组 ---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control"
+                data-ng-model="groupAppsCtrl.searchForm.clusterId"
+                data-ng-options="cluster.id as cluster.name for cluster in groupAppsCtrl.clusters"
+                data-required="required">
+                <option value="">--- 选择搜索的集群 ---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="输入应用名称进行搜索" 
+                data-ng-model="groupAppsCtrl.searchForm.keywords">
+        </div>
+        <button type="submit" class="btn btn-info" data-ng-click="groupAppsCtrl.search()" 
+            data-ng-disabled="searchForm.$invalid">搜索</button>
+    </form>
+    <table ng-table="groupAppsCtrl.appListTable" template-pagination="/views/common/ngTablePage.html"
+           class="table table-striped" ng-table-columns-binding="boundCols">
+        <tbody>
+        <tr ng-repeat="app in groupAppsCtrl.applist">
+            <td data-title="'应用名称'" sortable="'name'"><a href="#"
+                                                         data-ui-sref="appdetails.config({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a>
+            </td>
+            <td data-title="'当前状态'">{/listappctrl.APP_STATUS[groupAppsCtrl.appListStatus[app.id].status]/}</td>
+            <td data-title="'更新时间'" sortable="'updated'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td data-title="'所属集群'" id="appTdCluster">
+                <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
+                   ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '10'}"> <img
+                        data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
+                        ng-show="groupAppsCtrl.appListStatus[app.id].status == '10'">
+                    {/groupAppsCtrl.clusterNameMap[app.cid]/}
+                </a>
+            </td>
+            <td data-title="'容器个数'" sortable="'instances'"><span
+                    ng-show="groupAppsCtrl.appListStatus[app.id].tasks != undefined && groupAppsCtrl.appListStatus[app.id].tasks != app.instances">{/groupAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
+                <span ng-show="groupAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+            </td>
+            <td data-title="'操作'">
+                <button type="button"
+                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '2' && listappctrl.appListStatus[app.id].status != '3'"
+                        data-toggle="modal" data-target="#app-upContainer"
+                        data-ng-click="listappctrl.upContainerModal(app.cid, app.id, app.instances)"
+                        class="btn btn-default btn-xs" data-demo-disable>扩展
+                </button>
+                <button type="button"
+                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '2'"
+                        class="btn btn-default btn-xs"
+                        data-ng-click="listappctrl.stop(app.cid, app.id)"
+                        data-ng-show="listappctrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+                </button>
+                <button type="button"
+                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '3'"
+                        class="btn btn-default btn-xs"
+                        data-ng-click="listappctrl.start(app.cid, app.id)"
+                        data-ng-show="listappctrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+                </button>
+                <button type="button" class="btn btn-default btn-xs"
+                        data-ng-click="listappctrl.undo(app.cid, app.id)"
+                        data-ng-show="listappctrl.appListStatus[app.id].status == '6'" data-demo-disable>撤销
+                </button>
+                <button type="button"
+                        data-ng-disabled="listappctrl.appListStatus[app.id].status == '5' || listappctrl.appListStatus[app.id].status == 'undefined'"
+                        data-ng-click="listappctrl.delete(app.cid, app.id)" class="btn btn-default btn-xs"
+                        data-demo-disable>删除
+                </button>
+                <button type="button"
+                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '9'"
+                        class="btn btn-default btn-xs"
+                        data-ng-click="listappctrl.redeploy(app.cid, app.id)"
+                        data-ng-show="listappctrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="groupAppsCtrl.showNothtingAlert">
+        未查询到应用数据
+    </div>
+</div>
+<div data-ng-if='groupAppsCtrl.groups.length === 0'>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-info">
+                <p>“数人云”—云操作系统，是一款部署在公有云或者私有云（IDC）之上的应用运维软件，旨在帮助用户在云端快速建立并稳定运维一个高性能生产环境。 </p>
+                <p>通过数人云，用户可以快速整合不同环境下的主机资源，部署海量应用。通过领先的 Mesos 和 Docker 技术，数人云可以为用户的业务系统带来高可用的服务质量，快速的性能伸缩，高效的资源利用以及便捷的可视化管理和监控；同时，数人云保证用户的服务资源和数据完全为用户私有可控。 </p>
+                <p class="text-center">
+                    <br>
+                    <a data-ui-sref="user.groups" class="btn btn-success" data-demo-disable>新建群组</a>
+                    <br><br>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

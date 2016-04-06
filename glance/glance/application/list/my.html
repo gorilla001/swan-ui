@@ -1,0 +1,69 @@
+<form class="form-inline search-container">
+    <div class="form-group">
+        <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord" 
+            placeholder="输入应用名称进行搜索" my-enter="myAppsCtrl.doSearch(searchKeyWord)">
+    </div>
+    <button type="submit" ng-click="myAppsCtrl.doSearch(searchKeyWord)" class="btn btn-info">搜索</button>
+</form>
+<table ng-table="myAppsCtrl.appListTable" template-pagination="/views/common/ngTablePage.html"
+       class="table table-striped" ng-table-columns-binding="boundCols">
+    <tbody>
+    <tr ng-repeat="app in myAppsCtrl.applist">
+        <td data-title="'应用名称'" sortable="'name'"><a href="#"
+                                                     data-ui-sref="appdetails.config({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a>
+        </td>
+        <td data-title="'当前状态'">{/listappctrl.APP_STATUS[myAppsCtrl.appListStatus[app.id].status]/}</td>
+        <td data-title="'更新时间'" sortable="'updated'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+        <td data-title="'所属集群'" id="appTdCluster">
+            <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
+               ng-class="{'danger': myAppsCtrl.appListStatus[app.id].status == '10'}"> <img
+                    data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
+                    ng-show="myAppsCtrl.appListStatus[app.id].status == '10'">
+                {/myAppsCtrl.clusterNameMap[app.cid]/}
+            </a>
+        </td>
+        <td data-title="'容器个数'" sortable="'instances'"><span
+                ng-show="myAppsCtrl.appListStatus[app.id].tasks != undefined && myAppsCtrl.appListStatus[app.id].tasks != app.instances">{/myAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
+            <span ng-show="myAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+        </td>
+        <td data-title="'操作'">
+            <button type="button"
+                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2' && myAppsCtrl.appListStatus[app.id].status != '3'"
+                    data-toggle="modal" data-target="#app-upContainer"
+                    data-ng-click="listappctrl.upContainerModal(app.cid, app.id, app.instances)"
+                    class="btn btn-default btn-xs" data-demo-disable>扩展
+            </button>
+            <button type="button"
+                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2'"
+                    class="btn btn-default btn-xs"
+                    data-ng-click="listappctrl.stop(app.cid, app.id)"
+                    data-ng-show="myAppsCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+            </button>
+            <button type="button"
+                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '3'"
+                    class="btn btn-default btn-xs"
+                    data-ng-click="listappctrl.start(app.cid, app.id)"
+                    data-ng-show="myAppsCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+            </button>
+            <button type="button" class="btn btn-default btn-xs"
+                    data-ng-click="listappctrl.undo(app.cid, app.id)"
+                    data-ng-show="myAppsCtrl.appListStatus[app.id].status == '6'" data-demo-disable>撤销
+            </button>
+            <button type="button"
+                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status == '5' || myAppsCtrl.appListStatus[app.id].status == 'undefined'"
+                    data-ng-click="listappctrl.delete(app.cid, app.id)" class="btn btn-default btn-xs"
+                    data-demo-disable>删除
+            </button>
+            <button type="button"
+                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '9'"
+                    class="btn btn-default btn-xs"
+                    data-ng-click="listappctrl.redeploy(app.cid, app.id)"
+                    data-ng-show="myAppsCtrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="alert alert-warning text-center" data-ng-show="myAppsCtrl.showNothtingAlert">
+    未查询到应用数据
+</div>
