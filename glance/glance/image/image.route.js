@@ -9,12 +9,15 @@
 
         $stateProvider
             .state('imageList', {
-                url: '/image',
+                url: '/image?per_page&page&order&keywords&sort_by',
                 views: {
                     '': {
                         templateUrl: '/glance/image/list/list.html',
                         controller: 'ImageListCtrl as imageListCtrl'
                     }
+                },
+                resolve: {
+                    data: listProjects
                 }
             })
             .state('imageCreate', {
@@ -69,8 +72,13 @@
 
     }
 
-    getProject.$inject = ['$stateParams', 'imageBackend'];
+    /* @ngInject */
     function getProject($stateParams, imageBackend) {
         return imageBackend.getProject($stateParams.projectId);
+    }
+    
+    /* @ngInject */
+    function listProjects($stateParams, imageBackend, utils) {
+        return imageBackend.listProjects(utils.encodeQueryParams($stateParams));
     }
 })();
