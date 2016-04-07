@@ -1,130 +1,145 @@
-function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcurd, Notification, joinDemoGroupModal) {
+(function () {
+    'use strict';
+    angular.module('glance.common')
+        .controller('RootCtrl', RootCtrl);
 
-    $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
+    /* @ngInject */
+    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal) {
+        var self = this;
 
-    // app list request params
-    $rootScope.myAppListParams = {
-        searchKeyWord:'',
-        page: 1,  //current page index
-        count: 20, // current count
-        //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
-    };
-    
-    $rootScope.groupAppListParams = {
-            searchKeyWord:'',
+        self.getCSUrl = getCSUrl;
+        self.logout = logout;
+        self.goBack = goBack;
+        self.openJoinDemoGroupModal = openJoinDemoGroupModal;
+        self.userManualUrl = "http://doc.shurenyun.com";
+        self.noticeHtml = null;
+
+        $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
+        $rootScope.FRONTEND_MSG = FRONTEND_MSG;
+        $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
+
+        // app list request params
+        $rootScope.myAppListParams = {
+            searchKeyWord: '',
+            page: 1,  //current page index
+            count: 20, // current count
+            //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
+        };
+
+        $rootScope.groupAppListParams = {
+            searchKeyWord: '',
             page: 1,  //current page index
             count: 20, // current count
             clusterId: null,
             groupId: null
-    };
+        };
 
-    $rootScope.groupListParams = {
-        page: 1,
-        count: 20
-    };
+        $rootScope.groupListParams = {
+            page: 1,
+            count: 20
+        };
 
-    // image list request params
-    $rootScope.imageListParams = {
-        page: 1,  //current page index
-        count: 20, // current count
-    };
+        // image list request params
+        $rootScope.imageListParams = {
+            page: 1,  //current page index
+            count: 20, // current count
+        };
 
-    if(IS_OFF_LINE){
-        $scope.userManualUrl = "http://offlinedoc.shurenyun.com/";
-    }else{
-        $scope.userManualUrl = "http://doc.shurenyun.com";
-    }
-    
-    $scope.getCSUrl = function () {
-        var w = window.open();
-        gHttp.Resource("auth.customerservice").get().then(function (data) {
-            w.location = data.url;
-        })
-    };
+        activate();
 
-    $scope.logout = function(){
-        gHttp.Resource("auth.auth").delete().then(function(){
-            glanceUser.clear();
-            window.location.href = USER_URL+"/?timestamp="+new Date().getTime();;
-        });
-    };
-
-    $scope.goBack = function() {
-        $window.history.back();
-    };
-
-    //set Notice Alert if has notice
-    (function () {
-        gHttp.Resource("auth.notice").get().then(function (data) {
-            if(data){
-                $scope.noticeHtml = data.content;
-            }
-        }).catch(function() {
-            console.log("Notice ajax error");
-        })
-    })();
-    
-    $scope.FRONTEND_MSG = FRONTEND_MSG;
-
-    $rootScope.$on('$stateChangeStart',
-        function (event, toState, toParams, fromState, fromParams) {
-            switch (true) {
-                case toState.name.startsWith('app'):
-                    $rootScope.show = 'application';
-                    break;
-                case toState.name.startsWith('image'):
-                    $rootScope.show = 'image';
-                    break;
-                case toState.name.startsWith('log'):
-                    $rootScope.show = 'log';
-                    break;
-                case toState.name.startsWith('home'):
-                    $rootScope.show = 'home';
-                    break;
-                case toState.name.startsWith('cluster'):
-                    $rootScope.show = 'cluster';
-            }
-        });
-
-    $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
-
-    firstLogin();
-    $rootScope.$watch('isFirstLogin', function(newValue, oldValue) {
-        if(newValue !== oldValue) {
+        function activate() {
+            getNotice();
             firstLogin();
-        }
-    });
 
-    function firstLogin() {
-        if($rootScope.isFirstLogin && $rootScope.demoGroupId) {
-            $scope.openJoinDemoGroupModal();
-            $rootScope.isFirstLogin = false;
+            //check offLine/onLine
+            if (IS_OFF_LINE) {
+                self.userManualUrl = "http://offlinedoc.shurenyun.com/";
+            } else {
+                self.userManualUrl = "http://doc.shurenyun.com";
+            }
         }
-    }
 
-    $scope.openJoinDemoGroupModal = function() {
-        if($rootScope.isPhoneVerified) {
-            joinDemoGroup().then(function() {
-                joinDemoGroupModalSuccess();
-            });
-        } else {
-            joinDemoGroupModal.open().then(function (res) {
-                joinDemoGroupModalSuccess();
-                $rootScope.isPhoneVerified = true;
+        function getCSUrl() {
+            var w = window.open();
+            commonBackend.getCSUrl().then(function (data) {
+                w.location = data.url;
             });
         }
-    };
 
-    function joinDemoGroupModalSuccess() {
-        $rootScope.notInDemoGroup = false;
-        $state.go('user.groups', null, {reload: true});
-        Notification.success("申请试用成功");
+        function logout() {
+            commonBackend.logout().then(function (data) {
+                glanceUser.clear();
+                window.location.href = USER_URL + "/?timestamp=" + new Date().getTime();
+            });
+        }
+
+        function joinDemoGroupModalSuccess() {
+            $rootScope.notInDemoGroup = false;
+            $state.go('user.groups', null, {reload: true});
+            Notification.success("申请试用成功");
+        }
+
+        function goBack() {
+            $window.history.back();
+        }
+
+        function getNotice() {
+            commonBackend.getNotice()
+                .then(function (data) {
+                    if (data) {
+                        self.noticeHtml = data.content;
+                    }
+                })
+                .catch(function () {
+                    console.log("Notice ajax error");
+                })
+        }
+
+        function firstLogin() {
+            if ($rootScope.isFirstLogin && $rootScope.demoGroupId) {
+                openJoinDemoGroupModal();
+                $rootScope.isFirstLogin = false;
+            }
+        }
+
+        function openJoinDemoGroupModal() {
+            if ($rootScope.isPhoneVerified) {
+                commonBackend.joinDemoGroup()
+                    .then(function () {
+                        joinDemoGroupModalSuccess();
+                    });
+            } else {
+                joinDemoGroupModal.open().then(function (res) {
+                    joinDemoGroupModalSuccess();
+                    $rootScope.isPhoneVerified = true;
+                });
+            }
+        }
+
+        $rootScope.$on('$stateChangeStart',
+            function (event, toState, toParams, fromState, fromParams) {
+                switch (true) {
+                    case toState.name.startsWith('app'):
+                        $rootScope.show = 'application';
+                        break;
+                    case toState.name.startsWith('image'):
+                        $rootScope.show = 'image';
+                        break;
+                    case toState.name.startsWith('log'):
+                        $rootScope.show = 'log';
+                        break;
+                    case toState.name.startsWith('home'):
+                        $rootScope.show = 'home';
+                        break;
+                    case toState.name.startsWith('cluster'):
+                        $rootScope.show = 'cluster';
+                }
+            });
+
+        $rootScope.$watch('isFirstLogin', function (newValue, oldValue) {
+            if (newValue !== oldValue) {
+                firstLogin();
+            }
+        });
     }
-
-    function joinDemoGroup(data) {
-        return gHttp.Resource('user.groupDemo').post(data);
-    }
-}
-
-rootCtrl.$inject = ["$scope", "$rootScope", "$state", "glanceUser", "gHttp", "$window", "appcurd", 'Notification', 'joinDemoGroupModal'];
-glanceApp.controller("rootCtrl", rootCtrl);
+})();

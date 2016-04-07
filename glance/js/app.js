@@ -15,7 +15,8 @@ var glanceApp = angular.module('glance',
         'glance.utils',
         'glance.app',
         'glance.user',
-        'glance.image'
+        'glance.image',
+        'glance.common'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider',
