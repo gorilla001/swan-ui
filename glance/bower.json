@@ -23,31 +23,29 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
-    "angular": "~1.4.6",
+    "angular": "~1.5.*",
     "zeroclipboard": "~2.2.0",
     "angular-ui-router": "~0.2.15",
     "ngSocket": "~0.2.1",
-    "angular-mocks": "^1.4.6",
-    "angular-cookies": "~1.4.3",
-    "angular-sanitize": "~1.4.3",
+    "angular-mocks": "~1.5.*",
+    "angular-cookies": "~1.5.*",
+    "angular-sanitize": "~1.5.*",
     "ngInfiniteScroll": "~1.2.1",
-    "angular-animate": "~1.4.6",
+    "angular-animate": "~1.5.*",
     "angular-bootstrap": "~0.13.4",
     "isteven-angular-multiselect": "~4.0.0",
-    "moment": "latest",
     "zrender": "~2.1.1",
-    "circliful": "0.1.5",
-    "angular-ui-notification": "0.0.12",
-    "ng-dialog": "0.3.7",
+    "angular-ui-notification": "latest",
     "angular-ui-bootstrap-datetimepicker": "~0.14.0",
     "angularjs-slider": "~2.0.0",
     "ng-table": "~0.8.3",
     "font-awesome": "~4.5.0",
     "angular-markdown-directive": "~0.3.1",
     "angular-base64": "~2.0.5",
-    "angular-bootstrap-switch": "~0.5.0"
+    "angular-bootstrap-switch": "~0.5.0",
+    "angular-material": "~1.0.7"
   },
   "resolutions": {
-    "angular": ">= 1.0.8"
+    "angular": "~1.5.*"
   }
 }
