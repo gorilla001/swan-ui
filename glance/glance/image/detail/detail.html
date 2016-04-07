@@ -45,6 +45,18 @@
                     </a>
                 </li>
                 <li>
+                    <label>登录命令：</label>
+                    <span id="loginImage" data-ng-show="imageDetailCtrl.project.loginCommand">
+                        {/imageDetailCtrl.project.loginCommand/}
+                    </span>
+                    <span data-ng-hide="imageDetailCtrl.project.loginCommand">
+                        暂未生成
+                    </span>
+                    <a href="#" data-ng-show="imageDetailCtrl.project.loginCommand">
+                        <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
+                    </a>
+                </li>
+                <li>
                     <label>拉取镜像：</label>
                     <span id="latestImage" data-ng-show="imageDetailCtrl.project.image">
                         docker pull {/imageDetailCtrl.project.image/}
