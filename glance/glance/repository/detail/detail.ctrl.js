@@ -4,7 +4,7 @@
         .controller('RepoDetailCtrl', RepoDetailCtrl);
 
     /* @ngInject */
-    function RepoDetailCtrl($stateParams, repoBackend, $base64) {
+    function RepoDetailCtrl($stateParams, repoBackend, $base64, clusterCurd) {
         var self = this;
         var projectName = $stateParams.projectName;
         var repositoryName = $stateParams.repositoryName;
@@ -14,6 +14,7 @@
             category: ''
         };
         self.tags = [];
+        self.clusters = [];
         self.deploy = deploy;
 
         activate();
@@ -21,6 +22,7 @@
         function activate() {
             getRepoDetail(projectName, repositoryName);
             listTags(projectName, repositoryName);
+            listClusters()
         }
 
         function getRepoDetail(projectName, repositoryName) {
@@ -29,7 +31,7 @@
                     self.form = data;
                     self.markdown = decodeURIComponent(escape($base64.decode(self.form.markdown)));
                     if (data.sryCompose) {
-                        self.form.questions = angular.fromJson(data.sryCompose)['.catalog'].questions;
+                        self.form.questions = angular.fromJson(data.sryCompose);
                     }
                 })
         }
@@ -39,6 +41,12 @@
                 .then(function (data) {
                     self.tags = data;
                 })
+        }
+
+        function listClusters() {
+            clusterCurd.listClusterLables().then(function(data){
+                self.clusters = data
+            });
         }
 
         function deploy() {

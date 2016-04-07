@@ -226,6 +226,7 @@ BACKEND_URL = {
         repositories: 'api/v3/repositories',
         repository: 'api/v3/repositories/$project_name/$repository_name',
         repositoryTags: 'api/v3/repositories/$project_name/$repository_name/tags',
-        repositoryCategories: 'api/v3/repositories/categories'
+        repositoryCategories: 'api/v3/repositories/categories',
+        deployRepo: 'api/v3/repositories/$project_name/$repository_name/apps'
     }
 };
