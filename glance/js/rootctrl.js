@@ -93,18 +93,19 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
 
     $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
 
-    if($rootScope.isFirstLogin) {
-        $scope.openJoinDemoGroupModal();
-        $rootScope.isFirstLogin = false;
-    }
+    firstLogin();
     $rootScope.$watch('isFirstLogin', function(newValue, oldValue) {
         if(newValue !== oldValue) {
-            if($rootScope.isFirstLogin) {
-                $scope.openJoinDemoGroupModal();
-                $rootScope.isFirstLogin = false;
-            }
+            firstLogin();
         }
     });
+
+    function firstLogin() {
+        if($rootScope.isFirstLogin && $rootScope.demoGroupId) {
+            $scope.openJoinDemoGroupModal();
+            $rootScope.isFirstLogin = false;
+        }
+    }
 
     $scope.openJoinDemoGroupModal = function() {
         if($rootScope.isPhoneVerified) {
