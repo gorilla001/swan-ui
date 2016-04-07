@@ -47,37 +47,37 @@
             </td>
             <td data-title="'操作'">
                 <button type="button"
-                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '2' && listappctrl.appListStatus[app.id].status != '3'"
+                        data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2' && groupAppsCtrl.appListStatus[app.id].status != '3'"
                         data-toggle="modal" data-target="#app-upContainer"
                         data-ng-click="listappctrl.upContainerModal(app.cid, app.id, app.instances)"
                         class="btn btn-default btn-xs" data-demo-disable>扩展
                 </button>
                 <button type="button"
-                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '2'"
+                        data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2'"
                         class="btn btn-default btn-xs"
                         data-ng-click="listappctrl.stop(app.cid, app.id)"
-                        data-ng-show="listappctrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+                        data-ng-show="groupAppsCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
                 </button>
                 <button type="button"
-                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '3'"
+                        data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '3'"
                         class="btn btn-default btn-xs"
                         data-ng-click="listappctrl.start(app.cid, app.id)"
-                        data-ng-show="listappctrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+                        data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
                 </button>
                 <button type="button" class="btn btn-default btn-xs"
                         data-ng-click="listappctrl.undo(app.cid, app.id)"
-                        data-ng-show="listappctrl.appListStatus[app.id].status == '6'" data-demo-disable>撤销
+                        data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '6'" data-demo-disable>撤销
                 </button>
                 <button type="button"
-                        data-ng-disabled="listappctrl.appListStatus[app.id].status == '5' || listappctrl.appListStatus[app.id].status == 'undefined'"
-                        data-ng-click="listappctrl.delete(app.cid, app.id)" class="btn btn-default btn-xs"
+                        data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status == '5' || groupAppsCtrl.appListStatus[app.id].status == 'undefined'"
+                        data-ng-click="groupAppsCtrl.delete(app.cid, app.id)" class="btn btn-default btn-xs"
                         data-demo-disable>删除
                 </button>
                 <button type="button"
-                        data-ng-disabled="listappctrl.appListStatus[app.id].status != '9'"
+                        data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '9'"
                         class="btn btn-default btn-xs"
                         data-ng-click="listappctrl.redeploy(app.cid, app.id)"
-                        data-ng-show="listappctrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
+                        data-ng-show="groupAppsCtrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
                 </button>
             </td>
         </tr>
