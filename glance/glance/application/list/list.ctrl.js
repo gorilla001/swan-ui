@@ -36,8 +36,8 @@
         /*
            删除操作
          */
-        self.delete = function (clusterId, appId) {
-            appcurd.del(clusterId, appId);
+        self.delete = function (clusterId, appId, state) {
+            appcurd.del(clusterId, appId, state);
         };
 
         /*

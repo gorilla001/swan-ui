@@ -32,11 +32,14 @@
                 })
         }
 
-        function del(clusterId, appId) {
+        function del(clusterId, appId, state) {
+            if (!state) {
+                state = 'applist.my';
+            }
             confirmModal.open("是否确认删除应用？").then(function () {
                 appservice.deleteApp(clusterId, appId)
                 .then(function (data) {
-                    $state.go('applist', null, {reload: true});
+                    $state.go(state, null, {reload: true});
                 })
             });
         }
