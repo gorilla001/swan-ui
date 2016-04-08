@@ -3,9 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice'];
+logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackendService'];
 
-function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice) {
+function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackendService) {
     $scope.showContextUI = false;
     $scope.logDownloadToplimit = LOG.logDownloadToplimit;
     var clusterIdTemp;
@@ -14,20 +14,28 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
 
     $scope.inputNodesInfo = [];
 
+    $scope.clusters = [];
     $scope.clusterlogs = new LogLoader();
     $scope.contextlogs = new LogLoader();
     $scope.inputLogPaths = [];
     $scope.clusterMapping = {};
 
     $scope.listCluster = function () {
-        gHttp.Resource('cluster.clusters').get().then(function (data) {
-            if (data && data.length !== 0) {
-                $scope.clusters = data;
+
+        clusterBackendService.listClusters()
+            .then(function (clusters) {
+                angular.forEach(clusters, function (cluster, index) {
+                    if (cluster.group_name) {
+                        $scope.clusters.push({id: cluster.id, name: cluster.group_name + ":" + cluster.name});
+                    } else {
+                        $scope.clusters.push({id: cluster.id, name: cluster.name});
+                    }
+                });
+
                 angular.forEach($scope.clusters, function(cluster){
                     $scope.clusterMapping[cluster.id] = cluster;
                 })
-            }
-        })
+            });
     };
     $scope.listCluster();
 

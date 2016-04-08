@@ -123,7 +123,7 @@ function rootCtrl($scope, $rootScope, $state, glanceUser, gHttp, $window, appcur
     function joinDemoGroupModalSuccess() {
         $rootScope.notInDemoGroup = false;
         $state.go('user.groups', null, {reload: true});
-        Notification.success("加入Demo用户组成功");
+        Notification.success("申请试用成功");
     }
 
     function joinDemoGroup(data) {
