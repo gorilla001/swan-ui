@@ -224,3 +224,87 @@ body, html {
 	padding: 15px 20px;
 	min-height: 300px;
 }
+
+.main {
+	height: 100%;
+}
+.sidebar-main {
+	background-color: #354052;
+	width: 200px;
+}
+.sidebar-main .logo {
+	border-bottom: 1px solid #293241;
+	box-shadow: 0 1px 0 #3D495D;
+	height: 80px;
+	text-align: center;
+}
+.sidebar-main .logo img {
+	margin-top: 25px;
+	opacity: 0.7;
+	width: 112px;
+}
+.sidebar-main ul{
+	margin: 20px 0 40px 0;
+	padding: 0;
+}
+.sidebar-main li i {
+	font-size: 20px;
+	margin-left: 24px;
+	margin-right: 20px;
+	text-align: center;
+	width: 24px;
+}
+.sidebar-main li a {
+	color: #A0ABBF;
+	display: block;
+	font-size: 14px;
+	height: 48px;
+	line-height: 48px;
+	margin: 0;
+	text-align: left;
+}
+.sidebar-main li a:hover {
+	background-color: transparent!important;
+	color: #FFF;
+	text-decoration: none;
+}
+.sidebar-main li.active a {
+	background-color: #303949;
+	border-left: 4px solid #2196F3;
+	border-radius: 0;
+	color: #FFF;
+}
+.sidebar-main hr {
+	border-color: #293241;
+	margin: 0;
+}
+.sidebar-main hr:nth-child(2n) {
+	border-color: #3D495D;
+}
+
+.nav-main md-toolbar {
+	background-color: transparent;
+	border-bottom: 1px solid #E5E7EA;
+	height: 80px;
+}
+.nav-main .md-toolbar-tools {
+	height: 80px;
+	max-height: 80px;
+	padding: 0;
+}
+.nav-main .md-toolbar-tools .md-button {
+	border-left: 1px solid #E5E7EA;
+	border-radius: 0;
+	font-size: 24px;
+	height: 80px;
+	margin: 0;
+	padding: 0;
+	width: 80px;
+}
+.nav-main .md-toolbar-tools .md-button:first-child {
+	border-left: 0;
+	border-right: 1px solid #E5E7EA;
+}
+.nav-main md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), .nav-main md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
+	color: #A0ABBF;
+}

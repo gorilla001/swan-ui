@@ -18,11 +18,21 @@ var glanceApp = angular.module('glance',
         'glance.image',
         'glance.common',
         'glance.repository',
-        'glance.policy'
+        'glance.policy',
+        'ngMaterial'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
     function ($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider, NotificationProvider) {
+        NotificationProvider.setOptions({
+            delay: 1000,
+            positionX: 'right',
+            positionY: 'top',
+            replaceMessage: true,
+            startTop: 20,
+            startRight: 260
+        });
+
         $urlRouterProvider.otherwise('/home');
         $stateProvider
             .state("cluster", {

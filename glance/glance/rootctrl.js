@@ -4,13 +4,16 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal) {
+    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, $mdSidenav, $log) {
         var self = this;
 
         self.getCSUrl = getCSUrl;
         self.logout = logout;
         self.goBack = goBack;
         self.openJoinDemoGroupModal = openJoinDemoGroupModal;
+        self.isOpenRight = isOpenRight;
+        self.closeNav = closeNav;
+        self.toggleRight = buildToggler('right');
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
 
@@ -56,6 +59,28 @@
                 self.userManualUrl = "http://offlinedoc.shurenyun.com/";
             } else {
                 self.userManualUrl = "http://doc.shurenyun.com";
+            }
+        }
+
+        function isOpenRight() {
+            return $mdSidenav('right').isOpen();
+
+        }
+
+        function closeNav() {
+            $mdSidenav('right').close()
+                .then(function () {
+                    $log.debug("close RIGHT is done");
+                });
+        }
+
+        function buildToggler(navID) {
+            return function () {
+                $mdSidenav(navID)
+                    .toggle()
+                    .then(function () {
+                        $log.debug("toggle " + navID + " is done");
+                    });
             }
         }
 
