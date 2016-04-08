@@ -64,7 +64,7 @@
                             <span data-ng-show="portInfo.protocol == 2">http://</span>{/nodeIp/}:{/portInfo.mapPort/}
                         </p>
 
-                        <p ng-repeat="nodeIp in configAppCtrl.listNodesIp" data-ng-show="configAppCtrl.isDemoFlag && !portInfo.uri">
+                        <p data-ng-show="configAppCtrl.isDemoFlag && !portInfo.uri">
                             <span data-ng-show="portInfo.protocol == 2">http://</span>123.59.140.193:{/portInfo.mapPort/}
                         </p>
 
