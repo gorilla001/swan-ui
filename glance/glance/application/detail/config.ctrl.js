@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('ConfigAppCtrl', ConfigAppCtrl);
 
-    ConfigAppCtrl.$inject = ['gHttp', '$scope'];
+    ConfigAppCtrl.$inject = ['gHttp', '$scope', 'clusterBackendService', '$stateParams'];
 
-    function ConfigAppCtrl(gHttp, $scope) {
+    function ConfigAppCtrl(gHttp, $scope, clusterBackendService, $stateParams) {
         var self = this;
         ///
         self.listNodesIp = [];
@@ -21,7 +21,12 @@
             HOST: "HOST 模式"
         };
 
-        listGateAndProxy();
+        activate();
+
+        function activate(){
+            listGateAndProxy();
+            checkDemoGroup();
+        }
 
         function listGateAndProxy() {
             gHttp.Resource('cluster.cluster', {cluster_id: $scope.appStatus.cid}).get().then(function (data) {
@@ -32,6 +37,15 @@
                     }
                 }
             })
+        }
+
+        function checkDemoGroup(){
+            clusterBackendService.getCluster($stateParams.cluster_id)
+                .then(function(data){
+                    if(data.is_demo_group){
+                        self.isDemoFlag = true;
+                    }
+                })
         }
 
     }
