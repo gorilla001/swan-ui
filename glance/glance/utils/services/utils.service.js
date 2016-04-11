@@ -3,10 +3,15 @@
     angular.module('glance.utils')
         .factory('utils', utils);
 
-    utils.$inject = ["Notification"];
-
+    /* @ngInject */
     function utils(Notification) {
-        var clickToCopy = function (className) {
+        return {
+            buildFullURL: buildFullURL,
+            clickToCopy: clickToCopy,
+            encodeQueryParams: encodeQueryParams
+        };
+        
+        function clickToCopy(className) {
             if (!className) {
                 className = ".copy";
             }
@@ -34,7 +39,7 @@
             return base + BACKEND_URL[categoryKey][detailKey];
         }
 
-        var buildFullURL = function (name, params) {
+        function buildFullURL(name, params) {
             var url = getUrlTemplate(name);
             if (params) {
                 $.each(params, function (key, val) {
@@ -43,24 +48,20 @@
             }
             return url;
         };
-
-        var createPages = function (cur, total) {
-            var pages = [];
-            for (var i = 0; i < total; i++) {
-                var page = {"num": i, "tag": i + 1, "isCur": false};
-                if (cur == i) {
-                    page["isCur"] = true;
-                }
-                pages.push(page);
+        
+        function encodeQueryParams($stateParams) {
+            var params = {
+                    page: $stateParams.page, 
+                    per_page: $stateParams.per_page,
+                    keywords: $stateParams.keywords
+                    };
+            if ($stateParams.sort_by) {
+                params.sort_by = $stateParams.sort_by;
+                params.order = $stateParams.order;
             }
-            return pages;
+            return params;
         };
 
-        return {
-            buildFullURL: buildFullURL,
-            clickToCopy: clickToCopy,
-            createPages: createPages
-        }
     }
 
 })();

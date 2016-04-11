@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="glance" data-ng-controller="rootCtrl">
+<html data-ng-app="glance" data-ng-controller="RootCtrl as rootCtrl">
     <head>
         <meta charset="utf-8">
         <title>数人云</title>
@@ -32,7 +32,7 @@
 						<img src="../pics/ico-user-header.svg">
                         <h5 data-ng-bind="userName"></h5>
                         <a href="#" data-ui-sref="user.groups" data-demo-disable><span class="glyphicon glyphicon-cog" aria-hidden="true" title="用户中心"></span></a>&nbsp;
-                        <a href="#" data-ng-click="logout()">
+                        <a href="#" data-ng-click="rootCtrl.logout()">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                         <li data-ng-class="{'active': show==='image'}" title="镜像构建">
-                            <a data-ui-sref="imageList" data-ui-sref-opts="{reload: true}">
+                            <a data-ui-sref="imageList({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">
                                 <i class="fa fa-cogs"></i> <span class="text">镜像构建</span>
                             </a>
                         </li>
@@ -66,17 +66,17 @@
                         </li>
                     </ul>
 
-                    <div class="form-group" id="notice" ng-if="noticeHtml" ng-cloak>
+                    <div class="form-group" id="notice" ng-if="rootCtrl.noticeHtml" ng-cloak>
                         <div class="alert alert-warning" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                            <div data-ng-bind-html="noticeHtml"></div>
+                            <div data-ng-bind-html="rootCtrl.noticeHtml"></div>
                         </div>
                     </div>
 
                     <a data-ui-sref="home" ng-class="{'sidebar-logo': !IS_OFF_FLAG}"></a>
 					<ul class="nav-sidebar-footer" data-ng-if="!IS_OFF_FLAG" ng-cloak>
-						<li><a  ng-href="{/userManualUrl/}" title="用户手册" target="_blank"><div class="userdoc"><span>用户手册</span></div></a></li>
+						<li><a  ng-href="{/rootCtrl.userManualUrl/}" title="用户手册" target="_blank"><div class="userdoc"><span>用户手册</span></div></a></li>
 						<li><a href="http://open.shurenyun.com" title="数人社区" target="_blank"><div class="bbs"><span>数人社区</span></div></a></li>
 					</ul>
                     
@@ -86,30 +86,16 @@
                     <div data-ui-view></div>
                     <div class="loading-style" data-ng-include="'/views/loading/loading.html'" data-ng-show="loadings.default"></div>
                 </div>
-                <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h3>{/ _confirmMsg /}</h3>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-ng-click="_confirmCallback()" data-dismiss="modal">确定</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="tab-rb-feedback ng-hide" style="bottom: 76px;" ng-show="notInDemoGroup && demoGroupId">
-            <a href="#" data-ng-click="openJoinDemoGroupModal()">
+            <a href="#" data-ng-click="rootCtrl.openJoinDemoGroupModal()">
                 <i class="glyphicon glyphicon-gift"></i>
                 <em>试用</em>
             </a>
         </div>
         <div class="tab-rb-feedback" data-ng-if="!IS_OFF_FLAG" ng-cloak>
-            <a href="#" data-ng-click="getCSUrl()">
+            <a href="#" data-ng-click="rootCtrl.getCSUrl()">
                 <i class="glyphicon glyphicon-edit"></i>
                 <em>反馈</em>
             </a>
@@ -151,14 +137,19 @@
         <!--endbuild-->
         
         <!--build:js(build) js/main.js-->
-        
+        <script src="glance/constants.js" type="text/javascript"></script>
+
         <script src="glance/utils/utils.module.js" type="text/javascript"></script>
         <script src="glance/utils/services/utils.service.js" type="text/javascript"></script>
         <script src="glance/utils/services/ghttp.service.js" type="text/javascript"></script>
+        <script src="glance/utils/services/table.service.js" type="text/javascript"></script>
         <script src="glance/utils/modals/confirm.service.js" type="text/javascript"></script>
         <script src="glance/utils/modals/alert.service.js" type="text/javascript"></script>
         <script src="glance/utils/modals/form.service.js" type="text/javascript"></script>
-        
+
+        <script src="glance/common/common.module.js" type="text/javascript"></script>
+        <script src="glance/common/services/common-backend.service.js" type="text/javascript"></script>
+
         <script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
         <script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
         <script src="glance/cluster/services/cluster-backend.service.js" type="text/javascript"></script>
@@ -207,7 +198,6 @@
         
         <!--build:js js/old-main.js-->
         <script src="js/app.js" type="text/javascript"></script>
-        <script src="js/constants.js" type="text/javascript"></script>
         <script src="js/directives.js" type="text/javascript"></script>
         <script src="js/directives/include-replace.js" type="text/javascript"></script>
         <script src="js/ngservices/http-service.js" type="text/javascript"></script>
@@ -222,9 +212,7 @@
         <script src="js/ngservices/get-cluster-lables.js" type="text/javascript"></script>
         <script src="js/ngservices/multi-select-service.js" type="text/javascript"></script>
         <script src="js/ngservices/model-open.js" type="text/javascript"></script>
-        <script src="js/ngservices/appCURD.js" type="text/javascript"></script>
         <script type="text/javascript" src="js/ngservices/label-service.js"></script>
-        <script src="js/rootctrl.js" type="text/javascript"></script>
         <script src="js/cluster/clusterctrl.js" type="text/javascript"></script>
         <script src="js/cluster/listclustersctrl.js" type="text/javascript"></script>
         <script src="js/cluster/clusterdetailsctrl.js" type="text/javascript"></script>
@@ -250,6 +238,7 @@
         <!--build:js(build) js/directive.js-->
         <script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
         <script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
+        <script src="glance/rootctrl.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js js/template.js-->

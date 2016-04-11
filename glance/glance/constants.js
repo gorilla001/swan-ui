@@ -28,13 +28,9 @@ CODE_MESSAGE = {
     15009: "image 不存在"
 };
 
-function getCodeMessage (code) {
-    if (CODE_MESSAGE[code]) {
-        return CODE_MESSAGE[code]
-    } else {
-        return ''
-    }
-}
+WS_CODE = {
+        token_invalide: 4051
+};
 
 FRONTEND_MSG = {
     no_group_admin: "对不起，您不是用户组管理员，不能进行此操作!"
@@ -108,11 +104,6 @@ APP_EVENTS_TYPE = {
     FailureMessage: "部署失败消息"
 };
 
-APP_PORT_TYPE = {
-    "1": "对内",
-    "2": "对外"
-};
-
 APP_PROTOCOL_TYPE = {
     "1": "TCP",
     "2": "HTTP"
@@ -142,9 +133,6 @@ CLUSTER_STATUS = {
     unknow: 'unknow'
 };
 
-WS_CODE = {
-    token_invalide: 4051
-};
 
 SERVICES_STATUS = {
     running: 'running',
