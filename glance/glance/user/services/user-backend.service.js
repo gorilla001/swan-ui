@@ -12,9 +12,9 @@
             leaveGroup: leaveGroup,
             createGroup: createGroup,
             listGroupUser: listGroupUser,
-            sendInviteEmail: sendInviteEmail,
+            sendInvitation: sendInvitation,
             deleteGroupUsers: deleteGroupUsers,
-            joinDemoGroup: joinDemoGroup
+            joinInvitedGroup: joinInvitedGroup
         };
 
         function listGroups(params, loading) {
@@ -37,7 +37,7 @@
             return gHttp.Resource('user.groupMemberships', {group_id: groupId}).get()
         }
 
-        function sendInviteEmail(data, groupId) {
+        function sendInvitation(data, groupId) {
             return gHttp.Resource('user.groupMemberships', {group_id: groupId}).post(data);
         }
 
@@ -45,8 +45,8 @@
             return gHttp.Resource('user.groupMemberships', {group_id: groupId}).delete({data: data});
         }
 
-        function joinDemoGroup() {
-            return gHttp.Resource('user.groupDemo').post();
+        function joinInvitedGroup(groupId) {
+            return gHttp.Resource('user.groupMyMemberships', {group_id: groupId}).post();
         }
     }
 })();
