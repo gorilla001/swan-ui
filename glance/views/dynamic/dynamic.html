@@ -46,7 +46,7 @@
                         <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal" radius="[50, 65]"
                               use-color="#ff9494" show-text="内存占用" text-color="#ff9494" error-code="errorCode">
                         </piechart>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal"><em>{/cluster.masMetrics.memUsed/}</em> / {/cluster.masMetrics.memTotal/} MB</div>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal"><em>{/cluster.masMetrics.memUsed/}</em> / {/cluster.masMetrics.memTotal | currency: '' :0/} MB</div>
                     </div>
                 </div>
 
