@@ -25,16 +25,13 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
         clusterBackendService.listClusters()
             .then(function (clusters) {
                 angular.forEach(clusters, function (cluster, index) {
-                    if (cluster.group_name) {
+                    if (cluster.group_id) {
                         $scope.clusters.push({id: cluster.id, name: cluster.group_name + ":" + cluster.name});
                     } else {
                         $scope.clusters.push({id: cluster.id, name: cluster.name});
                     }
-                });
-
-                angular.forEach($scope.clusters, function(cluster){
                     $scope.clusterMapping[cluster.id] = cluster;
-                })
+                });
             });
     };
     $scope.listCluster();
