@@ -11,7 +11,8 @@
             getRepository: getRepository,
             updateRepository: updateRepository,
             listRepositoryTags: listRepositoryTags,
-            listCategories: listCategories
+            listCategories: listCategories,
+            deployRepo: deployRepo
         };
 
         function listRepositories() {
@@ -41,6 +42,13 @@
 
         function listCategories() {
             return gHttp.Resource('repo.repositoryCategories').get();
+        }
+
+        function deployRepo(proejctName, repositoryName, data) {
+            return gHttp.Resource('repo.deployRepo',{
+                project_name: proejctName,
+                repository_name: repositoryName
+            }).post(data);
         }
     }
 })();
