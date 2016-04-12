@@ -19,7 +19,8 @@
         'app',
         '$stateParams',
         'selectImageModal',
-        '$filter'
+        '$filter',
+        'clusterCurd'
     ];
 
     function CreateAppCtrl(appservice,
@@ -34,7 +35,8 @@
                            app,
                            $stateParams,
                            selectImageModal,
-                           $filter) {
+                           $filter,
+                           clusterCurd) {
         var self = this;
         self.target = target;
 
@@ -286,16 +288,9 @@
         }
 
         function listClusters() {
-            clusterBackendService.listClusters()
-                .then(function (clusters) {
-                    angular.forEach(clusters, function (cluster, index) {
-                        if (cluster.group_name) {
-                            self.clusters.push({id: cluster.id, name: cluster.group_name + ":" + cluster.name});
-                        } else {
-                            self.clusters.push({id: cluster.id, name: cluster.name});
-                        }
-                    });
-                });
+            clusterCurd.listClusterLables().then(function(data){
+                self.clusters = data
+            });
         }
 
         function listNodesBySelectedLabels() {

@@ -43,7 +43,7 @@
                                 <i class="fa fa-home"></i> <span class="text">首页</span>
                             </a>
                         </li>
-                        <li data-ng-class="{'active': show=='cluster'}" title="集群管理">
+                        <li data-ng-class="{'active': show === 'cluster'}" title="集群管理">
                             <a data-ui-sref="cluster.listclusters" data-ui-sref-opts="{reload: true}">
                                 <i class="fa fa-server"></i> <span class="text">集群管理</span>
                             </a>
@@ -59,7 +59,12 @@
                                 <i class="fa fa-cogs"></i> <span class="text">镜像构建</span>
                             </a>
                         </li>
-                        <li data-ng-class="{'active': show=='log'}" title="日志查询">
+                        <li data-ng-class="{'active': show === 'repository'}" title="应用目录">
+                            <a data-ui-sref="repositoryList" data-ui-sref-opts="{reload: true}">
+                                <i class="fa fa-shopping-cart"></i> <span class="text">应用目录</span>
+                            </a>
+                        </li>
+                        <li data-ng-class="{'active': show === 'log'}" title="日志查询">
                             <a data-ui-sref="log" data-ui-sref-opts="{reload: true}">
                                 <i class="fa fa-file-text"></i> <span class="text">日志查询</span>
                             </a>
@@ -134,6 +139,9 @@
         <script src="bower_components/echarts/src/echarts-dataman.js" type="text/javascript"></script>
         <script src="bower_components/angularjs-slider/dist/rzslider.min.js" type="text/javascript"></script>
         <script src="bower_components/ng-table/dist/ng-table.js" type="text/javascript"></script>
+        <script src="bower_components/showdown/src/showdown.js" type="text/javascript"></script>
+        <script src="bower_components/angular-markdown-directive/markdown.js" type="text/javascript"></script>
+        <script src="bower_components/angular-base64/angular-base64.min.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js(build) js/main.js-->
@@ -153,6 +161,7 @@
         <script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
         <script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
         <script src="glance/cluster/services/cluster-backend.service.js" type="text/javascript"></script>
+        <script src="glance/cluster/services/cluster-curd.service.js" type="text/javascript"></script>
 
         <script src="glance/application/app.module.js" type="text/javascript"></script>
         <script src="glance/application/app.config.js" type="text/javascript"></script>
@@ -194,6 +203,13 @@
         <script type="text/javascript" src="glance/image/detail/version.ctrl.js"></script>
         <script type="text/javascript" src="glance/image/detail/brief.ctrl.js"></script>
         <script type="text/javascript" src="glance/image/detail/setting.ctrl.js"></script>
+
+        <script src="glance/repository/repo.module.js" type="text/javascript"></script>
+        <script src="glance/repository/repo.config.js" type="text/javascript"></script>
+        <script src="glance/repository/repo.route.js" type="text/javascript"></script>
+        <script src="glance/repository/services/repo-backend.service.js" type="text/javascript"></script>
+        <script src="glance/repository/list/list.ctrl.js" type="text/javascript"></script>
+        <script src="glance/repository/detail/detail.ctrl.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js js/old-main.js-->
@@ -236,6 +252,7 @@
         <!--endbuild-->
         
         <!--build:js(build) js/directive.js-->
+        <script src="glance/directives/dm-dynamic-field.directive.js" type="text/javascript"></script>
         <script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
         <script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
         <script src="glance/rootctrl.js" type="text/javascript"></script>

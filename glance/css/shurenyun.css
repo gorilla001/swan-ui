@@ -139,3 +139,43 @@ body, html {
     z-index: 10;
     opacity: 0.5;
 }
+
+#app-index .thumbnail {
+	border: 0;
+	text-align: center;
+	position: relative;
+	margin-bottom: 50px;
+}
+#app-index .thumbnail:after {
+	background-color: #EEE;
+	content:"";
+	height: 100%;
+	position: absolute;
+	right: -15px;
+	top: 0;
+	width: 1px;
+}
+#app-index .col-md-3:last-child .thumbnail:after {
+	width: 0px;
+}
+#app-index .col-md-3:nth-child(4) .thumbnail:after {
+	width: 0px;
+}
+#app-index .thumbnail h4 {
+	font-size: 16px;
+}
+#app-index .thumbnail img 	{
+	height: 60px;
+	width: auto;
+}
+#app-index .thumbnail p {
+	color: #666;
+	font-size: 12px;
+	height: 60px;
+}
+#app-index .thumbnail .btn {
+	width: 60%;
+}
+#app-index .form-filter-top {
+	margin-bottom: 30px;
+}

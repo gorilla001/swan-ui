@@ -133,6 +133,10 @@
                         break;
                     case toState.name.startsWith('cluster'):
                         $rootScope.show = 'cluster';
+                        break;
+                    case toState.name.startsWith('repository'):
+                        $rootScope.show = 'repository';
+                        break;
                 }
             });
 
