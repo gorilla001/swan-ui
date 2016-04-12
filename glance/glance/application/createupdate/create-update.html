@@ -385,6 +385,44 @@
                             </table>
                         </div>
 
+                        <!-- Docker Arg -->
+                        <div class="item-header">
+                            <h4>Docker 参数
+                                <small>自定义 Docker 参数</small>
+                            </h4>
+                        </div>
+
+                        <div class="form-inline">
+                            <button type="button" class="btn btn-info btn-sm"
+                                    data-ng-click="createAppCtrl.openDockerArg()">
+                                添加 Docker 参数
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered"
+                                   data-ng-show="createAppCtrl.form.parameters.length">
+                                <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="parameter in createAppCtrl.form.parameters">
+                                    <td>{/parameter.key/}</td>
+                                    <td>{/parameter.value/}</td>
+                                    <td>
+                                        <button type="button" data-ng-click="createAppCtrl.deleteConfig($index, 'parameters')"
+                                                class="btn btn-default btn-xs">删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- 日志目录 -->
                         <div class="item-header">
                             <h4>日志目录

@@ -85,7 +85,9 @@ APP_EVENTS_MSG = {
     RestartApplication: "应用重启",
     Redeploy: "应用重新部署",
     PullImageError: "镜像拉取失败",
-    UnknownError: "未知错误"
+    UnknownError: "未知错误",
+    SlaveRemoved: "主机节点已被删除",
+    DockerRunError: "Docker 启动错误"
 };
 
 IMAGE_TRIGGER_TYPE = {
