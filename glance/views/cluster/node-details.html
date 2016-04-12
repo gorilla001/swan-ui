@@ -128,8 +128,7 @@
                                 data-dm-permit-msg="FRONTEND_MSG.no_group_admin">重启</button>
                             </div>  
                             <em data-ng-bind="getServiceLabel(service)"></em>
-                            <span class="version" data-ng-if="service !== 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version.split(':', 2)[1].substr('omega.'.length)"></span>
-                            <span class="version" data-ng-if="service === 'docker'" data-ng-bind="statusMgr.nodes[node.id].services[service].version"></span>
+                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version"></span>
                         </li>
                     </ul>
                 </div>
