@@ -13,7 +13,11 @@
             open: open
         };
 
-        //options: size,dataName,initData,initDataName,ctrlName
+        /*
+           dataName: Module 传出的属性名称, 默认为 form
+           initData: open Module 时传入的初始值, 默认为 form
+           initDataName: open Module 时传入的数据名称
+         */
         function open(templateUrl, options) {
             if (!options) {
                 options = {};
@@ -43,7 +47,7 @@
                         return options.initDataName
                     }
                 }
-            })
+            });
             
             return modalInstance.result;
         }

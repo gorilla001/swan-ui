@@ -57,7 +57,8 @@
                 forceImage: false,
                 network: 'BRIDGE',
                 constraints: [],
-                logPaths: []
+                logPaths: [],
+                parameters: []
             };
             self.isNetworkDisable = false;
         } else {
@@ -75,7 +76,8 @@
                 imageVersion: app.imageVersion,
                 forceImage: false,
                 network: app.network,
-                logPaths: app.logPaths
+                logPaths: app.logPaths,
+                parameters: app.parameters
             };
             if (!self.form.logPaths) {
                 self.form.logPaths = [];
@@ -180,6 +182,17 @@
                     Notification.error('无法映射主机的多个目录到同一个容器目录');
                 } else {
                     self.form.volumes.push(volume);
+                }
+            })
+        };
+
+        //docker arg module
+        self.openDockerArg = function(){
+            formModal.open('/glance/application/createupdate/modals/create-docker-arg.html').then(function (dockerArg) {
+                if (isDisableAddList(dockerArg, self.form.parameters)) {
+                    Notification.error('Docker 环境变量添加失败');
+                } else {
+                    self.form.parameters.push(dockerArg);
                 }
             })
         };
