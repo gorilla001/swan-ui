@@ -5,14 +5,11 @@
 
 
     /* @ngInject */
-    function RepoListCtrl(repoBackend, $filter) {
+    function RepoListCtrl(repoBackend) {
         var self = this;
-        var repositoriesSearchTemp = [];
-        var repositoriesFilterTemp = [];
 
         self.repositories = [];
         self.categories = [];
-        self.search = search;
         self.filterCategory = filterCategory;
         ////
 
@@ -27,8 +24,6 @@
             repoBackend.listRepositories()
                 .then(function (data) {
                     self.repositories = data;
-                    repositoriesSearchTemp = data;
-                    repositoriesFilterTemp = data;
                 })
         }
 
@@ -39,20 +34,13 @@
                 })
         }
 
-        function search(searchName) {
-            self.repositories = $filter('filter')(repositoriesSearchTemp, {name: searchName})
-        }
-
         function filterCategory(category) {
-            self.searchName = '';
-
-            if (category) {
-                self.repositories = $filter('filter')(repositoriesFilterTemp, {category: category});
-            } else {
-                self.repositories = repositoriesFilterTemp;
-            }
-
-            repositoriesSearchTemp = self.repositories
+            return function (item){
+                if(category){
+                    return item.category === category
+                }
+                return true
+            };
         }
     }
 })();
