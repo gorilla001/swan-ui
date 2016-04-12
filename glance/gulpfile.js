@@ -17,23 +17,23 @@ var minifyHtml = require('gulp-minify-html');
 var inject = require('gulp-inject');
 var ngAnnotate = require('gulp-ng-annotate');
 
-gulp.task('copy-confdev', function() {
+gulp.task('copy-confdev', function () {
     gulp.src('js/confdev.js')
         .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('copy-pics', ['copy-confdev'], function() {
+gulp.task('copy-pics', ['copy-confdev'], function () {
     gulp.src('pics/*')
         .pipe(gulp.dest('build/pics/'));
 });
 
-gulp.task('copy-fonts', ['copy-pics'], function() {
+gulp.task('copy-fonts', ['copy-pics'], function () {
     var sources = ['bower_components/bootstrap/dist/fonts/*', 'bower_components/font-awesome/fonts/*'];
     gulp.src(sources)
         .pipe(gulp.dest('build/fonts'));
 });
 
-gulp.task('copy-swf', ['copy-fonts'], function() {
+gulp.task('copy-swf', ['copy-fonts'], function () {
     var sources = ['bower_components/zeroclipboard/dist/ZeroClipboard.swf'];
     return gulp.src(sources)
         .pipe(gulp.dest('build/js'));
@@ -98,8 +98,24 @@ gulp.task('template-min-image', ['template-min-app'], function () {
         }))
         .pipe(gulp.dest('build/js/'));
 });
+
+//repo
+gulp.task('template-min-repo', ['template-min-image'], function () {
+    return gulp.src('glance/repository/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlRepository.js', {
+            module: 'glance.repository',
+            root: '/glance/repository'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 // views html to js
-gulp.task('template-min', ['template-min-image'], function () {
+gulp.task('template-min', ['template-min-repo'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,
@@ -113,15 +129,15 @@ gulp.task('template-min', ['template-min-image'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('ng-annotate', ['template-min'], function(){
+gulp.task('ng-annotate', ['template-min'], function () {
     return gulp.src('glance/**/*.js')
         .pipe(ngAnnotate({add: true}))
         .pipe(gulp.dest('build/glance/'))
 })
 
-gulp.task('html-replace', ['ng-annotate'], function() {
+gulp.task('html-replace', ['ng-annotate'], function () {
 
-    var templateInjectFile = gulp.src('build/js/templateCacheHtml*.js', { read: false });
+    var templateInjectFile = gulp.src('build/js/templateCacheHtml*.js', {read: false});
     var templateInjectOptions = {
         starttag: '<!-- inject:template.js  -->',
         addRootSlash: false
@@ -142,23 +158,23 @@ gulp.task('html-replace', ['ng-annotate'], function() {
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('html-rename', ['html-replace'], function() {
+gulp.task('html-rename', ['html-replace'], function () {
     gulp.src('build/index.*.html')
-      .pipe(rename('index.html').on('error', gutil.log))
-      .pipe(gulp.dest('build/'));
+        .pipe(rename('index.html').on('error', gutil.log))
+        .pipe(gulp.dest('build/'));
 });
 
-gulp.task('clean', ['html-rename'], function() {
+gulp.task('clean', ['html-rename'], function () {
     var sources = [
-      'build/index.**.html',
-      'build/js/templateCacheHtml*.js',
-      'build/glance'
+        'build/index.**.html',
+        'build/js/templateCacheHtml*.js',
+        'build/glance'
     ];
     return gulp.src(sources, {read: false})
         .pipe(clean());
 });
 
-gulp.task('rev', function() {
+gulp.task('rev', function () {
     gulp.src('build/index.html')
         .pipe(rev())
         .pipe(gulp.dest('build/'));
@@ -167,12 +183,12 @@ gulp.task('rev', function() {
 gulp.task('default', ['clean', 'copy-swf']);
 
 gulp.task('lint', function () {
-  gulp.src('./js/*.js')
-  .pipe(jslint.run({
-    node: true,
-    vars: true
-  }))
-  .pipe(jslint.report({
-     reporter: require('jshint-stylish').reporter
-  }));
+    gulp.src('./js/*.js')
+        .pipe(jslint.run({
+            node: true,
+            vars: true
+        }))
+        .pipe(jslint.report({
+            reporter: require('jshint-stylish').reporter
+        }));
 });
