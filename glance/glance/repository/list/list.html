@@ -9,20 +9,17 @@
         <div class="main-container-body">
             <form class="form-inline form-filter-top">
                 <select class="form-control" ng-options="category for category in repoListCtrl.categories"
-                        ng-model="repoListCtrl.selected"
-                        data-ng-change="repoListCtrl.filterCategory(repoListCtrl.selected)">
+                        ng-model="repoListCtrl.selected">
                     <option value="">全部</option>
                 </select>
                 <div class="form-group">
                     <input type="text" class="form-control" id="search" placeholder="搜索"
                            data-ng-model="repoListCtrl.searchName">
                 </div>
-                <button type="submit" class="btn btn-default"
-                        data-ng-click="repoListCtrl.search(repoListCtrl.searchName)">搜索
-                </button>
             </form>
             <div class="row">
-                <div class="col-md-3" data-ng-repeat="repository in repoListCtrl.repositories">
+                <div class="col-md-3"
+                     data-ng-repeat="repository in repoListCtrl.repositories | filter : repoListCtrl.filterCategory(repoListCtrl.selected) | filter: {name: repoListCtrl.searchName}">
                     <div class="thumbnail">
                         <img src="../pics/logo-shurenyun.png" alt="...">
                         <div class="caption">
