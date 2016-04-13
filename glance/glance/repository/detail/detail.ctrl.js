@@ -4,7 +4,7 @@
         .controller('RepoDetailCtrl', RepoDetailCtrl);
 
     /* @ngInject */
-    function RepoDetailCtrl($stateParams, repoBackend, $base64, clusterCurd, $state) {
+    function RepoDetailCtrl($stateParams, repoBackend, $base64, clusterCurd, $state, Notification) {
         var self = this;
         var projectName = $stateParams.projectName;
         var repositoryName = $stateParams.repositoryName;
@@ -64,7 +64,7 @@
 
             repoBackend.deployRepo($stateParams.projectName, $stateParams.repositoryName, self.form)
                 .then(function(data){
-                    Notification.success(self.form.apps.appName + ' 部署成功');
+                    Notification.success(self.form.app.appName + ' 部署成功');
                     $state.go('applist.my')
                 });
         }
