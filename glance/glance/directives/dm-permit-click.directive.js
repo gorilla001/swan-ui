@@ -20,7 +20,7 @@
         function link(scope, elem, attrs) {
             elem.on('click', function(e) {
                 var permitRoles = scope.permitRoles.split(",");
-                permitRoles.push("");
+                permitRoles.push("", "-1");
                 if (permitRoles.indexOf(scope.role+"") < 0 ) {
                     if (scope.errorMsg) {
                         alertModal.open(scope.errorMsg);
