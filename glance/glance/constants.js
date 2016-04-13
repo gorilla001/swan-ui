@@ -239,5 +239,10 @@ BACKEND_URL = {
         repositoryTags: 'api/v3/repositories/$project_name/$repository_name/tags',
         repositoryCategories: 'api/v3/repositories/categories',
         deployRepo: 'api/v3/repositories/$project_name/$repository_name/apps'
+    },
+
+    warning: {
+        tasks: 'api/v3/tasks',
+        task: 'api/v3/tasks/$task_name'
     }
 };

@@ -16,8 +16,12 @@
                     }
                 },
                 resolve: {
-                    target: function () {return 'create'},
-                    app: function () {return null}
+                    target: function () {
+                        return 'create'
+                    },
+                    app: function () {
+                        return null
+                    }
                 }
             })
             .state('appupdate', {
@@ -29,7 +33,9 @@
                     }
                 },
                 resolve: {
-                    target: function () {return 'update'},
+                    target: function () {
+                        return 'update'
+                    },
                     app: getAppInfo
                 }
             })
@@ -125,6 +131,57 @@
                         controller: 'VersionAppCtrl as versionAppCtrl'
                     }
                 }
+            })
+            .state('appwarningcreate', {
+                url: '/appwarningcreate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',
+                        controller: 'CreateWarningCtrl as createWarningCtrl'
+                    }
+                },
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    warning: function () {
+                        return null
+                    }
+                }
+            })
+            .state('appwarningupdate', {
+                url: '/appwarningupdate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',
+                        controller: 'CreateWarningCtrl as createWarningCtrl'
+                    }
+                },
+                resolve: {
+                    target: function () {
+                        return 'update'
+                    },
+                    warning: function () {
+                        ////
+                    }
+                }
+            })
+            .state('appstrategy', {
+                url: '/appstrategy',
+                views: {
+                    '': {
+                        templateUrl: '/glance/application/strategy/strategy.html'
+                    }
+                }
+            })
+            .state('appstrategy.warninglist', {
+                url: '/warninglist',
+                views: {
+                    'strategyTab': {
+                        templateUrl: '/glance/application/strategy/warning/list/list.html',
+                        controller: 'WarningListCtrl as warningListCtrl'
+                    }
+                }
             });
 
     }
@@ -133,7 +190,7 @@
     function listClusters(gHttp) {
         return gHttp.Resource('cluster.clusters').get()
     }
-    
+
     /* @ngInject */
     function listGroups(userBackend) {
         return userBackend.listGroups();
