@@ -61,11 +61,29 @@
                 $uibModalInstance.dismiss('cancel');
             };
 
+            function patternInvalid() {
 
-            var pattern = /^(?:[0-9]{1,3}|1000)$|10[0-2][0-4]|500[1-9]|50[1-9][0-9]|5100|1[0-9][0-9][0-9][0-9]|20000|31[0-9][0-9][0-9]|32000/;
+                if (self.portInfo.mapPort >= 1 && self.portInfo.mapPort <= 1024 && (self.portInfo.mapPort != 80 && self.portInfo.mapPort != 443)) {
+                    return true
+                }
+
+                if (self.portInfo.mapPort >= 5000 && self.portInfo.mapPort <= 5100) {
+                    return true
+                }
+
+                if (self.portInfo.mapPort >= 10000 && self.portInfo.mapPort <= 20000) {
+                    return true
+                }
+
+                if (self.portInfo.mapPort >= 31000 && self.portInfo.mapPort <= 32000) {
+                    return true
+                }
+
+                return false
+            }
 
             function invalidPort() {
-                return pattern.test(self.portInfo.mapPort) || portOccupied();
+                return patternInvalid() || portOccupied();
             }
 
             function portOccupied() {

@@ -55,7 +55,7 @@
                         class="portrange">31000 ~ 32000</span><br><br>
                 </div>
 
-                <div ng-show="createAppPortCtrl.portInfo.type == 2">
+                <div ng-if="createAppPortCtrl.portInfo.type == 2 && createAppPortCtrl.outerPorts.length">
                     <strong>占用端口: </strong><br> <span ng-repeat="outPort in createAppPortCtrl.outerPorts"
                                                         class="port">{/outPort/} </span>
                 </div>
