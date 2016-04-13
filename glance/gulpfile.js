@@ -40,8 +40,23 @@ gulp.task('copy-swf', ['copy-fonts'], function () {
 });
 
 
+//directives html
+gulp.task('template-min-directives', function () {
+    return gulp.src('glance/directives/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlRirectives.js', {
+            module: 'glance',
+            root: '/glance/directives'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 //utils html to js
-gulp.task('template-min-utils', function () {
+gulp.task('template-min-utils', ['template-min-directives'],function () {
     return gulp.src('glance/utils/**/*.html')
         .pipe(minifyHtml({
             empty: true,
