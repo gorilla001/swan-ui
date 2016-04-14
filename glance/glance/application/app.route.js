@@ -150,7 +150,7 @@
                 }
             })
             .state('appwarningupdate', {
-                url: '/appwarningupdate',
+                url: '/appwarningupdate?app_name&app_alias',
                 views: {
                     '': {
                         templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',

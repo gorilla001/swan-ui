@@ -1,1 +1,36 @@
-warningList
+<button class="btn btn-success" type="button" data-ui-sref="appwarningcreate">创建告警</button>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>应用名称</th>
+        <th>监控指标</th>
+        <th>阈值</th>
+        <th>监控周期</th>
+        <th>一个周期内连续达到阈值次数</th>
+        <th>联系人</th>
+        <th>通知</th>
+        <th>更新时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>应用名称</td>
+        <td>监控指标</td>
+        <td>阈值</td>
+        <td>监控周期</td>
+        <td>一个周期内连续达到阈值次数</td>
+        <td>联系人</td>
+        <td>通知</td>
+        <td>更新时间</td>
+        <td>
+            <button class="btn btn-default btn-xs" data-ui-sref="appwarningupdate({app_name: '111', app_alias: 'sdasd'})">
+                编辑
+            </button>
+            <button class="btn btn-default btn-xs">
+                删除
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
