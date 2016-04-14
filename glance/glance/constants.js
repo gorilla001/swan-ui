@@ -125,7 +125,8 @@ NODE_STATUS = {
     installing: "installing",
     initing: "initing",
     upgrading: "upgrading",
-    uninstalling: "uninstalling"
+    repairing: "repairing",
+    abnormal: "abnormal"
 };
 
 CLUSTER_STATUS = {

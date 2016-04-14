@@ -5,9 +5,12 @@ function clusterCtrl($scope, $state, gHttp, Notification) {
     $scope.statName = {
         running: '运行正常',
         terminated: '主机失联',
-        failed: '主机预警',
-        installing: '主机初始化中',
-        upgrading: '主机升级中'
+        failed: '主机异常',
+        initing: '主机初始化中',
+        upgrading: '主机升级中',
+        abnormal: '主机预警',
+        installing: '主机安装中',
+        repairing: '主机修复中'
     };
     
     $scope.getServiceLabel = function(serviceName) {

@@ -47,26 +47,7 @@
         
         ClusterStatusMgr.prototype.updateNodeStatus = function(clusterId, nodeId, rawStatus, agentVersion) {
             if (this.nodes[nodeId]) {
-                var servicesStatus = this._getNodeServiceStatus(clusterId, nodeId);
-                var status;
-                if (!rawStatus) {
-                    rawStatus = this.nodes[nodeId].status;
-                    if (rawStatus === NODE_STATUS.failed) {
-                        rawStatus = NODE_STATUS.running;
-                    }
-                }
-                if (rawStatus === NODE_STATUS.installing || rawStatus === NODE_STATUS.initing
-                    || rawStatus === NODE_STATUS.uninstalling) {
-                    status = NODE_STATUS.installing;
-                } else if (rawStatus === NODE_STATUS.running){
-                   if (this._getNodeServiceStatus(clusterId, nodeId) === SERVICES_STATUS.failed) {
-                       status = NODE_STATUS.failed;
-                   }
-                }
-                if (!status) {
-                    status = rawStatus;
-                }
-                this.nodes[nodeId].status = status;
+                this.nodes[nodeId].status = rawStatus.split('_')[1];
                 if (agentVersion){
                     this.nodes[nodeId].services.agent.version = agentVersion;
                 }
