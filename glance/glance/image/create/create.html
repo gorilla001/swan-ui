@@ -56,13 +56,15 @@ build:
                          data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
                         <input type="text" class="form-control" data-required="required" name="image" data-samename
                                data-name-list="imageCreateCtrl.projectsImagesNameList"
-                               data-ng-model="imageCreateCtrl.form.imageName">
+                               data-ng-model="imageCreateCtrl.form.imageName" data-ng-pattern="/[a-z0-9](?:-*[a-z0-9])*(?:[._][a-z0-9](?:-*[a-z0-9])*)*/">
                     </div>
                     <div data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
                         <p data-ng-show="staticForm.image.$error.required && !staticForm.image.$pristine"
                            class="help-block">镜像名称不能为空</p>
                         <p data-ng-show="staticForm.image.$error.samename"
                            class="help-block">镜像名称已存在</p>
+                        <p data-ng-show="staticForm.image.$error.pattern && !staticForm.image.$pristine"
+                           class="help-block">镜像名称名称不规范</p>
                     </div>
                 </div>
                 <div class="form-group">
