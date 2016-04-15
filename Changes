@@ -8,6 +8,10 @@ Release Note
 - 重大的bug fix
 - 重大的feature
 
+### v0.1.021702
+
+confdev.js 添加 IS_OFFLINE (true/false) 变量，可以根据该变量区分是线上还是线下环境
+
 ### v0.1.122505
 features
 * 组件更新
