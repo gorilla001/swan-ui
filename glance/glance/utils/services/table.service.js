@@ -46,8 +46,10 @@
                     getData: function ($defer, params) {
                         if (!isFirst) {
                             $state.go($state.current, decodeTableParams(params), {reload: true});
+                        } else {
+                            $defer.resolve(data);
+                            isFirst = false;
                         }
-                        isFirst = false;
                     }
                 });
             tableParams.total(total);
