@@ -20,6 +20,7 @@
             BRIDGE: "网桥模式",
             HOST: "HOST 模式"
         };
+        self.specialUrl = APP_CONFIG_SPE_URL;
 
         activate();
 
@@ -43,7 +44,7 @@
             clusterBackendService.getCluster($stateParams.cluster_id)
                 .then(function(data){
                     if(data.is_demo_group){
-                        self.isDemoFlag = true;
+                        self.isGroupFlag = true;
                     }
                 })
         }

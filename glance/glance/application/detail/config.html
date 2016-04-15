@@ -60,12 +60,16 @@
                     <td>{/portInfo.appPort/}</td>
                     <td>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
                     <td>
-                        <p ng-repeat="nodeIp in configAppCtrl.listNodesIp" data-ng-hide="portInfo.uri || configAppCtrl.isDemoFlag">
+                        <p ng-repeat="nodeIp in configAppCtrl.listNodesIp" data-ng-hide="portInfo.uri || configAppCtrl.isGroupFlag">
                             <span data-ng-show="portInfo.protocol == 2">http://</span>{/nodeIp/}:{/portInfo.mapPort/}
                         </p>
 
-                        <p data-ng-show="configAppCtrl.isDemoFlag && !portInfo.uri">
-                            <span data-ng-show="portInfo.protocol == 2">http://</span>123.59.140.193:{/portInfo.mapPort/}
+                        <p data-ng-show="configAppCtrl.isGroupFlag && !portInfo.uri">
+                            <span data-ng-show="portInfo.protocol == 2">http://</span>{/configAppCtrl.specialUrl.group/}:{/portInfo.mapPort/}
+                        </p>
+
+                        <p data-ng-show="isDemo && !portInfo.uri && !configAppCtrl.isGroupFlag">
+                            <span data-ng-show="portInfo.protocol == 2">http://</span>{/configAppCtrl.specialUrl.demo/}:{/portInfo.mapPort/}
                         </p>
 
                         <p data-ng-show="portInfo.uri">http://{/portInfo.uri/}</p>
