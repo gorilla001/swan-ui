@@ -4,9 +4,10 @@
         .controller('WarningListCtrl', WarningListCtrl);
 
     /* @ngInject */
-    function WarningListCtrl(appWarningBackend, $stateParams) {
+    function WarningListCtrl(data, table) {
         var self = this;
-
+        self.warningList = data.List;
+        self.warningListTable = table.createParams(data.List, data.Count);
         ////
     }
 })();

@@ -78,6 +78,11 @@
             self.form.appname = self.app.name;
             console.log(self.form)
 
+            appWarningBackend.createWarning(self.form)
+                .then(function(data){
+                    console.log(data)
+                })
+
         }
 
         function update() {

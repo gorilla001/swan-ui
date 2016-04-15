@@ -175,12 +175,15 @@
                 }
             })
             .state('appstrategy.warninglist', {
-                url: '/warninglist',
+                url: '/warninglist?per_page&page&order&keywords&sort_by',
                 views: {
                     'strategyTab': {
                         templateUrl: '/glance/application/strategy/warning/list/list.html',
                         controller: 'WarningListCtrl as warningListCtrl'
                     }
+                },
+                resolve: {
+                    data: listWarning
                 }
             });
 
@@ -204,5 +207,16 @@
     /* @ngInject */
     function getAppStatus(appservice, $stateParams) {
         return appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id)
+    }
+
+    /* @ngInject */
+    function listWarning(appWarningBackend, utils, $stateParams) {
+        //return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
+        return appWarningBackend.warningList();
+        //return {List: [{name: '111', times: 2},{name: '222', times: 5},{name: '111', times: 2},
+        //    {name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}
+        //,{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},
+        //    {name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}
+        //,{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}], Count: 22}
     }
 })();
