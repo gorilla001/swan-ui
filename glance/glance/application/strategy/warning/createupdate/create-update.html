@@ -1,6 +1,7 @@
 <div class="page-header">
     <div>
-        <h1 class="pull-left">新建告警策略</h1>
+        <h1 class="pull-left" data-ng-if="createWarningCtrl.target === 'create'">新建告警策略</h1>
+        <h1 class="pull-left" data-ng-if="createWarningCtrl.target === 'update'">更新告警策略</h1>
     </div>
 </div>
 <section>
@@ -42,30 +43,32 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'MemUsed'"
+                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'"
                              data-ng-class="{ 'has-error' : warningForm.memused.$invalid && !warningForm.memused.$pristine}">
-                            <input type="number" class="form-control" placeholder="数值"
+                            <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="memused"
                                    ng-required="createWarningCtrl.form.metric === 'MemUsed'">
                             <span class="input-group-addon" id="memused">Mb</span>
                         </div>
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'CpuUsed'"
+                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'"
                              data-ng-class="{ 'has-error' : warningForm.cpuused.$invalid && !warningForm.cpuused.$pristine}">
-                            <input type="number" class="form-control" placeholder="数值"
+                            <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="cpuused"
                                    ng-required="createWarningCtrl.form.metric === 'CpuUsed'">
                             <span class="input-group-addon" id="cpuused">%</span>
                         </div>
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'DiskUsed'"
+                        <div class="input-group"
+                             data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' || createWarningCtrl.form.metric === 'DiskIOWriteBytesRate'"
                              data-ng-class="{ 'has-error' : warningForm.diskused.$invalid && !warningForm.diskused.$pristine}">
-                            <input type="number" class="form-control" placeholder="数值"
+                            <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="diskused"
                                    ng-required="createWarningCtrl.form.metric === 'DiskUsed'">
                             <span class="input-group-addon" id="diskused">Kb/s</span>
                         </div>
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'NetUsed'"
+                        <div class="input-group"
+                             data-ng-if="createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || createWarningCtrl.form.metric === 'NetworkSentByteRate'"
                              data-ng-class="{ 'has-error' : warningForm.netused.$invalid && !warningForm.netused.$pristine}">
-                            <input type="number" class="form-control" placeholder="数值"
+                            <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="netused"
                                    ng-required="createWarningCtrl.form.metric === 'NetUsed'">
                             <span class="input-group-addon" id="netused">Kb/s</span>
@@ -80,9 +83,14 @@
                         <div class="input-group">
                             <input type="number" class="form-control" placeholder="数值"
                                    aria-describedby="basic-addon2" data-ng-model="createWarningCtrl.form.duration"
-                                   data-required="required" name="duration">
+                                   data-required="required" name="duration" max="255">
                             <span class="input-group-addon" id="duration">分钟</span>
                         </div>
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : warningForm.duration.$invalid && !warningForm.duration.$pristine}">
+                        <p data-ng-show="warningForm.duration.$error.max && !warningForm.duration.$pristine"
+                           class="help-block">最大值不得超过 255</p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -92,9 +100,14 @@
                         <div class="input-group">
                             <input type="number" class="form-control" placeholder="数值"
                                    aria-describedby="basic-addon2" data-ng-model="createWarningCtrl.form.times"
-                                   data-required="required" name="times">
+                                   data-required="required" name="times" max="255">
                             <span class="input-group-addon" id="times">次</span>
                         </div>
+                    </div>
+
+                    <div data-ng-class="{ 'has-error' : warningForm.times.$invalid && !warningForm.times.$pristine}">
+                        <p data-ng-show="warningForm.times.$error.max && !warningForm.times.$pristine"
+                           class="help-block">最大值不得超过 255</p>
                     </div>
                 </div>
 

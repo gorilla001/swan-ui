@@ -162,6 +162,21 @@ IMAGE_BASE_URL = {
     prod: 'https://static.shurenyun.com/'
 };
 
+WARNING_TYPE = {
+    MemoryUsed: '内存',
+    CpuUsedCores: 'CPU 使用',
+    DiskIOReadBytesRate: '磁盘读取',
+    DiskIOWriteBytesRate: '磁盘写入',
+    NetworkReceviedByteRate: '网络接收',
+    NetworkSentByteRate: 'NetworkSentByteRate'
+};
+
+WARNING_RULE = {
+    '>': '大于',
+    '=': '等于',
+    '<': '小于'
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
@@ -243,6 +258,6 @@ BACKEND_URL = {
 
     warning: {
         tasks: 'api/v3/tasks',
-        task: 'api/v3/tasks/$task_name'
+        task: 'api/v3/tasks/$task_id'
     }
 };

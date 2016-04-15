@@ -62,7 +62,7 @@
             </button>
             <button type="button"
                     data-ng-if="myAppsCtrl.appListStatus[app.id].status == '2'"
-                    class="btn btn-default btn-xs" data-ui-sref="appwarningupdate({app_name: app.name, app_alias: app.alias})">
+                    class="btn btn-default btn-xs" data-ui-sref="appstrategy.warninglist({page:1, per_page:20, keywords: app.alias})">
                     告警策略
             </button>
         </td>

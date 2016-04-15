@@ -8,20 +8,30 @@
         //////
         return {
             createWarning: createWarning,
-            deleteTask: deleteTask,
-            warningList: warningList
+            deleteWarning: deleteWarning,
+            warningList: warningList,
+            updateWarning: updateWarning,
+            getWarning: getWarning
         };
 
         function createWarning(data) {
             return gHttp.Resource('warning.tasks').post(data);
         }
 
-        function deleteTask(taskName) {
-            return gHttp.Resource('warning.tasks', {task_name: taskName}).delete();
+        function deleteWarning(taskId) {
+            return gHttp.Resource('warning.task', {task_id: taskId}).delete();
         }
 
         function warningList(params) {
-            return gHttp.Resource('warning.tasks').get({params : params});
+            return gHttp.Resource('warning.tasks').get({params: params});
+        }
+
+        function updateWarning(data) {
+            return gHttp.Resource('warning.tasks').put(data);
+        }
+
+        function getWarning(taskId) {
+            return gHttp.Resource('warning.task', {task_id: taskId}).get();
         }
     }
 })();

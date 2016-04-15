@@ -3,27 +3,40 @@
        class="table table-striped" ng-table-columns-binding="boundCols">
     <tbody>
     <tr ng-repeat="item in warningListCtrl.warningList">
-        <td data-title="'应用名称'">
-            {/item.name/}
+        <td data-title="'应用名称'" sortable="'appname'">
+            {/item.appname/}
         </td>
-        <td data-title="'监控指标'">
-            监控指标
+        <td data-title="'告警规则'">
+            {/warningListCtrl.WARNING_TYPE[item.metric]/} / {/warningListCtrl.WARNING_RULE[item.operator]/}
+            /{/item.threshold/}
+            <span data-ng-if="item.metric === 'MemoryUsed'">Mb</span>
+            <span data-ng-if="item.metric === 'CpuUsedCores'">%</span>
+            <span data-ng-if="item.metric === 'DiskIOReadBytesRate' || item.metric === 'DiskIOWriteBytesRate' ||
+            item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">Kb/s</span>
         </td>
-        <td data-title="'阈值'" sortable="'threshold'">阈值</td>
-        <td data-title="'监控周期'" sortable="'duration'">监控周期
+        <td data-title="'监控周期'">{/item.duration/} 分钟
         </td>
-        <td data-title="'一个周期内连续达到阈值次数'">{/item.times/}</td>
-        <td data-title="'联系人'">
-            联系人
+        <td data-title="'连续达到阈值'">{/item.times/} 次</td>
+        <td data-title="'联系人'" sortable="'emails'">
+            {/item.emails/}
         </td>
         <td data-title="'通知'">
-            通知
+            <input type="checkbox" ng-true-value="true"
+                   ng-false-value="false" data-ng-model="item.enabled"
+                   data-ng-change="warningListCtrl.switchNotice(item)"> 是/否
         </td>
-        <td data-title="'更新时间'">
-            更新时间
+        <td data-title="'更新时间'" sortable="'updated'">
+            {/item.updated | date:"yyyy-MM-dd HH:mm:ss"/}
         </td>
         <td data-title="'操作'">
-            操作
+            <button type="button"
+                    class="btn btn-default btn-xs" data-demo-disable
+                    data-ui-sref="appwarningupdate({task_id: item.id})">更新
+            </button>
+            <button type="button"
+                    class="btn btn-danger btn-xs" data-ng-click="warningListCtrl.deleteTask(item.id)" data-demo-disable>
+                删除
+            </button>
         </td>
     </tr>
     </tbody>

@@ -145,12 +145,12 @@
                         return 'create'
                     },
                     warning: function () {
-                        return null
+                        return 'create'
                     }
                 }
             })
             .state('appwarningupdate', {
-                url: '/appwarningupdate?app_name&app_alias',
+                url: '/appwarningupdate?task_id',
                 views: {
                     '': {
                         templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',
@@ -161,9 +161,7 @@
                     target: function () {
                         return 'update'
                     },
-                    warning: function () {
-                        ////
-                    }
+                    warning: getTaskInfo
                 }
             })
             .state('appstrategy', {
@@ -211,12 +209,13 @@
 
     /* @ngInject */
     function listWarning(appWarningBackend, utils, $stateParams) {
-        //return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
-        return appWarningBackend.warningList();
-        //return {List: [{name: '111', times: 2},{name: '222', times: 5},{name: '111', times: 2},
-        //    {name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}
-        //,{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},
-        //    {name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}
-        //,{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2},{name: '111', times: 2}], Count: 22}
+        return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
     }
+
+    /* @ngInject */
+    function getTaskInfo(appWarningBackend, $stateParams) {
+        return appWarningBackend.getWarning($stateParams.task_id);
+    }
+
+
 })();
