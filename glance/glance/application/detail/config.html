@@ -60,7 +60,7 @@
                     <td>{/portInfo.appPort/}</td>
                     <td>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
                     <td>
-                        <p ng-repeat="nodeIp in configAppCtrl.listNodesIp" data-ng-hide="portInfo.uri || configAppCtrl.isGroupFlag">
+                        <p ng-repeat="nodeIp in configAppCtrl.listNodesIp" data-ng-hide="portInfo.uri || configAppCtrl.isGroupFlag || isDemo">
                             <span data-ng-show="portInfo.protocol == 2">http://</span>{/nodeIp/}:{/portInfo.mapPort/}
                         </p>
 
