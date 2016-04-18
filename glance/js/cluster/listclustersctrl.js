@@ -359,7 +359,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         if (clusterStatus === CLUSTER_STATUS.installing) {
             problemStatus = [NODE_STATUS.installing];
         } else {
-            problemStatus = [NODE_STATUS.terminated, NODE_STATUS.failed, NODE_STATUS.installing];
+            problemStatus = [NODE_STATUS.terminated, NODE_STATUS.failed, NODE_STATUS.installing, NODE_STATUS.abnormal];
         }
         angular.forEach(nodeTypes, function(type, typeIndex) {
             angular.forEach(problemStatus, function(status, statusIndex) {
