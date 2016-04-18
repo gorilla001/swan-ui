@@ -15,11 +15,13 @@
                     </td>
                     <td data-title="'状态'">
                         <span data-ng-class="{'text-danger': project.status == 'failure' || project.status == 'error', 'text-success': project.status == 'success',
-                        'text-info': project.status == 'running' || project.status == 'pending'}">
+                        'text-info': project.status == 'running' || project.status == 'pending'}" data-ng-hide="project.status == 'pending' && !project.active">
                             <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
                             'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
                             {/imageListCtrl.IMAGE_STATUS[project.status]/}
                         </span>
+
+                        <span data-ng-if="project.status == 'pending' && !project.active">未开始</span>
                     </td>
                     <td data-title="'镜像名称'" sortable="'name'">{/project.imageName/}</td>
                     <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}
