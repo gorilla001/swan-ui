@@ -103,8 +103,8 @@
                                 <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
                                   data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
                                 <button class="btn btn-xs btn-warning" 
-                                data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' && 
-                                    (statusMgr.nodes[node.id].status=='running'||statusMgr.nodes[node.id].status=='failed')"
+                                data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' &&
+                                ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0"
                                 data-ng-click="openServiceRepair(service)" data-demo-disable
                                 data-dm-permit-click="1" 
                                 data-dm-role="node.cluster.group_role"
