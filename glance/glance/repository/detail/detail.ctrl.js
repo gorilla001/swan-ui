@@ -13,13 +13,45 @@
             app: {
                 appName: $stateParams.repositoryName || '',
                 imageVersion: '',
-                clusterId: null
+                clusterId: null,
+                cpus: 0.1,
+                mem: 16
             },
             answers: {}
         };
         self.tags = [];
         self.clusters = [];
         self.questions = [];
+        self.containerConfig = {
+            cpu: {
+                min: 1,
+                max: 10,
+                options: {
+                    step: 1,
+                    floor: 1,
+                    ceil: 10,
+                    showSelectionBar: true,
+                    translate: function (value) {
+                        return self.form.app.cpus = value / 10.0;
+                    }
+                }
+            },
+            mem: {
+                min: 4,
+                max: 12,
+                options: {
+                    step: 1,
+                    floor: 4,
+                    ceil: 12,
+                    showSelectionBar: true,
+                    translate: function (value) {
+                        return self.form.app.mem = Math.pow(2, value);
+                    }
+                }
+            }
+        };
+        self.cpuSlideValue = self.form.app.cpus * 10;
+        self.memSlideValue = Math.log(self.form.app.mem) / Math.LN2;
         self.deploy = deploy;
 
         activate();
@@ -63,7 +95,7 @@
             self.form.app.clusterId = self.form.app.clusterId.toString();
 
             repoBackend.deployRepo($stateParams.projectName, $stateParams.repositoryName, self.form)
-                .then(function(data){
+                .then(function (data) {
                     Notification.success(self.form.app.appName + ' 部署成功');
                     $state.go('applist.my')
                 });
