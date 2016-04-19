@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('glance.app')
+    angular.module('glance.policy')
         .factory('appWarningBackend', appWarningBackend);
 
     /* @ngInject */

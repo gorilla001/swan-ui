@@ -1,7 +1,7 @@
 <form class="form-inline search-container">
     <div class="form-group">
-        <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord" 
-            placeholder="输入应用名称进行搜索" my-enter="myAppsCtrl.doSearch(searchKeyWord)">
+        <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord"
+               placeholder="输入应用名称进行搜索" my-enter="myAppsCtrl.doSearch(searchKeyWord)">
     </div>
     <button type="submit" ng-click="myAppsCtrl.doSearch(searchKeyWord)" class="btn btn-info">搜索</button>
 </form>
@@ -62,8 +62,9 @@
             </button>
             <button type="button"
                     data-ng-if="myAppsCtrl.appListStatus[app.id].status == '2'"
-                    class="btn btn-default btn-xs" data-ui-sref="appstrategy.warninglist({page:1, per_page:20, keywords: app.alias})">
-                    告警策略
+                    class="btn btn-default btn-xs"
+                    data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20, alias: app.alias, keywords: app.name})">
+                告警策略
             </button>
         </td>
     </tr>

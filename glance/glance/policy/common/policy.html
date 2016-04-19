@@ -1,0 +1,20 @@
+<div class="page-header">
+    <div>
+        <h1 class="pull-left">服务策略</h1>
+    </div>
+</div>
+<section>
+    <div class="main-container new-app">
+        <header class="clearfix">
+            <ul class="nav nav-tabs">
+                <li data-ng-class="{'active': tabActiveFlag=='appwarning'}"><a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
+                                                        >应用告警</a></li>
+                <li data-ng-class="{'active': tabActiveFlag=='apptimescaling'}"><a data-ui-sref="policy.apptimescaling.scalinglist({page:1, per_page:20})"
+                                               >应用定时扩缩</a></li>
+                <li><a>应用资源扩缩</a></li>
+                <li><a>日志告警</a></li>
+            </ul>
+        </header>
+        <div data-ui-view="policyTab" class="tab-content"></div>
+    </div>
+</section>

@@ -131,60 +131,7 @@
                         controller: 'VersionAppCtrl as versionAppCtrl'
                     }
                 }
-            })
-            .state('appwarningcreate', {
-                url: '/appwarningcreate',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',
-                        controller: 'CreateWarningCtrl as createWarningCtrl'
-                    }
-                },
-                resolve: {
-                    target: function () {
-                        return 'create'
-                    },
-                    warning: function () {
-                        return 'create'
-                    }
-                }
-            })
-            .state('appwarningupdate', {
-                url: '/appwarningupdate?task_id',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/strategy/warning/createupdate/create-update.html',
-                        controller: 'CreateWarningCtrl as createWarningCtrl'
-                    }
-                },
-                resolve: {
-                    target: function () {
-                        return 'update'
-                    },
-                    warning: getTaskInfo
-                }
-            })
-            .state('appstrategy', {
-                url: '/appstrategy',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/strategy/strategy.html'
-                    }
-                }
-            })
-            .state('appstrategy.warninglist', {
-                url: '/warninglist?per_page&page&order&keywords&sort_by',
-                views: {
-                    'strategyTab': {
-                        templateUrl: '/glance/application/strategy/warning/list/list.html',
-                        controller: 'WarningListCtrl as warningListCtrl'
-                    }
-                },
-                resolve: {
-                    data: listWarning
-                }
             });
-
     }
 
     /* @ngInject */
@@ -206,16 +153,4 @@
     function getAppStatus(appservice, $stateParams) {
         return appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id)
     }
-
-    /* @ngInject */
-    function listWarning(appWarningBackend, utils, $stateParams) {
-        return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
-    }
-
-    /* @ngInject */
-    function getTaskInfo(appWarningBackend, $stateParams) {
-        return appWarningBackend.getWarning($stateParams.task_id);
-    }
-
-
 })();

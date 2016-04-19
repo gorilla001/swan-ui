@@ -137,6 +137,17 @@
                     case toState.name.startsWith('repository'):
                         $rootScope.show = 'repository';
                         break;
+                    case toState.name.startsWith('policy'):
+                        $rootScope.show = 'policy';
+                        switch (true) {
+                            case toState.name.includes('appwarning'):
+                                $rootScope.tabActiveFlag = 'appwarning';
+                                break;
+                            case toState.name.includes('apptimescaling'):
+                                $rootScope.tabActiveFlag = 'apptimescaling';
+                                break;
+                        }
+                        break;
                 }
             });
 

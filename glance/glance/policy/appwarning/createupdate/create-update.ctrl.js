@@ -1,10 +1,10 @@
 (function () {
     'use strict';
-    angular.module('glance.app')
+    angular.module('glance.policy')
         .controller('CreateWarningCtrl', CreateWarningCtrl);
 
     /* @ngInject */
-    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams) {
+    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification) {
         var self = this;
         self.target = target;
         self.app = {};
@@ -87,7 +87,7 @@
 
             appWarningBackend.createWarning(self.form)
                 .then(function (data) {
-                    $state.go('appstrategy.warninglist', {per_page: 20, page: 1}, {reload: true})
+                    $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
                 })
 
         }
@@ -98,7 +98,7 @@
             warningCurd.updateTask(self.form)
                 .then(function (data) {
                     Notification.success("更新成功");
-                    $state.go('appstrategy.warninglist', {per_page: 20, page: 1})
+                    $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1})
                 });
         }
     }
