@@ -134,6 +134,7 @@
                     if (cluster.is_demo_group) {
                         self.form.network = 'BRIDGE';
                         self.isNetworkDisable = true;
+                        self.form.parameters = [];
                     } else if (target === 'create'){
                         self.isNetworkDisable = false;
                     }
@@ -190,6 +191,10 @@
 
         //docker arg module
         self.openDockerArg = function(){
+            if(self.isNetworkDisable){
+                Notification.warning('共享集群不能添加 Docker 参数');
+                return
+            }
             formModal.open('/glance/application/createupdate/modals/create-docker-arg.html').then(function (dockerArg) {
                 if (isDisableAddList(dockerArg, self.form.parameters)) {
                     Notification.error('Docker 环境变量添加失败');
