@@ -15,7 +15,8 @@
                 imageVersion: '',
                 clusterId: null,
                 cpus: 0.1,
-                mem: 16
+                mem: 16,
+                instances: 1
             },
             answers: {}
         };
