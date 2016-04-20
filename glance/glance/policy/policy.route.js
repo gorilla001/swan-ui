@@ -73,7 +73,8 @@
                 url: '/warningevent',
                 views: {
                     'warningContent': {
-                        templateUrl: '/glance/policy/appwarning/event/event.html'
+                        templateUrl: '/glance/policy/appwarning/event/event.html',
+                        controller: 'WarningEventCtrl as warningEventCtrl'
                     }
                 }
             })
