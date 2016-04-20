@@ -179,3 +179,48 @@ body, html {
 #app-index .form-filter-top {
 	margin-bottom: 30px;
 }
+
+#warning-tactics .media-left span {
+	font-weight: bold;
+}
+#warning-tactics .media-body span {
+	font-size: 12px;
+}
+#warning-tactics .media-body h4 {
+	font-size: 16px;
+}
+#warning-tactics .nav-pills li {
+	border-bottom: 1px solid #EEE;
+}
+#warning-tactics .nav-pills li a {
+	color: #666;
+}
+#warning-tactics .nav-pills li.active {
+	border-bottom: 0;
+	position: relative;
+}
+#warning-tactics .nav-pills > li.active > a, #warning-tactics .nav-pills > li.active > a:hover, #warning-tactics .nav-pills > li.active > a:focus {
+	border-radius: 0;
+	color: #FFF;
+}
+#warning-tactics .nav-pills > li.active:after {
+	position: absolute;
+	content: "";
+	display: block;
+	right: -10px;
+	top: 10px;
+	width: 0;
+	height: 0;
+	border-top: 8px solid transparent;
+	border-left: 10px solid #337ab7;
+	border-bottom: 8px solid transparent;
+}
+#warning-tactics .main-container-body .nav-tabs {
+	margin-bottom: 20px;
+}
+#warning-tactics .info-box {
+	background: #F1F1F1;
+	border: 1px solid #EEE;
+	padding: 15px 20px;
+	min-height: 300px;
+}

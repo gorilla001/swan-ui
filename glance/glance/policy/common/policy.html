@@ -4,7 +4,7 @@
     </div>
 </div>
 <section>
-    <div class="main-container new-app">
+    <div class="main-container new-app" id="warning-tactics">
         <header class="clearfix">
             <ul class="nav nav-tabs">
                 <li data-ng-class="{'active': tabActiveFlag=='appwarning'}"><a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
@@ -15,6 +15,8 @@
                 <li><a>日志告警</a></li>
             </ul>
         </header>
-        <div data-ui-view="policyTab" class="tab-content"></div>
+        <div class="main-container-body">
+            <div data-ui-view="policyTab" class="tab-content"></div>
+        </div>
     </div>
 </section>
