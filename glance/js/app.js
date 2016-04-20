@@ -20,8 +20,8 @@ var glanceApp = angular.module('glance',
         'glance.repository'
     ]);
 
-glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider',
-    function ($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider) {
+glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
+    function ($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider, NotificationProvider) {
         $urlRouterProvider.otherwise('/home');
         $stateProvider
             .state("cluster", {
@@ -188,6 +188,10 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
+
+        NotificationProvider.setOptions({
+            replaceMessage: true
+        });
     }]);
 
 glanceApp.run(glanceInit);

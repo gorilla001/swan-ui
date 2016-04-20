@@ -53,6 +53,67 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <!-- 容器规格 -->
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="text-danger">* </span>
+                                        容器规格
+                                    </label>
+
+                                    <div class="col-md-5">
+                                        <rzslider
+                                                rz-slider-model="repoDetailCtrl.cpuSlideValue"
+                                                rz-slider-options="repoDetailCtrl.containerConfig.cpu.options"
+                                                style="width: 70%; float: left;"></rzslider>
+                                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
+                                            <strong style="font-size: 30px;">
+                                                {/repoDetailCtrl.form.app.cpus/}
+                                            </strong>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-5 col-md-offset-2">
+                                        <rzslider
+                                                rz-slider-model="repoDetailCtrl.memSlideValue"
+                                                rz-slider-options="repoDetailCtrl.containerConfig.mem.options"
+                                                style="width: 70%; float: left;"></rzslider>
+                                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
+                                            <strong style="font-size: 30px;">
+                                                {/repoDetailCtrl.form.app.mem/}
+                                            </strong>
+                                            <sub>MB</sub>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!--  容器个数 -->
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label">
+                                        <span class="text-danger">* </span>
+                                        容器个数
+                                    </label>
+
+                                    <div class="col-md-2"
+                                         data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
+                                        <input type="number" class="form-control"
+                                               name="instances"
+                                               data-ng-model="repoDetailCtrl.form.app.instances"
+                                               data-min="1"
+                                               data-required="required">
+
+                                        <div data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
+                                            <p data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine"
+                                               class="help-block">容器个数不小于 1 </p>
+
+                                            <p data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine"
+                                               class="help-block">容器个数不能为空 </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group" data-ng-show="repoDetailCtrl.questions.length">
                                     <label class="col-md-2 control-label">配置</label>
                                     <div class="col-md-5">
