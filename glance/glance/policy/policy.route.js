@@ -93,7 +93,8 @@
                 url: '/scalinglist?per_page&page&order&keywords&sort_by',
                 views: {
                     'scalingContent': {
-                        templateUrl: '/glance/policy/apptimescaling/list/scalingList.html'
+                        templateUrl: '/glance/policy/apptimescaling/list/list.html',
+                        controller: 'ScalingListCtrl as scalingListCtrl'
                     }
                 }
             })
@@ -102,6 +103,40 @@
                 views: {
                     'scalingContent': {
                         templateUrl: '/glance/policy/apptimescaling/event/scalingEvent.html'
+                    }
+                }
+            })
+            .state('policyScalingCreate', {
+                url: '/policyScalingCreate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/policy/apptimescaling/createupdate/create-update.html',
+                        controller: 'CreateScalingCtrl as createScalingCtrl'
+                    }
+                },
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    scaling: function () {
+                        return 'create'
+                    }
+                }
+            })
+            .state('policyScalingUpdate', {
+                url: '/policyScalingUpdate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/policy/apptimescaling/createupdate/create-update.html',
+                        controller: 'CreateScalingCtrl as createScalingCtrl'
+                    }
+                },
+                resolve: {
+                    target: function () {
+                        return 'update'
+                    },
+                    scaling: function () {
+                        return 'update'
                     }
                 }
             });
