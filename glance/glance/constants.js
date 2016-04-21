@@ -156,6 +156,12 @@ SMS = {
     phoneCodeResendExpire: 60
 };
 
+IMAGE_BASE_URL = {
+    dev: 'http://devstatic.dataman-inc.net/',
+    demo: 'http://demostatic.dataman-inc.net/',
+    prod: 'https://static.shurenyun.com/'
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
