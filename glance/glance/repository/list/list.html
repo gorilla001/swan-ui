@@ -21,7 +21,7 @@
                 <div class="col-md-3"
                      data-ng-repeat="repository in repoListCtrl.repositories | filter : repoListCtrl.filterCategory(repoListCtrl.selected) | filter: {name: repoListCtrl.searchName}">
                     <div class="thumbnail">
-                        <img src="../pics/logo-shurenyun.png" alt="...">
+                        <img ng-src="{/repoListCtrl.repoImageBaseUrl/}{/repository.name/}.png" alt="...">
                         <div class="caption">
                             <h4>{/repository.name/}</h4>
                             <p>{/repository.description/}</p>

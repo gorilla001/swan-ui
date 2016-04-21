@@ -10,6 +10,7 @@
 
         self.repositories = [];
         self.categories = [];
+        self.repoImageBaseUrl = IMAGE_BASE_URL[RUNNING_ENV] + 'app_catalog_icons/';
         self.filterCategory = filterCategory;
         ////
 
