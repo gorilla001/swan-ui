@@ -70,12 +70,15 @@
                 }
             })
             .state('policy.appwarning.warningevent', {
-                url: '/warningevent',
+                url: '/warningevent?per_page&page&order&keywords&sort_by',
                 views: {
                     'warningContent': {
                         templateUrl: '/glance/policy/appwarning/event/event.html',
                         controller: 'WarningEventCtrl as warningEventCtrl'
                     }
+                },
+                resolve: {
+                    data: warningEvent
                 }
             })
             .state('policy.apptimescaling', {
@@ -113,5 +116,10 @@
     /* @ngInject */
     function getTaskInfo(appWarningBackend, $stateParams) {
         return appWarningBackend.getWarning($stateParams.task_id);
+    }
+
+    /* @ngInject */
+    function warningEvent(appWarningBackend, utils, $stateParams) {
+        return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
     }
 })();

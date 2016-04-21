@@ -11,7 +11,8 @@
             deleteWarning: deleteWarning,
             warningList: warningList,
             updateWarning: updateWarning,
-            getWarning: getWarning
+            getWarning: getWarning,
+            warningEvent: warningEvent
         };
 
         function createWarning(data) {
@@ -32,6 +33,10 @@
 
         function getWarning(taskId) {
             return gHttp.Resource('warning.task', {task_id: taskId}).get();
+        }
+
+        function warningEvent(params) {
+            return gHttp.Resource('warning.tasks').get({params: params});
         }
     }
 })();

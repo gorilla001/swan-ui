@@ -4,25 +4,23 @@
         .controller('WarningEventCtrl', WarningEventCtrl);
 
     /* @ngInject */
-    function WarningEventCtrl() {
+    function WarningEventCtrl(data, table, $stateParams, $state) {
         var self = this;
+        self.warningEvents = data.tasks;
+        self.WARNING_TYPE = WARNING_TYPE;
+        self.WARNING_RULE = WARNING_RULE;
+        self.searchKeyWord = $stateParams.keywords || '';
+        self.warningEventTable = table.createParams(data.events, data.count);
 
-        self.totalItems = 64;
-        self.currentPage = 1;
-        self.setPage = setPage;
-        self.pageChanged = pageChanged;
-        self.getTaskEvent = getTaskEvent;
-
-        function setPage(pageNo) {
-            self.currentPage = pageNo;
+        self.doSearch = doSearch;
+        ////
+        function doSearch(searchKeyWord) {
+            $state.go('policy.appwarning.warningevent', {
+                page: 1,
+                per_page: 20,
+                keywords: searchKeyWord
+            }, {reload: true});
         }
 
-        function pageChanged() {
-            console.log(self.currentPage);
-        }
-
-        function getTaskEvent(){
-            console.log(111)
-        }
     }
 })();
