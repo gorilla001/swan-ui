@@ -110,33 +110,8 @@
                 url: '/policyScalingCreate',
                 views: {
                     '': {
-                        templateUrl: '/glance/policy/apptimescaling/createupdate/create-update.html',
+                        templateUrl: '/glance/policy/apptimescaling/create/create.html',
                         controller: 'CreateScalingCtrl as createScalingCtrl'
-                    }
-                },
-                resolve: {
-                    target: function () {
-                        return 'create'
-                    },
-                    scaling: function () {
-                        return 'create'
-                    }
-                }
-            })
-            .state('policyScalingUpdate', {
-                url: '/policyScalingUpdate',
-                views: {
-                    '': {
-                        templateUrl: '/glance/policy/apptimescaling/createupdate/create-update.html',
-                        controller: 'CreateScalingCtrl as createScalingCtrl'
-                    }
-                },
-                resolve: {
-                    target: function () {
-                        return 'update'
-                    },
-                    scaling: function () {
-                        return 'update'
                     }
                 }
             });
