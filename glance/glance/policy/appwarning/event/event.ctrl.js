@@ -6,7 +6,7 @@
     /* @ngInject */
     function WarningEventCtrl(data, table, $stateParams, $state) {
         var self = this;
-        self.warningEvents = data.tasks;
+        self.warningEvents = data.events;
         self.WARNING_TYPE = WARNING_TYPE;
         self.WARNING_RULE = WARNING_RULE;
         self.searchKeyWord = $stateParams.keywords || '';

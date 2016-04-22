@@ -48,7 +48,7 @@
                             <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="memused"
                                    ng-required="createWarningCtrl.form.metric === 'MemUsed'">
-                            <span class="input-group-addon" id="memused">Mb</span>
+                            <span class="input-group-addon" id="memused">MB</span>
                         </div>
                         <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'"
                              data-ng-class="{ 'has-error' : warningForm.cpuused.$invalid && !warningForm.cpuused.$pristine}">
@@ -63,7 +63,7 @@
                             <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="diskused"
                                    ng-required="createWarningCtrl.form.metric === 'DiskUsed'">
-                            <span class="input-group-addon" id="diskused">Kb/s</span>
+                            <span class="input-group-addon" id="diskused">KB/s</span>
                         </div>
                         <div class="input-group"
                              data-ng-if="createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || createWarningCtrl.form.metric === 'NetworkSentByteRate'"
@@ -71,7 +71,7 @@
                             <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="netused"
                                    ng-required="createWarningCtrl.form.metric === 'NetUsed'">
-                            <span class="input-group-addon" id="netused">Kb/s</span>
+                            <span class="input-group-addon" id="netused">KB/s</span>
 
                         </div>
                     </div>

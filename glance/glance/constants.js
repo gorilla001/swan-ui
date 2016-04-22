@@ -168,12 +168,12 @@ WARNING_TYPE = {
     DiskIOReadBytesRate: '磁盘读取',
     DiskIOWriteBytesRate: '磁盘写入',
     NetworkReceviedByteRate: '网络接收',
-    NetworkSentByteRate: 'NetworkSentByteRate'
+    NetworkSentByteRate: '网络发送'
 };
 
 WARNING_RULE = {
     '>': '大于',
-    '=': '等于',
+    '==': '等于',
     '<': '小于'
 };
 
@@ -258,6 +258,7 @@ BACKEND_URL = {
 
     warning: {
         tasks: 'api/v3/tasks',
-        task: 'api/v3/tasks/$task_id'
+        task: 'api/v3/tasks/$task_id',
+        tasksEvent: 'api/v3/alert/events'
     }
 };

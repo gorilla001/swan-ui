@@ -24,10 +24,10 @@
         <td data-title="'告警规则'">
             {/warningListCtrl.WARNING_TYPE[item.metric]/} / {/warningListCtrl.WARNING_RULE[item.operator]/}
             / {/item.threshold/}
-            <span data-ng-if="item.metric === 'MemoryUsed'">Mb</span>
+            <span data-ng-if="item.metric === 'MemoryUsed'">MB</span>
             <span data-ng-if="item.metric === 'CpuUsedCores'">%</span>
             <span data-ng-if="item.metric === 'DiskIOReadBytesRate' || item.metric === 'DiskIOWriteBytesRate' ||
-            item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">Kb/s</span>
+            item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">KB/s</span>
         </td>
         <td data-title="'监控周期'">{/item.duration/} 分钟
         </td>

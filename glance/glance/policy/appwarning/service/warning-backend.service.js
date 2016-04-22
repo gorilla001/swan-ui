@@ -36,7 +36,7 @@
         }
 
         function warningEvent(params) {
-            return gHttp.Resource('warning.tasks').get({params: params});
+            return gHttp.Resource('warning.tasksEvent').get({params: params});
         }
     }
 })();

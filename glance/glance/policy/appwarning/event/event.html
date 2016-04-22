@@ -14,24 +14,34 @@
     </button>
 
 </div>
-<table ng-table="warningEventCtrl.warningListTable" template-pagination="/views/common/ngTablePage.html"
+<table ng-table="warningEventCtrl.warningEventTable" template-pagination="/views/common/ngTablePage.html"
        class="table table-striped" ng-table-columns-binding="boundCols">
     <tbody>
     <tr ng-repeat="item in warningEventCtrl.warningEvents">
-        <td data-title="'编号'" sortable="'number'">
-            编号
+        <td data-title="'编号'">
+            {/item.index/}
         </td>
         <td data-title="'规则 ID'">
-            规则 ID
+            {/item.taskid/}
         </td>
-        <td data-title="'应用'">应用
+        <td data-title="'应用'" sortable="'appname'">{/item.appname/}
         </td>
-        <td data-title="'告警时间'">告警时间</td>
+        <td data-title="'告警时间'" sortable="'alerttime'">{/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
         <td data-title="'实例'">
-            实例
+            {/item.instance/}
+        </td>
+        <td data-title="'实际值'">
+            {/item.currentvalue/}
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
         </td>
         <td data-title="'告警内容'">
-            告警内容
+            {/warningEventCtrl.WARNING_TYPE[item.metric]/} {/warningEventCtrl.WARNING_RULE[item.operator]/}
+            {/item.threshold/}
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
         </td>
     </tr>
     </tbody>
