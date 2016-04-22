@@ -83,15 +83,23 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
 
     function buildHiddenStatuses(hiddenStatuses, clickedStatus) {
          var index;
-         if(hiddenStatuses.length) {
-            index = hiddenStatuses.indexOf(clickedStatus);
-            (index === -1) ? hiddenStatuses.push(clickedStatus): hiddenStatuses.splice(index, 1);
+         var filterStatus;
+         if (clickedStatus === NODE_STATUS.installing) {
+             filterStatus = [NODE_STATUS.installing, NODE_STATUS.initing, NODE_STATUS.upgrading, NODE_STATUS.repairing];
          } else {
-            var showStatuses = Object.keys(NODE_STATUS);
-            index = showStatuses.indexOf(clickedStatus);
-            showStatuses.splice(index, 1);
-            hiddenStatuses = showStatuses;
+             filterStatus = [clickedStatus];
          }
+         angular.forEach(filterStatus, function(status) {
+             if(hiddenStatuses.length) {
+                 index = hiddenStatuses.indexOf(status);
+                 (index === -1) ? hiddenStatuses.push(status): hiddenStatuses.splice(index, 1);
+             } else {
+                 var showStatuses = Object.keys(NODE_STATUS);
+                 index = showStatuses.indexOf(status);
+                 showStatuses.splice(index, 1);
+                 hiddenStatuses = showStatuses;
+             }
+         })
          return hiddenStatuses;
     }
 

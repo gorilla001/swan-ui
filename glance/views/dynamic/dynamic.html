@@ -60,11 +60,13 @@
                         <li class="terminated">
                           <a>失联主机 <span>{/statusMgr.nodeStatusCount[clusterId].terminated || 0/}</span></a>
                         </li>
-                        <li class="failed">
-                          <a>报警主机 <span>{/statusMgr.nodeStatusCount[clusterId].failed || 0/}</span></a>
-                        </li>
                         <li class="installing">
-                          <a>初始化主机 <span>{/(statusMgr.nodeStatusCount[clusterId].installing + statusMgr.nodeStatusCount[clusterId].upgrading) || 0/}</span></a>
+                          <a>维护中主机 <span>{/(statusMgr.nodeStatusCount[clusterId].installing+statusMgr.nodeStatusCount[clusterId].upgrading+statusMgr.nodeStatusCount[clusterId].initing+statusMgr.nodeStatusCount[clusterId].repairing) || 0/}</span></a>
+                        </li>
+                        <li class="failed">
+                          <a>异常主机 <span>{/statusMgr.nodeStatusCount[clusterId].failed || 0/}</span>&nbsp;&nbsp;
+                             报警主机 <span>{/statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</span>
+                          </a>
                         </li>
                     </ul>
                 </div>
