@@ -24,7 +24,7 @@
                     <div class="col-md-7">
                         <datetimepicker
                                 min-date="minDate" hour-step="hourStep"
-                                minute-step="minuteStep" ng-model="createScalingCtrl.form.startTime"
+                                minute-step="minuteStep" ng-model="createScalingCtrl.form.started"
                                 show-meridian="createScalingCtrl.showMeridian"
                                 date-format="yyyy-MM-dd" date-options="createScalingCtrl.dateOptions"
                                 readonly-date="false"
@@ -41,14 +41,14 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">循环周期</label>
                     <div class="col-md-1">
-                        <select class="form-control" data-ng-model="createScalingCtrl.form.cycleType"
+                        <select class="form-control" data-ng-model="createScalingCtrl.form.durationType"
                                 data-ng-options="cycle.label as cycle.name for cycle in createScalingCtrl.selectCycle">
                         </select>
                     </div>
 
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="cycleTimes" placeholder="周期"
-                               data-ng-model="createScalingCtrl.form.cycleTimes" min="1">
+                        <input type="number" class="form-control" name="duration" placeholder="周期"
+                               data-ng-model="createScalingCtrl.form.duration" min="1">
                     </div>
                 </div>
 
@@ -64,8 +64,8 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">实例个数</label>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="instances"
-                               data-ng-model="createScalingCtrl.form.instances"
+                        <input type="number" class="form-control" name="instance"
+                               data-ng-model="createScalingCtrl.form.instance"
                                data-required="required">
                     </div>
                 </div>

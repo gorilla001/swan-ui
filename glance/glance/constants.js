@@ -227,7 +227,9 @@ BACKEND_URL = {
         appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks",
         ports: "api/v3/clusters/$cluster_id/ports",
         logPaths: "api/v3/clusters/$cluster_id/apps/$app_id/logpaths",
-        appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes"
+        appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes",
+        scale: 'api/v3/clusters/$cluster_id/apps/$app_id/scale',
+        scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id'
     },
     user: {
         groups: 'api/v3/groups',

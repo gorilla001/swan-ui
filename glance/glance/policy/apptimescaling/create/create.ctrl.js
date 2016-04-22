@@ -4,15 +4,15 @@
         .controller('CreateScalingCtrl', CreateScalingCtrl);
 
     /* @ngInject */
-    function CreateScalingCtrl(appservice, $state, $stateParams, Notification) {
+    function CreateScalingCtrl(appservice, $state, $stateParams, Notification, appScalingBackend) {
         var self = this;
         self.form = {
-            appname: '',
-            startTime: new Date(),
-            instances: 1,
+            appName: '',
+            started: new Date(),
+            instance: 1,
             times: '',
-            cycleType: 'year',
-            cycleTimes: ''
+            durationType: 'year',
+            duration: ''
         };
 
         self.selectCycle = [
@@ -23,6 +23,10 @@
             {
                 name: '月',
                 label: 'month'
+            },
+            {
+                name: '周',
+                label: 'week'
             },
             {
                 name: '日',
@@ -63,8 +67,12 @@
 
         function create() {
             ///
-            self.form.appname = self.selectApp.name;
-            console.log(self.form)
+            self.form.appName = self.selectApp.name;
+            appScalingBackend.createScaling(self.selectApp.cid, self.selectApp.id, self.form)
+                .then(function (data) {
+                    Notification.success('扩缩策略创建成功');
+                    $state.go('policy.apptimescaling.scalinglist', {per_page: 20, page: 1}, {reload: true})
+                })
         }
     }
 })();
