@@ -11,8 +11,8 @@
                     <label class="col-md-2 control-label">应用名称</label>
                     <div class="col-md-5">
                         <select class="form-control"
-                                data-ng-options="app.name as app.name for app in createScalingCtrl.apps"
-                                data-ng-model="createScalingCtrl.form.appname"
+                                data-ng-options="app as app.name for app in createScalingCtrl.apps"
+                                data-ng-model="createScalingCtrl.selectApp"
                                 data-required="required">
                             <option value="">---请选择应用---</option>
                         </select>

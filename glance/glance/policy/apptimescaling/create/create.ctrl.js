@@ -63,6 +63,8 @@
 
         function create() {
             ///
+            self.form.appname = self.selectApp.name;
+            console.log(self.form)
         }
     }
 })();
