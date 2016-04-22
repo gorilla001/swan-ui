@@ -229,6 +229,8 @@ BACKEND_URL = {
         logPaths: "api/v3/clusters/$cluster_id/apps/$app_id/logpaths",
         appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes",
         scale: 'api/v3/clusters/$cluster_id/apps/$app_id/scale',
+        crons: 'api/v3/crons',
+        cron: 'api/v3/crons/$scale_id',
         scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id'
     },
     user: {

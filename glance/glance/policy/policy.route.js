@@ -96,6 +96,9 @@
                         templateUrl: '/glance/policy/apptimescaling/list/list.html',
                         controller: 'ScalingListCtrl as scalingListCtrl'
                     }
+                },
+                resolve: {
+                    data: scaleList
                 }
             })
             .state('policy.apptimescaling.scalingevent', {
@@ -131,5 +134,10 @@
     /* @ngInject */
     function warningEvent(appWarningBackend, utils, $stateParams) {
         return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
+    }
+
+    /* @ngInject */
+    function scaleList(appScalingBackend, utils, $stateParams) {
+        return appScalingBackend.scaleList(utils.encodeQueryParams($stateParams));
     }
 })();

@@ -16,12 +16,12 @@
             return gHttp.Resource('app.scale', ({cluster_id: cid, app_id: appId})).post(data);
         }
 
-        function scaleList(cid, appId, params) {
-            return gHttp.Resource('app.scale', ({cluster_id: cid, app_id: appId})).get({params: params});
+        function scaleList(params) {
+            return gHttp.Resource('app.crons').get({params: params});
         }
 
-        function deleteScale(cid, appId, scaleId) {
-            return gHttp.Resource('app.scale', ({cluster_id: cid, app_id: appId, scale_id: scaleId})).delete();
+        function deleteScale(scaleId) {
+            return gHttp.Resource('app.cron', ({scale_id: scaleId})).delete();
         }
     }
 })();
