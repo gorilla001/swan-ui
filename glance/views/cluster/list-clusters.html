@@ -37,12 +37,17 @@
                     </li>
                     <li class="failed {/clustersNodesData[$index].selectedClasses.failed/}" data-ng-show="cluster.amounts.failed">
                         <a data-ng-click="filterSingleCluster($index, 'failed')" href="#">
-                            报警主机 <span>{/cluster.amounts.failed/}</span>
+                            异常主机 <span>{/cluster.amounts.failed/}</span>
                         </a>
                     </li>
-                    <li class="installing {/clustersNodesData[$index].selectedClasses.installing/}" data-ng-show="cluster.amounts.installing">
+                    <li class="failed {/clustersNodesData[$index].selectedClasses.failed/}" data-ng-show="cluster.amounts.abnormal">
+                        <a data-ng-click="filterSingleCluster($index, 'abnormal')" href="#">
+                            报警主机 <span>{/cluster.amounts.abnormal/}</span>
+                        </a>
+                    </li>
+                    <li class="installing {/clustersNodesData[$index].selectedClasses.installing/}" data-ng-show="cluster.amounts.installing||cluster.amounts.initing||cluster.amounts.upgrading||cluster.amounts.repairing">
                         <a data-ng-click="filterSingleCluster($index, 'installing')" href="#">
-                            初始化主机 <span>{/cluster.amounts.installing/}</span>
+                            维护中主机 <span>{/cluster.amounts.installing+cluster.amounts.initing+cluster.amounts.upgrading+cluster.amounts.repairing/}</span>
                         </a>
                     </li>
                 </ul>
