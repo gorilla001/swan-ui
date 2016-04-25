@@ -12,7 +12,7 @@
                     <div class="col-md-5">
                         <select class="form-control"
                                 data-ng-options="app as app.name for app in createLogWarningCtrl.apps"
-                                data-ng-model="createLogWarningCtrl.selectApp"
+                                data-ng-model="createLogWarningCtrl.app"
                                 data-required="required">
                             <option value="">---请选择应用---</option>
                         </select>
@@ -22,8 +22,8 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">监控关键字</label>
                     <div class="col-md-5">
-                        <input type="text" class="form-control" name="keywords" placeholder="多个关键字用 , 分隔"
-                               data-ng-model="createLogWarningCtrl.form.keywords"
+                        <input type="text" class="form-control" name="keyword" placeholder="多个关键字用 , 分隔"
+                               data-ng-model="createLogWarningCtrl.form.keyword"
                                data-required="required">
                     </div>
                 </div>
@@ -31,8 +31,8 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">监控周期</label>
                     <div class="col-md-2">
-                        <input type="text" class="form-control" name="cycle" placeholder="监控周期"
-                               data-ng-model="createLogWarningCtrl.form.cycle"
+                        <input type="number" class="form-control" name="interval" placeholder="监控周期"
+                               data-ng-model="createLogWarningCtrl.form.interval"
                                data-required="required">
                     </div>
                 </div>
@@ -40,8 +40,8 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">连续出现次数</label>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="times" placeholder="连续出现次数"
-                               data-ng-model="createLogWarningCtrl.form.times" min="0"
+                        <input type="number" class="form-control" name="gtnum" placeholder="连续出现次数"
+                               data-ng-model="createLogWarningCtrl.form.gtnum" min="0"
                                data-required="required">
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="col-md-5">
                         <input type="text" class="form-control" placeholder="mail1@123.com; mail2@123.com, ..."
                                name="emails"
-                               data-required="required" data-ng-model="logwarningForm.form.emails">
+                               data-required="required" data-ng-model="createLogWarningCtrl.form.emails">
                     </div>
                 </div>
 
