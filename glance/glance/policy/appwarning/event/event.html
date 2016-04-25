@@ -3,7 +3,7 @@
         <div class="form-group">
             <input type="text" class="form-control" ng-model="warningEventCtrl.searchKeyWord"
                    name="searchKeyWord"
-                   placeholder="输入应用名称进行搜索" my-enter="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)">
+                   placeholder="输入应用全称进行搜索" my-enter="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)">
         </div>
         <button type="submit" ng-click="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)"
                 class="btn btn-info">搜索
@@ -24,9 +24,9 @@
         <td data-title="'规则 ID'">
             {/item.taskid/}
         </td>
-        <td data-title="'应用'" sortable="'appname'">{/item.appname/}
+        <td data-title="'应用'">{/item.appname/}
         </td>
-        <td data-title="'告警时间'" sortable="'alerttime'">{/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+        <td data-title="'告警时间'">{/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
         <td data-title="'实例'">
             {/item.instance/}
         </td>

@@ -58,7 +58,7 @@
                 }
             })
             .state('policy.appwarning.warninglist', {
-                url: '/warninglist?per_page&page&order&keywords&sort_by&alias',
+                url: '/warninglist?per_page&page&order&keywords&sort_by&appalias',
                 views: {
                     'warningContent': {
                         templateUrl: '/glance/policy/appwarning/list/list.html',
