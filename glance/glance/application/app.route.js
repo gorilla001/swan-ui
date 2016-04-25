@@ -16,8 +16,12 @@
                     }
                 },
                 resolve: {
-                    target: function () {return 'create'},
-                    app: function () {return null}
+                    target: function () {
+                        return 'create'
+                    },
+                    app: function () {
+                        return null
+                    }
                 }
             })
             .state('appupdate', {
@@ -29,7 +33,9 @@
                     }
                 },
                 resolve: {
-                    target: function () {return 'update'},
+                    target: function () {
+                        return 'update'
+                    },
                     app: getAppInfo
                 }
             })
@@ -126,14 +132,13 @@
                     }
                 }
             });
-
     }
 
     /* @ngInject */
     function listClusters(gHttp) {
         return gHttp.Resource('cluster.clusters').get()
     }
-    
+
     /* @ngInject */
     function listGroups(userBackend) {
         return userBackend.listGroups();

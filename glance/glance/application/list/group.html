@@ -79,6 +79,11 @@
                         data-ng-click="listappctrl.redeploy(app.cid, app.id)"
                         data-ng-show="groupAppsCtrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
                 </button>
+                <button type="button"
+                        data-ng-if="groupAppsCtrl.appListStatus[app.id].status == '2'"
+                        class="btn btn-default btn-xs" data-ui-sref="policy.appwarning.warninglist(page:1, per_page:20, appalias: app.alias, keywords: app.name)">
+                    告警策略
+                </button>
             </td>
         </tr>
         </tbody>

@@ -1,0 +1,51 @@
+<div>
+    <form class="form-inline search-container col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="warningEventCtrl.searchKeyWord"
+                   name="searchKeyWord"
+                   placeholder="输入应用全称进行搜索" my-enter="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)">
+        </div>
+        <button type="submit" ng-click="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)"
+                class="btn btn-info">搜索
+        </button>
+    </form>
+
+    <button class="btn btn-success col-md-2 col-md-offset-6" type="button" data-ui-sref="policyWarningCreate">创建新规则
+    </button>
+
+</div>
+<table ng-table="warningEventCtrl.warningEventTable" template-pagination="/views/common/ngTablePage.html"
+       class="table table-striped" ng-table-columns-binding="boundCols">
+    <tbody>
+    <tr ng-repeat="item in warningEventCtrl.warningEvents">
+        <td data-title="'编号'">
+            {/item.index/}
+        </td>
+        <td data-title="'规则 ID'">
+            {/item.taskid/}
+        </td>
+        <td data-title="'应用'">{/item.appname/}
+        </td>
+        <td data-title="'告警时间'">{/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+        <td data-title="'实例'">
+            {/item.instance/}
+        </td>
+        <td data-title="'实际值'">
+            {/item.currentvalue/}
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
+        </td>
+        <td data-title="'告警内容'">
+            {/warningEventCtrl.WARNING_TYPE[item.metric]/} {/warningEventCtrl.WARNING_RULE[item.operator]/}
+            {/item.threshold/}
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="alert alert-warning text-center" data-ng-show="!warningEventCtrl.warningEvents.length">
+    未查询到监控事件
+</div>

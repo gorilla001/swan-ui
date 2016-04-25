@@ -162,6 +162,21 @@ IMAGE_BASE_URL = {
     prod: 'https://static.shurenyun.com/'
 };
 
+WARNING_TYPE = {
+    MemoryUsed: '内存',
+    CpuUsedCores: 'CPU 使用',
+    DiskIOReadBytesRate: '磁盘读取',
+    DiskIOWriteBytesRate: '磁盘写入',
+    NetworkReceviedByteRate: '网络接收',
+    NetworkSentByteRate: '网络发送'
+};
+
+WARNING_RULE = {
+    '>': '大于',
+    '==': '等于',
+    '<': '小于'
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
@@ -212,7 +227,11 @@ BACKEND_URL = {
         appTask: "api/v3/clusters/$cluster_id/apps/$app_id/tasks",
         ports: "api/v3/clusters/$cluster_id/ports",
         logPaths: "api/v3/clusters/$cluster_id/apps/$app_id/logpaths",
-        appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes"
+        appNodes: "api/v3/clusters/$cluster_id/apps/$app_id/appnodes",
+        scale: 'api/v3/clusters/$cluster_id/apps/$app_id/scale',
+        crons: 'api/v3/crons',
+        cron: 'api/v3/crons/$scale_id',
+        scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id'
     },
     user: {
         groups: 'api/v3/groups',
@@ -239,5 +258,11 @@ BACKEND_URL = {
         repositoryTags: 'api/v3/repositories/$project_name/$repository_name/tags',
         repositoryCategories: 'api/v3/repositories/categories',
         deployRepo: 'api/v3/repositories/$project_name/$repository_name/apps'
+    },
+
+    warning: {
+        tasks: 'api/v3/tasks',
+        task: 'api/v3/tasks/$task_id',
+        tasksEvent: 'api/v3/alert/events'
     }
 };

@@ -48,7 +48,12 @@
                                 <i class="fa fa-server"></i> <span class="text">集群管理</span>
                             </a>
                         </li>
-
+                        <li data-ng-class="{'active': show=='policy'}" title="服务策略">
+                            <a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
+                               data-ui-sref-opts="{reload: true, inherit: false}">
+                                <i class="fa fa-clock-o"></i> <span class="text">服务策略</span>
+                            </a>
+                        </li>
                         <li data-ng-class="{'active': show=='application'}" title="应用管理">
                             <a data-ui-sref="applist.my" data-ui-sref-opts="{reload: true}">
                                 <i class="fa fa-cube"></i> <span class="text">应用管理</span>
@@ -189,20 +194,20 @@
         <script src="glance/user/password/update.ctrl.js" type="text/javascript"></script>
         <script src="glance/user/services/user-backend.service.js"></script>
 
-        <script type="text/javascript" src="glance/image/image.module.js"></script>
-        <script type="text/javascript" src="glance/image/image.config.js"></script>
-        <script type="text/javascript" src="glance/image/image.route.js"></script>
-        <script type="text/javascript" src="glance/image/services/image-backend.service.js"></script>
-        <script type="text/javascript" src="glance/image/services/image-build-setting.service.js"></script>
-        <script type="text/javascript" src="glance/image/services/image-curd-service.js"></script>
-        <script type="text/javascript" src="glance/image/modals/image-log-modal.service.js"></script>
-        <script type="text/javascript" src="glance/filter/project-url.filter.js"></script>
-        <script type="text/javascript" src="glance/image/list/list.ctrl.js"></script>
-        <script type="text/javascript" src="glance/image/create/create.ctrl.js"></script>
-        <script type="text/javascript" src="glance/image/detail/detail.ctrl.js"></script>
-        <script type="text/javascript" src="glance/image/detail/version.ctrl.js"></script>
-        <script type="text/javascript" src="glance/image/detail/brief.ctrl.js"></script>
-        <script type="text/javascript" src="glance/image/detail/setting.ctrl.js"></script>
+        <script src="glance/image/image.module.js" type="text/javascript"></script>
+        <script src="glance/image/image.config.js" type="text/javascript"></script>
+        <script src="glance/image/image.route.js" type="text/javascript"></script>
+        <script src="glance/image/services/image-backend.service.js" type="text/javascript"></script>
+        <script src="glance/image/services/image-build-setting.service.js" type="text/javascript"></script>
+        <script src="glance/image/services/image-curd-service.js" type="text/javascript"></script>
+        <script src="glance/image/modals/image-log-modal.service.js" type="text/javascript"></script>
+        <script src="glance/filter/project-url.filter.js" type="text/javascript"></script>
+        <script src="glance/image/list/list.ctrl.js" type="text/javascript"></script>
+        <script src="glance/image/create/create.ctrl.js" type="text/javascript"></script>
+        <script src="glance/image/detail/detail.ctrl.js" type="text/javascript"></script>
+        <script src="glance/image/detail/version.ctrl.js" type="text/javascript"></script>
+        <script src="glance/image/detail/brief.ctrl.js" type="text/javascript"></script>
+        <script src="glance/image/detail/setting.ctrl.js" type="text/javascript"></script>
 
         <script src="glance/repository/repo.module.js" type="text/javascript"></script>
         <script src="glance/repository/repo.config.js" type="text/javascript"></script>
@@ -210,6 +215,19 @@
         <script src="glance/repository/services/repo-backend.service.js" type="text/javascript"></script>
         <script src="glance/repository/list/list.ctrl.js" type="text/javascript"></script>
         <script src="glance/repository/detail/detail.ctrl.js" type="text/javascript"></script>
+
+        <script src="glance/policy/policy.module.js" type="text/javascript"></script>
+        <script src="glance/policy/policy.config.js" type="text/javascript"></script>
+        <script src="glance/policy/policy.route.js" type="text/javascript"></script>
+        <script src="glance/policy/appwarning/service/warning-backend.service.js" type="text/javascript"></script>
+        <script src="glance/policy/appwarning/service/warning-curd.service.js" type="text/javascript"></script>
+        <script src="glance/policy/appwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/appwarning/list/list.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/appwarning/event/event.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/apptimescaling/service/scaling-backend.service.js" type="text/javascript"></script>
+        <script src="glance/policy/apptimescaling/service/scaling-curd.service.js" type="text/javascript"></script>
+        <script src="glance/policy/apptimescaling/create/create.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/apptimescaling/list/list.ctrl.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js js/old-main.js-->
