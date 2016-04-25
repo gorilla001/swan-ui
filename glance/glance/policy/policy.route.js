@@ -117,6 +117,40 @@
                         controller: 'CreateScalingCtrl as createScalingCtrl'
                     }
                 }
+            })
+            .state('policyLogWarningCreate', {
+                url: '/policyLogWarningCreate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/policy/applogwarning/create/create.html',
+                        controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
+                    }
+                }
+            })
+            .state('policy.applogwarning', {
+                url: '/applogwarning',
+                views: {
+                    'policyTab': {
+                        templateUrl: '/glance/policy/applogwarning/log-tab-view.html'
+                    }
+                }
+            })
+            .state('policy.applogwarning.loglist', {
+                url: '/loglist?per_page&page&order&keywords&sort_by',
+                views: {
+                    'logContent': {
+                        templateUrl: '/glance/policy/applogwarning/list/list.html',
+                        controller: 'LogWarningListCtrl as logWarningListCtrl'
+                    }
+                }
+            })
+            .state('policy.applogwarning.logevent', {
+                url: '/logevent',
+                views: {
+                    'logContent': {
+                        templateUrl: '/glance/policy/applogwarning/event/event.html'
+                    }
+                }
             });
 
     }

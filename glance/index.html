@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li data-ng-class="{'active': show=='policy'}" title="服务策略">
-                            <a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
+                            <a data-ui-sref="policy.applogwarning.loglist({page:1, per_page:20})"
                                data-ui-sref-opts="{reload: true, inherit: false}">
                                 <i class="fa fa-clock-o"></i> <span class="text">服务策略</span>
                             </a>
@@ -228,6 +228,10 @@
         <script src="glance/policy/apptimescaling/service/scaling-curd.service.js" type="text/javascript"></script>
         <script src="glance/policy/apptimescaling/create/create.ctrl.js" type="text/javascript"></script>
         <script src="glance/policy/apptimescaling/list/list.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/applogwarning/service/logwarning-backend.service.js" type="text/javascript"></script>
+        <script src="glance/policy/applogwarning/service/logwarning-curd.service.js" type="text/javascript"></script>
+        <script src="glance/policy/applogwarning/create/create.ctrl.js" type="text/javascript"></script>
+        <script src="glance/policy/applogwarning/list/list.ctrl.js" type="text/javascript"></script>
         <!--endbuild-->
         
         <!--build:js js/old-main.js-->

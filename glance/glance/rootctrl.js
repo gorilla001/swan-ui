@@ -146,6 +146,9 @@
                             case toState.name.includes('apptimescaling'):
                                 $rootScope.tabActiveFlag = 'apptimescaling';
                                 break;
+                            case toState.name.includes('applogwarning'):
+                                $rootScope.tabActiveFlag = 'applogwarning';
+                                break;
                         }
                         break;
                 }
