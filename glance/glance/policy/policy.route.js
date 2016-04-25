@@ -105,7 +105,7 @@
                 url: '/scalingevent',
                 views: {
                     'scalingContent': {
-                        templateUrl: '/glance/policy/apptimescaling/event/scalingEvent.html'
+                        templateUrl: '/glance/policy/apptimescaling/event/event.html'
                     }
                 }
             })
