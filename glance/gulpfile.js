@@ -129,6 +129,21 @@ gulp.task('template-min-repo', ['template-min-image'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
+//policy
+gulp.task('template-min-policy', ['template-min-repo'], function () {
+    return gulp.src('glance/policy/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlPolicy.js', {
+            module: 'glance.policy',
+            root: '/glance/policy'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 // views html to js
 gulp.task('template-min', ['template-min-repo'], function () {
     return gulp.src('views/**/*.html')
