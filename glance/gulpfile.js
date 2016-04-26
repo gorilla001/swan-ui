@@ -145,7 +145,7 @@ gulp.task('template-min-policy', ['template-min-repo'], function () {
 });
 
 // views html to js
-gulp.task('template-min', ['template-min-repo'], function () {
+gulp.task('template-min', ['template-min-policy'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,
