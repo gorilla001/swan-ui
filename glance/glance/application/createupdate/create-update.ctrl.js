@@ -63,6 +63,7 @@
                 parameters: []
             };
             self.isNetworkDisable = false;
+            self.isDockerArgDisable = false;
         } else {
             self.form = {
                 cluster_id: app.cid,
@@ -134,9 +135,11 @@
                     if (cluster.is_demo_group) {
                         self.form.network = 'BRIDGE';
                         self.isNetworkDisable = true;
+                        self.isDockerArgDisable = true;
                         self.form.parameters = [];
                     } else if (target === 'create'){
                         self.isNetworkDisable = false;
+                        self.isDockerArgDisable = false;
                     }
                 });
         }
@@ -191,7 +194,7 @@
 
         //docker arg module
         self.openDockerArg = function(){
-            if(self.isNetworkDisable){
+            if(self.isDockerArgDisable){
                 Notification.warning('共享集群不能添加 Docker 参数');
                 return
             }
