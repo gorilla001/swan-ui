@@ -1,1 +1,54 @@
-日志告警列表<a data-ui-sref="policyLogWarningCreate">创建日志规则</a>
+<div>
+    <form class="form-inline search-container col-md-4">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="logWarningListCtrl.searchKeyWord"
+                   name="searchKeyWord"
+                   placeholder="输入应用名称进行搜索" my-enter="logWarningListCtrl.doSearch(logWarningListCtrl.searchKeyWord)">
+        </div>
+        <button type="submit" ng-click="logWarningListCtrl.doSearch(logWarningListCtrl.searchKeyWord)"
+                class="btn btn-info">搜索
+        </button>
+    </form>
+
+    <button class="btn btn-success col-md-2 col-md-offset-6" type="button" data-ui-sref="policyLogWarningCreate">创建新规则
+    </button>
+
+</div>
+<table ng-table="logWarningListCtrl.logListTable" template-pagination="/views/common/ngTablePage.html"
+       class="table table-striped" ng-table-columns-binding="boundCols">
+    <tbody>
+    <tr ng-repeat="item in logWarningListCtrl.logWarningList">
+        <td data-title="'ID'" sortable="'id'">
+            ID
+        </td>
+        <td data-title="'应用名称'">
+            应用名称
+        </td>
+        <td data-title="'监控关键字'">
+            监控关键字
+        </td>
+        <td data-title="'监控周期'">
+            监控周期
+        </td>
+        <td data-title="'出现次数'">
+            出现次数
+        </td>
+        <td data-title="'联系人'">
+            联系人
+        </td>
+        <td data-title="'更新时间'">
+            更新时间
+        </td>
+        <td data-title="'操作'">
+            <button type="button"
+                    class="btn btn-danger btn-xs" data-ng-click="logWarningListCtrl.deleteLogPolicy(111)"
+                    data-demo-disable>
+                删除
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="alert alert-warning text-center" data-ng-show="!logWarningListCtrl.logWarningList.length">
+    未查询到日志告警数据
+</div>

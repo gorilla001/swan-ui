@@ -142,14 +142,21 @@
                         templateUrl: '/glance/policy/applogwarning/list/list.html',
                         controller: 'LogWarningListCtrl as logWarningListCtrl'
                     }
+                },
+                resolve: {
+                    data: logList
                 }
             })
             .state('policy.applogwarning.logevent', {
-                url: '/logevent',
+                url: '/logevent?per_page&page&order&keywords&sort_by',
                 views: {
                     'logContent': {
-                        templateUrl: '/glance/policy/applogwarning/event/event.html'
+                        templateUrl: '/glance/policy/applogwarning/event/event.html',
+                        controller: 'EventLogListCtrl as eventLogListCtrl'
                     }
+                },
+                resolve: {
+                    data: eventLogList
                 }
             });
 
@@ -173,5 +180,15 @@
     /* @ngInject */
     function scaleList(appScalingBackend, utils, $stateParams) {
         return appScalingBackend.scaleList(utils.encodeQueryParams($stateParams));
+    }
+
+    /* @ngInject */
+    function logList(logWarningBackend, utils, $stateParams) {
+        return {logs: [{}, {}], Count: 21};
+    }
+
+    /* @ngInject */
+    function eventLogList(logWarningBackend, utils, $stateParams) {
+        return {events: [{}, {}], Count: 21};
     }
 })();

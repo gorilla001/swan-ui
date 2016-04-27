@@ -36,6 +36,7 @@
         function create() {
             self.form.appalias = self.app.alias;
             self.form.clusterid = self.app.cid;
+            console.log(self.form)
             logWarningBackend.createLogPolicy(self.form)
                 .then(function (data) {
                     Notification.success('日志告警创建成功');
