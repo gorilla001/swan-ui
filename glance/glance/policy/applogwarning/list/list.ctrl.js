@@ -6,9 +6,9 @@
     /* @ngInject */
     function LogWarningListCtrl(data, table, $state, $stateParams) {
         var self = this;
-        self.logWarningList = data.logs;
+        self.logWarningList = data.alarms;
         self.searchKeyWord = $stateParams.keywords || '';
-        self.logListTable = table.createParams(data.logs, data.Count);
+        self.logListTable = table.createParams(data.alarms, data.count);
         self.deleteLogPolicy = deleteLogPolicy;
         self.doSearch = doSearch;
         ///

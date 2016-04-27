@@ -184,7 +184,7 @@
 
     /* @ngInject */
     function logList(logWarningBackend, utils, $stateParams) {
-        return {logs: [{}, {}], Count: 21};
+        return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
     }
 
     /* @ngInject */

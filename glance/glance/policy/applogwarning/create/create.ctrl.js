@@ -4,8 +4,10 @@
         .controller('CreateLogWarningCtrl', CreateLogWarningCtrl);
 
     /* @ngInject */
-    function CreateLogWarningCtrl(appservice, $state, logWarningBackend) {
+    function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackendService) {
         var self = this;
+        var clusters = [];
+        var clusterMapping = [];
 
         self.form = {
             clusterid: '',
@@ -13,7 +15,8 @@
             interval: '',
             gtnum: '',
             keyword: '',
-            emails: ''
+            emails: '',
+            usertype: ''
         };
         self.create = create;
 
@@ -22,9 +25,23 @@
         activate();
 
         function activate() {
+            listCluster();
             getAppList()
         }
 
+        function listCluster() {
+            clusterBackendService.listClusters()
+                .then(function (data) {
+                    angular.forEach(data, function (cluster, index) {
+                        if (cluster.group_id) {
+                            clusters.push({id: cluster.id, name: cluster.group_name + ":" + cluster.name});
+                        } else {
+                            clusters.push({id: cluster.id, name: cluster.name});
+                        }
+                        clusterMapping[cluster.id] = cluster;
+                    });
+                });
+        }
 
         function getAppList() {
             appservice.listApps()
@@ -34,9 +51,9 @@
         }
 
         function create() {
+            self.form.usertype = clusterMapping[self.app.cid].group_id ? 'group' : 'user';
             self.form.appalias = self.app.alias;
             self.form.clusterid = self.app.cid;
-            console.log(self.form)
             logWarningBackend.createLogPolicy(self.form)
                 .then(function (data) {
                     Notification.success('日志告警创建成功');
