@@ -47,7 +47,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-2"  data-ng-class="{ 'has-error' : scalingForm.duration.$invalid && !scalingForm.duration.$pristine }">
                         <input type="number" class="form-control" name="duration" placeholder="周期"
                                data-ng-model="createScalingCtrl.form.duration" min="1">
                     </div>
@@ -55,18 +55,18 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">循环次数</label>
-                    <div class="col-md-2">
+                    <div class="col-md-2" data-ng-class="{ 'has-error' : scalingForm.times.$invalid && !scalingForm.times.$pristine }">
                         <input type="number" class="form-control" name="times" placeholder="次数"
-                               data-ng-model="createScalingCtrl.form.times"
+                               data-ng-model="createScalingCtrl.form.times" min="1"
                                data-required="required">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">实例个数</label>
-                    <div class="col-md-2">
+                    <div class="col-md-2" data-ng-class="{ 'has-error' : scalingForm.instance.$invalid && !scalingForm.instance.$pristine }">
                         <input type="number" class="form-control" name="instance"
-                               data-ng-model="createScalingCtrl.form.instance"
+                               data-ng-model="createScalingCtrl.form.instance" min="1"
                                data-required="required">
                     </div>
                 </div>
