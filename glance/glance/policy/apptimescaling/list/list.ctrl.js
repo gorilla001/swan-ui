@@ -4,7 +4,7 @@
         .controller('ScalingListCtrl', ScalingListCtrl);
 
     /* @ngInject */
-    function ScalingListCtrl(data, table, scaleCurd, $stateParams) {
+    function ScalingListCtrl(data, table, scaleCurd, $stateParams, $state) {
         var self = this;
         self.dateType = {
             year: '年',
