@@ -285,8 +285,8 @@ BACKEND_URL = {
     },
 
     warning: {
-        tasks: 'api/v3/tasks',
-        task: 'api/v3/tasks/$task_id',
+        tasks: 'api/v3/alert/tasks',
+        task: 'api/v3/alert/tasks/$task_id',
         tasksEvent: 'api/v3/alert/events'
     }
 };
