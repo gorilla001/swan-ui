@@ -191,7 +191,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
         $interpolateProvider.endSymbol('/}');
 
         NotificationProvider.setOptions({
-            replaceMessage: true
+            replaceMessage: false 
         });
     }]);
 
