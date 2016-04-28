@@ -1,8 +1,8 @@
 <div class="tab-pane active">
     <ul class="nav nav-tabs">
-        <li ui-sref-active="active"><a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">策略</a>
+        <li data-ng-class="{'active': tabContentPolicy=='warninglist'}"><a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">策略</a>
         </li>
-        <li ui-sref-active="active"><a data-ui-sref="policy.appwarning.warningevent({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">信息</a>
+        <li data-ng-class="{'active': tabContentPolicy=='warningevent'}"><a data-ui-sref="policy.appwarning.warningevent({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">信息</a>
         </li>
     </ul>
     <div class="tab-content">
