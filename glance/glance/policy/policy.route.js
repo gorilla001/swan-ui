@@ -189,6 +189,6 @@
 
     /* @ngInject */
     function eventLogList(logWarningBackend, utils, $stateParams) {
-        return {events: [{}, {}], Count: 21};
+        return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
     }
 })();

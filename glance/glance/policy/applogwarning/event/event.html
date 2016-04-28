@@ -14,26 +14,26 @@
        class="table table-striped" ng-table-columns-binding="boundCols">
     <tbody>
     <tr ng-repeat="item in eventLogListCtrl.eventLogList">
-        <td data-title="'编号'">
-            编号
+        <td data-title="'编号'" sortable="'id'">
+            {/item.id/}
         </td>
-        <td data-title="'规则 ID'">
-            规则 ID
+        <td data-title="'规则 ID'" sortable="'jobid'">
+            {/item.jobid/}
         </td>
-        <td data-title="'应用名称'">
-            应用名称
+        <td data-title="'应用名称'" sortable="'appname'">
+            {/item.appname/}
         </td>
-        <td data-title="'监控周期'">
-            监控周期
+        <td data-title="'监控周期(分钟)'">
+            {/item.ival/}
         </td>
-        <td data-title="'时间'">
-            时间
+        <td data-title="'时间'" sortable="'exectime'">
+            {/item.exectime | date: 'yyyy-MM-dd HH:mm'/}
         </td>
-        <td data-title="'关键字'">
-            关键字
+        <td data-title="'关键字'" sortable="'keyword'">
+            {/item.keyword/}
         </td>
-        <td data-title="'出现次数'">
-            出现次数
+        <td data-title="'出现次数'" sortable="'resultnum'">
+            {/item.resultnum/}
         </td>
     </tr>
     </tbody>
