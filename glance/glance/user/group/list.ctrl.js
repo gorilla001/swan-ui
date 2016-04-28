@@ -132,13 +132,35 @@
                     emails.push(_emails[i].trim());
                 }
                 userBackend.sendInvitation({emails: emails}, groupId).then(function(data) {
-                    if(data.error_emails.length) {
+                    /* TODO(mgniu): notification windows will be overlaped, this should be fixed */
+                    if(data.error_emails.length && data.invited_emails.length) {
                         var errMsg = '下列用户不存在:<br>';
                         for (var i = 0; i < data.error_emails.length; i++) {
                             errMsg += data.error_emails[i] + '<br>'
                         }
                         Notification.warning(errMsg);
-                    } else {
+
+                        var notif = '下列用户已被邀请:<br>';
+                        for (var i = 0; i < data.invited_emails.length; i++) {
+                            notif += data.invited_emails[i] + '<br>'
+                        }
+                        Notification.success(notif);
+                    }else {
+                        if(data.error_emails.length){
+                            var errMsg = '下列用户不存在:<br>';
+                            for (var i = 0; i < data.error_emails.length; i++) {
+                                errMsg += data.error_emails[i] + '<br>'
+                            }
+                            Notification.warning(errMsg);
+                        }else if(data.invited_emails.length){
+                            var notif = '下列用户已被邀请:<br>';
+                            for (var i = 0; i < data.invited_emails.length; i++) {
+                                notif += data.invited_emails[i] + '<br>'
+                            }
+                            Notification.success(notif);
+                        }
+                    }
+                    if(data.need_send){
                         Notification.success("邀请邮件发送成功");
                     }
                     self.showManagePanel(groupId);
