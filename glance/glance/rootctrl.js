@@ -142,9 +142,36 @@
                         switch (true) {
                             case toState.name.includes('appwarning'):
                                 $rootScope.tabActiveFlag = 'appwarning';
+                                switch (true){
+                                    case toState.name.includes('warninglist'):
+                                        $rootScope.tabContentPolicy = 'warninglist';
+                                        break;
+                                    case toState.name.includes('warningevent'):
+                                        $rootScope.tabContentPolicy = 'warningevent';
+                                        break;
+                                }
                                 break;
                             case toState.name.includes('apptimescaling'):
                                 $rootScope.tabActiveFlag = 'apptimescaling';
+                                switch (true){
+                                    case toState.name.includes('scalinglist'):
+                                        $rootScope.tabContentPolicy = 'scalinglist';
+                                        break;
+                                    case toState.name.includes('scalingevent'):
+                                        $rootScope.tabContentPolicy = 'scalingevent';
+                                        break;
+                                }
+                                break;
+                            case toState.name.includes('applogwarning'):
+                                $rootScope.tabActiveFlag = 'applogwarning';
+                                switch (true){
+                                    case toState.name.includes('loglist'):
+                                        $rootScope.tabContentPolicy = 'loglist';
+                                        break;
+                                    case toState.name.includes('logevent'):
+                                        $rootScope.tabContentPolicy = 'logevent';
+                                        break;
+                                }
                                 break;
                         }
                         break;

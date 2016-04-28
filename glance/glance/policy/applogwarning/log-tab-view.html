@@ -1,0 +1,11 @@
+<div class="tab-pane active">
+    <ul class="nav nav-tabs">
+        <li data-ng-class="{'active': tabContentPolicy=='loglist'}"><a data-ui-sref="policy.applogwarning.loglist({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">策略</a>
+        </li>
+        <li data-ng-class="{'active': tabContentPolicy=='logevent'}"><a data-ui-sref="policy.applogwarning.logevent({page:1, per_page:20})" data-ui-sref-opts="{reload: true}">信息</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div data-ui-view="logContent"></div>
+    </div>
+</div>

@@ -117,6 +117,47 @@
                         controller: 'CreateScalingCtrl as createScalingCtrl'
                     }
                 }
+            })
+            .state('policyLogWarningCreate', {
+                url: '/policyLogWarningCreate',
+                views: {
+                    '': {
+                        templateUrl: '/glance/policy/applogwarning/create/create.html',
+                        controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
+                    }
+                }
+            })
+            .state('policy.applogwarning', {
+                url: '/applogwarning',
+                views: {
+                    'policyTab': {
+                        templateUrl: '/glance/policy/applogwarning/log-tab-view.html'
+                    }
+                }
+            })
+            .state('policy.applogwarning.loglist', {
+                url: '/loglist?per_page&page&order&keywords&sort_by',
+                views: {
+                    'logContent': {
+                        templateUrl: '/glance/policy/applogwarning/list/list.html',
+                        controller: 'LogWarningListCtrl as logWarningListCtrl'
+                    }
+                },
+                resolve: {
+                    data: logList
+                }
+            })
+            .state('policy.applogwarning.logevent', {
+                url: '/logevent?per_page&page&order&keywords&sort_by',
+                views: {
+                    'logContent': {
+                        templateUrl: '/glance/policy/applogwarning/event/event.html',
+                        controller: 'EventLogListCtrl as eventLogListCtrl'
+                    }
+                },
+                resolve: {
+                    data: eventLogList
+                }
             });
 
     }
@@ -139,5 +180,15 @@
     /* @ngInject */
     function scaleList(appScalingBackend, utils, $stateParams) {
         return appScalingBackend.scaleList(utils.encodeQueryParams($stateParams));
+    }
+
+    /* @ngInject */
+    function logList(logWarningBackend, utils, $stateParams) {
+        return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
+    }
+
+    /* @ngInject */
+    function eventLogList(logWarningBackend, utils, $stateParams) {
+        return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
     }
 })();
