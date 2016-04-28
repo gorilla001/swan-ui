@@ -19,29 +19,29 @@
     <tbody>
     <tr ng-repeat="item in logWarningListCtrl.logWarningList">
         <td data-title="'ID'" sortable="'id'">
-            ID
+            {/item.id/}
         </td>
         <td data-title="'应用名称'">
-            应用名称
+            {/item.appname/}
         </td>
         <td data-title="'监控关键字'">
-            监控关键字
+            {/item.keyword/}
         </td>
-        <td data-title="'监控周期'">
-            监控周期
+        <td data-title="'监控周期(分钟)'">
+            {/item.ival/}
         </td>
         <td data-title="'出现次数'">
-            出现次数
+            {/item.gtnum/}
         </td>
         <td data-title="'联系人'">
-            联系人
+            {/item.emails/}
         </td>
         <td data-title="'更新时间'">
-            更新时间
+            {/item.createtime | date: 'yyyy-MM-dd HH:mm'/}
         </td>
         <td data-title="'操作'">
             <button type="button"
-                    class="btn btn-danger btn-xs" data-ng-click="logWarningListCtrl.deleteLogPolicy(111)"
+                    class="btn btn-danger btn-xs" data-ng-click="logWarningListCtrl.deleteLogPolicy(item.id)"
                     data-demo-disable>
                 删除
             </button>

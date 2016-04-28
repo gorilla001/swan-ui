@@ -4,7 +4,7 @@
         .controller('CreateLogWarningCtrl', CreateLogWarningCtrl);
 
     /* @ngInject */
-    function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackendService) {
+    function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackendService, Notification) {
         var self = this;
         var clusters = [];
         var clusterMapping = [];
@@ -53,6 +53,7 @@
         function create() {
             self.form.usertype = clusterMapping[self.app.cid].group_id ? 'group' : 'user';
             self.form.appalias = self.app.alias;
+            self.form.appname = self.app.name;
             self.form.clusterid = self.app.cid;
             logWarningBackend.createLogPolicy(self.form)
                 .then(function (data) {

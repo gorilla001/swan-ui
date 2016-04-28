@@ -4,7 +4,7 @@
         .controller('LogWarningListCtrl', LogWarningListCtrl);
 
     /* @ngInject */
-    function LogWarningListCtrl(data, table, $state, $stateParams) {
+    function LogWarningListCtrl(data, table, $state, $stateParams, logWarningCurd) {
         var self = this;
         self.logWarningList = data.alarms;
         self.searchKeyWord = $stateParams.keywords || '';
@@ -14,7 +14,7 @@
         ///
 
         function deleteLogPolicy(logId) {
-            ////
+            logWarningCurd.deletLogPolicy(logId)
         }
 
         function doSearch(searchKeyWord) {
