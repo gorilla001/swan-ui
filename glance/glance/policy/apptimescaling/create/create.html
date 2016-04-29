@@ -41,15 +41,16 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">循环周期</label>
-                    <div class="col-md-1">
-                        <select class="form-control" data-ng-model="createScalingCtrl.form.durationType"
-                                data-ng-options="cycle.label as cycle.name for cycle in createScalingCtrl.selectCycle">
-                        </select>
-                    </div>
 
                     <div class="col-md-2"  data-ng-class="{ 'has-error' : scalingForm.duration.$invalid && !scalingForm.duration.$pristine }">
                         <input type="number" class="form-control" name="duration" placeholder="周期"
                                data-ng-model="createScalingCtrl.form.duration" min="1">
+                    </div>
+
+                    <div class="col-md-1">
+                        <select class="form-control" data-ng-model="createScalingCtrl.form.durationType"
+                                data-ng-options="cycle.label as cycle.name for cycle in createScalingCtrl.selectCycle">
+                        </select>
                     </div>
                 </div>
 

@@ -27,16 +27,16 @@
         <td data-title="'监控关键字'" sortable="'keyword'">
             {/item.keyword/}
         </td>
-        <td data-title="'监控周期(分钟)'">
-            {/item.ival/}
+        <td data-title="'监控周期'">
+            {/item.ival/} 分钟
         </td>
         <td data-title="'出现次数'" sortable="'gtnum'">
-            {/item.gtnum/}
+            {/item.gtnum/} 次
         </td>
         <td data-title="'联系人'" sortable="'emails'">
             {/item.emails/}
         </td>
-        <td data-title="'更新时间'" sortable="'createtime'">
+        <td data-title="'创建时间'" sortable="'createtime'">
             {/item.createtime | date: 'yyyy-MM-dd HH:mm'/}
         </td>
         <td data-title="'操作'">

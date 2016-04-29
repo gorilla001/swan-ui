@@ -28,13 +28,13 @@
             {/item.duration/} {/scalingListCtrl.dateType[item.durationType]/}
         </td>
         <td data-title="'循环次数'">
-            {/item.times/}
+            {/item.times/} 次
+        </td>
+        <td data-title="'实例个数'">
+            {/item.instance/} 个
         </td>
         <td data-title="'创建时间'">
             {/item.created * 1000 | date: 'yyyy-MM-dd HH:mm'/}
-        </td>
-        <td data-title="'实例个数'">
-            {/item.instance/}
         </td>
         <td data-title="'操作'">
             <button type="button"
