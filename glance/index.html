@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-material-data-table/dist/md-data-table.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/shurenyun.css">
     <!--endbuild-->
@@ -50,7 +51,7 @@
                 <md-button ng-href="#"><i class="fa fa-cubes"></i>应用编排</md-button>
             </li>
             <li data-ng-class="{'active': show=='image'}" title="镜像构建">
-                <md-button data-ui-sref="imageList" data-ui-sref-opts="{reload: true, inherit: false}"><i class="fa fa-cogs"></i>镜像构建
+                <md-button data-ui-sref="imageList({page:1, per_page:20})" data-ui-sref-opts="{reload: true, inherit: false}"><i class="fa fa-cogs"></i>镜像构建
                 </md-button>
             </li>
             <li data-ng-class="{'active': show=='log'}" title="日志查询">
@@ -155,8 +156,12 @@
 <script src="bower_components/showdown/src/showdown.js" type="text/javascript"></script>
 <script src="bower_components/angular-markdown-directive/markdown.js" type="text/javascript"></script>
 <script src="bower_components/angular-base64/angular-base64.min.js" type="text/javascript"></script>
+<<<<<<< 4a5aae160b46a02fc4f62ec5b66b15d0f6ed2746
 <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
 <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js" type="text/javascript"></script>
+=======
+<script src="bower_components/angular-material-data-table/dist/md-data-table.js" type="text/javascript"></script>
+>>>>>>> Add angular-material-data-table bower
 <!--endbuild-->
 
 <!--build:js(build) js/main.js-->
