@@ -41,7 +41,7 @@
                    data-ng-change="warningListCtrl.switchNotice(item)"> 是
         </td>
         <td data-title="'更新时间'" sortable="'updated'">
-            {/item.updated | date:"yyyy-MM-dd HH:mm:ss"/}
+            {/item.updated | date:"yyyy-MM-dd HH:mm" : "UTC"/}
         </td>
         <td data-title="'操作'">
             <button type="button"
