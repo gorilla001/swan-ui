@@ -17,7 +17,7 @@
                     }
                 },
                 resolve: {
-                    data: listProjects
+                    project: listProjects
                 }
             })
             .state('imageCreate', {
@@ -76,7 +76,7 @@
     function getProject($stateParams, imageBackend) {
         return imageBackend.getProject($stateParams.projectId);
     }
-    
+
     /* @ngInject */
     function listProjects($stateParams, imageBackend, utils) {
         return imageBackend.listProjects(utils.encodeQueryParams($stateParams));

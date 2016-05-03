@@ -1,49 +1,24 @@
-<div class="page-header">
-    <h1>镜像构建</h1>
-    <a data-ui-sref="imageCreate" class="btn btn-success" data-demo-disable="left">新建项目</a>
-</div>
+<md-table-container>
+    <table md-table md-progress="imageListCtrl.promise">
+        <thead md-head md-order="imageListCtrl.query.order" md-on-reorder="imageListCtrl.getOrder">
+        <tr md-row>
+            <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>
+            <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
+            <th md-column md-numeric>Fat (g)</th>
+            <th md-column md-numeric>Carbs (g)</th>
+            <th md-column md-numeric>Protein (g)</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="dessert" ng-repeat="dessert in imageListCtrl.projects">
+            <td md-cell>1111</td>
+            <td md-cell>222222</td>
+            <td md-cell>33333</td>
+            <td md-cell>4444</td>
+            <td md-cell>5555</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
 
-<section>
-    <div class="main-container">
-        <div class="main-container-body">
-            <table ng-table="imageListCtrl.imageListTable" template-pagination="/views/common/ngTablePage.html"
-                   class="table table-striped" ng-table-columns-binding="boundCols">
-                <tbody>
-                <tr ng-repeat="project in imageListCtrl.projects">
-                    <td data-title="'项目名称'"><a href="#"
-                                               data-ui-sref="imageDetail.version({projectId: project.id})">{/project.name/}</a>
-                    </td>
-                    <td data-title="'状态'">
-                        <span data-ng-class="{'text-danger': project.status == 'failure' || project.status == 'error', 'text-success': project.status == 'success',
-                        'text-info': project.status == 'running' || project.status == 'pending'}" data-ng-hide="project.status == 'pending' && !project.active">
-                            <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
-                            'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
-                            {/imageListCtrl.IMAGE_STATUS[project.status]/}
-                        </span>
-
-                        <span data-ng-if="project.status == 'pending' && !project.active">未开始</span>
-                    </td>
-                    <td data-title="'镜像名称'" sortable="'name'">{/project.imageName/}</td>
-                    <td data-title="'最近构建时间'" sortable="'updated'">{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}
-                    </td>
-                    <td data-title="'最新版本'">{/project.image | filterVersion: 'version'/}</td>
-                    <td data-title="'操作'">
-                        <button class="btn btn-default btn-xs" data-ng-show="project.status == 'success'"
-                                data-ng-click="imageListCtrl.goToCreateApp(project.image)">部署
-                        </button>
-                        <button class="btn btn-default btn-xs"
-                                data-ng-click="imageListCtrl.manualBuild(project)">构建
-                        </button>
-                        <button class="btn btn-danger btn-xs" data-ng-click="imageListCtrl.deleteProject(project.id)">
-                            删除
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="alert alert-warning text-center" data-ng-show="!imageListCtrl.projects.length">
-                未查询到项目数据
-            </div>
-        </div>
-    </div>
-</section>
+<md-table-pagination md-limit="imageListCtrl.query.limit" md-limit-options="[5, 10, 15]" md-page="imageListCtrl.query.page" md-total="{/imageListCtrl.count/}" md-on-paginate="imageListCtrl.getPage" md-page-select></md-table-pagination>

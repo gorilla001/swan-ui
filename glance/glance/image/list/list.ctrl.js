@@ -5,21 +5,29 @@
 
 
     /* @ngInject */
-    function ImageListCtrl(imageCurd, table, data) {
+    function ImageListCtrl(imageCurd, $stateParams, $state, project) {
         var self = this;
 
         self.IMAGE_STATUS = IMAGE_STATUS;
-        self.projects = data.Project;
-        self.imageListTable = table.createParams(data.Project, data.Count);
-        
+        self.projects = project.Project;
+        self.count = project.Count;
+
+        self.query = {
+            order: $stateParams.order === 'asc' ? $stateParams.sort_by : '-' + $stateParams.sort_by,
+            limit: $stateParams.per_page || 20,
+            page: $stateParams.page || 1
+        };
+
         self.goToCreateApp = goToCreateApp;
         self.manualBuild = manualBuild;
         self.deleteProject = deleteProject;
-        
-        function deleteProject (projectId) {
+        self.getPage = getPage;
+        self.getOrder = getOrder;
+
+        function deleteProject(projectId) {
             imageCurd.deleteProjet(projectId)
         }
-        
+
         function goToCreateApp(imageUrl) {
             imageCurd.goToCreateApp(imageUrl)
         }
@@ -37,6 +45,35 @@
                 imageName: project.imageName
             };
             imageCurd.manualBuild(project.id, postData)
+        }
+
+        function getPage(page, limit) {
+            console.log('getPage:', page, '||', limit);
+            $state.go('imageList', {
+                page: page,
+                per_page: limit,
+                keywords: $stateParams.keywords
+            });
+        }
+
+        function getOrder(order) {
+            var direction = 'asc';
+
+            if (order.charAt(0) === '-') {
+                direction = 'desc';
+                order = order.slice(1);
+            }
+
+            console.log('direction',direction);
+            console.log('order',order);
+
+            $state.go('imageList', {
+                page: $stateParams.page,
+                per_page: $stateParams.per_page,
+                order: direction,
+                sort_by: order,
+                keywords: $stateParams.keywords
+            },{reload: true});
         }
     }
 })();
