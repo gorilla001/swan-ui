@@ -13,7 +13,7 @@
         self.count = project.Count;
 
         self.query = {
-            order: $stateParams.order === 'asc' ? $stateParams.sort_by : '-' + $stateParams.sort_by,
+            order: initOrder(),
             limit: $stateParams.per_page || 20,
             page: $stateParams.page || 1
         };
@@ -23,6 +23,12 @@
         self.deleteProject = deleteProject;
         self.getPage = getPage;
         self.getOrder = getOrder;
+
+        activate();
+
+        function activate(){
+
+        }
 
         function deleteProject(projectId) {
             imageCurd.deleteProjet(projectId)
@@ -48,12 +54,11 @@
         }
 
         function getPage(page, limit) {
-            console.log('getPage:', page, '||', limit);
             $state.go('imageList', {
                 page: page,
                 per_page: limit,
                 keywords: $stateParams.keywords
-            });
+            }, {reload: true});
         }
 
         function getOrder(order) {
@@ -64,16 +69,23 @@
                 order = order.slice(1);
             }
 
-            console.log('direction',direction);
-            console.log('order',order);
-
             $state.go('imageList', {
                 page: $stateParams.page,
                 per_page: $stateParams.per_page,
                 order: direction,
                 sort_by: order,
                 keywords: $stateParams.keywords
-            },{reload: true});
+            }, {reload: true});
+        }
+
+        function initOrder() {
+            if (!$stateParams.order) {
+                return 'name'
+            } else if ($stateParams.order === 'asc') {
+                return $stateParams.sort_by
+            } else {
+                return '-' + $stateParams.sort_by
+            }
         }
     }
 })();

@@ -2,23 +2,58 @@
     <table md-table md-progress="imageListCtrl.promise">
         <thead md-head md-order="imageListCtrl.query.order" md-on-reorder="imageListCtrl.getOrder">
         <tr md-row>
-            <th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>
-            <th md-column md-numeric md-order-by="calories.value"><span>Calories</span></th>
-            <th md-column md-numeric>Fat (g)</th>
-            <th md-column md-numeric>Carbs (g)</th>
-            <th md-column md-numeric>Protein (g)</th>
+            <th md-column md-order-by="name"><span>项目名称</span></th>
+            <th md-column md-numeric><span>状态</span></th>
+            <th md-column md-numeric>镜像名称</th>
+            <th md-column md-numeric md-order-by="updated">最近构建时间</th>
+            <th md-column md-numeric>最新版本</th>
+            <th md-column md-numeric>操作</th>
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row md-select="dessert" ng-repeat="dessert in imageListCtrl.projects">
-            <td md-cell>1111</td>
-            <td md-cell>222222</td>
-            <td md-cell>33333</td>
-            <td md-cell>4444</td>
-            <td md-cell>5555</td>
+        <tr md-row md-select="project" ng-repeat="project in imageListCtrl.projects">
+            <td md-cell>{/project.name/}</td>
+            <td md-cell>
+                 <span data-ng-class="{'text-danger': project.status == 'failure' || project.status == 'error', 'text-success': project.status == 'success',
+                        'text-info': project.status == 'running' || project.status == 'pending'}"
+                       data-ng-hide="project.status == 'pending' && !project.active">
+                            <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
+                            'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
+                            {/imageListCtrl.IMAGE_STATUS[project.status]/}
+                        </span>
+            </td>
+            <td md-cell>{/project.imageName/}</td>
+            <td md-cell>{/project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
+            <td md-cell>{/project.image/}</td>
+            <td md-cell>
+                <md-button aria-label="build"
+                           data-ng-click="imageListCtrl.manualBuild(project)">构建
+                </md-button>
+                <md-menu md-offset="50 10">
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Open some menu">
+                        更多
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button aria-label="depoly" data-ng-disabled="project.status !== 'success'">
+                                部署
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="delete">
+                                删除
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
         </tr>
         </tbody>
     </table>
 </md-table-container>
 
-<md-table-pagination md-limit="imageListCtrl.query.limit" md-limit-options="[5, 10, 15]" md-page="imageListCtrl.query.page" md-total="{/imageListCtrl.count/}" md-on-paginate="imageListCtrl.getPage" md-page-select></md-table-pagination>
+<md-table-pagination
+        md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="imageListCtrl.query.limit"
+        md-limit-options="[5, 10, 15]"
+        md-page="imageListCtrl.query.page" md-total="{/imageListCtrl.count/}"
+        md-on-paginate="imageListCtrl.getPage" md-page-select></md-table-pagination>
