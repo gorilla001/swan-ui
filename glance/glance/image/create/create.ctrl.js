@@ -62,7 +62,7 @@
         function createProject(fromData) {
             imageBackend.createProject(fromData).then(function (data) {
                 Notification.success('项目创建成功');
-                $state.go('imageDetail.version',({projectId: data.id}))
+                $state.go('image.detail.version',({projectId: data.id}))
             })
         }
 

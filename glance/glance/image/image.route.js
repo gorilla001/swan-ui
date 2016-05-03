@@ -8,66 +8,51 @@
     function route($stateProvider) {
 
         $stateProvider
-            .state('imageList', {
-                url: '/image?per_page&page&order&keywords&sort_by',
-                views: {
-                    '': {
-                        templateUrl: '/glance/image/list/list.html',
-                        controller: 'ImageListCtrl as imageListCtrl'
-                    }
+            .state('image', {
+                url: '/image',
+                template: '<ui-view/>',
+                targetState: 'list'
+            })
+            .state('image.list', {
+                url: '/list?per_page&page&order&keywords&sort_by',
+                templateUrl: '/glance/image/list/list.html',
+                controller: 'ImageListCtrl as imageListCtrl',
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
                 },
                 resolve: {
                     project: listProjects
                 }
             })
-            .state('imageCreate', {
+            .state('image.create', {
                 url: '/image/create',
-                views: {
-                    '': {
-                        templateUrl: '/glance/image/create/create.html',
-                        controller: 'ImageCreateCtrl as imageCreateCtrl'
-                    }
-                }
+                templateUrl: '/glance/image/create/create.html',
+                controller: 'ImageCreateCtrl as imageCreateCtrl',
             })
-            .state('imageDetail', {
+            .state('image.detail', {
                 url: '/image/detail/:projectId',
-                abstract: true,
-                views: {
-                    '': {
-                        templateUrl: '/glance/image/detail/detail.html',
-                        controller: 'ImageDetailCtrl as imageDetailCtrl'
-                    }
-                },
+                templateUrl: '/glance/image/detail/detail.html',
+                controller: 'ImageDetailCtrl as imageDetailCtrl',
                 resolve: {
                     project: getProject
-                }
+                },
+                targetState: 'version'
             })
-            .state('imageDetail.version', {
+            .state('image.detail.version', {
                 url: '/version',
-                views: {
-                    'imageDetailTab': {
-                        templateUrl: '/glance/image/detail/version.html',
-                        controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
-                    }
-                }
+                templateUrl: '/glance/image/detail/version.html',
+                controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
             })
-            .state('imageDetail.brief', {
+            .state('image.detail.brief', {
                 url: '/brief',
-                views: {
-                    'imageDetailTab': {
-                        templateUrl: '/glance/image/detail/brief.html',
-                        controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
-                    }
-                }
+                templateUrl: '/glance/image/detail/brief.html',
+                controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
             })
-            .state('imageDetail.setting', {
+            .state('image.detail.setting', {
                 url: '/setting',
-                views: {
-                    'imageDetailTab': {
-                        templateUrl: '/glance/image/detail/setting.html',
-                        controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
-                    }
-                }
+                templateUrl: '/glance/image/detail/setting.html',
+                controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
             });
 
     }

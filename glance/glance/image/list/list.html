@@ -22,7 +22,7 @@
         </thead>
         <tbody md-body>
         <tr md-row md-select="project" ng-repeat="project in imageListCtrl.projects">
-            <td md-cell>{/project.name/}</td>
+            <td md-cell><a href="#" data-ui-sref="image.detail({projectId: project.id})">{/project.name/}</a></td>
             <td md-cell>
                  <span data-ng-class="{'text-danger': project.status == 'failure' || project.status == 'error', 'text-success': project.status == 'success',
                         'text-info': project.status == 'running' || project.status == 'pending'}"
