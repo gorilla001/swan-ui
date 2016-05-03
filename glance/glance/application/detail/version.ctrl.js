@@ -6,10 +6,12 @@
     angular.module('glance.app')
         .controller('VersionAppCtrl', VersionAppCtrl);
 
-    VersionAppCtrl.$inject = ['$scope', '$stateParams', 'Notification', 'confirmModal', 'appservice'];
+    VersionAppCtrl.$inject = ['$scope', '$stateParams', 'Notification', 'confirmModal', 'appservice', 'appcurd'];
 
-    function VersionAppCtrl($scope, $stateParams, Notification, confirmModal, appservice) {
+    function VersionAppCtrl($scope, $stateParams, Notification, confirmModal, appservice, appcurd) {
         var self = this;
+        self.versions = [];
+        self.upCanary = upCanary;
 
         self.cancelDeploy = function () {
             appservice.stopDeploy({}, $stateParams.cluster_id, $stateParams.app_id)
@@ -62,6 +64,10 @@
                         }
                     }
                 );
+        }
+
+        function upCanary(versions) {
+            appcurd.upCanary(versions)
         }
     }
 })();

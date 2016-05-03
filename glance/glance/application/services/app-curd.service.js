@@ -15,7 +15,8 @@
             del: del,
             undo: undo,
             updateContainer: updateContainer,
-            redeploy: redeploy
+            redeploy: redeploy,
+            upCanary: upCanary
         };
 
         function stop(data, clusterId, appId) {
@@ -38,9 +39,9 @@
             }
             confirmModal.open("是否确认删除应用？").then(function () {
                 appservice.deleteApp(clusterId, appId)
-                .then(function (data) {
-                    $state.go(state, null, {reload: true});
-                })
+                    .then(function (data) {
+                        $state.go(state, null, {reload: true});
+                    })
             });
         }
 
@@ -52,13 +53,13 @@
         }
 
         function updateContainer(curInsNmu, clusterId, appId) {
-            formModal.open('/glance/application/modals/up-container.html', 
-                    {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
-                        var data = {instances: instanceNum};
-                        appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
-                            $state.reload();
-                        });
-                    });
+            formModal.open('/glance/application/modals/up-container.html',
+                {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
+                var data = {instances: instanceNum};
+                appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
+                    $state.reload();
+                });
+            });
         }
 
         function redeploy(data, clusterId, appId) {
@@ -68,6 +69,11 @@
                 })
         }
 
-
+        function upCanary(versions) {
+            formModal.open('/glance/application/modals/up-canary.html',
+                {dataName: 'versions', initData: versions}).then(function (versions) {
+                //ajax
+            });
+        }
     }
 })();

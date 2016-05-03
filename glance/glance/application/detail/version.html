@@ -18,6 +18,7 @@
                 <button data-ng-show="!appversion.currentDeploy && appversion.status == 1" type="button" data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
                 <button data-ng-show="appversion.status === 0" type="button" data-ng-click="versionAppCtrl.cancelDeploy()" class="btn btn-default btn-xs" data-demo-disable>撤销</button>
                 <button data-ng-show="!appversion.currentDeploy && appversion.status != 0" type="button" data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>删除</button>
+                <button type="button" class="btn btn-default btn-xs" data-demo-disable>权重</button>
             </td>
         </tr>
         </tbody>
