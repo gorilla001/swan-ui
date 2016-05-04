@@ -3,36 +3,25 @@
     angular.module('glance.utils')
         .factory('alertModal', alertModal);
 
-    alertModal.$inject = ['$uibModal'];
 
-    function alertModal($uibModal) {
-        
-        AlertCtrl.$inject = ['$uibModalInstance', 'content'];
+    /* @ngInject */
+    function alertModal($mdDialog) {
         
         return {
             open: open
         }
         
-        function open(content) {
-            var modalInstance = $uibModal.open({
-                templateUrl: '/glance/utils/modals/alert.html',
-                controller: AlertCtrl,
-                controllerAs: 'alertCtrl',
-                resolve: {
-                    content: function () {return content}
-                }
-            })
-            return modalInstance.result;
+        function open(content, ev) {
+            var dialog = $mdDialog.show(
+                    $mdDialog.alert()
+                      .clickOutsideToClose(true)
+                      .textContent(content)
+                      .ok('确定')
+                      .targetEvent(ev)
+                  );
+            return dialog;
         }
-        
-        
-        function AlertCtrl($uibModalInstance, content) {
-            var self = this;
-            self.content = content;
-            self.close = function () {
-                $uibModalInstance.close();
-            };
-        }
+       
     }
 
 })();

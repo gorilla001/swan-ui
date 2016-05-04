@@ -3,39 +3,22 @@
     angular.module('glance.utils')
         .factory('confirmModal', confirmModal);
 
-    confirmModal.$inject = ['$uibModal'];
-
-    function confirmModal($uibModal) {
-        
-        ConfirmCtrl.$inject = ['$uibModalInstance', 'content'];
+    /* @ngInject */
+    function confirmModal($mdDialog) {
         
         return {
             open: open
         }
         
-        function open(content) {
-            var modalInstance = $uibModal.open({
-                templateUrl: '/glance/utils/modals/confirm.html',
-                controller: ConfirmCtrl,
-                controllerAs: 'confirmCtrl',
-                resolve: {
-                    content: function () {return content}
-                }
-            })
-            
-            return modalInstance.result;
-        }
-        
-        
-        function ConfirmCtrl($uibModalInstance, content) {
-            var self = this;
-            self.content = content;
-            self.ok = function () {
-                $uibModalInstance.close();
-            };
-            self.cancel = function () {
-                $uibModalInstance.dismiss();
-            }
+        function open(content, ev) {
+            var confirm = $mdDialog.confirm()
+            .clickOutsideToClose(true)
+            .textContent(content)
+            .targetEvent(ev)
+            .ok('确定')
+            .cancel('取消');
+             var dialog = $mdDialog.show(confirm);
+            return dialog
         }
     }
 

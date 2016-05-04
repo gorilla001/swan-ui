@@ -1,13 +1,10 @@
-/**
- * Created by my9074 on 16/3/2.
- */
 (function () {
     'use strict';
     angular.module('glance.utils')
         .factory('formModal', formModal);
 
     /* @ngInject */
-    function formModal($uibModal) {
+    function formModal($mdDialog) {
         
         return {
             open: open
@@ -18,7 +15,9 @@
            initData: open Module 时传入的初始值, 默认为 form
            initDataName: open Module 时传入的数据名称
          */
-        function open(templateUrl, options) {
+        function open(templateUrl, ev, options) {
+            
+
             if (!options) {
                 options = {};
             }
@@ -31,38 +30,30 @@
             if (!options.ctrlName) {
                 options.ctrlName = 'formCtrl';
             }
-            var modalInstance = $uibModal.open({
-                templateUrl: templateUrl,
+            
+            var dialog = $mdDialog.show({
                 controller: FormModalCtrl,
                 controllerAs: options.ctrlName,
-                size: options.size,
-                resolve: {
-                    dataName: function () {
-                        return options.dataName
-                    },
-                    initData: function () {
-                        return options.initData
-                    },
-                    initDataName: function () {
-                        return options.initDataName
-                    }
-                }
+                templateUrl: templateUrl,
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                locals: {dataName: options.dataName, initData: options.initData, initDataName: options.initDataName}
             });
-            
-            return modalInstance.result;
+            return dialog;
         }
         
         /* @ngInject */
-        function FormModalCtrl($uibModalInstance, dataName, initData, initDataName) {
+        function FormModalCtrl($mdDialog, dataName, initData, initDataName) {
             var self = this;
             self[initDataName] = initData;
             
             self.ok = function () {
-                $uibModalInstance.close(self[dataName]);
+                $mdDialog.hide(self[dataName]);
             };
             
             self.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
+                $mdDialog.cancel();
             };
         
         }
