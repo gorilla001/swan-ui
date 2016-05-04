@@ -12,7 +12,8 @@
             warningList: warningList,
             updateWarning: updateWarning,
             getWarning: getWarning,
-            warningEvent: warningEvent
+            warningEvent: warningEvent,
+            patchWarning: patchWarning
         };
 
         function createWarning(data) {
@@ -29,6 +30,10 @@
 
         function updateWarning(data) {
             return gHttp.Resource('warning.tasks').put(data);
+        }
+        
+        function patchWarning(taskId, method) {
+            return gHttp.Resource('warning.task', {task_id: taskId}).patch({method: method});
         }
 
         function getWarning(taskId) {

@@ -21,7 +21,8 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">监控关键字</label>
-                    <div class="col-md-5">
+                    <div class="col-md-5"
+                        data-ng-class="{ 'has-error' : logwarningForm.keyword.$invalid && !logwarningForm.keyword.$pristine}">
                         <input type="text" class="form-control" name="keyword" placeholder="多个关键字用 , 分隔"
                                data-ng-model="createLogWarningCtrl.form.keyword"
                                data-required="required">
@@ -50,7 +51,8 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">出现次数</label>
-                    <div class="col-md-2">
+                    <div class="col-md-2"
+                        data-ng-class="{ 'has-error' : logwarningForm.gtnum.$invalid && !logwarningForm.gtnum.$pristine}">
                         <input type="number" class="form-control" name="gtnum" placeholder="出现次数"
                                data-ng-model="createLogWarningCtrl.form.gtnum" min="0"
                                data-required="required">
@@ -59,7 +61,8 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">告警联系人</label>
-                    <div class="col-md-5">
+                    <div class="col-md-5"
+                        data-ng-class="{ 'has-error' : logwarningForm.emails.$invalid && !logwarningForm.emails.$pristine}">
                         <input type="text" class="form-control" placeholder="mail1@123.com; mail2@123.com, ..."
                                name="emails"
                                data-required="required" data-ng-model="createLogWarningCtrl.form.emails">

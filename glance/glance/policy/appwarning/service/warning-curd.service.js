@@ -11,7 +11,8 @@
     function warningCurd(appWarningBackend, confirmModal, $state, Notification) {
         return {
             deleteTask: deleteTask,
-            updateTask: updateTask
+            updateTask: updateTask,
+            switchNotice: switchNotice
         };
 
         function deleteTask(taskId) {
@@ -24,6 +25,16 @@
 
         function updateTask(data) {
             return appWarningBackend.updateWarning(data);
+        }
+        
+        function switchNotice(taskId, enable) {
+            var method;
+            if (enable) {
+                method = "enable";
+            } else {
+                method = "disable";
+            }
+            return appWarningBackend.patchWarning(taskId, method);
         }
     }
 })();

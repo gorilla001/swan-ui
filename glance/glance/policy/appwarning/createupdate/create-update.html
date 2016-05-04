@@ -43,37 +43,22 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'"
-                             data-ng-class="{ 'has-error' : warningForm.memused.$invalid && !warningForm.memused.$pristine}">
-                            <input type="text" class="form-control" placeholder="数值"
-                                   data-ng-model="createWarningCtrl.form.threshold" name="memused"
-                                   ng-required="createWarningCtrl.form.metric === 'MemUsed'">
-                            <span class="input-group-addon" id="memused">MB</span>
-                        </div>
-                        <div class="input-group" data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'"
-                             data-ng-class="{ 'has-error' : warningForm.cpuused.$invalid && !warningForm.cpuused.$pristine}">
-                            <input type="text" class="form-control" placeholder="数值"
-                                   data-ng-model="createWarningCtrl.form.threshold" name="cpuused"
-                                   ng-required="createWarningCtrl.form.metric === 'CpuUsed'">
-                            <span class="input-group-addon" id="cpuused">%</span>
-                        </div>
                         <div class="input-group"
-                             data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' || createWarningCtrl.form.metric === 'DiskIOWriteBytesRate'"
-                             data-ng-class="{ 'has-error' : warningForm.diskused.$invalid && !warningForm.diskused.$pristine}">
+                             data-ng-class="{ 'has-error' : warningForm.threshold.$invalid && !warningForm.threshold.$pristine}">
                             <input type="text" class="form-control" placeholder="数值"
-                                   data-ng-model="createWarningCtrl.form.threshold" name="diskused"
-                                   ng-required="createWarningCtrl.form.metric === 'DiskUsed'">
-                            <span class="input-group-addon" id="diskused">KB/s</span>
+                                   data-ng-model="createWarningCtrl.form.threshold" name="threshold"
+                                   ng-required data-ng-pattern="/^\d+(\.\d+)?$/">
+                            <span class="input-group-addon" id="memused" data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'">MB</span>
+                            <span class="input-group-addon" id="cpuused" data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'">%</span>
+                            <span class="input-group-addon" id="diskused" data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' || 
+                                                                                    createWarningCtrl.form.metric === 'DiskIOWriteBytesRate' || 
+                                                                                    createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || 
+                                                                                    createWarningCtrl.form.metric === 'NetworkSentByteRate'">KB/s</span>
                         </div>
-                        <div class="input-group"
-                             data-ng-if="createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || createWarningCtrl.form.metric === 'NetworkSentByteRate'"
-                             data-ng-class="{ 'has-error' : warningForm.netused.$invalid && !warningForm.netused.$pristine}">
-                            <input type="text" class="form-control" placeholder="数值"
-                                   data-ng-model="createWarningCtrl.form.threshold" name="netused"
-                                   ng-required="createWarningCtrl.form.metric === 'NetUsed'">
-                            <span class="input-group-addon" id="netused">KB/s</span>
-
-                        </div>
+                    </div>
+                    <div data-ng-class="{ 'has-error' : warningForm.threshold.$invalid && !warningForm.threshold.$pristine}">
+                        <p data-ng-show="warningForm.threshold.$error.pattern && !warningForm.threshold.$pristine"
+                           class="help-block">必须为数字</p>
                     </div>
                 </div>
                 <div class="form-group">
