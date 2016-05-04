@@ -91,6 +91,8 @@
                     <div data-ng-class="{ 'has-error' : warningForm.duration.$invalid && !warningForm.duration.$pristine}">
                         <p data-ng-show="warningForm.duration.$error.max && !warningForm.duration.$pristine"
                            class="help-block">最大值不得超过 255</p>
+                        <p data-ng-show="warningForm.duration.$error.min && !warningForm.duration.$pristine"
+                           class="help-block">最小值不得低于 1</p>
                     </div>
                 </div>
                 <div class="form-group">
