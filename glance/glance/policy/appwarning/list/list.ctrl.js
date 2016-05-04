@@ -27,8 +27,8 @@
             warningCurd.deleteTask(taskId)
         }
 
-        function switchNotice(itemInfo) {
-            warningCurd.updateTask(itemInfo)
+        function switchNotice(task) {
+            warningCurd.switchNotice(task.id, task.enabled)
                 .then(function (data) {
                     $state.reload();
                 });
