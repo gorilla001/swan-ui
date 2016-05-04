@@ -30,7 +30,8 @@
 
                 <div class="form-group">
                     <label class="col-md-2 control-label">监控周期</label>
-                    <div class="col-md-2">
+                    <div class="col-md-2" 
+                        data-ng-class="{ 'has-error' : logwarningForm.interval.$invalid && !logwarningForm.interval.$pristine}">
                         <div class="input-group">
                             <input type="number" class="form-control" name="interval" placeholder="监控周期"
                                    data-ng-model="createLogWarningCtrl.form.interval"
