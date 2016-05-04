@@ -115,17 +115,15 @@
     
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
         <md-toolbar class="md-theme-light">
-            <h1 class="md-toolbar-tools">Sidenav Right</h1>
+            <h1 class="md-toolbar-tools">公告栏</h1>
         </md-toolbar>
         <md-content layout-padding>
             <div>
                 <md-content>
-                    公告
+                    <div data-ng-if="!rootCtrl.noticeHtml">暂无公告</div>
+                    <div data-ng-bind-html="rootCtrl.noticeHtml"></div>
                 </md-content>
             </div>
-            <md-button ng-click="rootCtrl.closeNav()" class="md-icon-button" aria-label="Close">
-                <i class="fa fa-angle-double-right"></i>
-            </md-button>
         </md-content>
     </md-sidenav>
 </div>

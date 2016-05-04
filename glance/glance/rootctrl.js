@@ -4,7 +4,7 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, $mdSidenav, $log) {
+    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, $mdSidenav) {
         var self = this;
 
         self.getCSUrl = getCSUrl;
@@ -68,19 +68,13 @@
         }
 
         function closeNav() {
-            $mdSidenav('right').close()
-                .then(function () {
-                    $log.debug("close RIGHT is done");
-                });
+            $mdSidenav('right').close();
         }
 
         function buildToggler(navID) {
             return function () {
                 $mdSidenav(navID)
-                    .toggle()
-                    .then(function () {
-                        $log.debug("toggle " + navID + " is done");
-                    });
+                    .toggle();
             }
         }
 
