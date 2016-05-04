@@ -4,16 +4,16 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, $mdSidenav) {
+    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav) {
         var self = this;
 
+        self.noticeNav = mdSideNav.createSideNav('noticeNav');
         self.getCSUrl = getCSUrl;
         self.logout = logout;
         self.goBack = goBack;
         self.openJoinDemoGroupModal = openJoinDemoGroupModal;
-        self.isOpenRight = isOpenRight;
-        self.closeNav = closeNav;
-        self.toggleRight = buildToggler('right');
+        self.togShortMenu = togShortMenu;
+        self.isShortMenu = false;
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
 
@@ -59,22 +59,6 @@
                 self.userManualUrl = "http://offlinedoc.shurenyun.com/";
             } else {
                 self.userManualUrl = "http://doc.shurenyun.com";
-            }
-        }
-
-        function isOpenRight() {
-            return $mdSidenav('right').isOpen();
-
-        }
-
-        function closeNav() {
-            $mdSidenav('right').close();
-        }
-
-        function buildToggler(navID) {
-            return function () {
-                $mdSidenav(navID)
-                    .toggle();
             }
         }
 
@@ -135,6 +119,10 @@
             }
         }
 
+        function togShortMenu() {
+            self.isShortMenu = !self.isShortMenu;
+        }
+
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
                 switch (true) {
@@ -161,7 +149,7 @@
                         switch (true) {
                             case toState.name.includes('appwarning'):
                                 $rootScope.tabActiveFlag = 'appwarning';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('warninglist'):
                                         $rootScope.tabContentPolicy = 'warninglist';
                                         break;
@@ -172,7 +160,7 @@
                                 break;
                             case toState.name.includes('apptimescaling'):
                                 $rootScope.tabActiveFlag = 'apptimescaling';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('scalinglist'):
                                         $rootScope.tabContentPolicy = 'scalinglist';
                                         break;
@@ -183,7 +171,7 @@
                                 break;
                             case toState.name.includes('applogwarning'):
                                 $rootScope.tabActiveFlag = 'applogwarning';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('loglist'):
                                         $rootScope.tabContentPolicy = 'loglist';
                                         break;
