@@ -34,9 +34,16 @@
                         <div class="input-group">
                             <input type="number" class="form-control" name="interval" placeholder="监控周期"
                                    data-ng-model="createLogWarningCtrl.form.interval"
-                                   data-required="required">
+                                   data-required="required"
+                                   max="255" min="1">
                             <span class="input-group-addon" id="duration">分钟</span>
                         </div>
+                    </div>
+                    <div data-ng-class="{ 'has-error' : logwarningForm.interval.$invalid && !logwarningForm.interval.$pristine}">
+                        <p data-ng-show="logwarningForm.interval.$error.max && !logwarningForm.interval.$pristine"
+                           class="help-block">最大值不得超过 255</p>
+                        <p data-ng-show="logwarningForm.interval.$error.min && !logwarningForm.interval.$pristine"
+                           class="help-block">最小值不得低于 1</p>
                     </div>
                 </div>
 
