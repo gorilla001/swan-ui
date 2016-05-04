@@ -39,13 +39,19 @@
                 }
 
                 $state.go(stateName, {
-                    page: $stateParams.page,
                     per_page: $stateParams.per_page,
                     order: orderObj.direction,
                     sort_by: orderObj.order,
                     keywords: $stateParams.keywords
                 }, {reload: true});
             };
+
+            this.doSearch = function (searchKey) {
+                $state.go(stateName, {
+                    per_page: $stateParams.per_page,
+                    keywords: searchKey
+                }, {reload: true});
+            }
         }
 
         function initOrder(defSort) {
