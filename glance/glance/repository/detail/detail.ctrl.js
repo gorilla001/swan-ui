@@ -69,7 +69,7 @@
         function getRepoDetail(projectName, repositoryName) {
             repoBackend.getRepository(projectName, repositoryName)
                 .then(function (data) {
-                    self.markdown = decodeURIComponent(escape($base64.decode(data.markdown)));
+                    self.markdown = decodeURIComponent(escape($base64.decode(data.readme)));
                     self.form.dockerCompose = data.dockerCompose;
                     self.form.marathonConfig = data.marathonConfig;
                     self.form.catalog = data.catalog;
