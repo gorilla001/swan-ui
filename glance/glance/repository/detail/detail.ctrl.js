@@ -18,7 +18,10 @@
                 mem: 16,
                 instances: 1
             },
-            answers: {}
+            answers: {},
+            dockerCompose: "",
+            marathonConfig: "",
+            catalog: ""
         };
         self.tags = [];
         self.clusters = [];
@@ -67,8 +70,11 @@
             repoBackend.getRepository(projectName, repositoryName)
                 .then(function (data) {
                     self.markdown = decodeURIComponent(escape($base64.decode(data.markdown)));
-                    if (data.sryCompose) {
-                        self.questions = angular.fromJson(data.sryCompose);
+                    self.form.dockerCompose = data.dockerCompose;
+                    self.form.marathonConfig = data.marathonConfig;
+                    self.form.catalog = data.catalog;
+                    if (data.questions) {
+                        self.questions = angular.fromJson(data.questions);
                     }
                 })
         }
