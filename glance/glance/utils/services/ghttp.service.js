@@ -3,8 +3,8 @@
 
     angular.module('glance.utils').factory('gHttp', gHttp);
 
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies'];
-    function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies) {
+    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies', 'cfpLoadingBar'];
+    function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies, cfpLoadingBar) {
         var token;
 
         if (!$rootScope.loadings) {
@@ -127,17 +127,13 @@
 
             Resource.prototype._startLoading = function (loading) {
                 if (loading) {
-                    if (!$rootScope.loadings[loading]) {
-                        $rootScope.loadings[loading] = 1;
-                    } else {
-                        $rootScope.loadings[loading] += 1;
-                    }
+                    cfpLoadingBar.start();
                 }
             };
 
             Resource.prototype._stopLoading = function (loading) {
                 if (loading) {
-                    $rootScope.loadings[loading] -= 1;
+                    cfpLoadingBar.complete();
                 }
             };
 
