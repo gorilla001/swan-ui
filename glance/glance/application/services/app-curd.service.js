@@ -6,9 +6,8 @@
     angular.module('glance.app')
         .factory('appcurd', appcurd);
 
-    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal', 'formModal','$stateParams'];
-
-    function appcurd(Notification, appservice, $state, confirmModal, formModal, $stateParams) {
+    /* @ngInject */
+    function appcurd(Notification, appservice, $state, confirmModal, formModal, $stateParams, upCanaryModal) {
         return {
             stop: stop,
             start: start,
@@ -72,8 +71,8 @@
 
         // 权重
         function upCanary(versions) {
-            formModal.open('/glance/application/modals/up-canary.html',
-                {dataName: 'versions', initData: versions}).then(function (versions) {
+            
+            upCanaryModal.open(versions).then(function (versions) {
                 var weight = {};
                 versions.forEach(function(value) {
                     weight[value.versionId] = value.weight;
