@@ -64,14 +64,14 @@
                                 <i class="fa fa-cogs"></i> <span class="text">镜像构建</span>
                             </a>
                         </li>
-                        <li data-ng-class="{'active': show === 'cluster'}" title="集群管理">
-                            <a data-ui-sref="cluster.listclusters" data-ui-sref-opts="{reload: true}">
-                                <i class="fa fa-server"></i> <span class="text">集群管理</span>
-                            </a>
-                        </li>
                         <li data-ng-class="{'active': show === 'log'}" title="日志查询">
                             <a data-ui-sref="log" data-ui-sref-opts="{reload: true}">
                                 <i class="fa fa-file-text"></i> <span class="text">日志查询</span>
+                            </a>
+                        </li>
+                        <li data-ng-class="{'active': show === 'cluster'}" title="集群管理">
+                            <a data-ui-sref="cluster.listclusters" data-ui-sref-opts="{reload: true}">
+                                <i class="fa fa-server"></i> <span class="text">集群管理</span>
                             </a>
                         </li>
                     </ul>
