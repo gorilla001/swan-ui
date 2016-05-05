@@ -38,7 +38,7 @@
                            $filter,
                            clusterCurd) {
         var self = this;
-        var canaryRelease = $stateParams.canaryRelease;
+        var canary = $stateParams.canary;
         self.target = target;
 
         self.cluster;
@@ -82,7 +82,7 @@
                 network: app.network,
                 logPaths: app.logPaths,
                 parameters: app.parameters,
-                canaryRelease: !!canaryRelease
+                canary: !!canary
             };
             if (!self.form.logPaths) {
                 self.form.logPaths = [];
