@@ -31,7 +31,8 @@
             listAppInstances: listAppInstances,
             listClusterAllApps: listClusterAllApps,
             listAppPorts: listAppPorts,
-            listAppNodes: listAppNodes
+            listAppNodes: listAppNodes,
+            changeWeight: changeWeight
 
         };
 
@@ -101,6 +102,7 @@
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
+        // 扩展容器数提交
         function updateContainerNum(data, clusterId, appId){
             data.method = 'scale';
 
@@ -155,6 +157,9 @@
         function listAppNodes(clusterId, appId, loading) {
             return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
-
+        // 修改权重
+        function changeWeight(clusterId, appId, data) {
+            return gHttp.Resource('app.changeWeight', {cluster_id: clusterId, app_id: appId}).post(data);
+        }
     }
 })();

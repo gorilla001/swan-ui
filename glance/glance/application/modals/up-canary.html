@@ -4,14 +4,16 @@
 
 <form class="form-horizontal" name="canaryForm">
     <div class="modal-body">
-        <div data-ng-repeat="version in formCtrl.versions" class="form-inline">
-            <span>{/version.imageVersion/}</span>
-            <input type="number" class="form-control" data-ng-model="version.weight">
+        <div data-ng-repeat="version in formCtrl.versions" class="form-inline form-group">
+            <label class="col-sm-4 control-label">{/version.imageVersion/}</label>
+            <div class="col-sm-8">
+                <input type="number" class="form-control" data-ng-model="version.weight">
+            </div>
         </div>
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" data-ng-disabled="canaryForm.$invalid"
+        <button class="btn btn-primary" type="submit"  data-ng-disabled="canaryForm.$invalid"
                 data-ng-click="formCtrl.ok()">
             确定
         </button>
