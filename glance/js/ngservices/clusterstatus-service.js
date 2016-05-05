@@ -119,7 +119,6 @@
                         this.updateServiceStatus(data.nodeId, key, val);
                     }
                 }.bind(this));
-                this.updateNodeStatus(data.clusterId, data.nodeId, undefined, undefined);
             }.bind(this));
         }
         
