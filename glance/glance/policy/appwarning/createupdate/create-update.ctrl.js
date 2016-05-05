@@ -7,7 +7,7 @@
     function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification) {
         var self = this;
         self.target = target;
-        self.app = {};
+        self.app = null;
         self.form = {
             appalias: warning.appalias || '',
             appname: warning.appname,
