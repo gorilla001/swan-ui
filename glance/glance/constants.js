@@ -255,7 +255,8 @@ BACKEND_URL = {
         scale: 'api/v3/clusters/$cluster_id/apps/$app_id/scale',
         crons: 'api/v3/crons',
         cron: 'api/v3/crons/$scale_id',
-        scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id'
+        scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id',
+        changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight'
     },
     user: {
         groups: 'api/v3/groups',

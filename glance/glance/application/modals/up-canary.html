@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h3 class="modal-title">修改权重</h3>
+</div>
+
+<form class="form-horizontal" name="canaryForm">
+    <div class="modal-body">
+        <div data-ng-repeat="version in formCtrl.versions" class="form-group" data-ng-class="{'has-error' : canaryForm['weight'+$index].$invalid}">
+            <label class="col-sm-4 control-label">{/version.imageVersion/}</label>
+            <div class="col-sm-3" style="display:inline-block">
+                <input type="number" name="weight{/$index/}"class="form-control" data-ng-model="version.weight" min="0" required>
+            </div>
+            <div>
+                <p data-ng-show="canaryForm['weight'+$index].$error.min" class="help-block">权重不能小于0</p>
+            </div>
+        </div>
+        <div class="form-group" data-ng-class="{'has-error' : canaryForm.total.$invalid}">
+            <label class="col-sm-4 control-label">总权重</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" name="total" data-ng-model="formCtrl.total" data-ng-disabled='true' max="100" min="100">
+            </div>
+            <div>
+                <p data-ng-show="canaryForm.total.$error.max||canaryForm.total.$error.min" class="help-block">总权重必须等于100</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit"  data-ng-disabled="canaryForm.$invalid"
+                data-ng-click="formCtrl.ok()">
+            确定
+        </button>
+        <button class="btn btn-default" type="button" data-ng-click="formCtrl.cancel()">取消</button>
+    </div>
+</form>
