@@ -45,7 +45,7 @@
         self.pageChanged = function () {
             self.contentCurPage = self.versions.slice((self.currentPage - 1) * self.pageLength, self.currentPage * self.pageLength);
         };
-
+        
         getImageVersions();
 
         $scope.$on('refreshAppData', function () {

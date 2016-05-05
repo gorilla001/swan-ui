@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .factory('appcurd', appcurd);
 
-    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal', 'formModal'];
+    appcurd.$inject = ['Notification', 'appservice', '$state', 'confirmModal', 'formModal','$stateParams'];
 
-    function appcurd(Notification, appservice, $state, confirmModal, formModal) {
+    function appcurd(Notification, appservice, $state, confirmModal, formModal, $stateParams) {
         return {
             stop: stop,
             start: start,
@@ -16,7 +16,8 @@
             undo: undo,
             updateContainer: updateContainer,
             redeploy: redeploy,
-            upCanary: upCanary
+            upCanary: upCanary,
+
         };
 
         function stop(data, clusterId, appId) {
@@ -69,10 +70,19 @@
                 })
         }
 
+        // 权重
         function upCanary(versions) {
             formModal.open('/glance/application/modals/up-canary.html',
                 {dataName: 'versions', initData: versions}).then(function (versions) {
-                //ajax
+                var weight = {};
+                versions.forEach(function(value) {
+                    weight[value.versionId] = value.weight;
+                });
+                var data = {
+                    "id": $stateParams.app_id,
+                    "versions": weight
+                };
+                appservice.changeWeight($stateParams.cluster_id, $stateParams.app_id, data)
             });
         }
     }
