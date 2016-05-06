@@ -5,7 +5,10 @@
 <form class="form-horizontal" name="canaryForm">
     <div class="modal-body">
         <div data-ng-repeat="version in formCtrl.versions" class="form-group" data-ng-class="{'has-error' : canaryForm['weight'+$index].$invalid}">
-            <label class="col-sm-4 control-label">{/version.imageVersion/}</label>
+            <label class="col-sm-4 control-label">{/version.imageVersion | filterVersion: 'version'/}
+                <span class="bg-primary" data-ng-show="version.currentDeploy">[当前部署版本]</span>
+                <span  class="bg-warning" data-ng-show="version.canary">[灰度发布]</span>
+            </label>
             <div class="col-sm-3" style="display:inline-block">
                 <input type="number" name="weight{/$index/}"class="form-control" data-ng-model="version.weight" min="0" required>
             </div>
