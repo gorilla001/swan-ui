@@ -36,7 +36,7 @@
                         <div class="input-group">
                             <input type="number" class="form-control" name="interval" placeholder="监控周期"
                                    data-ng-model="createLogWarningCtrl.form.interval"
-                                   data-required="required"
+                                   data-required="required" integer
                                    max="255" min="1">
                             <span class="input-group-addon" id="duration">分钟</span>
                         </div>
@@ -54,7 +54,7 @@
                     <div class="col-md-2"
                         data-ng-class="{ 'has-error' : logwarningForm.gtnum.$invalid && !logwarningForm.gtnum.$pristine}">
                         <input type="number" class="form-control" name="gtnum" placeholder="出现次数"
-                               data-ng-model="createLogWarningCtrl.form.gtnum" min="0"
+                               data-ng-model="createLogWarningCtrl.form.gtnum" min="0" integer
                                data-required="required">
                     </div>
                 </div>
