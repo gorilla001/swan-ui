@@ -10,7 +10,6 @@
         self.WARNING_TYPE = WARNING_TYPE;
         self.WARNING_RULE = WARNING_RULE;
         self.searchKeyWord = $stateParams.keywords || '';
-        console.log('searchKeyWord',self.searchKeyWord)
         self.warningEventTable = table.createParams(data.events, data.count);
 
         self.doSearch = doSearch;
