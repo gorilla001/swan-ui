@@ -47,9 +47,11 @@
                              data-ng-class="{ 'has-error' : warningForm.threshold.$invalid && !warningForm.threshold.$pristine}">
                             <input type="text" class="form-control" placeholder="数值"
                                    data-ng-model="createWarningCtrl.form.threshold" name="threshold"
-                                   ng-required data-ng-pattern="/^\d+(\.\d+)?$/">
-                            <span class="input-group-addon" id="memused" data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'">MB</span>
-                            <span class="input-group-addon" id="cpuused" data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'">%</span>
+                                   data-required="required" data-ng-pattern="/^\d+(\.\d+)?$/">
+                            <span class="input-group-addon" id="memused"
+                                  data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'">MB</span>
+                            <span class="input-group-addon" id="cpuused"
+                                  data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'">%</span>
                             <span class="input-group-addon" id="diskused" data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' || 
                                                                                     createWarningCtrl.form.metric === 'DiskIOWriteBytesRate' || 
                                                                                     createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || 
