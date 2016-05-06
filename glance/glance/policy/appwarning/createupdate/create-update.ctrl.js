@@ -20,6 +20,10 @@
             enabled: true
         };
 
+        if (self.target === 'update' && warning.metric === 'CpuUsedCores') {
+            self.form.threshold = self.form.threshold * 100
+        }
+
         self.selectRules = [
             {
                 name: '内存',
@@ -64,8 +68,7 @@
 
         self.apps = [];
 
-        self.create = create;
-        self.update = update;
+        self.submit = submit;
 
         activate();
 
@@ -80,28 +83,30 @@
                 })
         }
 
-        ////
-        function create() {
-            self.form.appalias = self.app.alias;
-            self.form.appname = self.app.name;
-            self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold/100 :self.form.threshold;
-            self.form.threshold = self.form.threshold.toString();
-            appWarningBackend.createWarning(self.form)
-                .then(function (data) {
-                    $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
-                }, function (res) {
-                    self.form.threshold =  self.form.metric === 'CpuUsedCores' ? self.form.threshold*100 : self.form.threshold;
-                })
-        }
+        function submit() {
+            self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
+            if (self.target === 'create') {
+                self.form.appalias = self.app.alias;
+                self.form.appname = self.app.name;
 
-        function update() {
-            self.form.id = parseInt($stateParams.task_id);
-            self.form.cid = parseInt(warning.cid);
-            warningCurd.updateTask(self.form)
-                .then(function (data) {
-                    Notification.success("更新成功");
-                    $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1})
-                });
+                appWarningBackend.createWarning(self.form)
+                    .then(function (data) {
+                        $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
+                    }, function (res) {
+                        self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
+                    })
+            } else {
+                self.form.id = parseInt($stateParams.task_id);
+                self.form.cid = parseInt(warning.cid);
+
+                warningCurd.updateTask(self.form)
+                    .then(function (data) {
+                        Notification.success("更新成功");
+                        $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1})
+                    }, function (res) {
+                        self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
+                    });
+            }
         }
     }
 })();

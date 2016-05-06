@@ -7,7 +7,7 @@
 <section>
     <div class="main-container new-app">
         <div class="main-container-body">
-            <form class="form-horizontal" name="warningForm">
+            <form class="form-horizontal" name="warningForm" data-ng-submit="createWarningCtrl.submit()">
                 <div class="form-group" data-ng-if="createWarningCtrl.target === 'update'">
                     <label class="col-md-2 control-label">应用名称</label>
                     <div class="col-md-5">
@@ -111,14 +111,12 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-5" data-ng-if="createWarningCtrl.target === 'create'">
                         <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createWarningCtrl.create()"
                                 data-ng-disabled="warningForm.$invalid">创 建
                         </button>
                     </div>
 
                     <div class="col-md-offset-2 col-md-5" data-ng-if="createWarningCtrl.target === 'update'">
                         <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createWarningCtrl.update()"
                                 data-ng-disabled="warningForm.$invalid">更 新
                         </button>
                     </div>
