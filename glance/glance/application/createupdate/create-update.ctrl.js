@@ -305,7 +305,7 @@
             appservice.listApps()
                 .then(function (data) {
                     angular.forEach(data.App, function (app, index) {
-                        self.appNames.push(app.appName);
+                        self.appNames.push(app.name);
                     });
                 });
         }
