@@ -28,14 +28,14 @@
         </td>
         <td data-title="'实际值'">
             {/item.currentvalue/}
-            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
             <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
             <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
         </td>
         <td data-title="'告警内容'">
             {/warningEventCtrl.WARNING_TYPE[item.metric]/} {/warningEventCtrl.WARNING_RULE[item.operator]/}
             {/item.threshold/}
-            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> KB/s</span>
+            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
             <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
             <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
         </td>

@@ -84,12 +84,14 @@
         function create() {
             self.form.appalias = self.app.alias;
             self.form.appname = self.app.name;
-
+            self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold/100 :self.form.threshold;
+            self.form.threshold = self.form.threshold.toString();
             appWarningBackend.createWarning(self.form)
                 .then(function (data) {
                     $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
+                }, function (res) {
+                    self.form.threshold =  self.form.metric === 'CpuUsedCores' ? self.form.threshold*100 : self.form.threshold;
                 })
-
         }
 
         function update() {
