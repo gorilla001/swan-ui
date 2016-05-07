@@ -8,7 +8,7 @@
         var self = this;
 
         self.noticeNav = mdSideNav.createSideNav('noticeNav');
-        self.getCSUrl = getCSUrl;
+        self.linkToCS = linkToCS;
         self.logout = logout;
         self.goBack = goBack;
         self.openJoinDemoGroupModal = openJoinDemoGroupModal;
@@ -62,7 +62,7 @@
             }
         }
 
-        function getCSUrl() {
+        function linkToCS() {
             var w = window.open();
             commonBackend.getCSUrl().then(function (data) {
                 w.location = data.url;

@@ -71,17 +71,15 @@
                 </md-button>
             </li>
         </ul>
-        <hr>
-        <hr>
         <ul>
-            <li>
-                <md-button ng-href="#"><i class="fa fa-book"></i>用户手册</md-button>
+            <li data-ng-if="!IS_OFF_FLAG">
+                <md-button ng-href="{/rootCtrl.userManualUrl/}" target="_blank"><i class="fa fa-book"></i>用户手册</md-button>
+            </li>
+            <li data-ng-if="!IS_OFF_FLAG">
+                <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
             </li>
             <li>
-                <md-button ng-href="#"><i class="fa fa-coffee"></i>数人社区</md-button>
-            </li>
-            <li>
-                <md-button ng-href="#"><i class="fa fa-pencil-square-o"></i>工单反馈</md-button>
+                <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()"><i class="fa fa-pencil-square-o" ></i>工单反馈</md-button>
             </li>
         </ul>
     </aside>

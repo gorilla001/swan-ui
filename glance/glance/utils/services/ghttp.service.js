@@ -7,10 +7,6 @@
     function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies, cfpLoadingBar) {
         var token;
 
-        if (!$rootScope.loadings) {
-            $rootScope.loadings = {};
-        }
-
         var ResourceCls = buildResourceCls();
 
         return {

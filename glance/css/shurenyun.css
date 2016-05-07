@@ -2,7 +2,7 @@ body {
     background-color: #f3f5f7;
     color: #3D3D3D;
     font-family: 'PingHei', 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 14px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -500,4 +500,217 @@ md-dialog[add-item-dialog] > md-dialog-content > form > .input-row {
 
 md-dialog[add-item-dialog] > md-dialog-content > form > .input-row > md-input-container {
     min-width: 120px;
+}
+
+/* 内容基本布局 */
+.main-section header {
+    padding: 50px;
+}
+
+.main-section header h2 {
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0 0 15px 0;
+}
+
+.main-section header dl {
+    margin-bottom: 5px;
+}
+
+.main-section header dl:last-child {
+    margin-bottom: 0;
+}
+
+.main-section header dt, .main-section header dd {
+    display: inline-block;
+}
+
+.main-section header dt {
+    color: #A0ABBF;
+    margin-right: 10px;
+    position: relative;
+}
+
+.main-section header dd {
+    margin-right: 25px;
+}
+
+.main-section header dt:after {
+    content: "･";
+    position: absolute;
+    right: -10px;
+    top: 0px;
+}
+
+.main-section .content {
+    padding: 50px;
+}
+
+.main-section header .operation .md-fab {
+    font-size: 18px;
+    margin-bottom: 0;
+	margin-top: 0;
+}
+
+/* 主文本版式 */
+.main-article h1 {
+    font-size: 42px;
+    margin-top: 0
+}
+
+.main-article p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* tab 样式 */
+md-content.main-tab-content {
+    background-color: #ECF2F6;
+    padding: 50px;
+}
+
+md-tabs-canvas {
+    height: 32px;
+}
+
+md-pagination-wrapper {
+    margin-left: 50px;
+    height: 32px;
+}
+
+md-tabs .md-tab {
+    color: #A0ABBF;
+    line-height: 20px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+md-tabs .md-tab.md-active {
+    color: #354052;
+}
+
+md-toolbar.md-table-toolbar {
+    border-bottom: 2px solid #ECF2F6;
+}
+
+md-table-container {
+    background-color: #FFF;
+    padding: 0 25px;
+}
+
+table.md-table {
+    background-color: #FFF;
+}
+
+table.md-table td.md-cell {
+    border-bottom: 1px solid #EEF2F5;
+    border-top: 0;
+    color: #596679;
+    font-size: 12px;
+    line-height: 14px;
+    padding: 20px 10px !important;
+}
+
+table.md-table th.md-column {
+    border-bottom: 2px solid #EEF2F5;
+    color: #7A89A0;
+    font-size: 14px;
+    padding: 15px 10px !important;
+}
+
+table.md-table .md-button {
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 1;
+    margin: 0;
+    min-height: 14px;
+    min-width: auto;
+    padding: 0 5px;
+}
+
+table.md-table .md-menu {
+    padding: 0;
+}
+
+.status-normal {
+    color: #4CAF50;
+}
+
+.main-section .main-content {
+    background-color: #ecf2f6;
+    padding: 50px;
+}
+
+/* form group */
+.form-group {
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+.form-group label {
+
+}
+
+.form-group md-switch, .form-group md-input-container, .form-group .help-info-bottom, .form-group md-checkbox {
+    margin: 0;
+}
+
+.form-group .help-info-bottom {
+    color: #A0ABBF;
+    display: block;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.form-group md-switch {
+    display: inline;
+    height: 24px;
+    line-height: 24px;
+}
+
+.form-group-switch label {
+    line-height: 24px;
+}
+
+.form-group-checkbox label, .form-group-checkbox .md-label {
+    line-height: 20px;
+}
+
+.form-group-select label {
+    line-height: 34px;
+}
+
+.form-footer-button {
+    padding-top: 20px;
+}
+
+.form-footer-button .md-button {
+    margin: 0 15px 0 0;
+}
+
+.form-group-input input[type="text"] {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box; /* Firefox */
+    -webkit-box-sizing: border-box; /* Safari */
+    border: 1px solid #D8DFE5;
+    color: #354052;
+    font-size: 14px;
+    line-height: 14px;
+    padding: 18px;
+    width: 100%;
+}
+.form-group-input label, .form-group-textarea label {
+    padding-top: 19px;
+    line-height: 14px;
+}
+.form-group-textarea textarea {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box; /* Firefox */
+    -webkit-box-sizing: border-box; /* Safari */
+    border: 1px solid #D8DFE5;
+    color: #354052;
+    font-size: 14px;
+    min-height: 150px;
+    line-height: 14px;
+    padding: 18px;
+    width: 100%;
 }

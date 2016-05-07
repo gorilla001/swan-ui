@@ -41,18 +41,33 @@
             })
             .state('image.detail.version', {
                 url: '/version',
-                templateUrl: '/glance/image/detail/version.html',
-                controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
+                views: {
+                    'version': {
+                        templateUrl: '/glance/image/detail/version.html',
+                        controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
+                    }
+                }
+
             })
             .state('image.detail.brief', {
                 url: '/brief',
-                templateUrl: '/glance/image/detail/brief.html',
-                controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
+                views: {
+                    'brief': {
+                        templateUrl: '/glance/image/detail/brief.html',
+                        controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
+                    }
+                }
+
             })
             .state('image.detail.setting', {
                 url: '/setting',
-                templateUrl: '/glance/image/detail/setting.html',
-                controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
+                views: {
+                    'setting': {
+                        templateUrl: '/glance/image/detail/setting.html',
+                        controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
+                    }
+                }
+
             });
 
     }

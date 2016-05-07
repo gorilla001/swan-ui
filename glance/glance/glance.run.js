@@ -5,6 +5,7 @@
 
     /*@ngInject*/
     function run($state, $rootScope) {
+        $rootScope.$state = $state;
 
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {

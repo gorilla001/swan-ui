@@ -1,50 +1,57 @@
-<div class="main-container-body">
-    <div class="tab-content">
-        <div class="tab-pane active" id="version">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Build Number</th>
-                        <th>镜像地址</th>
-                        <th>状态</th>
-                        <th>分支/Tag</th>
-                        <th>Commit</th>
-                        <th>时间</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr data-ng-repeat="image in imageDetailVersionCtrl.projectImages | orderBy: image.number">
-                        <td>{/image.number/}</td>
-                        <td>{/image.image/}</td>
-                        <td>
-                             <span data-ng-class="{'text-danger': image.status == 'failure' || image.status == 'error', 'text-success': image.status == 'success',
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="imageDetailVersionCtrl.table.query.order"
+               md-on-reorder="imageDetailVersionCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column>Build Number</th>
+            <th md-column>镜像地址</th>
+            <th md-column>状态</th>
+            <th md-column>分支/Tag</th>
+            <th md-column>Commit</th>
+            <th md-column>时间</th>
+            <th md-column>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="image in imageDetailVersionCtrl.projectImages | orderBy: image.number">
+            <td md-cell>{/image.number/}</td>
+            <td md-cell>{/image.image/}</td>
+            <td md-cell>
+                <span data-ng-class="{'text-danger': image.status == 'failure' || image.status == 'error', 'text-success': image.status == 'success',
                         'text-info': image.status == 'running' || image.status == 'pending'}">
                             <i class="fa" data-ng-class="{'fa-times-circle': image.status == 'failure' || image.status == 'error', 'fa-check-circle': image.status == 'success',
                             'fa-spinner': image.status == 'running' || image.status == 'pending', 'fa-spin': image.status == 'running' || image.status == 'pending'}"></i>
                             {/imageDetailVersionCtrl.IMAGE_STATUS[image.status]/}
-                        </span>
-                        </td>
-                        <td>{/image.branch/}</td>
-                        <td>{/image.commit | limitTo: 7/}</td>
-                        <td>{/image.timestamp * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
-                        <td>
+                </span>
+            </td>
+            <td md-cell>{/image.branch/}</td>
+            <td md-cell>{/image.commit | limitTo: 7/}</td>
+            <td md-cell>{/image.timestamp * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</td>
+            <td md-cell>
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="Open demo menu" class="md-button md-raised"
+                               data-ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    </md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item>
                             <span ng-show="false" id="imageUrl{/$index/}">docker pull {/image.image/}</span>
-                            <button class="btn btn-default btn-xs" data-clipboard-target="imageUrl{/$index/}" dm-copy>
-                                拷贝pull命令
-                            </button>
-                            <button class="btn btn-default btn-xs" data-ng-show="image.status == 'success'"
-                                    data-ng-click="imageDetailVersionCtrl.goToCreateApp(image.image)">部署
-                            </button>
-                            <button class="btn btn-default btn-xs"
-                                    ng-click="imageDetailVersionCtrl.openLogModal(image.number, image.status)">日志
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                            <md-button data-clipboard-target="imageUrl{/$index/}" dm-copy>复制 pull 命令</md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ng-disabled="image.status !== 'success'"
+                                       data-ng-click="imageDetailVersionCtrl.goToCreateApp(image.image)">部署
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ng-click="imageDetailVersionCtrl.openLogModal($event, image.number, image.status)">
+                                日志
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

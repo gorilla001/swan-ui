@@ -5,15 +5,16 @@
 
 
     /* @ngInject */
-    function ImageDetailVersionCtrl(imageBackend, $state, imageLogModal, $stateParams, imageCurd, $scope) {
+    function ImageDetailVersionCtrl(imageBackend, $state, imageLogModal, $stateParams, imageCurd, $scope, mdTable) {
         var self = this;
         self.IMAGE_STATUS = IMAGE_STATUS;
+        self.table = mdTable.createTable('image.list.version');
         self.goToCreateApp = goToCreateApp;
 
         activate();
 
-        self.openLogModal = function (imageId, imageState) {
-            imageLogModal.open($stateParams.projectId, imageId, imageState);
+        self.openLogModal = function (ev, imageId, imageState) {
+            imageLogModal.open(ev, $stateParams.projectId, imageId, imageState);
         };
 
         function activate() {

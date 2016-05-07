@@ -8,7 +8,6 @@
         var self = this;
         ///
         self.form = {
-            uid: $rootScope.userId,
             name: "",
             repoUri: "",
             triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
@@ -41,7 +40,6 @@
         self.branch = false;
 
         self.createProject = createProject;
-        self.triggerCheck = triggerCheck;
         self.triggerRules = triggerRules;
 
         activate();
@@ -66,11 +64,8 @@
             })
         }
 
-        function triggerCheck(checkValue) {
-            self.triggerCount = imageBuildSetting.triggerCheck(checkValue, self.triggerCount)
-        }
-
-        function triggerRules() {
+        function triggerRules(checkValue) {
+            self.triggerCount = imageBuildSetting.triggerCheck(checkValue, self.triggerCount);
             self.form.triggerType = imageBuildSetting.triggerRules(self.tag, self.branch);
         }
     }
