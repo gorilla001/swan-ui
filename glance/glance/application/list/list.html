@@ -1,26 +1,16 @@
-<div class="page-header">
-    <h1>应用管理</h1>
-    <small>应用管理功能主要负责部署应用和管理应用的生命周期。<br>可以添加、删除、启动、停止应用，还可以弹性扩展应用实例数量。<br><a
-            data-ng-if="!IS_OFF_FLAG" ng-cloak href="http://doc.shurenyun.com/practice/wordpress.html" target="_blank">
-        如何搭建 Wordpress 个人博客</a></small>
-    <a data-ui-sref="appcreate" class="btn btn-success" data-demo-disable="left">新建应用</a>
+<div class="main-content app-layout">
+    <section>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="我的应用" data-ui-sref="app.list.my" md-active="$state.includes('app.list.my')">
+                    <md-content class="md-padding main-tab-content" data-ui-view="myapp">
+                    </md-content>
+                </md-tab>
+                <md-tab label="用户组的应用" data-ui-sref="app.list.group" md-active="$state.includes('app.list.group')">
+                    <md-content class="main-tab-content" data-ui-view="groupapp">
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </section>
 </div>
-<section>
-    <div class="main-container">
-        <header class="clearfix">
-            <h2 class=""></h2>
-            <ul class="nav nav-tabs">
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="applist.my" data-ui-sref-opts="{reload: true}">我的应用</a>
-                </li>
-                <li data-ui-sref-active="active">
-                    <a data-ui-sref="applist.group" data-ui-sref-opts="{reload: true}">用户组的应用</a>
-                </li>
-            </ul>
-        </header>
-        <div class="main-container-body">
-            <div data-ui-view="tabdetail" class="tab-content">
-            </div>
-        </div>
-    </div>
-</section>

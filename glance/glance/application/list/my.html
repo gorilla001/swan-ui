@@ -1,79 +1,117 @@
-<form class="form-inline search-container">
-    <div class="form-group">
-        <input type="text" class="form-control" ng-model="searchKeyWord" name="searchKeyWord"
-               placeholder="输入应用名称进行搜索" my-enter="myAppsCtrl.doSearch(searchKeyWord)">
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="myAppsCtrl.filter" placeholder="搜索"
+                   my-enter="myAppsCtrl.table.doSearch(myAppsCtrl.filter)">
+        </form>
     </div>
-    <button type="submit" ng-click="myAppsCtrl.doSearch(searchKeyWord)" class="btn btn-info">搜索</button>
-</form>
-<table ng-table="myAppsCtrl.appListTable" template-pagination="/views/common/ngTablePage.html"
-       class="table table-striped" ng-table-columns-binding="boundCols">
-    <tbody>
-    <tr ng-repeat="app in myAppsCtrl.applist">
-        <td data-title="'应用名称'" sortable="'name'"><a href="#"
-                                                     data-ui-sref="appdetails.config({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a>
-        </td>
-        <td data-title="'当前状态'">{/listappctrl.APP_STATUS[myAppsCtrl.appListStatus[app.id].status]/}</td>
-        <td data-title="'更新时间'" sortable="'updated'">{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-        <td data-title="'所属集群'" id="appTdCluster">
-            <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
-               ng-class="{'danger': myAppsCtrl.appListStatus[app.id].status == '10'}"> <img
-                    data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
-                    ng-show="myAppsCtrl.appListStatus[app.id].status == '10'">
-                {/myAppsCtrl.clusterNameMap[app.cid]/}
-            </a>
-        </td>
-        <td data-title="'容器个数'" sortable="'instances'"><span
-                ng-show="myAppsCtrl.appListStatus[app.id].tasks != undefined && myAppsCtrl.appListStatus[app.id].tasks != app.instances">{/myAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
-            <span ng-show="myAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
-        </td>
-        <td data-title="'操作'">
-            <button type="button"
-                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2' && myAppsCtrl.appListStatus[app.id].status != '3'"
-                    data-toggle="modal" data-target="#app-upContainer"
-                    data-ng-click="listappctrl.upContainerModal(app.cid, app.id, app.instances)"
-                    class="btn btn-default btn-xs" data-demo-disable>扩展
-            </button>
-            <button type="button"
-                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2'"
-                    class="btn btn-default btn-xs"
-                    data-ng-click="listappctrl.stop(app.cid, app.id)"
-                    data-ng-show="myAppsCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
-            </button>
-            <button type="button"
-                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '3'"
-                    class="btn btn-default btn-xs"
-                    data-ng-click="listappctrl.start(app.cid, app.id)"
-                    data-ng-show="myAppsCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
-            </button>
-            <button type="button" class="btn btn-default btn-xs"
-                    data-ng-click="listappctrl.undo(app.cid, app.id)"
-                    data-ng-show="myAppsCtrl.appListStatus[app.id].status == '6'" data-demo-disable>撤销
-            </button>
-            <button type="button"
-                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status == '5' || myAppsCtrl.appListStatus[app.id].status == 'undefined'"
-                    data-ng-click="listappctrl.delete(app.cid, app.id)" class="btn btn-default btn-xs"
-                    data-demo-disable>删除
-            </button>
-            <button type="button"
-                    data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '9'"
-                    class="btn btn-default btn-xs"
-                    data-ng-click="listappctrl.redeploy(app.cid, app.id)"
-                    data-ng-show="myAppsCtrl.appListStatus[app.id].status =='9'" data-demo-disable>恢复
-            </button>
-            <button type="button"
-                    class="btn btn-default btn-xs"
-                    data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20, appalias: app.alias, keywords: app.name})">
-                告警策略
-            </button>
-            <button type="button"
-                    class="btn btn-default btn-xs"
-                    data-ui-sref="appupdate({cluster_id: app.cid, app_id: app.id, canary: true})"
-                    data-ng-show="myAppsCtrl.appListStatus[app.id].status =='2'" data-demo-disable>灰度发布
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div class="alert alert-warning text-center" data-ng-show="myAppsCtrl.showNothtingAlert">
-    未查询到应用数据
-</div>
+</md-toolbar>
+
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="myAppsCtrl.table.query.order"
+               md-on-reorder="myAppsCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-order-by="name"><span>应用名称</span></th>
+            <th md-column md-numeric><span>当前状态</span></th>
+            <th md-column md-numeric md-order-by="updated">更新时间</th>
+            <th md-column md-numeric>所属集群</th>
+            <th md-column md-numeric md-order-by="instances">容器个数</th>
+            <th md-column md-numeric>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="app in myAppsCtrl.applist">
+            <td md-cell><a href="#"
+                           data-ui-sref="app.detail({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a></td>
+            <td md-cell>
+                {/listappctrl.APP_STATUS[myAppsCtrl.appListStatus[app.id].status]/} {/app.status/}
+            </td>
+            <td md-cell>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td md-cell>
+                <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
+                   ng-class="{'danger': myAppsCtrl.appListStatus[app.id].status == '10'}"> <img
+                        data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
+                        ng-show="myAppsCtrl.appListStatus[app.id].status == '10'">
+                    {/myAppsCtrl.clusterNameMap[app.cid]/}
+                </a>
+            </td>
+            <td md-cell>
+                <span ng-show="myAppsCtrl.appListStatus[app.id].tasks != undefined && myAppsCtrl.appListStatus[app.id].tasks != app.instances">{/myAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
+                <span ng-show="myAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+            </td>
+            <td md-cell>
+                <md-button aria-label="strp" class="md-button md-raised"
+                           data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2'"
+                           data-ng-click="listappctrl.stop(app.cid, app.id)"
+                           data-ng-show="myAppsCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+                </md-button>
+                <md-button aria-label="start" class="md-button md-raised"
+                           data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '3'"
+                           data-ng-click="listappctrl.start(app.cid, app.id)"
+                           data-ng-show="myAppsCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+                </md-button>
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="appListMenu" class="md-button md-raised"
+                               ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    </md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item>
+                            <md-button aria-label="upContainer"
+                                       ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2' && myAppsCtrl.appListStatus[app.id].status != '3'"
+                                       data-ng-click="listappctrl.upContainerModal(app.cid, app.id, app.instances)"
+                                       data-demo-disable>扩展
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="undo"
+                                       data-ng-click="listappctrl.undo(app.cid, app.id)"
+                                       ng-disabled="myAppsCtrl.appListStatus[app.id].status !== '6'"
+                                       data-demo-disable>撤销
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="delete"
+                                       ng-disabled="myAppsCtrl.appListStatus[app.id].status == '5' || myAppsCtrl.appListStatus[app.id].status == 'undefined'"
+                                       data-ng-click="listappctrl.delete(app.cid, app.id)"
+                                       data-demo-disable>删除
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="redeploy"
+                                       ng-disabled="myAppsCtrl.appListStatus[app.id].status != '9'"
+                                       data-ng-click="listappctrl.redeploy(app.cid, app.id)"
+                                       data-demo-disable>恢复
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="alert"
+                                       data-ng-if="myAppsCtrl.appListStatus[app.id].status == '2'"
+                                       data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20, appalias: app.alias, keywords: app.name})">
+                                告警策略
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="canary"
+                                       data-ui-sref="appupdate({cluster_id: app.cid, app_id: app.id, canary: true})"
+                                       data-ng-if="myAppsCtrl.appListStatus[app.id].status =='2'" data-demo-disable>
+                                灰度发布
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-if="!myAppsCtrl.applist.length">
+        未查询到应用数据
+    </div>
+</md-table-container>
+
+<md-table-pagination
+        md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="myAppsCtrl.table.query.limit"
+        md-limit-options="[20, 50, 100]"
+        md-page="myAppsCtrl.table.query.page" md-total="{/myAppsCtrl.count/}"
+        md-on-paginate="myAppsCtrl.table.getPage" md-page-select></md-table-pagination>

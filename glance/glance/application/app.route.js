@@ -7,14 +7,15 @@
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $interpolateProvider) {
 
         $stateProvider
-            .state('appcreate', {
-                url: '/app/create?url&version',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/createupdate/create-update.html',
-                        controller: 'CreateAppCtrl as createAppCtrl'
-                    }
-                },
+            .state('app', {
+                url: '/app',
+                template: '<ui-view/>',
+                targetState: 'list'
+            })
+            .state('app.create', {
+                url: '/create?url&version',
+                templateUrl: '/glance/application/createupdate/create-update.html',
+                controller: 'CreateAppCtrl as createAppCtrl',
                 resolve: {
                     target: function () {
                         return 'create'
@@ -24,14 +25,10 @@
                     }
                 }
             })
-            .state('appupdate', {
-                url: '/app/:cluster_id/:app_id/update?canary',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/createupdate/create-update.html',
-                        controller: 'CreateAppCtrl as createAppCtrl'
-                    }
-                },
+            .state('app.update', {
+                url: '/:cluster_id/:app_id/update?canary',
+                templateUrl: '/glance/application/createupdate/create-update.html',
+                controller: 'CreateAppCtrl as createAppCtrl',
                 resolve: {
                     target: function () {
                         return 'update'
@@ -39,55 +36,60 @@
                     app: getAppInfo
                 }
             })
-            .state('applist', {
-                url: '/apps',
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/list/list.html',
-                        controller: 'ListAppCtrl as listappctrl'
-                    }
-                }
+            .state('app.list', {
+                url: '/list',
+                templateUrl: '/glance/application/list/list.html',
+                controller: 'ListAppCtrl as listappctrl',
+                targetState: 'my'
             })
-            .state('applist.my', {
-                url: '/apps/my',
+            .state('app.list.my', {
+                url: '/my?per_page&page&order&keywords&sort_by',
                 views: {
-                    'tabdetail': {
+                    'myapp': {
                         templateUrl: '/glance/application/list/my.html',
                         controller: 'MyAppsCtrl as myAppsCtrl'
                     }
                 },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
+                },
                 resolve: {
-                    clusters: listClusters
+                    clusters: listClusters,
+                    apps: listApp,
+                    status: getAppsStatus
                 }
             })
-            .state('applist.group', {
-                url: '/apps/group',
+            .state('app.list.group', {
+                url: '/group?per_page&page&order&keywords&sort_by&clusterId&groupId',
                 views: {
-                    'tabdetail': {
+                    'groupapp': {
                         templateUrl: '/glance/application/list/group.html',
                         controller: 'GroupAppsCtrl as groupAppsCtrl'
                     }
                 },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
+                },
                 resolve: {
                     clusters: listClusters,
-                    groups: listGroups
+                    groups: listGroups,
+                    status: getAppsStatus,
+                    apps: listGroupApp
                 }
             })
-            .state('appdetails', {
-                url: '/app/:cluster_id/:app_id',
-                abstract: true,
-                views: {
-                    '': {
-                        templateUrl: '/glance/application/detail/detail.html',
-                        controller: 'DetailAppCtrl as detailAppCtrl'
-                    }
-                },
+            .state('app.detail', {
+                url: '/:cluster_id/:app_id',
+                templateUrl: '/glance/application/detail/detail.html',
+                controller: 'DetailAppCtrl as detailAppCtrl',
+                targetState: 'config',
                 resolve: {
                     appInfo: getAppInfo,
                     appStatus: getAppStatus
                 }
             })
-            .state('appdetails.instance', {
+            .state('app.detail.instance', {
                 url: '/instance',
                 views: {
                     'tabdetail': {
@@ -96,7 +98,7 @@
                     }
                 }
             })
-            .state('appdetails.monitoring', {
+            .state('app.detail.monitoring', {
                 url: '/monitoring',
                 views: {
                     'tabdetail': {
@@ -105,7 +107,7 @@
                     }
                 }
             })
-            .state('appdetails.config', {
+            .state('app.detail.config', {
                 url: '/config',
                 views: {
                     'tabdetail': {
@@ -114,7 +116,7 @@
                     }
                 }
             })
-            .state('appdetails.event', {
+            .state('app.detail.event', {
                 url: '/event',
                 views: {
                     'tabdetail': {
@@ -123,7 +125,7 @@
                     }
                 }
             })
-            .state('appdetails.version', {
+            .state('app.detail.version', {
                 url: '/version',
                 views: {
                     'tabdetail': {
@@ -153,4 +155,41 @@
     function getAppStatus(appservice, $stateParams) {
         return appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id)
     }
+
+    /* @ngInject */
+    function listApp($stateParams, appservice, utils) {
+        return appservice.listApps(utils.encodeQueryParams($stateParams))
+    }
+
+    /* @ngInject */
+    function getAppsStatus(appservice, $stateParams) {
+        return appservice.listAppsStatus({cid: $stateParams.clusterId});
+    }
+
+    /* @ngInject */
+    function listGroupApp(appservice, $stateParams, utils) {
+
+        //encode Params of listGroupApp Ajax
+        function encodeGroupAppsParams($stateParams) {
+            var params = utils.encodeQueryParams($stateParams);
+
+            if ($stateParams.clusterId) {
+                params.clusterId = $stateParams.clusterId;
+            }
+
+            if ($stateParams.groupId) {
+                params.groupId = $stateParams.groupId;
+            }
+
+            return params;
+        }
+
+        if ($stateParams.clusterId) {
+            return appservice.listClusterApps(encodeGroupAppsParams($stateParams), $stateParams.clusterId)
+        } else {
+            return {}
+        }
+    }
+
+
 })();

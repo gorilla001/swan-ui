@@ -288,7 +288,7 @@
             return appservice.createApp(self.form, self.form.cluster_id)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
-                    $state.go('appdetails.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
+                    $state.go('app.detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
                 });
         };
 
@@ -297,7 +297,7 @@
             delete self.form.cluster_id;
             return appservice.updateApp(self.form, app.cid, app.id)
                 .then(function (data) {
-                    $state.go('appdetails.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
+                    $state.go('app.detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
                 });
         };
 

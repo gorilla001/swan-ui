@@ -35,7 +35,7 @@
 
         function del(clusterId, appId, state) {
             if (!state) {
-                state = 'applist.my';
+                state = 'app.list.my';
             }
             confirmModal.open("是否确认删除应用？").then(function () {
                 appservice.deleteApp(clusterId, appId)

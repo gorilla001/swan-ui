@@ -96,11 +96,11 @@
                     params: this.options.params
                 };
 
-                this._startLoading(this.options.loading);
-
+                if(!this.options.loading){
+                    req.ignoreLoadingBar = true;
+                }
                 var deferred = $q.defer();
                 $http(req).success(function (data) {
-                    this._stopLoading(this.options.loading);
                     if (data.code === MESSAGE_CODE.success) {
                         deferred.resolve(data.data);
                     } else if (data.code === MESSAGE_CODE.noExist) {
@@ -113,24 +113,11 @@
                         deferred.reject(data);
                     }
                 }.bind(this)).error(function (data, status) {
-                    this._stopLoading(this.options.loading);
                     this._handleErrors(status);
                 }.bind(this));
 
                 return deferred.promise;
 
-            };
-
-            Resource.prototype._startLoading = function (loading) {
-                if (loading) {
-                    cfpLoadingBar.start();
-                }
-            };
-
-            Resource.prototype._stopLoading = function (loading) {
-                if (loading) {
-                    cfpLoadingBar.complete();
-                }
             };
 
             Resource.prototype._handleErrors = function (status) {

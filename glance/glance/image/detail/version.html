@@ -30,12 +30,12 @@
             <td md-cell>
                 <md-menu md-offset="0 -5">
                     <md-button aria-label="Open demo menu" class="md-button md-raised"
-                               data-ng-click="$mdOpenMenu($event)">
+                               ng-click="$mdOpenMenu($event)">
                         <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                     </md-button>
                     <md-menu-content width="2">
                         <md-menu-item>
-                            <span ng-show="false" id="imageUrl{/$index/}">docker pull {/image.image/}</span>
+                            <span data-ng-show="false" id="imageUrl{/$index/}">docker pull {/image.image/}</span>
                             <md-button data-clipboard-target="imageUrl{/$index/}" dm-copy>复制 pull 命令</md-button>
                         </md-menu-item>
                         <md-menu-item>
