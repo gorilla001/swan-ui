@@ -11,6 +11,7 @@
         self.logListTable = table.createParams(data.alarms, data.count);
         self.deleteLogPolicy = deleteLogPolicy;
         self.doSearch = doSearch;
+        self.switchNotice = switchNotice;
         ///
 
         function deleteLogPolicy(logId) {
@@ -23,6 +24,13 @@
                 per_page: 20,
                 keywords: searchKeyWord
             }, {reload: true});
+        }
+
+        function switchNotice(logPolicy) {
+            logWarningCurd.switchNotice(logPolicy.id, logPolicy.isnotice)
+                .then(function (data) {
+                    $state.reload();
+                });
         }
     }
 })();
