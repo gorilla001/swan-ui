@@ -16,8 +16,8 @@
             manualBuild: manualBuild
         };
 
-        function deleteProjet(projectId) {
-            confirmModal.open('确定删除该项目吗?').then(function () {
+        function deleteProjet(projectId, ev) {
+            confirmModal.open('确定删除该项目吗?', ev).then(function () {
                 imageBackend.deleteProject(projectId).then(function (data) {
                     $state.go('image.list', null, {reload: true});
                 });

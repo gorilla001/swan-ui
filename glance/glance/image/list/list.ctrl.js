@@ -19,8 +19,8 @@
         self.manualBuild = manualBuild;
         self.deleteProject = deleteProject;
 
-        function deleteProject(projectId) {
-            imageCurd.deleteProjet(projectId)
+        function deleteProject(projectId, ev) {
+            imageCurd.deleteProjet(projectId, ev)
         }
 
         function goToCreateApp(imageUrl) {

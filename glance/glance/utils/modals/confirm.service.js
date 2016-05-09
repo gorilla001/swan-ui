@@ -13,7 +13,7 @@
         function open(content, ev) {
             var confirm = $mdDialog.confirm()
             .clickOutsideToClose(true)
-            .textContent(content)
+            .htmlContent("<h3>" + content + "</h3>")
             .targetEvent(ev)
             .ok('确定')
             .cancel('取消');

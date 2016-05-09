@@ -15,7 +15,7 @@
             var dialog = $mdDialog.show(
                     $mdDialog.alert()
                       .clickOutsideToClose(true)
-                      .textContent(content)
+                      .htmlContent("</h3>" + content  + "</h3>")
                       .ok('确定')
                       .targetEvent(ev)
                   );

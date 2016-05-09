@@ -11,7 +11,6 @@
             function (event, toState, toParams, fromState, fromParams) {
                 if (toState.targetState) {
                     event.preventDefault();
-                    var params;
                     var newState = [toState.name, toState.targetState].join('.');
                     $state.go(newState, toParams);
                 } else if (toState.defaultParams) {
