@@ -36,10 +36,19 @@
         <td data-title="'联系人'" sortable="'emails'">
             {/item.emails/}
         </td>
+        <td data-title="'通知'">
+            <input type="checkbox" ng-true-value="true"
+                   ng-false-value="false" data-ng-model="item.isnotice"
+                   data-ng-change="logWarningListCtrl.switchNotice(item)"> 是
+        </td>
         <td data-title="'创建时间'" sortable="'createtime'">
             {/item.createtime | date: 'yyyy-MM-dd HH:mm'/}
         </td>
         <td data-title="'操作'">
+            <button type="button"
+                    class="btn btn-default btn-xs" data-demo-disable
+                    data-ui-sref="policyLogWarningUpdate({log_id: item.id})">更新
+            </button>
             <button type="button"
                     class="btn btn-danger btn-xs" data-ng-click="logWarningListCtrl.deleteLogPolicy(item.id)"
                     data-demo-disable>

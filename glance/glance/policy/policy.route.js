@@ -122,9 +122,32 @@
                 url: '/policyLogWarningCreate',
                 views: {
                     '': {
-                        templateUrl: '/glance/policy/applogwarning/create/create.html',
+                        templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
                         controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
                     }
+                },
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    logPolicy: function () {
+                        return 'create'
+                    }
+                }
+            })
+            .state('policyLogWarningUpdate', {
+                url: '/policyLogWarningUpdate?log_id',
+                views: {
+                    '': {
+                        templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
+                        controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
+                    }
+                },
+                resolve: {
+                    target: function () {
+                        return 'update'
+                    },
+                    logPolicy: getLogPolicyInfo
                 }
             })
             .state('policy.applogwarning', {
@@ -170,6 +193,11 @@
     /* @ngInject */
     function getTaskInfo(appWarningBackend, $stateParams) {
         return appWarningBackend.getWarning($stateParams.task_id);
+    }
+    
+    /* @ngInject */
+    function getLogPolicyInfo(logWarningBackend, $stateParams) {
+        return logWarningBackend.getLogPolicy($stateParams.log_id);
     }
 
     /* @ngInject */

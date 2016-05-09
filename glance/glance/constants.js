@@ -233,10 +233,14 @@ BACKEND_URL = {
         downloadSearch: "es/download/index/log",
         searchContext: "es/context",
         downloadContext: "es/download/context/log",
+        logPolicy: "es/alarm/$log_id",
         createLogPolicy: "es/alarm/create",
-        logPolicy: "es/alarm/delete/$log_id",
+        updateLogPolicy: "es/alarm/update",
+        deleteLogPolicy: "es/alarm/delete/$log_id",
         logPolicys: "es/alarm/list",
-        logPolicyEvents: "es/alarm/scheduler/history"
+        logPolicyEvents: "es/alarm/scheduler/history",
+        stopLogPolicy: "es/alarm/stop/$log_id",
+        restartLogPolicy: "es/alarm/restart/$log_id"
     },
     app: {
         userApps: 'api/v3/apps',

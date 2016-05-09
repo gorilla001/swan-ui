@@ -10,7 +10,8 @@
     /* @ngInject */
     function logWarningCurd(logWarningBackend, $state, Notification, confirmModal) {
         return {
-            deletLogPolicy: deletLogPolicy
+            deletLogPolicy: deletLogPolicy,
+            switchNotice: switchNotice
         };
 
         function deletLogPolicy(logId){
@@ -20,6 +21,12 @@
                     $state.reload();
                 });
             })
+        }
+
+        function switchNotice(logId, enable) {
+            return enable ?
+                logWarningBackend.restartLogPolicy(logId) :
+                logWarningBackend.stopLogPolicy(logId);
         }
     }
 })();
