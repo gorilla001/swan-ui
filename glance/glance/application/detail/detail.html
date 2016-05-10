@@ -1,73 +1,78 @@
-<div class="page-header">
-    <h1 class="pull-left">应用详情</h1>
-</div>
-<ol class="breadcrumb">
-    <li>
-        <a data-ui-sref="applist.my">应用管理</a>
-    </li>
-    <li>
-        应用详情
-    </li>
-</ol>
-<section>
-    <div>
-        <div class="app-detail-header">
-            <div class="main-container">
-                <div class="main-container-body">
-                    <h3 class="ng-binding">{/detailAppCtrl.appInfo.name/}</h3>
-                    <dl>
-                        <dt>最近更新时间：</dt>
-                        <dd>{/detailAppCtrl.appInfo.update | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
-                        <dt>应用状态：</dt>
-                        <dd>{/detailAppCtrl.APP_STATUS[detailAppCtrl.appStatus.status]/}</dd>
-                    </dl>
-                    <div class="btn-group btn-group-toggle">
-                        <button data-ng-disabled="!detailAppCtrl.appStatus.status" aria-expanded="false" aria-haspopup="true"
-                                data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li data-ng-show="detailAppCtrl.appStatus.status == '3'"><a href="#"
-                                                                        data-ng-click="detailAppCtrl.start(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">启动</a>
-                            </li>
-                            <li data-ng-show="detailAppCtrl.appStatus.status =='2'"><a href="#"
-                                                                       data-ng-click="detailAppCtrl.stop(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">停止</a>
-                            </li>
-                            <li data-ng-hide="detailAppCtrl.appStatus.status == 'undefined' || detailAppCtrl.appStatus.status == '5'"><a
-                                    data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)" href="#">删除</a></li>
-                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a
-                                    href="#" data-ng-click="detailAppCtrl.upContainerModal(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">扩展</a></li>
-                            <li data-ng-show="detailAppCtrl.appStatus.status == '9'"><a
-                                    data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
-                                    href="#">恢复</a></li>
-                            <li data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"><a data-ui-sref="appupdate({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})">更新</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>{/detailAppCtrl.appInfo.name/}</h2>
+                <dl>
+                    <dt>最近更新时间:</dt>
+                    <dd>{/detailAppCtrl.appInfo.update | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
+                    <dt>应用状态</dt>
+                    <dd>{/detailAppCtrl.APP_STATUS[detailAppCtrl.appStatus.status]/}</dd>
+                </dl>
             </div>
-        </div>
-    </div>
-    <div class="main-container"> <!-- Only required for left/right tabs -->
-        <header class="clearfix main-container-header">
-            <ul class="nav nav-tabs">
-                <li ui-sref-active="active"><a
-                        data-ui-sref="appdetails.config"
-                        data-ui-sref-opts="{reload: true}">配置</a></li>
-                <li ui-sref-active="active"><a
-                        data-ui-sref="appdetails.version" data-ui-sref-opts="{reload: true}">版本</a>
-                </li>
-                <li ui-sref-active="active"><a
-                        data-ui-sref="appdetails.monitoring"
-                        data-ui-sref-opts="{reload: true}">监控</a></li>
-                <li ui-sref-active="active"><a
-                        data-ui-sref="appdetails.instance" data-ui-sref-opts="{reload: true}">实例</a>
-                </li>
-                <li ui-sref-active="active"><a
-                        data-ui-sref="appdetails.event"
-                        data-ui-sref-opts="{reload: true}">事件</a></li>
-            </ul>
+            <div layout-align="end center" class="operation">
+                <md-fab-speed-dial md-open="false" md-direction="left"
+                                   class="md-scale">
+                    <md-fab-trigger>
+                        <md-button aria-label="menu" class="md-fab md-primary">
+                            菜单
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button aria-label="start" class="md-fab md-raised md-mini"
+                                   data-ng-if="detailAppCtrl.appStatus.status == '3'"
+                                   data-ng-click="detailAppCtrl.start(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                            启动
+                        </md-button>
+                        <md-button aria-label="stop" class="md-fab md-raised md-mini"
+                                   data-ng-if="detailAppCtrl.appStatus.status =='2'"
+                                   data-ng-click="detailAppCtrl.stop(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                            停止
+                        </md-button>
+                        <md-button aria-label="delete" class="md-fab md-raised md-mini"
+                                   data-ng-hide="detailAppCtrl.appStatus.status == 'undefined' || detailAppCtrl.appStatus.status == '5'"
+                                   data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                            删除
+                        </md-button>
+                        <md-button aria-label="upcontainer" class="md-fab md-raised md-mini"
+                                   data-ng-if="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
+                                   data-ng-click="detailAppCtrl.upContainerModal(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">
+                            扩展
+                        </md-button>
+                        <md-button aria-label="undo" class="md-fab md-raised md-mini"
+                                   data-ng-if="detailAppCtrl.appStatus.status == '9'"
+                                   data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                            恢复
+                        </md-button>
+                        <md-button aria-label="update" class="md-fab md-raised md-mini"
+                                   data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
+                                   data-ui-sref="app.update({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})">
+                            更新
+                        </md-button>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+            </div>
         </header>
-        <div data-ui-view="tabdetail" class="tab-content">
-        </div>
-    </div>
-</section>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="配置" data-ui-sref="app.detail.config" md-active="$state.includes('app.detail.config')">
+                    <md-content class="md-padding main-tab-content" ui-view="config">
+                </md-tab>
+                <md-tab label="版本" data-ui-sref="app.detail.version" md-active="$state.includes('app.detail.version')">
+                    <md-content class="md-padding main-tab-content" ui-view="version">
+                </md-tab>
+                <md-tab label="监控" data-ui-sref="app.detail.monitoring"
+                        md-active="$state.includes('app.detail.monitoring')">
+                    <md-content class="md-padding main-tab-content" ui-view="monitoring">
+                </md-tab>
+                <md-tab label="实例" data-ui-sref="app.detail.instance"
+                        md-active="$state.includes('app.detail.instance')">
+                    <md-content class="md-padding main-tab-content" ui-view="instance">
+                </md-tab>
+                <md-tab label="事件" data-ui-sref="app.detail.event" md-active="$state.includes('app.detail.event')">
+                    <md-content class="md-padding main-tab-content" ui-view="event">
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </section>
+</div>

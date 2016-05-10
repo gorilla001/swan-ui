@@ -92,7 +92,7 @@
             .state('app.detail.instance', {
                 url: '/instance',
                 views: {
-                    'tabdetail': {
+                    'instance': {
                         templateUrl: '/glance/application/detail/instance.html',
                         controller: 'InstanceAppCtrl as instanceAppCtrl'
                     }
@@ -101,7 +101,7 @@
             .state('app.detail.monitoring', {
                 url: '/monitoring',
                 views: {
-                    'tabdetail': {
+                    'monitoring': {
                         templateUrl: '/glance/application/detail/monitoring.html',
                         controller: 'MonitorAppCtrl as monitorAppCtrl'
                     }
@@ -110,7 +110,7 @@
             .state('app.detail.config', {
                 url: '/config',
                 views: {
-                    'tabdetail': {
+                    'config': {
                         templateUrl: '/glance/application/detail/config.html',
                         controller: 'ConfigAppCtrl as configAppCtrl'
                     }
@@ -119,7 +119,7 @@
             .state('app.detail.event', {
                 url: '/event',
                 views: {
-                    'tabdetail': {
+                    'event': {
                         templateUrl: '/glance/application/detail/event.html',
                         controller: 'EventAppCtrl as eventAppCtrl'
                     }
@@ -128,7 +128,7 @@
             .state('app.detail.version', {
                 url: '/version',
                 views: {
-                    'tabdetail': {
+                    'version': {
                         templateUrl: '/glance/application/detail/version.html',
                         controller: 'VersionAppCtrl as versionAppCtrl'
                     }
