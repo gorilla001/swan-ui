@@ -25,7 +25,7 @@
                     order: $stateParams.order,
                     sort_by: $stateParams.sort_by,
                     keywords: $stateParams.keywords
-                }, {reload: true});
+                });
             };
             this.getOrder = function (order) {
                 var orderObj = {
@@ -43,14 +43,14 @@
                     order: orderObj.direction,
                     sort_by: orderObj.order,
                     keywords: $stateParams.keywords
-                }, {reload: true});
+                });
             };
 
             this.doSearch = function (searchKey) {
                 $state.go(stateName, {
                     per_page: $stateParams.per_page,
                     keywords: searchKey
-                }, {reload: true});
+                });
             }
         }
 
