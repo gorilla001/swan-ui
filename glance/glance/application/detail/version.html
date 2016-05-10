@@ -15,7 +15,7 @@
             </td>
             <td>{/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</td>
             <td>
-                <button data-ng-show="!appversion.currentDeploy && appversion.status == 1" type="button" data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
+                <button data-ng-show="!appversion.currentDeploy && appversion.status == 1 && !appversion.canary" type="button" data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
                 <button data-ng-show="appversion.status === 0" type="button" data-ng-click="versionAppCtrl.cancelDeploy()" class="btn btn-default btn-xs" data-demo-disable>撤销</button>
                 <button data-ng-show="!appversion.currentDeploy && appversion.status != 0" type="button" data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>删除</button>
                 <button type="button" class="btn btn-default btn-xs" data-ng-show="appversion.currentDeploy || appversion.canary" data-demo-disable data-ng-click="versionAppCtrl.upCanary(versionAppCtrl.versions)">权重</button>
