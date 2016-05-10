@@ -19,7 +19,8 @@ var glanceApp = angular.module('glance',
         'glance.common',
         'glance.repository',
         'glance.policy',
-        'ngMaterial'
+        'ngMaterial',
+        'glance.layout'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
