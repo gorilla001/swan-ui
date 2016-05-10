@@ -322,7 +322,7 @@
                             <h4>应用地址</h4>
                         </div>
                         <div class="form-inline" style="margin-bottom: 15px;">
-                            <button type="button" class="btn btn-info btn-sm"
+                            <button type="button" class="btn btn-info btn-sm" data-ng-disabled="createAppCtrl.form.canary"
                                     data-ng-click="createAppCtrl.openPortModule()"
                             > 添加应用地址
                             </button>
@@ -347,7 +347,7 @@
                                         {/info.mapPort/}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-default btn-xs"
+                                        <button type="button" class="btn btn-default btn-xs" data-ng-disabled="createAppCtrl.form.canary"
                                                 data-ng-click="createAppCtrl.deleteConfig($index, 'portMappings')">删除
                                         </button>
                                     </td>
