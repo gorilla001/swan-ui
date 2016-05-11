@@ -269,6 +269,10 @@ BACKEND_URL = {
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships',
         groupDemo: 'api/v3/groups/demo/mymemberships'
     },
+
+    billing: {
+        billings: 'api/v3/billing/list'
+    },
     
     image: {
         projects: 'api/v3/projects',

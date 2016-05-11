@@ -14,7 +14,8 @@
             listGroupUser: listGroupUser,
             sendInvitation: sendInvitation,
             deleteGroupUsers: deleteGroupUsers,
-            joinInvitedGroup: joinInvitedGroup
+            joinInvitedGroup: joinInvitedGroup,
+            listBillings: listBillings
         };
 
         function listGroups(params, loading) {
@@ -47,6 +48,10 @@
 
         function joinInvitedGroup(groupId) {
             return gHttp.Resource('user.groupMyMemberships', {group_id: groupId}).post();
+        }
+
+        function listBillings(params) {
+            return gHttp.Resource('billing.billings').get({params: params});
         }
     }
 })();
