@@ -297,5 +297,13 @@ BACKEND_URL = {
         tasks: 'api/v3/alert/tasks',
         task: 'api/v3/alert/tasks/$task_id',
         tasksEvent: 'api/v3/alert/events'
+    },
+
+    stack: {
+        listStack: 'api/v3/stacks',
+        stacks: 'api/v3/clusters/$cluster_id/stacks',
+        stack: 'api/v3/clusters/$cluster_id/stacks/$stack_id',
+        deploy: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deploy',
+        deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key'
     }
 };

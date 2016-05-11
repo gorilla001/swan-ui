@@ -1,1 +1,90 @@
-创建应用编排
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>应用编排</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+        <div class="main-content">
+            <form name="createApp">
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                        <div flex="none"
+                             data-ng-class="{ 'has-error' : createApp.appname.$invalid && !createApp.appname.$pristine }">
+                            <input type="text" class="form-input" data-ng-model="layoutCreateCtrl.form.name"
+                                   data-required="required" name="appname">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">选择集群</label>
+                    <div flex="50" layout="column">
+                        <md-input-container>
+                            <md-select ng-model="layoutCreateCtrl.clusterId" aria-label="cluster"
+                                       data-required="required" name="cluster"
+                                       md-on-open="layoutCreateCtrl.listClusters()">
+                                <md-option ng-repeat="cluster in layoutCreateCtrl.clusters" ng-value="cluster.id">
+                                    {/cluster.name/}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-textarea">
+                    <label flex="15">数人云 Compose</label>
+                    <div flex="50" layout="column">
+                        <div layout="row"
+                             data-ng-class="{ 'has-error' : createApp.sryunCompose.$invalid && !createApp.sryunCompose.$pristine }">
+                            <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
+                                      data-required="required" name="sryunCompose"></textarea>
+                        </div>
+                        <p class="help-info-bottom">
+                            <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-textarea">
+                    <label flex="15">Docker Compose</label>
+                    <div flex="50" layout="column">
+                        <div layout="row"
+                             data-ng-class="{ 'has-error' : createApp.dockerCompose.$invalid && !createApp.dockerCompose.$pristine }">
+                            <textarea data-ng-model="layoutCreateCtrl.form.compose"
+                                      data-required="required" name="dockerCompose"></textarea>
+                        </div>
+                        <p class="help-info-bottom">
+                            <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15" layout="row" layout-align="end end">
+                        <md-button class="md-raised md-primary"
+                                   data-ng-disabled="createApp.$invalid" data-demo-disable
+                                   data-ng-click="layoutCreateCtrl.create()">
+                            确认
+                        </md-button>
+                        <md-button>取 消</md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <footer></footer>
+        <section>
+        </section>
+    </section>
+</div>
