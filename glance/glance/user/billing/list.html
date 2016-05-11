@@ -1,4 +1,4 @@
-<form layout="row" name="billingForm" data-ng-submit="listBillingCtrl.getBillings()">
+<div layout-gt-xs="row">
     <md-input-container>
         <label>应用名称</label>
         <md-select ng-model="listBillingCtrl.form.appname">
@@ -9,51 +9,14 @@
         </md-select>
     </md-input-container>
 
-    <div class="col-md-12">
-        <div style="display: inline-block;">
-            <div style="display: inline-block; margin-right: 20px; margin-left: 20px;">
-                <label style="display: block">起始日期 <span class="text-danger">* </span></label>
-                <datetimepicker
-                        hour-step="listBillingCtrl.hourStep"
-                        minute-step="listBillingCtrl.minuteStep" ng-model="listBillingCtrl.form.starttime" show-meridian="listBillingCtrl.showMeridian"
-                        date-format="yyyy-MM-dd" date-options="listBillingCtrl.dateOptions"
-                        readonly-date="false"
-                        show-spinners="false"
-                        readonly-time="false"
-                        current-text="今天"
-                        clear-text="清除"
-                        close-text="关闭"
-                        mousewheel="false"
-                        date-disabled="listBillingCtrl.isDisableGteDate(date, mode)">
-                </datetimepicker>
-            </div>
-            <div style="display: inline-block;">
-                <label style="display: block">截止日期 <span class="text-danger">* </span></label>
-                <datetimepicker
-                        hour-step="listBillingCtrl.hourStep"
-                        minute-step="listBillingCtrl.minuteStep" ng-model="listBillingCtrl.form.endtime" show-meridian="listBillingCtrl.showMeridian"
-                        date-format="yyyy-MM-dd" date-options="listBillingCtrl.dateOptions"
-                        readonly-date="false"
-                        show-spinners="false"
-                        readonly-time="false"
-                        current-text="今天"
-                        clear-text="清除"
-                        close-text="关闭"
-                        mousewheel="false"
-                        date-disabled="listBillingCtrl.isDisablelteDate(date, mode)">
-                </datetimepicker>
-            </div>
-        </div>
-
-        <div style="display: inline-block; margin-left: 20px;">
-            <label></label>
-            <button type="submit"
-                    data-ng-disabled="billingForm.$invalid"
-                    class="btn btn-primary btn-sm" style="width: 150px;">查询
-            </button>
-        </div>
-    </div>
-</form>
+    <md-datepicker md-placeholder="起始日期" md-max-date="listBillingCtrl.maxDate"
+                   data-ng-model="listBillingCtrl.form.starttime">
+    </md-datepicker>
+    <md-datepicker md-placeholder="截止日期" md-max-date="listBillingCtrl.maxDate"
+                   data-ng-model="listBillingCtrl.form.endtime">
+    </md-datepicker>
+    <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()">查询</md-button>
+</div>
 
 <md-table-container>
     <table md-table>
