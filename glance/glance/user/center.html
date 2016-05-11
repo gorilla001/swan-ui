@@ -1,19 +1,29 @@
-<div class="page-header">
-    <h1 class="pull-left">用户中心</h1>
-</div>
-<section>
-    <div class="main-container">
-        <header class="clearfix main-container-header">
-            <ul class="nav nav-tabs">
-                <li data-ng-class="{'active': userTabFlag ==='password'}" data-toggle="tab"><a
-                        data-ui-sref="user.password"
-                        data-ui-sref-opts="{reload: true}">修改密码</a></li>
-                <li data-ng-class="{'active': userTabFlag ==='groups'}" data-toggle="tab"><a
-                        data-ui-sref="user.groups" data-ui-sref-opts="{reload: true}">用户组管理</a>
-                </li>
-            </ul>
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>用户中心</h2>
+            </div>
         </header>
-        <div data-ui-view="tabdetail" class="tab-content">
+
+        <div class="main-content">
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="修改密码" data-ui-sref="user.password" md-active="$state.includes('user.password')">
+                        <md-content class="main-tab-content" data-ui-view="password">
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="用户组管理" data-ui-sref="user.groups" md-active="$state.includes('user.groups')">
+                        <md-content class="main-tab-content" data-ui-view="groups">
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="资源计量" data-ui-sref="user.billings" md-active="$state.includes('user.billings')">
+                        <md-content class="main-tab-content" data-ui-view="billings">
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
         </div>
-    </div>
-</section>
+    </section>
+</div>
+

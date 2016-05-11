@@ -3,17 +3,9 @@
     angular.module('glance.user')
         .controller('ListGroupCtrl', ListGroupCtrl);
 
-    ListGroupCtrl.$inject = [
-        '$rootScope',
-        '$state',
-        'Notification',
-        'ngTableParams',
-        'confirmModal',
-        'userBackend'
-    ];
 
-    function ListGroupCtrl($rootScope, $state, Notification, ngTableParams, confirmModal, userBackend) {
-        $rootScope.userTabFlag = 'groups';
+    /* @ngInject */
+    function ListGroupCtrl($rootScope, $state, Notification, userBackend, confirmModal, groups, mdTable) {
         var self = this;
 
         self.isCollapsed = true;
@@ -30,61 +22,24 @@
             description: ''
         };
 
-        self.inviteForm = {
-            emails: ''
-        };
+        self.emailsList = {};
 
         self.groupUserMapping = {};
-        
-        self.grouplist = [];
-        self.showNothtingAlert = false;     //应用列表空标记
 
-        self.isFirstLoad = true;
-
-        self.groupListTable = new ngTableParams($rootScope.groupListParams, {
-                counts: [20, 50, 100], // custom page count
-                total: 0,
-                paginationMaxBlocks: 13,
-                paginationMinBlocks: 2,
-                getData: function ($defer, params) {
-                    var loading = "";
-                    if (self.isFirstLoad) {
-                        loading = undefined;
-                    }
-                    $rootScope.groupListParams = self.groupListTable.parameters();
-                    userBackend.listGroups(dealParams(params.url()), loading)
-                        .then(function (data) {
-                            //If you remove when the current grouplication of only one grouplication,
-                            //set new Page and Switch back page
-                            if (!data.groups.length && $rootScope.groupListParams.page > 1) {
-                                $rootScope.groupListParams.page = $rootScope.groupListParams.page - 1
-                            }
-                            var total = data.total;
-                            self.grouplist = data.groups;
-                            for(var g in self.grouplist) {
-                                self.isCollapsedGroupMapping[self.grouplist[g].id] = true;
-                                self.isOpenInvite[self.grouplist[g].id] = false;
-                            }
-
-                            //Check whether show the warning dialog
-                            self.showNothtingAlert = !self.grouplist.length;
-                            params.total(total);
-                            if (total > 0) {
-                                $defer.resolve(data.groups);
-                            }
-
-                            self.isFirstLoad = false;
-                        }, function (res) {
-
-                        });
-                }
-            }
-        );
+        self.table = mdTable.createTable('user.groups');
+        self.groups = groups.groups;
+        self.count = groups.total;
+        for(var g in self.groups) {
+            self.emailsList[self.groups[g].id] = '';
+            self.isCollapsedGroupMapping[self.groups[g].id] = true;
+            self.isOpenInvite[self.groups[g].id] = false;
+        }
 
         /* 删除组 */
-        self.deleteGroup = function(groupId) {
-            confirmModal.open('您确定要删除该用户吗？').then(function () {
+        self.deleteGroup = function(groupId, $event) {
+            confirmModal.open('您确定要删除该用户吗？', $event).then(function () {
                 userBackend.deleteGroup(groupId).then(function (data) {
+                    Notification.success('删除成功');
                     $state.reload();
                 }, function (res) {
                 });
@@ -92,12 +47,13 @@
         };
 
         /* 离开组 */
-        self.leaveGroup = function(groupId) {
-            confirmModal.open('您确定要离开该用户组吗？').then(function () {
+        self.leaveGroup = function(groupId, $event) {
+            confirmModal.open('您确定要离开该用户组吗？', $event).then(function () {
                 userBackend.leaveGroup(groupId).then(function (data) {
                     if(groupId == $rootScope.demoGroupId) {
                         $rootScope.notInDemoGroup = true;
                     }
+                    Notification.success('离开成功');
                     $state.reload();
                 }, function (res) {
                 });
@@ -122,11 +78,11 @@
 
         /* 发送邀请 */
         self.sendInvitation = function(groupId) {
-            var emailStr = self.inviteForm.emails.trim();
+            var emailStr = self.emailsList[groupId].trim();
             if(!emailStr) {
                 Notification.error('邮箱地址不能为空');
             } else {
-                var _emails = self.inviteForm.emails.split(',');
+                var _emails = emailStr.split(',');
                 var emails = [];
                 for(var i=0; i < _emails.length; i++) {
                     emails.push(_emails[i].trim());
@@ -172,6 +128,7 @@
             confirmModal.open('您确定要移除该用户吗？').then(function () {
                 userBackend.deleteGroupUsers({users: [userId]}, groupId).then(function (data) {
                     self.isCollapsed = true;
+                    Notification.success('移除成功');
                     $state.reload()
                 }, function (res) {
                 });
@@ -200,26 +157,5 @@
                 $state.reload();
             });
         };
-
-        /*
-         修改 ngTable 默认的 params.url() 为数人云标准格式
-         */
-        function dealParams(urlParams) {
-            var data = {};
-            for (var key in urlParams) {
-                var temp = key;
-
-                if (key === 'count') {
-                    temp = 'per_page';
-                }
-
-                if (key.includes('sorting')) {
-                    temp = 'order';
-                    data['sort_by'] = key.slice(8, -1)
-                }
-                data[temp] = urlParams[key]
-            }
-            return data;
-        }
     }
 })();
