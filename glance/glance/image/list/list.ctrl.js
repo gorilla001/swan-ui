@@ -5,21 +5,24 @@
 
 
     /* @ngInject */
-    function ImageListCtrl(imageCurd, table, data) {
+    function ImageListCtrl(imageCurd, project, mdTable, $stateParams) {
         var self = this;
 
         self.IMAGE_STATUS = IMAGE_STATUS;
-        self.projects = data.Project;
-        self.imageListTable = table.createParams(data.Project, data.Count);
-        
+        self.table = mdTable.createTable('image.list');
+        self.projects = project.Project;
+        self.count = project.Count;
+        self.filter = $stateParams.keywords;
+
+
         self.goToCreateApp = goToCreateApp;
         self.manualBuild = manualBuild;
         self.deleteProject = deleteProject;
-        
-        function deleteProject (projectId) {
-            imageCurd.deleteProjet(projectId)
+
+        function deleteProject(projectId, ev) {
+            imageCurd.deleteProjet(projectId, ev)
         }
-        
+
         function goToCreateApp(imageUrl) {
             imageCurd.goToCreateApp(imageUrl)
         }

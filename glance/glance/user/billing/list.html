@@ -1,0 +1,53 @@
+<div layout-gt-xs="row">
+    <md-input-container>
+        <label>应用名称</label>
+        <md-select ng-model="listBillingCtrl.form.appname">
+            <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appname">All</md-option>
+            <md-option data-ng-value="app.name" data-ng-selected="app.name === listBillingCtrl.form.appname" ng-repeat="app in listBillingCtrl.apps">
+                {/app.name/}
+            </md-option>
+        </md-select>
+    </md-input-container>
+
+    <md-datepicker md-placeholder="起始日期" md-max-date="listBillingCtrl.maxDate"
+                   data-ng-model="listBillingCtrl.form.starttime">
+    </md-datepicker>
+    <md-datepicker md-placeholder="截止日期" md-max-date="listBillingCtrl.maxDate"
+                   data-ng-model="listBillingCtrl.form.endtime">
+    </md-datepicker>
+    <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()">查询</md-button>
+</div>
+
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="listBillingCtrl.table.query.order"
+               md-on-reorder="listBillingCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-order-by="appname">应用名称</th>
+            <th md-column md-order-by="cpus">CPU申请量</th>
+            <th md-column md-order-by="mem">内存申请量</th>
+            <th md-column md-order-by="instances">实例数</th>
+            <th md-column md-order-by="timelen">使用时长</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="billing" ng-repeat="billing in listBillingCtrl.billings">
+            <td md-cell>
+                {/billing.appname/}
+            </td>
+            <td md-cell>
+                {/billing.cpus/}
+            </td>
+            <td md-cell>{/billing.mem/}M</td>
+            <td md-cell>{/billing.instances/}</td>
+            <td md-cell>{/billing.timelen/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<md-table-pagination
+        md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="listBillingCtrl.table.query.limit"
+        md-limit-options="[20, 50, 100]"
+        md-page="listBillingCtrl.table.query.page" md-total="{/listBillingCtrl.count/}"
+        md-on-paginate="listBillingCtrl.table.getPage" md-page-select></md-table-pagination>

@@ -1,0 +1,152 @@
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>应用编排</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="部署最新镜像" data-ui-sref="layout.create">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+        <div class="main-content">
+            <ul class="collapse in">
+                <li class="panel" data-ng-repeat="stack in layoutListCtrl.stacks">
+                    <div layout="row" layout-align="end start" class="panel-heading">
+                        <div class="info" flex>
+                            <h3>{/stack.name/}</h3>
+                            <dl class="list-dl-row">
+                                <dt>状态</dt>
+                                <dd>{/layoutListCtrl.stackTypeText[stack.status]/}</i></dd>
+                                <dt>更新时间</dt>
+                                <dd>{/stack.updated | date:"yyyy-MM-dd HH:mm"/}</dd>
+                                <dt>所属集群</dt>
+                                <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div layout-align="end center" class="operation">
+                            <md-button class="md-raised" aria-label="add"
+                                       ng-click="layoutListCtrl.showTableData(stack.Cid, stack.Id)"><i
+                                    class="fa fa-plus" aria-hidden="true"></i>
+                            </md-button>
+                            <md-menu md-offset="0 -5">
+                                <md-button aria-label="Open demo menu" class="md-button md-raised"
+                                           ng-click="$mdOpenMenu($event)"><i class="fa fa-ellipsis-h"
+                                                                             aria-hidden="true"></i>
+                                </md-button>
+                                <md-menu-content width="2">
+                                    <md-menu-item>
+                                        <md-button aria-label="delete" data-demo-disable
+                                                   data-ng-click="layoutListCtrl.delStack(stack.Cid, stack.Id, $event)">
+                                            删除
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button aria-label="edit" data-demo-disable
+                                                   data-ui-sref="layout.update({cluster_id: stack.Cid, stack_id:stack.Id})">
+                                            更新 YML
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                    </div>
+                    <div class="panel-collapse">
+                        <table md-table ng-show="layoutListCtrl.openFlag[stack.Id]">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column><span>应用名称</span></th>
+                                <th md-column><span>状态</span></th>
+                                <th md-column>更新时间</th>
+                                <th md-column>容器数</th>
+                                <th md-column>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="app in layoutListCtrl.appList[stack.Id]">
+                                <td md-cell>{/app.Name/}
+                                </td>
+                                <td md-cell>
+                                    {/layoutListCtrl.APP_STATUS[layoutListCtrl.appListStatus[app.Id].status]/}
+                                </td>
+                                <td md-cell>{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
+                                <td md-cell>{/app.Instances/}</td>
+                                <td md-cell>
+                                    <md-menu md-offset="0 -5">
+                                        <md-button aria-label="Open demo menu" class="md-button md-raised"
+                                                   data-ng-disabled="!app.Id"
+                                                   ng-click="$mdOpenMenu($event)"><i
+                                                class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
+                                        <md-menu-content width="2">
+                                            <md-menu-item>
+                                                <md-button aria-label="stop"
+                                                           data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.Id, stack.Id)"
+                                                           data-demo-disable>
+                                                    停止
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="delete"
+                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status == '5' || layoutListCtrl.appListStatus[app.Id].status == 'undefined'"
+                                                           data-ng-click="layoutListCtrl.deleteApp(stack.Cid, app.Id, stack.Id, $event)"
+                                                           data-demo-disable>
+                                                    删除
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="update"
+                                                           data-ui-sref="app.update({cluster_id:stack.Cid, app_id: app.Id})"
+                                                           data-demo-disable>
+                                                    更新
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="undo"
+                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status !== '6'"
+                                                           data-ng-click="layoutListCtrl.undoApp(stack.Cid, app.Id, stack.Id)"
+                                                           data-demo-disable>
+                                                    撤销
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="upContainer"
+                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2' && layoutListCtrl.appListStatus[app.Id].status != '3'"
+                                                           data-ng-click="layoutListCtrl.updateContainer(app.Instances, stack.Cid, app.Id, stack.Id, $event)"
+                                                           data-demo-disable>
+                                                    扩展
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="canary"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status !='2'"
+                                                           data-ui-sref="appupdate({cluster_id: stack.Cid, app_id: app.Id, canary: true})"
+                                                           data-demo-disable>
+                                                    灰度发布
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button aria-label="policy"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
+                                                           data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20, appalias: app.Alias, keywords: app.Name})"
+                                                           data-demo-disable>
+                                                    告警策略
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <footer></footer>
+        <section>
+        </section>
+    </section>
+</div>

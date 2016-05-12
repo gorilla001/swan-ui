@@ -1,309 +1,341 @@
 <!DOCTYPE html>
 <html data-ng-app="glance" data-ng-controller="RootCtrl as rootCtrl">
-    <head>
-        <meta charset="utf-8">
-        <title>数人云</title>
-        <base href="/">
-        <!--build:css css/style.css-->
-        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/loaders.css/loaders.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/circliful/css/jquery.circliful.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/ng-dialog/css/ngDialog.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/ng-dialog/css/ngDialog-theme-plain.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/angularjs-slider/dist/rzslider.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/ng-table/dist/ng-table.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="stylesheet" type="text/css" href="css/shurenyun.css">
-        <!--endbuild-->
-        <link rel="shortcut icon" type="image/x-icon" href="pics/favicon.ico" />
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>数人云</title>
+    <base href="/">
+    <!--build:css css/style.css-->
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/loaders.css/loaders.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css">
+    <link rel="stylesheet" type="text/css"
+          href="bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angularjs-slider/dist/rzslider.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-table/dist/ng-table.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" type="text/css"
+          href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-material-data-table/dist/md-data-table.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-loading-bar/build/loading-bar.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/shurenyun.css">
+    <!--endbuild-->
+    <link rel="shortcut icon" type="image/x-icon" href="pics/favicon.ico"/>
+</head>
 
-    <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-1 col-sm-1 col-md-2 sidebar">
-                    <div class="user">
-						<img src="../pics/ico-user-header.svg">
-                        <h5 data-ng-bind="userName"></h5>
-                        <a href="#" data-ui-sref="user.groups" data-demo-disable><span class="glyphicon glyphicon-cog" aria-hidden="true" title="用户中心"></span></a>&nbsp;
-                        <a href="#" data-ng-click="rootCtrl.logout()">
-                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                        </a>
-                    </div>
-
-                    <ul class="nav nav-sidebar">
-                        <li data-ng-class="{'active': show=='home'}" title="首页">
-                            <a data-ui-sref="home" data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-home"></i> <span class="text">首页</span>
-                            </a>
-                        </li>
-                        <li data-ng-class="{'active': show=='application'}" title="应用管理">
-                            <a data-ui-sref="applist.my" data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-cube"></i> <span class="text">应用管理</span>
-                            </a>
-                        </li>
-                        <li data-ng-class="{'active': show=='policy'}" title="服务策略">
-                            <a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
-                               data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-clock-o"></i> <span class="text">服务策略</span>
-                            </a>
-                        </li>
-                        <!--  <li data-ng-class="{'active': show === 'repository'}" title="应用目录">
-                            <a data-ui-sref="repositoryList" data-ui-sref-opts="{reload: true}">
-                                <i class="fa fa-shopping-cart"></i> <span class="text">应用目录</span>
-                            </a>
-                        </li>-->
-                        <li data-ng-class="{'active': show==='image'}" title="镜像构建">
-                            <a data-ui-sref="imageList({page:1, per_page:20})" data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-cogs"></i> <span class="text">镜像构建</span>
-                            </a>
-                        </li>
-                        <li data-ng-class="{'active': show === 'log'}" title="日志查询">
-                            <a data-ui-sref="log" data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-file-text"></i> <span class="text">日志查询</span>
-                            </a>
-                        </li>
-                        <li data-ng-class="{'active': show === 'cluster'}" title="集群管理">
-                            <a data-ui-sref="cluster.listclusters" data-ui-sref-opts="{inherit: false}">
-                                <i class="fa fa-server"></i> <span class="text">集群管理</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="form-group" id="notice" ng-if="rootCtrl.noticeHtml" ng-cloak>
-                        <div class="alert alert-warning" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                            <div data-ng-bind-html="rootCtrl.noticeHtml"></div>
-                        </div>
-                    </div>
-
-                    <a data-ui-sref="home" ng-class="{'sidebar-logo': !IS_OFF_FLAG}"></a>
-					<ul class="nav-sidebar-footer" data-ng-if="!IS_OFF_FLAG" ng-cloak>
-						<li><a  ng-href="{/rootCtrl.userManualUrl/}" title="用户手册" target="_blank"><div class="userdoc"><span>用户手册</span></div></a></li>
-						<li><a href="http://open.shurenyun.com" title="数人社区" target="_blank"><div class="bbs"><span>数人社区</span></div></a></li>
-					</ul>
-                    
+<body>
+<div layout="row" class="main" ng-cloak>
+    <aside class="sidebar-main" data-ng-class="{'shortMenu' : rootCtrl.isShortMenu}">
+        <div class="logo">
+            <a href="#"><img src="pics/logo-white-full.svg"></a>
+        </div>
+        <ul>
+            <li data-ng-class="{'active': show=='home'}" title="首页">
+                <md-button data-ui-sref="home" data-ui-sref-opts="{reload: true}">
+                    <i class="fa fa-tachometer"></i>
+                    首页
+                </md-button>
+            </li>
+            <li title="应用管理" data-ui-sref-active="active">
+                <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}"><i
+                        class="fa fa-cube"></i>应用管理
+                </md-button>
+            </li>
+            <li data-ng-class="{'active': show=='policy'}" title="服务策略">
+                <md-button data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
+                           data-ui-sref-opts="{inherit: false}"><i class="fa fa-cube"></i>服务策略
+                </md-button>
+            </li>
+            <li data-ng-class="{'active': show=='repository'}" title="应用目录">
+                <md-button data-ui-sref="repositoryList" data-ui-sref-opts="{inherit: false}"><i
+                        class="fa fa-shopping-cart"></i>应用目录
+                </md-button>
+            </li>
+            <li data-ui-sref-active="active" title="镜像构建">
+                <md-button data-ui-sref="image"
+                           data-ui-sref-opts="{inherit: false}"><i class="fa fa-cogs"></i>镜像构建
+                </md-button>
+            </li>
+            <li title="应用编排" data-ui-sref-active="active">
+                <md-button data-ui-sref="layout" data-ui-sref-opts="{reload: true, inherit: false}"><i
+                        class="fa fa-cubes"></i>应用编排
+                </md-button>
+            </li>
+            <li data-ng-class="{'active': show=='log'}" title="日志查询">
+                <md-button data-ui-sref="log" data-ui-sref-opts="{inherit: false}"><i
+                        class="fa fa-search"></i>日志查询
+                </md-button>
+            </li>
+            <li data-ng-class="{'active': show=='cluster'}" title="集群管理">
+                <md-button data-ui-sref="cluster.listclusters" data-ui-sref-opts="{inherit: false}"><i
+                        class="fa fa-server"></i>集群管理
+                </md-button>
+            </li>
+        </ul>
+        <ul>
+            <li data-ng-if="!IS_OFF_FLAG">
+                <md-button ng-href="{/rootCtrl.userManualUrl/}" target="_blank"><i class="fa fa-book"></i>用户手册
+                </md-button>
+            </li>
+            <li data-ng-if="!IS_OFF_FLAG">
+                <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
+            </li>
+            <li>
+                <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()"><i class="fa fa-pencil-square-o"></i>工单反馈
+                </md-button>
+            </li>
+        </ul>
+    </aside>
+    <div layout="column" flex>
+        <nav class="nav-main">
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <md-button class="md-icon-button" aria-label="Settings" data-ng-click="rootCtrl.togShortMenu()">
+                        <i class="fa fa-bars"></i>
+                    </md-button>
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Favorite">
+                        <i class="fa fa-th"></i>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" ng-click="rootCtrl.noticeNav.buildToggler()"
+                               ng-hide="rootCtrl.noticeNav.isOpenNav()">
+                        <i class="fa fa-bell"></i>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More" data-ui-sref="user.groups">
+                        <i class="fa fa-user"></i>
+                    </md-button>
                 </div>
+            </md-toolbar>
+        </nav>
+        <div flex data-ui-view></div>
+    </div>
 
-                <div id="main" class="col-xs-11 col-xs-offset-1 col-sm-11 col-sm-offset-1 col-md-10 col-md-offset-2 main">
-                    <div data-ui-view></div>
-                    <div class="loading-style" data-ng-include="'/views/loading/loading.html'" data-ng-show="loadings.default"></div>
-                </div>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="noticeNav">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">公告栏</h1>
+        </md-toolbar>
+        <md-content layout-padding>
+            <div>
+                <md-content>
+                    <div data-ng-if="!rootCtrl.noticeHtml">暂无公告</div>
+                    <div data-ng-bind-html="rootCtrl.noticeHtml"></div>
+                </md-content>
             </div>
-        </div>
-        <div class="tab-rb-feedback ng-hide" style="bottom: 76px;" ng-show="notInDemoGroup && demoGroupId">
-            <a href="#" data-ng-click="rootCtrl.openJoinDemoGroupModal()">
-                <i class="glyphicon glyphicon-gift"></i>
-                <em>试用</em>
-            </a>
-        </div>
-        <div class="tab-rb-feedback" data-ng-if="!IS_OFF_FLAG" ng-cloak>
-            <a href="#" data-ng-click="rootCtrl.getCSUrl()">
-                <i class="glyphicon glyphicon-edit"></i>
-                <em>反馈</em>
-            </a>
-        </div>
-        
-        <!-- GrowingIO -->
-        <script type='text/javascript'>
-            var _vds = _vds || [];
-        </script>
-        
-        <!-- rev-hash -->
-        <script src="js/confdev.js" type="text/javascript"></script>
-        <!-- end -->
-        <!--build:js js/script.js-->
-        <script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
-        <script src="bower_components/loaders.css/loaders.css.js" type="text/javascript"></script>
-        <!--endbuild-->
+        </md-content>
+    </md-sidenav>
+</div>
 
-        <!--build:js js/angular.js-->
-        <script src="bower_components/angular/angular.js" type="text/javascript"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js" type="text/javascript"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
-        <script src="bower_components/ngSocket/dist/ngSocket.js"></script>
-        <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-        <script src="bower_components/zeroclipboard/dist/ZeroClipboard.js" type="text/javascript"></script>
-        <script src="bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-        <script src="bower_components/isteven-angular-multiselect/isteven-multi-select.js" type="text/javascript"></script>
-        <script src="bower_components/moment/min/moment-with-locales.min.js" type="text/javascript"></script>
-        <script src="bower_components/circliful/js/jquery.circliful.min.js" type="text/javascript"></script>
-        <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js" type="text/javascript"></script>
-        <script src="bower_components/ng-dialog/js/ngDialog.min.js" type="text/javascript"></script>
-        <script src="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js" type="text/javascript"></script>
-        <script src="bower_components/echarts/src/echarts-dataman.js" type="text/javascript"></script>
-        <script src="bower_components/angularjs-slider/dist/rzslider.min.js" type="text/javascript"></script>
-        <script src="bower_components/ng-table/dist/ng-table.js" type="text/javascript"></script>
-        <script src="bower_components/showdown/src/showdown.js" type="text/javascript"></script>
-        <script src="bower_components/angular-markdown-directive/markdown.js" type="text/javascript"></script>
-        <script src="bower_components/angular-base64/angular-base64.min.js" type="text/javascript"></script>
-        <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
-        <script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js" type="text/javascript"></script>
-        <!--endbuild-->
-        
-        <!--build:js(build) js/main.js-->
-        <script src="glance/constants.js" type="text/javascript"></script>
+<!-- GrowingIO -->
+<script type='text/javascript'>
+    var _vds = _vds || [];
+</script>
 
-        <script src="glance/utils/utils.module.js" type="text/javascript"></script>
-        <script src="glance/utils/services/utils.service.js" type="text/javascript"></script>
-        <script src="glance/utils/services/ghttp.service.js" type="text/javascript"></script>
-        <script src="glance/utils/services/table.service.js" type="text/javascript"></script>
-        <script src="glance/utils/modals/confirm.service.js" type="text/javascript"></script>
-        <script src="glance/utils/modals/alert.service.js" type="text/javascript"></script>
-        <script src="glance/utils/modals/form.service.js" type="text/javascript"></script>
+<!-- rev-hash -->
+<script src="js/confdev.js" type="text/javascript"></script>
+<!-- end -->
+<!--build:js js/script.js-->
+<script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
+<script src="bower_components/loaders.css/loaders.css.js" type="text/javascript"></script>
+<!--endbuild-->
 
-        <script src="glance/common/common.module.js" type="text/javascript"></script>
-        <script src="glance/common/services/common-backend.service.js" type="text/javascript"></script>
+<!--build:js js/angular.js-->
+<script src="bower_components/angular/angular.js" type="text/javascript"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js" type="text/javascript"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
+<script src="bower_components/angular-aria/angular-aria.js" type="text/javascript"></script>
+<script src="bower_components/angular-material/angular-material.js" type="text/javascript"></script>
+<script src="bower_components/ngSocket/dist/ngSocket.js"></script>
+<script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+<script src="bower_components/zeroclipboard/dist/ZeroClipboard.js" type="text/javascript"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<script src="bower_components/isteven-angular-multiselect/isteven-multi-select.js" type="text/javascript"></script>
+<script src="bower_components/moment/min/moment-with-locales.min.js" type="text/javascript"></script>
+<script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"
+        type="text/javascript"></script>
+<script src="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js" type="text/javascript"></script>
+<script src="bower_components/echarts/src/echarts-dataman.js" type="text/javascript"></script>
+<script src="bower_components/angularjs-slider/dist/rzslider.min.js" type="text/javascript"></script>
+<script src="bower_components/ng-table/dist/ng-table.js" type="text/javascript"></script>
+<script src="bower_components/ng-table/dist/ng-table.js" type="text/javascript"></script>
+<script src="bower_components/showdown/src/showdown.js" type="text/javascript"></script>
+<script src="bower_components/angular-markdown-directive/markdown.js" type="text/javascript"></script>
+<script src="bower_components/angular-base64/angular-base64.min.js" type="text/javascript"></script>
+<script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+<script src="bower_components/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"
+        type="text/javascript"></script>
+<script src="bower_components/angular-material-data-table/dist/md-data-table.js" type="text/javascript"></script>
+<script src="bower_components/angular-loading-bar/build/loading-bar.js" type="text/javascript"></script>
+<!--endbuild-->
 
-        <script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
-        <script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
-        <script src="glance/cluster/services/cluster-backend.service.js" type="text/javascript"></script>
-        <script src="glance/cluster/services/cluster-curd.service.js" type="text/javascript"></script>
+<!--build:js(build) js/main.js-->
+<script src="glance/constants.js" type="text/javascript"></script>
 
-        <script src="glance/application/app.module.js" type="text/javascript"></script>
-        <script src="glance/application/app.config.js" type="text/javascript"></script>
-        <script src="glance/application/app.route.js" type="text/javascript"></script>
-        <script src="glance/application/services/app-backend.service.js" type="text/javascript"></script>
-        <script src="glance/application/services/app-curd.service.js" type="text/javascript"></script>
-        <script src="glance/application/services/app-label.service.js" type="text/javascript"></script>
-        <script src="glance/application/modals/up-canary.service.js" type="text/javascript"></script>
-        <script src="glance/application/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/createupdate/modals/create-port.service.js" type="text/javascript"></script>
-        <script src="glance/application/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
-        <script src="glance/application/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/list/my.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/list/group.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/detail.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/config.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/event.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/instance.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/monitoring.ctrl.js" type="text/javascript"></script>
-        <script src="glance/application/detail/version.ctrl.js" type="text/javascript"></script>
+<script src="glance/utils/utils.module.js" type="text/javascript"></script>
+<script src="glance/utils/utils.config.js" type="text/javascript"></script>
+<script src="glance/utils/services/utils.service.js" type="text/javascript"></script>
+<script src="glance/utils/services/ghttp.service.js" type="text/javascript"></script>
+<script src="glance/utils/services/table.service.js" type="text/javascript"></script>
+<script src="glance/utils/services/mdTable.service.js" type="text/javascript"></script>
+<script src="glance/utils/services/mdSideNav.service.js" type="text/javascript"></script>
+<script src="glance/utils/services/timing.service.js" type="text/javascript"></script>
+<script src="glance/utils/modals/confirm.service.js" type="text/javascript"></script>
+<script src="glance/utils/modals/alert.service.js" type="text/javascript"></script>
+<script src="glance/utils/modals/form.service.js" type="text/javascript"></script>
 
-        <script src="glance/user/user.module.js" type="text/javascript"></script>
-        <script src="glance/user/user.config.js" type="text/javascript"></script>
-        <script src="glance/user/center.ctrl.js" type="text/javascript"></script>
-        <script src="glance/user/group/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/user/password/update.ctrl.js" type="text/javascript"></script>
-        <script src="glance/user/services/user-backend.service.js"></script>
+<script src="glance/common/common.module.js" type="text/javascript"></script>
+<script src="glance/common/services/common-backend.service.js" type="text/javascript"></script>
 
-        <script src="glance/image/image.module.js" type="text/javascript"></script>
-        <script src="glance/image/image.config.js" type="text/javascript"></script>
-        <script src="glance/image/image.route.js" type="text/javascript"></script>
-        <script src="glance/image/services/image-backend.service.js" type="text/javascript"></script>
-        <script src="glance/image/services/image-build-setting.service.js" type="text/javascript"></script>
-        <script src="glance/image/services/image-curd-service.js" type="text/javascript"></script>
-        <script src="glance/image/modals/image-log-modal.service.js" type="text/javascript"></script>
-        <script src="glance/filter/project-url.filter.js" type="text/javascript"></script>
-        <script src="glance/image/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/image/create/create.ctrl.js" type="text/javascript"></script>
-        <script src="glance/image/detail/detail.ctrl.js" type="text/javascript"></script>
-        <script src="glance/image/detail/version.ctrl.js" type="text/javascript"></script>
-        <script src="glance/image/detail/brief.ctrl.js" type="text/javascript"></script>
-        <script src="glance/image/detail/setting.ctrl.js" type="text/javascript"></script>
+<script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
+<script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
+<script src="glance/cluster/services/cluster-backend.service.js" type="text/javascript"></script>
+<script src="glance/cluster/services/cluster-curd.service.js" type="text/javascript"></script>
 
-        <script src="glance/repository/repo.module.js" type="text/javascript"></script>
-        <script src="glance/repository/repo.config.js" type="text/javascript"></script>
-        <script src="glance/repository/repo.route.js" type="text/javascript"></script>
-        <script src="glance/repository/services/repo-backend.service.js" type="text/javascript"></script>
-        <script src="glance/repository/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/repository/detail/detail.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/app.module.js" type="text/javascript"></script>
+<script src="glance/application/app.config.js" type="text/javascript"></script>
+<script src="glance/application/app.route.js" type="text/javascript"></script>
+<script src="glance/application/services/app-backend.service.js" type="text/javascript"></script>
+<script src="glance/application/services/app-curd.service.js" type="text/javascript"></script>
+<script src="glance/application/services/app-label.service.js" type="text/javascript"></script>
+<script src="glance/application/modals/up-canary.service.js" type="text/javascript"></script>
+<script src="glance/application/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/createupdate/modals/create-port.service.js" type="text/javascript"></script>
+<script src="glance/application/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
+<script src="glance/application/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/list/my.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/list/group.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/detail.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/config.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/event.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/instance.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/monitoring.ctrl.js" type="text/javascript"></script>
+<script src="glance/application/detail/version.ctrl.js" type="text/javascript"></script>
 
-        <script src="glance/policy/policy.module.js" type="text/javascript"></script>
-        <script src="glance/policy/policy.config.js" type="text/javascript"></script>
-        <script src="glance/policy/policy.route.js" type="text/javascript"></script>
-        <script src="glance/policy/appwarning/service/warning-backend.service.js" type="text/javascript"></script>
-        <script src="glance/policy/appwarning/service/warning-curd.service.js" type="text/javascript"></script>
-        <script src="glance/policy/appwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/appwarning/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/appwarning/event/event.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/apptimescaling/service/scaling-backend.service.js" type="text/javascript"></script>
-        <script src="glance/policy/apptimescaling/service/scaling-curd.service.js" type="text/javascript"></script>
-        <script src="glance/policy/apptimescaling/create/create.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/apptimescaling/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/applogwarning/service/logwarning-backend.service.js" type="text/javascript"></script>
-        <script src="glance/policy/applogwarning/service/logwarning-curd.service.js" type="text/javascript"></script>
-        <script src="glance/policy/applogwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/applogwarning/list/list.ctrl.js" type="text/javascript"></script>
-        <script src="glance/policy/applogwarning/event/event.ctrl.js" type="text/javascript"></script>
-        <!--endbuild-->
-        
-        <!--build:js js/old-main.js-->
-        <script src="js/app.js" type="text/javascript"></script>
-        <script src="js/directives.js" type="text/javascript"></script>
-        <script src="js/directives/include-replace.js" type="text/javascript"></script>
-        <script src="js/ngservices/http-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/logloader-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/unitconversion-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/ws-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/user-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/monitor-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/charts-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/clusterstatus-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/update-cluster-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/get-cluster-lables.js" type="text/javascript"></script>
-        <script src="js/ngservices/multi-select-service.js" type="text/javascript"></script>
-        <script src="js/ngservices/model-open.js" type="text/javascript"></script>
-        <script type="text/javascript" src="js/ngservices/label-service.js"></script>
-        <script src="js/cluster/clusterctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/listclustersctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/clusterdetailsctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/clusterdetailsnodectrl.js" type="text/javascript"></script>
-        <script src="js/cluster/clusterdetailslogctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/clusterdetailsmonitorctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/createclusterctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/createclusterformctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/updateclusterctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/updateclusterformctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/addnodectrl.js" type="text/javascript"></script>
-        <script src="js/cluster/addlivingnodectrl.js" type="text/javascript"></script>
-        <script src="js/cluster/iaasCtrl.js" type="text/javascript"></script>
-        <script src="js/cluster/addnodeformctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/nodedetailsctrl.js" type="text/javascript"></script>
-        <script src="js/cluster/updatenodectrl.js" type="text/javascript"></script>
-        <script src="js/cluster/updatenodeformctrl.js" type="text/javascript"></script>
-        <script src="js/log/logbase.js" type="text/javascript"></script>
-        <script src="js/dynamic/dynamicbase.js" type="text/javascript"></script>
-        <script src="js/modals/join-demo-group.js" type="text/javascript"></script>
-        <!--endbuild-->
-        
-        <!--build:js(build) js/directive.js-->
-        <script src="glance/directives/dm-dynamic-field.directive.js" type="text/javascript"></script>
-        <script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
-        <script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
-        <script src="glance/directives/positive-integer.directive.js" type="text/javascript"></script>
-        <script src="glance/rootctrl.js" type="text/javascript"></script>
-        <!--endbuild-->
-        
-        <!--build:js js/template.js-->
-        <!-- inject:template.js -->
-        <!-- angular templates will be automatically converted in js and inserted here -->
-        <!-- endinject -->
-        <!--endbuild-->
+<script src="glance/user/user.module.js" type="text/javascript"></script>
+<script src="glance/user/user.config.js" type="text/javascript"></script>
+<script src="glance/user/user.route.js" type="text/javascript"></script>
+<script src="glance/user/center.ctrl.js" type="text/javascript"></script>
+<script src="glance/user/group/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/user/password/update.ctrl.js" type="text/javascript"></script>
+<script src="glance/user/billing/list.ctrl.js" type = text/javascript></script>
+<script src="glance/user/services/user-backend.service.js"></script>
 
-        <!-- baidu -->
-        <script>
-            if (RUNNING_ENV === "prod") {
-                var _hmt = _hmt || [];
-                (function() {
-                    var hm = document.createElement("script");
-                    hm.src = "//hm.baidu.com/hm.js?cd74c0fcc0c51aecc3bb276315e35e6a";
-                    var s = document.getElementsByTagName("script")[0];
-                    s.parentNode.insertBefore(hm, s);
-                })();
-            }
-        </script>
+<script src="glance/image/image.module.js" type="text/javascript"></script>
+<script src="glance/image/image.config.js" type="text/javascript"></script>
+<script src="glance/image/image.route.js" type="text/javascript"></script>
+<script src="glance/image/services/image-backend.service.js" type="text/javascript"></script>
+<script src="glance/image/services/image-build-setting.service.js" type="text/javascript"></script>
+<script src="glance/image/services/image-curd-service.js" type="text/javascript"></script>
+<script src="glance/image/modals/image-log-modal.service.js" type="text/javascript"></script>
+<script src="glance/filter/project-url.filter.js" type="text/javascript"></script>
+<script src="glance/image/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/image/create/create.ctrl.js" type="text/javascript"></script>
+<script src="glance/image/detail/detail.ctrl.js" type="text/javascript"></script>
+<script src="glance/image/detail/version.ctrl.js" type="text/javascript"></script>
+<script src="glance/image/detail/brief.ctrl.js" type="text/javascript"></script>
+<script src="glance/image/detail/setting.ctrl.js" type="text/javascript"></script>
 
-    </body>
+<script src="glance/repository/repo.module.js" type="text/javascript"></script>
+<script src="glance/repository/repo.config.js" type="text/javascript"></script>
+<script src="glance/repository/repo.route.js" type="text/javascript"></script>
+<script src="glance/repository/services/repo-backend.service.js" type="text/javascript"></script>
+<script src="glance/repository/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/repository/detail/detail.ctrl.js" type="text/javascript"></script>
+
+<script src="glance/policy/policy.module.js" type="text/javascript"></script>
+<script src="glance/policy/policy.config.js" type="text/javascript"></script>
+<script src="glance/policy/policy.route.js" type="text/javascript"></script>
+<script src="glance/policy/appwarning/service/warning-backend.service.js" type="text/javascript"></script>
+<script src="glance/policy/appwarning/service/warning-curd.service.js" type="text/javascript"></script>
+<script src="glance/policy/appwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/appwarning/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/appwarning/event/event.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/apptimescaling/service/scaling-backend.service.js" type="text/javascript"></script>
+<script src="glance/policy/apptimescaling/service/scaling-curd.service.js" type="text/javascript"></script>
+<script src="glance/policy/apptimescaling/create/create.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/apptimescaling/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/applogwarning/service/logwarning-backend.service.js" type="text/javascript"></script>
+<script src="glance/policy/applogwarning/service/logwarning-curd.service.js" type="text/javascript"></script>
+<script src="glance/policy/applogwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/applogwarning/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/policy/applogwarning/event/event.ctrl.js" type="text/javascript"></script>
+
+<script src="glance/applayout/layout.module.js" type="text/javascript"></script>
+<script src="glance/applayout/layout.config.js" type="text/javascript"></script>
+<script src="glance/applayout/layout.route.js" type="text/javascript"></script>
+<script src="glance/applayout/services/layout-backend.service.js" type="text/javascript"></script>
+<script src="glance/applayout/services/layout-curd-service.js" type="text/javascript"></script>
+<script src="glance/applayout/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+<script src="glance/applayout/list/list.ctrl.js" type="text/javascript"></script>
+
+<!--endbuild-->
+
+<!--build:js js/old-main.js-->
+<script src="js/app.js" type="text/javascript"></script>
+<script src="js/directives.js" type="text/javascript"></script>
+<script src="js/directives/include-replace.js" type="text/javascript"></script>
+<script src="js/ngservices/http-service.js" type="text/javascript"></script>
+<script src="js/ngservices/logloader-service.js" type="text/javascript"></script>
+<script src="js/ngservices/unitconversion-service.js" type="text/javascript"></script>
+<script src="js/ngservices/ws-service.js" type="text/javascript"></script>
+<script src="js/ngservices/user-service.js" type="text/javascript"></script>
+<script src="js/ngservices/monitor-service.js" type="text/javascript"></script>
+<script src="js/ngservices/charts-service.js" type="text/javascript"></script>
+<script src="js/ngservices/clusterstatus-service.js" type="text/javascript"></script>
+<script src="js/ngservices/update-cluster-service.js" type="text/javascript"></script>
+<script src="js/ngservices/get-cluster-lables.js" type="text/javascript"></script>
+<script src="js/ngservices/multi-select-service.js" type="text/javascript"></script>
+<script src="js/ngservices/model-open.js" type="text/javascript"></script>
+<script src="js/ngservices/label-service.js" type="text/javascript"></script>
+<script src="js/cluster/clusterctrl.js" type="text/javascript"></script>
+<script src="js/cluster/listclustersctrl.js" type="text/javascript"></script>
+<script src="js/cluster/clusterdetailsctrl.js" type="text/javascript"></script>
+<script src="js/cluster/clusterdetailsnodectrl.js" type="text/javascript"></script>
+<script src="js/cluster/clusterdetailslogctrl.js" type="text/javascript"></script>
+<script src="js/cluster/clusterdetailsmonitorctrl.js" type="text/javascript"></script>
+<script src="js/cluster/createclusterctrl.js" type="text/javascript"></script>
+<script src="js/cluster/createclusterformctrl.js" type="text/javascript"></script>
+<script src="js/cluster/updateclusterctrl.js" type="text/javascript"></script>
+<script src="js/cluster/updateclusterformctrl.js" type="text/javascript"></script>
+<script src="js/cluster/addnodectrl.js" type="text/javascript"></script>
+<script src="js/cluster/addlivingnodectrl.js" type="text/javascript"></script>
+<script src="js/cluster/iaasCtrl.js" type="text/javascript"></script>
+<script src="js/cluster/addnodeformctrl.js" type="text/javascript"></script>
+<script src="js/cluster/nodedetailsctrl.js" type="text/javascript"></script>
+<script src="js/cluster/updatenodectrl.js" type="text/javascript"></script>
+<script src="js/cluster/updatenodeformctrl.js" type="text/javascript"></script>
+<script src="js/log/logbase.js" type="text/javascript"></script>
+<script src="js/dynamic/dynamicbase.js" type="text/javascript"></script>
+<script src="js/modals/join-demo-group.js" type="text/javascript"></script>
+<!--endbuild-->
+
+<!--build:js(build) js/directive.js-->
+<script src="glance/directives/dm-copy.directive.js" type="text/javascript"></script>
+<script src="glance/directives/dm-permit-click.directive.js" type="text/javascript"></script>
+<script src="glance/directives/dm-dynamic-field.directive.js" type="text/javascript"></script>
+<script src="glance/directives/positive-integer.directive.js" type="text/javascript"></script>
+<script src="glance/glance.run.js" type="text/javascript"></script>
+<script src="glance/rootctrl.js" type="text/javascript"></script>
+<!--endbuild-->
+
+<!-- baidu -->
+<script>
+    if (RUNNING_ENV === "prod") {
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?cd74c0fcc0c51aecc3bb276315e35e6a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    }
+</script>
+
+</body>
 </html>

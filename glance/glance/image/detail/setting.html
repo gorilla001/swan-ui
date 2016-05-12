@@ -1,59 +1,56 @@
-<div class="main-container-body">
-    <div class="form-horizontal">
-        <form class="form-horizontal" name="staticForm">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">自动构建</label>
-                <div class="col-sm-2">
-                    <label class="radio-inline">
-                        <input type="radio" data-ng-model="imageDetailSettingCtrl.form.active" ng-value="true"> 是
-                    </label>
-
-                </div>
-                <div class="col-sm-4">
-                    <label class="radio-inline">
-                        <input type="radio" data-ng-model="imageDetailSettingCtrl.form.active" ng-value="false"> 否
-                    </label>
-                </div>
+<form name="staticForm">
+    <div layout="row" layout-align="end start" class="form-group form-group-switch">
+        <label flex="15">自动构建</label>
+        <div flex="50" layout="column">
+            <div flex="none">
+                <md-switch data-ng-model="imageDetailSettingCtrl.form.active" aria-label="active-switch"></md-switch>
             </div>
-
-            <div class="form-group" data-ng-show="imageDetailSettingCtrl.form.active">
-                <label class="col-sm-2 control-label">自动构建时间</label>
-                <div class="col-md-5">
-                    <select class="form-control"
-                            data-ng-options=" period.value as period.name for period in imageDetailSettingCtrl.periodList"
-                            data-ng-model="imageDetailSettingCtrl.form.period"
-                            data-required="imageDetailSettingCtrl.form.active">
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group" data-ng-show="imageDetailSettingCtrl.form.active">
-                <label class="col-sm-2 control-label">触发规则</label>
-                <div class="col-sm-2">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" data-ng-model="imageDetailSettingCtrl.tag" ng-change="imageDetailSettingCtrl.triggerRules()"
-                               ng-click="imageDetailSettingCtrl.triggerCheck(imageDetailSettingCtrl.tag)"
-                        > Tag 更新
-                    </label>
-                </div>
-                <div class="col-sm-4">
-                    <label class="checkbox-inline">
-                        <input type="checkbox" data-ng-model="imageDetailSettingCtrl.branch" ng-change="imageDetailSettingCtrl.triggerRules()"
-                               ng-click="imageDetailSettingCtrl.triggerCheck(imageDetailSettingCtrl.branch)"
-                        > 代码分支更新
-                    </label>
-                </div>
-            </div>
-
-            <hr>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-5">
-                    <button type="submit" class="btn btn-success btn-block"
-                            ng-disabled="staticForm.$invalid || imageDetailSettingCtrl.triggerCount == 0"
-                            data-ng-click="imageDetailSettingCtrl.saveSetting(imageDetailSettingCtrl.form)">保存配置
-                    </button>
-                </div>
-            </div>
-        </form>
+            <p class="help-info-bottom">按照设置的频率去检查是否有满足触发规则的行为发生，有就自动构建镜像。</p>
+        </div>
+        <div flex></div>
     </div>
-</div>
+
+    <div layout="row" layout-align="end start" class="form-group form-group-select"
+         data-ng-show="imageDetailSettingCtrl.form.active">
+        <label flex="15">自动构建时间</label>
+        <div flex="50">
+            <md-input-container>
+                <md-select data-ng-model="imageDetailSettingCtrl.form.period" aria-label="period-select">
+                    <md-option ng-value="period.value" ng-repeat="period in imageDetailSettingCtrl.periodList"
+                               data-required="imageDetailSettingCtrl.form.active">{/ period.name /}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div flex></div>
+    </div>
+
+    <div layout="row" layout-align="end start" class="form-group form-group-checkbox"
+         data-ng-show="imageDetailSettingCtrl.form.active">
+        <label flex="15">自动构建</label>
+        <div flex="50" layout="column">
+            <div layout="row">
+                <md-checkbox flex="30" data-ng-model="imageDetailSettingCtrl.tag" aria-label="tag-checkbox"
+                             ng-change="imageDetailSettingCtrl.triggerRules(imageDetailSettingCtrl.tag)">Tag 更新
+                </md-checkbox>
+                <md-checkbox flex="30" data-ng-model="imageDetailSettingCtrl.branch" aria-label="branch-checkbox"
+                             ng-change="imageDetailSettingCtrl.triggerRules(imageDetailSettingCtrl.branch)">代码分支更新
+                </md-checkbox>
+            </div>
+            <p class="help-info-bottom">当代码仓库发生左边的操作时会触发镜像构建。</p>
+        </div>
+        <div flex></div>
+    </div>
+
+    <div layout="row" class="form-footer-button">
+        <div flex-offset="15">
+            <md-button class="md-raised md-primary" aria-label="submit"
+                       ng-disabled="staticForm.$invalid || imageDetailSettingCtrl.triggerCount == 0"
+                       data-ng-click="imageDetailSettingCtrl.saveSetting(imageDetailSettingCtrl.form)">保 存
+            </md-button>
+            <md-button data-ng-click="rootCtrl.goBack()">取 消</md-button>
+        </div>
+    </div>
+
+
+</form>

@@ -4,46 +4,22 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal) {
+    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav) {
         var self = this;
 
-        self.getCSUrl = getCSUrl;
+        self.noticeNav = mdSideNav.createSideNav('noticeNav');
+        self.linkToCS = linkToCS;
         self.logout = logout;
         self.goBack = goBack;
         self.openJoinDemoGroupModal = openJoinDemoGroupModal;
+        self.togShortMenu = togShortMenu;
+        self.isShortMenu = false;
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
 
         $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
         $rootScope.FRONTEND_MSG = FRONTEND_MSG;
         $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
-
-        // app list request params
-        $rootScope.myAppListParams = {
-            searchKeyWord: '',
-            page: 1,  //current page index
-            count: 20, // current count
-            //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
-        };
-
-        $rootScope.groupAppListParams = {
-            searchKeyWord: '',
-            page: 1,  //current page index
-            count: 20, // current count
-            clusterId: null,
-            groupId: null
-        };
-
-        $rootScope.groupListParams = {
-            page: 1,
-            count: 20
-        };
-
-        // image list request params
-        $rootScope.imageListParams = {
-            page: 1,  //current page index
-            count: 20, // current count
-        };
 
         activate();
 
@@ -59,7 +35,7 @@
             }
         }
 
-        function getCSUrl() {
+        function linkToCS() {
             var w = window.open();
             commonBackend.getCSUrl().then(function (data) {
                 w.location = data.url;
@@ -116,6 +92,10 @@
             }
         }
 
+        function togShortMenu() {
+            self.isShortMenu = !self.isShortMenu;
+        }
+
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
                 switch (true) {
@@ -142,7 +122,7 @@
                         switch (true) {
                             case toState.name.includes('appwarning'):
                                 $rootScope.tabActiveFlag = 'appwarning';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('warninglist'):
                                         $rootScope.tabContentPolicy = 'warninglist';
                                         break;
@@ -153,7 +133,7 @@
                                 break;
                             case toState.name.includes('apptimescaling'):
                                 $rootScope.tabActiveFlag = 'apptimescaling';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('scalinglist'):
                                         $rootScope.tabContentPolicy = 'scalinglist';
                                         break;
@@ -164,7 +144,7 @@
                                 break;
                             case toState.name.includes('applogwarning'):
                                 $rootScope.tabActiveFlag = 'applogwarning';
-                                switch (true){
+                                switch (true) {
                                     case toState.name.includes('loglist'):
                                         $rootScope.tabContentPolicy = 'loglist';
                                         break;

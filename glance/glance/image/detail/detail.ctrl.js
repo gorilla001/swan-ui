@@ -17,8 +17,8 @@
         self.manualBuild = manualBuild;
         self.popoverContent = $sce.trustAsHtml('<div style="word-break: break-all">' + self.project.pubkey + '</div>');
 
-        function deleteProject() {
-            imageCurd.deleteProjet($stateParams.projectId)
+        function deleteProject(ev) {
+            imageCurd.deleteProjet($stateParams.projectId, ev)
         }
 
         function goToCreateApp(imageUrl){

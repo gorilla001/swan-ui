@@ -1,52 +1,32 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">查看镜像</h1>
-    </div>
-</div>
-<ol class="breadcrumb">
-    <li>
-        <a data-ui-sref="imageList">镜像列表</a>
-    </li>
-    <li>镜像详情</li>
-</ol>
-<section class="app-detail">
-    <div class="main-container app-title">
-        <div class="main-container-body">
-            <div class="btn-group-vertical pull-right" role="group">
-                <button type="button" class="btn btn-info" data-ng-disabled="imageDetailCtrl.project.status != 'success'"
-                        data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)"
-                >
-                    部署最新镜像
-                </button>
-                <button type="button" class="btn btn-default" data-ng-click="imageDetailCtrl.manualBuild()">构建
-                </button>
-                <button type="button" class="btn btn-danger" data-ng-click="imageDetailCtrl.deleteProject()">删除项目
-                </button>
-            </div>
-            <h3>
-                {/imageDetailCtrl.project.name/}
-                <small>最新版本构建于: {/imageDetailCtrl.project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</small>
-            </h3>
-            <ul class="list-text">
-                <li>
-                    <label>部署公钥：</label>
-                    <span id="publicKey" uib-popover-html="imageDetailCtrl.popoverContent" popover-trigger="mouseenter"
-                          popover-placement="right">
-                        {/imageDetailCtrl.project.pubkey/}
+<section class="main-section">
+    <header layout="row" layout-align="end start">
+        <div class="info" flex>
+            <h2>{/imageDetailCtrl.project.name/}</h2>
+            <dl>
+                <dd>最新版本构建于: {/imageDetailCtrl.project.updated * 1000 | date: 'yyyy-MM-dd HH:mm:ss'/}</dd>
+            </dl>
+            <dl>
+                <dt>部署公钥</dt>
+                <dd>
+                    <span id="publicKey">{/imageDetailCtrl.project.pubkey/}
                     </span>
                     <a href="#">
                         <i class="fa fa-files-o" data-clipboard-target="publicKey" dm-copy></i>
                     </a>
-                </li>
-                <li>
-                    <label>代码源：</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>代码源</dt>
+                <dd>
                     <a href={/imageDetailCtrl.project.repoUri/} target="_blank">
                         {/imageDetailCtrl.project.repoUri/}
                     </a>
-                </li>
-                <li>
-                    <label>登录命令：</label>
-                    <span id="loginImage" data-ng-show="imageDetailCtrl.project.loginCommand">
+                </dd>
+            </dl>
+            <dl>
+                <dt>登录命令</dt>
+                <dd>
+                   <span id="loginImage" data-ng-show="imageDetailCtrl.project.loginCommand">
                         {/imageDetailCtrl.project.loginCommand/}
                     </span>
                     <span data-ng-hide="imageDetailCtrl.project.loginCommand">
@@ -55,9 +35,11 @@
                     <a href="#" data-ng-show="imageDetailCtrl.project.loginCommand">
                         <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
                     </a>
-                </li>
-                <li>
-                    <label>拉取镜像：</label>
+                </dd>
+            </dl>
+            <dl>
+                <dt>拉取镜像</dt>
+                <dd>
                     <span id="latestImage" data-ng-show="imageDetailCtrl.project.image">
                         docker pull {/imageDetailCtrl.project.image/}
                     </span>
@@ -67,25 +49,38 @@
                     <a href="#" data-ng-show="imageDetailCtrl.project.image">
                         <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
                     </a>
-                </li>
-            </ul>
-
+                </dd>
+            </dl>
         </div>
-    </div>
-    <div class="main-container">
-        <header class="clearfix main-container-header">
-            <ul class="nav nav-tabs">
-                <li data-toggle="tab" ui-sref-active="active">
-                    <a href="#" data-ui-sref="imageDetail.version">版本</a>
-                </li>
-                <li data-toggle="tab" ui-sref-active="active">
-                    <a href="#" data-ui-sref="imageDetail.brief">说明</a>
-                </li>
-                <li data-toggle="tab" ui-sref-active="active">
-                    <a href="#" data-ui-sref="imageDetail.setting">设置</a>
-                </li>
-            </ul>
-        </header>
-        <div data-ui-view="imageDetailTab" class="tab-content"></div>
-    </div>
+        <div layout-align="end center" class="operation">
+            <md-button class="md-fab md-mini" aria-label="部署最新镜像"
+                       data-ng-disabled="imageDetailCtrl.project.status != 'success'"
+                       data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)">
+                <i class="fa fa-caret-right" aria-hidden="true"></i>
+            </md-button>
+            <md-button class="md-fab md-mini" aria-label="删除项目" data-ng-click="imageDetailCtrl.deleteProject($event)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </md-button>
+        </div>
+    </header>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="版 本" data-ui-sref="image.detail.version" md-active="$state.includes('image.detail.version')">
+                <md-content class="md-padding main-tab-content" data-ui-view="version">
+                </md-content>
+            </md-tab>
+            <md-tab label="说 明" data-ui-sref="image.detail.brief" md-active="$state.includes('image.detail.brief')">
+                <md-content class="main-tab-content" data-ui-view="brief">
+                </md-content>
+            </md-tab>
+            <md-tab label="设 置" data-ui-sref="image.detail.setting" md-active="$state.includes('image.detail.setting')">
+                <md-content class="md-padding main-tab-content" data-ui-view="setting">
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+
+    <footer></footer>
+    <section>
+    </section>
 </section>

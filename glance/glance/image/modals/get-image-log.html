@@ -1,12 +1,19 @@
-<div class="modal-header">
-    <button type="button" class="close" aria-hidden="true" data-ng-click="imageLogCtrl.cancel()">&times;</button>
-    <h4 class="modal-title">日志</h4>
-</div>
+<md-dialog aria-label="日志" ng-cloak flex="50">
+    <form name="logForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>日志</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div class="alert alert-warning text-center" data-ng-show="imageLogCtrl.noLogsFlag">
+                    暂无日志
+                </div>
 
-<form class="form-horizontal" name="logForm">
-    <div class="alert alert-warning text-center" data-ng-show="imageLogCtrl.noLogsFlag">
-        暂无日志
-    </div>
-
-    <pre class="modal-body" data-ng-hide="imageLogCtrl.noLogsFlag">{/imageLogCtrl.log/}</pre>
-</form>
+                <pre class="modal-body" data-ng-hide="imageLogCtrl.noLogsFlag">{/imageLogCtrl.log/}</pre>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>

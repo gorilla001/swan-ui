@@ -4,33 +4,36 @@
         .factory('imageLogModal', imageLogModal);
 
     /* @ngInject */
-    function imageLogModal($uibModal) {
+    function imageLogModal($mdDialog) {
 
         return {
             open: open
         };
 
-        function open(projectId, buildNumber, imageState) {
-            var modalInstance = $uibModal.open({
-                templateUrl: '/glance/image/modals/get-image-log.html',
+        function open(ev, projectId, buildNumber, imageState) {
+
+            var dialog = $mdDialog.show({
                 controller: ImageLogCtrl,
                 controllerAs: 'imageLogCtrl',
-                resolve: {
-                    content: function () {
-                        return {
-                            projectId: projectId,
-                            buildNumber: buildNumber,
-                            imageState: imageState
-                        }
+                templateUrl: '/glance/image/modals/get-image-log.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    content: {
+                        projectId: projectId,
+                        buildNumber: buildNumber,
+                        imageState: imageState
                     }
                 }
+
             });
 
-            return modalInstance.result;
+            return dialog;
         }
 
         /* @ngInject */
-        function ImageLogCtrl($uibModalInstance, content, imageBackend, $rootScope, utils) {
+        function ImageLogCtrl($mdDialog, content, imageBackend, $rootScope, utils) {
             var self = this;
             var projectId = content.projectId;
             var buildNumber = content.buildNumber;
@@ -61,10 +64,10 @@
             }
 
             self.ok = function () {
-                $uibModalInstance.close();
+                $mdDialog.hide();
             };
             self.cancel = function () {
-                $uibModalInstance.dismiss();
+                $mdDialog.cancel();
             };
 
             function Stream(projectId, buildNumber, _callback) {

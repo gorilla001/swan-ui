@@ -7,7 +7,9 @@ BACKEND_URL_BASE = {
     log: null,
     app: null,
     image: null,
-    warning: null
+    warning: null,
+    billing: null,
+    stack: null
 },
 
 RUNNING_ENV = "ENVIRONMENT"; //dev, demo, prod

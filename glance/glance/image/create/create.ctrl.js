@@ -8,7 +8,6 @@
         var self = this;
         ///
         self.form = {
-            uid: $rootScope.userId,
             name: "",
             repoUri: "",
             triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
@@ -41,7 +40,6 @@
         self.branch = false;
 
         self.createProject = createProject;
-        self.triggerCheck = triggerCheck;
         self.triggerRules = triggerRules;
 
         activate();
@@ -62,15 +60,12 @@
         function createProject(fromData) {
             imageBackend.createProject(fromData).then(function (data) {
                 Notification.success('项目创建成功');
-                $state.go('imageDetail.version',({projectId: data.id}))
+                $state.go('image.detail.version',({projectId: data.id}))
             })
         }
 
-        function triggerCheck(checkValue) {
-            self.triggerCount = imageBuildSetting.triggerCheck(checkValue, self.triggerCount)
-        }
-
-        function triggerRules() {
+        function triggerRules(checkValue) {
+            self.triggerCount = imageBuildSetting.triggerCheck(checkValue, self.triggerCount);
             self.form.triggerType = imageBuildSetting.triggerRules(self.tag, self.branch);
         }
     }

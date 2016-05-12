@@ -3,13 +3,9 @@
 
     angular.module('glance.utils').factory('gHttp', gHttp);
 
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies'];
-    function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies) {
+    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies', 'cfpLoadingBar'];
+    function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies, cfpLoadingBar) {
         var token;
-
-        if (!$rootScope.loadings) {
-            $rootScope.loadings = {};
-        }
 
         var ResourceCls = buildResourceCls();
 
@@ -100,11 +96,11 @@
                     params: this.options.params
                 };
 
-                this._startLoading(this.options.loading);
-
+                if(!this.options.loading){
+                    req.ignoreLoadingBar = true;
+                }
                 var deferred = $q.defer();
                 $http(req).success(function (data) {
-                    this._stopLoading(this.options.loading);
                     if (data.code === MESSAGE_CODE.success) {
                         deferred.resolve(data.data);
                     } else if (data.code === MESSAGE_CODE.noExist) {
@@ -117,28 +113,11 @@
                         deferred.reject(data);
                     }
                 }.bind(this)).error(function (data, status) {
-                    this._stopLoading(this.options.loading);
                     this._handleErrors(status);
                 }.bind(this));
 
                 return deferred.promise;
 
-            };
-
-            Resource.prototype._startLoading = function (loading) {
-                if (loading) {
-                    if (!$rootScope.loadings[loading]) {
-                        $rootScope.loadings[loading] = 1;
-                    } else {
-                        $rootScope.loadings[loading] += 1;
-                    }
-                }
-            };
-
-            Resource.prototype._stopLoading = function (loading) {
-                if (loading) {
-                    $rootScope.loadings[loading] -= 1;
-                }
             };
 
             Resource.prototype._handleErrors = function (status) {

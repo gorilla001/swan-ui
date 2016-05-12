@@ -23,9 +23,9 @@
                 permitRoles.push("", "-1");
                 if (permitRoles.indexOf(scope.role+"") < 0 ) {
                     if (scope.errorMsg) {
-                        alertModal.open(scope.errorMsg);
+                        alertModal.open(scope.errorMsg, e);
                     } else {
-                        alertModal.open("抱歉，您没有权限进行此操作!");
+                        alertModal.open("抱歉，您没有权限进行此操作!", e);
                     }
                     e.preventDefault();
                     e.stopImmediatePropagation();
