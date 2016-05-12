@@ -23,8 +23,27 @@
             })
             .state('layout.create', {
                 url: '/create',
-                templateUrl: '/glance/applayout/create/create.html',
-                controller: 'LayoutCreateCtrl as layoutCreateCtrl'
+                templateUrl: '/glance/applayout/createupdate/create-update.html',
+                controller: 'LayoutCreateCtrl as layoutCreateCtrl',
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    stack: function () {
+                        return 'create'
+                    }
+                }
+            })
+            .state('layout.update', {
+                url: '/update/:cluster_id/:stack_id',
+                templateUrl: '/glance/applayout/createupdate/create-update.html',
+                controller: 'LayoutCreateCtrl as layoutCreateCtrl',
+                resolve: {
+                    target: function () {
+                        return 'update'
+                    },
+                    stack: getStack
+                }
             });
 
         /* @ngInject */
@@ -35,6 +54,11 @@
         /* @ngInject */
         function listClusters(gHttp) {
             return gHttp.Resource('cluster.clusters').get()
+        }
+
+        /* @ngInject */
+        function getStack(layoutBackend, $stateParams) {
+            return layoutBackend.getStack($stateParams.cluster_id, $stateParams.stack_id)
         }
     }
 })();

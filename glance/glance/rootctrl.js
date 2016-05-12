@@ -21,33 +21,6 @@
         $rootScope.FRONTEND_MSG = FRONTEND_MSG;
         $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
 
-        // app list request params
-        $rootScope.myAppListParams = {
-            searchKeyWord: '',
-            page: 1,  //current page index
-            count: 20, // current count
-            //sorting: { name: 'asc',  appStatus:'asc', containerNum:'asc', clusterId:'asc', update:'asc'} // sorting field
-        };
-
-        $rootScope.groupAppListParams = {
-            searchKeyWord: '',
-            page: 1,  //current page index
-            count: 20, // current count
-            clusterId: null,
-            groupId: null
-        };
-
-        $rootScope.groupListParams = {
-            page: 1,
-            count: 20
-        };
-
-        // image list request params
-        $rootScope.imageListParams = {
-            page: 1,  //current page index
-            count: 20, // current count
-        };
-
         activate();
 
         function activate() {

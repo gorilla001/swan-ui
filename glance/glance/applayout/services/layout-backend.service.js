@@ -10,7 +10,7 @@
             create: create,
             deploy: deploy,
             deleteStack: deleteStack,
-            listStackApps: listStackApps,
+            getStack: getStack,
             list: list,
             update: update
         };
@@ -27,7 +27,7 @@
             return gHttp.Resource('stack.stack', {cluster_id: clusterId, stack_id: stackId}).delete();
         }
 
-        function listStackApps(stackId, clusterId) {
+        function getStack(clusterId, stackId) {
             return gHttp.Resource('stack.stack', {cluster_id: clusterId, stack_id: stackId}).get();
         }
 

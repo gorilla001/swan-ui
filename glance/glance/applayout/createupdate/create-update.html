@@ -18,7 +18,8 @@
                         <div flex="none"
                              data-ng-class="{ 'has-error' : createApp.appname.$invalid && !createApp.appname.$pristine }">
                             <input type="text" class="form-input" data-ng-model="layoutCreateCtrl.form.name"
-                                   data-required="required" name="appname">
+                                   data-required="required" name="appname"
+                                   data-ng-disabled="layoutCreateCtrl.target === 'update'">
                         </div>
                     </div>
                     <div flex></div>
@@ -30,6 +31,7 @@
                         <md-input-container>
                             <md-select ng-model="layoutCreateCtrl.clusterId" aria-label="cluster"
                                        data-required="required" name="cluster"
+                                       data-ng-disabled="layoutCreateCtrl.target === 'update'"
                                        md-on-open="layoutCreateCtrl.listClusters()">
                                 <md-option ng-repeat="cluster in layoutCreateCtrl.clusters" ng-value="cluster.id">
                                     {/cluster.name/}
@@ -72,9 +74,14 @@
 
                 <div layout="row" class="form-footer-button">
                     <div flex-offset="15" layout="row" layout-align="end end">
-                        <md-button class="md-raised md-primary"
+                        <md-button class="md-raised md-primary" data-ng-if="layoutCreateCtrl.target === 'create'"
                                    data-ng-disabled="createApp.$invalid" data-demo-disable
                                    data-ng-click="layoutCreateCtrl.create()">
+                            确认
+                        </md-button>
+                        <md-button class="md-raised md-primary" data-ng-if="layoutCreateCtrl.target === 'update'"
+                                   data-ng-disabled="createApp.$invalid" data-demo-disable
+                                   data-ng-click="layoutCreateCtrl.update()">
                             确认
                         </md-button>
                         <md-button>取 消</md-button>

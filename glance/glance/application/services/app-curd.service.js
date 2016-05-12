@@ -52,8 +52,8 @@
                 })
         }
 
-        function updateContainer(curInsNmu, clusterId, appId) {
-            formModal.open('/glance/application/modals/up-container.html',
+        function updateContainer(ev, curInsNmu, clusterId, appId) {
+            formModal.open('/glance/application/modals/up-container.html',ev,
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
                 appservice.updateContainerNum(data, clusterId, appId).then(function (data) {

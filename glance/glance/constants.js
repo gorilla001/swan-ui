@@ -197,6 +197,15 @@ WARNING_RULE = {
     '<': '小于'
 };
 
+STACK_STATUS = {
+    pending: '未部署',
+    deploying: '部署中',
+    deploy_failed: '部署失败',
+    running: '正常',
+    stopped: '已停止',
+    unhealthy: '故障'
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",

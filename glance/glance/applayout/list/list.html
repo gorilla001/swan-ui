@@ -17,18 +17,18 @@
                         <div class="info" flex>
                             <h3>{/stack.name/}</h3>
                             <dl class="list-dl-row">
-                                <dt>{/stack.status/}</dt>
-                                <dd><i class="fa fa-heartbeat status-normal"></i></dd>
+                                <dt>状态</dt>
+                                <dd>{/layoutListCtrl.stackTypeText[stack.status]/}</i></dd>
                                 <dt>更新时间</dt>
                                 <dd>{/stack.updated | date:"yyyy-MM-dd HH:mm"/}</dd>
                                 <dt>所属集群</dt>
-                                <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
+                                <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
                                 </dd>
                             </dl>
                         </div>
                         <div layout-align="end center" class="operation">
                             <md-button class="md-raised" aria-label="add"
-                                       ng-click="layoutListCtrl.showTableData(stack.Id, stack.Cid)"><i
+                                       ng-click="layoutListCtrl.showTableData(stack.Cid, stack.Id)"><i
                                     class="fa fa-plus" aria-hidden="true"></i>
                             </md-button>
                             <md-menu md-offset="0 -5">
@@ -38,13 +38,15 @@
                                 </md-button>
                                 <md-menu-content width="2">
                                     <md-menu-item>
-                                        <md-button aria-label="stop">停止</md-button>
+                                        <md-button aria-label="delete"
+                                                   data-ng-click="layoutListCtrl.delStack(stack.Cid, stack.Id)">删除
+                                        </md-button>
                                     </md-menu-item>
                                     <md-menu-item>
-                                        <md-button aria-label="delete">删除</md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
-                                        <md-button aria-label="edit">更新 YML</md-button>
+                                        <md-button aria-label="edit"
+                                                   data-ui-sref="layout.update({cluster_id: stack.Cid, stack_id:stack.Id})">
+                                            更新 YML
+                                        </md-button>
                                     </md-menu-item>
                                 </md-menu-content>
                             </md-menu>
@@ -52,31 +54,32 @@
                     </div>
                     <div class="panel-collapse">
                         <table md-table ng-show="layoutListCtrl.openFlag[stack.Id]">
-                            <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                            <thead md-head>
                             <tr md-row>
-                                <th md-column md-order-by="nameToLower"><span>应用名称</span></th>
-                                <th md-column md-order-by="calories.value"><span>状态</span></th>
+                                <th md-column><span>应用名称</span></th>
+                                <th md-column><span>状态</span></th>
                                 <th md-column>更新时间</th>
-                                <th md-column>服务数</th>
                                 <th md-column>容器数</th>
                                 <th md-column>操作</th>
                             </tr>
                             </thead>
                             <tbody md-body>
-                            <tr md-row ng-repeat="table in layoutListCtrl.tableList[stack.Id]">
-                                <td md-cell>Project 01</td>
-                                <td md-cell><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> 构建中</td>
-                                <td md-cell>2016-01-25 20:12:36</td>
-                                <td md-cell>2</td>
-                                <td md-cell>2</td>
+                            <tr md-row ng-repeat="app in layoutListCtrl.appList[stack.Id]">
+                                <td md-cell>{/app.Name/}</td>
+                                <td md-cell>
+                                    {/layoutListCtrl.APP_STATUS[layoutListCtrl.appListStatus[app.id].status]/}
+                                </td>
+                                <td md-cell>{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
+                                <td md-cell>{/app.Instances/}</td>
                                 <td md-cell>
                                     <md-menu md-offset="0 -5">
                                         <md-button aria-label="Open demo menu" class="md-button md-raised"
+                                                   data-ng-disabled="!app.Id"
                                                    ng-click="$mdOpenMenu($event)"><i
                                                 class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
                                         <md-menu-content width="2">
                                             <md-menu-item>
-                                                <md-button aria-label="stop">停止</md-button>
+                                                <md-button aria-label="stop" data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.id, stack.Id)">停止</md-button>
                                             </md-menu-item>
                                             <md-menu-item>
                                                 <md-button aria-label="delete">删除</md-button>

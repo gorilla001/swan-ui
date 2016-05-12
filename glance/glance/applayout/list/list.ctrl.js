@@ -5,25 +5,49 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl(mdTable, data, layoutBackend, clusters) {
+    function LayoutListCtrl(data, layoutBackend, clusters, layoutCurd, appservice) {
         var self = this;
 
-        self.stacks = data.Stacks;
         self.clusterNameMap = listClusterMap(clusters);
+        self.stacks = data.Stacks;
+        self.stackTypeText = STACK_STATUS;
+        self.APP_STATUS = APP_STATUS;
         self.openFlag = {};
-        self.tableList = {};
-        self.showTableData = showTableData;
+        self.appList = {};
 
-        function showTableData(stackId, clusterId) {
+        self.showTableData = showTableData;
+        self.delStack = delStack;
+        self.stopApp = stopApp;
+
+        function showTableData(clusterId, stackId) {
             if (!self.openFlag[stackId]) {
-                layoutBackend.listStackApps(stackId, clusterId).
-                    then(function(data){
-                     console.log(data.applications);
-                     self.tableList[stackId] = data.applications;
+                layoutBackend.getStack(clusterId, stackId).then(function (data) {
+                    self.appList[stackId] = data.applications;
+                    appservice.listAppsStatus()
+                        .then(function(data){
+                            self.appListStatus = data;
+                        });
+                    self.openFlag[stackId] = true;
                 })
             } else {
                 self.openFlag[stackId] = false;
+                self.appList[stackId] = [];
+                self.appListStatus = {}
             }
+        }
+
+        function delStack(clusterId, stackId) {
+            layoutCurd.deleteStack(clusterId, stackId)
+                .then(function (data) {
+                    self.stacks = data.Stacks
+                })
+        }
+
+        function stopApp(clusterId, appId, stackId) {
+            layoutCurd.stopApp(clusterId, appId, stackId)
+                .then(function (data) {
+                    self.appList[stackId] = data.applications;
+                })
         }
 
         /*
