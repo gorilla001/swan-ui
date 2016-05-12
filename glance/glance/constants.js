@@ -197,6 +197,15 @@ WARNING_RULE = {
     '<': '小于'
 };
 
+STACK_STATUS = {
+    pending: '未部署',
+    deploying: '部署中',
+    deploy_failed: '部署失败',
+    running: '正常',
+    stopped: '已停止',
+    unhealthy: '故障'
+};
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
@@ -297,5 +306,13 @@ BACKEND_URL = {
         tasks: 'api/v3/alert/tasks',
         task: 'api/v3/alert/tasks/$task_id',
         tasksEvent: 'api/v3/alert/events'
+    },
+
+    stack: {
+        listStack: 'api/v3/stacks',
+        stacks: 'api/v3/clusters/$cluster_id/stacks',
+        stack: 'api/v3/clusters/$cluster_id/stacks/$stack_id',
+        deploy: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deploy',
+        deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key'
     }
 };

@@ -19,7 +19,8 @@ var glanceApp = angular.module('glance',
         'glance.common',
         'glance.repository',
         'glance.policy',
-        'ngMaterial'
+        'ngMaterial',
+        'glance.layout'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
@@ -199,10 +200,6 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
-
-        NotificationProvider.setOptions({
-            replaceMessage: false 
-        });
     }]);
 
 glanceApp.run(glanceInit);

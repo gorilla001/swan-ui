@@ -714,3 +714,66 @@ table.md-table .md-menu {
     padding: 18px;
     width: 100%;
 }
+
+dl.list-dl-row {
+    margin-bottom: 5px;
+}
+dl.list-dl-row:last-child {
+    margin-bottom: 0;
+}
+dl.list-dl-row dt, .list-dl-row dd{
+    display: inline-block;
+}
+dl.list-dl-row dt {
+    color: #A0ABBF;
+    margin-right: 10px;
+    position: relative;
+}
+dl.list-dl-row dd {
+    margin-right: 25px;
+}
+dl.list-dl-row dt:after {
+    content:"･";
+    position: absolute;
+    right: -10px;
+    top: 0px;
+}
+
+.collapse .panel {
+    margin-bottom: 2px;
+}
+.collapse .panel-heading {
+    background-color: #6F7D95;
+    color: #D8DFE5;
+    padding: 10px 10px 10px 18px;
+}
+.collapse .panel-heading h3 {
+    color: #FFF;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+}
+.collapse .panel-heading a {
+    color: #D8DFE5;
+}
+.collapse .panel-heading .md-button {
+    background-color: rgba(0,0,0,0.1);
+    border: 1px solid #7A89A0;
+    box-shadow: none;
+    color: #D8DFE5;
+    font-size: 12px;
+    line-height: 30px;
+    min-height: 30px;
+    min-width: 30px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.collapse .panel-heading .md-button:hover {
+    box-shadow: none;
+    color: #333;
+}
+.ui-notification {
+    box-shadow: none;
+    left: 300px!important;
+    text-align: center;
+    width: calc(100% - 560px);
+}

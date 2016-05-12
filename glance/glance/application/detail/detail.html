@@ -36,7 +36,7 @@
                         </md-button>
                         <md-button aria-label="upcontainer" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
-                                   data-ng-click="detailAppCtrl.upContainerModal(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">
+                                   data-ng-click="detailAppCtrl.upContainerModal($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">
                             扩展
                         </md-button>
                         <md-button aria-label="undo" class="md-fab md-raised md-mini"

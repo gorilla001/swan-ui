@@ -144,8 +144,23 @@ gulp.task('template-min-policy', ['template-min-repo'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
+//applayout
+gulp.task('template-min-layout', ['template-min-policy'], function () {
+    return gulp.src('glance/applayout/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlAppLayout.js', {
+            module: 'glance.layout',
+            root: '/glance/applayout'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 // views html to js
-gulp.task('template-min', ['template-min-policy'], function () {
+gulp.task('template-min', ['template-min-layout'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,

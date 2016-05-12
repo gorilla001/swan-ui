@@ -57,8 +57,8 @@
             appcurd.del(clusterId, appId)
         };
 
-        self.upContainerModal = function (clusterId, appId, instanceNum) {
-            appcurd.updateContainer(instanceNum, clusterId, appId);
+        self.upContainerModal = function (ev, clusterId, appId, instanceNum) {
+            appcurd.updateContainer(ev, instanceNum, clusterId, appId);
         };
         
         function refreshData() {
