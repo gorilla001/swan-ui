@@ -18,14 +18,12 @@
                                    data-samename data-name-list="imageCreateCtrl.projectsNameList"
                                    data-ng-model="imageCreateCtrl.form.name">
                         </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.projectName.$error.required && !staticForm.projectName.$pristine">
+                            <small>项目名称不能为空</small>
+                        </p>
                     </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.projectName.$invalid && !staticForm.projectName.$pristine}">
-                        <p data-ng-show="staticForm.projectName.$error.required && !staticForm.projectName.$pristine"
-                           class="help-block">项目名称不能为空</p>
 
-                        <p data-ng-show="staticForm.projectName.$error.samename"
-                           class="help-block">项目名称已存在</p>
-                    </div>
                     <div flex></div>
                 </div>
 
@@ -53,15 +51,19 @@
                                    data-name-list="imageCreateCtrl.projectsImagesNameList"
                                    data-ng-model="imageCreateCtrl.form.imageName"
                                    data-ng-pattern="/[a-z0-9](?:-*[a-z0-9])*(?:[._][a-z0-9](?:-*[a-z0-9])*)*/">
+                            <p class="error-info help-info-bottom"
+                               data-ng-show="staticForm.image.$error.required && !staticForm.image.$pristine">
+                                <small>镜像名称不能为空</small>
+                            </p>
+                            <p class="error-info help-info-bottom"
+                               data-ng-show="staticForm.image.$error.samename">
+                                <small>镜像名称已存在</small>
+                            </p>
+                            <p class="error-info help-info-bottom"
+                               data-ng-show="staticForm.image.$error.pattern && !staticForm.image.$pristine">
+                                <small>镜像名称名称不规范</small>
+                            </p>
                         </div>
-                    </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.image.$invalid && !staticForm.image.$pristine}">
-                        <p data-ng-show="staticForm.image.$error.required && !staticForm.image.$pristine"
-                           class="help-block">镜像名称不能为空</p>
-                        <p data-ng-show="staticForm.image.$error.samename"
-                           class="help-block">镜像名称已存在</p>
-                        <p data-ng-show="staticForm.image.$error.pattern && !staticForm.image.$pristine"
-                           class="help-block">镜像名称名称不规范</p>
                     </div>
                     <div flex></div>
                 </div>
@@ -74,10 +76,10 @@
                             <input type="text" class="form-input" data-required="required" name="branchName"
                                    data-ng-model="imageCreateCtrl.form.branch">
                         </div>
-                    </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
-                        <p data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine"
-                           class="help-block">分支名称不能为空</p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine">
+                            <small>分支名称不能为空</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
@@ -88,10 +90,10 @@
                          data-ng-class="{ 'has-error' : staticForm.description.$invalid && !staticForm.description.$pristine}">
                         <textarea class="form-control" rows="3" data-ng-model="imageCreateCtrl.form.description"
                                   name="description" ng-maxlength="256"></textarea>
-                    </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.description.$invalid && !staticForm.description.$pristine}">
-                        <p data-ng-show="staticForm.description.$error.maxlength && !staticForm.description.$pristine"
-                           class="help-block">说明字数不能超过256个字符</p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.description.$error.maxlength && !staticForm.description.$pristine">
+                            <small>说明字数不能超过256个字符</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
