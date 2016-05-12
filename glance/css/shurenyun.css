@@ -687,7 +687,7 @@ table.md-table .md-menu {
     margin: 0 15px 0 0;
 }
 
-.form-group-input input[type="text"] {
+.form-group-input input[type="text"],.form-group-input input[type="password"] {
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
