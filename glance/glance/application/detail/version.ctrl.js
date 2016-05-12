@@ -6,10 +6,12 @@
     angular.module('glance.app')
         .controller('VersionAppCtrl', VersionAppCtrl);
 
-    VersionAppCtrl.$inject = ['$scope', '$stateParams', 'Notification', 'confirmModal', 'appservice', 'appcurd'];
-
-    function VersionAppCtrl($scope, $stateParams, Notification, confirmModal, appservice, appcurd) {
+    /* @ngInject */
+    function VersionAppCtrl($scope, mdTable, $stateParams, Notification, confirmModal, appservice, appcurd) {
         var self = this;
+
+        self.table = mdTable.createTable('app.detail.version');
+
         self.versions = [];
         self.upCanary = upCanary;
 
@@ -29,8 +31,8 @@
             });
         };
 
-        self.deleteVersion = function (versionId) {
-            confirmModal.open('您确定要删除该版本吗？').then(function () {
+        self.deleteVersion = function (versionId, ev) {
+            confirmModal.open('您确定要删除该版本吗？', ev).then(function () {
                 appservice.deleteAppVersion($stateParams.cluster_id, $stateParams.app_id, versionId)
                     .then(function () {
                         getImageVersions()
@@ -38,15 +40,11 @@
             });
         };
 
-        self.setPage = function (pageNo) {
-            self.currentPage = pageNo;
-        };
+        activate();
 
-        self.pageChanged = function () {
-            self.contentCurPage = self.versions.slice((self.currentPage - 1) * self.pageLength, self.currentPage * self.pageLength);
-        };
-        
-        getImageVersions();
+        function activate() {
+            getImageVersions();
+        }
 
         $scope.$on('refreshAppData', function () {
             getImageVersions(false);
@@ -57,10 +55,7 @@
                 .then(function (data) {
                         if (data && data.length !== 0) {
                             self.versions = data;
-                            self.totalItems = self.versions.length;
-                            self.pageLength = 10;
-                            self.showPagination = (self.totalItems > self.pageLength);
-                            self.contentCurPage = self.versions.slice(0, self.pageLength);
+                            self.count = self.versions.length;
                         }
                     }
                 );

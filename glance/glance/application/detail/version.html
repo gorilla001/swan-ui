@@ -1,27 +1,47 @@
 <div class="main-container-body">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>镜像地址</th>
-            <th>最新更新时间</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="appversion in versionAppCtrl.contentCurPage">
-            <td>{/appversion.imageVersion/}
-                <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span><span data-ng-show="appversion.status === 0">[正在部署中]</span></span>
-                <span data-ng-show="appversion.status === 2">[配置不可用]</span><span  class="bg-warning" data-ng-show="appversion.canary">[灰度发布]</span>
-            </td>
-            <td>{/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-            <td>
-                <button data-ng-show="!appversion.currentDeploy && appversion.status == 1 && !appversion.canary" type="button" data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>部署</button>
-                <button data-ng-show="appversion.status === 0" type="button" data-ng-click="versionAppCtrl.cancelDeploy()" class="btn btn-default btn-xs" data-demo-disable>撤销</button>
-                <button data-ng-show="!appversion.currentDeploy && appversion.status != 0" type="button" data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId)" class="btn btn-default btn-xs" data-demo-disable>删除</button>
-                <button type="button" class="btn btn-default btn-xs" data-ng-show="appversion.currentDeploy || appversion.canary" data-demo-disable data-ng-click="versionAppCtrl.upCanary(versionAppCtrl.versions)">权重</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <uib-pagination total-items="totalItems" items-per-page="10" ng-model="currentPage" ng-change="versionAppCtrl.pageChanged()" data-ng-show="showPagination" previous-text="上一页" next-text="下一页"></uib-pagination>
+    <md-table-container>
+        <table md-table>
+            <thead md-head>
+            <tr md-row>
+                <th md-column>镜像地址</th>
+                <th md-column md-numeric>最新更新时间</th>
+                <th md-column md-numeric>操作</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+            <tr md-row ng-repeat="appversion in versionAppCtrl.versions">
+                <td md-cell>
+                    {/appversion.imageVersion/}
+                    <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span><span data-ng-show="appversion.status === 0">[正在部署中]</span>
+                    <span data-ng-show="appversion.status === 2">[配置不可用]</span><span  class="bg-warning" data-ng-show="appversion.canary">[灰度发布]</span>
+                </td>
+                <td md-cell>
+                    {/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}
+                </td>
+                <td md-cell>
+                    <md-button aria-label="deploy" class="md-button md-raised"
+                               data-ng-show="!appversion.currentDeploy && appversion.status == 1 && !appversion.canary"
+                               data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" data-demo-disable>
+                        部署
+                    </md-button>
+                    <md-button aria-label="cancel" class="md-button md-raised"
+                               data-ng-show="appversion.status === 0"
+                               data-ng-click="versionAppCtrl.cancelDeploy()" data-demo-disable>
+                        撤销
+                    </md-button>
+                    <md-button aria-label="delete" class="md-button md-raised"
+                               data-ng-show="!appversion.currentDeploy && appversion.status != 0"
+                               data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId, $event)" data-demo-disable>
+                        删除
+                    </md-button>
+                    <md-button aria-label="canary" class="md-button md-raised"
+                               data-ng-show="appversion.currentDeploy || appversion.canary"
+                               data-ng-click="versionAppCtrl.upCanary(versionAppCtrl.versions)" data-demo-disable>
+                        权重
+                    </md-button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </md-table-container>
 </div>
