@@ -6,24 +6,20 @@
             </div>
         </header>
 
-        <div class="main-content">
-            <md-content>
-                <md-tabs md-dynamic-height md-border-bottom>
-                    <md-tab label="修改密码" data-ui-sref="user.password" md-active="$state.includes('user.password')">
-                        <md-content class="main-tab-content" data-ui-view="password">
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="用户组管理" data-ui-sref="user.groups" md-active="$state.includes('user.groups')">
-                        <md-content class="main-tab-content" data-ui-view="groups">
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="资源计量" data-ui-sref="user.billings" md-active="$state.includes('user.billings')">
-                        <md-content class="main-tab-content" data-ui-view="billings">
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
-            </md-content>
-        </div>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="修改密码" data-ui-sref="user.password" md-active="$state.includes('user.password')">
+                <md-content class="main-tab-content" data-ui-view="password">
+                </md-content>
+            </md-tab>
+            <md-tab label="用户组管理" data-ui-sref="user.groups" md-active="$state.includes('user.groups')">
+                <md-content class="main-tab-content" data-ui-view="groups">
+                </md-content>
+            </md-tab>
+            <md-tab label="资源计量" data-ui-sref="user.billings" md-active="$state.includes('user.billings')">
+                <md-content class="main-tab-content" data-ui-view="billings">
+                </md-content>
+            </md-tab>
+        </md-tabs>
     </section>
 </div>
 
