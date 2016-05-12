@@ -200,10 +200,6 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
-
-        NotificationProvider.setOptions({
-            replaceMessage: false 
-        });
     }]);
 
 glanceApp.run(glanceInit);
