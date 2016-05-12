@@ -6,10 +6,13 @@
     angular.module('glance.app')
         .controller('InstanceAppCtrl', InstanceAppCtrl);
 
-    InstanceAppCtrl.$inject = ['$scope', '$stateParams', 'appservice'];
-
-    function InstanceAppCtrl($scope, $stateParams, appservice) {
+    /* @ngInject */
+    function InstanceAppCtrl($scope, mdTable, $stateParams, appservice) {
         var self = this;
+
+        self.instances = [];
+
+        self.table = mdTable.createTable('app.detail.instance');
         
         self.APP_INS_STATUS = APP_INS_STATUS;
         
