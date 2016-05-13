@@ -1,3 +1,6 @@
+//clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
+glanceApp.controller('clusterCtrl', clusterCtrl);
+/* ngInject */
 function clusterCtrl($scope, $state, gHttp, Notification) {
     $scope.clusterNames = [];
     $scope.allLabels = [];
@@ -113,5 +116,3 @@ function clusterCtrl($scope, $state, gHttp, Notification) {
     
 }
 
-clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
-glanceApp.controller('clusterCtrl', clusterCtrl);

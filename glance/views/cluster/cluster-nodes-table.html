@@ -1,0 +1,96 @@
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+    <form flex name="filter.form">
+        <input type="text" ng-model="searchKeyWord" placeholder="输入标签名称搜索主机"
+               my-enter="doSearch(searchKeyWord)">
+    </form>
+</div>
+</md-toolbar>
+<md-toolbar class="md-table-toolbar md-default" layout="row" layout-align="left" ng-hide="false">
+  <div class="md-toolbar-tools">
+    <div flex></div>
+    <md-button class="" md-direction="left" data-ng-click="refresh()">刷新</md-button>
+    <md-button class=""
+                data-ui-sref="cluster.nodesource({clusterId:cluster.id})"
+                data-dm-permit-click="1"
+                data-dm-role="cluster.group_role"
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+              添加主机
+    </md-button> 
+    <md-button class="" data-ng-click="deleteNodes(selected)"
+                    data-ng-disabled="!selected.length" data-demo-disable
+                    data-dm-permit-click="1"
+                    data-dm-role="cluster.group_role"
+                    data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除主机
+    </md-button>
+    <md-menu md-offset="0 40">
+        <md-button class="md-button"
+                   ng-click="$mdOpenMenu($event)"
+                   id="dropdownMenuNodeLabel"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
+                   data-ng-disabled="!selected.length"
+                   data-demo-disable
+                   data-dm-permit-click="1"
+                   data-dm-role="cluster.group_role"
+                   data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+        主机标签
+        </md-button>
+        <md-menu-content style="min-width: 88px;">
+            <md-menu-item>
+                <md-button data-ng-click="showAddLabelModal(selected, $event)">
+                贴标签 
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button data-ng-click="showTearLabelModal(selected, $event)">  
+                撕标签         
+                </md-button>
+            </md-menu-item>
+         </md-menu-content>
+    </md-menu>
+  </div>
+</md-toolbar>
+<md-table-container>
+  <table md-table md-row-select multiple ng-model="selected" md-progress="promise"> 
+    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+        <tr md-row>
+            <th md-column ><span>名称</span></th>
+            <th md-column ><span>类型</span></th>
+            <th md-column ><span>标签</span></th>
+            <th md-column >IP地址</th>
+            <th md-column >运行状态</th>
+            <th md-column >Agent版本</th>
+            <th md-column >创建时间</th>
+        </tr>
+    </thead>
+    <tbody md-body>
+        <tr md-row md-select="node" ng-repeat="node in contentCurPage">
+              <td md-cell class="agent-version">
+                  <span><a data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.id})">{/ node.name /}</a>
+                      <em class="label label-danger" data-ng-show="upgradeFailedNodes[node.id]">
+                          升级失败
+                      </em>
+                  </span>
+              </td>
+              <td md-cell>
+                  <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span>
+              </td>
+              <td md-cell>
+                  <span style="margin-left:2px" class="bg-primary" data-ng-repeat="nodeLabel in clusterLabels[node.id]">{/ nodeLabel.name /}</span>
+              </td>
+              <td md-cell>
+                  {/ node.ip/}
+              </td>
+              <td md-cell>
+                  <img data-ng-src="../pics/ico-node-status-{/statusMgr.nodes[node.id].status/}.png" width="16"> {/statName[statusMgr.nodes[node.id].status]/}
+              </td>
+              <td md-cell>
+                  <span>{/ statusMgr.nodes[node.id].services.agent.version /}</span>
+              </td>
+              <td md-cell>
+                  {/ node.created_at /}
+              </td>
+        </tr>
+    </tbody>
+  </table>
+</md-table-container>

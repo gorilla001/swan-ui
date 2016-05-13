@@ -1,4 +1,5 @@
-function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification, confirmModal) {
+/* @ngInject */
+function clusterNodesCtrl($scope, mdTable, $mdDialog, addLabelModal, $stateParams, $state, $filter, gHttp, unitConversion, utils, monitor, labelService, Notification, confirmModal) {
     $scope.unitConversion = unitConversion;
 
     $scope.allLabels = [];
@@ -6,7 +7,9 @@ function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConv
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
     $scope.checkedNodeLabels = [];
-    $scope.labelForm = {};
+    $scope.selected = [];
+
+    self.table = mdTable.createTable('cluster.clusterdetails.nodes');
 
     $scope.refresh = function () {
         $state.reload("cluster.clusterdetails");
@@ -44,57 +47,55 @@ function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConv
     };
 
     // labels
-    $scope.showAddLabelModal = function(checkedNodes) {
+    $scope.showAddLabelModal = function(checkedNodes, ev) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
         $scope.selectedLabels = [];
         labelService.changeLabels($scope)
             .then(function() {
                 $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+                // FIX(mgniu): I have to pass the $scope to modal, this is not the good way!!!
+                addLabelModal.open('/views/cluster/cluster-add-label.html', ev, checkedNodes, $scope);
             });
     };
 
-    $scope.showTearLabelModal = function(checkedNodes) {
+    $scope.showTearLabelModal = function(checkedNodes, ev) {
         $scope.checkedNodesIds = listChcekNodesIds(checkedNodes);
         $scope.selectedLabels = listCheckedNodeLables($scope.checkedNodesIds);
         $scope.unselectedLabels = [];
         $scope.showNoLabelTip = $scope.selectedLabels.length ? false : true;
+        // FIX(mgniu): I have to pass the $scope to modal, this is not the good way!!!
+        addLabelModal.open('/views/cluster/cluster-tear-label.html', ev, checkedNodes, $scope);
     };
 
-    $scope.labelledNode = function(label) {
-        labelService.labelledNode(label, $scope);
-    };
-
-    $scope.tearLabel = function(label) {
-        labelService.tearLabel(label, $scope);
-    };
-
-    $scope.createLabel = function() {
-        labelService.createLabel($scope);
-    };
-
-    $scope.deleteLabel = function(label) {
-        labelService.deleteLabel(label, $scope);
-    };
-
-    $scope.labelledConfirm = function() {
-        var postData = listRequestData($scope.selectedLabels);
+    $scope.labelledConfirm = function(labels, dialog) {
+        var postData = listRequestData(labels);
+        console.log(postData);
         return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId}).
             post(postData).then(function() {
                 updateClusterLabels($stateParams.clusterId);
                 updateContentPage();
+                dialog.cancel();
+                $scope.refresh();
             }, function(data) {
                 Notification.error(data.data.labels);
+                dialog.cancel();
+                $scope.refresh();
             });
     };
 
-    $scope.tearConfirm = function() {
-        var deleteData = listRequestData($scope.unselectedLabels);
+    $scope.tearConfirm = function(labels, dialog) {
+        var deleteData = listRequestData(labels);
+        console.log(deleteData);
         return gHttp.Resource('cluster.nodesLabels', {'cluster_id': $stateParams.clusterId})
             .delete({'data': deleteData}).then(function() {
                 updateClusterLabels($stateParams.clusterId);
                 updateContentPage();
+                dialog.cancel();
+                $scope.refresh();
             }, function(resp) {
                 Notification.error(resp.data.labels);
+                dialog.cancel();
+                $scope.refresh();
             });
     };
 
@@ -172,5 +173,4 @@ function clusterNodesCtrl($scope, $stateParams, $state, $filter, gHttp, unitConv
 
 }
 
-clusterNodesCtrl.$inject = ["$scope", "$stateParams", "$state", "$filter", "gHttp", "unitConversion", "utils", "monitor", "labelService", "Notification" , "confirmModal"];
 glanceApp.controller("clusterNodesCtrl", clusterNodesCtrl);

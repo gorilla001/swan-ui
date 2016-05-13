@@ -1,14 +1,14 @@
-<div class="modal fade modal-tag" id="clusterAddLabel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+<md-dialog style="min-width:500px;box-shadow:none;border-radius:10px">
+   <md-dialog-content>
+    <div class="modal-content" role="document">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">贴标签</h4>
       </div>
 
       <div class="modal-body">
-        <ul>
+        <ul class="modal-tag">
           <li data-ng-repeat="selectedLabel in selectedLabels">
-            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签" data-demo-disable>
+            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
               {/selectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
@@ -16,12 +16,12 @@
           </li>
 
           <li data-ng-repeat="unselectedLabel in unselectedLabels">
-            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签" data-demo-disable>
+            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签">
               {/unselectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
             </span>
-            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel)" data-demo-disable>
+            <a href="#" title="删除标签" data-ng-click="deleteLabel(unselectedLabel)">
               <span class="glyphicon glyphicon-trash"></span>
             </a>
           </li>
@@ -35,10 +35,11 @@
                   placeholder="标签名称" name="newLabelName"
                   data-ng-model="labelForm.newLabelName" data-ng-trim="true"
                   data-required="required" data-ng-pattern="/^[A-Za-z0-9-]{1,}$/"
-                  data-samename data-name-list="allLabelNames">
+                  data-samename data-name-list="allLabelNames"/>
                 <button type="submit" class="btn btn-sm btn-success"
                   data-ng-click="createLabel()"
-                  data-ng-disabled="labelForm.label.newLabelName.$invalid" data-demo-disable>新建标签</button>
+                  data-ng-disabled="labelForm.label.newLabelName.$invalid">新建标签
+                </button>
               </div>
               <p data-ng-show="labelForm.label.newLabelName.$error.samename" class="help-block text-left">
                 <small>标签名已存在</small>
@@ -53,8 +54,8 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal"
             data-ng-click="labelledConfirm()">完成</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-default" data-ng-click="cancel()">取消</button>
       </div>
     </div>
-  </div>
-</div>
+    </md-dialog-content>
+</md-dialog>
