@@ -30,8 +30,9 @@
                         md-active="$state.includes('policy.tab.appwarning')">
                     <md-content class="md-padding main-tab-content" ui-view="appWarningTab">
                 </md-tab>
-                <md-tab label="日志告警">
-                    <md-content class="md-padding main-tab-content" ui-view="policyTab">
+                <md-tab label="日志告警" data-ui-sref="policy.tab.applogwarning"
+                        md-active="$state.includes('policy.tab.applogwarning')">
+                    <md-content class="md-padding main-tab-content" ui-view="logWarningTab">
                     </md-content>
                 </md-tab>
             </md-tabs>

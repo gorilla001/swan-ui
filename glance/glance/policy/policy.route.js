@@ -124,14 +124,10 @@
                     }
                 }
             })
-            .state('policyLogWarningCreate', {
+            .state('policy.policyLogWarningCreate', {
                 url: '/policyLogWarningCreate',
-                views: {
-                    '': {
-                        templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
-                        controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
+                controller: 'CreateLogWarningCtrl as createLogWarningCtrl',
                 resolve: {
                     target: function () {
                         return 'create'
@@ -141,14 +137,10 @@
                     }
                 }
             })
-            .state('policyLogWarningUpdate', {
+            .state('policy.policyLogWarningUpdate', {
                 url: '/policyLogWarningUpdate?log_id',
-                views: {
-                    '': {
-                        templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
-                        controller: 'CreateLogWarningCtrl as createLogWarningCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/applogwarning/createupdate/create-update.html',
+                controller: 'CreateLogWarningCtrl as createLogWarningCtrl',
                 resolve: {
                     target: function () {
                         return 'update'
@@ -156,33 +148,42 @@
                     logPolicy: getLogPolicyInfo
                 }
             })
-            .state('policy.applogwarning', {
+            .state('policy.tab.applogwarning', {
                 url: '/applogwarning',
                 views: {
-                    'policyTab': {
+                    'logWarningTab': {
                         templateUrl: '/glance/policy/applogwarning/log-tab-view.html'
                     }
-                }
+                },
+                targetState: 'loglist'
             })
-            .state('policy.applogwarning.loglist', {
+            .state('policy.tab.applogwarning.loglist', {
                 url: '/loglist?per_page&page&order&keywords&sort_by',
                 views: {
-                    'logContent': {
+                    'list': {
                         templateUrl: '/glance/policy/applogwarning/list/list.html',
                         controller: 'LogWarningListCtrl as logWarningListCtrl'
                     }
+                },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
                 },
                 resolve: {
                     data: logList
                 }
             })
-            .state('policy.applogwarning.logevent', {
+            .state('policy.tab.applogwarning.logevent', {
                 url: '/logevent?per_page&page&order&keywords&sort_by',
                 views: {
-                    'logContent': {
+                    'event': {
                         templateUrl: '/glance/policy/applogwarning/event/event.html',
                         controller: 'EventLogListCtrl as eventLogListCtrl'
                     }
+                },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
                 },
                 resolve: {
                     data: eventLogList
@@ -220,11 +221,13 @@
 
     /* @ngInject */
     function logList(logWarningBackend, utils, $stateParams) {
-        return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
+        //return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
+        return {alarms: [{id:1, appname:'111',keyword: '1,23',ival: 60,gtnum:2,emails: '3@3.com',isnotice: false,createtime: '2016-05-09T14:33:48'}],count: 1}
     }
 
     /* @ngInject */
     function eventLogList(logWarningBackend, utils, $stateParams) {
-        return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
+        //return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
+        return {events: [1,2,3,4],count: 4}
     }
 })();

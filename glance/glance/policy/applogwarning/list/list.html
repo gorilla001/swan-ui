@@ -1,63 +1,69 @@
-<div>
-    <form class="form-inline search-container col-md-4">
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="logWarningListCtrl.searchKeyWord"
-                   name="searchKeyWord"
-                   placeholder="输入应用名称进行搜索" my-enter="logWarningListCtrl.doSearch(logWarningListCtrl.searchKeyWord)">
-        </div>
-        <button type="submit" ng-click="logWarningListCtrl.doSearch(logWarningListCtrl.searchKeyWord)"
-                class="btn btn-info">搜索
-        </button>
-    </form>
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="logWarningListCtrl.searchKeyWord" placeholder="输入应用名称进行搜索"
+                   my-enter="logWarningListCtrl.table.doSearch(logWarningListCtrl.searchKeyWord)">
+        </form>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="logWarningListCtrl.table.query.order"
+               md-on-reorder="logWarningListCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-order-by="id" md-numeric><span>ID</span></th>
+            <th md-column md-numeric md-order-by="appname"><span>应用名称</span></th>
+            <th md-column md-numeric md-order-by="keyword">监控关键字</th>
+            <th md-column md-numeric>监控周期</th>
+            <th md-column md-numeric md-order-by="gtnum">出现次数</th>
+            <th md-column md-numeric md-order-by="emails">联系人</th>
+            <th md-column md-numeric>启用</th>
+            <th md-column md-order-by="createtime" md-numeric>创建时间</th>
+            <th md-column md-numeric>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in logWarningListCtrl.logWarningList">
+            <td md-cell>{/item.id/}</td>
+            <td md-cell><a href="#">{/item.appname/}</a></td>
+            <td md-cell>{/item.keyword/}</td>
+            <td md-cell>{/item.ival/} 分钟</td>
+            <td md-cell>{/item.gtnum/} 次</td>
+            <td md-cell>{/item.emails/}</td>
+            <td md-cell>{/logWarningListCtrl.enableText[item.isnotice]/}</td>
+            <td md-cell>{/item.createtime | date: 'yyyy-MM-dd HH:mm'/}</td>
+            <td md-cell>
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="Open demo menu" class="md-button md-raised" ng-click="$mdOpenMenu($event)"><i
+                            class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item ng-if="!item.isnotice" data-ng-click="logWarningListCtrl.switchNotice(item)">
+                            <md-button>启动</md-button>
+                        </md-menu-item>
+                        <md-menu-item ng-if="item.isnotice" data-ng-click="logWarningListCtrl.switchNotice(item)">
+                            <md-button>停止</md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ng-click="logWarningListCtrl.deleteLogPolicy(item.id, $event)">删除
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ui-sref="policy.policyLogWarningUpdate({log_id: item.id})">更新</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!logWarningListCtrl.logWarningList.length">
+        未查询到日志告警数据
+    </div>
+</md-table-container>
+<md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
+                     md-limit="logWarningListCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
+                     md-page="logWarningListCtrl.table.query.page"
+                     md-total="{/logWarningListCtrl.count/}" md-on-paginate="logWarningListCtrl.table.getPage"
+                     md-page-select>
+</md-table-pagination>
 
-    <button class="btn btn-success col-md-2 col-md-offset-6" type="button" data-ui-sref="policyLogWarningCreate">新建策略
-    </button>
-
-</div>
-<table ng-table="logWarningListCtrl.logListTable" template-pagination="/views/common/ngTablePage.html"
-       class="table table-striped" ng-table-columns-binding="boundCols">
-    <tbody>
-    <tr ng-repeat="item in logWarningListCtrl.logWarningList">
-        <td data-title="'策略 ID'" sortable="'id'">
-            {/item.id/}
-        </td>
-        <td data-title="'应用名称'" sortable="'appname'">
-            {/item.appname/}
-        </td>
-        <td data-title="'监控关键字'" sortable="'keyword'">
-            {/item.keyword/}
-        </td>
-        <td data-title="'监控周期'">
-            {/item.ival/} 分钟
-        </td>
-        <td data-title="'出现次数'" sortable="'gtnum'">
-            {/item.gtnum/} 次
-        </td>
-        <td data-title="'联系人'" sortable="'emails'">
-            {/item.emails/}
-        </td>
-        <td data-title="'启用'">
-            <input type="checkbox" ng-true-value="true"
-                   ng-false-value="false" data-ng-model="item.isnotice"
-                   data-ng-change="logWarningListCtrl.switchNotice(item)"> 是
-        </td>
-        <td data-title="'创建时间'" sortable="'createtime'">
-            {/item.createtime | date: 'yyyy-MM-dd HH:mm'/}
-        </td>
-        <td data-title="'操作'">
-            <button type="button"
-                    class="btn btn-default btn-xs" data-demo-disable
-                    data-ui-sref="policyLogWarningUpdate({log_id: item.id})">更新
-            </button>
-            <button type="button"
-                    class="btn btn-danger btn-xs" data-ng-click="logWarningListCtrl.deleteLogPolicy(item.id)"
-                    data-demo-disable>
-                删除
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div class="alert alert-warning text-center" data-ng-show="!logWarningListCtrl.logWarningList.length">
-    未查询到日志告警数据
-</div>

@@ -4,22 +4,28 @@
         .controller('LogWarningListCtrl', LogWarningListCtrl);
 
     /* @ngInject */
-    function LogWarningListCtrl(data, table, $state, $stateParams, logWarningCurd) {
+    function LogWarningListCtrl(data, mdTable, $state, $stateParams, logWarningCurd) {
         var self = this;
+
         self.logWarningList = data.alarms;
         self.searchKeyWord = $stateParams.keywords || '';
-        self.logListTable = table.createParams(data.alarms, data.count);
+        self.table = mdTable.createTable('policy.tab.applogwarning.loglist');
+        self.enableText = {
+            true: '启动',
+            false: '停止'
+        };
+
         self.deleteLogPolicy = deleteLogPolicy;
         self.doSearch = doSearch;
         self.switchNotice = switchNotice;
         ///
 
-        function deleteLogPolicy(logId) {
-            logWarningCurd.deletLogPolicy(logId)
+        function deleteLogPolicy(logId, ev) {
+            logWarningCurd.deletLogPolicy(logId, ev)
         }
 
         function doSearch(searchKeyWord) {
-            $state.go('policy.applogwarning.loglist', {
+            $state.go('policy.tab.applogwarning.loglist', {
                 page: 1,
                 per_page: 20,
                 keywords: searchKeyWord
