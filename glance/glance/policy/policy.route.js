@@ -194,7 +194,7 @@
     /* @ngInject */
     function warningList(appWarningBackend, utils, $stateParams) {
         //return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
-        return {tasks: [{id:1, appname:"111", duration: 1,times:2, emails:"3@3.com",updated: "2016-05-09T14:33:48Z", enabled: true}],count:6}
+        return {tasks: [{id:1, appname:"111", duration: 1,times:2, emails:"3@3.com",updated: "2016-05-09T14:33:48Z", enabled: true}],count:1}
     }
 
     /* @ngInject */
@@ -210,7 +210,7 @@
     /* @ngInject */
     function warningEvent(appWarningBackend, utils, $stateParams) {
         //return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
-        return {events: [1,2,3,4,5],count:5}
+        return {events: [{taskid: 1,appname: '111', alerttime: '2016-05-09T14:33:48', instance: 1,metric: 'CpuUsedCores', currentvalue:0.8, operator: '>',threshold: 0.9}],count:1}
     }
 
     /* @ngInject */

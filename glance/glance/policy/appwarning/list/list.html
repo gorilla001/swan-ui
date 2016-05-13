@@ -11,15 +11,15 @@
         <thead md-head md-order="warningListCtrl.table.query.order"
                md-on-reorder="warningListCtrl.table.getOrder">
         <tr md-row>
-            <th md-column md-order-by="id"><span>ID</span></th>
-            <th md-column md-order-by="appname"><span>应用名称</span></th>
-            <th md-column>规则</th>
-            <th md-column>周期</th>
-            <th md-column>阈值</th>
+            <th md-column md-order-by="id" md-numeric><span>ID</span></th>
+            <th md-column md-numeric md-order-by="appname"><span>应用名称</span></th>
+            <th md-column md-numeric>规则</th>
+            <th md-column md-numeric>周期</th>
+            <th md-column md-numeric>阈值</th>
             <th md-column md-order-by="emails">联系人</th>
-            <th md-column>启用</th>
-            <th md-column md-order-by="updated">更新时间</th>
-            <th md-column>操作</th>
+            <th md-column md-numeric>启用</th>
+            <th md-column md-order-by="updated" md-numeric>更新时间</th>
+            <th md-column md-numeric>操作</th>
         </tr>
         </thead>
         <tbody md-body>
@@ -64,6 +64,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="alert alert-warning text-center" data-ng-show="!warningListCtrl.warningList.length">
+        未查询到监控事件
+    </div>
 </md-table-container>
 <md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
                      md-limit="warningListCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
