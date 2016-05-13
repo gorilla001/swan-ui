@@ -771,9 +771,3 @@ dl.list-dl-row dt:after {
     box-shadow: none;
     color: #333;
 }
-.ui-notification {
-    box-shadow: none;
-    left: 300px!important;
-    text-align: center;
-    width: calc(100% - 560px);
-}
