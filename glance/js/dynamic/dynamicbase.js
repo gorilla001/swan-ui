@@ -71,7 +71,6 @@
                 for (var j = 0; j < cluster.nodes.length; j++) {
                     $scope.statusMgr.addNode(cluster.id, cluster.nodes[j]);
                 }
-                console.log(clusterList)
             }
             $scope.statusMgr.startListen($scope);
             return clusterList;
