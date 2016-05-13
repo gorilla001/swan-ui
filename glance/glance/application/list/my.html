@@ -94,7 +94,7 @@
                         </md-menu-item>
                         <md-menu-item>
                             <md-button aria-label="canary"
-                                       data-ui-sref="appupdate({cluster_id: app.cid, app_id: app.id, canary: true})"
+                                       data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id, canary: true})"
                                        data-ng-disabled="myAppsCtrl.appListStatus[app.id].status !='2'" data-demo-disable>
                                 灰度发布
                             </md-button>
