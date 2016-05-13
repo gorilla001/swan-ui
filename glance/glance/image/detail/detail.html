@@ -53,12 +53,17 @@
             </dl>
         </div>
         <div layout-align="end center" class="operation">
-            <md-button class="md-fab md-mini" aria-label="部署最新镜像"
+            <md-button class="md-fab md-mini" aria-label="deploy new"
                        data-ng-disabled="imageDetailCtrl.project.status != 'success'"
                        data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)">
                 <i class="fa fa-caret-right" aria-hidden="true"></i>
             </md-button>
-            <md-button class="md-fab md-mini" aria-label="删除项目" data-ng-click="imageDetailCtrl.deleteProject($event)">
+
+            <md-button class="md-fab md-mini" aria-label="structure" data-ng-click="imageDetailCtrl.manualBuild()">
+                <i class="fa fa-caret-left" aria-hidden="true"></i>
+            </md-button>
+
+            <md-button class="md-fab md-mini" aria-label="delete" data-ng-click="imageDetailCtrl.deleteProject($event)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </md-button>
         </div>
