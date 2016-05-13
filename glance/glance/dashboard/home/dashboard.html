@@ -1,0 +1,107 @@
+<div class="main-content app-layout" id="dashboard"
+     ng-repeat="(clusterId, cluster) in dashboardCtrl.clusterList track by clusterId">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2> 集群名称: <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
+                </h2>
+                <dl>
+                    <dt><i class="fa fa-files-o"></i> 正常主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
+                    <dt><i class="fa fa-files-o"></i> 失联主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
+                    <dt><i class="fa fa-files-o"></i> 维护中主机</dt>
+                    <dd>
+                        {/(dashboardCtrl.statusMgr.nodeStatusCount[clusterId].installing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].upgrading+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].initing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].repairing)
+                        || 0/}
+                    </dd>
+                    <dt><i class="fa fa-files-o"></i>异常主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
+                    <dt><i class="fa fa-files-o"></i>报警主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
+                </dl>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+                <md-button class="md-fab md-mini" aria-label="删除项目">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+        <div class="main-content" id="dasboard" layout="row" layout-align="start start">
+            <div flex="50" layout="row" layout-align="start center" class="cluster-charts-panel">
+                <div flex="40">
+                    <div class="disable-cover"
+                         data-ng-if="!(dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running +
+                    dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed +
+                    dashboardCtrl.statusMgr.nodeStatusCount[clusterId].installing +
+                    dashboardCtrlstatusMgr.nodeStatusCount[clusterId].upgrading)">
+                    </div>
+                    <div class="charts-panel">
+                        <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[57, 67]"
+                                  use-color="#00BCD4" show-text="CPU占用" font-size="24" text-color="#596679"
+                                  error-code="errorCode">
+                        </piechart>
+                    </div>
+                    <div class="info-panel" data-ng-if="cluster.masMetrics.cpuPercent">
+                        CPU 占用量<br>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare.toFixed(2)/}</em>
+                            / {/cluster.masMetrics.cpuTotal/}
+                        </div>
+                    </div>
+                </div>
+                <div flex="40">
+                    <div class="charts-panel">
+                        <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal"
+                                  radius="[57, 67]"
+                                  use-color="#00BCD4" show-text="内存占用" text-color="#596679" error-code="errorCode"
+                                  font-size="24">
+                        </piechart>
+                    </div>
+                    <div class="info-panel" data-ng-if="cluster.masMetrics.memUsed">
+                        内存占用量<br>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal"><em>{/cluster.masMetrics.memUsed/}</em>
+                            / {/cluster.masMetrics.memTotal | currency: '' :0/} MB
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div flex="40">
+                <div class="fold-panel mCustomScrollbar" data-ng-class="{'dropShow':dashboardCtrl.dropStatus}" data-mcs-theme="dark">
+                    <div ng-repeat="appMon in cluster.appMonitors">
+                        <dl layout="row" layout-align="start center" class="app-charts-panel">
+                            <dt class="app-header">{/appMon.appName/}</dt>
+                            <dd flex="30">
+                                <div class="charts-panel">
+                                    <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare"
+                                              radius="[34, 40]"
+                                              use-color="#009688" show-text="CPU使用" font-size="16" text-color="#596679"
+                                              error-code="errorCode"
+                                              status="appMon.status">
+                                    </piechart>
+                                </div>
+                            </dd>
+                            <dd flex="30">
+                                <div class="charts-panel">
+                                    <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare"
+                                              radius="[34, 40]"
+                                              use-color="#009688" show-text="内存使用" font-size="16" text-color="#596679"
+                                              error-code="errorCode"
+                                              status="appMon.status">
+                                    </piechart>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length">
+                    <a href="#" data-ng-click="dashboardCtrl.dropShow()"><i class="fa"
+                                                              data-ng-class="{'fa-chevron-down':!dashboardCtrl.dropStatus, 'fa-chevron-up': dashboardCtrl.dropStatus}"></i></a>
+                </div>
+            </div>
+        </div>
+        <section>
+
+</div>
