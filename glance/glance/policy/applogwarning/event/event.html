@@ -1,40 +1,42 @@
-<div>
-    <form class="form-inline search-container col-md-4">
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="eventLogListCtrl.searchKeyWord"
-                   name="searchKeyWord"
-                   placeholder="输入应用名称进行搜索" my-enter="eventLogListCtrl.doSearch(eventLogListCtrl.searchKeyWord)">
-        </div>
-        <button type="submit" ng-click="eventLogListCtrl.doSearch(eventLogListCtrl.searchKeyWord)"
-                class="btn btn-info">搜索
-        </button>
-    </form>
-</div>
-<table ng-table="eventLogListCtrl.eventLogListTable" template-pagination="/views/common/ngTablePage.html"
-       class="table table-striped" ng-table-columns-binding="boundCols">
-    <tbody>
-    <tr ng-repeat="item in eventLogListCtrl.eventLogList">
-        <td data-title="'策略 ID'" sortable="'jobid'">
-            {/item.jobid/}
-        </td>
-        <td data-title="'应用名称'" sortable="'appname'">
-            {/item.appname/}
-        </td>
-        <td data-title="'监控周期(分钟)'">
-            {/item.ival/}
-        </td>
-        <td data-title="'时间'" sortable="'exectime'">
-            {/item.exectime | date: 'yyyy-MM-dd HH:mm'/}
-        </td>
-        <td data-title="'关键字'" sortable="'keyword'">
-            {/item.keyword/}
-        </td>
-        <td data-title="'出现次数'" sortable="'resultnum'">
-            {/item.resultnum/}
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div class="alert alert-warning text-center" data-ng-show="!eventLogListCtrl.eventLogList.length">
-    未查询到日志告警事件
-</div>
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="eventLogListCtrl.searchKeyWord" placeholder="输入应用名称进行搜索"
+                   my-enter="eventLogListCtrl.table.doSearch(eventLogListCtrl.searchKeyWord)">
+        </form>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="eventLogListCtrl.table.query.order"
+               md-on-reorder="eventLogListCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-numeric md-order-by="jobid"><span>ID</span></th>
+            <th md-column md-numeric md-order-by="appname"><span>应用名称</span></th>
+            <th md-column md-numeric>监控周期(分钟)</th>
+            <th md-column md-numeric md-order-by="exectime">时间</th>
+            <th md-column md-numeric md-order-by="keyword">关键字</th>
+            <th md-column md-numeric md-order-by="resultnum">出现次数</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in eventLogListCtrl.eventLogList">
+            <td md-cell>{/item.jobid/}</td>
+            <td md-cell><a href="#">{/item.appname/}</a></td>
+            <td md-cell>{/item.ival/}</td>
+            <td md-cell>{/item.exectime | date: 'yyyy-MM-dd HH:mm'/}</td>
+            <td md-cell>{/item.keyword/}</td>
+            <td md-cell>{/item.resultnum/}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!eventLogListCtrl.eventLogList.length">
+        未查询到日志告警事件
+    </div>
+</md-table-container>
+<md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
+                     md-limit="eventLogListCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
+                     md-page="eventLogListCtrl.table.query.page"
+                     md-total="{/eventLogListCtrl.count/}" md-on-paginate="eventLogListCtrl.table.getPage"
+                     md-page-select>
+</md-table-pagination>

@@ -194,8 +194,8 @@
 
     /* @ngInject */
     function warningList(appWarningBackend, utils, $stateParams) {
-        //return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
-        return {tasks: [{id:1, appname:"111", duration: 1,times:2, emails:"3@3.com",updated: "2016-05-09T14:33:48Z", enabled: true}],count:1}
+        return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
+        //return {tasks: [{id:1, appname:"111", duration: 1,times:2, emails:"3@3.com",updated: "2016-05-09T14:33:48Z", enabled: true}],count:1}
     }
 
     /* @ngInject */
@@ -210,8 +210,8 @@
 
     /* @ngInject */
     function warningEvent(appWarningBackend, utils, $stateParams) {
-        //return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
-        return {events: [{taskid: 1,appname: '111', alerttime: '2016-05-09T14:33:48', instance: 1,metric: 'CpuUsedCores', currentvalue:0.8, operator: '>',threshold: 0.9}],count:1}
+        return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
+        //return {events: [{taskid: 1,appname: '111', alerttime: '2016-05-09T14:33:48', instance: 1,metric: 'CpuUsedCores', currentvalue:0.8, operator: '>',threshold: 0.9}],count:1}
     }
 
     /* @ngInject */
@@ -221,13 +221,13 @@
 
     /* @ngInject */
     function logList(logWarningBackend, utils, $stateParams) {
-        //return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
-        return {alarms: [{id:1, appname:'111',keyword: '1,23',ival: 60,gtnum:2,emails: '3@3.com',isnotice: false,createtime: '2016-05-09T14:33:48'}],count: 1}
+        return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
+        //return {alarms: [{id:1, appname:'111',keyword: '1,23',ival: 60,gtnum:2,emails: '3@3.com',isnotice: false,createtime: '2016-05-09T14:33:48'}],count: 1}
     }
 
     /* @ngInject */
     function eventLogList(logWarningBackend, utils, $stateParams) {
-        //return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
-        return {events: [1,2,3,4],count: 4}
+        return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
+        //return {events: [{jobid: 1,appname: 'my',ival: 60,exectime: '2016-05-09T14:33:48',keyword:'abc',resultnum:3}],count: 1}
     }
 })();
