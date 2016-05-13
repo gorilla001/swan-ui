@@ -1,48 +1,59 @@
-<div>
-    <form class="form-inline search-container col-md-4">
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="warningEventCtrl.searchKeyWord"
-                   name="searchKeyWord"
-                   placeholder="输入应用全称进行搜索" my-enter="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)">
-        </div>
-        <button type="submit" ng-click="warningEventCtrl.doSearch(warningEventCtrl.searchKeyWord)"
-                class="btn btn-info">搜索
-        </button>
-    </form>
-</div>
-<table ng-table="warningEventCtrl.warningEventTable" template-pagination="/views/common/ngTablePage.html"
-       class="table table-striped" ng-table-columns-binding="boundCols">
-    <tbody>
-    <tr ng-repeat="item in warningEventCtrl.warningEvents">
-        <td data-title="'策略 ID'">
-            {/item.taskid/}
-        </td>
-        <td data-title="'应用'">{/item.appname/}
-        </td>
-        <td data-title="'告警时间'">{/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-        <td data-title="'实例'">
-            {/item.instance/}
-        </td>
-        <td data-title="'实际值'">
-            <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.currentvalue * 100 /}</span>
-            <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.currentvalue/}</span>
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="warningEventCtrl.searchKeyWord" placeholder="输入应用名称进行搜索"
+                   my-enter="warningEventCtrl.table.doSearch(warningEventCtrl.searchKeyWord)">
+        </form>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="warningEventCtrl.table.query.order"
+               md-on-reorder="warningEventCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-numeric><span>ID</span></th>
+            <th md-column md-numeric><span>应用名称</span></th>
+            <th md-column md-numeric>告警时间</th>
+            <th md-column md-numeric>实例</th>
+            <th md-column md-numeric>实际值</th>
+            <th md-column md-numeric>告警内容</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in warningEventCtrl.warningEvents">
+            <td md-cell>{/item.taskid/}</td>
+            <td md-cell><a href="#">{/item.appname/}</a></td>
+            <td md-cell>
+                {/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}
+            </td>
+            <td md-cell>{/item.instance/}</td>
+            <td md-cell>
+                <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.currentvalue * 100 /}</span>
+                <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.currentvalue/}</span>
 
-            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
-            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
-            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
-        </td>
-        <td data-title="'告警内容'">
-            {/warningEventCtrl.WARNING_TYPE[item.metric]/} {/warningEventCtrl.WARNING_RULE[item.operator]/}
-            <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.threshold * 100 /}</span>
-            <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.threshold/}</span>
+                <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
+                <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+                <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
+            </td>
+            <td md-cell>
+                {/warningEventCtrl.WARNING_TYPE[item.metric]/} {/warningEventCtrl.WARNING_RULE[item.operator]/}
+                <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.threshold * 100 /}</span>
+                <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.threshold/}</span>
 
-            <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
-            <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
-            <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div class="alert alert-warning text-center" data-ng-show="!warningEventCtrl.warningEvents.length">
-    未查询到监控事件
-</div>
+                <span data-ng-if="item.metric == 'DiskIOReadBytesRate' || item.metric == 'DiskIOWriteBytesRate' || item.metric == 'NetworkReceviedByteRate' || item.metric == 'NetworkSentByteRate'"> B/s</span>
+                <span data-ng-if="item.metric == 'MemoryUsed'"> MB</span>
+                <span data-ng-if="item.metric == 'CpuUsedCores'"> %</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!warningEventCtrl.warningEvents.length">
+        未查询到监控事件
+    </div>
+</md-table-container>
+<md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
+                     md-limit="warningEventCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
+                     md-page="warningEventCtrl.table.query.page"
+                     md-total="{/warningEventCtrl.count/}" md-on-paginate="warningEventCtrl.table.getPage"
+                     md-page-select>
+</md-table-pagination>

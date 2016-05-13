@@ -1,67 +1,75 @@
-<div>
-    <form class="form-inline search-container col-md-4">
-        <div class="form-group">
-            <input type="text" class="form-control" ng-model="warningListCtrl.searchKeyWord"
-                   name="searchKeyWord"
-                   placeholder="输入应用名称进行搜索" my-enter="warningListCtrl.doSearch(warningListCtrl.searchKeyWord)">
-        </div>
-        <button type="submit" ng-click="warningListCtrl.doSearch(warningListCtrl.searchKeyWord)"
-                class="btn btn-info">搜索
-        </button>
-    </form>
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="warningListCtrl.searchKeyWord" placeholder="输入应用名称进行搜索"
+                   my-enter="warningListCtrl.table.doSearch(warningListCtrl.searchKeyWord)">
+        </form>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="warningListCtrl.table.query.order"
+               md-on-reorder="warningListCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column md-order-by="id" md-numeric><span>ID</span></th>
+            <th md-column md-numeric md-order-by="appname"><span>应用名称</span></th>
+            <th md-column md-numeric>规则</th>
+            <th md-column md-numeric>周期</th>
+            <th md-column md-numeric>阈值</th>
+            <th md-column md-order-by="emails">联系人</th>
+            <th md-column md-numeric>启用</th>
+            <th md-column md-order-by="updated" md-numeric>更新时间</th>
+            <th md-column md-numeric>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in warningListCtrl.warningList">
+            <td md-cell>{/item.id/}</td>
+            <td md-cell><a href="#">{/item.appname/}</a></td>
+            <td md-cell>
+                {/warningListCtrl.WARNING_TYPE[item.metric]/} / {/warningListCtrl.WARNING_RULE[item.operator]/}/
+                <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.threshold * 100 /}</span>
+                <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.threshold/}</span>
 
-    <button class="btn btn-success col-md-2 col-md-offset-6" type="button" data-ui-sref="policyWarningCreate">新建策略
-    </button>
-
-</div>
-<table ng-table="warningListCtrl.warningListTable" template-pagination="/views/common/ngTablePage.html"
-       class="table table-striped" ng-table-columns-binding="boundCols">
-    <tbody>
-    <tr ng-repeat="item in warningListCtrl.warningList">
-        <td data-title="'策略 ID'" sortable="'id'">
-            {/item.id/}
-        </td>
-        <td data-title="'应用名称'" sortable="'appname'">
-            {/item.appname/}
-        </td>
-        <td data-title="'告警规则'">
-            {/warningListCtrl.WARNING_TYPE[item.metric]/} / {/warningListCtrl.WARNING_RULE[item.operator]/}/
-            <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.threshold * 100 /}</span>
-            <span data-ng-hide="item.metric === 'CpuUsedCores'">{/item.threshold/}</span>
-
-            <span data-ng-if="item.metric === 'MemoryUsed'">MB</span>
-            <span data-ng-if="item.metric === 'CpuUsedCores'">%</span>
-            <span data-ng-if="item.metric === 'DiskIOReadBytesRate' || item.metric === 'DiskIOWriteBytesRate' ||
-            item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">B/s</span>
-        </td>
-        <td data-title="'监控周期'">{/item.duration/} 分钟
-        </td>
-        <td data-title="'达到阈值'">{/item.times/} 次</td>
-        <td data-title="'联系人'" sortable="'emails'">
-            {/item.emails/}
-        </td>
-        <td data-title="'启用'">
-            <input type="checkbox" ng-true-value="true"
-                   ng-false-value="false" data-ng-model="item.enabled"
-                   data-ng-change="warningListCtrl.switchNotice(item)"> 是
-        </td>
-        <td data-title="'更新时间'" sortable="'updated'">
-            {/item.updated | date:"yyyy-MM-dd HH:mm" : "UTC"/}
-        </td>
-        <td data-title="'操作'">
-            <button type="button"
-                    class="btn btn-default btn-xs" data-demo-disable
-                    data-ui-sref="policyWarningUpdate({task_id: item.id})">更新
-            </button>
-            <button type="button"
-                    class="btn btn-danger btn-xs" data-ng-click="warningListCtrl.deleteTask(item.id)"
-                    data-demo-disable>
-                删除
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div class="alert alert-warning text-center" data-ng-show="!warningListCtrl.warningList.length">
-    未查询到监控数据
-</div>
+                <span data-ng-if="item.metric === 'MemoryUsed'">MB</span>
+                <span data-ng-if="item.metric === 'CpuUsedCores'">%</span>
+                <span data-ng-if="item.metric === 'DiskIOReadBytesRate' || item.metric === 'DiskIOWriteBytesRate' ||
+                item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">B/s</span>
+            </td>
+            <td md-cell>{/item.duration/} 分钟</td>
+            <td md-cell>{/item.times/} 次</td>
+            <td md-cell>{/item.emails/}</td>
+            <td md-cell>{/warningListCtrl.enableText[item.enabled]/}</td>
+            <td md-cell>{/item.updated | date:"yyyy-MM-dd HH:mm" : "UTC"/}</td>
+            <td md-cell>
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="Open demo menu" class="md-button md-raised" ng-click="$mdOpenMenu($event)"><i
+                            class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item ng-if="!item.enabled" data-ng-click="warningListCtrl.switchNotice(item)">
+                            <md-button>启动</md-button>
+                        </md-menu-item>
+                        <md-menu-item ng-if="item.enabled" data-ng-click="warningListCtrl.switchNotice(item)">
+                            <md-button>停止</md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ng-click="warningListCtrl.deleteTask(item.id, $event)">删除</md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ui-sref="policy.WarningUpdate({task_id: item.id})">更新</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!warningListCtrl.warningList.length">
+        未查询到监控事件
+    </div>
+</md-table-container>
+<md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
+                     md-limit="warningListCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
+                     md-page="warningListCtrl.table.query.page"
+                     md-total="{/warningListCtrl.count/}" md-on-paginate="warningListCtrl.table.getPage" md-page-select>
+</md-table-pagination>

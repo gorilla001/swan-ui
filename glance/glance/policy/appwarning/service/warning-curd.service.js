@@ -8,15 +8,15 @@
 
 
     /* @ngInject */
-    function warningCurd(appWarningBackend, confirmModal, $state, Notification) {
+    function warningCurd(appWarningBackend, confirmModal, $state) {
         return {
             deleteTask: deleteTask,
             updateTask: updateTask,
             switchNotice: switchNotice
         };
 
-        function deleteTask(taskId) {
-            confirmModal.open('确定删除该应用告警策略吗?').then(function () {
+        function deleteTask(taskId, ev) {
+            confirmModal.open('确定删除该应用告警策略吗?', ev).then(function () {
                 appWarningBackend.deleteWarning(taskId).then(function (data) {
                     $state.reload();
                 });

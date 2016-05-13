@@ -1,22 +1,41 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">服务策略</h1>
-    </div>
-</div>
-<section>
-    <div class="main-container new-app" id="warning-tactics">
-        <header class="clearfix">
-            <ul class="nav nav-tabs">
-                <li data-ng-class="{'active': tabActiveFlag=='appwarning'}"><a data-ui-sref="policy.appwarning.warninglist({page:1, per_page:20})"
-                                                        >应用告警</a></li>
-                <li data-ng-if="false" data-ng-class="{'active': tabActiveFlag=='apptimescaling'}"><a data-ui-sref="policy.apptimescaling.scalinglist({page:1, per_page:20})"
-                                               >应用定时扩缩</a></li>
-                <li data-ng-class="{'active': tabActiveFlag=='applogwarning'}"><a data-ui-sref="policy.applogwarning.loglist({page:1, per_page:20})"
-                                               >日志告警</a></li>
-            </ul>
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>管理策略</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="Open demo menu" class="md-fab md-mini"
+                               ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <md-tooltip md-direction="top">
+                            新建策略
+                        </md-tooltip>
+                    </md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item>
+                            <md-button>应用告警</md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button>日志告警</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
         </header>
-        <div class="main-container-body">
-            <div data-ui-view="policyTab" class="tab-content"></div>
-        </div>
-    </div>
-</section>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="应用告警" data-ui-sref="policy.tab.appwarning"
+                        md-active="$state.includes('policy.tab.appwarning')">
+                    <md-content class="md-padding main-tab-content" ui-view="appWarningTab">
+                </md-tab>
+                <md-tab label="日志告警" data-ui-sref="policy.tab.applogwarning"
+                        md-active="$state.includes('policy.tab.applogwarning')">
+                    <md-content class="md-padding main-tab-content" ui-view="logWarningTab">
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </section>
+</div>

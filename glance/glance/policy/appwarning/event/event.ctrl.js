@@ -4,18 +4,20 @@
         .controller('WarningEventCtrl', WarningEventCtrl);
 
     /* @ngInject */
-    function WarningEventCtrl(data, table, $stateParams, $state) {
+    function WarningEventCtrl(data, mdTable, $stateParams, $state) {
         var self = this;
+
         self.warningEvents = data.events;
+        self.count = data.count;
         self.WARNING_TYPE = WARNING_TYPE;
         self.WARNING_RULE = WARNING_RULE;
+        self.table = mdTable.createTable('policy.tab.appwarning.warningevent');
         self.searchKeyWord = $stateParams.keywords || '';
-        self.warningEventTable = table.createParams(data.events, data.count);
 
         self.doSearch = doSearch;
         ////
         function doSearch(searchKeyWord) {
-            $state.go('policy.appwarning.warningevent', {
+            $state.go('policy.tab.appwarning.warningevent', {
                 page: 1,
                 per_page: 20,
                 keywords: searchKeyWord
