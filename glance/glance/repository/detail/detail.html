@@ -1,67 +1,62 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">应用部署</h1>
-    </div>
-</div>
-
-<section>
-    <div class="main-container">
-        <header class="clearfix">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#config" data-toggle="tab">基本信息</a></li>
-                <li><a href="#detail" data-toggle="tab">详情</a></li>
-            </ul>
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>应用部署</h2>
+            </div>
         </header>
-        <div class="main-container-body">
-            <div class="tab-content">
-                <div class="tab-pane active" id="config">
-                    <div class="main-container">
-                        <div class="main-container-body">
-                            <form class="form-horizontal" name="staticForm">
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label"><span class="text-danger">*</span>
-                                        应用名称</label>
-                                    <div class="col-md-5">
-                                        <input type="text" class="form-control"
-                                               data-ng-model="repoDetailCtrl.form.app.appName" data-required="required">
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="基本信息">
+                    <md-content class="md-padding main-tab-content">
+                        <form name="staticForm">
+                            <div layout="row" layout-align="end start" class="form-group form-group-input">
+                                <label flex="15">应用名称</label>
+                                <div flex="50" layout="column">
+                                    <div flex="none">
+                                        <input type="text" class="form-input" data-required="required"
+                                               data-ng-model="repoDetailCtrl.form.app.appName" >
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label"><span class="text-danger">*</span>
-                                        应用版本</label>
-                                    <div class="col-md-5">
-                                        <select class="form-control"
-                                                data-ng-options="tag.version as tag.version for tag in repoDetailCtrl.tags"
-                                                data-ng-model="repoDetailCtrl.form.app.imageVersion"
-                                                data-required="required">
-                                            <option value="">--- 选择应用版本 ---</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="text-danger">* </span>
-                                        选择集群
-                                    </label>
-                                    <div class="col-md-5">
-                                        <select class="form-control"
-                                                data-ng-model="repoDetailCtrl.form.app.clusterId"
-                                                data-ng-options="cluster.id as cluster.name for cluster in repoDetailCtrl.clusters"
-                                                data-required="required"
-                                        >
-                                            <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <div flex></div>
+                            </div>
 
-                                <!-- 容器规格 -->
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="text-danger">* </span>
-                                        容器规格
-                                    </label>
+                            <div layout="row" layout-align="end start" class="form-group form-group-input">
+                                <label flex="15">应用版本</label>
+                                <div flex="50" layout="column">
+                                    <md-input-container>
+                                        <md-select ng-model="repoDetailCtrl.form.app.imageVersion" aria-label="tag"
+                                                   data-required="required">
+                                            <md-option ng-repeat="tag in repoDetailCtrl.tags" ng-value="tag.version">
+                                                {/tag.version/}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div flex></div>
+                            </div>
 
-                                    <div class="col-md-5">
+                            <div layout="row" layout-align="end start" class="form-group form-group-input">
+                                <label flex="15">选择集群</label>
+                                <div flex="50" layout="column">
+                                    <md-input-container>
+                                        <md-select data-ng-model="repoDetailCtrl.form.app.clusterId" aria-label="cluster"
+                                                   data-required="required">
+                                            <md-option ng-repeat="cluster in repoDetailCtrl.clusters" ng-value="cluster.id">
+                                                {/cluster.name/}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>
+                                <div flex></div>
+                            </div>
+
+                            <!-- 容器规格 -->
+                            <div layout="row" layout-align="end start" class="form-group form-group-input">
+                                <label flex="15">容器规格</label>
+
+                                <div flex="50" layout="column">
+                                    <div layout="row">
                                         <rzslider
                                                 rz-slider-model="repoDetailCtrl.cpuSlideValue"
                                                 rz-slider-options="repoDetailCtrl.containerConfig.cpu.options"
@@ -72,10 +67,8 @@
                                             </strong>
                                         </span>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-5 col-md-offset-2">
+                                    <div layout="row">
                                         <rzslider
                                                 rz-slider-model="repoDetailCtrl.memSlideValue"
                                                 rz-slider-options="repoDetailCtrl.containerConfig.mem.options"
@@ -88,61 +81,64 @@
                                         </span>
                                     </div>
                                 </div>
+                                <div flex></div>
+                            </div>
 
-                                <!--  容器个数 -->
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label">
-                                        <span class="text-danger">* </span>
-                                        容器个数
-                                    </label>
-
-                                    <div class="col-md-2"
-                                         data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
-                                        <input type="number" class="form-control"
-                                               name="instances"
+                            <div layout="row" layout-align="end start" class="form-group form-group-input">
+                                <label flex="15">容器个数</label>
+                                <div flex="10" layout="column">
+                                    <md-input-container class="md-block">
+                                        <input type="number" name="instances" aria-label="instances"
                                                data-ng-model="repoDetailCtrl.form.app.instances"
                                                data-min="1"
                                                data-required="required">
+                                        <p class="error-info help-info-bottom"
+                                           data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine">
+                                            <small>容器个数不小于 1</small>
+                                        </p>
 
-                                        <div data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
-                                            <p data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine"
-                                               class="help-block">容器个数不小于 1 </p>
+                                        <p class="error-info help-info-bottom"
+                                           data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
+                                            <small>容器个数不能为空</small>
+                                        </p>
+                                    </md-input-container>
+                                </div>
+                                <div flex></div>
+                            </div>
 
-                                            <p data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine"
-                                               class="help-block">容器个数不能为空 </p>
-                                        </div>
-                                    </div>
+                            <div layout="row" layout-align="end start" class="form-group form-group-input"
+                                 data-ng-show="repoDetailCtrl.questions.length">
+                                <label flex="15">配置</label>
+                                <div flex="50" layout="column">
+                                    <dynamic-field field-data="fieldData"
+                                                   ng-repeat="fieldData in repoDetailCtrl.questions">
+                                    </dynamic-field>
                                 </div>
+                                <div flex></div>
+                            </div>
 
-                                <div class="form-group" data-ng-show="repoDetailCtrl.questions.length">
-                                    <label class="col-md-2 control-label">配置</label>
-                                    <div class="col-md-5">
-                                        <dynamic-field field-data="fieldData"
-                                                       ng-repeat="fieldData in repoDetailCtrl.questions"></dynamic-field>
-                                    </div>
+                            <div layout="row" class="form-footer-button">
+                                <div flex-offset="15" layout="row" layout-align="end end">
+                                    <md-button class="md-raised md-primary"
+                                               ng-disabled="staticForm.$invalid" data-demo-disable
+                                               data-ng-click="repoDetailCtrl.deploy()">
+                                        确认
+                                    </md-button>
                                 </div>
-                                <hr>
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-5">
-                                        <button type="submit" class="btn btn-primary btn-block"
-                                                ng-disabled="staticForm.$invalid"
-                                                data-ng-click="repoDetailCtrl.deploy()">部 署
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+                <md-tab label="详情">
+                    <md-content class="main-tab-content">
+                        <div class="alert alert-warning text-center" data-ng-if="!repoDetailCtrl.markdown">
+                            暂无详情
                         </div>
-                    </div>
-                </div>
-
-                <div class="tab-pane" id="detail">
-                    <div class="alert alert-warning text-center" data-ng-if="!repoDetailCtrl.markdown">
-                        暂无详情
-                    </div>
-                    <div btf-markdown="repoDetailCtrl.markdown">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                        <div btf-markdown="repoDetailCtrl.markdown">
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </section>
+</div>
