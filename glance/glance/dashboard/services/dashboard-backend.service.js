@@ -7,16 +7,11 @@
     /* @ngInject */
     function dashboardBackend(gHttp) {
         return {
-            listAllClusters: listAllClusters,
-            getMetrics: getMetrics
+            listAllClusters: listAllClusters
         };
 
         function listAllClusters() {
             return gHttp.Resource('cluster.clusters').get();
-        }
-
-        function getMetrics(clusterId) {
-            return gHttp.Resource('metrics.getClusterMonitor', {cluster_id: clusterId}).get();
         }
     }
 })();

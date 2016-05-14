@@ -42,7 +42,7 @@
                     <div class="charts-panel">
                         <piechart chart-used="cluster.masMetrics.cpuPercent" chart-total="100" radius="[57, 67]"
                                   use-color="#00BCD4" show-text="CPU占用" font-size="24" text-color="#596679"
-                                  error-code="errorCode">
+                                  error-code="dashboardCtrl.errorCode">
                         </piechart>
                     </div>
                     <div class="info-panel" data-ng-if="cluster.masMetrics.cpuPercent">
@@ -56,7 +56,7 @@
                     <div class="charts-panel">
                         <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal"
                                   radius="[57, 67]"
-                                  use-color="#00BCD4" show-text="内存占用" text-color="#596679" error-code="errorCode"
+                                  use-color="#00BCD4" show-text="内存占用" text-color="#596679" error-code="dashboardCtrl.errorCode"
                                   font-size="24">
                         </piechart>
                     </div>
@@ -78,7 +78,7 @@
                                     <piechart chart-used="appMon.appCpuUsed" chart-total="appMon.appCpuShare"
                                               radius="[34, 40]"
                                               use-color="#009688" show-text="CPU使用" font-size="16" text-color="#596679"
-                                              error-code="errorCode"
+                                              error-code="dashboardCtrl.errorCode"
                                               status="appMon.status">
                                     </piechart>
                                 </div>
@@ -88,7 +88,7 @@
                                     <piechart chart-used="appMon.appMemUsed" chart-total="appMon.appMemShare"
                                               radius="[34, 40]"
                                               use-color="#009688" show-text="内存使用" font-size="16" text-color="#596679"
-                                              error-code="errorCode"
+                                              error-code="dashboardCtrl.errorCode"
                                               status="appMon.status">
                                     </piechart>
                                 </div>

@@ -6,7 +6,7 @@
     angular.module('glance.dashboard').controller('DashboardCtrl', DashboardCtrl);
 
     /* @ngInject */
-    function DashboardCtrl($scope, ClusterStatusMgr, dashboardBackend) {
+    function DashboardCtrl($scope, ClusterStatusMgr, dashboardBackend, glanceHttp) {
         var self = this;
 
         self.statusMgr = new ClusterStatusMgr();
@@ -33,19 +33,21 @@
         function joinMonitorInClusterList() {
             angular.forEach(self.clusterList, function (cluster) {
                 if (cluster.nodes.length) {
-                    dashboardBackend.getMetrics(cluster.id)
-                        .then(function (data) {
-                            if (data) {
-                                if (data.appMetrics) {
-                                    cluster.appMonitors = data.appMetrics;
-                                }
-                                if (data.masMetrics) {
-                                    cluster.masMetrics = data.masMetrics;
-                                }
-                                // 设置app下拉插件
-                                angular.element(document).find('.mCustomScrollbar').mCustomScrollbar();
+                    glanceHttp.ajaxGet(['metrics.getClusterMonitor', {cluster_id: cluster.id}], function (data) {
+                        self.errorCode = data.code;
+                        if (data && data.data) {
+                            if (data.data.appMetrics) {
+                                cluster.appMonitors = data.data.appMetrics;
                             }
-                        });
+                            if (data.data.masMetrics) {
+                                cluster.masMetrics = data.data.masMetrics;
+                            }
+                            // 设置app下拉插件
+                            angular.element(document).find('.mCustomScrollbar').mCustomScrollbar();
+                        }
+                    }, undefined, undefined, function (data) {
+                        self.errorCode = data.code;
+                    });
                 }
             });
         }
