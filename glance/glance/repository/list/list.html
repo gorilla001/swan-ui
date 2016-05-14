@@ -1,37 +1,27 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">应用目录 </h1>
-        <small><br><br>提供丰富的应用可以直接部署</small>
-    </div>
-</div>
-<section id="app-index">
-    <div class="main-container">
-        <div class="main-container-body">
-            <form class="form-inline form-filter-top">
-                <select class="form-control" ng-options="category for category in repoListCtrl.categories"
-                        ng-model="repoListCtrl.selected">
-                    <option value="">全部</option>
-                </select>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="search" placeholder="搜索"
-                           data-ng-model="repoListCtrl.searchName">
-                </div>
-            </form>
-            <div class="row">
-                <div class="col-md-3"
-                     data-ng-repeat="repository in repoListCtrl.repositories | filter : repoListCtrl.filterCategory(repoListCtrl.selected) | filter: {name: repoListCtrl.searchName}">
-                    <div class="thumbnail">
-                        <img ng-src="{/repoListCtrl.repoImageBaseUrl/}{/repository.name/}.png" alt="...">
-                        <div class="caption">
-                            <h4>{/repository.name/}</h4>
-                            <p>{/repository.description/}</p>
-                            <a href="#" class="btn btn-primary btn-sm" role="button"
-                               data-ui-sref="repositoryDetail({projectName: repository.projectName, repositoryName:repository.name})">部署</a>
-                        </div>
-                    </div>
-                </div>
+<div class="app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>应用目录</h2>
+            </div>
+        </header>
+        <div class="main-content">
+            <div layout="row" layout-wrap>
+                <md-card flex="18" data-ng-repeat="repository in repoListCtrl.repositories">
+                    <img ng-src="{/repoListCtrl.repoImageBaseUrl/}{/repository.name/}.png" class="md-card-image" alt="Washed Out">
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{/repository.name/}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        <p>{/repository.description/}</p>
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button class="md-raised md-primary" data-ui-sref="repository.detail({projectName: repository.projectName, repositoryName:repository.name})">部署</md-button>
+                    </md-card-actions>
+                </md-card>
             </div>
         </div>
-    </div>
-
-</section>
+    </section>
+</div>

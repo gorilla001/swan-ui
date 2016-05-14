@@ -7,23 +7,20 @@
     function route($stateProvider) {
 
         $stateProvider
-            .state('repositoryList', {
+            .state('repository', {
                 url: '/repository',
-                views: {
-                    '': {
-                        templateUrl: '/glance/repository/list/list.html',
-                        controller: 'RepoListCtrl as repoListCtrl'
-                    }
-                }
+                template: '<ui-view/>',
+                targetState: 'list'
             })
-            .state('repositoryDetail', {
-                url: '/repository/detail/:projectName/:repositoryName',
-                views: {
-                    '': {
-                        templateUrl: '/glance/repository/detail/detail.html',
-                        controller: 'RepoDetailCtrl as repoDetailCtrl'
-                    }
-                }
+            .state('repository.list', {
+                url: '/list',
+                templateUrl: '/glance/repository/list/list.html',
+                controller: 'RepoListCtrl as repoListCtrl'
+            })
+            .state('repository.detail', {
+                url: '/detail/:projectName/:repositoryName',
+                templateUrl: '/glance/repository/detail/detail.html',
+                controller: 'RepoDetailCtrl as repoDetailCtrl'
             });
     }
 })();
