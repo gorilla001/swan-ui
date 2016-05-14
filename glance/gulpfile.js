@@ -84,8 +84,22 @@ gulp.task('template-min-user', ['template-min-utils'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
+gulp.task('template-min-dashboard', ['template-min-user'], function () {
+    return gulp.src('glance/dashboard/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlDashboard.js', {
+            module: 'glance.dashboard',
+            root: '/glance/dashboard'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 //application html to js
-gulp.task('template-min-app', ['template-min-user'], function () {
+gulp.task('template-min-app', ['template-min-dashboard'], function () {
     return gulp.src('glance/application/**/*.html')
         .pipe(minifyHtml({
             empty: true,
