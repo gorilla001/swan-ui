@@ -35,7 +35,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
             startRight: 260
         });
 
-        $urlRouterProvider.otherwise('/dashboard');
+        $urlRouterProvider.otherwise('/dashboard/home');
         $stateProvider
             .state("cluster", {
                 url: '/cluster',
