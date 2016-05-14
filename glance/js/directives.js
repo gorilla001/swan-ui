@@ -203,7 +203,8 @@ glanceApp.directive('piechart', function () {
             showText: '@showText',
             textcolor: '@textColor',
             errorCode: '=errorCode',
-            statusText: '=status'
+            statusText: '=status',
+            fontSize: '@fontSize'
 
         },
         link: function (scope, elem, attrs, ctrl) {
@@ -220,7 +221,7 @@ glanceApp.directive('piechart', function () {
                         position: 'center',
                         formatter: '{b}',
                         textStyle: {
-                            fontSize: 17,
+                            fontSize: scope.fontSize,
                             baseline: 'bottom',
                             color: scope.textcolor || "#68d1f2"
                         }
@@ -233,14 +234,14 @@ glanceApp.directive('piechart', function () {
 
             var labelBottom = {
                 normal: {
-                    color: scope.backgroundColor || "#eee",
+                    color: scope.backgroundColor || "#D9E4EB",
                     label: {
                         show: true,
                         position: 'center',
                         formatter: scope.showText || "pieCart",
                         textStyle: {
-                            fontSize: 7,
-                            color: '#CCC'
+                            fontSize: 10,
+                            color: '#8A95A5'
                         }
                     },
                     labelLine: {
@@ -408,7 +409,7 @@ function demoDisable() {
                             container: 'body'});
                     }
                 }
-          });
+            });
         }
     };
 }

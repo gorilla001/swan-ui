@@ -20,7 +20,8 @@ var glanceApp = angular.module('glance',
         'glance.repository',
         'glance.policy',
         'ngMaterial',
-        'glance.layout'
+        'glance.layout',
+        'glance.dashboard'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
@@ -34,7 +35,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
             startRight: 260
         });
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/dashboard/home');
         $stateProvider
             .state("cluster", {
                 url: '/cluster',
@@ -166,15 +167,6 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
                     '': {
                         templateUrl: '/views/log/log.html',
                         controller: 'logBaseCtrl'
-                    }
-                }
-            })
-            .state('home', {
-                url: '/home',
-                views: {
-                    '': {
-                        templateUrl: '/views/dynamic/dynamic.html',
-                        controller: 'dynamicBaseCtrl'
                     }
                 }
             })
