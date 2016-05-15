@@ -69,11 +69,12 @@
         self.apps = [];
 
         self.submit = submit;
+        self.getAppList = getAppList;
 
         activate();
 
         function activate() {
-            getAppList()
+            ///
         }
 
         function getAppList() {

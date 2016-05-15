@@ -105,6 +105,10 @@ ul, li, dt, dd, dl {
     color: #A0ABBF;
 }
 
+.main-container {
+    overflow-y: scroll;
+}
+
 /* md-table*/
 md-toolbar,
 footer-content {
@@ -357,11 +361,11 @@ table.md-table .md-menu {
     margin-bottom: 30px;
 }
 
-.form-group label {
-
-}
-
-.form-group md-switch, .form-group md-input-container, .form-group .help-info-bottom, .form-group md-checkbox {
+.form-group md-switch,
+.form-group md-input-container,
+.form-group .help-info-bottom,
+.form-group md-checkbox,
+.form-group md-select {
     margin: 0;
 }
 
@@ -402,7 +406,9 @@ table.md-table .md-menu {
     margin: 0 15px 0 0;
 }
 
-.form-group-input input[type="text"] {
+.form-group-input input[type="text"],
+.form-group-input input[type="number"],
+.form-group-input input[type="password"] {
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
@@ -414,7 +420,14 @@ table.md-table .md-menu {
     width: 100%;
 }
 
-.form-group-input input[type="text"]:hover, .form-group-input input[type="text"]:focus, .form-group-textarea textarea:hover, .form-group-textarea textarea:focus {
+.form-group-input input[type="text"]:hover,
+.form-group-input input[type="text"]:focus,
+.form-group-input input[type="number"]:hover,
+.form-group-input input[type="number"]:focus,
+.form-group-input input[type="password"]:hover,
+.form-group-input input[type="password"]:focus,
+.form-group-textarea textarea:hover,
+.form-group-textarea textarea:focus {
     border-color: #3f51b5;
 }
 
@@ -434,6 +447,14 @@ table.md-table .md-menu {
     line-height: 14px;
     padding: 18px;
     width: 100%;
+}
+
+.form-input-addon {
+    color: #999;
+    display: inline-block;
+    font-size: 18px;
+    margin-left: 10px;
+    margin-top: 15px;
 }
 
 dl.list-dl-row {

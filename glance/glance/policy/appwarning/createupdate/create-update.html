@@ -1,129 +1,155 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left" data-ng-if="createWarningCtrl.target === 'create'">新建应用告警</h1>
-        <h1 class="pull-left" data-ng-if="createWarningCtrl.target === 'update'">更新应用告警</h1>
-    </div>
-</div>
-<section>
-    <div class="main-container new-app">
-        <div class="main-container-body">
-            <form class="form-horizontal" name="warningForm" data-ng-submit="createWarningCtrl.submit()">
-                <div class="form-group" data-ng-if="createWarningCtrl.target === 'update'">
-                    <label class="col-md-2 control-label">应用名称</label>
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" name="appName"
-                               data-ng-model="createWarningCtrl.form.appname" data-ng-disabled="true">
-                    </div>
-                </div>
-                <div class="form-group" data-ng-if="createWarningCtrl.target === 'create'">
-                    <label class="col-md-2 control-label">应用名称</label>
-                    <div class="col-md-5">
-
-                        <select class="form-control"
-                                data-ng-options="app as app.name for app in createWarningCtrl.apps"
-                                data-ng-model="createWarningCtrl.app"
-                                data-required="required">
-                            <option value="">---请选择应用---</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">告警规则</label>
-                    <div class="col-md-2">
-                        <select class="form-control"
-                                data-ng-options="rule.label as rule.name for rule in createWarningCtrl.selectRules"
-                                data-ng-model="createWarningCtrl.form.metric"
-                                data-required="required">
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-control" data-ng-model="createWarningCtrl.form.operator"
-                                data-ng-options="size.label as size.name for size in createWarningCtrl.selectSize"
-                                data-required="required">
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="input-group"
-                             data-ng-class="{ 'has-error' : warningForm.threshold.$invalid && !warningForm.threshold.$pristine}">
-                            <input type="text" class="form-control" placeholder="数值"
-                                   data-ng-model="createWarningCtrl.form.threshold" name="threshold"
-                                   data-required="required" data-ng-pattern="/^\d+(\.\d+)?$/">
-                            <span class="input-group-addon" id="memused"
-                                  data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'">MB</span>
-                            <span class="input-group-addon" id="cpuused"
-                                  data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'">%</span>
-                            <span class="input-group-addon" id="diskused" data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' || 
-                                                                                    createWarningCtrl.form.metric === 'DiskIOWriteBytesRate' || 
-                                                                                    createWarningCtrl.form.metric === 'NetworkReceviedByteRate' || 
-                                                                                    createWarningCtrl.form.metric === 'NetworkSentByteRate'">B/s</span>
+<div class="main-container app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2 data-ng-if="createWarningCtrl.target === 'create'">新建应用告警策略</h2>
+                <h2 data-ng-if="createWarningCtrl.target === 'update'">更新应用告警策略</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+        <div class="main-content">
+            <form name="warningForm" data-ng-submit="createWarningCtrl.submit()">
+                <div layout="row" layout-align="end start" class="form-group form-group-input"
+                     data-ng-if="createWarningCtrl.target === 'update'">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <input type="text" class="form-input" aria-label="updateapp"
+                                   data-ng-model="createWarningCtrl.form.appname" data-ng-disabled="true">
                         </div>
                     </div>
-                    <div data-ng-class="{ 'has-error' : warningForm.threshold.$invalid && !warningForm.threshold.$pristine}">
-                        <p data-ng-show="warningForm.threshold.$error.pattern && !warningForm.threshold.$pristine"
-                           class="help-block">必须为数字</p>
-                    </div>
+                    <div flex></div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">监控周期</label>
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : warningForm.duration.$invalid && !warningForm.duration.$pristine}">
-                        <div class="input-group">
-                            <input type="number" class="form-control" placeholder="数值"
-                                   aria-describedby="basic-addon2" data-ng-model="createWarningCtrl.form.duration"
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input"
+                     data-ng-if="createWarningCtrl.target === 'create'">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                            <md-input-container>
+                                <md-select data-ng-model="createWarningCtrl.app" aria-label="createapp"
+                                           data-required="required" name="createapp"
+                                           data-ng-disabled="createWarningCtrl.target === 'update'"
+                                           md-on-open="createWarningCtrl.getAppList()">
+                                    <md-option ng-repeat="app in createWarningCtrl.apps" ng-value="app">
+                                        {/app.name/}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">告警规则</label>
+                    <div flex="50" layout="column">
+                        <div layout="row">
+                            <div flex="25">
+                                <md-select data-ng-model="createWarningCtrl.form.metric" data-required="required"
+                                           aria-label="metric">
+                                    <md-option data-ng-repeat="rule in createWarningCtrl.selectRules" ng-value="rule.label">{/rule.name/}</md-option>
+                                </md-select>
+                            </div>
+                            <div flex="25" flex-offset="5">
+                                <md-select data-ng-model="createWarningCtrl.form.operator" data-required="required"
+                                           aria-label="selectSize">
+                                    <md-option ng-repeat="size in createWarningCtrl.selectSize" ng-value="size.label">{/size.name/}</md-option>
+                                </md-select>
+                            </div>
+                            <div flex="30" flex-offset="5">
+                                <input type="text" class="form-input"
+                                       aria-label="threshold"
+                                       data-ng-model="createWarningCtrl.form.threshold" name="threshold"
+                                       data-required="required" data-ng-pattern="/^\d+(\.\d+)?$/">
+                            </div>
+                            <div flex>
+                                <span class="form-input-addon" id="memused"
+                                      data-ng-if="createWarningCtrl.form.metric === 'MemoryUsed'">MB</span>
+                                <span class="form-input-addon" id="cpuused"
+                                      data-ng-if="createWarningCtrl.form.metric === 'CpuUsedCores'">%</span>
+                                <span class="form-input-addon" id="diskused"
+                                      data-ng-if="createWarningCtrl.form.metric === 'DiskIOReadBytesRate' ||
+                                                  createWarningCtrl.form.metric === 'DiskIOWriteBytesRate' ||
+                                                  createWarningCtrl.form.metric === 'NetworkReceviedByteRate' ||
+                                                  createWarningCtrl.form.metric === 'NetworkSentByteRate'">B/s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">监控周期</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"  aria-label="duration"
+                                   data-ng-model="createWarningCtrl.form.duration"
                                    data-required="required" name="duration" max="255" min="1" integer>
-                            <span class="input-group-addon" id="duration">分钟</span>
                         </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="warningForm.duration.$error.max && !warningForm.duration.$pristine">
+                            <small>最大值不得超过 255</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="warningForm.duration.$error.min && !warningForm.duration.$pristine">
+                            <small>最小值不小于 1</small>
+                        </p>
                     </div>
-
-                    <div data-ng-class="{ 'has-error' : warningForm.duration.$invalid && !warningForm.duration.$pristine}">
-                        <p data-ng-show="warningForm.duration.$error.max && !warningForm.duration.$pristine"
-                           class="help-block">最大值不得超过 255</p>
-                        <p data-ng-show="warningForm.duration.$error.min && !warningForm.duration.$pristine"
-                           class="help-block">最小值不得低于 1</p>
-                    </div>
+                    <div flex><span class="form-input-addon">分钟</span></div>
+                    <div flex></div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">达到阈值</label>
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : warningForm.times.$invalid && !warningForm.times.$pristine}">
-                        <div class="input-group">
-                            <input type="number" class="form-control" placeholder="数值"
-                                   aria-describedby="basic-addon2" data-ng-model="createWarningCtrl.form.times"
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">阈值</label>
+                    <div flex="50" layout="column">
+                        <div flex="25">
+                            <input type="number" class="form-input" aria-label="times"
+                                   data-ng-model="createWarningCtrl.form.times"
                                    data-required="required" name="times" max="255" min="1" integer>
-                            <span class="input-group-addon" id="times">次</span>
                         </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="warningForm.times.$error.max && !warningForm.times.$pristine">
+                            <small>最大值不超过 255</small>
+                        </p>
                     </div>
-
-                    <div data-ng-class="{ 'has-error' : warningForm.times.$invalid && !warningForm.times.$pristine}">
-                        <p data-ng-show="warningForm.times.$error.max && !warningForm.times.$pristine"
-                           class="help-block">最大值不得超过 255</p>
-                    </div>
+                    <div flex><span class="form-input-addon">次数</span></div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">告警联系人</label>
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : warningForm.emails.$invalid && !warningForm.emails.$pristine}">
-                        <input type="text" class="form-control" placeholder="mail1@123.com; mail2@123.com, ..."
-                               name="emails"
-                               data-required="required" data-ng-model="createWarningCtrl.form.emails">
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">告警联系人</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <input type="text" class="form-input"
+                                   name="emails" aria-label="emails"
+                                   data-required="required" data-ng-model="createWarningCtrl.form.emails">
+                        </div>
+                        <p class="help-info-bottom">mail1@123.com, mail2@123.com, ...</p>
                     </div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-5" data-ng-if="createWarningCtrl.target === 'create'">
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-disabled="warningForm.$invalid">创 建
-                        </button>
-                    </div>
-
-                    <div class="col-md-offset-2 col-md-5" data-ng-if="createWarningCtrl.target === 'update'">
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-disabled="warningForm.$invalid">更 新
-                        </button>
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15" layout="row" layout-align="end end">
+                        <md-button class="md-raised md-primary" type="submit"
+                                   data-ng-if="createWarningCtrl.target === 'create'"
+                                   data-ng-disabled="warningForm.$invalid">创 建</md-button>
+                        <md-button class="md-raised md-primary" type="submit"
+                                   data-ng-if="createWarningCtrl.target === 'update'"
+                                   data-ng-disabled="warningForm.$invalid">更 新</md-button>
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-</section>
+
+        <footer></footer>
+        <section>
+        </section>
+    </section>
+</div>
+
+
