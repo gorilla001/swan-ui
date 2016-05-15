@@ -15,7 +15,7 @@
                                 <div flex="50" layout="column">
                                     <div flex="none">
                                         <input type="text" class="form-input" data-required="required"
-                                               data-ng-model="repoDetailCtrl.form.app.appName" >
+                                               data-ng-model="repoDetailCtrl.form.app.appName">
                                     </div>
                                 </div>
                                 <div flex></div>
@@ -40,9 +40,11 @@
                                 <label flex="15">选择集群</label>
                                 <div flex="50" layout="column">
                                     <md-input-container>
-                                        <md-select data-ng-model="repoDetailCtrl.form.app.clusterId" aria-label="cluster"
+                                        <md-select data-ng-model="repoDetailCtrl.form.app.clusterId"
+                                                   aria-label="cluster"
                                                    data-required="required">
-                                            <md-option ng-repeat="cluster in repoDetailCtrl.clusters" ng-value="cluster.id">
+                                            <md-option ng-repeat="cluster in repoDetailCtrl.clusters"
+                                                       ng-value="cluster.id">
                                                 {/cluster.name/}
                                             </md-option>
                                         </md-select>
@@ -57,10 +59,13 @@
 
                                 <div flex="50" layout="column">
                                     <div layout="row">
-                                        <rzslider
-                                                rz-slider-model="repoDetailCtrl.cpuSlideValue"
-                                                rz-slider-options="repoDetailCtrl.containerConfig.cpu.options"
-                                                style="width: 70%; float: left;"></rzslider>
+                                        <md-slider-container flex="70">
+                                            <span>CPU 权重</span>
+                                            <md-slider flex class="md-primary" md-discrete step="0.1" min="0.1" max="1"
+                                                       ng-model="repoDetailCtrl.form.app.cpus" aria-label="cpu"
+                                                       id="cpu-slider">
+                                            </md-slider>
+                                        </md-slider-container>
                                         <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
                                             <strong style="font-size: 30px;">
                                                 {/repoDetailCtrl.form.app.cpus/}
@@ -69,10 +74,13 @@
                                     </div>
 
                                     <div layout="row">
-                                        <rzslider
-                                                rz-slider-model="repoDetailCtrl.memSlideValue"
-                                                rz-slider-options="repoDetailCtrl.containerConfig.mem.options"
-                                                style="width: 70%; float: left;"></rzslider>
+                                        <md-slider-container flex="70">
+                                            <span>内存大小</span>
+                                            <md-slider flex class="md-warn" ng-model="repoDetailCtrl.form.app.mem"
+                                                       min="16" max="2048"
+                                                       aria-label="mem" id="mem-slider">
+                                            </md-slider>
+                                        </md-slider-container>
                                         <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
                                             <strong style="font-size: 30px;">
                                                 {/repoDetailCtrl.form.app.mem/}
@@ -87,21 +95,19 @@
                             <div layout="row" layout-align="end start" class="form-group form-group-input">
                                 <label flex="15">容器个数</label>
                                 <div flex="10" layout="column">
-                                    <md-input-container class="md-block">
-                                        <input type="number" name="instances" aria-label="instances"
-                                               data-ng-model="repoDetailCtrl.form.app.instances"
-                                               data-min="1"
-                                               data-required="required">
-                                        <p class="error-info help-info-bottom"
-                                           data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine">
-                                            <small>容器个数不小于 1</small>
-                                        </p>
+                                    <input type="number" name="instances" aria-label="instances"
+                                           data-ng-model="repoDetailCtrl.form.app.instances"
+                                           data-min="1"
+                                           data-required="required">
+                                    <p class="error-info help-info-bottom"
+                                       data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine">
+                                        <small>容器个数不小于 1</small>
+                                    </p>
 
-                                        <p class="error-info help-info-bottom"
-                                           data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
-                                            <small>容器个数不能为空</small>
-                                        </p>
-                                    </md-input-container>
+                                    <p class="error-info help-info-bottom"
+                                       data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
+                                        <small>容器个数不能为空</small>
+                                    </p>
                                 </div>
                                 <div flex></div>
                             </div>
