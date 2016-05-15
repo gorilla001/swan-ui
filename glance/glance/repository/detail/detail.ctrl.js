@@ -26,36 +26,6 @@
         self.tags = [];
         self.clusters = [];
         self.questions = [];
-        self.containerConfig = {
-            cpu: {
-                min: 1,
-                max: 10,
-                options: {
-                    step: 1,
-                    floor: 1,
-                    ceil: 10,
-                    showSelectionBar: true,
-                    translate: function (value) {
-                        return self.form.app.cpus = value / 10.0;
-                    }
-                }
-            },
-            mem: {
-                min: 4,
-                max: 12,
-                options: {
-                    step: 1,
-                    floor: 4,
-                    ceil: 12,
-                    showSelectionBar: true,
-                    translate: function (value) {
-                        return self.form.app.mem = Math.pow(2, value);
-                    }
-                }
-            }
-        };
-        self.cpuSlideValue = self.form.app.cpus * 10;
-        self.memSlideValue = Math.log(self.form.app.mem) / Math.LN2;
         self.deploy = deploy;
 
         activate();
