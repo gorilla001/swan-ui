@@ -24,6 +24,7 @@
             appname: alarm.appname
         };
         self.submit = submit;
+        self.getAppList= getAppList;
 
         ////
 
@@ -31,7 +32,6 @@
 
         function activate() {
             listCluster();
-            getAppList()
         }
 
         function listCluster() {

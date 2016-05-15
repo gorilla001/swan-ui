@@ -1,97 +1,120 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">新建日志告警</h1>
-    </div>
-</div>
-<section>
-    <div class="main-container">
-        <div class="main-container-body">
-            <form class="form-horizontal" name="logwarningForm">
-                <div class="form-group" data-ng-if="createLogWarningCtrl.target === 'update'">
-                    <label class="col-md-2 control-label">应用名称</label>
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" name="appName"
-                               data-ng-model="createLogWarningCtrl.form.appname" data-ng-disabled="true">
+<div class="main-container app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>新建日志告警策略</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+        <div class="main-content">
+            <form name="logwarningForm">
+                <div layout="row" layout-align="end start" class="form-group form-group-input"
+                     data-ng-if="createLogWarningCtrl.target === 'update'">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input" aria-label="updateapp"
+                                   data-ng-model="createLogWarningCtrl.form.appname" data-ng-disabled="true">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group" data-ng-if="createLogWarningCtrl.target === 'create'">
-                    <label class="col-md-2 control-label">应用名称</label>
-                    <div class="col-md-5">
-                        <select class="form-control"
-                                data-ng-options="app as app.name for app in createLogWarningCtrl.apps"
-                                data-ng-model="createLogWarningCtrl.app"
-                                data-required="required">
-                            <option value="">---请选择应用---</option>
-                        </select>
-                    </div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">监控关键字</label>
-                    <div class="col-md-5"
-                        data-ng-class="{ 'has-error' : logwarningForm.keyword.$invalid && !logwarningForm.keyword.$pristine}">
-                        <input type="text" class="form-control" name="keyword" placeholder="多个关键字用 , 分隔"
-                               data-ng-model="createLogWarningCtrl.form.keyword"
-                               data-required="required">
+                <div layout="row" layout-align="end start" class="form-group form-group-select"
+                     data-ng-if="createLogWarningCtrl.target === 'create'">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <md-select data-ng-model="createLogWarningCtrl.app"
+                                       data-required="required" aria-label="createapp"
+                                       md-on-open="createLogWarningCtrl.getAppList()">
+                                <md-option ng-repeat="app in createLogWarningCtrl.apps" ng-value="app">{/app.name/}</md-option>
+                            </md-select>
+                        </div>
                     </div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">监控周期</label>
-                    <div class="col-md-2" 
-                        data-ng-class="{ 'has-error' : logwarningForm.interval.$invalid && !logwarningForm.interval.$pristine}">
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="interval" placeholder="监控周期"
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">监控关键字</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <input type="text" class="form-input" name="keyword"
+                                   placeholder="多个关键字用 , 分隔"
+                                   data-ng-model="createLogWarningCtrl.form.keyword"
+                                   data-required="required">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">监控周期</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input" name="interval"
                                    data-ng-model="createLogWarningCtrl.form.interval"
                                    data-required="required" integer
                                    max="255" min="1">
-                            <span class="input-group-addon" id="duration">分钟</span>
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="logwarningForm.interval.$error.max && !logwarningForm.interval.$pristine">
+                            <small>最大值不得超过 255</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="logwarningForm.interval.$error.min && !logwarningForm.interval.$pristine">
+                            <small>最小值不得低于 1</small>
+                        </p>
+                    </div>
+                    <div flex><span class="form-input-addon">分钟</span></div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">出现次数</label>
+                    <div flex="50" layout="column">
+                        <div flex="25">
+                            <input type="number" class="form-input" name="gtnum"
+                                   data-ng-model="createLogWarningCtrl.form.gtnum" min="0" integer
+                                   data-required="required">
                         </div>
                     </div>
-                    <div data-ng-class="{ 'has-error' : logwarningForm.interval.$invalid && !logwarningForm.interval.$pristine}">
-                        <p data-ng-show="logwarningForm.interval.$error.max && !logwarningForm.interval.$pristine"
-                           class="help-block">最大值不得超过 255</p>
-                        <p data-ng-show="logwarningForm.interval.$error.min && !logwarningForm.interval.$pristine"
-                           class="help-block">最小值不得低于 1</p>
-                    </div>
+                    <div flex><span class="form-input-addon">次数</span></div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">出现次数</label>
-                    <div class="col-md-2"
-                        data-ng-class="{ 'has-error' : logwarningForm.gtnum.$invalid && !logwarningForm.gtnum.$pristine}">
-                        <input type="number" class="form-control" name="gtnum" placeholder="出现次数"
-                               data-ng-model="createLogWarningCtrl.form.gtnum" min="0" integer
-                               data-required="required">
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">告警联系人</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <input type="text" class="form-input" name="emails"
+                                   data-required="required" data-ng-model="createLogWarningCtrl.form.emails">
+                        </div>
+                        <p class="help-info-bottom">mail1@123.com, mail2@123.com, ...</p>
                     </div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-2 control-label">告警联系人</label>
-                    <div class="col-md-5"
-                        data-ng-class="{ 'has-error' : logwarningForm.emails.$invalid && !logwarningForm.emails.$pristine}">
-                        <input type="text" class="form-control" placeholder="mail1@123.com; mail2@123.com, ..."
-                               name="emails"
-                               data-required="required" data-ng-model="createLogWarningCtrl.form.emails">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-5" data-ng-if="createLogWarningCtrl.target === 'create'">
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createLogWarningCtrl.submit()"
-                                data-ng-disabled="logwarningForm.$invalid">创 建
-                        </button>
-                    </div>
-
-                    <div class="col-md-offset-2 col-md-5" data-ng-if="createLogWarningCtrl.target === 'update'">
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createLogWarningCtrl.submit()"
-                                data-ng-disabled="logwarningForm.$invalid">更 新
-                        </button>
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15" layout="row" layout-align="end end">
+                        <md-button class="md-raised md-primary"
+                                   data-ng-if="createLogWarningCtrl.target === 'create'"
+                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-disabled="logwarningForm.$invalid">创 建</md-button>
+                        <md-button class="md-raised md-primary"
+                                   data-ng-if="createLogWarningCtrl.target === 'update'"
+                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-disabled="logwarningForm.$invalid">更 新</md-button>
                     </div>
                 </div>
             </form>
         </div>
-    </div>
-</section>
+
+        <footer></footer>
+        <section>
+        </section>
+    </section>
+</div>
