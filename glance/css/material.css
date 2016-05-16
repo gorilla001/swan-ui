@@ -548,7 +548,9 @@ dl.list-dl-row dt:after {
 #dashboard .fold-panel {
     height: 200px;
 }
-
+#dashboard .dropShow {
+    height: auto;
+}
 .cluster-charts-panel .charts-panel {
     height: 135px;
     margin: 0 auto 15px auto;
@@ -560,7 +562,7 @@ dl.list-dl-row dt:after {
     border: 1px solid #D9E3EB;
     border-radius: 17px;
     font-size: 12px;
-    height: 32px;
+    height: 36px;
     margin: 0 auto;
     text-align: center;
     width: 133px;
