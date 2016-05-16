@@ -107,9 +107,20 @@
                                ng-hide="rootCtrl.noticeNav.isOpenNav()">
                         <i class="fa fa-bell"></i>
                     </md-button>
-                    <md-button class="md-icon-button" aria-label="More" data-ui-sref="user.groups">
-                        <i class="fa fa-user"></i>
-                    </md-button>
+                    <md-menu>
+                        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+                            <i class="fa fa-user"></i>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button data-ui-sref="user.groups">用户中心</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button data-ng-click="rootCtrl.logout()">退出</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+
                 </div>
             </md-toolbar>
         </nav>
