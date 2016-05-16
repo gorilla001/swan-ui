@@ -771,3 +771,16 @@ dl.list-dl-row dt:after {
     box-shadow: none;
     color: #333;
 }
+
+/*home -> liugeng*/
+#dashboard .info h2 {
+    width: 100%;
+}
+#dashboard  div.charts-panel {
+    background-color: #ecf2f6 ;
+}
+
+#dashboard div[ng-repeat="appMon in cluster.appMonitors"] {
+    margin-top: 10px;
+}
+/*home -> liugeng*/
