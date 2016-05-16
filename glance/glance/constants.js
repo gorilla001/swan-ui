@@ -200,10 +200,40 @@ WARNING_RULE = {
 STACK_STATUS = {
     pending: '未部署',
     deploying: '部署中',
-    deploy_failed: '部署失败',
+    deploy_fail: '部署失败',
     running: '正常',
     stopped: '已停止',
     unhealthy: '故障'
+};
+
+STACK_DEFAULT = {
+    DockerCompose: 'mysql:\n' +
+    '  image:  devregistry.dataman-inc.com:5000/library/mysql\n' +
+    '  restart: always\n' +
+    '  ports:\n' +
+    '    - "3306:3306"\n' +
+    '  environment:\n' +
+    '    MYSQL_ROOT_PASSWORD: foobar\n' +
+    'wordpress:\n' +
+    '  image:  devregistry.dataman-inc.com:5000/library/wordpress\n' +
+    '  restart: always\n' +
+    '  ports:\n' +
+    '    - "80:80"\n' +
+    '  environment:\n' +
+    '    WORDPRESS_DB_HOST: mysql:3306\n' +
+    '    WORDPRESS_DB_USER: root\n' +
+    '    WORDPRESS_DB_PASSWORD: foobar\n' +
+    '  links:\n' +
+    '    - mysql:mysql\n',
+    SryunCompose: 'mysql:\n' +
+    '  cpu: 0.1\n' +
+    '  mem: 168\n' +
+    '  instances: 2\n' +
+    '\n' +
+    'wordpress:\n' +
+    '  cpu: 0.1\n' +
+    '  mem: 168\n' +
+    '  instances: 2'
 };
 
 BACKEND_URL = {
@@ -313,6 +343,7 @@ BACKEND_URL = {
         stacks: 'api/v3/clusters/$cluster_id/stacks',
         stack: 'api/v3/clusters/$cluster_id/stacks/$stack_id',
         deploy: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deploy',
-        deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key'
+        deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key',
+        sse: 'api/v3/stacks/deployment_process'
     }
 };
