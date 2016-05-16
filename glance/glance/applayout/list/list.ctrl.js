@@ -5,8 +5,9 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl(data, layoutBackend, clusters, layoutCurd, appservice) {
+    function LayoutListCtrl($rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
         var self = this;
+        var events = undefined;
 
         self.clusterNameMap = listClusterMap(clusters);
         self.stacks = data.Stacks;
@@ -22,6 +23,51 @@
         self.deleteApp = deleteApp;
         self.undoApp = undoApp;
         self.updateContainer = updateContainer;
+
+        activate();
+
+        $scope.$on('$destroy', function() {
+            if(events) {
+                events.close();
+                events = undefined;
+            }
+        });
+
+        function activate() {
+            Stream(function (data) {
+                for(var i=0; i < self.stacks.length; i++) {
+                    var value = self.stacks[i];
+                    if(value.Id === data.stackId && value.md5 !== data.md5) {
+                        value.status = data.status;
+                        value.md5 = data.md5;
+                        value.deploymentMessage = data.deploymentMessage;
+                        $scope.$digest();
+                        break;
+                    }
+                }
+            });
+        }
+
+        function Stream(_callback) {
+            var callback = _callback;
+            var url = utils.buildFullURL("stack.sse")
+                + '?authorization=' + $rootScope.token;
+
+            events = new EventSource(url);
+            events.addEventListener("deployment_process", function(event) {
+                if (callback !== undefined) {
+                    callback(JSON.parse(event.data));
+                }
+            });
+            events.onerror = function (event) {
+                callback = undefined;
+                if (events !== undefined) {
+                    events.close();
+                    events = undefined;
+                }
+                console.log('applayout event stream closed due to error.', event);
+            };
+        }
 
         function showTableData(clusterId, stackId) {
             if (!self.openFlag[stackId]) {

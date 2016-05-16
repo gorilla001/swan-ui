@@ -10,12 +10,17 @@
 
         self.form = {
             name: stack.name || "",
-            marathonConfig: stack.marathonConfig || "",
-            compose: stack.compose || ""
+            marathonConfig: stack.marathonConfig || STACK_DEFAULT.SryunCompose || "",
+            compose: stack.compose || STACK_DEFAULT.DockerCompose || ""
+        };
+        self.errorInfo = {
+            compose: '',
+            marathonConfig: ''
         };
         self.listClusters = listClusters;
         self.create = create;
         self.update = update;
+        self.checkYaml = checkYaml;
 
         activate();
 
@@ -54,6 +59,17 @@
                             $state.go('layout.list')
                         });
                 })
+        }
+
+        function checkYaml(name) {
+            try {
+                var doc = jsyaml.load(self.form[name]);
+                self.errorInfo[name] = '';
+                return true;
+            } catch (err) {
+                self.errorInfo[name] = err.message;
+                return false;
+            }
         }
     }
 })();

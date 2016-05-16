@@ -43,13 +43,19 @@
                 </div>
 
                 <div layout="row" layout-align="end start" class="form-group form-group-textarea">
-                    <label flex="15">数人云 Compose</label>
+                    <label flex="15">Docker Compose</label>
                     <div flex="50" layout="column">
                         <div layout="row"
-                             data-ng-class="{ 'has-error' : createApp.sryunCompose.$invalid && !createApp.sryunCompose.$pristine }">
-                            <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
-                                      data-required="required" name="sryunCompose"></textarea>
+                             data-ng-class="{ 'has-error' : createApp.dockerCompose.$invalid || layoutCreateCtrl.checkYaml('compose') }">
+                            <textarea data-ng-model="layoutCreateCtrl.form.compose"
+                                      data-required="required" name="dockerCompose"></textarea>
                         </div>
+                        <p class="help-info-bottom error-info" data-ng-show="createApp.dockerCompose.$invalid">
+                            不能为空
+                        </p>
+                        <p class="help-info-bottom error-info" data-ng-show="layoutCreateCtrl.errorInfo.compose">
+                            {/layoutCreateCtrl.errorInfo.compose/}
+                        </p>
                         <p class="help-info-bottom">
                             <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
@@ -58,13 +64,19 @@
                 </div>
 
                 <div layout="row" layout-align="end start" class="form-group form-group-textarea">
-                    <label flex="15">Docker Compose</label>
+                    <label flex="15">数人云 Compose</label>
                     <div flex="50" layout="column">
                         <div layout="row"
-                             data-ng-class="{ 'has-error' : createApp.dockerCompose.$invalid && !createApp.dockerCompose.$pristine }">
-                            <textarea data-ng-model="layoutCreateCtrl.form.compose"
-                                      data-required="required" name="dockerCompose"></textarea>
+                             data-ng-class="{ 'has-error' : createApp.sryunCompose.$invalid || layoutCreateCtrl.checkYaml('marathonConfig') }">
+                            <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
+                                      data-required="required" name="sryunCompose"></textarea>
                         </div>
+                        <p class="help-info-bottom error-info" data-ng-show="createApp.sryunCompose.$invalid">
+                            不能为空
+                        </p>
+                        <p class="help-info-bottom error-info" data-ng-show="layoutCreateCtrl.errorInfo.marathonConfig">
+                            {/layoutCreateCtrl.errorInfo.marathonConfig/}
+                        </p>
                         <p class="help-info-bottom">
                             <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
@@ -75,12 +87,12 @@
                 <div layout="row" class="form-footer-button">
                     <div flex-offset="15" layout="row" layout-align="end end">
                         <md-button class="md-raised md-primary" data-ng-if="layoutCreateCtrl.target === 'create'"
-                                   data-ng-disabled="createApp.$invalid" data-demo-disable
+                                   data-ng-disabled="createApp.$invalid || layoutCreateCtrl.errorInfo.compose || layoutCreateCtrl.errorInfo.marathonConfig" data-demo-disable
                                    data-ng-click="layoutCreateCtrl.create()">
                             确认
                         </md-button>
                         <md-button class="md-raised md-primary" data-ng-if="layoutCreateCtrl.target === 'update'"
-                                   data-ng-disabled="createApp.$invalid" data-demo-disable
+                                   data-ng-disabled="createApp.$invalid || layoutCreateCtrl.errorInfo.compose || layoutCreateCtrl.errorInfo.marathonConfig" data-demo-disable
                                    data-ng-click="layoutCreateCtrl.update()">
                             确认
                         </md-button>

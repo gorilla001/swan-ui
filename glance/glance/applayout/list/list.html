@@ -24,6 +24,8 @@
                                 <dt>所属集群</dt>
                                 <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
                                 </dd>
+                                <dt data-ng-show="stack.deploymentMessage">部署信息</dt>
+                                <dd data-ng-show="stack.deploymentMessage">{/stack.deploymentMessage/}</dd>
                             </dl>
                         </div>
                         <div layout-align="end center" class="operation">
