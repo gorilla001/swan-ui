@@ -92,7 +92,7 @@
 
                 appWarningBackend.createWarning(self.form)
                     .then(function (data) {
-                        $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
+                        $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
                     }, function (res) {
                         self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
                     })
@@ -103,7 +103,7 @@
                 warningCurd.updateTask(self.form)
                     .then(function (data) {
                         Notification.success("更新成功");
-                        $state.go('policy.appwarning.warninglist', {per_page: 20, page: 1})
+                        $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1})
                     }, function (res) {
                         self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
                     });

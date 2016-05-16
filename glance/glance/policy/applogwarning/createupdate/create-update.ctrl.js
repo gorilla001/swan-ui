@@ -64,14 +64,14 @@
                 logWarningBackend.createLogPolicy(self.form)
                     .then(function (data) {
                         Notification.success('日志告警创建成功');
-                        $state.go('policy.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
+                        $state.go('policy.tab.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
                     })
             } else {
                 self.form.id = parseInt(alarm.id);
                 logWarningBackend.updateLogPolicy(self.form)
                     .then(function (data) {
                         Notification.success('日志告警更新成功');
-                        $state.go('policy.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
+                        $state.go('policy.tab.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
                     });
             }
         }
