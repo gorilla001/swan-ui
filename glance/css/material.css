@@ -106,7 +106,8 @@ ul, li, dt, dd, dl {
 }
 
 .main-container {
-    overflow-y: scroll;
+    overflow-y: auto;
+    width: 100%;
 }
 
 /* md-table*/
