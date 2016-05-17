@@ -51,7 +51,7 @@
         function Stream(_callback) {
             var callback = _callback;
             var url = utils.buildFullURL("stack.sse")
-                + '?Authorization=' + $rootScope.token;
+                + '?authorization=' + $rootScope.token;
 
             events = new EventSource(url);
             events.addEventListener("deployment_process", function(event) {
