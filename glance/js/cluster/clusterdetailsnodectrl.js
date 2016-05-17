@@ -15,7 +15,7 @@ function clusterNodesCtrl($scope, mdTable, $mdDialog, addLabelModal, $stateParam
         $state.reload("cluster.clusterdetails");
     };
 
-    $scope.deleteNodes = function (nodes) {
+    $scope.deleteNodes = function (nodes, ev) {
         var toast = "您确定要移除主机吗？";
         var nodeIds = [];
 
@@ -26,7 +26,7 @@ function clusterNodesCtrl($scope, mdTable, $mdDialog, addLabelModal, $stateParam
             }
         }
 
-        confirmModal.open(toast).then(function () {
+        confirmModal.open(toast, ev).then(function () {
             gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data':nodeIds}).then(function () {
                 $state.reload("cluster.clusterdetails");
             });
