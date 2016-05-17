@@ -46,9 +46,13 @@
                     <label flex="15">Docker Compose</label>
                     <div flex="50" layout="column">
                         <div layout="row"
-                             data-ng-class="{ 'has-error' : createApp.dockerCompose.$invalid || layoutCreateCtrl.checkYaml('compose') }">
-                            <textarea data-ng-model="layoutCreateCtrl.form.compose"
-                                      data-required="required" name="dockerCompose"></textarea>
+                             data-ng-class="{ 'has-error' : createApp.dockerCompose.$invalid || layoutCreateCtrl.errorInfo.compose }">
+                            <div class="CodeMirror-container">
+                                <textarea data-ng-model="layoutCreateCtrl.form.compose"
+                                          data-required="required" name="dockerCompose"
+                                          ui-codemirror ui-codemirror-opts="layoutCreateCtrl.editorOptions"
+                                          data-ng-change="layoutCreateCtrl.onChangeYaml('compose')"></textarea>
+                            </div>
                         </div>
                         <p class="help-info-bottom error-info" data-ng-show="createApp.dockerCompose.$invalid">
                             不能为空
@@ -56,8 +60,10 @@
                         <p class="help-info-bottom error-info" data-ng-show="layoutCreateCtrl.errorInfo.compose">
                             {/layoutCreateCtrl.errorInfo.compose/}
                         </p>
-                        <p class="help-info-bottom">
-                            <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
+                        <p class="help-info-bottom" data-ng-if="layoutCreateCtrl.supportReadFile">
+                            <input id="dockerFileInput" name="file" type="file" class="ng-hide"
+                                   accept="text/plain" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('docker', this.files)">
+                            <md-button class="md-primary" trigger-prev-click><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
                     </div>
                     <div flex></div>
@@ -67,9 +73,13 @@
                     <label flex="15">数人云 Compose</label>
                     <div flex="50" layout="column">
                         <div layout="row"
-                             data-ng-class="{ 'has-error' : createApp.sryunCompose.$invalid || layoutCreateCtrl.checkYaml('marathonConfig') }">
-                            <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
-                                      data-required="required" name="sryunCompose"></textarea>
+                             data-ng-class="{ 'has-error' : createApp.sryunCompose.$invalid || layoutCreateCtrl.errorInfo.marathonConfig }">
+                            <div class="CodeMirror-container">
+                                <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
+                                          data-required="required" name="sryunCompose"
+                                          ui-codemirror ui-codemirror-opts="layoutCreateCtrl.editorOptions"
+                                          data-ng-change="layoutCreateCtrl.onChangeYaml('marathonConfig')"></textarea>
+                            </div>
                         </div>
                         <p class="help-info-bottom error-info" data-ng-show="createApp.sryunCompose.$invalid">
                             不能为空
@@ -77,8 +87,10 @@
                         <p class="help-info-bottom error-info" data-ng-show="layoutCreateCtrl.errorInfo.marathonConfig">
                             {/layoutCreateCtrl.errorInfo.marathonConfig/}
                         </p>
-                        <p class="help-info-bottom">
-                            <md-button class="md-primary"><i class="fa fa-upload"></i> 从文件中读取</md-button>
+                        <p class="help-info-bottom" data-ng-if="layoutCreateCtrl.supportReadFile">
+                            <input id="sryFileInput" name="file" type="file" class="ng-hide"
+                                   accept="text/plain" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('sry', this.files)">
+                            <md-button class="md-primary" trigger-prev-click><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
                     </div>
                     <div flex></div>

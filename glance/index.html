@@ -22,6 +22,8 @@
     <link rel="stylesheet" type="text/css" href="bower_components/angular-material-data-table/dist/md-data-table.css">
     <link rel="stylesheet" type="text/css" href="bower_components/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" type="text/css" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/theme/midnight.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/shurenyun.css">
     <link rel="stylesheet" type="text/css" href="css/material.css">
@@ -155,12 +157,15 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
 <script src="bower_components/loaders.css/loaders.css.js" type="text/javascript"></script>
 <script src="bower_components/js-yaml/dist/js-yaml.min.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="bower_components/codemirror/mode/yaml/yaml.js"></script>
 <!--endbuild-->
 
 <!--build:js js/angular.js-->
 <script src="bower_components/angular/angular.js" type="text/javascript"></script>
 <script src="bower_components/angular-cookies/angular-cookies.js" type="text/javascript"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+<script type="text/javascript" src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
 <script src="bower_components/angular-aria/angular-aria.js" type="text/javascript"></script>
 <script src="bower_components/angular-material/angular-material.js" type="text/javascript"></script>
@@ -341,6 +346,7 @@
 <script src="glance/directives/dm-dynamic-field.directive.js" type="text/javascript"></script>
 <script src="glance/directives/positive-integer.directive.js" type="text/javascript"></script>
 <script src="glance/directives/dm-tab-sref.directive.js" type="text/javascript"></script>
+<script src="glance/directives/dm-trigger-prev-click.directive.js" type="text/javascript"></script>
 <script src="glance/glance.run.js" type="text/javascript"></script>
 <script src="glance/rootctrl.js" type="text/javascript"></script>
 <!--endbuild-->
