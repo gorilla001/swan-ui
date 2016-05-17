@@ -1,11 +1,9 @@
 <md-tabs md-dynamic-height md-border-bottom>
-    <md-tab label="策略" data-ui-sref="policy.tab.applogwarning.loglist"
-            md-active="$state.includes('policy.tab.applogwarning.loglist')">
+    <md-tab label="策略" dm-tab-sref="policy.tab.applogwarning.loglist">
         <md-content class="md-padding main-tab-content" data-ui-view="list">
         </md-content>
     </md-tab>
-    <md-tab label="信息" data-ui-sref="policy.tab.applogwarning.logevent"
-            md-active="$state.includes('policy.tab.applogwarning.logevent')">
+    <md-tab label="信息" dm-tab-sref="policy.tab.applogwarning.logevent">
         <md-content class="md-padding main-tab-content" data-ui-view="event">
         </md-content>
     </md-tab>
