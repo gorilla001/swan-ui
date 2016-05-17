@@ -1,72 +1,56 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">集群详情</h1>
-        <a data-ui-sref="cluster.createcluster" class="btn btn-success" data-demo-disable="left">新建集群</a>
-    </div>
-</div>
-<ol class="breadcrumb">
-  <li>
-  <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>集群详情</li>
-</ol>
-
-<section class="cluster-detail">
-    <div class="main-container cluster-title">
-        <div class="main-container-body">
-            <h3>
-                {/cluster.name/}
-                <small>主机数量: {/cluster.nodes.length/}</small>
-                &nbsp;&nbsp;&nbsp;
-                <small>用户组：{/cluster.group_name/}</small>
-                &nbsp;&nbsp;&nbsp;
-                <small data-ng-show="cluster.nodes.length">
-                  集群状态：<span data-ng-class="clusterStatusTextClass">
-                    {/clusterStatusText/}
-                  </span>
-                </small>
-            </h3>
-            <div class="btn-group btn-group-toggle">
-                <button type="button"
-                  class="btn btn-default dropdown-toggle"
-                  data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right">
-                    <li>
-                        <a data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable
-                            data-dm-permit-click="1" 
-                            data-dm-role="cluster.group_role"
-                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">编辑集群</a>
-                    </li>
-                    <li>
-                        <a href="#" data-toggle="modal"  data-target="#deleteClusterConfirm" data-demo-disable
-                            data-dm-permit-click="1" 
-                            data-dm-role="cluster.group_role"
-                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除集群</a>
-                    </li>
-                </ul>
+<div class="main-content app-layout">
+<section class="main-section">
+    <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>{/cluster.name/}</h2>
+                <dl>
+                    <dt>主机数量:</dt>
+                    <dd>{/cluster.nodes.length/}</dd>
+                    <dt>用户组:</dt>
+                    <dd>{/cluster.group_name/}</dd>
+                    <dt>集群状态:</dt>
+                    <dd>{/clusterStatusText/}</dd>
+                </dl>
+                </dl>
             </div>
-        </div>
-    </div>
-
-    <div class="main-container">
-        <header class="clearfix main-container-header" data-ng-show="cluster.nodes.length">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" ui-sref-active="active"">
-                    <a data-ui-sref="cluster.clusterdetails.nodes" aria-controls="home" role="tab">
-                        主机列表
-                      </a>
-                </li>
-                <li role="presentation" ui-sref-active="active"">
-                    <a data-ui-sref="cluster.clusterdetails.monitoring" aria-controls="configuration" role="tab">
-                        集群监控
-                    </a>
-                </li>
-            </ul>
+            <div layout-align="end center" class="operation">
+                <md-fab-speed-dial md-open="false" md-direction="left"
+                                   class="md-scale">
+                    <md-fab-trigger>
+                        <md-button aria-label="menu" class="md-fab md-primary">
+                            菜单
+                        </md-button>
+                    </md-fab-trigger>
+                    <md-fab-actions>
+                        <md-button class="md-raised" 
+                                   data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable
+                                   data-dm-permit-click="1"
+                                   data-dm-role="cluster.group_role"
+                                   data-dm-permit-msg="FRONTEND_MSG.no_group_admin"> 
+                           编辑集群 
+                        </md-button>
+                        <md-button class="md-raised" 
+                                   data-toggle="modal"
+                                   data-target="#deleteClusterConfirm"
+                                   data-dm-permit-click="1"
+                                   data-dm-role="cluster.group_role"
+                                   data-dm-permit-msg="FRONTEND_MSG.no_group_admin"> 
+                           删除集群 
+                        </md-button>
+                    </md-fab-actions>
+                </md-fab-speed-dial>
+            </div>
         </header>
-        <div data-ui-view="cluster"></div>
-    </div>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="主机列表" data-ui-sref="cluster.clusterdetails.nodes" md-active="$state.includes('cluster.clusterdetails.nodes')">
+                <md-content class="md-padding main-tab-content" ui-view="cluster">
+            </md-tab>
+            <md-tab label="集群监控" data-ui-sref="cluster.clusterdetails.monitoring" md-active="$state.includes('cluster.clusterdetails.monitoring')">
+                <md-content class="md-padding main-tab-content" ui-view="cluster">
+            </md-tab>
+        </md-tabs>
+    </md-content>
 
     <div class="modal fade" id="deleteClusterConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -90,3 +74,4 @@
         </div>
     </div>
 </section>
+</div>
