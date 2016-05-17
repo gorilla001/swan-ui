@@ -2,6 +2,8 @@ function clusterMonitorCtrl($scope, $stateParams, glanceHttp, $timeout, Notifica
     $scope.showAppMetrics = false;
     var timeoutPromise;
 
+    $scope.dropStatus = false;
+
     $scope.getClusterMonitor = function () {
         if (!$scope.isDestroy){
             glanceHttp.ajaxGet(["metrics.getClusterMonitor", {cluster_id: $stateParams.clusterId}], function (data) {
@@ -18,6 +20,9 @@ function clusterMonitorCtrl($scope, $stateParams, glanceHttp, $timeout, Notifica
                     $scope.cpuTotal = $scope.clusterMonitors.masMetrics.cpuTotal;
                     $scope.memTotal = $scope.clusterMonitors.masMetrics.memTotal;
                     $scope.showAppMetrics = true;
+
+                    // Set app pull bar.
+                    angular.element(document).find('.mCustomScrollbar').mCustomScrollbar();
                 }
                 timeoutPromise = $timeout($scope.getClusterMonitor, 3000);
                 
@@ -36,6 +41,9 @@ function clusterMonitorCtrl($scope, $stateParams, glanceHttp, $timeout, Notifica
         $scope.isDestroy = true;
         $timeout.cancel(timeoutPromise);
     });
+    $scope.dropShow = function() {
+            $scope.dropStatus = !$scope.dropStatus;
+        }
 }
 
 clusterMonitorCtrl.$inject = ['$scope', '$stateParams', 'glanceHttp', '$timeout', 'Notification'];
