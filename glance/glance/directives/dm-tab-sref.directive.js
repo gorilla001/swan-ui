@@ -14,7 +14,6 @@
         function link(scope, elem, attrs, tabsCtrl) {
             var sref = attrs['dmTabSref'];
             var index = elem.index();
-            console.log(index)
             if (!tabsCtrl.srefs) {
                 tabsCtrl.srefs = [];
             }
@@ -33,7 +32,7 @@
             
             scope.$on('$stateChangeSuccess',
                     function (event, toState, toParams, fromState, fromParams) {
-                        if (toState.name === sref) {
+                        if ($state.includes(sref)) {
                             $mdUtil.nextTick(function () {
                                 tabsCtrl.oldSelect(index);
                             });
