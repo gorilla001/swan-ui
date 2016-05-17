@@ -173,12 +173,18 @@ glanceApp.directive('samename', function () {
         },
         link: function (scope, ele, attrs, ngModelController) {
             ngModelController.$validators.samename = function(modelValue, viewValue) {
+                var list;
                 if (ngModelController.$isEmpty(modelValue)) {
                     // consider empty models to be valid
                     return true;
                 }
 
-                if (scope.names.indexOf(modelValue) == -1) {
+                if(angular.isFunction(scope.names)){
+                    list = scope.names();
+                }else{
+                    list = scope.names;
+                }
+                if (list.indexOf(modelValue) == -1) {
                     // it is valid
                     return true;
                 }

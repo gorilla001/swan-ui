@@ -12,8 +12,6 @@
         'multiSelectConfig',
         'clusterBackendService',
         'appLabelService',
-        'createAppPortModal',
-        'formModal',
         '$state',
         'target',
         'app',
@@ -28,8 +26,6 @@
                            multiSelectConfig,
                            clusterBackendService,
                            appLabelService,
-                           createAppPortModal,
-                           formModal,
                            $state,
                            target,
                            app,
@@ -97,6 +93,8 @@
         self.appNames = [];
         self.clusters = [];
         self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
+        self.showAdvanceContent = false;
+
         listApps();
         listClusters();
 
@@ -115,6 +113,10 @@
 
         self.refresClusterData = refresClusterData;
         self.openImageModal = openImageModal;
+        self.listPath = listPath;
+        self.listAppPort = listAppPort;
+        self.listEnvs = listEnvs;
+        self.listLogPath = listLogPath;
 
         function refresClusterData(cluster_id, app_id) {
             if (!cluster_id) {
@@ -139,7 +141,7 @@
                         self.isNetworkDisable = true;
                         self.isDockerArgDisable = true;
                         self.form.parameters = [];
-                    } else if (target === 'create'){
+                    } else if (target === 'create') {
                         self.isNetworkDisable = false;
                         self.isDockerArgDisable = false;
                     }
@@ -183,103 +185,91 @@
             setTick(self.multiSelect.selectedNodes, undefined);
         };
 
-        // 挂载点
-        self.openVolumeModule = function () {
-            formModal.open('/glance/application/createupdate/modals/create-volume.html').then(function (volume) {
-                if (isDisableAddList(volume, self.form.volumes, ['containerPath'])) {
-                    Notification.error('无法映射主机的多个目录到同一个容器目录');
-                } else {
-                    self.form.volumes.push(volume);
+        // new 挂载点
+        function listPath() {
+            var path = self.form.volumes.map(function (item) {
+                if (item.containerPath) {
+                    return item.containerPath
                 }
-            })
-        };
+            });
 
-        //docker arg module
-        self.openDockerArg = function(){
-            if(self.isDockerArgDisable){
+            return path
+        }
+
+        // new 应用地址
+        function listAppPort() {
+            var appPort = self.form.portMappings.map(function (item) {
+                if (item.mapPort) {
+                    return item.mapPort
+                }
+            });
+
+            return appPort
+        }
+
+        // new 环境变量
+        function listEnvs() {
+            var env = self.form.envs.map(function (item) {
+                if (item.key) {
+                    return item.key
+                }
+            });
+
+            return env
+        }
+
+        //new 日志目录
+        function listLogPath() {
+            var logPath = self.form.logPaths.map(function (item) {
+                if (item.path) {
+                    return item.path
+                }
+            });
+
+            return logPath
+        }
+
+        self.addConfig = function (configName) {
+            if (!self.form.cluster_id) {
+                Notification.warning('没有选择集群，无法添加，请选择集群后重试');
+                return
+            }
+
+            if (self.isDockerArgDisable && configName === 'parameters') {
                 Notification.warning('共享集群不能添加 Docker 参数');
                 return
             }
-            formModal.open('/glance/application/createupdate/modals/create-docker-arg.html').then(function (dockerArg) {
-                if (isDisableAddList(dockerArg, self.form.parameters)) {
-                    Notification.error('Docker 环境变量添加失败');
-                } else {
-                    self.form.parameters.push(dockerArg);
+            var config = {
+                volumes: {
+                    hostPath: '',
+                    containerPath: ''
+                },
+                portMappings: {
+                    appPort: '',
+                    protocol: '',
+                    mapPort: '',
+                    type: 2,
+                    isUri: 0,
+                    uri: ""
+                },
+                envs: {
+                    key: '',
+                    value: ''
+                },
+                parameters: {
+                    key: '',
+                    value: ''
+                },
+                logPaths: {
+                    path: ''
                 }
-            })
+
+            };
+            self.form[configName].push(config[configName]);
         };
 
-
-        self.containerConfig = {
-            cpu: {
-                min: 1,
-                max: 10,
-                options: {
-                    step: 1,
-                    floor: 1,
-                    ceil: 10,
-                    showSelectionBar: true,
-                    translate: function (value) {
-                        return self.form.cpus = value / 10.0;
-                    }
-                }
-            },
-            mem: {
-                min: 4,
-                max: 12,
-                options: {
-                    step: 1,
-                    floor: 4,
-                    ceil: 12,
-                    showSelectionBar: true,
-                    translate: function (value) {
-                        return self.form.mem = Math.pow(2, value);
-                    }
-                }
-            }
-        };
-        self.cpuSlideValue = self.form.cpus * 10;
-        self.memSlideValue = Math.log(self.form.mem) / Math.LN2;
-
-        self.openPathModule = function () {
-            formModal.open('/glance/application/createupdate/modals/create-path.html').then(function (path) {
-                if (isDisableAddList(path, self.form.envs, ['key'])) {
-                    Notification.error('添加的环境变量的 KEY 不能重复');
-                } else {
-                    self.form.envs.push(path);
-                }
-            })
-        };
-
-        self.deleteConfig = function (index, key) {
-            self.form[key].splice(index, 1);
-        };
-
-        // // 应用地址
-
-        self.openPortModule = function () {
-            if (!self.form.cluster_id) {
-                Notification.warning('没有选择集群，无法添加应用地址，请选择集群后重试');
-                return
-            }
-            createAppPortModal.open(existPorts).then(function (portInfo) {
-                if (isDisableAddList(portInfo, self.form.portMappings, ['type', 'mapPort'])) {
-                    Notification.error('添加的应用地址已存在');
-                } else {
-                    self.form.portMappings.push(portInfo);
-                }
-            });
-        };
-
-        //日志路径
-        self.openLogPathModule = function () {
-            formModal.open('/glance/application/createupdate/modals/create-logpath.html', {dataName: 'path'}).then(function (path) {
-                if (isDisableAddList(path, self.form.logPaths)) {
-                    Notification.error('添加的日志路径不能重复');
-                } else {
-                    self.form.logPaths.push(path);
-                }
-            })
+        self.deleteConfig = function (index, configName) {
+            self.form[configName].splice(index, 1);
         };
 
         self.createApp = function () {
@@ -311,7 +301,7 @@
         }
 
         function listClusters() {
-            clusterCurd.listClusterLables().then(function(data){
+            clusterCurd.listClusterLables().then(function (data) {
                 self.clusters = data
             });
         }
@@ -335,28 +325,6 @@
             angular.forEach(items, function (item, index) {
                 item.tick = value;
             });
-        }
-
-        function isDisableAddList(info, infoArray, attrnames) {
-            function equal(info1, info2) {
-                if (attrnames) {
-                    for (var i = 0; i < attrnames.length; i++) {
-                        if (info1[attrnames[i]] != info2[attrnames[i]]) {
-                            return false;
-                        }
-                    }
-                    return true;
-                } else {
-                    return info1 === info2
-                }
-            }
-
-            for (var i = 0; i < infoArray.length; i++) {
-                if (equal(info, infoArray[i])) {
-                    return true;
-                }
-            }
-            return false;
         }
 
         function setConstraints() {

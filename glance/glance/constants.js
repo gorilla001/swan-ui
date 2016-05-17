@@ -23,6 +23,7 @@ CODE_MESSAGE = {
     14008: "应用更新已完成，回滚失败",
     14009: "环境变量命名错误",
     14011: "请求错误",
+    14016: "集群异常",
     15001: "数据库操作错误",
     15008: "project 不存在",
     15009: "image 不存在",
@@ -133,10 +134,10 @@ APP_EVENTS_TYPE = {
     FailureMessage: "部署失败消息"
 };
 
-APP_PROTOCOL_TYPE = {
-    "1": "TCP",
-    "2": "HTTP"
-};
+APP_PROTOCOL_TYPE = [
+    {value: 1, name: 'TCP'},
+    {value: 2, name: 'HTTP'}
+];
 
 SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",

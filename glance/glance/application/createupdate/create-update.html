@@ -1,504 +1,458 @@
-<div class="page-header">
-    <div data-ng-if="createAppCtrl.target==='create'">
-        <h1 class="pull-left">新建应用</h1>
-        <small>
-            <br>
-            <br>
-            <a href="http://v.youku.com/v_show/id_XMTM5MTI1NzY4MA" target="_blank">
-                如何新建一个应用
-            </a>
-        </small>
-    </div>
-    <div data-ng-if="createAppCtrl.target==='update'">
-        <h1 class="pull-left">应用更新</h1>
-    </div>
-</div>
-<ol class="breadcrumb" data-ng-if="createAppCtrl.target==='create'">
-    <li>
-        <a data-ui-sref="applist.my">应用管理</a>
-    </li>
-    <li>
-        新建应用
-    </li>
-</ol>
-<section>
-    <div class="main-container new-app">
-        <div class="main-container-body">
-            <form class="form-horizontal" name="staticForm">
-                <!-- 应用名称 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">
-                        <span class="text-danger" data-ng-if="createAppCtrl.target==='create'">* </span>
-                        应用名称
-                    </label>
+<div class="main-container">
+    <section class="main-section">
+        <header layout="row" layout-align="start center">
+            <h2 flex data-ng-if="createAppCtrl.target==='create'">新建应用</h2>
+            <h2 flex data-ng-if="createAppCtrl.target==='update'">应用更新</h2>
+        </header>
 
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
-                        <input type="text" class="form-control" name="appName"
-                               data-ng-model="createAppCtrl.form.name"
-                               data-required="required"
-                               data-ng-pattern="/^\S*$/"
-                               data-ng-maxlength="16"
-                               data-ng-trim="true"
-                               data-samename
-                               data-name-list="createAppCtrl.appNames"
-                               data-ng-disabled="createAppCtrl.target==='update'">
+        <div class="main-content">
+            <form name="staticForm">
+                <div layout="row" layout-align="start start" class="form-group form-group-input">
+                    <label flex="15">应用名称</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input" name="appName"
+                                   aria-label="appName"
+                                   data-ng-model="createAppCtrl.form.name"
+                                   data-required="required"
+                                   data-ng-pattern="/^\S*$/"
+                                   data-ng-maxlength="16"
+                                   data-ng-trim="true"
+                                   data-samename
+                                   data-name-list="createAppCtrl.appNames"
+                                   data-ng-disabled="createAppCtrl.target==='update'">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine">
+                            <small>应用名不能为空</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine">
+                            <small>应用名称不能包含空白符号</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.appName.$error.samename">
+                            <small>应用名已存在</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine">
+                            <small>最大长度 16 个字符</small>
+                        </p>
                     </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.appName.$invalid && !staticForm.appName.$pristine}">
-                        <p data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine"
-                           class="help-block">应用名不能为空</p>
-
-                        <p data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine"
-                           class="help-block">应用名称不能包含空白符号</p>
-
-                        <p data-ng-show="staticForm.appName.$error.samename"
-                           class="help-block">应用名已存在</p>
-
-                        <p data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine"
-                           class="help-block">最大长度 16 个字符</p>
-                    </div>
+                    <div flex></div>
                 </div>
 
-                <!-- 选择集群 -->
-                <div class="form-group" data-ng-if="createAppCtrl.target==='create'">
-                    <label class="col-md-2 control-label">
-                        <span class="text-danger">* </span>
-                        选择集群
-                    </label>
-                    <div class="col-md-5">
-                        <select class="form-control"
-                                data-ng-model="createAppCtrl.form.cluster_id"
-                                data-ng-options="cluster.id as cluster.name for cluster in createAppCtrl.clusters"
-                                data-required="required"
-                                data-ng-change="createAppCtrl.refresClusterData()"
-                        >
-                            <option value="">--- 选择应用将要运行在哪个集群上 ---</option>
-                        </select>
+                <div layout="row" layout-align="end center" class="form-group form-group-select"
+                     data-ng-if="createAppCtrl.target==='create'">
+                    <label flex="15">选择集群</label>
+                    <div flex="50" layout="column">
+                        <md-input-container>
+                            <md-select data-ng-model="createAppCtrl.form.cluster_id" data-required="required"
+                                       aria-label="selectCluster"
+                                       data-ng-change="createAppCtrl.refresClusterData()">
+                                <md-option ng-repeat="cluster in createAppCtrl.clusters" ng-value="cluster.id">
+                                    {/cluster.name/}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
+                    <div flex></div>
                 </div>
 
-                <div class="form-group" data-ng-if="createAppCtrl.target==='update'">
-                    <label class="col-md-2 control-label">所属集群</label>
-
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" name="clusterName"
-                               ng-model="createAppCtrl.clusterName" ng-disabled="true">
+                <div layout="row" layout-align="end center" class="form-group form-group-input"
+                     data-ng-if="createAppCtrl.target==='update'">
+                    <label flex="15">所属集群</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input" name="clusterName" aria-label="updateCluster"
+                                   ng-model="createAppCtrl.clusterName" ng-disabled="true">
+                        </div>
                     </div>
+                    <div flex></div>
                 </div>
 
-                <!-- 镜像地址 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">
-                        <span class="text-danger">* </span>
-                        镜像地址
-                    </label>
-
-                    <div class="col-md-5"
-                         data-ng-class="{ 'has-error' : staticForm.imageName.$invalid && !staticForm.imageName.$pristine}">
-                        <div class="input-group">
-                            <input type="text" class="form-control"
-                                   name="imageName"
+                <div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">镜像地址</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="imageName" aria-label="imageName"
                                    data-ng-model="createAppCtrl.form.imageName"
                                    data-required="required">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" data-ng-click="createAppCtrl.openImageModal()"><i
-                                    class="fa fa-wrench"></i></button>
-                        </span>
                         </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.imageName.$error.required && !staticForm.imageName.$pristine">
+                            <small>镜像地址不能为空</small>
+                        </p>
                     </div>
-                    <div data-ng-class="{ 'has-error' : staticForm.imageName.$invalid && !staticForm.imageName.$pristine}">
-                        <p data-ng-show="staticForm.imageName.$error.required && !staticForm.imageName.$pristine"
-                           class="help-block">镜像地址不能为空</p>
-                    </div>
-                </div>
-
-                <!-- 镜像版本 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger">* </span>镜像版本</label>
-
-                    <div class="col-md-5">
-                        <input type="text" class="form-control"
-                               name=imageVersion
-                               data-ng-model="createAppCtrl.form.imageVersion"
-                               data-required="required"
-                               placeholder="版本号"
-                        >
-                        <label style="margin-top: 12px; font-weight: normal;" uib-popover="每次重启应用都会获取最新镜像"
-                               popover-trigger="mouseenter" popover-placement="right">
-                            <input type="checkbox" data-ng-model="createAppCtrl.form.forceImage">
-                            强制拉取镜像
-                        </label>
-                    </div>
-
-                    <div data-ng-class="{ 'has-error' : staticForm.imageVersion.$invalid && !staticForm.imageVersion.$pristine}">
-                        <p data-ng-show="staticForm.imageVersion.$error.required && !staticForm.imageVersion.$pristine"
-                           class="help-block">镜像版本不能为空</p>
+                    <div flex flex-offset="5">
+                        <md-button class="md-icon-button md-accent" aria-label="openImageModal"
+                                   data-ng-click="createAppCtrl.openImageModal()">
+                            <i class="fa fa-plus"></i>
+                        </md-button>
                     </div>
                 </div>
 
-                <!-- 网络模式 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label"><span class="text-danger"
-                                                                data-ng-if="createAppCtrl.target == 'create'">* </span>网络模式</label>
+                <div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">镜像版本</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="imageVersion" aria-label="imageName"
+                                   data-ng-model="createAppCtrl.form.imageVersion"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.imageVersion.$error.required && !staticForm.imageVersion.$pristine">
+                            <small>镜像版本不能为空</small>
+                        </p>
+                    </div>
+                    <div flex flex-offset="5">
+                        <md-checkbox data-ng-model="createAppCtrl.form.forceImage">强制拉取镜像</md-checkbox>
+                    </div>
 
-                    <div class="col-md-5">
-                        <label class="checkbox-inline">
-                            <input type="radio"
-                                   ng-model="createAppCtrl.form.network"
-                                   value="BRIDGE"
-                                   data-required="required"
-                                   data-ng-disabled="createAppCtrl.isNetworkDisable">
-                            网桥模式
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="radio"
-                                   ng-model="createAppCtrl.form.network"
-                                   value="HOST"
-                                   data-required="required"
-                                   data-ng-disabled="createAppCtrl.isNetworkDisable">
-                            HOST 模式
-                        </label>
+                </div>
+
+                <div layout="row" layout-align="end center" class="form-group form-group-radio">
+                    <label flex="15">网络模式</label>
+                    <div flex="30" layout="column">
+                        <div flex>
+                            <md-radio-group ng-model="createAppCtrl.form.network" layout="row"
+                                            data-required="required" aria-label="Network model">
+                                <md-radio-button value="BRIDGE" data-ng-disabled="createAppCtrl.isNetworkDisable"
+                                                 class="md-primary" flex>网桥模式
+                                </md-radio-button>
+                                <md-radio-button value="HOST" data-ng-disabled="createAppCtrl.isNetworkDisable" flex>HOST
+                                    模式
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end center" class="form-group form-group-radio">
+                    <label flex="15">容器规格</label>
+                    <div flex="50" layout="column">
+                        <div layout="row" layout-align="start center">
+                            <div flex="15">
+                                <span class="md-body-1">CPU 权重</span>
+                            </div>
+                            <md-slider flex md-discrete class="md-primary" data-ng-model="createAppCtrl.form.cpus"
+                                       step="0.1" min="0.1"
+                                       max="1" aria-label="cpus">
+                            </md-slider>
+                        </div>
+                    </div>
+                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.cpus/}</div>
+                </div>
+
+                <div layout="row" layout-align="end center" class="form-group form-group-radio">
+                    <label flex="15"></label>
+                    <div flex="50" layout="column">
+                        <div layout="row" layout-align="start center">
+                            <div flex="15">
+                                <span class="md-body-1">内存</span>
+                            </div>
+                            <md-slider flex class="md-warn" data-ng-model="createAppCtrl.form.mem" min="16" max="2048"
+                                       aria-label="mem">
+                            </md-slider>
+                        </div>
+                    </div>
+                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem/} <span style="font-size: 12px;">MB</span></div>
+                </div>
+
+                <div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">容器个数</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="instances" aria-label="Number of containers"
+                                   data-ng-model="createAppCtrl.form.instances"
+                                   data-min="1"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine">
+                            <small>容器个数不小于 1</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
+                            <small>容器个数不能为空</small>
+                        </p>
+                    </div>
+                    <div flex flex-offset="5">
+                        <md-checkbox data-ng-model="createAppCtrl.single" aria-label="single of containers"
+                                     data-ng-disabled="createAppCtrl.target==='update'">1容器 : 1主机
+                        </md-checkbox>
                     </div>
                 </div>
 
-                <!-- 选择主机 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">选择主机</label>
-
-                    <div class="col-md-2">
-                        <isteven-multi-select
-                                input-model="createAppCtrl.multiSelect.labels"
-                                output-model="createAppCtrl.multiSelect.selectedLabels"
-                                button-label="name"
-                                item-label="name"
-                                tick-property="tick"
-                                helper-elements="all none filter"
-                                max-height="200px"
-                                translation="createAppCtrl.multiSelect.config.label"
-                                on-item-click="createAppCtrl.tickItem(data)"
-                                on-select-all="createAppCtrl.tickAllLabels()"
-                                on-select-none="createAppCtrl.clearLabels()"
-                                max-labels="2"
-                        >
-                        </isteven-multi-select>
+                <div layout="row" layout-align="end center" class="form-group form-group-switch"
+                     data-ng-if="createAppCtrl.target==='update'">
+                    <label flex="15">灰度发布</label>
+                    <div flex="50" layout="column">
+                        <div flex="none">
+                            <md-switch data-ng-model="createAppCtrl.form.canary" aria-label="canary-switch"></md-switch>
+                        </div>
+                        <p class="help-info-bottom">勾选灰度发布后,可在应用版本中调整灰度权重</p>
                     </div>
-                    <div class="col-md-3">
-                        <isteven-multi-select
-                                input-model="createAppCtrl.multiSelect.nodes"
-                                output-model="createAppCtrl.multiSelect.selectedNodes"
-                                button-label="ip"
-                                item-label="ip"
-                                tick-property="tick"
-                                helper-elements="all none filter"
-                                max-height="200px"
-                                translation="createAppCtrl.multiSelect.config.node"
-                                on-select-all="createAppCtrl.tickAllNodes()"
-                                on-select-none="createAppCtrl.clearNode()"
-                                max-labels="2"
-                        >
-                        </isteven-multi-select>
-                    </div>
+                    <div flex></div>
                 </div>
 
-                <!-- 挂载点 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">挂载点</label>
-
-                    <div class="col-md-5">
-                        <button type="button" class="btn btn-info btn-sm"
-                                data-ng-click="createAppCtrl.openVolumeModule()">
-                            添加挂载路径
-                        </button>
-
-                        <table class="table table-striped table-bordered"
-                               data-ng-show="createAppCtrl.form.volumes.length">
-                            <thead>
-                            <tr>
-                                <th>主机路径</th>
-                                <th>容器路径</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr data-ng-repeat="volume in createAppCtrl.form.volumes">
-                                <td>{/volume.hostPath/}</td>
-                                <td>{/volume.containerPath/}</td>
-                                <td>
-                                    <button type="button"
-                                            data-ng-click="createAppCtrl.deleteConfig($index, 'volumes')"
-                                            class="btn btn-default btn-xs">删除
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="btn-folding-v">
+                    <a href="#" data-ng-click="createAppCtrl.showAdvanceContent = !createAppCtrl.showAdvanceContent">
+                        <md-tooltip md-direction="top" aria-label="advanced setting" >高级设置</md-tooltip>
+                        <i class="fa " data-ng-class="{'fa-chevron-down': createAppCtrl.showAdvanceContent, 'fa-chevron-up': !createAppCtrl.showAdvanceContent}"></i>
+                    </a>
                 </div>
-
-                <!-- 容器规格 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">
-                        <span class="text-danger">* </span>
-                        容器规格
-                    </label>
-
-                    <div class="col-md-5">
-                        <rzslider
-                                rz-slider-model="createAppCtrl.cpuSlideValue"
-                                rz-slider-options="createAppCtrl.containerConfig.cpu.options"
-                                style="width: 70%; float: left;"></rzslider>
-                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
-                            <strong style="font-size: 30px;">
-                                {/createAppCtrl.form.cpus/}
-                            </strong>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-5 col-md-offset-2">
-                        <rzslider
-                                rz-slider-model="createAppCtrl.memSlideValue"
-                                rz-slider-options="createAppCtrl.containerConfig.mem.options"
-                                style="width: 70%; float: left;"></rzslider>
-                        <span style="display: inline-block; margin-top: 10px; margin-left: 12px;">
-                            <strong style="font-size: 30px;">
-                                {/createAppCtrl.form.mem/}
-                            </strong>
-                            <sub>MB</sub>
-                        </span>
-                    </div>
-                </div>
-
-                <!--  容器个数 -->
-                <div class="form-group">
-                    <label class="col-md-2 control-label">
-                        <span class="text-danger">* </span>
-                        容器个数
-                    </label>
-
-                    <div class="col-md-2"
-                         data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
-                        <input type="number" class="form-control"
-                               name="instances"
-                               data-ng-model="createAppCtrl.form.instances"
-                               data-min="1"
-                               data-required="required">
-
-                        <div data-ng-class="{ 'has-error' : staticForm.instances.$invalid && !staticForm.instances.$pristine }">
-                            <p data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine"
-                               class="help-block">容器个数不小于 1 </p>
-
-                            <p data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine"
-                               class="help-block">容器个数不能为空 </p>
-                        </div>
-                    </div>
-                    <label style="margin-top: 7px; font-weight: normal;"
-                           uib-popover="每个主机只能运行一个当前应用的容器"
-                           popover-trigger="mouseenter">
-                        <input type="checkbox" data-ng-model="createAppCtrl.single"
-                               data-ng-disabled="createAppCtrl.target==='update'">
-                        1容器:1主机
-                    </label>
-                </div>
-
-                <div class="form-group" data-ng-if="createAppCtrl.target==='update'">
-                    <label class="col-md-2 control-label">灰度发布</label>
-
-                    <div class="col-md-5">
-                        <input bs-switch type="checkbox" name="canary"
-                               ng-model="createAppCtrl.form.canary">
-                    </div>
-                </div>
-
-                <a role="button" data-toggle="collapse" href="#advancedSettings" aria-expanded="false"
-                   aria-controls="advancedSettings" class="col-md-offset-2 ad-set">高级设置 <span class="caret"></span></a>
-
-
-                <div class="collapse" id="advancedSettings">
-                    <div class="well">
-                        <!-- 应用地址 -->
-                        <div class="item-header">
-                            <h4>应用地址</h4>
-                        </div>
-                        <div class="form-inline" style="margin-bottom: 15px;">
-                            <button type="button" class="btn btn-info btn-sm" data-ng-disabled="createAppCtrl.form.canary"
-                                    data-ng-click="createAppCtrl.openPortModule()"
-                            > 添加应用地址
-                            </button>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered"
-                                   data-ng-show="createAppCtrl.form.portMappings.length">
-                                <thead>
-                                <tr>
-                                    <th>应用端口</th>
-                                    <th>协议</th>
-                                    <th>映射端口</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="info in createAppCtrl.form.portMappings">
-                                    <td>{/info.appPort/}</td>
-                                    <td>{/createAppCtrl.APP_PROTOCOL_TYPE[info.protocol]/}</td>
-                                    <td>
-                                        {/info.mapPort/}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-default btn-xs" data-ng-disabled="createAppCtrl.form.canary"
-                                                data-ng-click="createAppCtrl.deleteConfig($index, 'portMappings')">删除
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- 环境变量 -->
-                        <div class="item-header">
-                            <h4>环境变量
-                                <small>自定义环境变量</small>
-                            </h4>
-                        </div>
-
-                        <div class="form-inline">
-                            <button type="button" class="btn btn-info btn-sm"
-                                    data-ng-click="createAppCtrl.openPathModule()">
-                                添加环境变量
-                            </button>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered"
-                                   data-ng-show="createAppCtrl.form.envs.length">
-                                <thead>
-                                <tr>
-                                    <th>Key</th>
-                                    <th>Value</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="env in createAppCtrl.form.envs">
-                                    <td>{/env.key/}</td>
-                                    <td>{/env.value/}</td>
-                                    <td>
-                                        <button type="button" data-ng-click="createAppCtrl.deleteConfig($index, 'envs')"
-                                                class="btn btn-default btn-xs">删除
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Docker Arg -->
-                        <div class="item-header">
-                            <h4>Docker 参数
-                                <small>自定义 Docker 参数</small>
-                            </h4>
-                        </div>
-
-                        <div class="form-inline">
-                            <button type="button" class="btn btn-info btn-sm"
-                                    data-ng-click="createAppCtrl.openDockerArg()">
-                                添加 Docker 参数
-                            </button>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered"
-                                   data-ng-show="createAppCtrl.form.parameters.length">
-                                <thead>
-                                <tr>
-                                    <th>Key</th>
-                                    <th>Value</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="parameter in createAppCtrl.form.parameters">
-                                    <td>{/parameter.key/}</td>
-                                    <td>{/parameter.value/}</td>
-                                    <td>
-                                        <button type="button" data-ng-click="createAppCtrl.deleteConfig($index, 'parameters')"
-                                                class="btn btn-default btn-xs">删除
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- 日志目录 -->
-                        <div class="item-header">
-                            <h4>日志目录
-                                <small>应用的日志文件目录，如'/var/log/app1.log'</small>
-                            </h4>
-                        </div>
-
-                        <div class="form-inline">
-                            <button type="button" class="btn btn-info btn-sm"
-                                    data-ng-click="createAppCtrl.openLogPathModule()">
-                                添加日志目录
-                            </button>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered"
-                                   data-ng-show="createAppCtrl.form.logPaths.length">
-                                <thead>
-                                <tr>
-                                    <th>路径</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr data-ng-repeat="logPath in createAppCtrl.form.logPaths">
-                                    <td>{/logPath/}</td>
-                                    <td>
-                                        <button type="button"
-                                                data-ng-click="createAppCtrl.deleteConfig($index, 'logPaths')"
-                                                class="btn btn-default btn-xs">删除
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- CMD -->
-                        <div class="item-header">
-                            <h4> CMD </h4>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-5">
-                                <input type="text" class="form-control" data-ng-model="createAppCtrl.form.cmd"
-                                       placeholder="输入需要运行的命令">
+                <div data-ng-show="createAppCtrl.showAdvanceContent" class="check-element animate-show">
+                    <div layout="row" layout-align="start center" class="form-group">
+                        <label flex="15">选择主机</label>
+                        <div flex="50" layout="column">
+                            <div flex>
+                                <div layout="row">
+                                    <div flex>
+                                        <isteven-multi-select
+                                                input-model="createAppCtrl.multiSelect.labels"
+                                                output-model="createAppCtrl.multiSelect.selectedLabels"
+                                                button-label="name"
+                                                item-label="name"
+                                                tick-property="tick"
+                                                helper-elements="all none filter"
+                                                max-height="200px"
+                                                translation="createAppCtrl.multiSelect.config.label"
+                                                on-item-click="createAppCtrl.tickItem(data)"
+                                                on-select-all="createAppCtrl.tickAllLabels()"
+                                                on-select-none="createAppCtrl.clearLabels()"
+                                                max-labels="2" style="position: relative;"
+                                        >
+                                        </isteven-multi-select>
+                                    </div>
+                                    <div flex-offset="5" flex>
+                                        <isteven-multi-select
+                                                input-model="createAppCtrl.multiSelect.nodes"
+                                                output-model="createAppCtrl.multiSelect.selectedNodes"
+                                                button-label="ip"
+                                                item-label="ip"
+                                                tick-property="tick"
+                                                helper-elements="all none filter"
+                                                max-height="200px"
+                                                translation="createAppCtrl.multiSelect.config.node"
+                                                on-select-all="createAppCtrl.tickAllNodes()"
+                                                on-select-none="createAppCtrl.clearNode()"
+                                                max-labels="2" style="position: relative;"
+                                        >
+                                        </isteven-multi-select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-3">
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createAppCtrl.createApp()"
-                                data-ng-disabled="staticForm.$invalid" data-demo-disable
-                                data-ng-if="createAppCtrl.target==='create'">
-                            创 建
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-block"
-                                data-ng-click="createAppCtrl.updateApp()"
-                                data-ng-disabled="staticForm.$invalid|| createAppCtrl.single || createAppCtrl.form.network === 'HOST'"
-                                data-demo-disable data-ng-if="createAppCtrl.target==='update'">
-                            更 新
-                        </button>
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">挂载点</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary"
+                                           aria-label="Add mountpoints"
+                                           data-ng-click="createAppCtrl.addConfig('volumes')">
+                                    <i class="fa fa-plus"></i>
+                                    添加挂载路径
+                                </md-button>
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="volume in createAppCtrl.form.volumes track by $index">
+                                <ng-form name="volumes" layout="row" layout-align="start center">
+                                    <input type="text" placeholder="主机路径" flex="40" data-ng-model="volume.hostPath"
+                                           data-required="required">
+                                    <input type="text" placeholder="容器路径" flex-offset="5" flex="40" name="containerPath"
+                                           data-ng-model="volume.containerPath" data-required="required"
+                                           samename data-name-list="createAppCtrl.listPath">
+                                    <div flex-offset="5" flex>
+                                        <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                   data-ng-click="createAppCtrl.deleteConfig($index, 'volumes')">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                    </div>
+                                </ng-form>
+                                <p data-ng-if="volumes.containerPath.$error.samename" class="help-info-bottom">
+                                    容器路径已存在</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">应用地址</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary" data-ng-click="createAppCtrl.addConfig('portMappings')"
+                                           aria-label="add"><i class="fa fa-plus"></i> 添加应用地址
+                                </md-button>
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="portmap in createAppCtrl.form.portMappings track by $index">
+                                <ng-form name="portMappings" layout="row" layout-align="start center">
+                                    <input type="number" placeholder="应用端口" flex="30" data-ng-model="portmap.appPort"
+                                           data-required="required">
+                                    <div flex-offset="5" flex="15">
+                                        <md-input-container>
+                                            <md-select ng-model="portmap.protocol" data-required="required"
+                                                       aria-label="select protocol">
+                                                <md-option ng-repeat="protocolType in createAppCtrl.APP_PROTOCOL_TYPE"
+                                                           ng-value="protocolType.value">{/protocolType.name/}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+                                    <input type="number" placeholder="映射端口" flex-offset="5" flex="30" name="mapPort"
+                                           data-ng-model="portmap.mapPort" data-required="required"
+                                           samename data-name-list="createAppCtrl.listAppPort">
+                                    <div flex-offset="5" flex>
+                                        <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                   data-ng-click="createAppCtrl.deleteConfig($index, 'portMappings')">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                    </div>
+                                </ng-form>
+                                <p data-ng-if="portMappings.mapPort.$error.samename" class="help-info-bottom">
+                                    映射端口已占用</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">环境变量</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary"
+                                           aria-label="Add mountpoints"
+                                           data-ng-click="createAppCtrl.addConfig('envs')">
+                                    <i class="fa fa-plus"></i>
+                                    添加环境变量
+                                </md-button>
+                                自定义环境变量
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="env in createAppCtrl.form.envs track by $index">
+                                <ng-form name="envs" layout="row" layout-align="start center">
+                                    <input type="text" placeholder="KEY" flex="40"
+                                           data-ng-model="env.key" data-required="required"
+                                           name="envKey" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
+                                           samename data-name-list="createAppCtrl.listEnvs">
+                                    <input type="text" placeholder="VALUE" flex-offset="5" flex="40"
+                                           data-ng-model="env.value" data-required="required"
+                                           name="envValue" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/">
+                                    <div flex-offset="5" flex>
+                                        <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                   data-ng-click="createAppCtrl.deleteConfig($index, 'envs')">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                    </div>
+                                </ng-form>
+                                <p data-ng-if="envs.envKey.$error.samename" class="help-info-bottom">环境变量的 KEY 重复</p>
+                                <p data-ng-if="envs.envKey.$error.pattern && !envs.envKey.$pristine"
+                                   class="help-info-bottom">环境变量 Key 不能包含中文</p>
+                                <p data-ng-if="envs.envValue.$error.pattern && !envs.envValue.$pristine"
+                                   class="help-info-bottom">环境变量 Value 不能包含中文</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">Docker 参数</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary"
+                                           aria-label="Add mountpoints"
+                                           data-ng-click="createAppCtrl.addConfig('parameters')">
+                                    <i class="fa fa-plus"></i>
+                                    添加 Docker 参数
+                                </md-button>
+                                自定义Docker 参数
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="docker in createAppCtrl.form.parameters track by $index">
+                                <ng-form name="dockerForm" layout="row" layout-align="start center">
+                                    <input type="text" placeholder="KEY" flex="40"
+                                           data-ng-model="docker.key" data-required="required"
+                                           name="dockerKey" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/">
+                                    <input type="text" placeholder="VALUE" flex-offset="5" flex="40"
+                                           data-ng-model="docker.value" data-required="required"
+                                           name="dockerValue" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/">
+                                    <div flex-offset="5" flex>
+                                        <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                   data-ng-click="createAppCtrl.deleteConfig($index, 'parameters')">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                    </div>
+                                </ng-form>
+                                <p data-ng-if="dockerForm.dockerKey.$error.pattern && !dockerForm.dockerKey.$pristine"
+                                   class="help-info-bottom">Docker参数的 Key 不能包含中文</p>
+                                <p data-ng-if="dockerForm.dockerValue.$error.pattern && !dockerForm.dockerValue.$pristine"
+                                   class="help-info-bottom">Docker参数的 Value 不能包含中文</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">日志目录</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary"
+                                           aria-label="Add mountpoints"
+                                           data-ng-click="createAppCtrl.addConfig('logPaths')">
+                                    <i class="fa fa-plus"></i>
+                                    添加日志目录
+                                </md-button>
+                                应用的日志文件目录，如'/var/log/app1.log'
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="logPath in createAppCtrl.form.logPaths track by $index">
+                                <ng-form name="logPathForm" layout="row" layout-align="start center">
+                                    <input type="text" flex="40" data-ng-model="logPath.path"
+                                           name="path" data-required="required"
+                                           data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
+                                           samename data-name-list="createAppCtrl.listLogPath">
+                                    <div flex-offset="5" flex>
+                                        <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                   data-ng-click="createAppCtrl.deleteConfig($index, 'logPaths')">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                    </div>
+                                </ng-form>
+                                <p data-ng-if="logPathForm.path.$error.samename" class="help-info-bottom">日志目录路径已存在</p>
+                                <p data-ng-if="logPathForm.path.$error.required && !logPathForm.path.$pristine"
+                                   class="help-info-bottom">不能为空</p>
+                                <p data-ng-if="logPathForm.path.$error.pattern && !logPathForm.path.$pristine"
+                                   class="help-info-bottom">路径不能包含中文</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div layout="row" layout-align="start start" class="form-group form-group-input">
+                        <label flex="15">CMD</label>
+                        <div flex="50" layout="column">
+                            <input type="text" data-ng-model="createAppCtrl.form.cmd" placeholder="输入需要运行的命令">
+                        </div>
                     </div>
                 </div>
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="createAppCtrl.createApp()"
+                                   data-ng-disabled="staticForm.$invalid" data-demo-disable aria-label="create"
+                                   data-ng-if="createAppCtrl.target==='create'">创 建
+                        </md-button>
+                        <md-button class="md-raised md-primary" data-ng-click="createAppCtrl.updateApp()"
+                                   data-ng-disabled="staticForm.$invalid|| createAppCtrl.single || createAppCtrl.form.network === 'HOST'"
+                                   data-demo-disable data-ng-if="createAppCtrl.target==='update'"
+                                   aria-label="update">更 新
+                        </md-button>
+                        <md-button aria-label="cancel">取 消</md-button>
+                    </div>
+                </div>
+
             </form>
         </div>
-    </div>
-</section>
+    </section>
+</div>
