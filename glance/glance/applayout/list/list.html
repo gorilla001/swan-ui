@@ -48,7 +48,7 @@
                                     <md-menu-item>
                                         <md-button aria-label="edit" data-demo-disable
                                                    data-ui-sref="layout.update({cluster_id: stack.Cid, stack_id:stack.Id})">
-                                            更新 YML
+                                            详情
                                         </md-button>
                                     </md-menu-item>
                                 </md-menu-content>
@@ -73,7 +73,8 @@
                                 <td md-cell>
                                     {/layoutListCtrl.APP_STATUS[layoutListCtrl.appListStatus[app.Id].status]/}
                                 </td>
-                                <td md-cell>{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
+                                <td md-cell data-ng-if="app.Id">{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
+                                <td md-cell data-ng-if="!app.Id">XXXX-XX-XX</td>
                                 <td md-cell>{/app.Instances/}</td>
                                 <td md-cell>
                                     <md-menu md-offset="0 -5">

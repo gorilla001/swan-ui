@@ -784,3 +784,13 @@ dl.list-dl-row dt:after {
     margin-top: 10px;
 }
 /*home -> liugeng*/
+/*添加样式*/
+.CodeMirror-container{
+    width: 100%;
+}
+.CodeMirror{
+    height: auto;
+}
+.CodeMirror-scroll{
+    max-height: 600px;
+}

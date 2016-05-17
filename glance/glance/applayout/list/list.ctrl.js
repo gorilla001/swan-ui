@@ -72,7 +72,19 @@
         function showTableData(clusterId, stackId) {
             if (!self.openFlag[stackId]) {
                 layoutBackend.getStack(clusterId, stackId).then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    var applications = data.applications;
+                    if(data.deployedApplications) {
+                        for(var j=0; j < applications.length; j++) {
+                            for (var i = 0; i < data.deployedApplications.length; i++) {
+                                var deployedApp = data.deployedApplications[i];
+                                if (applications[j].Name === deployedApp.Name) {
+                                    applications[j] = deployedApp;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    self.appList[stackId] = applications;
                     appservice.listAppsStatus()
                         .then(function (data) {
                             self.appListStatus = data;
