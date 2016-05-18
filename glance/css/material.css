@@ -1,15 +1,4 @@
 /* 重置 */
-body {
-    background-color: #FFF;
-    color: #354052;
-    font-size: 12px;
-    font-family: 'Helvetica Neue', 'Helvetica', 'PingHei', 'PingFang SC', 'STHeitiSC-Light', 'Arial', sans-serif;
-    font-weight: 300;
-    height: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizelegibility;
-}
 ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     list-style: none;
     line-height: 1;
@@ -507,7 +496,7 @@ dl.list-dl-row dt:after {
     color: #333;
 }
 .btn-folding-v {
-    background: url(../images/bg-line-gray.png) repeat-x 0 13px;
+    background: url(../pics/bg-line-gray.png) repeat-x 0 13px;
     height: 28px;
     margin-top: 20px;
     margin-bottom: 30px;
@@ -545,8 +534,13 @@ dl.list-dl-row dt:after {
     text-align: center;
     width: 133px; 
 }
+
+.cluster-piechart-num{
+    line-height: 10px;
+}
+
 .app-charts-panel {
-    background: url(../images/bg-line-gray.png) repeat-x 0 40px;
+    background: url(../pics/bg-line-gray.png) repeat-x 0 40px;
     margin-bottom: 30px;
 }
 .app-charts-panel:last-child {
