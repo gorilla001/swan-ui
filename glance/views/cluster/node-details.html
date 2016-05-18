@@ -1,276 +1,167 @@
-<div class="page-header">
-    <div>
-        <h1 class="pull-left">主机详情</h1>
-        <a data-ui-sref="cluster.createcluster" class="btn btn-success" data-demo-disable="left">新建集群</a>
-    </div>
-</div>
-<ol class="breadcrumb">
-  <li>
-  <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>主机详情</li>
-</ol>
-
-<section class="server-detail">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="main-container server-detail-title">
-                  <header class="clearfix">
-                  <h2>
-                    {/ node.name /}<a href="#" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})" class="modify-name" title="修改名称"
-                                        data-dm-permit-click="1" 
-                                        data-dm-role="node.cluster.group_role"
-                                        data-dm-permit-msg="FRONTEND_MSG.no_group_admin"><img src="../pics/ico-edit.svg" width="12"></a>
-                    <span class="label label-info" data-ng-show="isMasterFlag">MASTER</span>
-                  </h2>
-
-                  <div class="btn-group pull-right" role="group" data-ng-show="showPageNav">
-                    <button type="button" class="btn btn-default btn-xs"
-                      data-ng-disabled="disablePreNav"
-                      data-ng-click="goPreNode()">
-                      上一台主机
-                    </button>
-                    <button type="button" class="btn btn-default btn-xs"
-                      data-ng-disabled="disableNextNav"
-                      data-ng-click="goNextNode()">
-                      下一台主机
-                    </button>
-                  </div>
-
-                  </header>
-            </div>
+<div class="content" id="content">
+    <div class="scroll">
+    <div class="node-details">
+        <header layout="row" layout-align="end start">
+          <div class="info" flex>
+           <h2>{/ node.name /}</h2>
+           <dl>
+            <dt>主机类型</dt>
+            <dd>{/node.role/}</dd>
+            <dt>主机状态</dt>
+            <dd>
+                <i class="{/nodeStatusCls[statusMgr.nodes[node.id].status]/}" aria-hidden="true"></i>
+            </dd>
+            <dt>IP 地址</dt>
+            <dd>{/ node.ip /}</dd>
+            <dt>CPU</dt>
+            <dd>{/ nodeInfo.cpuNumber/}<span data-ng-show="nodeInfo.cpuNumber!=='未知'">核</span></dd>
+            <dt>内存</dt>
+            <dd>{/ unitConversion.convertMem(nodeInfo.memTotal).num /}{/unitConversion.convertMem(nodeInfo.memTotal).unit/}</dd>
+          </dl>
+          <dl>
+            <dt>所属集群</dt>
+            <dd><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a></dd>
+            <dt>系统版本</dt>
+            <dd>{/ nodeInfo.osVersion /}</dd>
+            <dt>Agent 版本</dt>
+            <dd>{/ nodeInfo.agentVersion /}</dd>
+          </dl>
+          <dl>
+            <dt>创建时间</dt>
+            <dd>{/ node.created_at /}</dd>
+            <dt>更新时间</dt>
+            <dd>{/ node.updated_at /}</dd>
+          </dl>
+          <dl>
+            <dt>主机标签</dt>
+            <dd>
+                <span data-ng-repeat="label in selectedLabels" class="node-label">{/label.name/}</span>
+            </dd>
+          </dl>
         </div>
-        <div class="col-md-4">
-            <div class="main-container">
-                <div class="main-container-body">
-                    <ul class="server-info">
-                        <li>
-                            <div>主机状态</div><em><big data-ng-class="getClass(statusMgr.nodes[node.id].status)">{/statName[statusMgr.nodes[node.id].status]/}</big></em>
-                        </li>
-                        <li>
-
-                          <div style="vertical-align:top;">主机标签</div>
-                          <span data-ng-include="'/views/cluster/node-label.html'"></span>
-
-                        </li>
-                        <li>
-                            <div>IP 地址</div><em>{/ node.ip /}</em>
-                        </li>
-                        <li>
-                            <div>所属集群</div><em><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a></em>
-                        </li>
-                        <li>
-                            <div>创建时间</div><em>{/ node.created_at /}</em>
-                        </li>
-                        <li>
-                            <div>CPU</div><em>{/ nodeInfo.cpuNumber/}<sub data-ng-show="nodeInfo.cpuNumber!=='未知'">核</sub></em>
-                        </li>
-                        <li>
-                            <div>内存</div><em>{/ unitConversion.convertMem(nodeInfo.memTotal).num /}<sub>{/unitConversion.convertMem(nodeInfo.memTotal).unit/}</sub></em>
-                        </li>
-                        <li>
-                            <div>系统版本</div><em>{/ nodeInfo.osVersion /}</em>
-                        </li> 
-                        <li>
-                            <div>agent 版本</div><em>{/ nodeInfo.agentVersion /}</em>
-                        </li>
-                        <li data-ng-show="node.updated_at">
-                            <div>更新时间</div><em>{/ node.updated_at /}</em>
-                        </li> 
-                    </ul>
-                    <div data-ng-include="'/views/cluster/node-label-modal.html'"></div>
-                </div>
-            </div>
-            <button class="btn btn-danger btn-block" data-ng-click="deleNode(node.id)" data-demo-disable
+        <div layout-align="end center" class="operation">
+         <md-button class="md-fab md-mini" aria-label="编辑主机" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id})"
+                data-demo-disable
                 data-dm-permit-click="1" 
                 data-dm-role="node.cluster.group_role"
-                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">删除主机</button>
-        </div>
-        <div class="col-md-8">
-            <div class="disable-cover" data-ng-if="statusMgr.nodes[node.id].status==='terminated'"></div>
-            <div class="main-container">
-                <div class="main-container-body">
-                    <ul class="clearfix server-app-status">
-                        <li data-ng-repeat="service in serviceViews" data-ng-show="statusMgr.nodes[node.id].services[service]"> 
-                            <div data-ng-if="service !== 'docker'">
-                                <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
-                                  <div class="arrow-download"></div>
-                                  <div class="service"></div>
-                                </div>
-                                <div class="ico-app-status status-reset" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'installing'">
-                                  <span class="glyphicon glyphicon-cog"></span>
-                                </div>
-                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
-                                  data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
-                                <button class="btn btn-xs btn-warning" 
-                                data-ng-show="statusMgr.nodes[node.id].services[service].status=='failed' &&
-                                ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0"
-                                data-ng-click="openServiceRepair(service)" data-demo-disable
-                                data-dm-permit-click="1" 
-                                data-dm-role="node.cluster.group_role"
-                                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">修复</button>
-                            </div> 
-                            <div data-ng-if="service === 'docker'">
-                                <div class="ico-app-status status-download" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'pulling'">
-                                  <div class="arrow-download"></div>
-                                  <div class="service"></div>
-                                </div>
-                                <div class="ico-app-status status-reset" data-ng-if="statusMgr.nodes[node.id].services[service].status == 'installing'">
-                                  <span class="glyphicon glyphicon-cog"></span>
-                                </div>
-                                <img data-ng-src="../pics/ico-service-status-{/statusMgr.nodes[node.id].services[service].status/}.png" width="30"
-                                  data-ng-if="statusMgr.nodes[node.id].services[service].status != 'pulling' && statusMgr.nodes[node.id].services[service].status != 'installing'">
-                                <button class="btn btn-xs btn-warning" 
-                                data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
-                                data-ng-click="repairService(service, 'restart')" data-demo-disable
-                                data-dm-permit-click="1" 
-                                data-dm-role="node.cluster.group_role"
-                                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">重启</button>
-                            </div>  
-                            <em data-ng-bind="getServiceLabel(service)"></em>
-                            <span class="version" data-ng-bind="statusMgr.nodes[node.id].services[service].version"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        
-            <div class="main-container">
-                <div class="main-container-body">
-                    <div class="charts-loading" data-ng-hide="showCharts">
-                          <p>CPU监控</p>
-                          <div class="loading-spiner-holder">
-                            <div class="loading-spiner">
-                              <div class="loaders">
-                                <div class="loader">
-                                  <div class="loader-inner ball-spin-fade-loader">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <p>内存监控</p>
-                          <div class="loading-spiner-holder">
-                            <div class="loading-spiner">
-                              <div class="loaders">
-                                <div class="loader">
-                                  <div class="loader-inner ball-spin-fade-loader">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <p>磁盘监控</p>
-                          <div class="loading-spiner-holder">
-                            <div class="loading-spiner">
-                              <div class="loaders">
-                                <div class="loader">
-                                  <div class="loader-inner ball-spin-fade-loader">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <p>磁盘I/O监控</p>
-                          <div class="loading-spiner-holder">
-                            <div class="loading-spiner">
-                              <div class="loaders">
-                                <div class="loader">
-                                  <div class="loader-inner ball-spin-fade-loader">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <p>网络I/O监控</p>
-                          <div class="loading-spiner-holder">
-                            <div class="loading-spiner">
-                              <div class="loaders">
-                                <div class="loader">
-                                  <div class="loader-inner ball-spin-fade-loader">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="charts">
-                          <div id="node-cpu-chart"></div>
-                          <div id="node-memory-chart"></div>
-                          <div id="node-disk-chart"></div>
-                          <div id="node-diskio-chart"></div>
-                          <div id="node-netio-chart"></div>
-                        </div>
-                </div> 
-            </div>
-        </div>
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+            <md-tooltip>
+                编辑主机
+            </md-tooltip>
+        </md-button>
+       <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="deleNode(node.id, $event)"
+                data-demo-disable
+                data-dm-permit-click="1" 
+                data-dm-role="node.cluster.group_role"
+                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+       <i class="fa fa-trash-o" aria-hidden="true"></i>
+       <md-tooltip>
+              删除主机
+       </md-tooltip>
+      </md-button>
+         <md-button class="md-fab md-mini" aria-label="上一台主机" data-ng-click="goPreNode()" data-ng-disabled="disablePreNav">
+       <i class="fa fa-angle-left" aria-hidden="true"></i>
+       <md-tooltip>
+              上一台主机
+       </md-tooltip>
+      </md-button>
+       <md-button class="md-fab md-mini" aria-label="下一台主机" data-ng-click="goNextNode()" data-ng-disabled="disableNextNav">
+       <i class="fa fa-angle-right" aria-hidden="true"></i>
+       <md-tooltip>
+              下一台主机
+       </md-tooltip>
+      </md-button>
+      </div>
+      </header>
     </div>
-</section>
-
-<div class="modal fade" id="repairService" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>修复服务</h3>
-            </div>
-            <div class="modal-body">
-                <div class="radio">
-                    <label>
-                        <input type="radio" data-ng-model="serviceRepairInfo.method" value="restart">
-                        重启，重启服务不会导致应用中断，如果多次重启依然无效，请尝试重置。
-                    </label>
-                </div>
-                <div class="radio" data-ng-show="serviceRepairInfo.serviceName!='docker'">
-                    <label>
-                        <input type="radio" data-ng-model="serviceRepairInfo.method" value="reset">
-                        重置，重置会重新下载最新版的服务安装，重置 Gateway 或者 Proxy 会中断您部署的应用，其他服务重置不会中断应用。
-                    </label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-ng-click="repairService()" data-dismiss="modal">修复</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
-            </div>
-        </div>
+    <!--点击加载更多组件-->
+<div class="homepage_bottom">
+    <div class="homepage_module" id="homepage_module">
+        <ul>
+            <li data-ng-repeat = "service in firstServices">
+                <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
+                    <button class="btn btn-xs btn-warning" 
+                        data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
+                        data-ng-click="repairService(service, 'restart')" data-demo-disable
+                        data-dm-permit-click="1" 
+                        data-dm-role="node.cluster.group_role"
+                        data-dm-permit-msg="FRONTEND_MSG.no_group_admin" data-ng-if="service === 'docker'">重启</button>
+                    <md-menu data-ng-if="service !== 'docker' && statusMgr.nodes[node.id].services[service].status=='failed' &&
+                        ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0">
+                        <button class="btn btn-xs btn-warning" aria-label="More" ng-click="$mdOpenMenu($event)"
+                            data-demo-disable
+                            data-dm-permit-click="1" 
+                            data-dm-role="node.cluster.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                            修复
+                        </button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button data-ng-click="repairService(service, 'restart')">重启</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button data-ng-click="repairService(service, 'reset')">重置</md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </span>
+                {/getServiceLabel(service)/}
+                <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
+            </li>
+        </ul>
+    <ul layout="row" layout-align="start start">
+      <li data-ng-repeat = "service in otherServices" flex="10">
+          <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
+            <md-menu data-ng-if="service !== 'docker' && statusMgr.nodes[node.id].services[service].status=='failed' &&
+                ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0">
+                <button class="btn btn-xs btn-warning" aria-label="More" ng-click="$mdOpenMenu($event)"
+                    data-demo-disable
+                    data-dm-permit-click="1" 
+                    data-dm-role="node.cluster.group_role"
+                    data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                    修复
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button data-ng-click="repairService(service, 'restart')">重启</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button data-ng-click="repairService(service, 'reset')">重置</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+          </span>{/getServiceLabel(service)/}
+          <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
+      </li>
+    </ul>
     </div>
+    <div class="lower_link" id="lower_link">
+      <div class="circles" id="circles">
+        <span class="circles_down  fa fa-chevron-down"></span>
+        <span class="circles_down  fa fa-chevron-down"></span>
+      </div>
+    </div>
+    <div class="homepage_view">
+        <ul>
+            <li class="homepage_viewone">
+               <div id="node-cpu-chart"></div>
+            </li>
+            <li class="homepage_viewtwo">
+               <div id="node-memory-chart"></div>
+            </li>
+            <li class="homepage_viewthre">
+                <div id="node-disk-chart"></div>
+            </li>
+            <li class="homepage_viewfour" >
+                <div id="node-diskio-chart"></div>
+            </li>
+            <li class="homepage_viewfive" >
+                <div id="node-netio-chart"></div>
+            </li>
+        </ul>
+        <div style="clear:both"></div>
+    </div>
+</div>
+</div>
 </div>
