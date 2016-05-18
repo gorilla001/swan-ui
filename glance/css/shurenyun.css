@@ -913,26 +913,25 @@ dl.list-dl-row dt:after {
   overflow: hidden;
   -webkit-transition: height 1s;
 }
-.homepage_module ul{
-    display: -webkit-box;
-    -webkit-box-orient: horizontal;
-    display: -moz-box;
-    -moz-box-orient: horizontal;
-}
 .homepage_module li{
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
+    float: left;
+    margin-left: 70px;
     line-height: 20px;
     padding-top: 50px;
 }
 .homepage_module span{
-    display: block;
-    text-align: center;
-    font-size: 25px;
     width: 30px;
     height: 25px;
     margin:0 auto;
+    display: block;
+    color: #4CAF50;
+    font-size: 25px;
     position: relative;
+}
+.homepage_module .btn{
+    position: absolute;
+    bottom: 15px;
+    left: 30px;
 }
 .homepage_module p{
     font-size: 12px;
@@ -940,11 +939,6 @@ dl.list-dl-row dt:after {
     text-align: center;
 }
 
-.homepage_module .btn{
-    position: absolute;
-    bottom: 15px;
-    left: 30px;
-}
 /*横线*/
 .lower_link{
     width: 100%;

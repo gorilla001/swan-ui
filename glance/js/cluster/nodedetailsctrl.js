@@ -31,8 +31,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
     $scope.nodeInfo = {};
     
-    $scope.firstServices = [];
-    $scope.otherServices = [];
+    $scope.services = [];
     
     $scope.nodeStatusCls = {};
     $scope.nodeStatusCls[NODE_STATUS.running] = "fa fa-heartbeat text-success";
@@ -92,13 +91,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 ) || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled") {
             services.push("chronos");
         }
-        
-        if (services.length > 9) {
-            $scope.firstServices = services.slice(0, 9);
-            $scope.otherServices = services.slice(9);
-        } else {
-            $scope.firstServices = services;
-        }
+        $scope.services = services;
     }
 
     $scope.DOMs = {
