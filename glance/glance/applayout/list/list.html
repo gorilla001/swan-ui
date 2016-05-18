@@ -7,6 +7,9 @@
             <div layout-align="end center" class="operation">
                 <md-button class="md-fab md-mini" aria-label="部署最新镜像" data-ui-sref="layout.create">
                     <i class="fa fa-plus" aria-hidden="true"></i>
+                    <md-tooltip md-direction="top">
+                        新建编排
+                    </md-tooltip>
                 </md-button>
             </div>
         </header>
@@ -25,7 +28,11 @@
                                 <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
                                 </dd>
                                 <dt data-ng-show="stack.deploymentMessage">部署信息</dt>
-                                <dd data-ng-show="stack.deploymentMessage">{/stack.deploymentMessage/}</dd>
+                                <dd class="text-info"
+                                    data-ng-class="{'animation-spin': layoutListCtrl.sseMsgStatus[stack.Id] == 'out', 'animation-spin-2': layoutListCtrl.sseMsgStatus[stack.Id] == 'in'}"
+                                    data-ng-show="stack.deploymentMessage">
+                                    <i class="fa fa-cog"></i> {/stack.deploymentMessage/}
+                                </dd>
                             </dl>
                         </div>
                         <div layout-align="end center" class="operation">

@@ -204,12 +204,12 @@ WARNING_RULE = {
 };
 
 STACK_STATUS = {
-    pending: '未部署',
-    deploying: '部署中',
+    pending: '尚未部署',
+    deploying: '部署进行',
     deploy_fail: '部署失败',
-    running: '正常',
-    stopped: '已停止',
-    unhealthy: '故障'
+    running: '运行正常',
+    stopped: '应用停止',
+    unhealthy: '应用故障'
 };
 
 STACK_DEFAULT = {

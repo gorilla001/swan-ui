@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl($rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
+    function LayoutListCtrl($timeout, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
         var self = this;
         var events = undefined;
 
@@ -15,6 +15,8 @@
         self.APP_STATUS = APP_STATUS;
         self.openFlag = {};
         self.appList = {};
+        self.sseMsgStatus = {};
+        self.timeoutPromises = {};
 
         self.showTableData = showTableData;
         self.delStack = delStack;
@@ -34,18 +36,35 @@
         });
 
         function activate() {
+            $scope.$on('$destroy', function () {
+                for(var key in self.timeoutPromises) {
+                    $timeout.cancel(self.timeoutPromises[key]);
+                }
+            });
+
             Stream(function (data) {
                 for(var i=0; i < self.stacks.length; i++) {
                     var value = self.stacks[i];
                     if(value.Id === data.stackId && value.md5 !== data.md5) {
-                        value.status = data.status;
                         value.md5 = data.md5;
-                        value.deploymentMessage = data.deploymentMessage;
+                        self.sseMsgStatus[data.stackId] = 'out';
                         $scope.$digest();
+                        (function(value) {
+                            self.timeoutPromises[data.stackId] = $timeout(function() {
+                                value.status = data.status;
+                                value.deploymentMessage = data.deploymentMessage;
+                                self.sseMsgStatus[data.stackId] = 'in';
+                                $scope.$digest();
+                            }, 600, false);
+                        })(value);
                         break;
                     }
                 }
             });
+
+            if(self.stacks && self.stacks.length) {
+                showTableData(self.stacks[0].Cid, self.stacks[0].Id)
+            }
         }
 
         function Stream(_callback) {

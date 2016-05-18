@@ -51,6 +51,7 @@
                                 <textarea data-ng-model="layoutCreateCtrl.form.compose"
                                           data-required="required" name="dockerCompose"
                                           ui-codemirror ui-codemirror-opts="layoutCreateCtrl.editorOptions"
+                                          ui-refresh="layoutCreateCtrl.refreshCodeMirror"
                                           data-ng-change="layoutCreateCtrl.onChangeYaml('compose')"></textarea>
                             </div>
                         </div>
@@ -78,6 +79,7 @@
                                 <textarea data-ng-model="layoutCreateCtrl.form.marathonConfig"
                                           data-required="required" name="sryunCompose"
                                           ui-codemirror ui-codemirror-opts="layoutCreateCtrl.editorOptions"
+                                          ui-refresh="layoutCreateCtrl.refreshCodeMirror"
                                           data-ng-change="layoutCreateCtrl.onChangeYaml('marathonConfig')"></textarea>
                             </div>
                         </div>
