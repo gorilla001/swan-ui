@@ -194,7 +194,13 @@ gulp.task('ng-annotate', ['template-min'], function () {
         .pipe(gulp.dest('build/glance/'))
 })
 
-gulp.task('html-replace', ['ng-annotate'], function () {
+gulp.task('ng-annotate-old', ['ng-annotate'], function () {
+    return gulp.src('js/**/*.js')
+        .pipe(ngAnnotate({add: true}))
+        .pipe(gulp.dest('build/js/'))
+})
+
+gulp.task('html-replace', ['ng-annotate-old'], function () {
 
     var templateInjectFile = gulp.src('build/js/templateCacheHtml*.js', {read: false});
     var templateInjectOptions = {
