@@ -1,71 +1,83 @@
-<div class="page-header">
-  <h1 class="pull-left" >集群管理</h1>
+<div class="main-container app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>新建集群</h2>
+            </div>
+       </header>
+       <div class="main-content"> 
+           <form name="staticForm" data-ng-controller="createClusterFormCtrl"> 
+              <div layout="row" layout-align="end start" class="form-group form-group-input layout-align-end-start layout-row">
+                  <label class="flex-15" flex="15">集群名称</label>
+                  <div class="layout-column flex-50" flex="50" layout="column">
+                    <div class="flex-none" flex="none">
+                      <input class="form-input" type="text" data-required="required" max=255 min=1 name="name" data-ng-model="form.name">
+                      <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
+                      <p data-ng-show="staticForm.name.$pristine" class="help-block">{/ staticForm.message_error_info["name"] /}</p>
+                    </div>
+                  </div>
+                  <div class="flex" flex=""></div>
+              </div>
+              <div layout="row" layout-align="end start" class="form-group form-group-input layout-align-end-start layout-row">
+                   <label class="flex-15" flex="15">用户组</label>
+                   <div class="layout-column flex-50" flex="50" layout="column">
+                     <div class="flex-none" flex="none">
+                         <md-input-container class="md-block" flex-gt-sm>
+                             <md-select data-ng-model="form.groupId">
+                                 <md-option value="">无</md-option>
+                                 <md-option ng-repeat="group.id as group.name for group in groups" value="{{group.id}}">
+                                   {{group.name}}
+                                 </md-option>
+                             </md-select>
+                         </md-input-container>
+                     </div>
+                   </div>
+                   <div class="flex" flex=""></div>
+               </div>
+               <div layout="row" layout-align="end start" class="form-group form-group-input layout-align-end-start layout-row">
+                   <label class="flex-15" flex="15">集群类型</label>
+                   <div class="layout-column flex-50" flex="50" layout="column">
+                     <div class="flex-none" flex="none">
+                         <md-radio-group ng-model="form.clusterType" role="radiogroup">
+                             <md-radio-button value="1_master" 
+                                              data-ng-click="form.clusterType='1_master'"
+                                              name="clusterType"
+                                              class="md-primary md-checked">
+                                 <strong>初级版</strong> <small>1 Master，开发环境使用，适合6台主机以内使用。</small>
+                             </md-radio-button>
+                             <md-radio-button value="3_master"
+                                              data-ng-click="form.clusterType='3_master'"
+                                              name="clusterType"
+                                              class="md-primary" > 
+                                 <strong>高级版</strong> <small>3 Masters，基础生产环境使用，适合30台主机以内使用。</small>
+                             </md-radio-button>
+                             <md-radio-button value="5_master"
+                                              name="clusterType"
+                                              data-ng-click="form.clusterType='5_master'"
+                                              class="md-primary">
+                                 <strong>企业版</strong> <small>5 Masters，高容错级生产环境使用，适合30台主机以上使用。</small>
+                             </md-radio-button>
+                         </md-radio-group>
+                     </div>
+                   </div>
+                   <div class="flex" flex=""></div>
+               </div>
+               <div layout="row" class="form-footer-button">
+                   <div flex-offset="15">
+                       <md-button class="md-raised md-primary"
+                                  data-ng-click="createCluster()"
+                                  data-ng-disabled="staticForm.$invalid"
+                                  data-demo-disable>完成
+                       </md-button>
+                       <md-button class="md-raised"
+                                  data-ng-click="createCluster(true)"
+                                  data-ng-disabled="staticForm.$invalid"
+                                  data-demo-disable>
+                                  完成并添加主机
+                       </md-button>
+                   </div>
+               </div>
+           </form>
+        </div>
+    </section>
 </div>
-<ol class="breadcrumb">
-  <li>
-  <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>新建集群</li>
-</ol>
-
-<section class="create-cluster">
-<div class="main-container">
-  <div class="main-container-body">
-    <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="createClusterFormCtrl" novalidate>
-      <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine) ||
-                  (staticForm.message_error_info.name && staticForm.name.$pristine)}">
-        <label class="col-md-2 control-label required">集群名称</label>
-        <div class="col-md-8">
-          <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required"/>
-          <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
-          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/ staticForm.message_error_info["name"] /}</p>
-        </div>
-      </div>
-      
-      <!-- 选择集群 -->
-    <div class="form-group">
-        <label class="col-md-2 control-label">
-            选择组
-        </label>
-        <div class="col-md-5">
-            <select class="form-control"
-                    data-ng-model="form.groupId"
-                    data-ng-options="group.id as group.name for group in groups"
-                    >
-                <option value="">无</option>
-            </select>
-        </div>
-    </div>
-
-      <div class="form-group">
-        <label class="col-md-2 control-label">集群规模</label>
-        <div class="col-md-8">
-          <div data-toggle="buttons" class="btn-radios">
-            <div class="btn btn-default active" data-ng-click="form.clusterType='1_master'">
-              <input type="radio" name="clusterType" autocomplete="off" value="1_master" data-ng-model="form.clusterType">
-              <h2>初级版</h2>
-              <p>1 Master，<br>开发环境使用，<br>适合6台主机以内使用。</p>
-            </div>
-            <div class="btn btn-default" data-ng-click="form.clusterType='3_masters'">
-              <input type="radio" name="clusterType" autocomplete="off" value="3_masters" data-ng-model="form.clusterType">
-              <h2>高级版</h2>
-              <p>3 Masters，<br>基础生产环境使用，<br>适合30台主机以内使用。</p>
-            </div>
-            <div class="btn btn-default" data-ng-click="form.clusterType='5_masters'">
-              <input type="radio" name="clusterType" autocomplete="off" value="5_masters" data-ng-model="form.clusterType">
-              <h2>企业版</h2>
-              <p>5 Masters，<br>高容错级生产环境使用，<br>适合30台主机以上使用。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group form-btnbar-b">
-        <div class="col-sm-offset-2 col-md-10">
-          <button class="btn btn-primary" data-ng-click="createCluster()"  data-ng-disabled="staticForm.$invalid" data-demo-disable>完成</button>
-          <button class="btn btn-default" data-ng-click="createCluster(true)"  data-ng-disabled="staticForm.$invalid" data-demo-disable>完成并添加主机</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-</section>
