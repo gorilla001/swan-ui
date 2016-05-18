@@ -27,17 +27,19 @@
             
             tabsCtrl.select = function (index, canSkipClick) {
                 var sref = tabsCtrl.srefs[index]
+                tabsCtrl.oldSelect(index, canSkipClick);
                 $state.go(sref, {reload: true});
             }
             
-            scope.$on('$stateChangeSuccess',
-                    function (event, toState, toParams, fromState, fromParams) {
-                        if ($state.includes(sref)) {
-                            $mdUtil.nextTick(function () {
-                                tabsCtrl.oldSelect(index);
-                            });
-                        }
-                    });
+//            scope.$on('$stateChangeSuccess',
+//                    function (event, toState, toParams, fromState, fromParams) {
+//                        console.log("my sref:", sref)
+//                        if ($state.includes(sref)) {
+//                            $mdUtil.nextTick(function () {
+//                                tabsCtrl.oldSelect(index);
+//                            });
+//                        }
+//                    });
         }
     }
 })();

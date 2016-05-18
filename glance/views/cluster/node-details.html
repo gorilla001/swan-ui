@@ -79,7 +79,7 @@
 <div class="homepage_bottom">
     <div class="homepage_module" id="homepage_module">
         <ul>
-            <li data-ng-repeat = "service in firstServices">
+            <li data-ng-repeat = "service in services">
                 <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
                     <button class="btn btn-xs btn-warning" 
                         data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
@@ -110,31 +110,7 @@
                 <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
             </li>
         </ul>
-    <ul layout="row" layout-align="start start">
-      <li data-ng-repeat = "service in otherServices" flex="10">
-          <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
-            <md-menu data-ng-if="service !== 'docker' && statusMgr.nodes[node.id].services[service].status=='failed' &&
-                ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0">
-                <button class="btn btn-xs btn-warning" aria-label="More" ng-click="$mdOpenMenu($event)"
-                    data-demo-disable
-                    data-dm-permit-click="1" 
-                    data-dm-role="node.cluster.group_role"
-                    data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
-                    修复
-                </button>
-                <md-menu-content>
-                    <md-menu-item>
-                        <md-button data-ng-click="repairService(service, 'restart')">重启</md-button>
-                    </md-menu-item>
-                    <md-menu-item>
-                        <md-button data-ng-click="repairService(service, 'reset')">重置</md-button>
-                    </md-menu-item>
-                </md-menu-content>
-            </md-menu>
-          </span>{/getServiceLabel(service)/}
-          <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
-      </li>
-    </ul>
+
     </div>
     <div class="lower_link" id="lower_link">
       <div class="circles" id="circles">
@@ -160,7 +136,7 @@
                 <div id="node-netio-chart"></div>
             </li>
         </ul>
-        <div style="clear:both"></div>
+        <div style=""></div>
     </div>
 </div>
 </div>
