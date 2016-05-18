@@ -462,6 +462,27 @@ table.md-table .md-menu {
     margin-top: 15px;
 }
 
+.form-group-addrow .md-button {
+    margin: 0 6px 3px 0;
+}
+
+.form-group-addrow label {
+    line-height: 20px;
+    padding-top: 8px;
+}
+
+.form-group-addrow .add-row-container {
+    margin-bottom: 3px;
+}
+
+.form-group-addrow .add-row-container:last-child {
+    margin-bottom: 0;
+}
+
+md-input-container {
+    width: 100%;
+}
+
 dl.list-dl-row {
     margin-bottom: 5px;
 }
@@ -533,6 +554,7 @@ dl.list-dl-row dt:after {
     background: url(../pics/bg-line-gray.png) repeat-x 0 13px;
     height: 28px;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .btn-folding-v a {
@@ -553,9 +575,7 @@ dl.list-dl-row dt:after {
 #dashboard .fold-panel {
     height: 200px;
 }
-#dashboard .dropShow {
-    height: auto;
-}
+
 .cluster-charts-panel .charts-panel {
     height: 135px;
     margin: 0 auto 15px auto;
@@ -567,7 +587,7 @@ dl.list-dl-row dt:after {
     border: 1px solid #D9E3EB;
     border-radius: 17px;
     font-size: 12px;
-    height: 36px;
+    height: 32px;
     margin: 0 auto;
     text-align: center;
     width: 133px;
