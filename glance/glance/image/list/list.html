@@ -70,6 +70,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="alert alert-warning text-center" data-ng-show="!imageListCtrl.projects.length">
+                    未查询到镜像
+                </div>
             </md-table-container>
 
             <md-table-pagination
