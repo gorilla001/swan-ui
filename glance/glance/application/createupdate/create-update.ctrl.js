@@ -89,7 +89,7 @@
             self.single = app.unique;
             self.isNetworkDisable = true;
         }
-        self.memPower = Math.log(self.form.mem)/Math.log(2)
+        self.memPower = Math.log(self.form.mem)/Math.log(2);
 
         self.appNames = [];
         self.clusters = [];
