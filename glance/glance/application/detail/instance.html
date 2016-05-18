@@ -1,21 +1,20 @@
-<div class="main-container-body">
-    <md-table-container>
-        <table md-table>
-            <thead md-head>
-            <tr md-row>
-                <th md-column>实例名称</th>
-                <th md-column>状态</th>
-                <th md-column>启动时间</th>
-            </tr>
-            </thead>
-            <tbody md-body>
-            <tr md-row ng-repeat="instance in instanceAppCtrl.instances">
-                <td md-cell>实例{/$index + 1/} ({/instance.taskId/})</td>
-                <td md-cell>{/instanceAppCtrl.APP_INS_STATUS[instance.taskStatus]/}</td>
-                <td md-cell data-ng-if="instance.startTime!=='0001-01-01T00:00:00Z'">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
-                <td md-cell data-ng-if="instance.startTime==='0001-01-01T00:00:00Z'"></td>
-            </tr>
-            </tbody>
-        </table>
-    </md-table-container>
-</div>
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>实例名称</th>
+            <th md-column>状态</th>
+            <th md-column>启动时间</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="instance in instanceAppCtrl.instances">
+            <td md-cell>实例{/$index + 1/} ({/instance.taskId/})</td>
+            <td md-cell>{/instanceAppCtrl.APP_INS_STATUS[instance.taskStatus]/}</td>
+            <td md-cell data-ng-if="instance.startTime!=='0001-01-01T00:00:00Z'">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}
+            </td>
+            <td md-cell data-ng-if="instance.startTime==='0001-01-01T00:00:00Z'"></td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
