@@ -1,36 +1,5 @@
 <div class="main-container-body tab-content">
     <div class="tab-pane active cluster-nodes" id="service-list" data-ng-show="cluster.nodes.length">
-        <div class="btn-group btn-dropdown-info" data-ng-show="!statusMgr.nodeStatusCount[cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[cluster.id].total">
-              <button type="button" class="btn btn-warning btn-sm" data-ng-click="upgradeNode(cluster.id)" data-demo-disable
-                data-dm-permit-click="1" 
-                data-dm-role="cluster.group_role"
-                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">升级服务
-                    <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
-              </button>
-              <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu">
-                <li data-ng-repeat="(name, _) in statusMgr.nodeOldVersionCount[cluster.id].widgets">{/getServiceLabel(name)/}
-                    <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id][name]"></span>
-                </li>
-              </ul>
-        </div>
-        <div class="btn-group btn-dropdown-info" data-ng-show="statusMgr.nodeStatusCount[cluster.id]['upgrading']">
-              <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中
-                  <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
-              </button>
-              <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu">
-                <li data-ng-repeat="(name, _) in statusMgr.nodeOldVersionCount[cluster.id].widgets">{/getServiceLabel(name)/}
-                    <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id][name]"></span>
-                </li>
-              </ul>
-        </div>
         <div data-ng-show="isShowUpgradeFailedMsg && upgradeFailedNodes && !statusMgr.nodeStatusCount[cluster.id]['upgrading']">
             <div class="alert alert-warning alert-dismissible" role="alert">
               <button type="button" class="close" aria-label="Close" data-ng-click="closeUpgradeFailedMsg()"><span aria-hidden="true">&times;</span></button>

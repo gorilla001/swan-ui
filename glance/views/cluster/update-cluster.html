@@ -1,35 +1,32 @@
-<div class="page-header">
-  <h1 class="pull-left" >集群管理</h1>
-</div>
-
-<ol class="breadcrumb">
-  <li>
-  <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>编辑集群</li>
-</ol>
-
-<section class="create-group">
-<div class="main-container container-size-m">
-  <div class="main-container-body">
-    <form name="staticForm" class="form-horizontal" role="form" data-ng-controller="updateClusterFormCtrl">
-      <div class="form-group" data-ng-class="{ 'has-error' : (staticForm.name.$invalid && !staticForm.name.$pristine)||
-        (staticForm.message_error_info.name && staticForm.name.$pristine)}">
-        <label class="col-md-3 control-label">集群名称</label>
-        <div class="col-md-8">
-          <input type="text" class="form-control" name="name" data-ng-model="form.name" data-required="required" />
-          <p data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine" class="help-block">集群名不能为空</p>
-          <p data-ng-show="staticForm.name.$pristine" class="help-block">{/staticForm.message_error_info["name"]/}</p>
+<div class="main-container app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>编辑集群</h2>
+            </div>
+       </header>
+       <div class="main-content" ng-controller="updateClusterCtrl">
+           <form name="infoForm" data-ng-controller="updateClusterFormCtrl"> 
+               <div layout="row" layout-align="end start" class="form-group form-group-input">
+                   <label flex="15">集群名称</label>
+                   <div flex="50" layout="column">
+                       <div flex="none">
+                           <input name="name" type="text" data-required="required" 
+                                  max="25" class="form-input" data-ng-model="form.name">
+                           <p data-ng-show="infoForm.name.$error.required && !infoForm.name.$pristine" class="help-block">集群名不能为空</p>
+                           <p data-ng-show="infoForm.name.$pristine" class="help-block">{/staticForm.message_error_info["name"]/}</p>
+                       </div>
+                   </div>
+                   <div flex></div>
+               </div>
+               <div layout="row" class="form-footer-button">
+                   <div flex-offset="15" layout="row" layout-align="end end">
+                       <md-button class="md-raised md-primary" type="button" 
+                                  data-ng-click="updateCluster()"
+                                  data-ng-disabled="infoForm.$invalid">完成</md-button>
+                   </div>
+               </div>
+           </form>
         </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-3 col-md-3">
-          <button class="btn btn-primary" data-ng-disabled="staticForm.$invalid" data-ng-click="updateCluster()" data-demo-disable>完成</button>
-          <button class="btn btn-default" data-ng-click="goback()">取消</button>
-        </div>
-      </div>
-    </form>
-  </div>
+    </section>
 </div>
-</section>
