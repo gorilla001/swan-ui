@@ -51,6 +51,10 @@
             {
                 name: '网络发送',
                 label: 'NetworkSentByteRate'
+            },
+            {
+                name: '每秒请求数',
+                label: 'Triffic'
             }
         ];
 
