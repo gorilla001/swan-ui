@@ -6,19 +6,20 @@
                 <h2> 集群名称: <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
                 </h2>
                 <dl>
-                    <dt><i class="fa fa-files-o"></i> 正常主机</dt>
+                    <dt><i class="fa fa-heartbeat text-success"></i> 正常主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
-                    <dt><i class="fa fa-files-o"></i> 失联主机</dt>
+                    <dt><i class="fa fa-chain-broken text-danger"></i> 失联主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
-                    <dt><i class="fa fa-files-o"></i> 维护中主机</dt>
+                    <dt><i class="fa fa-exclamation-triangle text-warning"></i>预警主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
+                    <dt><i class="fa fa-bomb text-danger"></i>异常主机</dt>
+                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
+                    <dt><i class="fa fa-cog text-info "></i> 其他主机</dt>
                     <dd>
                         {/(dashboardCtrl.statusMgr.nodeStatusCount[clusterId].installing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].upgrading+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].initing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].repairing)
                         || 0/}
                     </dd>
-                    <dt><i class="fa fa-files-o"></i>异常主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
-                    <dt><i class="fa fa-files-o"></i>报警主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
+
                 </dl>
             </div>
             <div layout-align="end center" class="operation">
@@ -64,7 +65,7 @@
             </div>
             <div flex="40">
                 <div class="fold-panel mCustomScrollbar" data-ng-class="{'dropShow':dashboardCtrl.dropStatus}" data-mcs-theme="dark">
-                    <div ng-repeat="appMon in cluster.appMonitors">
+                    <div ng-repeat="appMon in cluster.appMonitors" class="appGroup">
                         <dl layout="row" layout-align="start center" class="app-charts-panel">
                             <dt class="app-header">{/appMon.appName/}</dt>
                             <dd flex="30">
@@ -90,7 +91,7 @@
                         </dl>
                     </div>
                 </div>
-                <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length">
+                <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length > 1">
                     <a href="#" data-ng-click="dashboardCtrl.dropShow()"><i class="fa"
                                                               data-ng-class="{'fa-chevron-down':!dashboardCtrl.dropStatus, 'fa-chevron-up': dashboardCtrl.dropStatus}"></i></a>
                 </div>
