@@ -549,7 +549,7 @@ md-dialog[add-item-dialog] > md-dialog-content > form > .input-row > md-input-co
 .main-section header .operation .md-fab {
     font-size: 18px;
     margin-bottom: 0;
-	margin-top: 0;
+    margin-top: 0;
 }
 
 /* 主文本版式 */
@@ -687,7 +687,7 @@ table.md-table .md-menu {
     margin: 0 15px 0 0;
 }
 
-.form-group-input input[type="text"],.form-group-input input[type="password"] {
+.form-group-input input[type="text"], .form-group-input input[type="password"] {
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
     -webkit-box-sizing: border-box; /* Safari */
@@ -721,7 +721,7 @@ dl.list-dl-row {
 dl.list-dl-row:last-child {
     margin-bottom: 0;
 }
-dl.list-dl-row dt, .list-dl-row dd{
+dl.list-dl-row dt, .list-dl-row dd {
     display: inline-block;
 }
 dl.list-dl-row dt {
@@ -733,7 +733,7 @@ dl.list-dl-row dd {
     margin-right: 25px;
 }
 dl.list-dl-row dt:after {
-    content:"･";
+    content: "･";
     position: absolute;
     right: -10px;
     top: 0px;
@@ -756,7 +756,7 @@ dl.list-dl-row dt:after {
     color: #D8DFE5;
 }
 .collapse .panel-heading .md-button {
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid #7A89A0;
     box-shadow: none;
     color: #D8DFE5;
@@ -776,14 +776,25 @@ dl.list-dl-row dt:after {
 #dashboard .info h2 {
     width: 100%;
 }
-#dashboard  div.charts-panel {
-    background-color: #ecf2f6 ;
+
+#dashboard div.charts-panel {
+    background-color: #ecf2f6;
 }
 
 #dashboard div[ng-repeat="appMon in cluster.appMonitors"] {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 /*home -> liugeng*/
+
+/*cluster-> liugeng*/
+.info h2 {
+    width: 100%;
+}
+
+.main-content {
+    position: relative;
+}
+
 /*添加样式*/
 .CodeMirror-container{
     width: 100%;
