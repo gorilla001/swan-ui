@@ -1,6 +1,18 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
 function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, confirmModal) {
     'use strict';
+    
+    var circles=$("#circles"), homepage_module=$("#homepage_module");
+    circles.click(function(){
+        if (homepage_module.height() == '120') {
+            homepage_module.height('240');
+            circles.children('span').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+        }else{
+            homepage_module.height('120');
+            circles.children('span').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+        };
+    })
+    
     $scope.node = {};
     $scope.showCharts = false;
     $scope.showPageNav = false;
@@ -18,8 +30,30 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.labelForm = {};
 
     $scope.nodeInfo = {};
+    
+    $scope.firstServices = [];
+    $scope.otherServices = [];
+    
+    $scope.nodeStatusCls = {};
+    $scope.nodeStatusCls[NODE_STATUS.running] = "fa fa-heartbeat text-success";
+    $scope.nodeStatusCls[NODE_STATUS.terminated] = "fa fa-chain-broken text-danger";
+    $scope.nodeStatusCls[NODE_STATUS.failed] = "fa fa-bomb text-danger";
+    $scope.nodeStatusCls[NODE_STATUS.abnormal] = "fa fa-exclamation-triangle text-warning";
+    $scope.nodeStatusCls[NODE_STATUS.installing] = "fa fa-cog text-normal";
+    $scope.nodeStatusCls[NODE_STATUS.initing] = "fa fa-cog text-normal";
+    $scope.nodeStatusCls[NODE_STATUS.upgrading] = "fa fa-cog text-normal";
+    $scope.nodeStatusCls[NODE_STATUS.repairing] = "fa fa-cog text-normal";
+    
+    
+    $scope.serviceStatusCls = {};
+    $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
+    $scope.serviceStatusCls[SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
+    $scope.serviceStatusCls[SERVICES_STATUS.uninstalled] = "fa fa-chain-broken text-warning";
+    $scope.serviceStatusCls[SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[SERVICES_STATUS.installing] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-cog text-normal";
 
-    $scope.serviceViews = [];
+
     $('.charts').hide();
 
     $scope.statusMgr = new ClusterStatusMgr();
@@ -28,6 +62,11 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
             get().then(function (data) {
                 $scope.node = data;
                 $scope.isMasterFlag = $scope.getIsMaster($scope.node);
+                if ($scope.isMasterFlag) {
+                    $scope.node.role = "Master";
+                } else {
+                    $scope.node.role = "Slave"
+                }
                 $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
                 $scope.statusMgr.startListen($scope);
                 
@@ -39,19 +78,26 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.getCurNode();
 
     function createServiceViews() {
-        $scope.serviceViews = ["docker"];
+        var services = ["docker"];
         if ($scope.isMasterFlag) {
-            $scope.serviceViews.push("master", "marathon", "zookeeper", "exhibitor");
+            services.push("master", "marathon", "zookeeper", "exhibitor");
             if ($scope.node.cluster.cluster_type == '1_master') {
-                $scope.serviceViews.push("slave", "cadvisor", "bamboo", "haproxy");
+                services.push("slave", "cadvisor", "bamboo", "haproxy");
             }
         } else {
-            $scope.serviceViews.push("slave", "cadvisor", "bamboo", "haproxy");
+            services.push("slave", "cadvisor", "bamboo", "haproxy");
         }
-        $scope.serviceViews.push("logcollection");
+        services.push("logcollection");
 
         if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 ) || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled") {
-            $scope.serviceViews.push("chronos");
+            services.push("chronos");
+        }
+        
+        if (services.length > 9) {
+            $scope.firstServices = services.slice(0, 9);
+            $scope.otherServices = services.slice(9);
+        } else {
+            $scope.firstServices = services;
         }
     }
 
@@ -135,21 +181,16 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         }
     }
 
-    $scope.deleNode = function (id) {
+    $scope.deleNode = function (id, ev) {
         var ids = [];
         ids.push(id);
         var toast = '您确定要移除主机吗？';
 
-        confirmModal.open(toast).then(function () {
+        confirmModal.open(toast, ev).then(function () {
             gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data': ids}).then(function () {
                 $state.go('cluster.clusterdetails.nodes', {'clusterId': $stateParams.clusterId});
             });
         });
-    };
-
-    $scope.openServiceRepair = function (serviceName) {
-        $scope.serviceRepairInfo = {serviceName: serviceName, method: 'restart'};
-        $('#repairService').modal("show");
     };
 
     $scope.repairService = function (serviceName, method) {

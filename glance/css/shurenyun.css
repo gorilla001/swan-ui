@@ -830,3 +830,275 @@ dl.list-dl-row dt:after {
     border: 0;
     background: transparent;
 }
+
+/*nodedetails -> lixu*/
+ .content{
+    width: 100%;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*overflow: hidden;*/
+}
+.name{
+    display: block;
+    color: #4a4a4a;
+    font-size: 20px;
+    padding-top: 50px;
+    padding-left: 49px;
+    padding-bottom: 8px;
+}
+.node-details{
+    width: 100%;
+    height: 220px;
+}
+
+.node-details header {
+    padding: 50px 50px 30px 50px;
+}
+.node-details header h2{
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0 0 15px 0;
+}
+.node-details header dl {
+    margin-bottom: 5px;
+}
+.node-details header dl:last-child {
+    margin-bottom: 0;
+}
+.node-details header dt,header dd{
+    display: inline-block;
+}
+.node-details header dt {
+    color: #A0ABBF;
+    margin-right: 10px;
+    position: relative;
+}
+.node-details header dd {
+    margin-right: 25px;
+}
+
+.node-label{
+    margin-right: 8px;
+    background-color: #7A89A0;
+    width: 52px;
+    height: 15px;
+    color: #FFFFFF;
+    padding:0 5px 0 5px;
+    line-height: 15px;
+}
+
+.node-details header dt:after {
+    content:"･";
+    position: absolute;
+    right: -10px;
+    top: 0px;
+}
+.main-section .main-content {
+    overflow-x:hidden ;
+    background-color: #ecf2f6;
+    padding: 50px;
+}
+/*首页组件部分*/
+.homepage_bottom{
+    width: 100%;
+    height: auto;
+    background: #ECF2F6;
+}
+.homepage_module{
+    width: 100%;
+    height: 120px;
+    background: #ECF2F6;
+    text-align: center;
+  overflow: hidden;
+  -webkit-transition: height 1s;
+}
+.homepage_module ul{
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    display: -moz-box;
+    -moz-box-orient: horizontal;
+}
+.homepage_module li{
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    line-height: 20px;
+    padding-top: 50px;
+}
+.homepage_module span{
+    display: block;
+    text-align: center;
+    font-size: 25px;
+    width: 30px;
+    height: 25px;
+    margin:0 auto;
+    position: relative;
+}
+.homepage_module p{
+    font-size: 12px;
+    color: #A0ABBF;
+    text-align: center;
+}
+
+.homepage_module .btn{
+    position: absolute;
+    bottom: 15px;
+    left: 30px;
+}
+/*横线*/
+.lower_link{
+    width: 100%;
+    height: 28px;
+    margin:24px 53px 0 53px;
+    position: relative; 
+}
+.circles{
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ccc;
+    background: #FFFFFF;
+    border-radius: 100%;
+    position: absolute;
+    left: 46%;
+    top: 0;
+}
+.lower_link .circles span{
+    display: inline-block;
+    color: #2196F3;
+    font-size: 10px;
+    position: absolute;
+    top: 8px;
+    left: 7px;
+}
+.circles:before,.circles:after{
+    content: "";
+    display: block;
+    width: 760px;
+    height: 10px;
+    border-bottom: 1px solid #CCCCCC;
+    overflow: hidden;
+}
+.circles:before{
+    margin-left: -770px;
+    margin-top: 5px;
+}
+.circles:after{
+    margin-left: 35px;
+    margin-top: -10px;
+}
+/*视图*/
+.homepage_view{
+    width: 100%;
+}
+.homepage_viewone{
+    float: left;
+    width: 45%;
+    padding: 5px;
+    height: 295px;
+    background: #FFFFFF;
+    margin:30px 30px 54px 38px;
+}
+.homepage_viewtwo{
+    float: right;
+    width: 45%;
+    padding: 5px;
+    height: 295px;
+    background: #FFFFFF;
+    margin:30px 34px 54px 0px;
+}
+.homepage_viewthre{
+    float: left;
+    width: 45%;
+    padding: 5px;
+    height: 295px;
+    background: #FFFFFF;
+    margin:0px 30px 54px 38px;
+}
+.homepage_viewfour{
+    float: right;
+    width: 45%;
+    padding: 5px;
+    height: 295px;
+    background: #FFFFFF;
+    margin:0px 34px 54px 0px;
+}
+.homepage_viewfive{
+    float: left;
+    width: 45%;
+    padding: 5px;
+    height: 295px;
+    background: #FFFFFF;
+    margin:0px 30px 54px 38px;
+}
+/*右上角的菜单复选项*/
+.xuanxiang{
+    display: none;
+    width: 220px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    top: 85px;
+    right: 94px;
+    padding: 12px 0 0 5px;
+}
+.xuanxiang li{
+    width: 66px;
+    height: 38px;
+    color: #A0ABBF;
+    text-align: center;
+    line-height: 20px;
+    padding-right: 3px;
+    border-right: 1px solid #CCCCCC ;
+    cursor: pointer;
+}
+.xuanxiang li.jingxiang{
+    border: none;
+    padding-right: 0;
+}
+.xuanxiang li p{
+    font-size: 12px;
+    cursor: pointer;
+}
+.tixing{
+    display: none;
+    width: 210px;
+    height: 270px;
+    position: absolute;
+    top: 85px;
+    right: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.tixing li{
+    margin: 15px 15px auto 15px;
+    width: 180px;
+    font-size: 12px;
+    color: #2196F3;
+    border-bottom: 1px solid #ccc;
+}
+.enter{
+    display: none;
+    width: 130px;
+    height: 60px;
+    position: absolute;
+    top: 85px;
+    right: 17px;
+    border: 1px solid #ccc;
+    border-radius:5px ;
+}
+.enter li{
+    text-align: center;
+    padding-top: 9px;
+    font-size: 14px;
+    color: #354052;
+}
+.enter li:hover{
+    background: #E0E0E0;
+}
+
+.name .label{
+	margin-left: 8px;
+	font-size: 10px;
+}
+/*nodedetails -> lixu*/
