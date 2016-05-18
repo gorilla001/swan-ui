@@ -1,9 +1,13 @@
 /* 重置 */
-ul, li, dt, dd, dl {
+ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     list-style: none;
     line-height: 1;
     margin: 0;
     padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 12px;
 }
 
 .main {
@@ -214,7 +218,7 @@ md-dialog[add-item-dialog] > md-dialog-content > form > .input-row > md-input-co
 
 /* 内容基本布局 */
 .main-section header {
-    padding: 50px;
+    padding: 50px 50px 30px 50px;
 }
 
 .main-section header h2 {
@@ -603,4 +607,12 @@ dl.list-dl-row dt:after {
     left: 300px !important;
     text-align: center;
     width: calc(100% - 560px);
+}
+
+.help-container {
+    margin: 50px 0 30px 0;
+}
+.help-container ol li {
+    list-style: lower-roman;
+    line-height: 2;
 }

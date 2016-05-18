@@ -1,67 +1,64 @@
-<div class="page-header">
-  <div>
-    <h1 class="pull-left">添加主机</h1>
-    <small><br>数人云可以助您轻松接入遍布各地的计算资源，<br>无论主机的操作系统和网络环境。</small>
-  </div>
-</div>
-<ol class="breadcrumb">
-  <li>
-  <a data-ui-sref="cluster.listclusters">集群管理</a>
-  </li>
-  <li>添加主机</li>
-</ol>
-<section>
-  <div class="main-container add-node">
-    <div class="main-container-body select-nodetype-panel">
-      <h3>您要接入的主机属于下面哪一种情况？</h3>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="nodetype-old">
-            <h4>我已有一台主机 <small>请选择主机上的操作系统类型</small></h4>
-            <div class="btn-group" role="group" aria-label="...">
-              <a type="button" class="btn btn-info"data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})" data-demo-disable>Ubuntu</a>
-              <a type="button" class="btn btn-info"data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})" data-demo-disable>CentOS</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="nodetype-new">
-            <h4>我想去买一台新主机</h4>
-            <a type="button" class="btn btn-info" data-ui-sref="cluster.iaas({clusterId:clusterId})">通过主机市场买一台合适的云主机</a>
-          </div>
-        </div>
+<section class="main-section">
+  <header layout="row" layout-align="end start">
+    <div class="info" flex>
+      <h2>添加主机</h2>
+      <dl>
+        <dd>数人云可以助您轻松接入遍布各地的计算资源，无论主机的操作系统和网络环境。</dd>
+      </dl>
+    </div>
+  </header>
+  <div class="main-content">
+    <h1>您要接入的主机属于下面哪一种情况？</h1>
+    <div layout="row">
+      <div flex>
+        <md-card>
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">我已有一台主机</span>
+              <span class="md-subhead">请选择主机上的操作系统类型</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content layout="row" layout-align="end start">
+            <md-card-actions layout="row">
+              <md-button aria-label="Ubuntu" class="md-raised md-primary" data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})" data-demo-disable>
+                Ubuntu
+              </md-button>
+              <md-button aria-label="CentOS" class="md-raised md-primary" data-ui-sref="cluster.addlivingnode({clusterId:clusterId, nodeId:nodeId})" data-demo-disable>
+                CentOS
+              </md-button>
+            </md-card-actions>
+          </md-card-content>
+        </md-card>
       </div>
-
-      <div class="alert alert-info">
-        <h4>
-          <p>
-            在您添加主机之前，请检查以确保您的环境满足下述条件：
-          </p>
-        </h4>
-        <div>
-          <ol>
-            <li>
-              每台运行 Docker 的主机必须能够 ping 通数人云， ping www.shurenyun.com 响应；
-            </li>
-            <li>
-              同一集群内的主机相互都可以连通；
-            </li>
-            <li>
-              安装 Docker 版本须在1.7.1~1.9.1之间(强烈建议1.9.1)，并确保 Docker Daemon 运行；
-            </li>
-            <li>
-              使用64位 Linux 系统，已经通过测试的操作系统： <em>CentOS 7+</em> 和 <em>Ubuntu 14.04+</em>；
-            </li>
-            <li>
-              推荐 Ubuntu 使用 AUFS 或 CentOS 使用 Device Mapper 作为 Docker 文件系统(生产环境使用 Device Mapper)；
-            </li>
-            <li>CentOS 关闭 selinux；</li>
-            <li>开启 iptables-nat <a data-ng-if="!IS_OFF_FLAG" ng-cloak href="https://dataman.kf5.com/posts/view/124302"> (如何开启 iptables)；</a></li>
-          </ol>
-        </div>
+      <div flex flex-offset="5">
+        <md-card>
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">我想去买一台新主机</span>
+              <span class="md-subhead">通过主机市场买一台合适的云主机</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content layout="row" layout-align="end start">
+            <md-card-actions layout="row" layout-align="end start">
+              <md-button class="md-raised md-primary" aria-label="立即购买" data-ui-sref="cluster.iaas({clusterId:clusterId})">
+                立即购买新云主机
+              </md-button>
+            </md-card-actions>
+          </md-card-content>
+        </md-card>
       </div>
-
+    </div>
+    <div class="help-container">
+      <h3>在您添加主机之前，请检查以确保您的环境满足下述条件：</h3>
+      <ol>
+        <li>每台运行 Docker 的主机必须能够 ping 通数人云， ping www.shurenyun.com 响应；</li>
+        <li>同一集群内的主机相互都可以连通；</li>
+        <li>安装 Docker 版本须在1.7.1~1.9.1之间(强烈建议1.9.1)，并确保 Docker Daemon 运行；</li>
+        <li>使用64位 Linux 系统，已经通过测试的操作系统： CentOS 7+ 和 Ubuntu 14.04+；</li>
+        <li>推荐 Ubuntu 使用 AUFS 或 CentOS 使用 Device Mapper 作为 Docker 文件系统(生产环境使用 Device Mapper)；</li>
+        <li>CentOS 关闭 selinux；</li>
+        <li>开启 iptables-nat (如何开启 iptables)；</li>
+      </ol>
     </div>
   </div>
 </section>
