@@ -17,7 +17,11 @@
             emails: warning.emails || '',
             duration: warning.duration || '',
             times: warning.times || '',
-            enabled: true
+            enabled: true,
+            triger: false,
+            mininstance: warning.mininstance ||'',
+            instance: warning.instance||'',
+            appid:self.app.id
         };
 
         if (self.target === 'update' && warning.metric === 'CpuUsedCores') {
@@ -74,7 +78,7 @@
         activate();
 
         function activate() {
-            ///
+            
         }
 
         function getAppList() {
@@ -85,6 +89,7 @@
         }
 
         function submit() {
+            console.log(self.app);
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
             if (self.target === 'create') {
                 self.form.appalias = self.app.alias;
