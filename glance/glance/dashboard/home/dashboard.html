@@ -6,16 +6,16 @@
                 <h2> 集群名称: <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
                 </h2>
                 <dl>
-                    <dt><i class="{/nodeStatusCls['running']/}"></i> 正常主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
-                    <dt><i class="{/nodeStatusCls['terminated']/}"></i> 失联主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
-                    <dt><i class="{/nodeStatusCls['abnormal']/}"></i>预警主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
-                    <dt><i class="{/nodeStatusCls['failed']/}"></i>异常主机</dt>
-                    <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
-                    <dt><i class="fa fa-cog text-info "></i> 其他主机</dt>
-                    <dd>
+                    <dt><i class="fa fa-heartbeat "></i> 正常主机</dt>
+                    <dd class="text-success">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
+                    <dt><i class="fa fa-chain-broken"></i> 失联主机</dt>
+                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
+                    <dt><i class="fa fa-exclamation-triangle "></i>预警主机</dt>
+                    <dd class="text-warning">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
+                    <dt><i class="fa fa-bomb "></i>异常主机</dt>
+                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
+                    <dt><i class="fa fa-cog "></i> 其他主机</dt>
+                    <dd class="text-info">
                         {/(dashboardCtrl.statusMgr.nodeStatusCount[clusterId].installing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].upgrading+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].initing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].repairing)
                         || 0/}
                     </dd>
@@ -23,10 +23,12 @@
                 </dl>
             </div>
             <div layout-align="end center" class="operation">
-                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
+                <md-button class="md-fab md-mini" aria-label="添加主机">
+                    <md-tooltip md-direction="top">添加主机</md-tooltip>
                     <i class="fa fa-plus" aria-hidden="true"></i>
                 </md-button>
-                <md-button class="md-fab md-mini" aria-label="删除项目">
+                <md-button class="md-fab md-mini" aria-label="删除集群">
+                    <md-tooltip md-direction="top">删除集群</md-tooltip>
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </md-button>
             </div>
