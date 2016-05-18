@@ -104,7 +104,8 @@
                   </span>
               </td>
               <td md-cell>
-                  <span class="bg-primary" data-ng-show="getIsMaster(node)">MASTER</span>
+                  <span class="bg-primary" data-ng-if="getIsMaster(node)">MASTER</span>
+                  <span class="bg-primary" data-ng-if="!getIsMaster(node)">SLAVE</span>
               </td>
               <td md-cell>
                   <span style="margin-left:2px" class="bg-primary" data-ng-repeat="nodeLabel in clusterLabels[node.id]">{/ nodeLabel.name /}</span>
@@ -113,7 +114,7 @@
                   {/ node.ip/}
               </td>
               <td md-cell>
-                  <img data-ng-src="../pics/ico-node-status-{/statusMgr.nodes[node.id].status/}.png" width="16"> {/statName[statusMgr.nodes[node.id].status]/}
+                  <i class="{/nodeStatusCls[statusMgr.nodes[node.id].status]/}" aria-hidden="true"></i> {/statName[statusMgr.nodes[node.id].status]/}
               </td>
               <td md-cell>
                   <span>{/ statusMgr.nodes[node.id].services.agent.version /}</span>

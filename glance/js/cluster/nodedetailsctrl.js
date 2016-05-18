@@ -32,25 +32,6 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.nodeInfo = {};
     
     $scope.services = [];
-    
-    $scope.nodeStatusCls = {};
-    $scope.nodeStatusCls[NODE_STATUS.running] = "fa fa-heartbeat text-success";
-    $scope.nodeStatusCls[NODE_STATUS.terminated] = "fa fa-chain-broken text-danger";
-    $scope.nodeStatusCls[NODE_STATUS.failed] = "fa fa-bomb text-danger";
-    $scope.nodeStatusCls[NODE_STATUS.abnormal] = "fa fa-exclamation-triangle text-warning";
-    $scope.nodeStatusCls[NODE_STATUS.installing] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.initing] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.upgrading] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.repairing] = "fa fa-cog text-normal";
-    
-    
-    $scope.serviceStatusCls = {};
-    $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
-    $scope.serviceStatusCls[SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
-    $scope.serviceStatusCls[SERVICES_STATUS.uninstalled] = "fa fa-chain-broken text-warning";
-    $scope.serviceStatusCls[SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.installing] = "fa fa-cog text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-cog text-normal";
 
 
     $('.charts').hide();
@@ -62,9 +43,9 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
                 $scope.node = data;
                 $scope.isMasterFlag = $scope.getIsMaster($scope.node);
                 if ($scope.isMasterFlag) {
-                    $scope.node.role = "Master";
+                    $scope.node.role = "MASTER";
                 } else {
-                    $scope.node.role = "Slave"
+                    $scope.node.role = "SLAVE"
                 }
                 $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
                 $scope.statusMgr.startListen($scope);
