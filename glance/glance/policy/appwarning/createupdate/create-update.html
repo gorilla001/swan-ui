@@ -148,11 +148,11 @@
                     <label flex="15">实例数</label>
                     <div flex="50" layout="column">
                         <div layout="row">
-                            <input type="text" class="form-input"
-                                   name="emails" aria-label="emails"
+                            <input type="number" class="form-input"
+                                   name="max" aria-label="max"
                                    data-required="required" data-ng-model="createWarningCtrl.form.instance" flex placeholder="最大值">
-                            <input type="text" class="form-input"
-                                   name="emails" aria-label="emails"
+                            <input type="number" class="form-input"
+                                   name="mix" aria-label="mix"
                                    data-required="required" data-ng-model="createWarningCtrl.form.mininstance" flex flex-offset="5" placeholder="最小值">
                         </div>
                         <p>*选择自动扩缩,达到条件应用实例会扩展至最大实例数,随后每个监控周期未达到条件将会减少一个实例,直到最少实例数</p>
