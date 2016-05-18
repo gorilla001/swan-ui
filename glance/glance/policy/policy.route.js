@@ -83,13 +83,12 @@
                     data: warningEvent
                 }
             })
-            // 应用扩展
-            .state('policy.tab.appwarning.warningappextend', {
-                url: '/warningappextend?per_page&page&order&keywords&sort_by',
+            .state('policy.tab.appwarning.warningscaling', {
+                url: '/warningscaling?per_page&page&order&keywords&sort_by',
                 views: {
-                    'appextend': {
-                        templateUrl: '/glance/policy/appwarning/appExtend/appScalingList.html',
-                        controller: 'WarningAppExtendCtrl as warningAppExtendCtrl'
+                    'scalingList': {
+                        templateUrl: '/glance/policy/appwarning/scalingList/scalingList.html',
+                        controller: 'WarningScalingCtrl as warningScalingCtrl'
                     }
                 },
                 defaultParams: {
