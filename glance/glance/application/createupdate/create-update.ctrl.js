@@ -89,11 +89,13 @@
             self.single = app.unique;
             self.isNetworkDisable = true;
         }
+        self.memPower = Math.log(self.form.mem)/Math.log(2)
 
         self.appNames = [];
         self.clusters = [];
         self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
         self.showAdvanceContent = false;
+        self.pow = Math.pow;
 
         listApps();
         listClusters();
@@ -274,7 +276,7 @@
 
         self.createApp = function () {
             setConstraints();
-
+            self.form.mem = Math.pow(2, self.memPower);
             return appservice.createApp(self.form, self.form.cluster_id)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
@@ -285,6 +287,7 @@
         self.updateApp = function () {
             setConstraints();
             delete self.form.cluster_id;
+            self.form.mem = Math.pow(2, self.memPower);
             return appservice.updateApp(self.form, app.cid, app.id)
                 .then(function (data) {
                     $state.go('app.detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
