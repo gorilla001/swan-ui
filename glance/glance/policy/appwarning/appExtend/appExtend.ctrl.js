@@ -10,10 +10,11 @@
     function WarningAppExtendCtrl(data, mdTable, $stateParams, $state) {
         var self = this;
 
-        self.appExtend = data.data;
+        self.appExtends = data.ScaleHistory;
+        self.count = data.Count;
         self.WARNING_TYPE = WARNING_TYPE;
         self.WARNING_RULE = WARNING_RULE;
-        self.table = mdTable.createTable('policy.tab.appwarning.warningevent');
+        self.table = mdTable.createTable('policy.tab.appwarning.warningappextend');
         self.searchKeyWord = $stateParams.keywords || '';
 
         self.doSearch = doSearch;

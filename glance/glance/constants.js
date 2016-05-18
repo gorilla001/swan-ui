@@ -300,7 +300,7 @@ BACKEND_URL = {
         cron: 'api/v3/crons/$scale_id',
         scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id',
         changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight',
-        taskappExtend: '/api/v3/scales'
+        taskappExtend: 'api/v3/scales'
     },
     user: {
         groups: 'api/v3/groups',
@@ -336,7 +336,7 @@ BACKEND_URL = {
     warning: {
         tasks: 'api/v3/alert/tasks',
         task: 'api/v3/alert/tasks/$task_id',
-        tasksEvent: 'api/v3/alert/events',
+        tasksEvent: 'api/v3/alert/events'
     },
 
     stack: {

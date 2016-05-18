@@ -89,7 +89,6 @@
         }
 
         function submit() {
-            console.log(self.app);
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
             if (self.target === 'create') {
                 self.form.appalias = self.app.alias;
