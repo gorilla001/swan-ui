@@ -4,16 +4,18 @@
         .controller('LayoutCreateCtrl', LayoutCreateCtrl);
 
     /* @ngInject */
-    function LayoutCreateCtrl($scope, $state, Notification, clusterCurd, layoutBackend, target, stack, $stateParams) {
+    function LayoutCreateCtrl($timeout, $scope, $state, Notification, clusterCurd, layoutBackend, target, stack, $stateParams) {
         var self = this;
-        self.target = target;
 
-        // Check for the various File API support.
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            self.supportReadFile = true;
-        } else {
-            self.supportReadFile = false;
-        }
+        var yamlForm = {
+            compose: '',
+            marathonConfig: ''
+        };
+        var patt = new RegExp("^[a-z|_]+$");
+
+        self.target = target;
+        self.supportReadFile = false;
+        self.refreshCodeMirror = false;
 
         self.form = {
             name: stack.name || "",
@@ -29,7 +31,8 @@
             mode: 'yaml',
             lineNumbers: true,
             theme: 'midnight',
-            matchBrackets: true
+            matchBrackets: true,
+            tabSize: 2
         };
 
         self.listClusters = listClusters;
@@ -38,22 +41,34 @@
         self.onChangeYaml = onChangeYaml;
         self.onFileSelect = onFileSelect;
 
-        var yamlForm = {
-            compose: undefined,
-            marathonConfig: undefined
-        };
-
         activate();
 
         function activate() {
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+                self.supportReadFile = true;
+            } else {
+                self.supportReadFile = false;
+            }
+
             generateYaml('compose');
             generateYaml('marathonConfig');
+
             if (self.target === 'update') {
                 listClusters()
                     .then(function (data) {
                         self.clusterId = stack.Cid
                     });
             }
+
+            // cload timeout is 10, set long for it;
+            var timeoutPromise = $timeout( function(){
+                self.refreshCodeMirror = true;
+            }, 20, false);
+
+            $scope.$on('$destroy', function () {
+                $timeout.cancel(timeoutPromise);
+            });
         }
 
         function listClusters() {
@@ -85,15 +100,42 @@
         }
 
         function generateYaml(name) {
+            var keyList;
+            if(!self.form[name]) {
+                yamlForm[name] = '';
+                self.errorInfo[name] = '';
+                return false;
+            }
+
+            if(!self.form[name].trim()) {
+                yamlForm[name] = '';
+                self.errorInfo[name] = '不能为空';
+                return false;
+            }
+
             try {
                 yamlForm[name] = jsyaml.load(self.form[name]);
-                self.errorInfo[name] = '';
-                return true;
             } catch (err) {
-                yamlForm[name] = undefined;
+                yamlForm[name] = '';
                 self.errorInfo[name] = err.message;
                 return false;
             }
+            if(typeof(yamlForm[name]) === 'string') {
+                yamlForm[name] = '';
+                self.errorInfo[name] = '必须有多级结构';
+                return false;
+            }
+            keyList = Object.keys(yamlForm[name]);
+            for(var i=0; i < keyList.length; i++) {
+                var result = patt.test(keyList[i]);
+                if(!result) {
+                    yamlForm[name] = '';
+                    self.errorInfo[name] = '第一级只能由小写字母和下划线组成';
+                    return false;
+                }
+            }
+            self.errorInfo[name] = '';
+            return true;
         }
 
         function onChangeYaml(name) {
