@@ -4,23 +4,23 @@
 (function () {
     'use strict';
     angular.module('glance.policy')
-        .controller('WarningAppExtendCtrl', WarningAppExtendCtrl);
+        .controller('WarningScalingCtrl', WarningScalingCtrl);
 
     /* @ngInject */
-    function WarningAppExtendCtrl(data, mdTable, $stateParams, $state) {
+    function WarningScalingCtrl(data, mdTable, $stateParams, $state) {
         var self = this;
 
-        self.appExtends = data.ScaleHistory;
+        self.scalingList = data.ScaleHistory;
         self.count = data.Count;
         self.WARNING_TYPE = WARNING_TYPE;
         self.WARNING_RULE = WARNING_RULE;
-        self.table = mdTable.createTable('policy.tab.appwarning.warningappextend');
+        self.table = mdTable.createTable('policy.tab.appwarning.warningscaling');
         self.searchKeyWord = $stateParams.keywords || '';
 
         self.doSearch = doSearch;
         ////
         function doSearch(searchKeyWord) {
-            $state.go('policy.tab.appwarning.warningappextend', {
+            $state.go('policy.tab.appwarning.warningscaling', {
                 page: 1,
                 per_page: 20,
                 keywords: searchKeyWord
