@@ -16,8 +16,8 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.node = {};
     $scope.showCharts = false;
     $scope.showPageNav = false;
-    $scope.disablePreNav = false;
-    $scope.disableNextNav = false;
+    $scope.disablePreNav = true;
+    $scope.disableNextNav = true;
 
     $scope.allLabelNames = [];
     $scope.allLabels = [];
@@ -238,7 +238,6 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
             var nodes = data.nodes;
             if (nodes.length > 1) {
-                $scope.showPageNav = true;
                 getPreAndNextNodeIds(nodes, $stateParams.nodeId);
             }
         })
@@ -267,10 +266,10 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
             }
         }
 
-        if (currentNodeIndex === 0) {
-            $scope.disablePreNav = true;
-        } else if (currentNodeIndex === nodes.length - 1) {
-            $scope.disableNextNav = true;
+        if (currentNodeIndex > 0) {
+            $scope.disablePreNav = false;
+        } else if (currentNodeIndex < nodes.length - 1) {
+            $scope.disableNextNav = false;
         }
 
         if (nodes[currentNodeIndex - 1]) {
