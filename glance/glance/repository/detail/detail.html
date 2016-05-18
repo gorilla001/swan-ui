@@ -60,7 +60,9 @@
                                 <div flex="50" layout="column">
                                     <div layout="row">
                                         <md-slider-container flex layout="row" layout-align="start center">
-                                            <span flex="15">CPU 权重</span>
+                                            <div flex="15">
+                                                <span class="md-body-1">CPU 权重</span>
+                                            </div>
                                             <md-slider flex-offset="5" flex class="md-primary" md-discrete step="0.1"
                                                        min="0.1" max="1"
                                                        ng-model="repoDetailCtrl.form.app.cpus" aria-label="cpu"
@@ -69,8 +71,7 @@
                                         </md-slider-container>
                                     </div>
                                 </div>
-                                <div flex><span style="font-size: 36px;">
-                                                {/repoDetailCtrl.form.app.cpus/}   </span></div>
+                                <div flex style="font-size: 24px; margin-left: 12px;">{/repoDetailCtrl.form.app.cpus/}</div>
                             </div>
 
                             <div layout="row" layout-align="end start" class="form-group form-group-input">
@@ -79,7 +80,9 @@
                                 <div flex="50" layout="column">
                                     <div layout="row">
                                         <md-slider-container flex layout="row" layout-align="start center">
-                                            <span flex="15">内存大小</span>
+                                            <div flex="15">
+                                                <span class="md-body-1">内存</span>
+                                            </div>
                                             <md-slider flex-offset="5" flex class="md-warn"
                                                        ng-model="repoDetailCtrl.form.app.mem"
                                                        min="16" max="2048"
@@ -88,17 +91,12 @@
                                         </md-slider-container>
                                     </div>
                                 </div>
-                                <div flex>
-                                    <span style="font-size: 36px;">
-                                                {/repoDetailCtrl.form.app.mem/}
-                                            <sub>MB</sub>
-                                        </span>
-                                </div>
+                                <div flex style="font-size: 24px; margin-left: 12px;">{/repoDetailCtrl.form.app.mem/} <span style="font-size: 12px;">MB</span></div>
                             </div>
 
                             <div layout="row" layout-align="end start" class="form-group form-group-input">
                                 <label flex="15">容器个数</label>
-                                <div flex="10" layout="column">
+                                <div flex="50" layout="column">
                                     <input type="number" name="instances" aria-label="instances"
                                            data-ng-model="repoDetailCtrl.form.app.instances"
                                            data-min="1"

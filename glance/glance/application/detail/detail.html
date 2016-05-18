@@ -55,21 +55,19 @@
         </header>
         <md-content>
             <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="配置" data-ui-sref="app.detail.config" md-active="$state.includes('app.detail.config')">
+                <md-tab label="配置" dm-tab-sref="app.detail.config">
                     <md-content class="md-padding main-tab-content" ui-view="config">
                 </md-tab>
-                <md-tab label="版本" data-ui-sref="app.detail.version" md-active="$state.includes('app.detail.version')">
+                <md-tab label="版本" dm-tab-sref="app.detail.version">
                     <md-content class="md-padding main-tab-content" ui-view="version">
                 </md-tab>
-                <md-tab label="监控" data-ui-sref="app.detail.monitoring"
-                        md-active="$state.includes('app.detail.monitoring')">
+                <md-tab label="监控" dm-tab-sref="app.detail.monitoring">
                     <md-content class="md-padding main-tab-content" ui-view="monitoring">
                 </md-tab>
-                <md-tab label="实例" data-ui-sref="app.detail.instance"
-                        md-active="$state.includes('app.detail.instance')">
+                <md-tab label="实例" dm-tab-sref="app.detail.instance">
                     <md-content class="md-padding main-tab-content" ui-view="instance">
                 </md-tab>
-                <md-tab label="事件" data-ui-sref="app.detail.event" md-active="$state.includes('app.detail.event')">
+                <md-tab label="事件" dm-tab-sref="app.detail.event">
                     <md-content class="md-padding main-tab-content" ui-view="event">
                 </md-tab>
             </md-tabs>

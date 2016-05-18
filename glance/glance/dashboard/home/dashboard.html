@@ -41,7 +41,7 @@
                     </div>
                     <div class="info-panel" data-ng-if="cluster.masMetrics.cpuPercent">
                         CPU 占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal"><em>{/cluster.masMetrics.cpuShare.toFixed(2)/}</em>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal">{/cluster.masMetrics.cpuShare.toFixed(2)/}
                             / {/cluster.masMetrics.cpuTotal/}
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="info-panel" data-ng-if="cluster.masMetrics.memUsed">
                         内存占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal"><em>{/cluster.masMetrics.memUsed/}</em>
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal">{/cluster.masMetrics.memUsed/}
                             / {/cluster.masMetrics.memTotal | currency: '' :0/} MB
                         </div>
                     </div>
