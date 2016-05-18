@@ -16,15 +16,6 @@ function clusterCtrl($scope, $state, gHttp, Notification) {
         repairing: '主机修复中'
     };
     
-    $scope.nodeStatusCls = {};
-    $scope.nodeStatusCls[NODE_STATUS.running] = "fa fa-heartbeat text-success";
-    $scope.nodeStatusCls[NODE_STATUS.terminated] = "fa fa-chain-broken text-danger";
-    $scope.nodeStatusCls[NODE_STATUS.failed] = "fa fa-bomb text-danger";
-    $scope.nodeStatusCls[NODE_STATUS.abnormal] = "fa fa-exclamation-triangle text-warning";
-    $scope.nodeStatusCls[NODE_STATUS.installing] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.initing] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.upgrading] = "fa fa-cog text-normal";
-    $scope.nodeStatusCls[NODE_STATUS.repairing] = "fa fa-cog text-normal";
     
     
     $scope.serviceStatusCls = {};
