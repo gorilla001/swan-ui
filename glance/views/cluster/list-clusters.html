@@ -3,17 +3,20 @@
         <!--头部-->
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2> 集群名称: <a href="#" data-ng-show="cluster.amounts.total"
-                              data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id})"> {/
-                    cluster.infos.name /}</a>
+                <h2> 集群名称:
+                    <span data-ng-show="!cluster.amounts.total">{/ cluster.infos.name /}</span>
+                    <a data-ng-show="cluster.amounts.total"
+                       data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id})">
+                        {/cluster.infos.name /}
+                    </a>
                 </h2>
                 <dl>
                     <dt data-ng-show="cluster.amounts.total">主机数量</dt>
-                    <dd>{/cluster.amounts.total/}</dd>
+                    <dd data-ng-show="cluster.amounts.total">{/cluster.amounts.total/}</dd>
                     <dt data-ng-show="cluster.infos.updated_at">更新时间</dt>
-                    <dd>{/ cluster.infos.updated_at /}</dd>
-                    <dt data-ng-if="cluster.infos.group_name">用户组</dt>
-                    <dd> {/cluster.infos.group_name/}</dd>
+                    <dd data-ng-show="cluster.infos.updated_at">{/ cluster.infos.updated_at /}</dd>
+                    <dt data-ng-show="cluster.infos.group_name">用户组</dt>
+                    <dd data-ng-show="cluster.infos.group_name"> {/cluster.infos.group_name/}</dd>
                 </dl>
                 <dl class="hostList">
                     <dt class="running {/clustersNodesData[$index].selectedClasses.running/}"
