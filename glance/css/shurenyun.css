@@ -773,18 +773,31 @@ dl.list-dl-row dt:after {
 }
 
 /*home -> liugeng*/
+#dashboard .btn-folding-v {
+    background: url(../pics/bg-line-gray.png) repeat-x 0 13px;
+
+}
+#dashboard div.dropShow {
+    height: auto;
+}
+
 #dashboard .info h2 {
     width: 100%;
 }
-
+#dashboard .app-charts-panel {
+    background: url(../pics/bg-line-gray.png) repeat-x 0 40px;
+}
 #dashboard div.charts-panel {
     background-color: #ecf2f6;
 }
 
-#dashboard div[ng-repeat="appMon in cluster.appMonitors"] {
+#dashboard div.appGroup {
     margin-top: 20px;
 }
-/*home -> liugeng*/
+#dashboard .cluster-charts-panel .info-panel {
+    height: 36px;
+}
+    /*home -> liugeng*/
 
 /*cluster-> liugeng*/
 .info h2 {
