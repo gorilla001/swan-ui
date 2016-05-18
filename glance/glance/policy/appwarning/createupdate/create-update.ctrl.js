@@ -20,8 +20,7 @@
             enabled: true,
             triger: false,
             mininstance: warning.mininstance ||'',
-            instance: warning.instance||'',
-            appid:self.app.id
+            instance: warning.instance||''
         };
 
         if (self.target === 'update' && warning.metric === 'CpuUsedCores') {
@@ -90,6 +89,8 @@
 
         function submit() {
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
+            self.form.appid = self.app.id || warning.appid || '';
+
             if (self.target === 'create') {
                 self.form.appalias = self.app.alias;
                 self.form.appname = self.app.name;
