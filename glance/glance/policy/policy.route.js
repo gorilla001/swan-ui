@@ -88,7 +88,7 @@
                 url: '/warningappextend?per_page&page&order&keywords&sort_by',
                 views: {
                     'appextend': {
-                        templateUrl: '/glance/policy/appwarning/appExtend/appExtend.html',
+                        templateUrl: '/glance/policy/appwarning/appExtend/appScalingList.html',
                         controller: 'WarningAppExtendCtrl as warningAppExtendCtrl'
                     }
                 },
