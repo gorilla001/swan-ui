@@ -305,7 +305,8 @@ BACKEND_URL = {
         crons: 'api/v3/crons',
         cron: 'api/v3/crons/$scale_id',
         scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id',
-        changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight'
+        changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight',
+        taskappExtend: 'api/v3/scales'
     },
     user: {
         groups: 'api/v3/groups',

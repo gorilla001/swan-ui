@@ -13,7 +13,8 @@
             updateWarning: updateWarning,
             getWarning: getWarning,
             warningEvent: warningEvent,
-            patchWarning: patchWarning
+            patchWarning: patchWarning,
+            warningAppExtend: warningAppExtend
         };
 
         function createWarning(data) {
@@ -31,7 +32,7 @@
         function updateWarning(data) {
             return gHttp.Resource('warning.tasks').put(data);
         }
-        
+
         function patchWarning(taskId, method) {
             return gHttp.Resource('warning.task', {task_id: taskId}).patch({method: method});
         }
@@ -42,6 +43,10 @@
 
         function warningEvent(params) {
             return gHttp.Resource('warning.tasksEvent').get({params: params});
+        }
+        
+        function warningAppExtend() {
+            return gHttp.Resource('app.taskappExtend').get()
         }
     }
 })();

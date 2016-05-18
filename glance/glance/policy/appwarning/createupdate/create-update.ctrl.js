@@ -17,7 +17,11 @@
             emails: warning.emails || '',
             duration: warning.duration || '',
             times: warning.times || '',
-            enabled: true
+            enabled: true,
+            triger: false,
+            mininstance: warning.mininstance ||'',
+            instance: warning.instance||'',
+            appid:self.app.id
         };
 
         if (self.target === 'update' && warning.metric === 'CpuUsedCores') {
@@ -74,7 +78,7 @@
         activate();
 
         function activate() {
-            ///
+            
         }
 
         function getAppList() {

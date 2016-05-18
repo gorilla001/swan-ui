@@ -83,6 +83,23 @@
                     data: warningEvent
                 }
             })
+            // 应用扩展
+            .state('policy.tab.appwarning.warningappextend', {
+                url: '/warningappextend?per_page&page&order&keywords&sort_by',
+                views: {
+                    'appextend': {
+                        templateUrl: '/glance/policy/appwarning/appExtend/appScalingList.html',
+                        controller: 'WarningAppExtendCtrl as warningAppExtendCtrl'
+                    }
+                },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
+                },
+                resolve: {
+                    data: warningAppExtend
+                }
+            })
             .state('policy.tab.apptimescaling', {
                 url: '/apptimescaling',
                 views: {
@@ -212,6 +229,11 @@
     function warningEvent(appWarningBackend, utils, $stateParams) {
         return appWarningBackend.warningEvent(utils.encodeQueryParams($stateParams));
         //return {events: [{taskid: 1,appname: '111', alerttime: '2016-05-09T14:33:48', instance: 1,metric: 'CpuUsedCores', currentvalue:0.8, operator: '>',threshold: 0.9}],count:1}
+    }
+
+    /* @ngInject */
+    function warningAppExtend(appWarningBackend, utils, $stateParams) {
+        return appWarningBackend.warningAppExtend(utils.encodeQueryParams($stateParams));
     }
 
     /* @ngInject */

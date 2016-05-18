@@ -1,0 +1,43 @@
+<md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+        <form flex name="filter.form">
+            <input type="text" ng-model="warningAppExtendCtrl.searchKeyWord" placeholder="输入应用名称进行搜索"
+                   my-enter="warningAppExtendCtrl.table.doSearch(warningAppExtendCtrl.searchKeyWord)">
+        </form>
+    </div>
+</md-toolbar>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="warningAppExtendCtrl.table.query.order"
+               md-on-reorder="warningAppExtendCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column><span>ID</span></th>
+            <th md-column><span>应用名称</span></th>
+            <th md-column>扩缩时间</th>
+            <th md-column>实例数</th>
+            <th md-column>状态</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in warningAppExtendCtrl.appExtends">
+            <td md-cell>{/item.taskid/}</td>
+            <td md-cell><a href="#">{/item.appName/}</a></td>
+            <td md-cell>
+                {/item.startTime | date:"yyyy-MM-dd HH:mm:ss"/}
+            </td>
+
+            <td md-cell>{/item.instances/}</td>
+            <td md-cell>{/item.staus == 1 :'成功' ? '等待中'/}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!warningAppExtendCtrl.appExtend.length">
+        未查询到监控事件
+    </div>
+</md-table-container>
+<md-table-pagination md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}"
+                     md-limit="warningAppExtendCtrl.table.query.limit" md-limit-options="[20, 50, 100]"
+                     md-page="warningAppExtendCtrl.table.query.page"
+                     md-total="{/warningAppExtendCtrl.count/}" md-on-paginate="warningAppExtendCtrl.table.getPage"
+                     md-page-select>
+</md-table-pagination>
