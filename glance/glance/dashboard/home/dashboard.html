@@ -6,13 +6,13 @@
                 <h2> 集群名称: <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
                 </h2>
                 <dl>
-                    <dt><i class="fa fa-heartbeat text-success"></i> 正常主机</dt>
+                    <dt><i class="{/nodeStatusCls['running']/}"></i> 正常主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
-                    <dt><i class="fa fa-chain-broken text-danger"></i> 失联主机</dt>
+                    <dt><i class="{/nodeStatusCls['terminated']/}"></i> 失联主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
-                    <dt><i class="fa fa-exclamation-triangle text-warning"></i>预警主机</dt>
+                    <dt><i class="{/nodeStatusCls['abnormal']/}"></i>预警主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
-                    <dt><i class="fa fa-bomb text-danger"></i>异常主机</dt>
+                    <dt><i class="{/nodeStatusCls['failed']/}"></i>异常主机</dt>
                     <dd>{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
                     <dt><i class="fa fa-cog text-info "></i> 其他主机</dt>
                     <dd>
