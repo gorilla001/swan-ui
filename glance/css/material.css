@@ -89,7 +89,7 @@ ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     padding: 0;
   }
   .nav-main .md-toolbar-tools .md-button {
-    border-left: 1px solid #E5E7EA;
+    border-right: 1px solid #E5E7EA;
     border-radius: 0;
     font-size: 24px;
     height: 80px;    
@@ -98,8 +98,7 @@ ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     width: 80px;
   }
   .nav-main .md-toolbar-tools .md-button:first-child {
-    border-left: 0;
-    border-right: 1px solid #E5E7EA;
+    border-left: 1px solid #E5E7EA;
   }
   .nav-main md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), .nav-main md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
     color: #A0ABBF;
