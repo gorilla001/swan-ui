@@ -81,7 +81,7 @@
         activate();
 
         function activate() {
-            
+            getAppList();
         }
 
         function getAppList() {

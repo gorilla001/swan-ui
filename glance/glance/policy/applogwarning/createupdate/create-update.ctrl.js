@@ -32,6 +32,7 @@
 
         function activate() {
             listCluster();
+            getAppList();
         }
 
         function listCluster() {
