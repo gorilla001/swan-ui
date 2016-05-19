@@ -3,7 +3,7 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2> 集群名称: <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
+                <h2> <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
                 </h2>
                 <dl>
                     <dt><i class="fa fa-heartbeat "></i> 正常主机</dt>
@@ -21,16 +21,6 @@
                     </dd>
 
                 </dl>
-            </div>
-            <div layout-align="end center" class="operation">
-                <md-button class="md-fab md-mini" aria-label="添加主机">
-                    <md-tooltip md-direction="top">添加主机</md-tooltip>
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </md-button>
-                <md-button class="md-fab md-mini" aria-label="删除集群">
-                    <md-tooltip md-direction="top">删除集群</md-tooltip>
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                </md-button>
             </div>
         </header>
         <div class="main-content" id="dasboard" layout="row" layout-align="start start">

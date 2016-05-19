@@ -4,7 +4,7 @@
         .factory('imageLogModal', imageLogModal);
 
     /* @ngInject */
-    function imageLogModal($mdDialog) {
+    function imageLogModal($mdDialog, $base64) {
 
         return {
             open: open
@@ -81,7 +81,7 @@
                 var events = new EventSource(url);
                 events.addEventListener("ci_build_log", function(event) {
                     if (callback !== undefined) {
-                        callback(event.data);
+                        callback($base64.decode(event.data));
                     }
                 });
                 events.onerror = function (event) {
