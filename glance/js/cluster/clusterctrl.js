@@ -16,7 +16,12 @@ function clusterCtrl($scope, $state, gHttp, Notification) {
         repairing: '主机修复中'
     };
     
-    
+    $scope.clusterStatName = {
+            running: '运行正常',
+            installing: '初始化中',
+            abnormal: '异常',
+            unknow: '未知'
+        };
     
     $scope.serviceStatusCls = {};
     $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";

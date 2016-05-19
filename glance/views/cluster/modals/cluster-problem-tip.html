@@ -1,0 +1,31 @@
+<md-dialog ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h3>{/cluster.problemTips.headText/}</h3>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <p data-ng-show="'abnormal' === cluster.clusterStatus">
+                数人云是通过重启各组件快速恢复相应服务的。若仍有服务重启失效，需要去往主机详情页面重置该服务。修复过程大概需要一分钟。</p>
+            <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
+            <ul>
+                <li data-ng-repeat="node in cluster.problemNodes">
+                    <a href="#"
+                       data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.infos.id})">{/node.name/}
+                        &nbsp; [{/node.ip/}]</a>
+                </li>
+            </ul>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button
+                data-ng-click="close()">
+            {/cluster.problemTips.firstButtonText/}
+        </md-button>
+        <md-button data-ng-show="cluster.problemTips.secondButtonText"
+                data-ng-click="cancel()">{/cluster.problemTips.secondButtonText/}
+        </md-button>
+    </md-dialog-actions>
+</div>
+</md-dialog>

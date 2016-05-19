@@ -40,20 +40,17 @@
                      <div class="flex-none" flex="none">
                          <md-radio-group ng-model="form.clusterType" role="radiogroup">
                              <md-radio-button value="1_master" 
-                                              data-ng-click="form.clusterType='1_master'"
                                               name="clusterType"
                                               class="md-primary md-checked">
                                  <strong>初级版</strong> <small>1 Master，开发环境使用，适合6台主机以内使用。</small>
                              </md-radio-button>
-                             <md-radio-button value="3_master"
-                                              data-ng-click="form.clusterType='3_master'"
+                             <md-radio-button value="3_masters"
                                               name="clusterType"
                                               class="md-primary" > 
                                  <strong>高级版</strong> <small>3 Masters，基础生产环境使用，适合30台主机以内使用。</small>
                              </md-radio-button>
-                             <md-radio-button value="5_master"
+                             <md-radio-button value="5_masters"
                                               name="clusterType"
-                                              data-ng-click="form.clusterType='5_master'"
                                               class="md-primary">
                                  <strong>企业版</strong> <small>5 Masters，高容错级生产环境使用，适合30台主机以上使用。</small>
                              </md-radio-button>

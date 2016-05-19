@@ -1,4 +1,5 @@
-function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeout, gHttp) {
+/*@ngInject*/
+function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeout, gHttp, clusterProblemTipModal) {
     var clusterTypes = {
         '1_master': 1,
         '3_masters': 3,
@@ -35,23 +36,20 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         basicInfos.clickWords = basicInfos.showMore ? '点击显示更多' : '点击隐藏';
         basicInfos.showMore = !basicInfos.showMore;
     };
-
-    $scope.close = function (clusterId, index, clusterStatus) {
-        if (clusterStatus === CLUSTER_STATUS.installing) {
-            $state.go('cluster.nodesource', {'clusterId': clusterId});
-        } else if (clusterStatus === CLUSTER_STATUS.abnormal) {
-            $scope.clustersBasicData[index].problemTips.firstBtnDisable = true;
-            $scope.clustersBasicData[index].problemTips.firstButtonText = "正在修复中";
-            gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({"method": "repair"}).then(function(){
-                $timeout.cancel(repairPromise);
-                repairPromise = $timeout(function () {
-                    $state.reload();
-                }, 60000);
-            });
-        } else {
-            $scope.clustersBasicData[index].problemTips = null;
+    
+    $scope.showProblemTips = function (cluster, ev) {
+        if (cluster.problemTips) {
+            clusterProblemTipModal.open(cluster, ev).then(function () {
+                if (cluster.clusterStatus === CLUSTER_STATUS.installing) {
+                    $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
+                } else if (cluster.clusterStatus === CLUSTER_STATUS.abnormal) {
+                    gHttp.Resource('cluster.cluster', {'cluster_id': cluster.infos.id}).patch({"method": "repair"}).then(function(){
+                        $state.go('cluster.clusterdetails.nodes', {clusterId: cluster.infos.id})
+                    });
+                }
+            })
         }
-    };
+    }
 
     function countNodesAmount(nodesWithRoleAndStatus) {
         var amounts = {
@@ -383,5 +381,4 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
 
 }
 
-listClustersCtrl.$inject = ["$scope", "$state", "Notification", "ClusterStatusMgr", "$timeout", "gHttp"];
 glanceApp.controller("listClustersCtrl", listClustersCtrl);
