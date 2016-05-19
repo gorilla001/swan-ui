@@ -30,9 +30,10 @@
 
 <body>
 <div layout="row" class="main" ng-cloak>
-    <aside class="sidebar-main" data-ng-class="{'shortMenu' : rootCtrl.isShortMenu}">
+    <aside class="sidebar-main" data-ng-class="{'sidebar-main_two' : rootCtrl.isShortMenu}">
         <div class="logo">
-            <a href="#"><img src="pics/logo-white-full.svg"></a>
+            <a href="#"><img src="pics/logo-white-full.svg" data-ng-show="!rootCtrl.isShortMenu"></a>
+            <a href="#"><img src="pics/logo-white-small.jpg" data-ng-show="rootCtrl.isShortMenu"></a>
         </div>
         <ul>
             <li data-ui-sref-active="active" title="首页">
