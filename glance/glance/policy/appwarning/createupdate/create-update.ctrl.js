@@ -94,7 +94,8 @@
         function submit() {
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
             self.form.appid = self.app.id || warning.appid || '';
-            self.form.cid = self.app.cid || parseInt(warning.appid) || '';
+            self.form.cid = self.app.cid || parseInt(warning.cid) || '';
+
             if (self.target === 'create') {
                 self.form.appalias = self.app.alias;
                 self.form.appname = self.app.name;
