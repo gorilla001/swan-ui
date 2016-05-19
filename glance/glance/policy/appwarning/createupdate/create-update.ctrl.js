@@ -54,7 +54,7 @@
             },
             {
                 name: '每秒请求数',
-                label: 'Triffic'
+                label: 'reqrate'
             }
         ];
 
