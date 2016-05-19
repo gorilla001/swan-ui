@@ -23,10 +23,10 @@
                    <div class="layout-column flex-50" flex="50" layout="column">
                      <div class="flex-none" flex="none">
                          <md-input-container class="md-block" flex-gt-sm>
-                             <md-select data-ng-model="form.groupId">
+                             <md-select data-ng-model="form.groupId" aria-label="group">
                                  <md-option value="">无</md-option>
-                                 <md-option ng-repeat="group.id as group.name for group in groups" value="{{group.id}}">
-                                   {{group.name}}
+                                 <md-option ng-repeat="group in groups" value="{/ group.id /}">
+                                   {/ group.name /}
                                  </md-option>
                              </md-select>
                          </md-input-container>
