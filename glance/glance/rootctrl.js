@@ -4,7 +4,7 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav) {
+    function RootCtrl($rootScope, $document, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav) {
         var self = this;
 
         $rootScope.nodeStatusCls = {};
@@ -46,6 +46,17 @@
             } else {
                 self.userManualUrl = "http://doc.shurenyun.com";
             }
+
+            $document.on('click', function (e) {
+                if(!angular.element('.md-toolbar-tools_option').hasClass('ng-hide')) {
+                    var target = angular.element(e.target);
+                    var options = target.parents('.md-toolbar-tools_option');
+                    if (!options.length) {
+                        self.isShowToolbarToolsOption = false;
+                        $rootScope.$digest()
+                    }
+                }
+            });
         }
 
         function linkToCS() {

@@ -48,6 +48,7 @@
                     if(value.Id === data.stackId && value.md5 !== data.md5) {
                         value.md5 = data.md5;
                         self.sseMsgStatus[data.stackId] = 'out';
+                        forceShowTableData(value.Cid, value.Id);
                         $scope.$digest();
                         (function(value) {
                             self.timeoutPromises[data.stackId] = $timeout(function() {
@@ -86,6 +87,11 @@
                 }
                 console.log('applayout event stream closed due to error.', event);
             };
+        }
+
+        function forceShowTableData(clusterId, stackId) {
+            self.openFlag[stackId] = false;
+            self.showTableData(clusterId, stackId);
         }
 
         function showTableData(clusterId, stackId) {
@@ -135,7 +141,7 @@
             var data = {};
             layoutCurd.stopApp(data, clusterId, appId, stackId)
                 .then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    forceShowTableData(clusterId, stackId);
                 })
         }
 
@@ -143,14 +149,14 @@
             var data = {};
             layoutCurd.startApp(data, clusterId, appId, stackId)
                 .then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    forceShowTableData(clusterId, stackId);
                 })
         }
 
         function deleteApp(clusterId, appId, stackId, ev) {
             layoutCurd.deleteApp(clusterId, appId, stackId, ev)
                 .then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    forceShowTableData(clusterId, stackId);
                 })
         }
 
@@ -158,14 +164,14 @@
             var data = {};
             layoutCurd.undoApp(data, clusterId, appId, stackId)
                 .then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    forceShowTableData(clusterId, stackId);
                 })
         }
 
         function updateContainer(curInsNmu, clusterId, appId, stackId, ev) {
             layoutCurd.updateContainer(curInsNmu, clusterId, appId, stackId, ev)
                 .then(function (data) {
-                    self.appList[stackId] = data.applications;
+                    forceShowTableData(clusterId, stackId);
                 })
         }
 
