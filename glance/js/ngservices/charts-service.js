@@ -301,7 +301,8 @@ function buildCharts(monitor) {
     };
 
     return {
-        lineCharts: lineCharts
+        lineCharts: lineCharts,
+        initIOCharts: initIOCharts
     };
 }
 

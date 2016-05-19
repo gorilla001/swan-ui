@@ -12,16 +12,21 @@ function monitor($rootScope, ngSocket) {
             return times;
         },
 
-        getDataInhour: function(data, frequency, interval) {
+        getDataInhour: function(data, frequency, interval, getTimestampFn) {
+            if (!getTimestampFn) {
+                getTimestampFn = function (data) {
+                    return data.timestamp;
+                };
+            }
             var dataInhour = {};
-            var timestamp = Math.floor(data[0].timestamp/60)*60
+            var timestamp = Math.floor(getTimestampFn(data[0])/60)*60
             var xAxisTimes = this.getxAxisTimes(timestamp, frequency, interval);
             var yAxisInhour = [];
             for(var i = 0; i < frequency; i++) {
                 var cur_interval = interval/2 + 1;
                 
                 for (var j = 0; j < data.length; j++) {
-                    var temp_interval = Math.abs(data[j].timestamp - xAxisTimes.seconds[i])
+                    var temp_interval = Math.abs(getTimestampFn(data[j]) - xAxisTimes.seconds[i])
                     if(temp_interval < cur_interval) {
                         yAxisInhour[i] = data[j];
                         cur_interval = temp_interval;
@@ -52,7 +57,9 @@ function monitor($rootScope, ngSocket) {
                 yAxis: yAxis,
                 diskNames: diskNames
             };
-        }
+        },
+        
+        setShowRatio: setShowRatio
     };
 
     var calHourMin = function(seconds) {
