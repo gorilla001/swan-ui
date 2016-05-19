@@ -29,43 +29,28 @@
         }
 
         function stopApp(data, clusterId, appId, stackId) {
-            return appservice.stopApp(data, clusterId, appId)
-                .then(function (data) {
-                    return layoutBackend.getStack(clusterId, stackId)
-                })
+            return appservice.stopApp(data, clusterId, appId);
         }
 
         function startApp(data, clusterId, appId, stackId) {
-            return appservice.startApp(data, clusterId, appId)
-                .then(function (data) {
-                    return layoutBackend.getStack(clusterId, stackId)
-                })
+            return appservice.startApp(data, clusterId, appId);
         }
 
         function deleteApp(clusterId, appId, stackId, ev) {
             return confirmModal.open("是否确认删除应用？", ev).then(function () {
-                return appservice.deleteApp(clusterId, appId)
-                    .then(function (data) {
-                        return layoutBackend.getStack(clusterId, stackId)
-                    })
+                return appservice.deleteApp(clusterId, appId);
             });
         }
 
         function undoApp(data, clusterId, appId, stackId) {
-            return appservice.stopScaling(data, clusterId, appId)
-                .then(function (data) {
-                    return layoutBackend.getStack(clusterId, stackId)
-                })
+            return appservice.stopScaling(data, clusterId, appId);
         }
 
         function updateContainer(curInsNmu, clusterId, appId, stackId, ev) {
             return formModal.open('/glance/application/modals/up-container.html', ev,
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
-                return appservice.updateContainerNum(data, clusterId, appId)
-                    .then(function (data) {
-                        return ayoutBackend.getStack(clusterId, stackId)
-                    });
+                return appservice.updateContainerNum(data, clusterId, appId);
             });
         }
     }
