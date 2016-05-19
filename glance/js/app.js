@@ -38,7 +38,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
         $stateProvider
             .state("cluster", {
                 url: '/cluster',
-                abstract: true,
+                targetState: "listclusters",
                 views: {
                     "": {
                         templateUrl: '/views/cluster/cluster.html',
