@@ -31,8 +31,7 @@
                     <div flex="50" layout="column">
                             <md-input-container>
                                 <md-select data-ng-model="createWarningCtrl.app" aria-label="createapp"
-                                           data-required="required" name="createapp"
-                                           md-on-open="createWarningCtrl.getAppList()">
+                                           data-required="required" name="createapp">
                                     <md-option ng-repeat="app in createWarningCtrl.apps" ng-value="app">
                                         {/app.name/}
                                     </md-option>

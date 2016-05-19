@@ -30,8 +30,7 @@
                     <div flex="50" layout="column">
                         <div flex="none">
                             <md-select data-ng-model="createLogWarningCtrl.app"
-                                       data-required="required" aria-label="createapp"
-                                       md-on-open="createLogWarningCtrl.getAppList()">
+                                       data-required="required" aria-label="createapp">
                                 <md-option ng-repeat="app in createLogWarningCtrl.apps" ng-value="app">{/app.name/}</md-option>
                             </md-select>
                         </div>
