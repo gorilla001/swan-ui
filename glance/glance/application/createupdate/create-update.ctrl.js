@@ -370,8 +370,8 @@
             setTick(self.multiSelect.selectedNodes, true);
         }
 
-        function openImageModal() {
-            selectImageModal.open().then(function (data) {
+        function openImageModal(ev) {
+            selectImageModal.open(ev).then(function (data) {
                 self.form.imageName = $filter("filterVersion")(data.image, 'url');
                 self.form.imageVersion = $filter("filterVersion")(data.image, 'version');
             });

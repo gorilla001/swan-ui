@@ -6,29 +6,28 @@
     angular.module('glance.app')
         .factory('selectImageModal', selectImageModal);
 
-    selectImageModal.$inject = ['$uibModal', 'Notification'];
-
-    function selectImageModal($uibModal, Notification) {
-
-        SelectImageCtrl.$inject = ['$uibModalInstance', 'imageBackend', '$window'];
+    /* @ngInject */
+    function selectImageModal($mdDialog) {
 
         return {
             open: open
         };
 
-        function open() {
-            var modalInstance = $uibModal.open({
-                templateUrl: '/glance/application/createupdate/modals/create-select-image.html',
+        function open(ev){
+            var dialog = $mdDialog.show({
                 controller: SelectImageCtrl,
                 controllerAs: 'selectImageCtrl',
-                size: 'lg'
+                templateUrl: '/glance/application/createupdate/modals/create-select-image.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true
             });
 
-            return modalInstance.result;
+            return dialog;
         }
 
-
-        function SelectImageCtrl($uibModalInstance, imageBackend, $window) {
+        /* @ngInject */
+        function SelectImageCtrl($mdDialog, imageBackend) {
             var self = this;
 
             self.imageList = [];
@@ -45,12 +44,12 @@
 
             activate();
 
-            self.ok = function (image) {
-                $uibModalInstance.close(image)
+            self.ok = function () {
+                $mdDialog.hide(self.image);
             };
 
             self.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
+                $mdDialog.cancel();
             };
 
             function activate() {
