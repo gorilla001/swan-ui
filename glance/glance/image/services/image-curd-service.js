@@ -27,7 +27,7 @@
         function goToCreateApp(imageUrl) {
             var url = $filter("filterVersion")(imageUrl, 'url');
             var version = $filter("filterVersion")(imageUrl, 'version');
-            $state.go('appcreate', {url: url, version: version})
+            $state.go('app.create', {url: url, version: version})
         }
 
         function manualBuild(projectId, project) {
