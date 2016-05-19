@@ -25,8 +25,8 @@
 
         function switchNotice(logId, enable) {
             return enable ?
-                logWarningBackend.restartLogPolicy(logId) :
-                logWarningBackend.stopLogPolicy(logId);
+                logWarningBackend.stopLogPolicy(logId) :
+                logWarningBackend.restartLogPolicy(logId) ;
         }
     }
 })();
