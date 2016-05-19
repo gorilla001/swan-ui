@@ -1,55 +1,55 @@
 /* 重置 */
-body {
-    background-color: #FFF;
-    color: #354052;
-    font-size: 12px;
-    font-family: 'Helvetica Neue', 'Helvetica', 'PingHei', 'PingFang SC', 'STHeitiSC-Light', 'Arial', sans-serif;
-    font-weight: 300;
-    height: 100%;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizelegibility;
-}
+/*body {*/
+    /*background-color: #FFF;*/
+    /*color: #354052;*/
+    /*font-size: 12px;*/
+    /*font-family: 'Helvetica Neue', 'Helvetica', 'PingHei', 'PingFang SC', 'STHeitiSC-Light', 'Arial', sans-serif;*/
+    /*font-weight: 300;*/
+    /*height: 100%;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*text-rendering: optimizelegibility;*/
+/*}*/
 ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     list-style: none;
     line-height: 1;
     margin: 0;
     padding: 0;
 }
- h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
     margin-bottom: 12px;
- }
-  .main {
+}
+.main {
     height: 100%;
     overflow-x: hidden;
     position: relative;
-  }
-  .sidebar-main {
+}
+.sidebar-main {
     background-color: #354052;
     width: 200px;
-  }
-  .sidebar-main .logo {
+}
+.sidebar-main .logo {
     border-bottom: 1px solid #293241;
     box-shadow: 0 1px 0 #3D495D;
     height: 80px;
     text-align: center;
-  }
-  .sidebar-main .logo img {
+}
+.sidebar-main .logo img {
     margin-top: 25px;
     opacity: 0.7;
     width: 112px;
-  }
-  .sidebar-main ul{
+}
+.sidebar-main ul{
     margin: 20px 0 40px 0;
-  }
-  .sidebar-main li i {
+}
+.sidebar-main li i {
     font-size: 20px;
     margin-left: 24px;
     margin-right: 20px;
     text-align: center;
     width: 24px;
-  }
-  .sidebar-main li a {
+}
+.sidebar-main li a {
     border-left: 4px solid transparent;
     color: #A0ABBF;
     display: block;
@@ -58,51 +58,52 @@ ul, li, dt, dd, dl, h1, h2, h3, h4, h5, h6 {
     line-height: 48px;
     margin: 0;
     text-align: left;
-  }
-  .sidebar-main li a:hover {
+}
+.sidebar-main li a:hover {
     background-color: transparent!important;
     color: #FFF;
     text-decoration: none;
-  }
-  .sidebar-main li.active a {
+}
+.sidebar-main li.active a {
     background-color: #303949;
     border-left: 4px solid #2196F3;
     border-radius: 0;
     color: #FFF;
-  }
-  .sidebar-main hr {
+}
+.sidebar-main hr {
     border-color: #293241;
     margin: 0;
-  }
-  .sidebar-main hr:nth-child(2n) {
+}
+.sidebar-main hr:nth-child(2n) {
     border-color: #3D495D;
-  }
+}
 
-  .nav-main md-toolbar {
+.nav-main md-toolbar {
     background-color: transparent;
     border-bottom: 1px solid #E5E7EA;
     height: 80px;
-  }
-  .nav-main .md-toolbar-tools {
+}
+.nav-main .md-toolbar-tools {
     height: 80px;
     max-height: 80px;
     padding: 0;
-  }
-  .nav-main .md-toolbar-tools .md-button {
-    border-right: 1px solid #E5E7EA;
+}
+.nav-main .md-toolbar-tools .md-button {
+    border-left: 1px solid #E5E7EA;
     border-radius: 0;
     font-size: 24px;
-    height: 80px;    
+    height: 80px;
     margin: 0;
     padding: 0;
     width: 80px;
-  }
-  .nav-main .md-toolbar-tools .md-button:first-child {
-    border-left: 1px solid #E5E7EA;
-  }
-  .nav-main md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), .nav-main md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
+}
+.nav-main .md-toolbar-tools .md-button:first-child {
+    border-left: 0;
+    border-right: 1px solid #E5E7EA;
+}
+.nav-main md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised), .nav-main md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised) {
     color: #A0ABBF;
-  }
+}
 .main-container {
     overflow-y: auto;
     width: 100%;
@@ -359,9 +360,9 @@ table.md-table .md-menu {
     font-size: 14px;
     margin-bottom: 30px;
 }
-.form-group md-switch, 
-.form-group md-input-container, 
-.form-group .help-info-bottom, 
+.form-group md-switch,
+.form-group md-input-container,
+.form-group .help-info-bottom,
 .form-group md-checkbox,
 .form-group md-select {
     margin: 0;
@@ -395,8 +396,8 @@ table.md-table .md-menu {
 .form-footer-button md-switch {
     margin: 0 15px 0 0;
 }
-.form-group-input input[type="text"], 
-.form-group-input input[type="number"], 
+.form-group-input input[type="text"],
+.form-group-input input[type="number"],
 .form-group-input input[type="password"] {
     box-sizing: border-box;
     -moz-box-sizing: border-box; /* Firefox */
@@ -410,11 +411,11 @@ table.md-table .md-menu {
 }
 .form-group-input input[type="text"]:hover,
 .form-group-input input[type="text"]:focus,
-.form-group-input input[type="number"]:hover, 
-.form-group-input input[type="number"]:focus, 
-.form-group-input input[type="password"]:hover, 
-.form-group-input input[type="password"]:focus, 
-.form-group-textarea textarea:hover, 
+.form-group-input input[type="number"]:hover,
+.form-group-input input[type="number"]:focus,
+.form-group-input input[type="password"]:hover,
+.form-group-input input[type="password"]:focus,
+.form-group-textarea textarea:hover,
 .form-group-textarea textarea:focus {
     border-color: #3f51b5;
 }
@@ -432,7 +433,7 @@ table.md-table .md-menu {
     min-height: 150px;
     line-height: 14px;
     padding: 18px;
-    width: 100%;        
+    width: 100%;
 }
 .form-input-addon {
     color: #999;
@@ -555,19 +556,19 @@ dl.list-dl-row dt:after {
     height: 200px;
 }
 .cluster-charts-panel .charts-panel {
-    height: 135px; 
+    height: 135px;
     margin: 0 auto 15px auto;
     width: 135px;
 }
 .cluster-charts-panel .info-panel {
-    background: #FFF; 
-    border: 1px solid #D9E3EB; 
+    background: #FFF;
+    border: 1px solid #D9E3EB;
     border-radius: 17px;
-    font-size: 12px;  
-    height: 32px; 
+    font-size: 12px;
+    height: 32px;
     margin: 0 auto;
     text-align: center;
-    width: 133px; 
+    width: 133px;
 }
 .app-charts-panel {
     background: url(../pics/bg-line-gray.png) repeat-x 0 40px;
@@ -577,19 +578,19 @@ dl.list-dl-row dt:after {
     margin-bottom: 0px;
 }
 .app-charts-panel .app-header {
-    background:#FFF; 
-    border: 1px solid #D9E3EB; 
-    border-radius: 17px; 
+    background:#FFF;
+    border: 1px solid #D9E3EB;
+    border-radius: 17px;
     color: #354052;
     font-size: 12px;
-    height: 26px; 
+    height: 26px;
     line-height: 26px;
-    margin: 0 auto ;  
+    margin: 0 auto ;
     text-align: center;
-    width: 98px;  
+    width: 98px;
 }
 .app-charts-panel .charts-panel {
-    height: 80px; 
+    height: 80px;
     margin: 0 auto;
     width: 80px;
 }

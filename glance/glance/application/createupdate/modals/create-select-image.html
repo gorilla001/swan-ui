@@ -1,35 +1,74 @@
-<div id="createSelectImage">
+<md-dialog aria-label="select image">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>数人推荐镜像</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="selectImageCtrl.cancel()"
+                           aria-label="cancel">
+                    <i class="fa fa-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width: 600px; max-height: 600px; min-height: 200px;">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="数人推荐镜像">
+                    <md-content class="md-padding">
+                        <form>
+                            <div layout="row" layout-align="start start" class="form-group form-group-radio" flex>
+                                <div flex-offset="10" layout="column" layout-align="start center">
+                                    <div flex>
+                                        <md-radio-group ng-model="selectImageCtrl.image" layout="row" layout-wrap
+                                                        aria-label="select sry radio" layout-align="start center">
+                                            <div flex="50" data-ng-repeat-start="datamanImage in selectImageCtrl.datamanImages">
+                                                <md-radio-button ng-value="datamanImage" flex>{/datamanImage.name/}</md-radio-button>
+                                            </div>
+                                            <div flex="50" data-ng-repeat-end>
+                                                <md-button class="md-icon-button md-primary" aria-label="Settings"
+                                                           ng-href="{/datamanImage.url/}" target="_blank">
+                                                    <i class="fa fa-file-text"></i>
+                                                </md-button>
+                                            </div>
+                                        </md-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+                <md-tab label="用户镜像列表（默认最新版本）">
+                    <md-content class="md-padding">
+                        <form>
+                            <div layout="row" layout-align="start start" class="form-group form-group-radio" flex>
+                                <div flex-offset="10" layout="column" layout-align="start center">
+                                    <div flex>
+                                        <md-radio-group ng-model="selectImageCtrl.image" layout="row" layout-wrap
+                                                        aria-label="select user radio" layout-align="start center">
+                                            <div flex="50" ng-repeat="image in selectImageCtrl.imageList">
+                                                <md-radio-button ng-value="image" flex>
+                                                    {/image.imageName/}
+                                                </md-radio-button>
+                                            </div>
+                                        </md-radio-group>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <h2 data-ng-show="!selectImageCtrl.imageList.length">您还没有镜像.</h2>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="selectImageCtrl.cancel()" aria-label="cancel">
+                取消
+            </md-button>
+            <md-button data-ng-disabled="!selectImageCtrl.image" data-ng-click="selectImageCtrl.ok(selectImageCtrl.image)"
+                       aria-label="ok" style="margin-right:20px;" >
+                确认
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
 
-    <div class="modal-header">
-        <h4 class="modal-title">数人推荐镜像</h4>
-    </div>
-    <div class="modal-body">
-
-        <uib-tabset justified="true">
-            <uib-tab heading="数人推荐镜像">
-                <div role="tabpanel" class="tab-pane active">
-                    <span data-ng-repeat="datamanImage in selectImageCtrl.datamanImages">
-                        <a class="btn btn-info" ng-href="{/datamanImage.url/}" target="_blank">
-                            <i class="fa fa-file-text-o"></i>
-                        </a>
-                        <label class="btn btn-default" ng-model="selectImageCtrl.image"
-                               uib-btn-radio="datamanImage">{/datamanImage.name/}</label>
-                    </span>
-                </div>
-            </uib-tab>
-            <uib-tab heading="用户镜像列表(默认选择最新版本)">
-                <div role="tabpanel" class="tab-pane active">
-                    <span data-ng-repeat="image in selectImageCtrl.imageList">
-                        <label class="btn btn-default" ng-model="selectImageCtrl.image" uib-btn-radio="image">{/image.imageName/}</label>
-                    </span>
-                </div>
-            </uib-tab>
-        </uib-tabset>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-ng-click="selectImageCtrl.cancel()">取消</button>
-        <button type="button" class="btn btn-primary" data-ng-disabled="!selectImageCtrl.image"
-                data-ng-click="selectImageCtrl.ok(selectImageCtrl.image)">确认
-        </button>
-    </div>
-</div>
