@@ -24,12 +24,12 @@ function clusterMonitorCtrl($scope, $stateParams, glanceHttp, $timeout, Notifica
                     // Set app pull bar.
                     angular.element(document).find('.mCustomScrollbar').mCustomScrollbar();
                 }
-                timeoutPromise = $timeout($scope.getClusterMonitor, 3000);
+                timeoutPromise = $timeout($scope.getClusterMonitor, 10000);
                 
             }, undefined, null, function (data) {
                 $scope.errorCode = data.code;
                 if (data.code === 1) {
-                    timeoutPromise = $timeout($scope.getClusterMonitor, 3000);
+                    timeoutPromise = $timeout($scope.getClusterMonitor, 10000);
                 }
             }, false);
         }
