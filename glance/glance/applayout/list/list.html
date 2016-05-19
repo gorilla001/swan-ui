@@ -95,6 +95,13 @@
                                         <md-menu-content width="2">
                                             <md-menu-item>
                                                 <md-button aria-label="stop"
+                                                           data-ng-click="layoutListCtrl.startApp(stack.Cid, app.Id, stack.Id)"
+                                                           data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '3'"
+                                                           data-demo-disable>
+                                                    启动
+                                                </md-button>
+                                                <md-button aria-label="stop"
+                                                           data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '2'"
                                                            data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.Id, stack.Id)"
                                                            data-demo-disable>
                                                     停止

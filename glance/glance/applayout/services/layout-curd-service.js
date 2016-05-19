@@ -8,7 +8,7 @@
 
 
     /* @ngInject */
-    function layoutCurd(layoutBackend, confirmModal, appservice) {
+    function layoutCurd(layoutBackend, confirmModal, formModal, appservice) {
         //////
         return {
             deleteStack: deleteStack,
