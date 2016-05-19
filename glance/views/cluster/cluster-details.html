@@ -4,40 +4,33 @@
             <div class="info flex" flex="">
                 <h2>{/cluster.name/}</h2>
                 <dl>
-                    <dt><li class="fa fa-files-o"></li> 主机数量:</dt>
+                    <dt>主机数量</dt>
                     <dd>{/cluster.nodes.length/}</dd>
-                    <dt><li class="fa fa-files-o"></li> 用户组:</dt>
+                    <dt>用户组</dt>
                     <dd>{/cluster.group_name/}</dd>
-                    <dt><li class="fa fa-files-o"></li> 集群状态:</dt>
+                    <dt>集群状态:</dt>
                     <dd>{/clusterStatusText/}</dd>
                 </dl>
             </div>
             <div layout-align="end center" class="operation">
-                <md-fab-speed-dial md-open="false" md-direction="left"
-                                   class="md-scale">
-                    <md-fab-trigger>
-                        <md-button aria-label="menu" class="md-fab md-primary">
-                            菜单
-                        </md-button>
-                    </md-fab-trigger>
-                    <md-fab-actions>
-                        <md-button class="md-raised" 
-                                   data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable
-                                   data-dm-permit-click="1"
-                                   data-dm-role="cluster.group_role"
-                                   data-dm-permit-msg="FRONTEND_MSG.no_group_admin"> 
-                           编辑集群 
-                        </md-button>
-                        <md-button class="md-raised" 
-                                   data-toggle="modal"
-                                   data-target="#deleteClusterConfirm"
-                                   data-dm-permit-click="1"
-                                   data-dm-role="cluster.group_role"
-                                   data-dm-permit-msg="FRONTEND_MSG.no_group_admin"> 
-                           删除集群 
-                        </md-button>
-                    </md-fab-actions>
-                </md-fab-speed-dial>
+                <md-button class="md-fab md-mini"
+                           data-ui-sref="cluster.updatecluster({clusterId: cluster.id, name: cluster.name})" data-demo-disable
+			   data-dm-permit-click="1"
+                           data-dm-role="cluster.group_role"
+                           data-dm-permit-msg="FRONTEND_MSG.no_group_admin"
+                           aria-label="编辑集群">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </md-button>
+
+                <md-button class="md-fab md-mini" 
+                           data-toggle="modal"
+                           data-target="#deleteClusterConfirm"
+                           data-dm-permit-click="1"
+                           data-dm-role="cluster.group_role"
+                           data-dm-permit-msg="FRONTEND_MSG.no_group_admin"
+                           aria-label="删除项目">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </md-button>
             </div>
         </header>
     <md-content>
