@@ -6,9 +6,8 @@
     angular.module('glance.app')
         .controller('MonitorAppCtrl', MonitorAppCtrl);
 
-    MonitorAppCtrl.$inject = ['gHttp', '$scope', '$sce'];
-
-    function MonitorAppCtrl(gHttp, $scope, $sce) {
+    /* @ngInject */
+    function MonitorAppCtrl(gHttp, $scope, $sce, appservice, monitor, buildCharts) {
         var self = this;
         self.withGrafana = GRAFANA_CONFIG.baseUrl;
         self.appMonitors = {};
@@ -63,6 +62,45 @@
             }, function (res) {
                 self.errorCode = res.code;
             });
+            buildReqRateChart();
+        }
+        
+        function buildReqRateChart() {
+            appservice.getReqRate($scope.appInfo.cid, $scope.appInfo.alias).then(function (data) {
+                    paintReqRateChart(data);
+                });
+        }
+        
+        function paintReqRateChart(data) {
+            var dataInhour = monitor.httpMonitor.getDataInhour(data, 60, 60, function (data) {return data.time/1000000000});
+            var xAxis = dataInhour.xAxis;
+            var yAxisDataInhour = dataInhour.yAxis;
+            console.log(dataInhour)
+            var yAxis = []
+            for(var i = 0; i < 60; i++) {
+                var val = yAxisDataInhour[i];
+                if (!val) {
+                    yAxis[i] = monitor.httpMonitor.setShowRatio([], 1);
+                } else {
+                    yAxis[i] = monitor.httpMonitor.setShowRatio([val.reqrate], 1);
+                }
+            }
+            console.log(yAxis)
+            var indicator = {
+                key: 'req',
+                domId: "req-rate-chart",
+                descriptions: {
+                    title: '请求数监控',
+                    subtitle: '一小时内变化 (count/s)',
+                    seriesName: ['请求数目']
+                },
+                styles: {
+                    lineWidth: 3,
+                    axesColor: '#9B9B9B',
+                    axiesFontsize: '11px'
+                }
+            };
+            buildCharts.initIOCharts(indicator, xAxis, yAxis);
         }
     }
 })();

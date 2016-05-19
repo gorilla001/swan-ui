@@ -32,7 +32,8 @@
             listClusterAllApps: listClusterAllApps,
             listAppPorts: listAppPorts,
             listAppNodes: listAppNodes,
-            changeWeight: changeWeight
+            changeWeight: changeWeight,
+            getReqRate: getReqRate
 
         };
 
@@ -160,6 +161,10 @@
         // 修改权重
         function changeWeight(clusterId, appId, data) {
             return gHttp.Resource('app.changeWeight', {cluster_id: clusterId, app_id: appId}).post(data);
+        }
+        
+        function getReqRate(clusterId, alias) {
+            return gHttp.Resource('metrics.reqRate', {cluster_id: clusterId, aliase: alias}).get();
         }
     }
 })();
