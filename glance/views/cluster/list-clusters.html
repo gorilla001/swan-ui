@@ -22,6 +22,8 @@
                     <dd data-ng-show="cluster.infos.updated_at">{/ cluster.infos.updated_at /}</dd>
                     <dt data-ng-show="cluster.infos.group_name">用户组</dt>
                     <dd data-ng-show="cluster.infos.group_name"> {/cluster.infos.group_name/}</dd>
+                    <dt>集群状态</dt>
+                    <dd><a href="#" data-ng-click="showProblemTips(cluster, $event)">{/clusterStatName[cluster.clusterStatus]/}</a></dd>
                 </dl>
                 <dl class="hostList">
                     <dt class="running {/clustersNodesData[$index].selectedClasses.running/}"
@@ -131,36 +133,6 @@
                             添加主机
                         </a>
                     </h4>
-                </div>
-            </div>
-            <!--集群状态未知-->
-            <div class="cluster-status-panel" data-ng-show="cluster.problemTips">
-                <div class="cluster-status-main">
-                    <header>
-                        <h3 class="text-danger">{/cluster.problemTips.headText/}</h3>
-                    </header>
-                    <div class="cluster-status-content">
-                        <p data-ng-show="'abnormal' === cluster.clusterStatus">
-                            数人云是通过重启各组件快速恢复相应服务的。若仍有服务重启失效，需要去往主机详情页面重置该服务。修复过程大概需要一分钟。</p>
-                        <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
-                        <ul class="clearfix">
-                            <li data-ng-repeat="node in cluster.problemNodes">
-                                <a href="#"
-                                   data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.infos.id})">{/node.name/}
-                                    &nbsp; [{/node.ip/}]</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <footer>
-                        <button class="btn btn-primary"
-                                data-ng-click="close(cluster.infos.id, $index, cluster.clusterStatus)"
-                                data-ng-disabled="cluster.problemTips.firstBtnDisable">
-                            {/cluster.problemTips.firstButtonText/}
-                        </button>
-                        <button class="btn btn-default" data-ng-show="cluster.problemTips.secondButtonText"
-                                data-ng-click="close(cluster.infos.id, $index)">{/cluster.problemTips.secondButtonText/}
-                        </button>
-                    </footer>
                 </div>
             </div>
         </div>
