@@ -6,7 +6,7 @@
             </div>
         </header>
         <div class="main-content">
-            <form name="staticForm" data-ng-submit="getLog()">
+            <form name="staticForm">
                 <div layout="row">
                     <!-- 集群名-->
                     <div layout="row" flex="30" layout-align="start center"
@@ -135,7 +135,7 @@
                         </div>
                         <div flex="30" flex-offset="5" layout-align="start center">
                             <div layout="row">
-                        <md-button class="md-button md-raised" data-ng-disabled="staticForm.$invalid">查询</md-button>
+                        <md-button data-ng-click="getLog()" class="md-button md-raised" data-ng-disabled="staticForm.$invalid">查询</md-button>
                         <md-button ng-disabled="!clusterlogs.logs.length"
                                    ng-href="{/clusterlogs.downloadHref/}"
                                    ng-hide="showContextUI"
