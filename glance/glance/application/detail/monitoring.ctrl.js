@@ -75,7 +75,6 @@
             var dataInhour = monitor.httpMonitor.getDataInhour(data, 60, 60, function (data) {return data.time/1000000000});
             var xAxis = dataInhour.xAxis;
             var yAxisDataInhour = dataInhour.yAxis;
-            console.log(dataInhour)
             var yAxis = []
             for(var i = 0; i < 60; i++) {
                 var val = yAxisDataInhour[i];
@@ -85,7 +84,6 @@
                     yAxis[i] = monitor.httpMonitor.setShowRatio([val.reqrate], 1);
                 }
             }
-            console.log(yAxis)
             var indicator = {
                 key: 'req',
                 domId: "req-rate-chart",
