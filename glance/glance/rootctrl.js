@@ -106,18 +106,6 @@
             self.isShortMenu = !self.isShortMenu;
         }
 
-        $rootScope.$on('$stateChangeStart',
-            function (event, toState, toParams, fromState, fromParams) {
-                switch (true) {
-                    case toState.name.startsWith('log'):
-                        $rootScope.show = 'log';
-                        break;
-                    case toState.name.startsWith('cluster'):
-                        $rootScope.show = 'cluster';
-                        break;
-                }
-            });
-
         $rootScope.$watch('isFirstLogin', function (newValue, oldValue) {
             if (newValue !== oldValue) {
                 firstLogin();
