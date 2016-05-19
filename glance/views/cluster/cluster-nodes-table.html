@@ -26,7 +26,7 @@
           </li>
         </ul>
     </div>
-    <div class="btn-group btn-dropdown-info" data-ng-show="statusMgr.nodeStatusCount[cluster.id]['upgrading']">
+    <div class="btn-group btn-dropdown-info md-toolbar-tools" data-ng-show="statusMgr.nodeStatusCount[cluster.id]['upgrading']" style="padding: 0 10px">
         <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中
             <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
         </button>
