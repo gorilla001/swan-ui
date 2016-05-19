@@ -7,47 +7,63 @@
             </dl>
             <dl>
                 <dt>部署公钥</dt>
+                <dd flex="20" class="code-ellipsis" id="publicKey">{/imageDetailCtrl.project.pubkey/}
+                  <md-tooltip md-direction="top">
+                      {/imageDetailCtrl.project.pubkey/}
+                    </md-tooltip>
+                </dd>
                 <dd>
-                    <span id="publicKey">{/imageDetailCtrl.project.pubkey/}
-                    </span>
-                    <a href="#">
-                        <i class="fa fa-files-o" data-clipboard-target="publicKey" dm-copy></i>
+                    <a href="#" flex>
+                      <i class="fa fa-files-o" data-clipboard-target="publicKey" dm-copy></i>
+                      <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
             <dl>
                 <dt>代码源</dt>
-                <dd>
+                <dd flex="20" class="code-ellipsis">
                     <a href={/imageDetailCtrl.project.repoUri/} target="_blank">
                         {/imageDetailCtrl.project.repoUri/}
                     </a>
+                  <md-tooltip md-direction="top">
+                      {/imageDetailCtrl.project.repoUri/}
+                    </md-tooltip>
                 </dd>
             </dl>
             <dl>
                 <dt>登录命令</dt>
+                <dd flex="20" class="code-ellipsis" id="loginImage" data-ng-if="imageDetailCtrl.project.loginCommand">
+                  {/imageDetailCtrl.project.loginCommand/}
+                  <md-tooltip md-direction="top">
+                      {/imageDetailCtrl.project.loginCommand/}
+                    </md-tooltip>
+                </dd>
+                <dd data-ng-if="!imageDetailCtrl.project.loginCommand">
+                    暂未生成
+                </dd>
                 <dd>
-                   <span id="loginImage" data-ng-show="imageDetailCtrl.project.loginCommand">
-                        {/imageDetailCtrl.project.loginCommand/}
-                    </span>
-                    <span data-ng-hide="imageDetailCtrl.project.loginCommand">
-                        暂未生成
-                    </span>
-                    <a href="#" data-ng-show="imageDetailCtrl.project.loginCommand">
-                        <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
+                    <a href="#" flex>
+                      <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
+                      <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
             <dl>
                 <dt>拉取镜像</dt>
+                
+                <dd flex="20" class="code-ellipsis" id="latestImage" data-ng-if="imageDetailCtrl.project.image">
+                  {/imageDetailCtrl.project.image/}
+                  <md-tooltip md-direction="top">
+                      {/imageDetailCtrl.project.image/}
+                    </md-tooltip>
+                </dd>
+                <dd data-ng-if="!imageDetailCtrl.project.image">
+                    暂未生成
+                </dd>
                 <dd>
-                    <span id="latestImage" data-ng-show="imageDetailCtrl.project.image">
-                        docker pull {/imageDetailCtrl.project.image/}
-                    </span>
-                    <span data-ng-hide="imageDetailCtrl.project.image">
-                        暂未生成
-                    </span>
-                    <a href="#" data-ng-show="imageDetailCtrl.project.image">
-                        <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
+                    <a href="#" flex>
+                      <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
+                      <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
