@@ -20,7 +20,7 @@
         };
 
         function deleteStack(clusterId, stackId, ev) {
-            return confirmModal.open("是否确认删除 Stask？", ev).then(function () {
+            return confirmModal.open("是否确认删除应用？", ev).then(function () {
                 return layoutBackend.deleteStack(clusterId, stackId)
                     .then(function (data) {
                         return layoutBackend.list()
