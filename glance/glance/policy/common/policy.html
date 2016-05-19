@@ -2,28 +2,19 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2>管理策略</h2>
+                <h2>服务策略</h2>
             </div>
             <div layout-align="end center" class="operation">
-                <md-fab-speed-dial md-open="false" md-direction="left" class="md-scale">
-                    <md-fab-trigger>
-                        <md-button aria-label="menu" class="md-fab">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </md-button>
-                    </md-fab-trigger>
-                    <md-fab-actions>
-                        <md-button aria-label="create logwarning" class="md-fab md-mini"
-                                   data-ui-sref="policy.policyLogWarningCreate">
-                            <md-tooltip md-direction="top">创建日志告警</md-tooltip>
-                            <i class="fa fa-file-o" aria-hidden="true"></i>
-                        </md-button>
-                        <md-button aria-label="create appwarning" class="md-fab md-mini"
-                                   data-ui-sref="policy.WarningCreate">
-                            <md-tooltip md-direction="down">创建应用告警</md-tooltip>
-                            <i class="fa fa-warning" aria-hidden="true"></i>
-                        </md-button>
-                    </md-fab-actions>
-                </md-fab-speed-dial>
+                <md-button aria-label="create logwarning" class="md-fab md-mini"
+                           data-ui-sref="policy.policyLogWarningCreate">
+                    <md-tooltip md-direction="top">创建日志告警</md-tooltip>
+                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                </md-button>
+                <md-button aria-label="create appwarning" class="md-fab md-mini"
+                           data-ui-sref="policy.WarningCreate">
+                    <md-tooltip md-direction="top">创建应用告警</md-tooltip>
+                    <i class="fa fa-warning" aria-hidden="true"></i>
+                </md-button>
             </div>
         </header>
         <md-content>
