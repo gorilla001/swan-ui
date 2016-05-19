@@ -109,61 +109,11 @@
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
                 switch (true) {
-                    case toState.name.startsWith('app'):
-                        $rootScope.show = 'application';
-                        break;
-                    case toState.name.startsWith('image'):
-                        $rootScope.show = 'image';
-                        break;
                     case toState.name.startsWith('log'):
                         $rootScope.show = 'log';
                         break;
-                    case toState.name.startsWith('home'):
-                        $rootScope.show = 'home';
-                        break;
                     case toState.name.startsWith('cluster'):
                         $rootScope.show = 'cluster';
-                        break;
-                    case toState.name.startsWith('repository'):
-                        $rootScope.show = 'repository';
-                        break;
-                    case toState.name.startsWith('policy'):
-                        $rootScope.show = 'policy';
-                        switch (true) {
-                            case toState.name.includes('appwarning'):
-                                $rootScope.tabActiveFlag = 'appwarning';
-                                switch (true) {
-                                    case toState.name.includes('warninglist'):
-                                        $rootScope.tabContentPolicy = 'warninglist';
-                                        break;
-                                    case toState.name.includes('warningevent'):
-                                        $rootScope.tabContentPolicy = 'warningevent';
-                                        break;
-                                }
-                                break;
-                            case toState.name.includes('apptimescaling'):
-                                $rootScope.tabActiveFlag = 'apptimescaling';
-                                switch (true) {
-                                    case toState.name.includes('scalinglist'):
-                                        $rootScope.tabContentPolicy = 'scalinglist';
-                                        break;
-                                    case toState.name.includes('scalingevent'):
-                                        $rootScope.tabContentPolicy = 'scalingevent';
-                                        break;
-                                }
-                                break;
-                            case toState.name.includes('applogwarning'):
-                                $rootScope.tabActiveFlag = 'applogwarning';
-                                switch (true) {
-                                    case toState.name.includes('loglist'):
-                                        $rootScope.tabContentPolicy = 'loglist';
-                                        break;
-                                    case toState.name.includes('logevent'):
-                                        $rootScope.tabContentPolicy = 'logevent';
-                                        break;
-                                }
-                                break;
-                        }
                         break;
                 }
             });

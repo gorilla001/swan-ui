@@ -14,7 +14,7 @@
                 targetState: 'tab'
             })
             .state('policy.tab', {
-                url: '/policy',
+                url: '/tab',
                 templateUrl: '/glance/policy/common/policy.html',
                 targetState: 'appwarning'
             })
