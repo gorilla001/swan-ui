@@ -17,6 +17,9 @@
                     var isChangeParams = false;
                     angular.forEach(toState.defaultParams, function (val, key) {
                         if (toParams[key] === undefined) {
+                            if (angular.isFunction(val)) {
+                                val = val();
+                            }
                             toParams[key] = val;
                             isChangeParams = true;
                         }

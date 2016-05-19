@@ -53,17 +53,17 @@
                 defaultParams: {
                     per_page: 20,
                     page: 1,
-                    starttime: (function() {
+                    starttime: function() {
                         var starttime = new Date();
                         starttime.setDate(starttime.getDate() - 7);
                         starttime.setHours(0, 0, 0, 0);
                         return parseInt(starttime.getTime() / 1000);
-                    })(),
-                    endtime: (function() {
+                    },
+                    endtime: function() {
                         var endtime = new Date();
                         endtime.setHours(0, 0, 0, 0);
                         return parseInt(endtime.getTime() / 1000 + 24 * 60 * 60);
-                    })()
+                    }
                 }
             })
     }
