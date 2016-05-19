@@ -63,7 +63,7 @@
                         </p>
                         <p class="help-info-bottom" data-ng-if="layoutCreateCtrl.supportReadFile">
                             <input id="dockerFileInput" name="file" type="file" class="ng-hide"
-                                   accept="text/plain" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('docker', this.files)">
+                                   accept="text/plain, .yaml, .yml" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('docker', this.files)">
                             <md-button class="md-primary" trigger-prev-click><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
                     </div>
@@ -91,7 +91,7 @@
                         </p>
                         <p class="help-info-bottom" data-ng-if="layoutCreateCtrl.supportReadFile">
                             <input id="sryFileInput" name="file" type="file" class="ng-hide"
-                                   accept="text/plain" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('sry', this.files)">
+                                   accept="text/plain, .yaml, .yml" onchange="angular.element(this).scope().layoutCreateCtrl.onFileSelect('sry', this.files)">
                             <md-button class="md-primary" trigger-prev-click><i class="fa fa-upload"></i> 从文件中读取</md-button>
                         </p>
                     </div>
