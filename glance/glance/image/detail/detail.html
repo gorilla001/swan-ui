@@ -56,14 +56,23 @@
             <md-button class="md-fab md-mini" aria-label="deploy new"
                        data-ng-disabled="imageDetailCtrl.project.status != 'success'"
                        data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)">
-                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                       <md-tooltip md-direction="up">
+                        部署
+                       </md-tooltip>
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </md-button>
 
             <md-button class="md-fab md-mini" aria-label="structure" data-ng-click="imageDetailCtrl.manualBuild()">
+                <md-tooltip md-direction="up">
+                        构建
+                       </md-tooltip>
                 <i class="fa fa-caret-left" aria-hidden="true"></i>
             </md-button>
 
             <md-button class="md-fab md-mini" aria-label="delete" data-ng-click="imageDetailCtrl.deleteProject($event)">
+            <md-tooltip md-direction="up">
+                        删除
+                       </md-tooltip>
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </md-button>
         </div>

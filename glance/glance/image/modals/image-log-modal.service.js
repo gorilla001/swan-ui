@@ -79,11 +79,11 @@
                     $rootScope.token;
 
                 var events = new EventSource(url);
-                events.onmessage = function (event) {
+                events.addEventListener("ci_build_log", function(event) {
                     if (callback !== undefined) {
                         callback(event.data);
                     }
-                };
+                });
                 events.onerror = function (event) {
                     callback = undefined;
                     if (events !== undefined) {
