@@ -77,7 +77,7 @@
 
                 <md-button class="md-fab md-mini"
                            data-toggle="modal"
-                           data-target="#confirmDeleteCluster{/cluster.infos.id/}"
+                           data-ng-click="deleteCluster(cluster.infos.id, $event)"
                            data-demo-disable
                            data-dm-permit-click="1"
                            data-dm-role="cluster.infos.group_role"
@@ -139,33 +139,5 @@
                 </div>
             </div>
         </div>
-
-
-        <!--删除集群 弹出框-->
-        <div class="modal fade" id="confirmDeleteCluster{/cluster.infos.id/}" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h3>您确定要删除集群吗？</h3>
-                        <div class="delete-cluster">
-                            <p>删除集群将在您的主机上一并清除：</p>
-                            <ul>
-                                <li>数人云管理组件</li>
-                                <li>通过数人云下发部署的应用及其未持久化的数据</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                data-ng-click="deleteCluster(cluster.infos.id, cluster.infos.name)">确定
-                        </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <section>
 </div>
 

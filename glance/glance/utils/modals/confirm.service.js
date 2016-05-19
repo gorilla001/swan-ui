@@ -10,14 +10,17 @@
             open: open
         }
         
-        function open(content, ev) {
+        function open(title, ev, content) {
             var confirm = $mdDialog.confirm()
             .clickOutsideToClose(true)
-            .htmlContent("<h3>" + content + "</h3>")
+            .title(title)
             .targetEvent(ev)
             .ok('确定')
             .cancel('取消');
-             var dialog = $mdDialog.show(confirm);
+            if (content) {
+                confirm.textContent(content);
+            }
+            var dialog = $mdDialog.show(confirm);
             return dialog
         }
     }
