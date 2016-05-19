@@ -93,15 +93,22 @@
                 layoutBackend.getStack(clusterId, stackId).then(function (data) {
                     var applications = data.applications;
                     if(data.deployedApplications) {
-                        for(var j=0; j < applications.length; j++) {
-                            for (var i = 0; i < data.deployedApplications.length; i++) {
-                                var deployedApp = data.deployedApplications[i];
+                        var notExistedApps = [];
+                        for(var i=0; i < data.deployedApplications.length; i++) {
+                            var existed = false;
+                            var deployedApp = data.deployedApplications[i];
+                            for(var j=0; j < applications.length; j++) {
                                 if (applications[j].Name === deployedApp.Name) {
                                     applications[j] = deployedApp;
+                                    existed = true;
                                     break;
                                 }
                             }
+                            if(!existed) {
+                                notExistedApps.push(deployedApp);
+                            }
                         }
+                        Array.prototype.unshift.apply(applications, notExistedApps);
                     }
                     self.appList[stackId] = applications;
                     appservice.listAppsStatus()
