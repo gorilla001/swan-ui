@@ -100,7 +100,7 @@
                         <i class="fa fa-bars"></i>
                     </md-button>
                     <span flex></span>
-                    <md-button class="md-icon-button" aria-label="Favorite">
+                    <md-button class="md-icon-button" aria-label="Favorite" data-ng-click="rootCtrl.togShowToolbarToolsOption()">
                         <i class="fa fa-th"></i>
                     </md-button>
                     <md-button class="md-icon-button" aria-label="More" ng-click="rootCtrl.noticeNav.buildToggler()"
@@ -121,6 +121,18 @@
                         </md-menu-content>
                     </md-menu>
 
+                    <ul class="md-toolbar-tools_option" data-ng-show="rootCtrl.isShowToolbarToolsOption">
+                        <div class="option-arrow"></div>
+                        <li class="jiqun fa fa-server" data-ng-click="rootCtrl.goByToolbarToolsOption('cluster.createcluster')">
+                            <p>新建集群</p>
+                        </li>
+                        <li class="yingyong fa fa-cube" data-ng-click="rootCtrl.goByToolbarToolsOption('app.create')">
+                            <p>新建应用</p>
+                        </li>
+                        <li class="jingxiang fa fa-cogs" data-ng-click="rootCtrl.goByToolbarToolsOption('image.create')">
+                            <p>新建镜像</p>
+                        </li>
+                    </ul>
                 </div>
             </md-toolbar>
         </nav>

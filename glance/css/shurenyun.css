@@ -1037,18 +1037,18 @@ dl.list-dl-row dt:after {
     margin:0px 30px 54px 38px;
 }
 /*右上角的菜单复选项*/
-.xuanxiang{
-    display: none;
+.md-toolbar-tools_option{
     width: 220px;
     height: 60px;
     border: 1px solid #ccc;
     border-radius: 5px;
     position: absolute;
-    top: 85px;
-    right: 94px;
+    top: 86px;
+    right: 86px;
     padding: 12px 0 0 5px;
+    background-color: #f3f5f7;
 }
-.xuanxiang li{
+.md-toolbar-tools_option li{
     width: 66px;
     height: 38px;
     color: #A0ABBF;
@@ -1058,49 +1058,27 @@ dl.list-dl-row dt:after {
     border-right: 1px solid #CCCCCC ;
     cursor: pointer;
 }
-.xuanxiang li.jingxiang{
+.md-toolbar-tools_option .jingxiang{
     border: none;
     padding-right: 0;
 }
-.xuanxiang li p{
+.md-toolbar-tools_option li p{
     font-size: 12px;
     cursor: pointer;
+    margin: 0 0 10px;
 }
-.tixing{
-    display: none;
-    width: 210px;
-    height: 270px;
+
+.md-toolbar-tools_option .option-arrow {
+    top: -6px;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 0 5px 5px;
+    border-color: transparent;
+    border-bottom-color: #ccc;
     position: absolute;
-    top: 85px;
-    right: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.tixing li{
-    margin: 15px 15px auto 15px;
-    width: 180px;
-    font-size: 12px;
-    color: #2196F3;
-    border-bottom: 1px solid #ccc;
-}
-.enter{
-    display: none;
-    width: 130px;
-    height: 60px;
-    position: absolute;
-    top: 85px;
-    right: 17px;
-    border: 1px solid #ccc;
-    border-radius:5px ;
-}
-.enter li{
-    text-align: center;
-    padding-top: 9px;
-    font-size: 14px;
-    color: #354052;
-}
-.enter li:hover{
-    background: #E0E0E0;
+    width: 0;
+    height: 0;
+    border-style: solid;
 }
 
 .name .label{

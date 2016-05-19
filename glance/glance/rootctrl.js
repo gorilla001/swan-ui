@@ -23,7 +23,10 @@
         self.goBack = goBack;
         self.openJoinDemoGroupModal = openJoinDemoGroupModal;
         self.togShortMenu = togShortMenu;
+        self.togShowToolbarToolsOption = togShowToolbarToolsOption;
+        self.goByToolbarToolsOption = goByToolbarToolsOption;
         self.isShortMenu = false;
+        self.isShowToolbarToolsOption = false;
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
 
@@ -104,6 +107,15 @@
 
         function togShortMenu() {
             self.isShortMenu = !self.isShortMenu;
+        }
+        
+        function togShowToolbarToolsOption() {
+            self.isShowToolbarToolsOption = !self.isShowToolbarToolsOption;
+        }
+
+        function goByToolbarToolsOption(to) {
+            $state.go(to, null, {reload: true});
+            self.isShowToolbarToolsOption = false;
         }
 
         $rootScope.$watch('isFirstLogin', function (newValue, oldValue) {
