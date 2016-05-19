@@ -1,7 +1,7 @@
 //clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);
 /* ngInject */
-function clusterCtrl($scope, $state, gHttp, Notification) {
+function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
     $scope.clusterNames = [];
     $scope.allLabels = [];
 
@@ -52,15 +52,14 @@ function clusterCtrl($scope, $state, gHttp, Notification) {
         }
     };
 
-    $scope.deleteCluster = function(clusterId, name) {
-        $('#confirmDeleteCluster'+ clusterId).hide();
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        
-        gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
-            Notification.success('集群' + name + '删除成功');
-            $state.go('cluster.listclusters', null, {reload: true});
-        });
+    $scope.deleteCluster = function(clusterId, ev) {
+        var content = '删除集群将在您的主机上一并清除：数人云管理组件，通过数人云下发部署的应用及其未持久化的数据'
+        confirmModal.open('您确定要删除集群吗？', ev, content).then(function () {
+            gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
+                Notification.success('集群删除成功');
+                $state.go('cluster.listclusters', null, {reload: true});
+            });
+        })
     };
 
 

@@ -11,14 +11,16 @@
             open: open
         }
         
-        function open(content, ev) {
-            var dialog = $mdDialog.show(
-                    $mdDialog.alert()
-                      .clickOutsideToClose(true)
-                      .htmlContent("</h3>" + content  + "</h3>")
-                      .ok('确定')
-                      .targetEvent(ev)
-                  );
+        function open(title, ev, content) {
+            var alert = $mdDialog.alert()
+                    .clickOutsideToClose(true)
+                    .title(title)
+                    .ok('确定')
+                    .targetEvent(ev)
+            if (content) {
+                alert.textContent(content);
+            }
+            var dialog = $mdDialog.show(alert);
             return dialog;
         }
        
