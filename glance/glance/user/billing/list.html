@@ -1,6 +1,5 @@
 <div layout-gt-xs="row">
     <md-input-container>
-        <label>应用名称</label>
         <md-select ng-model="listBillingCtrl.form.appname">
             <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appname">All</md-option>
             <md-option data-ng-value="app.name" data-ng-selected="app.name === listBillingCtrl.form.appname" ng-repeat="app in listBillingCtrl.apps">
