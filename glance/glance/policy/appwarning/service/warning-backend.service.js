@@ -45,8 +45,8 @@
             return gHttp.Resource('warning.tasksEvent').get({params: params});
         }
         
-        function warningAppExtend() {
-            return gHttp.Resource('app.taskappExtend').get()
+        function warningAppExtend(params) {
+            return gHttp.Resource('app.taskappExtend').get({params: params})
         }
     }
 })();
