@@ -22,10 +22,10 @@
             </div>
           </div>
 
-          <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+          <div layout="row" layout-align="start center" class="form-group form-group-input form-group-addrow">
             <label flex="15">主机标签</label>
             <div flex="none">
-              <span class="tag" data-ng-repeat="label in selectedLabels">{/label.name/}</span>
+              <span class="server-tag" data-ng-repeat="label in selectedLabels">{/label.name/}</span>
             </div>
             <div flex="50">
               <md-button class="md-button md-primary" data-ng-click="showAddNodeLabelModal($event)">
