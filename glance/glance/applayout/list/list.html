@@ -37,7 +37,7 @@
                         </div>
                         <div layout-align="end center" class="operation">
                             <md-button class="md-raised" aria-label="add"
-                                       data-ng-show="!self.openFlag[stack.Id]""
+                                       data-ng-show="!layoutListCtrl.openFlag[stack.Id]""
                                        ng-click="layoutListCtrl.showTableData(stack.Cid, stack.Id)">
                                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 <md-tooltip md-direction="top">
@@ -45,7 +45,7 @@
                                 </md-tooltip>
                             </md-button>
                             <md-button class="md-raised" aria-label="add"
-                                       data-ng-show="self.openFlag[stack.Id]""
+                                       data-ng-show="layoutListCtrl.openFlag[stack.Id]""
                                        ng-click="layoutListCtrl.showTableData(stack.Cid, stack.Id)">
                                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
                                 <md-tooltip md-direction="top">
