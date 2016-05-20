@@ -29,14 +29,14 @@
                      data-ng-if="createWarningCtrl.target === 'create'">
                     <label flex="15">应用名称</label>
                     <div flex="50" layout="column">
-                            <md-input-container>
-                                <md-select data-ng-model="createWarningCtrl.app" aria-label="createapp"
-                                           data-required="required" name="createapp">
-                                    <md-option ng-repeat="app in createWarningCtrl.apps" ng-value="app">
-                                        {/app.name/}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                        <md-input-container>
+                            <md-select data-ng-model="createWarningCtrl.app" aria-label="createapp"
+                                       data-required="required" name="createapp">
+                                <md-option ng-repeat="app in createWarningCtrl.apps" ng-value="app">
+                                    {/app.name/}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
                     <div flex></div>
                 </div>
@@ -48,13 +48,17 @@
                             <div flex="25">
                                 <md-select data-ng-model="createWarningCtrl.form.metric" data-required="required"
                                            aria-label="metric">
-                                    <md-option data-ng-repeat="rule in createWarningCtrl.selectRules" ng-value="rule.label">{/rule.name/}</md-option>
+                                    <md-option data-ng-repeat="rule in createWarningCtrl.selectRules"
+                                               ng-value="rule.label">{/rule.name/}
+                                    </md-option>
                                 </md-select>
                             </div>
                             <div flex="25" flex-offset="5">
                                 <md-select data-ng-model="createWarningCtrl.form.operator" data-required="required"
                                            aria-label="selectSize">
-                                    <md-option ng-repeat="size in createWarningCtrl.selectSize" ng-value="size.label">{/size.name/}</md-option>
+                                    <md-option ng-repeat="size in createWarningCtrl.selectSize" ng-value="size.label">
+                                        {/size.name/}
+                                    </md-option>
                                 </md-select>
                             </div>
                             <div flex="30" flex-offset="5">
@@ -86,7 +90,7 @@
                     <label flex="15">监控周期</label>
                     <div flex="50" layout="column">
                         <div flex>
-                            <input type="number" class="form-input"  aria-label="duration"
+                            <input type="number" class="form-input" aria-label="duration"
                                    data-ng-model="createWarningCtrl.form.duration"
                                    data-required="required" name="duration" max="255" min="1" integer>
                         </div>
@@ -145,18 +149,30 @@
                     <div flex></div>
                 </div>
                 <!--实例数-->
-                <div layout="row" layout-align="end start" class="form-group form-group-input" data-ng-if="createWarningCtrl.form.triger">
+                <div layout="row" layout-align="end start" class="form-group form-group-input"
+                     data-ng-if="createWarningCtrl.form.triger">
                     <label flex="15">实例数</label>
                     <div flex="50" layout="column">
                         <div layout="row">
                             <input type="number" class="form-input"
-                                   name="max" aria-label="max"
-                                   data-required="required" data-ng-model="createWarningCtrl.form.instance" flex placeholder="最大值">
+                                   name="max" aria-label="max" ng-min="createWarningCtrl.form.mininstance"
+                                   ng-required="createWarningCtrl.form.triger"
+                                   data-ng-model="createWarningCtrl.form.instance" flex placeholder="最大值">
                             <input type="number" class="form-input"
-                                   name="mix" aria-label="mix"
-                                   data-required="required" data-ng-model="createWarningCtrl.form.mininstance" flex flex-offset="5" placeholder="最小值">
+                                   name="mix" aria-label="mix" ng-max="createWarningCtrl.form.instance"
+                                   ng-required="createWarningCtrl.form.triger"
+                                   data-ng-model="createWarningCtrl.form.mininstance" flex flex-offset="5"
+                                   placeholder="最小值">
                         </div>
-                        <p>*选择自动扩缩,达到条件应用实例会扩展至最大实例数,随后每个监控周期未达到条件将会减少一个实例,直到最少实例数</p>
+                        <p data-ng-if="warningForm.max.$error.min" class="help-info-bottom error-info">
+                            <small>最大值不能小于最小值</small>
+                        </p>
+                        <p data-ng-if="warningForm.mix.$error.max" class="help-info-bottom error-info">
+                            <small>最小值不能大于最大值</small>
+                        </p>
+                        <p class="help-info-bottom">
+                            <small>*选择自动扩缩,达到条件应用实例会扩展至最大实例数,随后每个监控周期未达到条件将会减少一个实例,直到最少实例数</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
@@ -166,10 +182,12 @@
                     <div flex-offset="15" layout="row" layout-align="end end">
                         <md-button class="md-raised md-primary" type="submit"
                                    data-ng-if="createWarningCtrl.target === 'create'"
-                                   data-ng-disabled="warningForm.$invalid">创 建</md-button>
+                                   data-ng-disabled="warningForm.$invalid">创 建
+                        </md-button>
                         <md-button class="md-raised md-primary" type="submit"
                                    data-ng-if="createWarningCtrl.target === 'update'"
-                                   data-ng-disabled="warningForm.$invalid">更 新</md-button>
+                                   data-ng-disabled="warningForm.$invalid">更 新
+                        </md-button>
                     </div>
                 </div>
             </form>
