@@ -128,7 +128,6 @@
             } else {
                 self.openFlag[stackId] = false;
                 self.appList[stackId] = [];
-                self.appListStatus = {}
             }
         }
 
