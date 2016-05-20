@@ -96,14 +96,15 @@
                                             <md-menu-item>
                                                 <md-button aria-label="stop"
                                                            data-ng-click="layoutListCtrl.startApp(stack.Cid, app.Id, stack.Id)"
-                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.id].status != '3'"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '3'"
                                                            data-demo-disable>
                                                     启动
                                                 </md-button>
                                             </md-menu-item>
                                             <md-menu-item>
+                                                <div>{/app.id/}</div>
                                                 <md-button aria-label="stop"
-                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.id].status != '2'"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
                                                            data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.Id, stack.Id)"
                                                            data-demo-disable>
                                                     停止
