@@ -7,7 +7,7 @@
     function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification) {
         var self = this;
         self.target = target;
-        self.app = null;
+        self.app = {};
         self.form = {
             appalias: warning.appalias || '',
             appname: warning.appname,
@@ -108,7 +108,7 @@
                     })
             } else {
                 self.form.id = parseInt($stateParams.task_id);
-                self.form.cid = parseInt(warning.cid);
+                    self.form.cid = parseInt(warning.cid);
 
                 warningCurd.updateTask(self.form)
                     .then(function (data) {
