@@ -48,7 +48,9 @@
                     if(value.Id === data.stackId && value.md5 !== data.md5) {
                         value.md5 = data.md5;
                         self.sseMsgStatus[data.stackId] = 'out';
-                        forceShowTableData(value.Cid, value.Id);
+                        if(self.openFlag[stackId]) {
+                            forceShowTableData(value.Cid, value.Id);
+                        }
                         $scope.$digest();
                         (function(value) {
                             self.timeoutPromises[data.stackId] = $timeout(function() {

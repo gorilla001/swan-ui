@@ -1,21 +1,28 @@
-<div layout-gt-xs="row">
-    <md-input-container>
-        <md-select ng-model="listBillingCtrl.form.appname">
-            <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appname">All</md-option>
-            <md-option data-ng-value="app.name" data-ng-selected="app.name === listBillingCtrl.form.appname" ng-repeat="app in listBillingCtrl.apps">
-                {/app.name/}
-            </md-option>
-        </md-select>
-    </md-input-container>
-
-    <md-datepicker md-placeholder="起始日期" md-max-date="listBillingCtrl.maxDate"
-                   data-ng-model="listBillingCtrl.form.starttime">
-    </md-datepicker>
-    <md-datepicker md-placeholder="截止日期" md-max-date="listBillingCtrl.maxDate"
-                   data-ng-model="listBillingCtrl.form.endtime">
-    </md-datepicker>
-    <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()"
-               data-ng-disabled="!listBillingCtrl.form.starttime || !listBillingCtrl.form.endtime">查询</md-button>
+<div layout="row" layout-align="start center">
+    <div flex="none">
+        <md-input-container>
+            <md-select ng-model="listBillingCtrl.form.appname">
+                <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appname">All</md-option>
+                <md-option data-ng-value="app.name" data-ng-selected="app.name === listBillingCtrl.form.appname" ng-repeat="app in listBillingCtrl.apps">
+                    {/app.name/}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div flex-offset="5">
+        <md-datepicker md-placeholder="起始日期" md-max-date="listBillingCtrl.maxDate"
+                       data-ng-model="listBillingCtrl.form.starttime">
+        </md-datepicker>
+    </div>
+    <div flex="none" flex-offset="5">
+        <md-datepicker md-placeholder="截止日期" md-max-date="listBillingCtrl.maxDate"
+                       data-ng-model="listBillingCtrl.form.endtime">
+        </md-datepicker>
+    </div>
+    <div flex="none" flex-offset="5">
+        <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()"
+                   data-ng-disabled="!listBillingCtrl.form.starttime || !listBillingCtrl.form.endtime">查询</md-button>
+    </div>
 </div>
 
 <md-table-container>
@@ -27,6 +34,7 @@
             <th md-column md-order-by="cpus">CPU申请量</th>
             <th md-column md-order-by="mem">内存申请量</th>
             <th md-column md-order-by="instances">实例数</th>
+            <th md-column md-order-by="endtime">结束时间</th>
             <th md-column>使用时长</th>
         </tr>
         </thead>
@@ -40,6 +48,8 @@
             </td>
             <td md-cell>{/billing.mem/}M</td>
             <td md-cell>{/billing.instances/}</td>
+            <td md-cell data-ng-if="billing.active">---- -- --</td>
+            <td md-cell data-ng-if="!billing.active">{/billing.endtime/}</td>
             <td md-cell>{/billing.timelen/}</td>
         </tr>
         </tbody>

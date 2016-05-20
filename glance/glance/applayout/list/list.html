@@ -38,9 +38,11 @@
                         <div layout-align="end center" class="operation">
                             <md-button class="md-raised" aria-label="add"
                                        ng-click="layoutListCtrl.showTableData(stack.Cid, stack.Id)">
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                <i class="fa" aria-hidden="true"
+                                   data-ng-class="{'fa-chevron-down': !self.openFlag[stack.Id], 'fa-chevron-up': self.openFlag[stack.Id]}"></i>
                                 <md-tooltip md-direction="top">
-                                    展开详情
+                                    <span data-ng-if="!self.openFlag[stack.Id]">展开详情</span>
+                                    <span data-ng-if="self.openFlag[stack.Id]">收起详情</span>
                                 </md-tooltip>
                             </md-button>
                             <md-menu md-offset="0 -5">
@@ -97,6 +99,7 @@
                                                 <md-button aria-label="stop"
                                                            data-ng-click="layoutListCtrl.startApp(stack.Cid, app.Id, stack.Id)"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '3'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '3'"
                                                            data-demo-disable>
                                                     启动
                                                 </md-button>
@@ -104,6 +107,7 @@
                                             <md-menu-item>
                                                 <md-button aria-label="stop"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '2'"
                                                            data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.Id, stack.Id)"
                                                            data-demo-disable>
                                                     停止
@@ -111,7 +115,8 @@
                                             </md-menu-item>
                                             <md-menu-item>
                                                 <md-button aria-label="delete"
-                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status == '5' || layoutListCtrl.appListStatus[app.Id].status == 'undefined'"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status == '5' || layoutListCtrl.appListStatus[app.Id].status == 'undefined'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status != '5' && layoutListCtrl.appListStatus[app.Id].status != 'undefined'"
                                                            data-ng-click="layoutListCtrl.deleteApp(stack.Cid, app.Id, stack.Id, $event)"
                                                            data-demo-disable>
                                                     删除
@@ -126,7 +131,8 @@
                                             </md-menu-item>
                                             <md-menu-item>
                                                 <md-button aria-label="undo"
-                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status !== '6'"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '6'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '6'"
                                                            data-ng-click="layoutListCtrl.undoApp(stack.Cid, app.Id, stack.Id)"
                                                            data-demo-disable>
                                                     撤销
@@ -134,7 +140,8 @@
                                             </md-menu-item>
                                             <md-menu-item>
                                                 <md-button aria-label="upContainer"
-                                                           ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2' && layoutListCtrl.appListStatus[app.Id].status != '3'"
+                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2' && layoutListCtrl.appListStatus[app.Id].status != '3'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '2' || layoutListCtrl.appListStatus[app.Id].status == '3'"
                                                            data-ng-click="layoutListCtrl.updateContainer(app.Instances, stack.Cid, app.Id, stack.Id, $event)"
                                                            data-demo-disable>
                                                     扩展
@@ -143,6 +150,7 @@
                                             <md-menu-item>
                                                 <md-button aria-label="canary"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status !='2'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status =='2'"
                                                            data-ui-sref="app.update({cluster_id: stack.Cid, app_id: app.Id, canary: true})"
                                                            data-demo-disable>
                                                     灰度发布
@@ -151,6 +159,7 @@
                                             <md-menu-item>
                                                 <md-button aria-label="policy"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
+                                                           data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '2'"
                                                            data-ui-sref="policy.tab.appwarning.warninglist({page:1, per_page:20, appalias: app.Alias, keywords: app.Name})"
                                                            data-demo-disable>
                                                     告警策略
