@@ -169,7 +169,8 @@ glanceApp.directive('samename', function () {
         restrict: "A",
         require: 'ngModel',
         scope: {
-            names: '=nameList'
+            names: '=nameList',
+            nameIndex: '=nameIndex'
         },
         link: function (scope, ele, attrs, ngModelController) {
             ngModelController.$validators.samename = function(modelValue, viewValue) {
@@ -180,7 +181,7 @@ glanceApp.directive('samename', function () {
                 }
 
                 if(angular.isFunction(scope.names)){
-                    list = scope.names();
+                    list = scope.names(scope.nameIndex);
                 }else{
                     list = scope.names;
                 }

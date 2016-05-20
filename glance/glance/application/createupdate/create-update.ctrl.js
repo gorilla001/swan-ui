@@ -188,9 +188,9 @@
         };
 
         // new 挂载点
-        function listPath() {
-            var path = self.form.volumes.map(function (item) {
-                if (item.containerPath) {
+        function listPath(curIndex) {
+            var path = self.form.volumes.map(function (item, index) {
+                if (item.containerPath && curIndex!==index) {
                     return item.containerPath
                 }
             });
@@ -199,9 +199,9 @@
         }
 
         // new 应用地址
-        function listAppPort() {
-            var appPort = self.form.portMappings.map(function (item) {
-                if (item.mapPort) {
+        function listAppPort(curIndex) {
+            var appPort = self.form.portMappings.map(function (item, index) {
+                if (item.mapPort && curIndex!==index) {
                     return item.mapPort
                 }
             });
@@ -210,9 +210,9 @@
         }
 
         // new 环境变量
-        function listEnvs() {
-            var env = self.form.envs.map(function (item) {
-                if (item.key) {
+        function listEnvs(curIndex) {
+            var env = self.form.envs.map(function (item, index) {
+                if (item.key && curIndex!==index) {
                     return item.key
                 }
             });
@@ -221,9 +221,9 @@
         }
 
         //new 日志目录
-        function listLogPath() {
-            var logPath = self.form.logPaths.map(function (item) {
-                if (item.path) {
+        function listLogPath(curIndex) {
+            var logPath = self.form.logPaths.map(function (item, index) {
+                if (item.path && curIndex!==index) {
                     return item.path
                 }
             });

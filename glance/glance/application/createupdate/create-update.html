@@ -268,7 +268,7 @@
                                            data-required="required">
                                     <input type="text" placeholder="容器路径" flex-offset="5" flex="40" name="containerPath"
                                            data-ng-model="volume.containerPath" data-required="required"
-                                           samename data-name-list="createAppCtrl.listPath">
+                                           samename data-name-list="createAppCtrl.listPath" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
                                                    data-ng-click="createAppCtrl.deleteConfig($index, 'volumes')">
@@ -276,7 +276,7 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="volumes.containerPath.$error.samename" class="help-info-bottom">
+                                <p data-ng-if="volumes.containerPath.$error.samename" class="help-info-bottom error-info">
                                     容器路径已存在</p>
                             </div>
                         </div>
@@ -307,7 +307,7 @@
                                     </div>
                                     <input type="number" placeholder="映射端口" flex-offset="5" flex="30" name="mapPort"
                                            data-ng-model="portmap.mapPort" data-required="required"
-                                           samename data-name-list="createAppCtrl.listAppPort">
+                                           samename data-name-list="createAppCtrl.listAppPort" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
                                                    data-ng-click="createAppCtrl.deleteConfig($index, 'portMappings')">
@@ -315,7 +315,7 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="portMappings.mapPort.$error.samename" class="help-info-bottom">
+                                <p data-ng-if="portMappings.mapPort.$error.samename" class="help-info-bottom error-info">
                                     映射端口已占用</p>
                             </div>
                         </div>
@@ -339,7 +339,7 @@
                                     <input type="text" placeholder="KEY" flex="40"
                                            data-ng-model="env.key" data-required="required"
                                            name="envKey" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
-                                           samename data-name-list="createAppCtrl.listEnvs">
+                                           samename data-name-list="createAppCtrl.listEnvs" data-name-index="$index">
                                     <input type="text" placeholder="VALUE" flex-offset="5" flex="40"
                                            data-ng-model="env.value" data-required="required"
                                            name="envValue" data-ng-pattern="/^[^\u4e00-\u9fa5]*$/">
@@ -350,11 +350,11 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="envs.envKey.$error.samename" class="help-info-bottom">环境变量的 KEY 重复</p>
+                                <p data-ng-if="envs.envKey.$error.samename" class="help-info-bottom error-info">环境变量的 KEY 重复</p>
                                 <p data-ng-if="envs.envKey.$error.pattern && !envs.envKey.$pristine"
-                                   class="help-info-bottom">环境变量 Key 不能包含中文</p>
+                                   class="help-info-bottom error-info">环境变量 Key 不能包含中文</p>
                                 <p data-ng-if="envs.envValue.$error.pattern && !envs.envValue.$pristine"
-                                   class="help-info-bottom">环境变量 Value 不能包含中文</p>
+                                   class="help-info-bottom error-info">环境变量 Value 不能包含中文</p>
                             </div>
                         </div>
                     </div>
@@ -413,7 +413,7 @@
                                     <input type="text" flex="40" data-ng-model="logPath.path"
                                            name="path" data-required="required"
                                            data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
-                                           samename data-name-list="createAppCtrl.listLogPath">
+                                           samename data-name-list="createAppCtrl.listLogPath" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
                                                    data-ng-click="createAppCtrl.deleteConfig($index, 'logPaths')">
@@ -421,11 +421,11 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="logPathForm.path.$error.samename" class="help-info-bottom">日志目录路径已存在</p>
+                                <p data-ng-if="logPathForm.path.$error.samename" class="help-info-bottom error-info">日志目录路径已存在</p>
                                 <p data-ng-if="logPathForm.path.$error.required && !logPathForm.path.$pristine"
-                                   class="help-info-bottom">不能为空</p>
+                                   class="help-info-bottom error-info">不能为空</p>
                                 <p data-ng-if="logPathForm.path.$error.pattern && !logPathForm.path.$pristine"
-                                   class="help-info-bottom">路径不能包含中文</p>
+                                   class="help-info-bottom error-info">路径不能包含中文</p>
                             </div>
                         </div>
                     </div>
