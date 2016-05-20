@@ -50,15 +50,15 @@
                                 </md-button>
                                 <md-menu-content width="2">
                                     <md-menu-item>
-                                        <md-button aria-label="delete" data-demo-disable
-                                                   data-ng-click="layoutListCtrl.delStack(stack.Cid, stack.Id, $event)">
-                                            删除
-                                        </md-button>
-                                    </md-menu-item>
-                                    <md-menu-item>
                                         <md-button aria-label="edit" data-demo-disable
                                                    data-ui-sref="layout.update({cluster_id: stack.Cid, stack_id:stack.Id})">
                                             详情
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button aria-label="delete" data-demo-disable
+                                                   data-ng-click="layoutListCtrl.delStack(stack.Cid, stack.Id, $event)">
+                                            删除
                                         </md-button>
                                     </md-menu-item>
                                 </md-menu-content>
@@ -102,7 +102,6 @@
                                                 </md-button>
                                             </md-menu-item>
                                             <md-menu-item>
-                                                <div>{/app.id/}</div>
                                                 <md-button aria-label="stop"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
                                                            data-ng-click="layoutListCtrl.stopApp(stack.Cid, app.Id, stack.Id)"

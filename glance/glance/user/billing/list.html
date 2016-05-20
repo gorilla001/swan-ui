@@ -14,7 +14,8 @@
     <md-datepicker md-placeholder="截止日期" md-max-date="listBillingCtrl.maxDate"
                    data-ng-model="listBillingCtrl.form.endtime">
     </md-datepicker>
-    <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()">查询</md-button>
+    <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()"
+               data-ng-disabled="!listBillingCtrl.form.starttime || !listBillingCtrl.form.endtime">查询</md-button>
 </div>
 
 <md-table-container>
