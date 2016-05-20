@@ -1267,3 +1267,8 @@ div.showDropDown {
 md-datepicker.md-default-theme, md-datepicker{
     background-color: transparent;
 }
+
+.label {
+    color: #666;
+    font-weight: 400;
+}
