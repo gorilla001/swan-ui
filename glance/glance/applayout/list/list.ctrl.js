@@ -48,7 +48,7 @@
                     if(value.Id === data.stackId && value.md5 !== data.md5) {
                         value.md5 = data.md5;
                         self.sseMsgStatus[data.stackId] = 'out';
-                        if(self.openFlag[stackId]) {
+                        if(self.openFlag.hasOwnProperty(stackId) && self.openFlag[stackId]) {
                             forceShowTableData(value.Cid, value.Id);
                         }
                         $scope.$digest();
