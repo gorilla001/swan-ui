@@ -8,7 +8,7 @@
       <div class="modal-body">
         <ul class="modal-tag">
           <li data-ng-repeat="selectedLabel in selectedLabels">
-            <span class="tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
+            <span class="server-tag selected" data-ng-click="tearLabel(selectedLabel)" title="移除标签">
               {/selectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
@@ -16,7 +16,7 @@
           </li>
 
           <li data-ng-repeat="unselectedLabel in unselectedLabels">
-            <span class="tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签">
+            <span class="server-tag" data-ng-click="labelledNode(unselectedLabel)" title="贴标签">
               {/unselectedLabel.name/}
               <em class="line-left"></em>
               <em class="line-right"></em>
