@@ -93,7 +93,7 @@
 
         function submit() {
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
-            self.form.appid = self.app.id || warning.appid || '';
+            self.form.appid = self.app.id || warning.appid || 0;
             self.form.cid = self.app.cid || parseInt(warning.cid) || '';
             if(!self.form.triger){
                 delete self.form.instance;
