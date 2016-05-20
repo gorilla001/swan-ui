@@ -28,7 +28,7 @@
               <span class="tag" data-ng-repeat="label in selectedLabels">{/label.name/}</span>
             </div>
             <div flex="50">
-              <md-button class="md-button md-primary" data-ng-click="showAddNodeLabelModal($event)">
+              <md-button class="md-button md-primary" data-ng-click="showAddNodeLabelModal($event)" data-ng-disabled="afterCopy">
                   <i class="fa fa-plus" ></i> 点击编辑标签
               </md-button>
             </div>
