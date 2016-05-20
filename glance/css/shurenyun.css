@@ -948,67 +948,51 @@ dl.list-dl-row dt:after {
     height: auto;
     background: #ECF2F6;
 }
-
-.homepage_module {
-    width: 100%;
-    height: 120px;
+.homepage_module{
+    height: 80px;
     background: #ECF2F6;
-    text-align: center;
     overflow: hidden;
-    -webkit-transition: height 0.5s;
+    -webkit-transition: height 1s;
 }
-
-.homepage_module ul {
-    display: -moz-box;
-    display: -webkit-box;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-}
-
 .homepage_module li {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    margin-top: 50px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-align: center;
 }
-
-.homepage_module span {
-    width: 30px;
-    height: 25px;
-    margin: 0 auto;
-    display: block;
+.homepage_module li span {
+    display: inline-block;
     font-size: 25px;
+    margin:0 auto;
     position: relative;
 }
-
-.homepage_module .btn {
-    vertical-align: middle;
-    display: inline-block;
-    margin-bottom: 0;
+.homepage_module li h5{
+    font-size: 12px;
+    font-weight: 300;
+    margin: 5px 0;
+}
+.homepage_module .btn{
     font-weight: 400;
     text-align: center;
-    white-space: nowrap;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
     cursor: pointer;
-    -webkit-user-select: none;
-    user-select: none;
     border: 1px solid transparent;
     color: #fff;
     background-color: #f0ad4e;
     border-color: #eea236;
     padding: 1px 5px;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1;
     border-radius: 3px;
     position: absolute;
-    bottom: 15px;
-    left: 30px;
+    top: 0;
+    right: -40px;
 }
 
 .homepage_module p {
-    font-size: 12px;
     color: #A0ABBF;
-    text-align: center;
+    font-size: 11px;
+}
+.homepage_view div {
+    background-color: #FFF;
 }
 
 /*横线*/
@@ -1056,56 +1040,6 @@ dl.list-dl-row dt:after {
 .circles:after {
     margin-left: 35px;
     margin-top: -10px;
-}
-
-/*视图*/
-.homepage_view {
-    width: 100%;
-}
-
-.homepage_viewone {
-    float: left;
-    width: 45%;
-    padding: 5px;
-    height: 295px;
-    background: #FFFFFF;
-    margin: 30px 30px 54px 38px;
-}
-
-.homepage_viewtwo {
-    float: right;
-    width: 45%;
-    padding: 5px;
-    height: 295px;
-    background: #FFFFFF;
-    margin: 30px 34px 54px 0px;
-}
-
-.homepage_viewthre {
-    float: left;
-    width: 45%;
-    padding: 5px;
-    height: 295px;
-    background: #FFFFFF;
-    margin: 0px 30px 54px 38px;
-}
-
-.homepage_viewfour {
-    float: right;
-    width: 45%;
-    padding: 5px;
-    height: 295px;
-    background: #FFFFFF;
-    margin: 0px 34px 54px 0px;
-}
-
-.homepage_viewfive {
-    float: left;
-    width: 45%;
-    padding: 5px;
-    height: 295px;
-    background: #FFFFFF;
-    margin: 0px 30px 54px 38px;
 }
 
 /*右上角的菜单复选项*/
@@ -1326,11 +1260,6 @@ dl.list-dl-row dt:after {
     border-color: #3D495D;
 }
 
-.btn-folding-v.short-hr {
-    margin-left: 60px;
-    margin-right: 60px;
-}
-
-md-datepicker.md-default-theme, md-datepicker {
-    background-color: transparent;
+div.showDropDown {
+    height: auto;
 }

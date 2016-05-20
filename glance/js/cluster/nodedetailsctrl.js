@@ -32,7 +32,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.nodeInfo = {};
     
     $scope.services = [];
-
+    $scope.showMore = false;
 
     $('.charts').hide();
 
