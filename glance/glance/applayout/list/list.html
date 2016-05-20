@@ -152,14 +152,14 @@
                                                     扩展
                                                 </md-button>
                                             </md-menu-item>
-                                            <md-menu-item data-ng-show="layoutListCtrl.appListStatus[app.Id].status =='2'">
-                                                <md-button aria-label="canary"
-                                                           data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status !='2'"
-                                                           data-ui-sref="app.update({cluster_id: stack.Cid, app_id: app.Id, canary: true})"
-                                                           data-demo-disable>
-                                                    灰度发布
-                                                </md-button>
-                                            </md-menu-item>
+                                            <!--<md-menu-item data-ng-show="layoutListCtrl.appListStatus[app.Id].status =='2'">-->
+                                                <!--<md-button aria-label="canary"-->
+                                                           <!--data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status !='2'"-->
+                                                           <!--data-ui-sref="app.update({cluster_id: stack.Cid, app_id: app.Id, canary: true})"-->
+                                                           <!--data-demo-disable>-->
+                                                    <!--灰度发布-->
+                                                <!--</md-button>-->
+                                            <!--</md-menu-item>-->
                                             <md-menu-item data-ng-show="layoutListCtrl.appListStatus[app.Id].status == '2'">
                                                 <md-button aria-label="policy"
                                                            data-ng-disabled="layoutListCtrl.appListStatus[app.Id].status != '2'"
