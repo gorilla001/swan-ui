@@ -29,7 +29,7 @@
             <td md-cell>{/item.keyword/}</td>
             <td md-cell>{/item.ival/} 分钟</td>
             <td md-cell>{/item.gtnum/} 次</td>
-            <td md-cell>{/item.emails/}</td>
+            <td md-cell>{/item.emails || '无'/}</td>
             <td md-cell>{/logWarningListCtrl.enableText[item.isnotice]/}</td>
             <td md-cell>{/item.createtime | date: 'yyyy-MM-dd HH:mm'/}</td>
             <td md-cell>

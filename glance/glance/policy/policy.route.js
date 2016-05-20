@@ -211,7 +211,7 @@
     /* @ngInject */
     function warningList(appWarningBackend, utils, $stateParams) {
         return appWarningBackend.warningList(utils.encodeQueryParams($stateParams));
-        //return {tasks: [{id:1, appname:"111", duration: 1,times:2, emails:"3@3.com",updated: "2016-05-09T14:33:48Z", enabled: true}],count:1}
+        //return {tasks: [{id:1, appname:"111", duration: 1,times:2,updated: "2016-05-09T14:33:48Z", enabled: true}],count:1}
     }
 
     /* @ngInject */
