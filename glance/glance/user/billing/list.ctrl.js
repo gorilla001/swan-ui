@@ -5,12 +5,14 @@
 
 
     /* @ngInject */
-    function ListBillingCtrl($state, $stateParams, appservice, billings, mdTable) {
+    function ListBillingCtrl($state, $stateParams, clusterBackendService, appservice, billings, apps, clusters, mdTable) {
         var self = this;
 
         self.table = mdTable.createTable('user.billings');
         self.billings = billings.billings;
         self.count = billings.count;
+        self.apps = apps.App;
+        self.clusters = {};
 
         var starttime, endtime;
         if($stateParams.starttime) {
@@ -21,7 +23,7 @@
 
         self.maxDate = new Date();
         self.form = {
-            appname: $stateParams.appname || '',
+            appid: '',
             starttime: starttime,
             endtime: endtime
         };
@@ -30,13 +32,40 @@
 
         activate();
 
-        function getBillings() {
+        function activate() {
+            angular.forEach(clusters, function (cluster, index) {
+                self.clusters[cluster.id] = cluster;
+            });
+
+            if($stateParams.appname && $stateParams.cid && self.apps.length) {
+                for(var i=0; i < self.apps.length; i++) {
+                    if(self.apps[i].name == $stateParams.appname && self.apps[i].cid == $stateParams.cid) {
+                        self.form.appid = self.apps[i].id;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function getBillings(page) {
             var params = {
-                page: $stateParams.page,
+                page: page || $stateParams.page,
                 per_page: $stateParams.per_page
             };
-            self.form.appname &&
-            (params['appname'] = self.form.appname);
+            if(self.form.appid) {
+                if(self.apps.length) {
+                    for(var i=0; i < self.apps.length; i++) {
+                        if(self.apps[i].id == self.form.appid) {
+                            params['appname'] = self.apps[i].name;
+                            params['cid'] = self.apps[i].cid;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                params['appname'] = undefined;
+                params['cid'] = undefined;
+            }
             self.form.starttime &&
             (params['starttime'] = parseInt(self.form.starttime.getTime() / 1000));
             // endtime plus one day
@@ -44,17 +73,6 @@
             (params['endtime'] = parseInt(self.form.endtime.getTime() / 1000 + 24 * 60 * 60));
 
             $state.go('user.billings', params, {reload: true});
-        }
-        
-        function activate() {
-            getAppList()
-        }
-
-        function getAppList() {
-            appservice.listApps()
-                .then(function (data) {
-                    self.apps = data.App;
-                })
         }
     }
 })();
