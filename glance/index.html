@@ -113,10 +113,16 @@
                         </md-button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button data-ui-sref="user.groups">用户中心</md-button>
+                                <md-button data-ui-sref="user.groups">
+                                    <md-icon md-svg-src="pics/ic_people.svg" aria-label="ic_people "></md-icon>
+                                    用户中心
+                                </md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button data-ng-click="rootCtrl.logout()">退出</md-button>
+                                <md-button data-ng-click="rootCtrl.logout()">
+                                    <md-icon md-svg-src="pics/ic_power_settings.svg" aria-label="ic_power_settings "></md-icon>
+                                    退出
+                                </md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
