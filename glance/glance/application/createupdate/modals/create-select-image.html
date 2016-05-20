@@ -44,7 +44,7 @@
                                     <div flex>
                                         <md-radio-group ng-model="selectImageCtrl.image" layout="row" layout-wrap
                                                         aria-label="select user radio" layout-align="start center">
-                                            <div flex="50" ng-repeat="image in selectImageCtrl.imageList">
+                                            <div flex="100" ng-repeat="image in selectImageCtrl.imageList" layout-padding>
                                                 <md-radio-button ng-value="image" flex>
                                                     {/image.imageName/}
                                                 </md-radio-button>
