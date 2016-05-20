@@ -81,7 +81,14 @@
                 var events = new EventSource(url);
                 events.addEventListener("ci_build_log", function(event) {
                     if (callback !== undefined) {
-                        callback($base64.decode(event.data));
+                        var msg = event.data;
+                        if (msg[0] === '"') {
+                            msg = msg.substring(1);
+                        }
+                        if (msg[msg.length-1] === '"') {
+                            msg = msg.substring(0, msg.length-1);
+                        }
+                        callback($base64.decode(msg));
                     }
                 });
                 events.onerror = function (event) {
