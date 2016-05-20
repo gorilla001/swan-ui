@@ -2,7 +2,7 @@
 function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, confirmModal) {
     'use strict';
     
-    var circles=$("#circles"), homepage_module=$("#homepage_module");
+    var circles=$("#btn-folding-v"), homepage_module=$("#homepage_module");
     circles.click(function(){
         if (homepage_module.height() == '120') {
             homepage_module.height('240');
@@ -10,8 +10,8 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         }else{
             homepage_module.height('120');
             circles.children('span').removeClass('fa-chevron-up').addClass('fa-chevron-down');
-        };
-    })
+        }
+    });
     
     $scope.node = {};
     $scope.showCharts = false;

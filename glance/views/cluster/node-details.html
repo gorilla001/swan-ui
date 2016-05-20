@@ -1,99 +1,106 @@
 <div class="content" id="content">
     <div class="scroll">
-    <div class="node-details">
-        <header layout="row" layout-align="end start">
-          <div class="info" flex>
-           <h2>{/ node.name /}</h2>
-           <dl>
-            <dt>主机类型</dt>
-            <dd>{/node.role/}</dd>
-            <dt>主机状态</dt>
-            <dd>
-                <i class="{/nodeStatusCls[statusMgr.nodes[node.id].status]/}" aria-hidden="true"></i>
-            </dd>
-            <dt>IP 地址</dt>
-            <dd>{/ node.ip /}</dd>
-            <dt>CPU</dt>
-            <dd>{/ nodeInfo.cpuNumber/}<span data-ng-show="nodeInfo.cpuNumber!=='未知'">核</span></dd>
-            <dt>内存</dt>
-            <dd>{/ unitConversion.convertMem(nodeInfo.memTotal).num /}{/unitConversion.convertMem(nodeInfo.memTotal).unit/}</dd>
-          </dl>
-          <dl>
-            <dt>所属集群</dt>
-            <dd><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/ node.cluster.name /}</a></dd>
-            <dt>系统版本</dt>
-            <dd>{/ nodeInfo.osVersion /}</dd>
-            <dt>Agent 版本</dt>
-            <dd>{/ nodeInfo.agentVersion /}</dd>
-          </dl>
-          <dl>
-            <dt>创建时间</dt>
-            <dd>{/ node.created_at /}</dd>
-            <dt>更新时间</dt>
-            <dd>{/ node.updated_at /}</dd>
-          </dl>
-          <dl>
-            <dt>主机标签</dt>
-            <dd>
-                <span data-ng-repeat="label in selectedLabels" class="node-label">{/label.name/}</span>
-            </dd>
-          </dl>
+        <div class="node-details">
+            <header layout="row" layout-align="end start">
+                <div class="info" flex>
+                    <h2>{/ node.name /}</h2>
+                    <dl>
+                        <dt>主机类型</dt>
+                        <dd>{/node.role/}</dd>
+                        <dt>主机状态</dt>
+                        <dd>
+                            <i class="{/nodeStatusCls[statusMgr.nodes[node.id].status]/}" aria-hidden="true"></i>
+                        </dd>
+                        <dt>IP 地址</dt>
+                        <dd>{/ node.ip /}</dd>
+                        <dt>CPU</dt>
+                        <dd>{/ nodeInfo.cpuNumber/}<span data-ng-show="nodeInfo.cpuNumber!=='未知'">核</span></dd>
+                        <dt>内存</dt>
+                        <dd>{/ unitConversion.convertMem(nodeInfo.memTotal).num
+                            /}{/unitConversion.convertMem(nodeInfo.memTotal).unit/}
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>所属集群</dt>
+                        <dd><a data-ui-sref="cluster.clusterdetails.nodes({clusterId:node.cluster.id})">{/
+                            node.cluster.name /}</a></dd>
+                        <dt>系统版本</dt>
+                        <dd>{/ nodeInfo.osVersion /}</dd>
+                        <dt>Agent 版本</dt>
+                        <dd>{/ nodeInfo.agentVersion /}</dd>
+                    </dl>
+                    <dl>
+                        <dt>创建时间</dt>
+                        <dd>{/ node.created_at /}</dd>
+                        <dt>更新时间</dt>
+                        <dd>{/ node.updated_at /}</dd>
+                    </dl>
+                    <dl>
+                        <dt>主机标签</dt>
+                        <dd>
+                            <span data-ng-repeat="label in selectedLabels" class="node-label">{/label.name/}</span>
+                        </dd>
+                    </dl>
+                </div>
+                <div layout-align="end center" class="operation">
+                    <md-button class="md-fab md-mini" aria-label="编辑主机"
+                               data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id, name: node.name})"
+                               data-demo-disable
+                               data-dm-permit-click="1"
+                               data-dm-role="node.cluster.group_role"
+                               data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        <md-tooltip md-direction="top">
+                            编辑主机
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="deleNode(node.id, $event)"
+                               data-demo-disable
+                               data-dm-permit-click="1"
+                               data-dm-role="node.cluster.group_role"
+                               data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <md-tooltip md-direction="top">
+                            删除主机
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-fab md-mini" aria-label="上一台主机" data-ng-click="goPreNode()"
+                               data-ng-disabled="disablePreNav">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <md-tooltip md-direction="top">
+                            上一台主机
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-fab md-mini" aria-label="下一台主机" data-ng-click="goNextNode()"
+                               data-ng-disabled="disableNextNav">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <md-tooltip md-direction="top">
+                            下一台主机
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </header>
         </div>
-        <div layout-align="end center" class="operation">
-         <md-button class="md-fab md-mini" aria-label="编辑主机" data-ui-sref="cluster.updatenode({nodeId: node.id, clusterId: node.cluster.id, name: node.name})"
-                data-demo-disable
-                data-dm-permit-click="1" 
-                data-dm-role="node.cluster.group_role"
-                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
-            <i class="fa fa-pencil" aria-hidden="true"></i>
-            <md-tooltip md-direction="top">
-                编辑主机
-            </md-tooltip>
-        </md-button>
-       <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="deleNode(node.id, $event)"
-                data-demo-disable
-                data-dm-permit-click="1" 
-                data-dm-role="node.cluster.group_role"
-                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
-       <i class="fa fa-trash-o" aria-hidden="true"></i>
-       <md-tooltip md-direction="top">
-              删除主机
-       </md-tooltip>
-      </md-button>
-         <md-button class="md-fab md-mini" aria-label="上一台主机" data-ng-click="goPreNode()" data-ng-disabled="disablePreNav">
-       <i class="fa fa-angle-left" aria-hidden="true"></i>
-       <md-tooltip md-direction="top">
-              上一台主机
-       </md-tooltip>
-      </md-button>
-       <md-button class="md-fab md-mini" aria-label="下一台主机" data-ng-click="goNextNode()" data-ng-disabled="disableNextNav">
-       <i class="fa fa-angle-right" aria-hidden="true"></i>
-       <md-tooltip md-direction="top">
-              下一台主机
-       </md-tooltip>
-      </md-button>
-      </div>
-      </header>
-    </div>
-    <!--点击加载更多组件-->
-<div class="homepage_bottom">
-    <div class="homepage_module" id="homepage_module">
-        <ul>
-            <li data-ng-repeat = "service in services">
+        <!--点击加载更多组件-->
+        <div class="homepage_bottom">
+            <div class="homepage_module" id="homepage_module">
+                <ul>
+                    <li data-ng-repeat="service in services">
                 <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
                     <button class="btn"
-                        data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
-                        data-ng-click="repairService(service, 'restart')" data-demo-disable
-                        data-dm-permit-click="1" 
-                        data-dm-role="node.cluster.group_role"
-                        data-dm-permit-msg="FRONTEND_MSG.no_group_admin" data-ng-if="service === 'docker'">重启</button>
+                            data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
+                            data-ng-click="repairService(service, 'restart')" data-demo-disable
+                            data-dm-permit-click="1"
+                            data-dm-role="node.cluster.group_role"
+                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin" data-ng-if="service === 'docker'">重启
+                    </button>
                     <md-menu data-ng-if="service !== 'docker' && statusMgr.nodes[node.id].services[service].status=='failed' &&
                         ['running', 'failed', 'abnormal'].indexOf(statusMgr.nodes[node.id].status) >= 0">
                         <button class="btn" aria-label="More" ng-click="$mdOpenMenu($event)"
-                            data-demo-disable
-                            data-dm-permit-click="1" 
-                            data-dm-role="node.cluster.group_role"
-                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                                data-demo-disable
+                                data-dm-permit-click="1"
+                                data-dm-role="node.cluster.group_role"
+                                data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
                             修复
                         </button>
                         <md-menu-content>
@@ -106,35 +113,35 @@
                         </md-menu-content>
                     </md-menu>
                 </span>
-                {/getServiceLabel(service)/}
-                <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
-            </li>
-        </ul>
+                        {/getServiceLabel(service)/}
+                        <p>{/statusMgr.nodes[node.id].services[service].version/}</p>
+                    </li>
+                </ul>
 
+            </div>
+            <div class="btn-folding-v short-hr">
+                <a href="#" id="btn-folding-v"><i class="fa fa-chevron-down"></i></a>
+            </div>
+            <div class="homepage_view">
+                <ul>
+                    <li class="homepage_viewone">
+                        <div id="node-cpu-chart"></div>
+                    </li>
+                    <li class="homepage_viewtwo">
+                        <div id="node-memory-chart"></div>
+                    </li>
+                    <li class="homepage_viewthre">
+                        <div id="node-disk-chart"></div>
+                    </li>
+                    <li class="homepage_viewfour">
+                        <div id="node-diskio-chart"></div>
+                    </li>
+                    <li class="homepage_viewfive">
+                        <div id="node-netio-chart"></div>
+                    </li>
+                </ul>
+                <div style="clear: both"></div>
+            </div>
+        </div>
     </div>
-    <div class="btn-folding-v short-hr">
-        <a href="#" ><i class="fa fa-chevron-down"></i></a>
-    </div>
-    <div class="homepage_view">
-        <ul>
-            <li class="homepage_viewone">
-               <div id="node-cpu-chart"></div>
-            </li>
-            <li class="homepage_viewtwo">
-               <div id="node-memory-chart"></div>
-            </li>
-            <li class="homepage_viewthre">
-                <div id="node-disk-chart"></div>
-            </li>
-            <li class="homepage_viewfour" >
-                <div id="node-diskio-chart"></div>
-            </li>
-            <li class="homepage_viewfive" >
-                <div id="node-netio-chart"></div>
-            </li>
-        </ul>
-        <div style="clear: both"></div>
-    </div>
-</div>
-</div>
 </div>
