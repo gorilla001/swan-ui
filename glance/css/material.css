@@ -739,3 +739,30 @@ dl.list-dl-row dt:after {
     padding: 3px 6px;
 }
 
+.server-tag {
+    background-color: #7A89A0;
+    color: #FFF;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    margin-right: 12px;
+    padding: 3px 6px;
+}
+.server-tag.selected {
+    background-color: #29b6f6;
+}
+.modal-tag li {
+    margin-bottom: 12px;
+    display: inline-block;
+    list-style: none;
+    padding-right: 12px;
+    margin-right: 15px;
+    position: relative;
+}
+.modal-tag li a {
+    color: #a94442;
+    display: none;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+}
