@@ -40,7 +40,7 @@
                     }
                 }
             }).state('user.billings', {
-                url: '/billings?per_page&page&order&sort_by&appname&starttime&endtime',
+                url: '/billings?per_page&page&order&sort_by&appname&starttime&endtime&cid',
                 views: {
                     'billings': {
                         templateUrl: '/glance/user/billing/list.html',
@@ -48,7 +48,9 @@
                     }
                 },
                 resolve: {
-                    billings: listBillings
+                    billings: listBillings,
+                    clusters: listClusters,
+                    apps: getAppList
                 },
                 defaultParams: {
                     per_page: 20,
@@ -81,6 +83,7 @@
                 per_page: $stateParams.per_page
             };
 
+            $stateParams.cid && (params.cid = $stateParams.cid);
             $stateParams.order && (params.order = $stateParams.order);
             $stateParams.sort_by && (params.sort_by = $stateParams.sort_by);
             $stateParams.appname && (params.appname = $stateParams.appname);
@@ -91,5 +94,15 @@
         }
 
         return userBackend.listBillings(encodeParams($stateParams));
+    }
+
+    /* @ngInject */
+    function getAppList(appservice) {
+        return appservice.listApps();
+    }
+
+    /* @ngInject */
+    function listClusters(clusterBackendService) {
+        return clusterBackendService.listClusters();
     }
 })();

@@ -1,10 +1,10 @@
 <div layout="row" layout-align="start center">
     <div flex="none">
         <md-input-container>
-            <md-select ng-model="listBillingCtrl.form.appname">
-                <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appname">All</md-option>
-                <md-option data-ng-value="app.name" data-ng-selected="app.name === listBillingCtrl.form.appname" ng-repeat="app in listBillingCtrl.apps">
-                    {/app.name/}
+            <md-select ng-model="listBillingCtrl.form.appid" aria-label="...">
+                <md-option data-ng-value="" data-ng-selected="!listBillingCtrl.form.appid">All</md-option>
+                <md-option data-ng-value="app.id" data-ng-selected="app.id === listBillingCtrl.form.appid" ng-repeat="app in listBillingCtrl.apps">
+                    {/listBillingCtrl.clusters[app.cid].name/}:{/app.name/}
                 </md-option>
             </md-select>
         </md-input-container>
@@ -20,7 +20,7 @@
         </md-datepicker>
     </div>
     <div flex="none" flex-offset="5">
-        <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings()"
+        <md-button class="md-raised md-primary" data-ng-click="listBillingCtrl.getBillings(1)"
                    data-ng-disabled="!listBillingCtrl.form.starttime || !listBillingCtrl.form.endtime">查询</md-button>
     </div>
 </div>
