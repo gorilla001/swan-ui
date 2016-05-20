@@ -26,8 +26,6 @@
         self.tags = [];
         self.clusters = [];
         self.questions = [];
-        self.memPower = Math.log(self.form.app.mem)/Math.log(2);
-        self.pow = Math.pow;
         self.deploy = deploy;
 
         activate();
@@ -72,7 +70,6 @@
             }
 
             self.form.app.clusterId = self.form.app.clusterId.toString();
-            self.form.app.mem = Math.pow(2, self.memPower);
 
             repoBackend.deployRepo($stateParams.projectName, $stateParams.repositoryName, self.form)
                 .then(function (data) {

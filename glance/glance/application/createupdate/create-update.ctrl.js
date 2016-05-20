@@ -89,13 +89,11 @@
             self.single = app.unique;
             self.isNetworkDisable = true;
         }
-        self.memPower = Math.log(self.form.mem)/Math.log(2);
 
         self.appNames = [];
         self.clusters = [];
         self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
         self.showAdvanceContent = false;
-        self.pow = Math.pow;
 
         listApps();
         listClusters();
@@ -190,7 +188,7 @@
         // new 挂载点
         function listPath(curIndex) {
             var path = self.form.volumes.map(function (item, index) {
-                if (item.containerPath && curIndex!==index) {
+                if (item.containerPath && curIndex !== index) {
                     return item.containerPath
                 }
             });
@@ -201,7 +199,7 @@
         // new 应用地址
         function listAppPort(curIndex) {
             var appPort = self.form.portMappings.map(function (item, index) {
-                if (item.mapPort && curIndex!==index) {
+                if (item.mapPort && curIndex !== index) {
                     return item.mapPort
                 }
             });
@@ -212,7 +210,7 @@
         // new 环境变量
         function listEnvs(curIndex) {
             var env = self.form.envs.map(function (item, index) {
-                if (item.key && curIndex!==index) {
+                if (item.key && curIndex !== index) {
                     return item.key
                 }
             });
@@ -222,13 +220,16 @@
 
         //new 日志目录
         function listLogPath(curIndex) {
-            var logPath = self.form.logPaths.map(function (item, index) {
-                if (item.path && curIndex!==index) {
-                    return item.path
-                }
-            });
+            var logPathArray = [];
+            var length = self.form.logPaths.length;
 
-            return logPath
+            for (var i = 0; i < length; i++) {
+                if (curIndex !== i) {
+                    logPathArray.push(self.form.logPaths[i]);
+                }
+            }
+
+            return logPathArray
         }
 
         self.addConfig = function (configName) {
@@ -262,9 +263,7 @@
                     key: '',
                     value: ''
                 },
-                logPaths: {
-                    path: ''
-                }
+                logPaths: ''
 
             };
             self.form[configName].push(config[configName]);
@@ -276,7 +275,6 @@
 
         self.createApp = function () {
             setConstraints();
-            self.form.mem = Math.pow(2, self.memPower);
             return appservice.createApp(self.form, self.form.cluster_id)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
@@ -287,7 +285,6 @@
         self.updateApp = function () {
             setConstraints();
             delete self.form.cluster_id;
-            self.form.mem = Math.pow(2, self.memPower);
             return appservice.updateApp(self.form, app.cid, app.id)
                 .then(function (data) {
                     $state.go('app.detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
