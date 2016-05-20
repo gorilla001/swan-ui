@@ -67,8 +67,11 @@
         
         function buildReqRateChart() {
             appservice.getReqRate($scope.appInfo.cid, $scope.appInfo.alias).then(function (data) {
-                    paintReqRateChart(data);
-                });
+                if (!data) {
+                    data = [{time: (new Date()).getTime()*1000000}]
+                }
+                paintReqRateChart(data);
+            });
         }
         
         function paintReqRateChart(data) {
