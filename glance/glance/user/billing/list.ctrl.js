@@ -32,8 +32,8 @@
 
         function getBillings() {
             var params = {
-                pcount: $stateParams.pcount,
-                pnum: $stateParams.pnum
+                page: $stateParams.page,
+                per_page: $stateParams.per_page
             };
             self.form.appname &&
             (params['appname'] = self.form.appname);
