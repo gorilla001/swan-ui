@@ -54,6 +54,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="alert alert-warning text-center" data-ng-show="!listBillingCtrl.billings.length">
+        未查询到计量数据
+    </div>
 </md-table-container>
 
 <md-table-pagination
