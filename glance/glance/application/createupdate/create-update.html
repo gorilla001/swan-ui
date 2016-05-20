@@ -154,12 +154,12 @@
                             <div flex="15">
                                 <span class="md-body-1">内存</span>
                             </div>
-                            <md-slider flex class="md-warn" data-ng-model="createAppCtrl.memPower" min="4" max="11"
+                            <md-slider flex class="md-warn" data-ng-model="createAppCtrl.form.mem" min="16" max="2048"
                                        aria-label="mem">
                             </md-slider>
                         </div>
                     </div>
-                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.pow(2, createAppCtrl.memPower)/} <span style="font-size: 12px;">MB</span></div>
+                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem/} <span style="font-size: 12px;">MB</span></div>
                 </div>
 
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
@@ -410,7 +410,7 @@
                             <div class="add-row-container"
                                  data-ng-repeat="logPath in createAppCtrl.form.logPaths track by $index">
                                 <ng-form name="logPathForm" layout="row" layout-align="start center">
-                                    <input type="text" flex="40" data-ng-model="logPath.path"
+                                    <input type="text" flex="40" data-ng-model="createAppCtrl.form.logPaths[$index]"
                                            name="path" data-required="required"
                                            data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
                                            samename data-name-list="createAppCtrl.listLogPath" data-name-index="$index">
