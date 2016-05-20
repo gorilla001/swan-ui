@@ -194,7 +194,8 @@ WARNING_TYPE = {
     DiskIOReadBytesRate: '磁盘读取',
     DiskIOWriteBytesRate: '磁盘写入',
     NetworkReceviedByteRate: '网络接收',
-    NetworkSentByteRate: '网络发送'
+    NetworkSentByteRate: '网络发送',
+    reqrate: '每秒请求数'
 };
 
 WARNING_RULE = {
