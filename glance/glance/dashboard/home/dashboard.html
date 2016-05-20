@@ -3,7 +3,7 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2> <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
+                <h2><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
                 </h2>
                 <dl>
                     <dt><i class="fa fa-heartbeat "></i> 正常主机</dt>
@@ -34,7 +34,8 @@
                     </div>
                     <div class="info-panel" data-ng-if="cluster.masMetrics.cpuPercent">
                         CPU 占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal">{/cluster.masMetrics.cpuShare.toFixed(2)/}
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal">
+                            {/cluster.masMetrics.cpuShare.toFixed(2)/}
                             / {/cluster.masMetrics.cpuTotal/}
                         </div>
                     </div>
@@ -43,20 +44,23 @@
                     <div class="charts-panel">
                         <piechart chart-used="cluster.masMetrics.memUsed" chart-total="cluster.masMetrics.memTotal"
                                   radius="[57, 67]"
-                                  use-color="#00BCD4" show-text="内存占用" text-color="#596679" error-code="dashboardCtrl.errorCode"
+                                  use-color="#00BCD4" show-text="内存占用" text-color="#596679"
+                                  error-code="dashboardCtrl.errorCode"
                                   font-size="24">
                         </piechart>
                     </div>
                     <div class="info-panel" data-ng-if="cluster.masMetrics.memUsed">
                         内存占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal">{/cluster.masMetrics.memUsed/}
+                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal">
+                            {/cluster.masMetrics.memUsed/}
                             / {/cluster.masMetrics.memTotal | currency: '' :0/} MB
                         </div>
                     </div>
                 </div>
             </div>
             <div flex="40">
-                <div class="fold-panel mCustomScrollbar" data-ng-class="{'dropShow':dashboardCtrl.dropStatus}" data-mcs-theme="dark">
+                <div class="fold-panel mCustomScrollbar" data-ng-class="{'dropShow':dashboardCtrl.dropStatus}"
+                     data-mcs-theme="dark">
                     <div ng-repeat="appMon in cluster.appMonitors" class="appGroup">
                         <dl layout="row" layout-align="start center" class="app-charts-panel">
                             <dt class="app-header">{/appMon.appName/}</dt>
@@ -83,12 +87,14 @@
                         </dl>
                     </div>
                 </div>
-                <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length > 1">
+                <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length > 2">
                     <a href="#" data-ng-click="dashboardCtrl.dropShow()"><i class="fa"
-                                                              data-ng-class="{'fa-chevron-down':!dashboardCtrl.dropStatus, 'fa-chevron-up': dashboardCtrl.dropStatus}"></i></a>
+                                                                            data-ng-class="{'fa-chevron-down':!dashboardCtrl.dropStatus, 'fa-chevron-up': dashboardCtrl.dropStatus}"></i></a>
                 </div>
             </div>
         </div>
         <section>
+        </section>
+    </section>
 
 </div>
