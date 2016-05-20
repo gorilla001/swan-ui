@@ -1263,3 +1263,7 @@ dl.list-dl-row dt:after {
 div.showDropDown {
     height: auto;
 }
+
+md-datepicker.md-default-theme, md-datepicker{
+    background-color: transparent;
+}
