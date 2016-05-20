@@ -77,8 +77,8 @@
     function listBillings($stateParams, userBackend) {
         function encodeParams($stateParams) {
             var params = {
-                pnum: $stateParams.page,
-                pcount: $stateParams.per_page
+                page: $stateParams.page,
+                per_page: $stateParams.per_page
             };
 
             $stateParams.order && (params.order = $stateParams.order);
