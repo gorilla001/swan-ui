@@ -1330,3 +1330,7 @@ dl.list-dl-row dt:after {
     margin-left: 60px;
     margin-right: 60px;
 }
+
+md-datepicker.md-default-theme, md-datepicker {
+    background-color: transparent;
+}
