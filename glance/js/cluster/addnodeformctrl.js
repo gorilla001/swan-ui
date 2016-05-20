@@ -1,4 +1,4 @@
-function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labelService) {
+function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labelService, addNodeLabelModal) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
@@ -82,7 +82,16 @@ function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labe
     $scope.deleteLabel = function(label) {
         labelService.deleteLabel(label, $scope);
     };
+    
+    $scope.showAddNodeLabelModal = function($event) {
+        labelService.changeLabels($scope)
+            .then(function() {
+                $scope.allLabelNames = $scope.getAllLabelNames($scope.allLabels, 'name');
+                // FIX(mgniu): I have to pass the $scope to modal, this is not the good way!!!
+                addNodeLabelModal.open('/views/cluster/node-label-modal.html', $event,$scope);
+            });
+    };
 }
 
-addNodeFormCtrl.$inject = ['$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService'];
+addNodeFormCtrl.$inject = ['$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService', 'addNodeLabelModal'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);
