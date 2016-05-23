@@ -17,8 +17,8 @@
             emails: warning.emails || '',
             duration: warning.duration || '',
             times: warning.times || '',
-            enabled: true,
-            triger: false,
+            enabled: warning.enabled || true, // Deprecated api
+            triger: warning.triger || false,
             mininstance: warning.mininstance ||'',
             instance: warning.instance||''
         };
