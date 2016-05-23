@@ -24,7 +24,7 @@
                                                 <md-radio-button ng-value="datamanImage" flex>{/datamanImage.name/}</md-radio-button>
                                             </div>
                                             <div flex="50" data-ng-repeat-end>
-                                                <md-button class="md-icon-button md-primary" aria-label="Settings"
+                                                <md-button class="md-icon-button md-primary" aria-label="Settings" data-ng-disabled="!datamanImage.url"
                                                            ng-href="{/datamanImage.url/}" target="_blank">
                                                     <i class="fa fa-file-text"></i>
                                                 </md-button>
