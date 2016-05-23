@@ -268,7 +268,8 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
         if (currentNodeIndex > 0) {
             $scope.disablePreNav = false;
-        } else if (currentNodeIndex < nodes.length - 1) {
+        }
+        if (currentNodeIndex < nodes.length - 1) {
             $scope.disableNextNav = false;
         }
 
