@@ -48,6 +48,7 @@
 
             this.doSearch = function (searchKey) {
                 $state.go(stateName, {
+                    page: 1,
                     per_page: $stateParams.per_page,
                     keywords: searchKey
                 });
