@@ -163,6 +163,10 @@
         };
 
         self.tickAllLabels = function () {
+            if (!self.form.cluster_id) {
+                Notification.warning('请选择集群');
+                return
+            }
             angular.extend(self.multiSelect.selectedLabels, self.multiSelect.labels);
             self.multiSelect.selectedNodes = [];
             self.multiSelect.nodes = [];
