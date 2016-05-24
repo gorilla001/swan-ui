@@ -4,7 +4,7 @@
         .controller('RootCtrl', RootCtrl);
 
     /* @ngInject */
-    function RootCtrl($rootScope, $document, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav) {
+    function RootCtrl($rootScope, $document, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav, utils) {
         var self = this;
 
         $rootScope.nodeStatusCls = {};
@@ -69,7 +69,7 @@
         function logout() {
             commonBackend.logout().then(function (data) {
                 glanceUser.clear();
-                window.location.href = USER_URL + "/?timestamp=" + new Date().getTime();
+                utils.redirectLogin();
             });
         }
 

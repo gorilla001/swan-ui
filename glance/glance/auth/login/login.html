@@ -15,7 +15,7 @@
                  data-ng-class="{ 'has-error' : (staticForm.username.$invalid && staticForm.username.$dirty) || (staticForm.$pristine && staticForm.message_error_info)}">
                 <input type="email" placeholder="邮箱地址" class="form-control input-first" data-required="required"
                        name="username"
-                       ng-model="loginCtrl.loginData.email">
+                       ng-model="loginCtrl.form.email">
                 <div class="prompt-box" style="display: block;"
                      data-ng-show="staticForm.username.$error.required && staticForm.username.$dirty">
                     <div class="arrow"></div>
@@ -39,7 +39,7 @@
                  data-ng-class="{ 'has-error' : staticForm.password.$invalid && staticForm.password.$dirty}">
                 <input type="password" placeholder="密码" class="form-control input-last" data-required="required"
                        name="password"
-                       ng-model="loginCtrl.loginData.password">
+                       ng-model="loginCtrl.form.password">
                 <div class="prompt-box" style="display: block;"
                      data-ng-show="staticForm.password.$error.required && staticForm.password.$dirty">
                     <div class="arrow"></div>
@@ -55,7 +55,7 @@
         </form>
         <div class="switch">
             <a href="#" data-toggle="popover" data-trigger="focus" tabindex="-1" data-content="请您联系客服info@shurenyun.com找回密码，谢谢！" data-placement="left">忘记密码</a>&nbsp;&nbsp;&nbsp;
-            <a title="注册" ui-sref="register" href="#" id="login-btn-register">注册</a>
+            <a title="注册" ui-sref="auth.register" href="#" id="login-btn-register">注册</a>
         </div>
     </div>
 </div>

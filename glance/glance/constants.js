@@ -257,7 +257,12 @@ BACKEND_URL = {
         password: 'api/v3/user/password',
         notice: 'api/v3/notice',
         phoneCode: 'api/v3/auth/phone/code',
-        verifyPhone: 'api/v3/auth/phone/verification'
+        verifyPhone: 'api/v3/auth/phone/verification',
+        register: 'api/v3/auth/user/registration',
+        active: 'api/v3/auth/user/activation/$active_code',
+        sendActiveMail: 'api/v3/auth/user/activation',
+        forgotPassword: 'api/v3/auth/password/reseturl',
+        resetPassword: 'api/v3/auth/password/$reset_code',
     },
 
     cluster: {

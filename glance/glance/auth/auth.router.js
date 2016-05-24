@@ -47,7 +47,7 @@
                 controller: 'SendActiveMailSuccessCtrl as sendActiveMailSuccessCtrl'
             })
             .state('auth.login', {
-                url: '/login',
+                url: '/login?return_to',
                 templateUrl: '/glance/auth/login/login.html',
                 controller: 'LoginCtrl as loginCtrl'
             })

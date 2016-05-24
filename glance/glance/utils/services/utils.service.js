@@ -8,7 +8,8 @@
         return {
             buildFullURL: buildFullURL,
             clickToCopy: clickToCopy,
-            encodeQueryParams: encodeQueryParams
+            encodeQueryParams: encodeQueryParams,
+            redirectLogin: redirectLogin
         };
         
         function clickToCopy(className) {
@@ -61,6 +62,15 @@
             }
             return params;
         };
+        
+        function redirectLogin(isReturn) {
+            var href = "/auth/login?timestamp=" + new Date().getTime(); 
+            if (isReturn) {
+                href += '&return_to=' + encodeURIComponent(window.location.href);
+            }
+            window.location.href = href;
+            $rootScope.$destroy();
+        }
 
     }
 

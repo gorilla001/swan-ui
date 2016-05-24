@@ -30,8 +30,8 @@
             return gHttp.Resource('user.resetPassword', {reset_code: resetCode}).get();
         }
 
-        function login(params, form) {
-            return gHttp.Resource('user.login').post(params, {'form': form});
+        function login(data, form) {
+            return gHttp.Resource('auth.auth').post(data, {form: form});
         }
 
         function forgotPassword(params, form) {
