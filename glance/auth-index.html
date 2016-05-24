@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-ng-app="glance">
+    <head data-update-meta>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content={/metaKeywords/}>
+        <meta name="description" content={/metaDescription/}>
+        <title ng-bind="metaTitle"></title>
+        <base href="/">
+        
+        <link rel="shortcut icon" type="image/x-icon" href="pics/facicon.ico" />
+        <!--build:css css/style.css-->
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/auth.css">
+        <!--endbuild-->
+    </head>
+    <body>
+        <div data-ui-view style="height: 100%;"></div>
+        <!-- rev-hash -->
+        <script src="js/confdev.js" type="text/javascript"></script>
+        <!-- end -->
+        <!--build:js js/script.js-->
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular/angular.js" type="text/javascript"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.js" type="text/javascript"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+        <script src="bower_components/angular-loading-bar/build/loading-bar.js" type="text/javascript"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
+        <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+        
+
+
+        <script type="text/javascript" src="glance/constants.js"></script>
+        
+        <script src="glance/utils/utils.module.js" type="text/javascript"></script>
+        <script src="glance/utils/utils.config.js" type="text/javascript"></script>
+        <script src="glance/utils/services/utils.service.js" type="text/javascript"></script>
+        <script src="glance/utils/services/email-util.service.js" type="text/javascript"></script>
+        <script src="glance/utils/services/ghttp.service.js" type="text/javascript"></script>
+        
+        <script src="glance/common/common.module.js" type="text/javascript"></script>
+        <script src="glance/common/services/common-backend.service.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="glance/auth/auth.module.js"></script>
+        <script type="text/javascript" src="glance/auth/auth.config.js"></script>
+        <script type="text/javascript" src="glance/auth/auth.router.js"></script>
+        <script type="text/javascript" src="glance/auth/services/auth-backend.service.js"></script>
+        <script type="text/javascript" src="glance/auth/services/auth-curd.service.js"></script>
+        <script type="text/javascript" src="glance/auth/register/register.js"></script>
+        <script type="text/javascript" src="glance/auth/login/login.js"></script>
+        <script type="text/javascript" src="glance/auth/password/forgot-password.js"></script>
+        <script type="text/javascript" src="glance/auth/active/active.ctrl.js"></script>
+        <script type="text/javascript" src="glance/auth/active/group-active.ctrl.js"></script>
+        <script type="text/javascript" src="glance/auth/active/need-active.js"></script>
+        <script type="text/javascript" src="glance/auth/active/send-active-mail-success.js"></script>
+        <script type="text/javascript" src="glance/auth/password/resetpassword.js"></script>
+        <script type="text/javascript" src="glance/auth/password/forgot-success.js"></script>
+
+        <script type="text/javascript" src="glance/glance-4-auth.module.js"></script>
+        <script type="text/javascript" src="glance/glance.run.js"></script>
+        
+        <script type="text/javascript" src="glance/directives/dm-password.js"></script>
+        <script type="text/javascript" src="glance/directives/dm-no-equal.directive.js"></script>
+
+
+        
+        <!--endbuild-->
+        
+        <!--build:js js/template.js-->
+        <!-- inject:template:js -->
+        <!-- endinject -->
+        <!--endbuild-->
+
+        <!-- Baidu -->
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+                var hm = document.createElement("script");
+                hm.src = "//hm.baidu.com/hm.js?cd74c0fcc0c51aecc3bb276315e35e6a";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+
+        <!-- GrowingIO -->
+        <script type='text/javascript'>
+            var _vds = _vds || [];(function(){ _vds.push(['setAccountId', '0edf12ee248505950b0a77b02d47c537']); (function() {var vds = document.createElement('script'); vds.type='text/javascript'; vds.async = true;vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'dn-growing.qbox.me/vds.js';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(vds, s);})();})();
+        </script>
+
+    </body>
+</html>
