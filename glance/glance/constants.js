@@ -1,7 +1,8 @@
 MESSAGE_CODE = {
     success: 0,
     dataInvalid: 10001,
-    noExist: 10009
+    noExist: 10009,
+    needActive: 11005
 };
 
 CODE_MESSAGE = {

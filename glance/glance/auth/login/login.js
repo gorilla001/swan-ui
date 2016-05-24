@@ -31,8 +31,7 @@
             authCurd.login(self.form, $scope.staticForm, returnTo)
             .catch(function (res) {
                 if (res.code === MESSAGE_CODE.needActive) {
-                    $state.get('needActive').data.email = self.loginData.email;
-                    $state.go('needActive');
+                    $state.go('auth.needActive', {email: self.form.email});
                 }
             })
         };

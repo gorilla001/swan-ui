@@ -23,7 +23,7 @@
         }
 
         function active(activeCode) {
-            return gHttp.Resource('user.active', {active_code: activeCode}).put();
+            return gHttp.Resource('auth.active', {active_code: activeCode}).put();
         }
 
         function resetPassword(resetCode) {
@@ -41,8 +41,8 @@
         function sendNewPassword(resetCode, params) {
             return webHttp.Resource('user.resetPassword', {reset_code: resetCode}).put(params);
         }
-        function sendActiveMail(email) {
-            return webHttp.Resource('user.sendActiveMail').post({email: email});
+        function sendActiveMail(email, form) {
+            return gHttp.Resource('auth.sendActiveMail').post({email: email}, {form: form});
         }
 
     }

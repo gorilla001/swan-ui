@@ -25,24 +25,17 @@
                 templateUrl: '/glance/auth/register/register-success-notice.html'
             })
             .state('auth.active', {
-                url: '/active',
+                url: '/active?active',
                 templateUrl: '/glance/auth/active/active.html',
                 controller: 'ActiveCtrl as activeCtrl'
             })
-            .state('auth.groupActive', {
-                url: '/groupactive',
-                templateUrl: '/glance/auth/active/group-active.html',
-                controller: 'GroupActiveCtrl as groupActiveCtrl'
-            })
             .state('auth.needActive', {
-                url: '/active/needed',
-                data: {email: ''},
+                url: '/active/needed?email',
                 templateUrl: '/glance/auth/active/need-active.html',
                 controller: 'NeedActiveCtrl as needActiveCtrl'
             })
             .state('auth.sendActiveMailSuccess', {
-                url: '/active/sendmailsuccess',
-                data: {email: ''},
+                url: '/active/sendmailsuccess?email',
                 templateUrl: '/glance/auth/active/send-active-mail-success.html',
                 controller: 'SendActiveMailSuccessCtrl as sendActiveMailSuccessCtrl'
             })

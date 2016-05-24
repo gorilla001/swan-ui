@@ -1,14 +1,14 @@
 <div class="login">
     <div class="container">
         <header>
-            <a ui-sref="home">
+            <a ui-sref="auth.login">
                 <img src="pics/logo-shurenyun-ico-black.svg" class="logo">
             </a>
             <h1>您的账户尚未激活，请激活后再尝试登录。</h1>
         </header>
         <form class="loginForm" name="staticForm">
             <div class="form-group"
-                 data-ng-class="{ 'has-error' : (staticForm.$invalid && staticForm.$dirty) || (needActiveCtrl.errorMsg)}">
+                 data-ng-class="{ 'has-error' : (staticForm.email.$invalid && staticForm.email.$dirty) || (staticForm.email.$pristine && staticForm.message_error_info.email)}">
                 <input type="email" class="form-control input-single" data-required="required"
                        name="email"
                        data-ng-model="needActiveCtrl.email"
@@ -22,9 +22,9 @@
                     <i class="fa fa-exclamation-circle"></i>
                 </span>
                 <div class="prompt-box" style="display: block;"
-                     data-ng-show="needActiveCtrl.errorMsg">
+                     data-ng-show="staticForm.email.$pristine && staticForm.message_error_info.email">
                     <div class="arrow"></div>
-                    <span>{/needActiveCtrl.errorMsg/}</span>
+                    <span>{/ staticForm.message_error_info.email /}</span>
                 </div>
             </div>
 
@@ -33,6 +33,5 @@
             </div>
         </form>
         <div class="switch">已有激活邮件，<a data-ng-href="{/needActiveCtrl.emailHref/}">前往邮箱激活</a></div>
-        <div data-ng-include="'/common_views/copy-right-footer.html'" data-include-replace></div>
     </div>
 </div>

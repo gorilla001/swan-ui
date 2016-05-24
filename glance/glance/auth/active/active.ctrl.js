@@ -5,23 +5,20 @@
       .controller('ActiveCtrl', ActiveCtrl);
 
     /* @ngInject */
-    function ActiveCtrl($location, authBackend) {
+    function ActiveCtrl($stateParams, authBackend) {
         var self = this;
-        self.activeSuccess = undefined;
-        var urlParmas = $location.search();
+        self.resultMsg;
+        
+        activate();
 
-        (function() {
-            return authBackend.active(urlParmas.active)
+        function activate() {
+            return authBackend.active($stateParams.active)
                 .then(function(data) {
-                    self.activeSuccess = true;
-                    // TODO
-                    // active success tips
+                    self.resultMsg = "激活成功！";
                 }, function(res) {
-                    self.activeSuccess = false;
-                    // TODO
-                    // active failed tips
+                    self.resultMsg = "激活失败！";
                 });
-        })();
+        };
 
     }
 })();

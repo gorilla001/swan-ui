@@ -4,11 +4,10 @@
     angular.module('glance.auth')
       .controller('SendActiveMailSuccessCtrl', SendActiveMailSuccessCtrl);
 
-    SendActiveMailSuccessCtrl.$inject = ['$state', 'emailService'];
-
-    function SendActiveMailSuccessCtrl($state, emailService) {
+    /* @ngInject */
+    function SendActiveMailSuccessCtrl($stateParams, emailUtil) {
         var self = this;
 
-        self.emailHref = emailService.emailUrl($state.current.data.email);
+        self.emailHref = emailUtil.getEmailUrl($stateParams.email);
     }
 })();
