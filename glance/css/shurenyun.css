@@ -1272,3 +1272,6 @@ md-datepicker.md-default-theme, md-datepicker{
     color: #666;
     font-weight: 400;
 }
+md-select-menu md-content {
+    background: #FFF;
+}
