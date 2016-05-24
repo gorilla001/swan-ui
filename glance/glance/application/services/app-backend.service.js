@@ -33,124 +33,129 @@
             listAppPorts: listAppPorts,
             listAppNodes: listAppNodes,
             changeWeight: changeWeight,
-            getReqRate: getReqRate
+            getReqRate: getReqRate,
+            getAppMetics: getAppMetics
 
         };
 
-        function listApps(params, loading){
-            return gHttp.Resource('app.userApps').get({params : params, "loading": loading});
+        function listApps(params, loading) {
+            return gHttp.Resource('app.userApps').get({params: params, "loading": loading});
         }
 
-        function listClusterApps(params, clusterId, loading){
-            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).get({params : params, loading: loading});
+        function listClusterApps(params, clusterId, loading) {
+            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).get({params: params, loading: loading});
         }
 
-        function createApp(data, clusterId){
+        function createApp(data, clusterId) {
             return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).post(data);
         }
 
         function updateApp(data, clusterId, appId) {
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).put(data);
         }
-        
-        function deleteApp(clusterId, appId){
+
+        function deleteApp(clusterId, appId) {
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).delete();
         }
 
-        function getApp(clusterId, appId, loading){
+        function getApp(clusterId, appId, loading) {
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
 
-        function rollbackApp(data, clusterId, appId){
+        function rollbackApp(data, clusterId, appId) {
             data.method = 'rollback';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function stopApp(data, clusterId, appId){
+        function stopApp(data, clusterId, appId) {
             data.method = 'stop';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function startApp(data, clusterId, appId){
+        function startApp(data, clusterId, appId) {
             data.method = 'start';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function updateVersion(data, clusterId, appId){
+        function updateVersion(data, clusterId, appId) {
             data.method = 'update_version';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function stopDeploy(data, clusterId, appId){
+        function stopDeploy(data, clusterId, appId) {
             data.method = 'stop_deploy';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function stopScaling(data, clusterId, appId){
+        function stopScaling(data, clusterId, appId) {
             data.method = 'stop_scaling';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function reDeploy(data, clusterId, appId){
+        function reDeploy(data, clusterId, appId) {
             data.method = 'redeploy';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
         // 扩展容器数提交
-        function updateContainerNum(data, clusterId, appId){
+        function updateContainerNum(data, clusterId, appId) {
             data.method = 'scale';
 
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
-        function modifyApp(data, clusterId, appId){
+        function modifyApp(data, clusterId, appId) {
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).put(data);
         }
 
-        function listAppEvents(params, clusterId, appId){
+        function listAppEvents(params, clusterId, appId) {
             return gHttp.Resource('app.appEvent', {cluster_id: clusterId, app_id: appId}).get({params: params});
         }
 
-        function listAppVersions(params, clusterId, appId, loading){
+        function listAppVersions(params, clusterId, appId, loading) {
             return gHttp.Resource('app.appVersions', {cluster_id: clusterId, app_id: appId})
                 .get({params: params, 'loading': loading});
         }
 
-        function deleteAppVersion(clusterId, appId, versionId){
-            return gHttp.Resource('app.appVersion', {cluster_id: clusterId, app_id: appId, version_id: versionId}).delete();
+        function deleteAppVersion(clusterId, appId, versionId) {
+            return gHttp.Resource('app.appVersion', {
+                cluster_id: clusterId,
+                app_id: appId,
+                version_id: versionId
+            }).delete();
         }
 
-        function listAppsStatus(params){
+        function listAppsStatus(params) {
             return gHttp.Resource('app.appsStatus').get({params: params, loading: ""});
         }
 
-        function getAppStatus(cluserId, appId, loading){
+        function getAppStatus(cluserId, appId, loading) {
             return gHttp.Resource('app.appStatus', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
-        
-        function listAppInstances(cluserId, appId, loading){
+
+        function listAppInstances(cluserId, appId, loading) {
             return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
 
-        function listClusterAllApps(cluserId){
+        function listClusterAllApps(cluserId) {
             var params = {
                 page: 1,
                 per_page: 10000
             };
 
-            return gHttp.Resource('app.clusterApps', {cluster_id: cluserId}).get({params : params});
+            return gHttp.Resource('app.clusterApps', {cluster_id: cluserId}).get({params: params});
         }
 
         function listAppPorts(clusterId, appId) {
             if (appId) {
-                var params = {"appId":appId};
+                var params = {"appId": appId};
             }
             return gHttp.Resource('app.ports', {cluster_id: clusterId}).get({'params': params});
         }
@@ -158,13 +163,18 @@
         function listAppNodes(clusterId, appId, loading) {
             return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
+
         // 修改权重
         function changeWeight(clusterId, appId, data) {
             return gHttp.Resource('app.changeWeight', {cluster_id: clusterId, app_id: appId}).post(data);
         }
-        
+
         function getReqRate(clusterId, alias) {
             return gHttp.Resource('metrics.reqRate', {cluster_id: clusterId, aliase: alias}).get();
+        }
+
+        function getAppMetics(clusterId, alias) {
+            return gHttp.Resource('metrics.appmonit', {clusterID: clusterId, aliase: alias}).get({loading: ''})
         }
     }
 })();

@@ -8,7 +8,7 @@
                     <piechart chart-used="monitorAppCtrl.cpuUsedCores"
                               chart-total="monitorAppCtrl.cpuShareCores" radius="[57, 67]"
                               use-color="#00BCD4" show-text="CPU占用" font-size="24" text-color="#596679"
-                              error-code="monitorAppCtrl.errorCode" status="appStatus.status">
+                              error-code="monitorAppCtrl.errorCode" status="detailAppCtrl.appStatus.status">
                     </piechart>
                 </div>
                 <div class="info-panel">
@@ -26,7 +26,7 @@
                     <piechart chart-used="monitorAppCtrl.memoryUsed" chart-total="monitorAppCtrl.memoryTotal"
                               radius="[57, 67]"
                               use-color="#00BCD4" show-text="内存占用" font-size="24" text-color="#596679"
-                              error-code="monitorAppCtrl.errorCode" status="appStatus.status">
+                              error-code="monitorAppCtrl.errorCode" status="detailAppCtrl.appStatus.status">
                     </piechart>
                 </div>
                 <div class="info-panel">
@@ -67,7 +67,7 @@
 </div>
 
 <div id="req-rate-chart" style="width:100%;height:250px;"></div>
-<div data-ng-if="monitorAppCtrl.withGrafana !== 'GF_BASE_URL'" ng-repeat="metricUrl in appIframeUrls">
+<div data-ng-if="monitorAppCtrl.withGrafana !== 'GF_BASE_URL'" ng-repeat="metricUrl in monitorAppCtrl.appIframeUrls">
     <iframe ng-src="{/metricUrl/}"
             width="100%" height="250" frameborder="0" scrolling="no" style="overflow:hidden">
     </iframe>

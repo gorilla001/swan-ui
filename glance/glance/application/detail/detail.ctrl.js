@@ -16,9 +16,6 @@
         self.appInfo = appInfo;
         self.appStatus = appStatus;
 
-        $scope.appStatus = appStatus;
-        $scope.appInfo = appInfo;
-
         var refreshInterval = 5000;
         var timeoutPromise = $timeout(refreshData, refreshInterval);
         
