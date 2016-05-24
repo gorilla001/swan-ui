@@ -25,7 +25,7 @@
         <tbody md-body>
         <tr md-row ng-repeat="item in warningListCtrl.warningList">
             <td md-cell>{/item.id/}</td>
-            <td md-cell><a href="#">{/item.appname/}</a></td>
+            <td md-cell>{/item.appname/}</td>
             <td md-cell>
                 {/warningListCtrl.WARNING_TYPE[item.metric]/} / {/warningListCtrl.WARNING_RULE[item.operator]/}/
                 <span data-ng-if="item.metric === 'CpuUsedCores'">{/item.threshold * 100 /}</span>
