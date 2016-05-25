@@ -18,8 +18,8 @@
 
         //////////
 
-        function register(params, form) {
-            return gHttp.Resource('user.register').post(params, {'form': form});
+        function register(data, form) {
+            return gHttp.Resource('auth.register').post(params, {'form': form});
         }
 
         function active(activeCode) {

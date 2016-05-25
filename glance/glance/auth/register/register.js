@@ -7,15 +7,14 @@
         .controller('RegisterCtrl', RegisterCtrl);
 
     /* @ngInject */
-    function RegisterCtrl(authBackend, $state, $rootScope, emailService, $scope) {
+    function RegisterCtrl(authBackend, $state) {
         var self = this;
-        self.registerDataMan = function () {
-            authBackend.register(self.register, $scope.staticForm).then(function (data) {
-                $rootScope.emailHref = emailService.emailUrl(self.register.email);
-                $state.go('registerSuccess');
-            }, function (res) {
-
-            })
+        self.register = register;
+        
+        function register() {
+            authBackend.register(self.registerForm, self.staticForm).then(function (data) {
+                $state.go('auth.registerSuccess');
+            });
         }
     }
 })();
