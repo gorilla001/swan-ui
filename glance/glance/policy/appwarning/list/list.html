@@ -56,7 +56,7 @@
                         <md-menu-item>
                             <md-button data-ng-click="warningListCtrl.deleteTask(item.id, $event)">删除</md-button>
                         </md-menu-item>
-                        <md-menu-item>
+                        <md-menu-item ng-if="false">
                             <md-button data-ui-sref="policy.WarningUpdate({task_id: item.id})">更新</md-button>
                         </md-menu-item>
                     </md-menu-content>
