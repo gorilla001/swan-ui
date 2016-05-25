@@ -35,11 +35,13 @@
                            clusterCurd) {
         var self = this;
         var canary = $stateParams.canary;
+
+        self.existPorts = {};
         self.target = target;
 
         self.cluster;
 
-        var existPorts;
+
         if (self.target === 'create') {
             self.form = {
                 cluster_id: '',
@@ -123,7 +125,7 @@
                 cluster_id = self.form.cluster_id;
             }
             appservice.listAppPorts(cluster_id, app_id).then(function (data) {
-                existPorts = data;
+                self.existPorts = data;
             });
             return clusterBackendService.getCluster(cluster_id)
                 .then(function (cluster) {
@@ -208,8 +210,8 @@
                 }
             });
 
-            if(existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2){
-                var concatAppPort = appPort.concat(existPorts.outerPorts);
+            if(self.existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2){
+                var concatAppPort = appPort.concat(self.existPorts.outerPorts);
                 return concatAppPort
             }
 

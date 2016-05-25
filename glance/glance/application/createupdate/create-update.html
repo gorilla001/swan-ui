@@ -122,7 +122,8 @@
                                 <md-radio-button value="BRIDGE" data-ng-disabled="createAppCtrl.isNetworkDisable"
                                                  class="md-accent" flex>网桥模式
                                 </md-radio-button>
-                                <md-radio-button value="HOST" data-ng-disabled="createAppCtrl.isNetworkDisable" class="md-accent"
+                                <md-radio-button value="HOST" data-ng-disabled="createAppCtrl.isNetworkDisable"
+                                                 class="md-accent"
                                                  flex>HOST 模式
                                 </md-radio-button>
                             </md-radio-group>
@@ -159,7 +160,8 @@
                             </md-slider>
                         </div>
                     </div>
-                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem/} <span style="font-size: 12px;">MB</span></div>
+                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem/} <span
+                            style="font-size: 12px;">MB</span></div>
                 </div>
 
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
@@ -189,21 +191,22 @@
                 </div>
 
                 <!--<div layout="row" layout-align="end center" class="form-group form-group-switch"-->
-                     <!--data-ng-if="createAppCtrl.target==='update'">-->
-                    <!--<label flex="15">灰度发布</label>-->
-                    <!--<div flex="50" layout="column">-->
-                        <!--<div flex="none">-->
-                            <!--<md-switch data-ng-model="createAppCtrl.form.canary" aria-label="canary-switch"></md-switch>-->
-                        <!--</div>-->
-                        <!--<p class="help-info-bottom">勾选灰度发布后,可在应用版本中调整灰度权重</p>-->
-                    <!--</div>-->
-                    <!--<div flex></div>-->
+                <!--data-ng-if="createAppCtrl.target==='update'">-->
+                <!--<label flex="15">灰度发布</label>-->
+                <!--<div flex="50" layout="column">-->
+                <!--<div flex="none">-->
+                <!--<md-switch data-ng-model="createAppCtrl.form.canary" aria-label="canary-switch"></md-switch>-->
+                <!--</div>-->
+                <!--<p class="help-info-bottom">勾选灰度发布后,可在应用版本中调整灰度权重</p>-->
+                <!--</div>-->
+                <!--<div flex></div>-->
                 <!--</div>-->
 
                 <div class="btn-folding-v">
                     <a href="#" data-ng-click="createAppCtrl.showAdvanceContent = !createAppCtrl.showAdvanceContent">
-                        <md-tooltip md-direction="top" aria-label="advanced setting" >高级设置</md-tooltip>
-                        <i class="fa " data-ng-class="{'fa-chevron-up': createAppCtrl.showAdvanceContent, 'fa-chevron-down': !createAppCtrl.showAdvanceContent}"></i>
+                        <md-tooltip md-direction="top" aria-label="advanced setting">高级设置</md-tooltip>
+                        <i class="fa "
+                           data-ng-class="{'fa-chevron-up': createAppCtrl.showAdvanceContent, 'fa-chevron-down': !createAppCtrl.showAdvanceContent}"></i>
                     </a>
                 </div>
                 <div data-ng-show="createAppCtrl.showAdvanceContent" class="check-element animate-show">
@@ -276,7 +279,8 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="volumes.containerPath.$error.samename" class="help-info-bottom error-info">
+                                <p data-ng-if="volumes.containerPath.$error.samename"
+                                   class="help-info-bottom error-info">
                                     容器路径已存在</p>
                             </div>
                         </div>
@@ -289,6 +293,13 @@
                                 <md-button class="md-primary" data-ng-click="createAppCtrl.addConfig('portMappings')"
                                            aria-label="add"><i class="fa fa-plus"></i> 添加应用地址
                                 </md-button>
+                                <p>
+                                    <small>以下端口范围不能使用:1~1024 (除 80 443), 5000~5100,10000~20000, 31000~32000
+                                        <span
+                                            data-ng-if="createAppCtrl.existPorts.outerPorts.length">, {/createAppCtrl.existPorts.outerPorts.toString()/}
+                                        </span>
+                                    </small>
+                                </p>
                             </div>
                             <div class="add-row-container"
                                  data-ng-repeat="portmap in createAppCtrl.form.portMappings track by $index">
@@ -299,8 +310,10 @@
                                         <md-input-container>
                                             <md-select ng-model="portmap.protocol" data-required="required"
                                                        aria-label="select protocol">
-                                                <md-option ng-repeat="(index,protocolType) in createAppCtrl.APP_PROTOCOL_TYPE"
-                                                           ng-value="protocolType.value" ng-selected="index == 0">{/protocolType.name/}
+                                                <md-option
+                                                        ng-repeat="(index,protocolType) in createAppCtrl.APP_PROTOCOL_TYPE"
+                                                        ng-value="protocolType.value" ng-selected="index == 0">
+                                                    {/protocolType.name/}
                                                 </md-option>
                                             </md-select>
                                         </md-input-container>
@@ -316,10 +329,16 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="portMappings.mapPort.$error.samename" class="help-info-bottom error-info">
+                                <p data-ng-if="portMappings.mapPort.$error.max"
+                                   class="help-info-bottom error-info">
+                                    <small>映射端口最大值为 65535</small>
+                                </p>
+                                <p data-ng-if="portMappings.mapPort.$error.samename"
+                                   class="help-info-bottom error-info">
                                     <small>映射端口已占用</small>
                                 </p>
-                                <p data-ng-if="portMappings.mapPort.$error.appPortVali" class="help-info-bottom error-info">
+                                <p data-ng-if="portMappings.mapPort.$error.appPortVali"
+                                   class="help-info-bottom error-info">
                                     <small>映射端口与规定端口范围不符</small>
                                 </p>
                             </div>
@@ -355,7 +374,8 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="envs.envKey.$error.samename" class="help-info-bottom error-info">环境变量的 KEY 重复</p>
+                                <p data-ng-if="envs.envKey.$error.samename" class="help-info-bottom error-info">环境变量的
+                                    KEY 重复</p>
                                 <p data-ng-if="envs.envKey.$error.pattern && !envs.envKey.$pristine"
                                    class="help-info-bottom error-info">环境变量 Key 不能包含中文</p>
                                 <p data-ng-if="envs.envValue.$error.pattern && !envs.envValue.$pristine"
@@ -426,7 +446,8 @@
                                         </md-button>
                                     </div>
                                 </ng-form>
-                                <p data-ng-if="logPathForm.path.$error.samename" class="help-info-bottom error-info">日志目录路径已存在</p>
+                                <p data-ng-if="logPathForm.path.$error.samename" class="help-info-bottom error-info">
+                                    日志目录路径已存在</p>
                                 <p data-ng-if="logPathForm.path.$error.required && !logPathForm.path.$pristine"
                                    class="help-info-bottom error-info">不能为空</p>
                                 <p data-ng-if="logPathForm.path.$error.pattern && !logPathForm.path.$pristine"
