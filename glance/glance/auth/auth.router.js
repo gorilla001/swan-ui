@@ -44,6 +44,10 @@
                 templateUrl: '/glance/auth/login/login.html',
                 controller: 'LoginCtrl as loginCtrl'
             })
+            .state('auth.demoLogin', {
+                url: '/demoLogin',
+                controller: 'DemoLoginCtrl'
+            })
             .state('auth.forgotPassword', {
                 url: '/forgotpassword',
                 templateUrl: '/glance/auth/password/forgot-password.html',
