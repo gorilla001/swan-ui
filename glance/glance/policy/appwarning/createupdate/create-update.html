@@ -155,20 +155,26 @@
                     <div flex="50" layout="column">
                         <div layout="row">
                             <input type="number" class="form-input"
-                                   name="max" aria-label="max" ng-min="createWarningCtrl.form.mininstance"
-                                   ng-required="createWarningCtrl.form.triger" min="0"
+                                   name="maxInstance" aria-label="max"
+                                   ng-min="Math.max(createWarningCtrl.form.mininstance || 0, 0)"
+                                   ng-required="createWarningCtrl.form.triger"
                                    data-ng-model="createWarningCtrl.form.instance" flex placeholder="最大值">
                             <input type="number" class="form-input"
-                                   name="mix" aria-label="mix" ng-max="createWarningCtrl.form.instance"
+                                   name="minInstance" aria-label="mix" ng-max="createWarningCtrl.form.instance"
                                    ng-required="createWarningCtrl.form.triger" min="0"
                                    data-ng-model="createWarningCtrl.form.mininstance" flex flex-offset="5"
                                    placeholder="最小值">
                         </div>
-                        <p data-ng-if="warningForm.max.$error.min" class="help-info-bottom error-info">
-                            <small>最大值不能小于最小值</small>
+                        <p ng-messages="warningForm.maxInstance.$error" ng-if="warningForm.maxInstance.$dirty"
+                           class="help-info-bottom error-info">
+                            <small ng-message="min">实例数必须大于 0 并且最大值不能小于最小值</small>
+                            <small ng-message="required">最大实例数不能为空</small>
                         </p>
-                        <p data-ng-if="warningForm.mix.$error.max" class="help-info-bottom error-info">
-                            <small>最小值不能大于最大值</small>
+                        <p ng-messages="warningForm.minInstance.$error" ng-if="warningForm.minInstance.$dirty"
+                           class="help-info-bottom error-info">
+                            <small ng-message="max">最小值不能大于最大值</small>
+                            <small ng-message="min">实例数必须大于 0</small>
+                            <small ng-message="required">最小实例数不能为空</small>
                         </p>
                         <p class="help-info-bottom">
                             <small>*选择自动扩缩,达到条件应用实例会扩展至最大实例数,随后若无告警信息发生则每分钟缩减一个实例，直至最小实例个数。</small>
