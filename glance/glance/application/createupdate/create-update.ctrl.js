@@ -208,6 +208,11 @@
                 }
             });
 
+            if(existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2){
+                var concatAppPort = appPort.concat(existPorts.outerPorts);
+                return concatAppPort
+            }
+
             return appPort
         }
 
