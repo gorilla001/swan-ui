@@ -70,7 +70,22 @@ gulp.task('template-min-utils', ['template-min-directives'],function () {
         .pipe(gulp.dest('build/js/'));
 });
 
-gulp.task('template-min-user', ['template-min-utils'], function () {
+//auth html to js
+gulp.task('template-min-auth', ['template-min-utils'],function () {
+    return gulp.src('glance/auth/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('authTemplateCacheHtmlAuth.js', {
+            module: 'glance.auth',
+            root: '/glance/auth'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
+gulp.task('template-min-user', ['template-min-auth'], function () {
     return gulp.src('glance/user/**/*.html')
         .pipe(minifyHtml({
             empty: true,
@@ -218,6 +233,7 @@ gulp.task('html-replace', ['ng-annotate-old'], function () {
         .pipe(assets.restore())
         .pipe(useref().on('error', gutil.log))
         .pipe(revAll.revision().on('error', gutil.log))
+        .pipe(rev())
         .pipe(gulp.dest('build/'))
         .pipe(revAll.manifestFile())
         .pipe(gulp.dest('build/'));
@@ -225,24 +241,52 @@ gulp.task('html-replace', ['ng-annotate-old'], function () {
 
 gulp.task('html-rename', ['html-replace'], function () {
     gulp.src('build/index.*.html')
-        .pipe(rename('index.html').on('error', gutil.log))
+    .pipe(rename('index.html').on('error', gutil.log))
+    .pipe(gulp.dest('build/'));
+});
+
+gulp.task('auth-html-replace', ['html-rename'], function () {
+
+    var templateInjectFile = gulp.src('build/js/authTemplateCacheHtml*.js', {read: false});
+    var templateInjectOptions = {
+        starttag: '<!-- inject:template.js  -->',
+        addRootSlash: false
+    };
+
+    var assets = useref.assets();
+    var revAll = new RevAll();
+    return gulp.src('auth-index.html')
+        .pipe(inject(templateInjectFile, templateInjectOptions))
+        .pipe(assets)
+        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.css', minifyCss()))
+        .pipe(assets.restore())
+        .pipe(useref().on('error', gutil.log))
+        .pipe(revAll.revision().on('error', gutil.log))
+        .pipe(rev())
+        .pipe(gulp.dest('build/'))
+        .pipe(revAll.manifestFile())
         .pipe(gulp.dest('build/'));
 });
 
-gulp.task('clean', ['html-rename'], function () {
+
+gulp.task('auth-html-rename', ['auth-html-replace'], function () {
+    gulp.src('build/auth-index.*.html')
+    .pipe(rename('auth-index.html').on('error', gutil.log))
+    .pipe(gulp.dest('build/'));
+});
+
+
+gulp.task('clean', ['auth-html-rename'], function () {
     var sources = [
         'build/index.**.html',
+        'build/auth-index.**.html',
         'build/js/templateCacheHtml*.js',
+        'build/js/authTemplateCacheHtml*.js',
         'build/glance'
     ];
     return gulp.src(sources, {read: false})
         .pipe(clean());
-});
-
-gulp.task('rev', function () {
-    gulp.src('build/index.html')
-        .pipe(rev())
-        .pipe(gulp.dest('build/'));
 });
 
 gulp.task('default', ['clean', 'copy-swf']);

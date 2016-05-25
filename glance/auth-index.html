@@ -10,7 +10,7 @@
         <base href="/">
         
         <link rel="shortcut icon" type="image/x-icon" href="pics/facicon.ico" />
-        <!--build:css css/style.css-->
+        <!--build:css css/auth-style.css-->
         <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/auth.css">
@@ -21,7 +21,7 @@
         <!-- rev-hash -->
         <script src="js/confdev.js" type="text/javascript"></script>
         <!-- end -->
-        <!--build:js js/script.js-->
+        <!--build:js js/auth-script.js-->
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="bower_components/angular/angular.js" type="text/javascript"></script>
@@ -32,9 +32,9 @@
         <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js" type="text/javascript"></script>
         <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
-        
+        <!--endbuild-->
 
-
+        <!--build:js(build) js/auth-main.js-->
         <script type="text/javascript" src="glance/constants.js"></script>
         
         <script src="glance/utils/utils.module.js" type="text/javascript"></script>
@@ -65,13 +65,10 @@
         
         <script type="text/javascript" src="glance/directives/dm-password.js"></script>
         <script type="text/javascript" src="glance/directives/dm-no-equal.directive.js"></script>
-
-
-        
         <!--endbuild-->
         
-        <!--build:js js/template.js-->
-        <!-- inject:template:js -->
+        <!--build:js js/auth-template.js-->
+        <!-- inject:template.js -->
         <!-- endinject -->
         <!--endbuild-->
 
