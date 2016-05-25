@@ -4,7 +4,7 @@
         .factory('utils', utils);
 
     /* @ngInject */
-    function utils(Notification) {
+    function utils(Notification, $rootScope) {
         return {
             buildFullURL: buildFullURL,
             clickToCopy: clickToCopy,
@@ -64,7 +64,7 @@
         };
         
         function redirectLogin(isReturn) {
-            var href = "/auth/login?timestamp=" + new Date().getTime(); 
+            var href = $rootScope.HOME_URL + "?timestamp=" + new Date().getTime(); 
             if (isReturn) {
                 href += '&return_to=' + encodeURIComponent(window.location.href);
             }

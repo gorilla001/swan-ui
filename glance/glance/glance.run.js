@@ -7,6 +7,7 @@
     function run($state, $rootScope) {
         $rootScope.$state = $state;
         $rootScope.Math = Math;
+        setHomeUrl();
 
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
@@ -31,5 +32,13 @@
                     }
                 }
             });
+        
+        function setHomeUrl() {
+            if (IS_OFF_LINE) {
+                $rootScope.HOME_URL = "/auth/login";
+            } else {
+                $rootScope.HOME_URL = USER_URL;
+            }
+        }
     }
 })();

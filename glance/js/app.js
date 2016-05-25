@@ -197,6 +197,11 @@ glanceApp.run(glanceInit);
 
 glanceInit.$inject = ['glanceUser', 'glanceHttp', '$rootScope', 'gHttp'];
 function glanceInit(glanceUser, glanceHttp, $rootScope, gHttp) {
+    if (IS_OFF_LINE) {
+        $rootScope.HOME_URL = "/auth/login";
+    } else {
+        $rootScope.HOME_URL = USER_URL;
+    }
     glanceUser.init();
     gHttp.Resource("auth.user").get().then(function (data) {
         $rootScope.userName = data["userName"];
