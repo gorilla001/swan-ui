@@ -59,7 +59,7 @@
                 controller: 'ForgotPasswordSuccessCtrl as forgotPasswordSuccessCtrl'
             })
             .state('auth.resetPassword', {
-                url: '/resetpassword',
+                url: '/resetpassword?reset',
                 templateUrl: '/glance/auth/password/reset-password.html',
                 controller: 'ResetPasswordCtrl as resetPasswordCtrl'
             })

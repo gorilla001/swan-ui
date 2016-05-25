@@ -9,7 +9,7 @@
         return {
             register: register,
             active: active,
-            resetPassword: resetPassword,
+            validResetCode: validResetCode,
             login: login,
             forgotPassword: forgotPassword,
             sendNewPassword: sendNewPassword,
@@ -26,7 +26,7 @@
             return gHttp.Resource('auth.active', {active_code: activeCode}).put();
         }
 
-        function resetPassword(resetCode) {
+        function validResetCode(resetCode) {
             return gHttp.Resource('auth.resetPassword', {reset_code: resetCode}).get();
         }
 
@@ -38,8 +38,8 @@
             return gHttp.Resource('auth.forgotPassword').post(data, {'form': form});
         }
 
-        function sendNewPassword(resetCode, params) {
-            return webHttp.Resource('auth.resetPassword', {reset_code: resetCode}).put(params);
+        function sendNewPassword(resetCode, data) {
+            return gHttp.Resource('auth.resetPassword', {reset_code: resetCode}).put(data);
         }
 
         function sendActiveMail(email, form) {

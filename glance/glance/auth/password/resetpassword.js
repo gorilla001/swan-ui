@@ -5,24 +5,26 @@
         .controller('ResetPasswordCtrl', ResetPasswordCtrl);
 
     /* @ngInject */
-    function ResetPasswordCtrl($location, authBackend, $state) {
+    function ResetPasswordCtrl($location, authBackend, $state, $stateParams) {
         var self = this;
-        var urlParmas = $location.search();
+        self.sendPassword = sendPassword;
+        self.valid;
 
-        validResetCode();
+        activate();
 
         //发送新密码
-        self.sendPassword = function () {
-            authBackend.sendNewPassword(urlParmas.reset, self.resetData)
+
+        function sendPassword() {
+            authBackend.sendNewPassword($stateParams.reset, self.resetData)
                 .then(function (data) {
-                    $state.go('resetPasswordSuccess');
+                    $state.go('auth.resetPasswordSuccess');
                 }, function (res) {
-                    $state.go('resetPasswordFailed');
+                    $state.go('auth.resetPasswordFailed');
                 });
         }
 
-        function validResetCode() {
-            return authBackend.resetPassword(urlParmas.reset)
+        function activate() {
+            return authBackend.validResetCode($stateParams.reset)
                 .then(function () {
                     self.valid = true;
                 }, function () {
