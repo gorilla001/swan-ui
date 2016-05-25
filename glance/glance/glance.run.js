@@ -6,6 +6,7 @@
     /*@ngInject*/
     function run($state, $rootScope) {
         $rootScope.$state = $state;
+        $rootScope.Math = Math;
 
         $rootScope.$on('$stateChangeStart',
             function (event, toState, toParams, fromState, fromParams) {
