@@ -50,8 +50,7 @@
                 controller: 'ForgotPasswordCtrl as forgotPasswordCtrl'
             })
             .state('auth.forgotSuccess', {
-                url: '/forgotpassword/success',
-                data: {email: ''},
+                url: '/forgotpassword/success?email',
                 templateUrl: '/glance/auth/password/forgot-success-notice.html',
                 controller: 'ForgotPasswordSuccessCtrl as forgotPasswordSuccessCtrl'
             })

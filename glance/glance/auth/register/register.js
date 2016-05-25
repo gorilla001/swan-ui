@@ -7,12 +7,12 @@
         .controller('RegisterCtrl', RegisterCtrl);
 
     /* @ngInject */
-    function RegisterCtrl(authBackend, $state) {
+    function RegisterCtrl(authBackend, $state, $scope) {
         var self = this;
         self.register = register;
         
         function register() {
-            authBackend.register(self.registerForm, self.staticForm).then(function (data) {
+            authBackend.register(self.registerForm, $scope.staticForm).then(function (data) {
                 $state.go('auth.registerSuccess');
             });
         }

@@ -8,14 +8,13 @@
         .controller('ForgotPasswordCtrl', ForgotPasswordCtrl);
 
     /* @ngInject */
-    function ForgotPasswordCtrl(authBackend, $scope, $state) {
+    function ForgotPasswordCtrl(authBackend, $state, $scope) {
         var self = this;
-        self.sendEmail = function () {
+        self.sendEmail = sendEmail;
+
+         function sendEmail () {
             authBackend.forgotPassword(self.forgot, $scope.staticForm).then(function (data) {
-                $state.get('forgotSuccess').data.email = self.forgot.email;
-                $state.go('forgotSuccess');
-            }, function (res) {
-                //TO DO
+                $state.go('auth.forgotSuccess',{email:self.forgot.email});
             });
         }
 

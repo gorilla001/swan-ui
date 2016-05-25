@@ -5,10 +5,9 @@
       .controller('ForgotPasswordSuccessCtrl', ForgotPasswordSuccessCtrl);
 
     /* @ngInject */
-    function ForgotPasswordSuccessCtrl($state, emailService) {
+    function ForgotPasswordSuccessCtrl($state, $stateParams, emailUtil) {
         var self = this;
-
-        self.email = $state.current.data.email;
-        self.emailHref = emailService.emailUrl(self.email);
+        self.email = $stateParams.email;
+        self.emailHref = emailUtil.getEmailUrl(self.email);
     }
 })();
