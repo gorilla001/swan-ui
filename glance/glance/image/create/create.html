@@ -117,7 +117,7 @@
                     <div flex="50">
                         <md-input-container>
                             <md-select data-ng-model="imageCreateCtrl.form.period" aria-label="period-select"
-                                       data-required="imageCreateCtrl.form.active">
+                                       ng-required="imageCreateCtrl.form.active">
                                 <md-option ng-value="period.value" ng-repeat="period in imageCreateCtrl.periodList">{/
                                     period.name /}
                                 </md-option>
@@ -141,7 +141,7 @@
                                 代码分支更新
                             </md-checkbox>
                         </div>
-                        <p class="help-info-bottom">当代码仓库发生左边的操作时会触发镜像构建。</p>
+                        <p class="help-info-bottom">当代码仓库发生上边的操作时会触发镜像构建。</p>
                     </div>
                     <div flex></div>
                 </div>

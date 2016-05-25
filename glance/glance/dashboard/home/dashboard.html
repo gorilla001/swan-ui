@@ -32,9 +32,9 @@
                                   error-code="dashboardCtrl.errorCode">
                         </piechart>
                     </div>
-                    <div class="info-panel" data-ng-if="cluster.masMetrics.cpuPercent">
+                    <div class="info-panel" data-ng-if="cluster.masMetrics.cpuTotal">
                         CPU 占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.cpuTotal">
+                        <div class="cluster-piechart-num">
                             {/cluster.masMetrics.cpuShare.toFixed(2)/}
                             / {/cluster.masMetrics.cpuTotal/}
                         </div>
@@ -49,9 +49,9 @@
                                   font-size="24">
                         </piechart>
                     </div>
-                    <div class="info-panel" data-ng-if="cluster.masMetrics.memUsed">
+                    <div class="info-panel" data-ng-if="cluster.masMetrics.memTotal">
                         内存占用量<br>
-                        <div class="cluster-piechart-num" ng-show="cluster.masMetrics.memTotal">
+                        <div class="cluster-piechart-num">
                             {/cluster.masMetrics.memUsed/}
                             / {/cluster.masMetrics.memTotal | currency: '' :0/} MB
                         </div>
