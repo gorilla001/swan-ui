@@ -149,7 +149,7 @@
                 <div layout="row" class="form-footer-button">
                     <div flex-offset="15">
                         <md-button class="md-raised md-primary"
-                                   ng-disabled="staticForm.$invalid || imageCreateCtrl.triggerCount == 0"
+                                   ng-disabled="staticForm.$invalid || (imageCreateCtrl.form.active && imageCreateCtrl.triggerCount == 0)"
                                    data-ng-click="imageCreateCtrl.createProject(imageCreateCtrl.form)">开始创建
                         </md-button>
                         <md-button data-ng-click="rootCtrl.goBack()">取 消</md-button>
