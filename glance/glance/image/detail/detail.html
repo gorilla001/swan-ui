@@ -7,7 +7,7 @@
             </dl>
             <dl>
                 <dt>部署公钥</dt>
-                <dd flex="20" class="code-ellipsis" id="publicKey">{/imageDetailCtrl.project.pubkey/}
+                <dd flex="50" class="code-ellipsis" id="publicKey">{/imageDetailCtrl.project.pubkey/}
                   <md-tooltip md-direction="top">
                       {/imageDetailCtrl.project.pubkey/}
                     </md-tooltip>
@@ -21,7 +21,7 @@
             </dl>
             <dl>
                 <dt>代码源</dt>
-                <dd flex="20" class="code-ellipsis">
+                <dd flex="50" class="code-ellipsis">
                     <a href={/imageDetailCtrl.project.repoUri/} target="_blank">
                         {/imageDetailCtrl.project.repoUri/}
                     </a>
@@ -32,7 +32,7 @@
             </dl>
             <dl>
                 <dt>登录命令</dt>
-                <dd flex="20" class="code-ellipsis" id="loginImage" data-ng-if="imageDetailCtrl.project.loginCommand">
+                <dd flex="50" class="code-ellipsis" id="loginImage" data-ng-if="imageDetailCtrl.project.loginCommand">
                   {/imageDetailCtrl.project.loginCommand/}
                   <md-tooltip md-direction="top">
                       {/imageDetailCtrl.project.loginCommand/}
@@ -51,7 +51,7 @@
             <dl>
                 <dt>拉取镜像</dt>
                 
-                <dd flex="20" class="code-ellipsis" id="latestImage" data-ng-if="imageDetailCtrl.project.image">
+                <dd flex="50" class="code-ellipsis" id="latestImage" data-ng-if="imageDetailCtrl.project.image">
                   {/imageDetailCtrl.project.image/}
                   <md-tooltip md-direction="top">
                       {/imageDetailCtrl.project.image/}
