@@ -91,7 +91,7 @@
                             <md-menu-item>
                                 <md-button aria-label="delete"
                                            ng-disabled="groupAppsCtrl.appListStatus[app.id].status == '5' || groupAppsCtrl.appListStatus[app.id].status == 'undefined'"
-                                           data-ng-click="listappctrl.delete(app.cid, app.id)"
+                                           data-ng-click="listappctrl.delete(app.cid, app.id, 'app.list.group')"
                                            data-demo-disable>删除
                                 </md-button>
                             </md-menu-item>
