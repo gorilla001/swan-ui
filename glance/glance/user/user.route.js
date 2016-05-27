@@ -87,8 +87,12 @@
             $stateParams.order && (params.order = $stateParams.order);
             $stateParams.sort_by && (params.sort_by = $stateParams.sort_by);
             $stateParams.appname && (params.appname = $stateParams.appname);
-            $stateParams.starttime && (params.starttime = $stateParams.starttime);
-            $stateParams.endtime && (params.endtime = $stateParams.endtime);
+            if($stateParams.starttime && $stateParams.starttime !== 'null') {
+                params.starttime = $stateParams.starttime;
+            }
+            if($stateParams.endtime && $stateParams.endtime !== 'null') {
+                params.endtime = $stateParams.endtime;
+            }
 
             return params;
         }
