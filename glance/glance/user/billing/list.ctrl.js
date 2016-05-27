@@ -66,11 +66,13 @@
                 params['appname'] = undefined;
                 params['cid'] = undefined;
             }
-            self.form.starttime &&
-            (params['starttime'] = parseInt(self.form.starttime.getTime() / 1000));
+            self.form.starttime
+                ? (params['starttime'] = parseInt(self.form.starttime.getTime() / 1000))
+                : (params['starttime'] = '');
             // endtime plus one day
-            self.form.endtime &&
-            (params['endtime'] = parseInt(self.form.endtime.getTime() / 1000 + 24 * 60 * 60));
+            self.form.endtime
+                ? (params['endtime'] = parseInt(self.form.endtime.getTime() / 1000 + 24 * 60 * 60))
+                : (params['endtime'] = '');
 
             $state.go('user.billings', params, {reload: true});
         }
