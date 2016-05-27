@@ -15,11 +15,13 @@
         self.clusters = {};
 
         var starttime, endtime;
-        if($stateParams.starttime) {
+        if($stateParams.starttime && $stateParams.starttime !== 'null') {
             starttime = new Date($stateParams.starttime * 1000);
         }
 
-        endtime = $stateParams.endtime && new Date(($stateParams.endtime - 24 * 60 * 60) * 1000);
+        if($stateParams.endtime && $stateParams.endtime !== 'null') {
+            endtime = new Date(($stateParams.endtime - 24 * 60 * 60) * 1000);
+        }
 
         self.maxDate = new Date();
         self.form = {
@@ -66,13 +68,13 @@
                 params['appname'] = undefined;
                 params['cid'] = undefined;
             }
-            self.form.starttime
-                ? (params['starttime'] = parseInt(self.form.starttime.getTime() / 1000))
-                : (params['starttime'] = '');
+            params['starttime'] = self.form.starttime
+                ? parseInt(self.form.starttime.getTime() / 1000)
+                : 'null';
             // endtime plus one day
-            self.form.endtime
-                ? (params['endtime'] = parseInt(self.form.endtime.getTime() / 1000 + 24 * 60 * 60))
-                : (params['endtime'] = '');
+            params['endtime'] = self.form.endtime
+                ? parseInt(self.form.endtime.getTime() / 1000 + 24 * 60 * 60)
+                : 'null';
 
             $state.go('user.billings', params, {reload: true});
         }
