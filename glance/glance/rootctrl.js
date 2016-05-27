@@ -80,7 +80,7 @@
         }
 
         function goBack() {
-            $window.history.back();
+            $window.history.length > 2 ? $window.history.back() : $state.go('dashboard.home');
         }
 
         function getNotice() {

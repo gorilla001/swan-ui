@@ -4,11 +4,6 @@
             <div class="info" flex>
                 <h2>新建日志告警策略</h2>
             </div>
-            <div layout-align="end center" class="operation">
-                <md-button class="md-fab md-mini" aria-label="部署最新镜像">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </md-button>
-            </div>
         </header>
         <div class="main-content">
             <form name="logwarningForm">
@@ -110,6 +105,7 @@
                                    data-ng-click="createLogWarningCtrl.submit()"
                                    data-ng-disabled="logwarningForm.$invalid">更 新</md-button>
                     </div>
+                    <md-button class="md-primary" data-ng-click="rootCtrl.goBack()">取 消</md-button>
                 </div>
             </form>
         </div>
