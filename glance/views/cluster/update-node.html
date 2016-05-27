@@ -25,7 +25,7 @@
                   <span class="server-tag" data-ng-repeat="label in selectedLabels" >{/label.name/}</span>
                 </div>
                 <div flex="50">
-                  <md-button class="md-button md-primary" data-ng-click="showAddNodeLabelModal()">
+                  <md-button class="md-button md-primary" data-ng-click="showAddNodeLabelModal()" data-demo-disable>
                         <i class="fa fa-plus"></i> 点击编辑标签
                       </md-button>
                 </div>
@@ -34,6 +34,7 @@
                    <div flex-offset="15" layout="row" layout-align="end end">
                        <md-button class="md-raised md-primary" type="button"
                                   data-ng-click="updateNode()"
+                                  data-demo-disable
                                   data-ng-disabled="infoForm.$invalid">完成</md-button>
                    </div>
                </div>

@@ -22,35 +22,41 @@
                     <md-fab-actions>
                         <md-button aria-label="start" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '3'"
-                                   data-ng-click="detailAppCtrl.start(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                                   data-ng-click="detailAppCtrl.start(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
+                                   data-demo-disable>
                             <md-tooltip md-direction="top">启动</md-tooltip>
                             <i class="fa fa-play"></i>
                         </md-button>
                         <md-button aria-label="stop" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status =='2'"
-                                   data-ng-click="detailAppCtrl.stop(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                                   data-ng-click="detailAppCtrl.stop(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
+                                   data-demo-disable>
                             <md-tooltip md-direction="top">停止</md-tooltip>
                             <i class="fa fa-stop"></i>
                         </md-button>
                         <md-button aria-label="delete" class="md-fab md-raised md-mini"
                                    data-ng-hide="detailAppCtrl.appStatus.status == 'undefined' || detailAppCtrl.appStatus.status == '5'"
-                                   data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                                   data-ng-click="detailAppCtrl.delete(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)"
+                                   data-demo-disable>
                             <md-tooltip md-direction="top">删除</md-tooltip>
                             <i class="fa fa-trash"></i>
                         </md-button>
                         <md-button aria-label="upcontainer" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
+                                   data-demo-disable
                                    data-ng-click="detailAppCtrl.upContainerModal($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">
                             <md-tooltip md-direction="top">扩展</md-tooltip>
                             <i class="fa fa-expand"></i>
                         </md-button>
                         <md-button aria-label="undo" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '9'"
+                                   data-demo-disable
                                    data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
                             <md-tooltip md-direction="top">恢复</md-tooltip>
                             <i class="fa fa-medkit"></i>
                         </md-button>
                         <md-button aria-label="update" class="md-fab md-raised md-mini"
+                                    data-demo-disable
                                    data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
                                    data-ui-sref="app.update({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})">
                             <md-tooltip md-direction="top">更新</md-tooltip>
