@@ -87,7 +87,7 @@
                 <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
             </li>
             <li data-ng-if="!IS_OFF_FLAG">
-                <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()"><i class="fa fa-pencil-square-o"></i>工单反馈
+                <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()" data-demo-disable><i class="fa fa-pencil-square-o"></i>工单反馈
                 </md-button>
             </li>
         </ul>
@@ -161,7 +161,7 @@
     </md-sidenav>
 </div>
 <div class="tab-rb-feedback ng-hide" style="bottom: 76px;" ng-show="notInDemoGroup && demoGroupId">
-    <a href="#" data-ng-click="rootCtrl.openJoinDemoGroupModal()">
+    <a href="#" data-ng-click="rootCtrl.openJoinDemoGroupModal()" data-demo-disable>
         <i class="glyphicon glyphicon-gift"></i>
         <em>试用</em>
     </a>

@@ -13,7 +13,7 @@
                            data-ng-model="listGroupCtrl.createGroupForm.description">
                 </div>
                 <button type="submit" class="btn btn-success"
-                        data-ng-click="listGroupCtrl.createGroup()">创建</button>
+                        data-ng-click="listGroupCtrl.createGroup()" data-demo-disable>创建</button>
                 <button type="submit" class="btn btn-default"
                         ng-click="listGroupCtrl.isCollapsed = !listGroupCtrl.isCollapsed">取消</button>
             </form>
@@ -85,7 +85,7 @@
                                        data-ng-model="listGroupCtrl.emailsList[group.id]">
                                     <span class="input-group-btn">
                                         <button class="btn btn-success" type="button"
-                                                data-ng-click="listGroupCtrl.sendInvitation(group.id)"> 添加 </button>
+                                                data-ng-click="listGroupCtrl.sendInvitation(group.id)" data-demo-disable> 添加 </button>
                                     </span>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                 <span class="label label-warning" data-ng-show="user.status=='not_join'">待加入</span>
                             </div>
                             <button class="btn btn-danger btn-xs"
-                                    data-ng-click="listGroupCtrl.deleteGroupUser(group.id, user.user.id)"><i class="fa fa-trash-o"></i></button>
+                                    data-ng-click="listGroupCtrl.deleteGroupUser(group.id, user.user.id)" data-demo-disable><i class="fa fa-trash-o"></i></button>
                         </div>
                     </div>
                 </div>

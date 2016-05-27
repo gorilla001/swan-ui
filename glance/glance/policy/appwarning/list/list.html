@@ -47,17 +47,17 @@
                     <md-button aria-label="Open demo menu" class="md-button md-raised" ng-click="$mdOpenMenu($event)"><i
                             class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
                     <md-menu-content width="2">
-                        <md-menu-item ng-if="!item.enabled" data-ng-click="warningListCtrl.switchNotice(item)">
-                            <md-button>启动</md-button>
+                        <md-menu-item ng-if="!item.enabled">
+                            <md-button data-ng-click="warningListCtrl.switchNotice(item)" data-demo-disable>启动</md-button>
                         </md-menu-item>
-                        <md-menu-item ng-if="item.enabled" data-ng-click="warningListCtrl.switchNotice(item)">
-                            <md-button>停止</md-button>
+                        <md-menu-item ng-if="item.enabled">
+                            <md-button data-ng-click="warningListCtrl.switchNotice(item)" data-demo-disable>停止</md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button data-ng-click="warningListCtrl.deleteTask(item.id, $event)">删除</md-button>
+                            <md-button data-ng-click="warningListCtrl.deleteTask(item.id, $event)" data-demo-disable>删除</md-button>
                         </md-menu-item>
                         <md-menu-item ng-if="false">
-                            <md-button data-ui-sref="policy.WarningUpdate({task_id: item.id})">更新</md-button>
+                            <md-button data-ui-sref="policy.WarningUpdate({task_id: item.id})" data-demo-disable>更新</md-button>
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
