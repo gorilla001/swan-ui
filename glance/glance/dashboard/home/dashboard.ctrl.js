@@ -78,8 +78,8 @@
         }
 
         // 应用下拉展示
-        function dropShow() {
-            self.dropStatus = !self.dropStatus;
+        function dropShow(clusterId) {
+            self.clusterList[clusterId].dropFlag = !self.clusterList[clusterId].dropFlag;
         }
     }
 })();
