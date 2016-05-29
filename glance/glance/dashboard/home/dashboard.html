@@ -59,7 +59,8 @@
                 </div>
             </div>
             <div flex="40">
-                <div class="fold-panel mCustomScrollbar" data-ng-class="{'dropShow':dashboardCtrl.dropStatus}"
+                <div class="fold-panel mCustomScrollbar"
+                     data-ng-class="{'dropShow':dashboardCtrl.clusterList[clusterId].dropFlag}"
                      data-mcs-theme="dark">
                     <div ng-repeat="appMon in cluster.appMonitors" class="appGroup">
                         <dl layout="row" layout-align="start center" class="app-charts-panel">
@@ -88,8 +89,9 @@
                     </div>
                 </div>
                 <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length > 2">
-                    <a href="#" data-ng-click="dashboardCtrl.dropShow()"><i class="fa"
-                                                                            data-ng-class="{'fa-chevron-down':!dashboardCtrl.dropStatus, 'fa-chevron-up': dashboardCtrl.dropStatus}"></i></a>
+                    <a href="#" data-ng-click="dashboardCtrl.dropShow(clusterId)">
+                        <i class="fa" data-ng-class="{'fa-chevron-down':!dashboardCtrl.clusterList[clusterId].dropFlag, 'fa-chevron-up': dashboardCtrl.clusterList[clusterId].dropFlag}"></i>
+                    </a>
                 </div>
             </div>
         </div>
