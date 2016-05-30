@@ -1,5 +1,9 @@
-### 
+### v0.2053000
 
-confdev.js 添加 APP_CONFIG_SPE_URL 变量，APP_CONFIG_SPE_URL.group 为共享用户组的应用配置ip地址，APP_CONFIG_SPE_URL.demo 为 demo 用户的应用配置ip地址
+* [confdev.js](https://github.com/Dataman-Cloud/frontend/blob/master/glance/js/confdev.js) 添加DEMO_USER_EMAIL配置。
+* frontend的nginx需要加入配置：
 
-test
+        location /auth {
+          try_files $uri /auth-index.html;
+        }
+
