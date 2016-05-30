@@ -1,3 +1,8 @@
+/*
+ * 后台各个服务的地址（含协议，网络地址，端口）.
+ * defaultBase为默认地址，如果某个服务的配置为null，则使用它作为后台地址.
+ * ws是指websocket.
+ */
 BACKEND_URL_BASE = {
     defaultBase: "APIURL/",
     ws: "STREAMING/",
@@ -12,27 +17,40 @@ BACKEND_URL_BASE = {
     stack: null
 },
 
+//部署模式，可选dev，demo，prod.
 RUNNING_ENV = "ENVIRONMENT"; //dev, demo, prod
 
+//webpage地址（含协议，网络地址，端口）.
 USER_URL = "MARKET";
 
+//是否为线下环境
 IS_OFF_LINE = OFFLINE;  //set true or false
 
+/*
+ * agent的配置
+ * dmHost为streaming的地址（含协议，网络地址，端口）.
+ * installUrl为agent的安装脚本路径
+ */
 AGENT_CONFIG = {
     dmHost: "LOCAL_DM_HOST",
     installUrl: "AGENT_URL"
 };
 
+//grafana配置
 GRAFANA_CONFIG = {
     baseUrl: "GF_BASE_URL",
 };
 
+/*
+ * group：共享集群中的应用，映射端口使用的地址
+ * demo：demo用户的应用，映射端口使用的地址
+ */
 APP_CONFIG_SPE_URL = {
     group: "GROUP_URL",
     demo: "DEMO_URL"
 };
 
-
+//demo用户的邮箱地址
 DEMO_USER_EMAIL = "DEMO_USER";
 
 (function() {
