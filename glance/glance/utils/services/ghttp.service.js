@@ -3,7 +3,7 @@
 
     angular.module('glance.utils').factory('gHttp', gHttp);
 
-    gHttp.$inject = ['utils', '$q', '$rootScope', '$http', 'Notification', '$state','$cookies', 'cfpLoadingBar'];
+    /* @ngInject */
     function gHttp(utils, $q, $rootScope, $http, Notification, $state, $cookies, cfpLoadingBar) {
         var token;
 
@@ -55,7 +55,7 @@
                 options.data = data;
                 if (options.form) {
                     options.form.$setPristine();
-                    options.form.message_error_info = {};
+                    options.form.message_error_info = null;
 
                     options.ignoreCodes = options.ignoreCodes || [];
                     options.ignoreCodes.push(MESSAGE_CODE.dataInvalid)
@@ -123,9 +123,7 @@
             Resource.prototype._handleErrors = function (status) {
                 if (status == 401) {
                     $cookies.remove('token');
-                    window.location.href = USER_URL + "/user/login?return_to=" + encodeURIComponent(window.location.href) 
-                                            + "?timestamp=" + new Date().getTime();
-                    $rootScope.$destroy();
+                    utils.redirectLogin(true);
                 } else if (status == 404) {
                     $state.go('404');
                 } else {

@@ -4,11 +4,12 @@
         .factory('utils', utils);
 
     /* @ngInject */
-    function utils(Notification) {
+    function utils(Notification, $rootScope) {
         return {
             buildFullURL: buildFullURL,
             clickToCopy: clickToCopy,
-            encodeQueryParams: encodeQueryParams
+            encodeQueryParams: encodeQueryParams,
+            redirectLogin: redirectLogin
         };
         
         function clickToCopy(className) {
@@ -61,6 +62,15 @@
             }
             return params;
         };
+        
+        function redirectLogin(isReturn) {
+            var href = $rootScope.HOME_URL + "?timestamp=" + new Date().getTime(); 
+            if (isReturn) {
+                href += '&return_to=' + encodeURIComponent(window.location.href);
+            }
+            window.location.href = href;
+            $rootScope.$destroy();
+        }
 
     }
 

@@ -12,8 +12,12 @@
             joinDemoGroup: joinDemoGroup
         };
         
-        function getCSUrl() {
-            return gHttp.Resource("auth.customerservice").get()
+        function getCSUrl(returnTo) {
+            var params = {};
+            if (returnTo) {
+                params = {return_to: returnTo};
+            }
+            return gHttp.Resource("auth.customerservice").get({params: params});
         }
 
         function logout() {

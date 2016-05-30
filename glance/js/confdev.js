@@ -32,6 +32,9 @@ APP_CONFIG_SPE_URL = {
     demo: "DEMO_URL"
 };
 
+
+DEMO_USER_EMAIL = "DEMO_USER";
+
 (function() {
   if (RUNNING_ENV === 'dev' && AGENT_CONFIG.dmHost.slice(0, 5) === "LOCAL") {
     AGENT_CONFIG.dmHost = 'DM_HOST=ws://devstreaming.dataman-inc.net/';
