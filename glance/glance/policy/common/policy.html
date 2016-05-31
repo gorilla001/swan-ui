@@ -19,14 +19,10 @@
         </header>
         <md-content>
             <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="应用告警" dm-tab-sref="policy.tab.appwarning">
-                    <md-content class="md-padding main-tab-content" ui-view="appWarningTab">
-                </md-tab>
-                <md-tab label="日志告警" dm-tab-sref="policy.tab.applogwarning">
-                    <md-content class="md-padding main-tab-content" ui-view="logWarningTab">
-                    </md-content>
-                </md-tab>
+                <md-tab label="应用告警" dm-tab-sref="policy.tab.appwarning"></md-tab>
+                <md-tab label="日志告警" dm-tab-sref="policy.tab.applogwarning"></md-tab>
             </md-tabs>
+            <md-content class="md-padding main-tab-content" ui-view></md-content>
         </md-content>
     </section>
 </div>

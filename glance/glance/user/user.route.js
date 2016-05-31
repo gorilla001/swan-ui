@@ -10,20 +10,13 @@
             .state('user', {
                 url: '/user',
                 targetState: 'groups',
-                views: {
-                    '': {
-                        templateUrl: '/glance/user/center.html',
-                        controller: 'UserCenterCtrl as userAppCtrl'
-                    }
-                }
-            }).state('user.groups', {
+                templateUrl: '/glance/user/center.html',
+                controller: 'UserCenterCtrl as userAppCtrl'
+            })
+            .state('user.groups', {
                 url: '/groups?per_page&page&order&sort_by',
-                views: {
-                    'groups': {
-                        templateUrl: '/glance/user/group/list.html',
-                        controller: 'ListGroupCtrl as listGroupCtrl'
-                    }
-                },
+                templateUrl: '/glance/user/group/list.html',
+                controller: 'ListGroupCtrl as listGroupCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -31,22 +24,16 @@
                 resolve: {
                     groups: listGroups
                 }
-            }).state('user.password', {
+            })
+            .state('user.password', {
                 url: '/password',
-                views: {
-                    'password': {
-                        templateUrl: '/glance/user/password/update.html',
-                        controller: 'UpdatePasswordCtrl as updatePasswordCtrl'
-                    }
-                }
-            }).state('user.billings', {
+                templateUrl: '/glance/user/password/update.html',
+                controller: 'UpdatePasswordCtrl as updatePasswordCtrl'
+            })
+            .state('user.billings', {
                 url: '/billings?per_page&page&order&sort_by&appname&starttime&endtime&cid',
-                views: {
-                    'billings': {
-                        templateUrl: '/glance/user/billing/list.html',
-                        controller: 'ListBillingCtrl as listBillingCtrl'
-                    }
-                },
+                templateUrl: '/glance/user/billing/list.html',
+                controller: 'ListBillingCtrl as listBillingCtrl',
                 resolve: {
                     billings: listBillings,
                     clusters: listClusters,
@@ -55,13 +42,13 @@
                 defaultParams: {
                     per_page: 20,
                     page: 1,
-                    starttime: function() {
+                    starttime: function () {
                         var starttime = new Date();
                         starttime.setDate(starttime.getDate() - 7);
                         starttime.setHours(0, 0, 0, 0);
                         return parseInt(starttime.getTime() / 1000);
                     },
-                    endtime: function() {
+                    endtime: function () {
                         var endtime = new Date();
                         endtime.setHours(0, 0, 0, 0);
                         return parseInt(endtime.getTime() / 1000 + 24 * 60 * 60);
@@ -87,10 +74,10 @@
             $stateParams.order && (params.order = $stateParams.order);
             $stateParams.sort_by && (params.sort_by = $stateParams.sort_by);
             $stateParams.appname && (params.appname = $stateParams.appname);
-            if($stateParams.starttime && $stateParams.starttime !== 'null') {
+            if ($stateParams.starttime && $stateParams.starttime !== 'null') {
                 params.starttime = $stateParams.starttime;
             }
-            if($stateParams.endtime && $stateParams.endtime !== 'null') {
+            if ($stateParams.endtime && $stateParams.endtime !== 'null') {
                 params.endtime = $stateParams.endtime;
             }
 

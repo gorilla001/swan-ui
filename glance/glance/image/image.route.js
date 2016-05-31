@@ -28,7 +28,7 @@
             .state('image.create', {
                 url: '/image/create',
                 templateUrl: '/glance/image/create/create.html',
-                controller: 'ImageCreateCtrl as imageCreateCtrl',
+                controller: 'ImageCreateCtrl as imageCreateCtrl'
             })
             .state('image.detail', {
                 url: '/image/detail/:projectId',
@@ -41,33 +41,18 @@
             })
             .state('image.detail.version', {
                 url: '/version',
-                views: {
-                    'version': {
-                        templateUrl: '/glance/image/detail/version.html',
-                        controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
-                    }
-                }
-
+                templateUrl: '/glance/image/detail/version.html',
+                controller: 'ImageDetailVersionCtrl as imageDetailVersionCtrl'
             })
             .state('image.detail.brief', {
                 url: '/brief',
-                views: {
-                    'brief': {
-                        templateUrl: '/glance/image/detail/brief.html',
-                        controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
-                    }
-                }
-
+                templateUrl: '/glance/image/detail/brief.html',
+                controller: 'ImageDetailBriefCtrl as imageDetailBriefCtrl'
             })
             .state('image.detail.setting', {
                 url: '/setting',
-                views: {
-                    'setting': {
-                        templateUrl: '/glance/image/detail/setting.html',
-                        controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
-                    }
-                }
-
+                templateUrl: '/glance/image/detail/setting.html',
+                controller: 'ImageDetailSettingCtrl as imageDetailSettingCtrl'
             });
 
     }
