@@ -44,21 +44,13 @@
             })
             .state('policy.tab.appwarning', {
                 url: '/appwarning',
-                views: {
-                    'appWarningTab': {
-                        templateUrl: '/glance/policy/appwarning/warning-tab-view.html'
-                    }
-                },
+                templateUrl: '/glance/policy/appwarning/warning-tab-view.html',
                 targetState: 'warninglist'
             })
             .state('policy.tab.appwarning.warninglist', {
                 url: '/warninglist?per_page&page&order&keywords&sort_by&appalias',
-                views: {
-                    'list': {
-                        templateUrl: '/glance/policy/appwarning/list/list.html',
-                        controller: 'WarningListCtrl as warningListCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/appwarning/list/list.html',
+                controller: 'WarningListCtrl as warningListCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -69,12 +61,8 @@
             })
             .state('policy.tab.appwarning.warningevent', {
                 url: '/warningevent?per_page&page&order&keywords&sort_by',
-                views: {
-                    'event': {
-                        templateUrl: '/glance/policy/appwarning/event/event.html',
-                        controller: 'WarningEventCtrl as warningEventCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/appwarning/event/event.html',
+                controller: 'WarningEventCtrl as warningEventCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -85,59 +73,14 @@
             })
             .state('policy.tab.appwarning.warningscaling', {
                 url: '/warningscaling?per_page&page&order&keywords&sort_by',
-                views: {
-                    'scalingList': {
-                        templateUrl: '/glance/policy/appwarning/scalingList/scalingList.html',
-                        controller: 'WarningScalingCtrl as warningScalingCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/appwarning/scalingList/scalingList.html',
+                controller: 'WarningScalingCtrl as warningScalingCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
                 },
                 resolve: {
                     data: warningAppExtend
-                }
-            })
-            .state('policy.tab.apptimescaling', {
-                url: '/apptimescaling',
-                views: {
-                    'policyTab': {
-                        templateUrl: '/glance/policy/apptimescaling/scaling-tab-view.html'
-                    }
-                }
-            })
-            .state('policy.tab.apptimescaling.scalinglist', {
-                url: '/scalinglist?per_page&page&order&keywords&sort_by',
-                views: {
-                    'scalingContent': {
-                        templateUrl: '/glance/policy/apptimescaling/list/list.html',
-                        controller: 'ScalingListCtrl as scalingListCtrl'
-                    }
-                },
-                defaultParams: {
-                    per_page: 20,
-                    page: 1
-                },
-                resolve: {
-                    data: scaleList
-                }
-            })
-            .state('policy.apptimescaling.scalingevent', {
-                url: '/scalingevent',
-                views: {
-                    'scalingContent': {
-                        templateUrl: '/glance/policy/apptimescaling/event/event.html'
-                    }
-                }
-            })
-            .state('policyScalingCreate', {
-                url: '/policyScalingCreate',
-                views: {
-                    '': {
-                        templateUrl: '/glance/policy/apptimescaling/create/create.html',
-                        controller: 'CreateScalingCtrl as createScalingCtrl'
-                    }
                 }
             })
             .state('policy.policyLogWarningCreate', {
@@ -166,21 +109,13 @@
             })
             .state('policy.tab.applogwarning', {
                 url: '/applogwarning',
-                views: {
-                    'logWarningTab': {
-                        templateUrl: '/glance/policy/applogwarning/log-tab-view.html'
-                    }
-                },
+                templateUrl: '/glance/policy/applogwarning/log-tab-view.html',
                 targetState: 'loglist'
             })
             .state('policy.tab.applogwarning.loglist', {
                 url: '/loglist?per_page&page&order&keywords&sort_by',
-                views: {
-                    'list': {
-                        templateUrl: '/glance/policy/applogwarning/list/list.html',
-                        controller: 'LogWarningListCtrl as logWarningListCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/applogwarning/list/list.html',
+                controller: 'LogWarningListCtrl as logWarningListCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -191,12 +126,8 @@
             })
             .state('policy.tab.applogwarning.logevent', {
                 url: '/logevent?per_page&page&order&keywords&sort_by',
-                views: {
-                    'event': {
-                        templateUrl: '/glance/policy/applogwarning/event/event.html',
-                        controller: 'EventLogListCtrl as eventLogListCtrl'
-                    }
-                },
+                templateUrl: '/glance/policy/applogwarning/event/event.html',
+                controller: 'EventLogListCtrl as eventLogListCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1

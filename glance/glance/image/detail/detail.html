@@ -8,14 +8,14 @@
             <dl>
                 <dt>部署公钥</dt>
                 <dd flex="50" class="code-ellipsis" id="publicKey">{/imageDetailCtrl.project.pubkey/}
-                  <md-tooltip md-direction="top">
-                      {/imageDetailCtrl.project.pubkey/}
+                    <md-tooltip md-direction="top">
+                        {/imageDetailCtrl.project.pubkey/}
                     </md-tooltip>
                 </dd>
                 <dd>
                     <a href="#" flex>
-                      <i class="fa fa-files-o" data-clipboard-target="publicKey" dm-copy></i>
-                      <md-tooltip md-direction="top">点击复制</md-tooltip>
+                        <i class="fa fa-files-o" data-clipboard-target="publicKey" dm-copy></i>
+                        <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
@@ -25,17 +25,17 @@
                     <a href={/imageDetailCtrl.project.repoUri/} target="_blank">
                         {/imageDetailCtrl.project.repoUri/}
                     </a>
-                  <md-tooltip md-direction="top">
-                      {/imageDetailCtrl.project.repoUri/}
+                    <md-tooltip md-direction="top">
+                        {/imageDetailCtrl.project.repoUri/}
                     </md-tooltip>
                 </dd>
             </dl>
             <dl>
                 <dt>登录命令</dt>
                 <dd flex="50" class="code-ellipsis" id="loginImage" data-ng-if="imageDetailCtrl.project.loginCommand">
-                  {/imageDetailCtrl.project.loginCommand/}
-                  <md-tooltip md-direction="top">
-                      {/imageDetailCtrl.project.loginCommand/}
+                    {/imageDetailCtrl.project.loginCommand/}
+                    <md-tooltip md-direction="top">
+                        {/imageDetailCtrl.project.loginCommand/}
                     </md-tooltip>
                 </dd>
                 <dd data-ng-if="!imageDetailCtrl.project.loginCommand">
@@ -43,18 +43,18 @@
                 </dd>
                 <dd>
                     <a href="#" flex>
-                      <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
-                      <md-tooltip md-direction="top">点击复制</md-tooltip>
+                        <i class="fa fa-files-o" data-clipboard-target="loginImage" dm-copy></i>
+                        <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
             <dl>
                 <dt>拉取镜像</dt>
-                
+
                 <dd flex="50" class="code-ellipsis" id="latestImage" data-ng-if="imageDetailCtrl.project.image">
-                  {/imageDetailCtrl.project.image/}
-                  <md-tooltip md-direction="top">
-                      {/imageDetailCtrl.project.image/}
+                    {/imageDetailCtrl.project.image/}
+                    <md-tooltip md-direction="top">
+                        {/imageDetailCtrl.project.image/}
                     </md-tooltip>
                 </dd>
                 <dd data-ng-if="!imageDetailCtrl.project.image">
@@ -62,8 +62,8 @@
                 </dd>
                 <dd>
                     <a href="#" flex>
-                      <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
-                      <md-tooltip md-direction="top">点击复制</md-tooltip>
+                        <i class="fa fa-files-o" data-clipboard-target="latestImage" dm-copy></i>
+                        <md-tooltip md-direction="top">点击复制</md-tooltip>
                     </a>
                 </dd>
             </dl>
@@ -72,23 +72,25 @@
             <md-button class="md-fab md-mini" aria-label="deploy new"
                        data-ng-disabled="imageDetailCtrl.project.status != 'success'"
                        data-ng-click="imageDetailCtrl.goToCreateApp(imageDetailCtrl.project.image)">
-                       <md-tooltip md-direction="top">
-                        部署
-                       </md-tooltip>
+                <md-tooltip md-direction="top">
+                    部署
+                </md-tooltip>
                 <i class="fa fa-caret-right" aria-hidden="true"></i>
             </md-button>
 
-            <md-button class="md-fab md-mini" aria-label="structure" data-ng-click="imageDetailCtrl.manualBuild()" data-demo-disable>
+            <md-button class="md-fab md-mini" aria-label="structure" data-ng-click="imageDetailCtrl.manualBuild()"
+                       data-demo-disable>
                 <md-tooltip md-direction="top">
-                        构建
-                       </md-tooltip>
+                    构建
+                </md-tooltip>
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </md-button>
 
-            <md-button class="md-fab md-mini" aria-label="delete" data-ng-click="imageDetailCtrl.deleteProject($event)" data-demo-disable>
-            <md-tooltip md-direction="top">
-                        删除
-                       </md-tooltip>
+            <md-button class="md-fab md-mini" aria-label="delete" data-ng-click="imageDetailCtrl.deleteProject($event)"
+                       data-demo-disable>
+                <md-tooltip md-direction="top">
+                    删除
+                </md-tooltip>
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </md-button>
         </div>
@@ -96,18 +98,14 @@
     <md-content>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="版 本" dm-tab-sref="image.detail.version">
-                <md-content class="md-padding main-tab-content" data-ui-view="version">
-                </md-content>
             </md-tab>
             <md-tab label="说 明" dm-tab-sref="image.detail.brief">
-                <md-content class="main-tab-content" data-ui-view="brief">
-                </md-content>
             </md-tab>
             <md-tab label="设 置" dm-tab-sref="image.detail.setting">
-                <md-content class="md-padding main-tab-content" data-ui-view="setting">
-                </md-content>
             </md-tab>
         </md-tabs>
+        <md-content class="md-padding main-tab-content" data-ui-view>
+        </md-content>
     </md-content>
 
     <footer></footer>

@@ -44,12 +44,8 @@
             })
             .state('app.list.my', {
                 url: '/my?per_page&page&order&keywords&sort_by',
-                views: {
-                    'myapp': {
-                        templateUrl: '/glance/application/list/my.html',
-                        controller: 'MyAppsCtrl as myAppsCtrl'
-                    }
-                },
+                templateUrl: '/glance/application/list/my.html',
+                controller: 'MyAppsCtrl as myAppsCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -62,12 +58,8 @@
             })
             .state('app.list.group', {
                 url: '/group?per_page&page&order&keywords&sort_by&clusterId&groupId',
-                views: {
-                    'groupapp': {
-                        templateUrl: '/glance/application/list/group.html',
-                        controller: 'GroupAppsCtrl as groupAppsCtrl'
-                    }
-                },
+                templateUrl: '/glance/application/list/group.html',
+                controller: 'GroupAppsCtrl as groupAppsCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -91,48 +83,28 @@
             })
             .state('app.detail.instance', {
                 url: '/instance',
-                views: {
-                    'instance': {
-                        templateUrl: '/glance/application/detail/instance.html',
-                        controller: 'InstanceAppCtrl as instanceAppCtrl'
-                    }
-                }
+                templateUrl: '/glance/application/detail/instance.html',
+                controller: 'InstanceAppCtrl as instanceAppCtrl'
             })
             .state('app.detail.monitoring', {
                 url: '/monitoring',
-                views: {
-                    'monitoring': {
-                        templateUrl: '/glance/application/detail/monitoring.html',
-                        controller: 'MonitorAppCtrl as monitorAppCtrl'
-                    }
-                }
+                templateUrl: '/glance/application/detail/monitoring.html',
+                controller: 'MonitorAppCtrl as monitorAppCtrl'
             })
             .state('app.detail.config', {
                 url: '/config',
-                views: {
-                    'config': {
-                        templateUrl: '/glance/application/detail/config.html',
-                        controller: 'ConfigAppCtrl as configAppCtrl'
-                    }
-                }
+                templateUrl: '/glance/application/detail/config.html',
+                controller: 'ConfigAppCtrl as configAppCtrl'
             })
             .state('app.detail.event', {
                 url: '/event',
-                views: {
-                    'event': {
-                        templateUrl: '/glance/application/detail/event.html',
-                        controller: 'EventAppCtrl as eventAppCtrl'
-                    }
-                }
+                templateUrl: '/glance/application/detail/event.html',
+                controller: 'EventAppCtrl as eventAppCtrl'
             })
             .state('app.detail.version', {
                 url: '/version',
-                views: {
-                    'version': {
-                        templateUrl: '/glance/application/detail/version.html',
-                        controller: 'VersionAppCtrl as versionAppCtrl'
-                    }
-                }
+                templateUrl: '/glance/application/detail/version.html',
+                controller: 'VersionAppCtrl as versionAppCtrl'
             });
     }
 

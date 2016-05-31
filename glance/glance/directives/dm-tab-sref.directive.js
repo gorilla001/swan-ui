@@ -9,8 +9,8 @@
             require: '^^mdTabs',
             restrict: 'A',
             link: link
-        }
-        
+        };
+
         function link(scope, elem, attrs, tabsCtrl) {
             var sref = attrs['dmTabSref'];
             var index = elem.index();
@@ -24,13 +24,13 @@
             if (!tabsCtrl.oldSelect) {
                 tabsCtrl.oldSelect = tabsCtrl.select;
             }
-            
+
             tabsCtrl.select = function (index, canSkipClick) {
-                var sref = tabsCtrl.srefs[index]
+                var sref = tabsCtrl.srefs[index];
                 tabsCtrl.oldSelect(index, canSkipClick);
-                $state.go(sref, {reload: true});
-            }
-            
+                $state.go(sref, null, {reload: true});
+            };
+
 //            scope.$on('$stateChangeSuccess',
 //                    function (event, toState, toParams, fromState, fromParams) {
 //                        console.log("my sref:", sref)
