@@ -25,13 +25,26 @@
                     <div flex="50" layout="column">
                         <div flex="none">
                             <md-select data-ng-model="createLogWarningCtrl.app"
-                                       data-required="required" aria-label="createapp">
+                                       data-required="required" aria-label="createapp"
+                                       md-on-close="createLogWarningCtrl.getInstance(createLogWarningCtrl.app.cid, createLogWarningCtrl.app.id)">
                                 <md-option ng-repeat="app in createLogWarningCtrl.apps" ng-value="app">{/app.name/}</md-option>
                             </md-select>
                         </div>
                     </div>
                     <div flex></div>
                 </div>
+
+                <!--<div layout="row" layout-align="end start" class="form-group form-group-select">-->
+                    <!--<label flex="15">应用实例</label>-->
+                    <!--<div flex="50" layout="column">-->
+                        <!--<div flex="none">-->
+                            <!--<md-select data-ng-model="createLogWarningCtrl.instanceSelect" multiple aria-label="instance" >-->
+                                <!--<md-option ng-repeat="instance in createLogWarningCtrl.instances" ng-value="instance.Ip">{/instance.Ip/}</md-option>-->
+                            <!--</md-select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div flex></div>-->
+                <!--</div>-->
 
                 <div layout="row" layout-align="end start" class="form-group form-group-input">
                     <label flex="15">监控关键字</label>
@@ -88,6 +101,52 @@
                                    data-required="required" data-ng-model="createLogWarningCtrl.form.emails">
                         </div>
                         <p class="help-info-bottom">mail1@123.com, mail2@123.com, ...</p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <!--应用扩缩-->
+                <div layout="row" layout-align="end start" class="form-group form-group-radio">
+                    <label flex="15">是否扩缩</label>
+                    <div flex="15" layout="column">
+                        <md-radio-group ng-model="createLogWarningCtrl.form.scaling" layout="row">
+                            <md-radio-button data-ng-value="true" flex> 是</md-radio-button>
+                            <md-radio-button data-ng-value="false" flex> 否</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                    <div flex></div>
+                </div>
+                <!--实例数-->
+                <div layout="row" layout-align="end start" class="form-group form-group-input"
+                     data-ng-if="createLogWarningCtrl.form.scaling">
+                    <label flex="15">实例数</label>
+                    <div flex="50" layout="column">
+                        <div layout="row">
+                            <input type="number" class="form-input"
+                                   name="maxInstance" aria-label="max"
+                                   ng-min="Math.max(createLogWarningCtrl.form.mins || 0, 0)"
+                                   ng-required="createLogWarningCtrl.form.scaling"
+                                   data-ng-model="createLogWarningCtrl.form.maxs" flex placeholder="最大值">
+                            <input type="number" class="form-input"
+                                   name="minInstance" aria-label="mix" ng-max="createLogWarningCtrl.form.maxs"
+                                   ng-required="createLogWarningCtrl.form.scaling" min="0"
+                                   data-ng-model="createLogWarningCtrl.form.mins" flex flex-offset="5"
+                                   placeholder="最小值">
+                        </div>
+                        <p ng-messages="logwarningForm.maxInstance.$error" ng-if="logwarningForm.maxInstance.$dirty"
+                           class="help-info-bottom error-info">
+                            <small ng-message="min">实例数必须大于 0 并且最大值不能小于最小值</small>
+                            <small ng-message="required">最大实例数不能为空</small>
+                        </p>
+                        <p ng-messages="logwarningForm.minInstance.$error" ng-if="logwarningForm.minInstance.$dirty"
+                           class="help-info-bottom error-info">
+                            <small ng-message="max">最小值不能大于最大值</small>
+                            <small ng-message="min">实例数必须大于 0</small>
+                            <small ng-message="required">最小实例数不能为空</small>
+                        </p>
+                        <p class="help-info-bottom">
+                            <small>*选择自动扩缩,达到条件应用实例会扩展至最大实例数,随后若无告警信息发生则每分钟缩减一个实例，直至最小实例个数。</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
