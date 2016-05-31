@@ -136,12 +136,14 @@
                         <div flex="30" flex-offset="5" layout-align="start center">
                             <div layout="row">
                         <md-button data-ng-click="getLog()" class="md-button md-raised" data-ng-disabled="staticForm.$invalid">查询</md-button>
-                        <md-button ng-disabled="!clusterlogs.logs.length"
+                        <md-button target="_blank"
+                                    ng-disabled="!clusterlogs.logs.length"
                                    ng-href="{/clusterlogs.downloadHref/}"
                                    ng-hide="showContextUI"
                                    ng-class="{'md-primary': clusterlogs.logs.length, 'md-raised': !clusterlogs.logs.length}"
                                    data-demo-disable>导出日志</md-button>
-                        <md-button ng-disabled="!clusterlogs.logs.length"
+                        <md-button target="_blank"
+                                    ng-disabled="!clusterlogs.logs.length"
                                    ng-href="{/contextlogs.downloadHref/}"
                                    ng-show="showContextUI"
                                    ng-class="{'md-primary': clusterlogs.logs.length, 'md-raised': !clusterlogs.logs.length}"
