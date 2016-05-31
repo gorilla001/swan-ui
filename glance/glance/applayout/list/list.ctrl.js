@@ -26,20 +26,22 @@
         self.undoApp = undoApp;
         self.updateContainer = updateContainer;
 
-        activate();
+        var refreshInterval = 5000;
+        var timeoutPromise = $timeout(refreshData, refreshInterval);
 
-        $scope.$on('$destroy', function() {
-            if(events) {
-                events.close();
-                events = undefined;
-            }
-        });
+        activate();
 
         function activate() {
             $scope.$on('$destroy', function () {
                 for(var key in self.timeoutPromises) {
                     $timeout.cancel(self.timeoutPromises[key]);
                 }
+                if(events) {
+                    events.close();
+                    events = undefined;
+                }
+                self.isDestroy = true;
+                $timeout.cancel(timeoutPromise);
             });
 
             Stream(function (data) {
@@ -48,9 +50,6 @@
                     if(value.Id === data.stackId && value.md5 !== data.md5) {
                         value.md5 = data.md5;
                         self.sseMsgStatus[data.stackId] = 'out';
-                        if(self.openFlag.hasOwnProperty(data.stackId) && self.openFlag[data.stackId]) {
-                            forceShowTableData(value.Cid, value.Id);
-                        }
                         $scope.$digest();
                         (function(value) {
                             self.timeoutPromises[data.stackId] = $timeout(function() {
@@ -187,6 +186,16 @@
             return clusterNameMap
         }
 
-        ///
+        // 刷新应用状态
+        function refreshData() {
+            if (!self.isDestroy) {
+                appservice.listAppsStatus().then(function (data) {
+                    self.appListStatus = data;
+                    timeoutPromise = $timeout(refreshData, refreshInterval);
+                }).catch(function() {
+                    timeoutPromise = $timeout(refreshData, refreshInterval);
+                })
+            }
+        }
     }
 })();
