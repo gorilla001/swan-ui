@@ -282,7 +282,8 @@ BACKEND_URL = {
     metrics: {
         getClusterMonitor: "api/v3/clusters/$cluster_id/metrics",
         appmonit: "api/v3/clusters/$clusterID/apps/$aliase/metrics",
-        reqRate: "api/v3/clusters/$cluster_id/apps/$aliase/session"
+        reqRate: "api/v3/clusters/$cluster_id/apps/$aliase/session",
+        monitor: "api/v3/clusters/$clusterID/apps/$aliase/monitor"
     },
     ws: {
         subscribe: "streaming/glance/$token"

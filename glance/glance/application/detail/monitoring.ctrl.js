@@ -7,7 +7,7 @@
         .controller('MonitorAppCtrl', MonitorAppCtrl);
 
     /* @ngInject */
-    function MonitorAppCtrl($scope, $sce, appservice, monitor, buildCharts) {
+    function MonitorAppCtrl($scope, $sce, appservice, monitor, appChart) {
         var self = this;
         self.withGrafana = GRAFANA_CONFIG.baseUrl;
         self.appMonitors = {};
@@ -26,26 +26,21 @@
 
         function activate() {
             initMonitor();
-            buildReqRateChart()
+            appChart.paintReqRateChart(self.appInfo.cid, self.appInfo.alias, 'req-rate-chart');
+            appChart.paintMonitorCharts(self.appInfo.cid, self.appInfo.alias, {
+                cpu: 'cpu-chart',
+                mem: 'mem-chart',
+                diskRead: 'disk-read-chart',
+                diskWrite: 'disk-write-chart',
+                networkSend: 'network-send-chart',
+                networkRecevied: 'network-recevied-chart'
+            });
         }
 
 
         $scope.$on('refreshAppData', function () {
-            initMonitor();
-            buildReqRateChart()
+            activate();
         });
-
-        function setIframeUrls() {
-            if (!(self.appInfo.alias in self.metricUrls)) {
-                angular.forEach(self.metrics, function (metric) {
-                    self.iframeUrl = GRAFANA_CONFIG.baseUrl + "/dashboard-solo/db/app?panelId=" + metric.id + "&fullscreen&var-cluster_id_t=" + self.appInfo.cid + "&var-app_uuid_t=" + self.appInfo.alias + "&theme=light";
-                    self.appIframeUrls.push($sce.trustAsResourceUrl(self.iframeUrl));
-                });
-                self.metricUrls[self.appInfo.alias] = self.appIframeUrls;
-            } else {
-                self.appIframeUrls = self.metricUrls[self.appInfo.alias];
-            }
-        }
 
         function initMonitor() {
             appservice.getAppMetics(self.appInfo.cid, self.appInfo.alias)
@@ -62,53 +57,9 @@
                         self.memoryUsed += appMonitor.memoryUsed;
                         self.memoryTotal += appMonitor.memoryTotal;
                     });
-                    if (typeof GRAFANA_CONFIG !== 'undefined') {
-                        setIframeUrls();
-                    }
                 }, function (res) {
                     self.errorCode = res.code;
                 });
-        }
-
-        function buildReqRateChart() {
-            appservice.getReqRate(self.appInfo.cid, self.appInfo.alias).then(function (data) {
-                if (!data) {
-                    data = [{time: (new Date()).getTime() * 1000000}]
-                }
-                paintReqRateChart(data);
-            });
-        }
-
-        function paintReqRateChart(data) {
-            var dataInhour = monitor.httpMonitor.getDataInhour(data, 60, 60, function (data) {
-                return data.time / 1000000000
-            });
-            var xAxis = dataInhour.xAxis;
-            var yAxisDataInhour = dataInhour.yAxis;
-            var yAxis = [];
-            for (var i = 0; i < 60; i++) {
-                var val = yAxisDataInhour[i];
-                if (!val) {
-                    yAxis[i] = monitor.httpMonitor.setShowRatio([], 1);
-                } else {
-                    yAxis[i] = monitor.httpMonitor.setShowRatio([val.reqrate], 1);
-                }
-            }
-            var indicator = {
-                key: 'req',
-                domId: "req-rate-chart",
-                descriptions: {
-                    title: '请求数监控',
-                    subtitle: '一小时内变化 (count/s)',
-                    seriesName: ['请求数目']
-                },
-                styles: {
-                    lineWidth: 3,
-                    axesColor: '#9B9B9B',
-                    axiesFontsize: '11px'
-                }
-            };
-            buildCharts.initIOCharts(indicator, xAxis, yAxis);
         }
     }
 })();
