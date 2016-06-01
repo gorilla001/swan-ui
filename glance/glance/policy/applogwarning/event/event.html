@@ -13,6 +13,7 @@
         <tr md-row>
             <th md-column md-order-by="jobid"><span>策略 ID</span></th>
             <th md-column md-order-by="appname"><span>应用名称</span></th>
+            <th md-column><span>实例</span></th>
             <th md-column>监控周期(分钟)</th>
             <th md-column md-order-by="exectime">时间</th>
             <th md-column md-order-by="keyword">关键字</th>
@@ -23,6 +24,7 @@
         <tr md-row ng-repeat="item in eventLogListCtrl.eventLogList">
             <td md-cell>{/item.jobid/}</td>
             <td md-cell>{/item.appname/}</td>
+            <td md-cell>{/item.ipport/}</td>
             <td md-cell>{/item.ival/}</td>
             <td md-cell>{/item.exectime | date: 'yyyy-MM-dd HH:mm'/}</td>
             <td md-cell>{/item.keyword/}</td>

@@ -13,7 +13,6 @@
         var alarm = logPolicy.alarm || '';
 
         self.target = target;
-        self.instances = [];
         self.form = {
             clusterid: alarm.cid || '',
             appalias: alarm.appalias || '',
@@ -24,15 +23,12 @@
             emails: alarm.emails || '',
             usertype: alarm.usertype || '',
             appname: alarm.appname,
-            ipport: alarm.ipport || '',
             scaling: alarm.scaling || false,
             mins: alarm.mins || '',
             maxs: alarm.maxs|| ''
         };
         self.submit = submit;
         self.getAppList= getAppList;
-        self.getInstance = getInstance;
-
         ////
 
         activate();
@@ -41,8 +37,6 @@
 
             listCluster();
             getAppList();
-            if(self.target === 'update')
-                updataInit();
         }
 
         function listCluster() {
@@ -66,27 +60,7 @@
                 })
         }
 
-        function getInstance(cid, appId) {
-            return appservice.listAppNodes(cid, appId)
-                .then(function (data) {
-                    return self.instances = data;
-                })
-        }
-
-        function updataInit(){
-            if(self.form.ipport){
-                getInstance(alarm.cid, alarm.appid)
-                    .then(function(data){
-                        self.instanceSelect = self.form.ipport.split(',');
-                    });
-            }
-        }
-
         function submit() {
-            if(self.instanceSelect && self.instanceSelect.length){
-                self.form.ipport = self.instanceSelect.join();
-            }
-
             if(!self.form.scaling){
                 delete self.form.mins;
                 delete self.form.maxs;
