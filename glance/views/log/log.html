@@ -31,7 +31,8 @@
                             <md-input-container>
                                 <md-select data-ng-model="app" aria-label="clusters-select"
                                            data-required="required" ng-change="getNodePorts(app.id,clusterId)">
-                                    <md-option ng-value="option" data-ng-repeat="option in options">{/option.name/}</md-option>
+                                    <md-option ng-value="option" data-ng-repeat="option in options">{/option.name/}
+                                    </md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -46,45 +47,45 @@
                     </div>
                 </div>
                 <div layout="row">
-                <!--实例名-->
-                <div layout="row" flex="30" layout-align="start center"
-                     class="form-group form-group-select layout-align-end-start layout-row">
-                    <label>实例名</label>
-                    <div flex flex-offset="5" layout="column">
-                        <isteven-multi-select
-                                input-model="inputNodesInfo"
-                                output-model="nodeId"
-                                button-label="name"
-                                item-label="name"
-                                tick-property="ticked"
-                                helper-elements="all none filter"
-                                max-height="200px"
-                                translation="multiConfig"
-                                max-labels="1"
-                        >
-                        </isteven-multi-select>
+                    <!--实例名-->
+                    <div layout="row" flex="30" layout-align="start center"
+                         class="form-group form-group-select layout-align-end-start layout-row">
+                        <label>实例名</label>
+                        <div flex flex-offset="5" layout="column">
+                            <isteven-multi-select
+                                    input-model="inputNodesInfo"
+                                    output-model="nodeId"
+                                    button-label="name"
+                                    item-label="name"
+                                    tick-property="ticked"
+                                    helper-elements="all none filter"
+                                    max-height="200px"
+                                    translation="multiConfig"
+                                    max-labels="1"
+                            >
+                            </isteven-multi-select>
+                        </div>
                     </div>
-                </div>
-                <!--日志目录-->
-                <div layout="row" flex="30" flex-offset="5" layout-align="start center"
-                     class="form-group form-group-select layout-align-end-start layout-row">
-                    <label>日志目录</label>
-                    <div flex flex-offset="5" layout="column">
-                        <isteven-multi-select
-                                input-model="inputLogPaths"
-                                output-model="logPaths"
-                                button-label="logpath"
-                                item-label="logpath"
-                                tick-property="ticked"
-                                helper-elements="all none filter"
-                                max-height="200px"
-                                translation="multiConfig"
-                                max-labels="1"
-                        >
-                        </isteven-multi-select>
+                    <!--日志目录-->
+                    <div layout="row" flex="30" flex-offset="5" layout-align="start center"
+                         class="form-group form-group-select layout-align-end-start layout-row">
+                        <label>日志目录</label>
+                        <div flex flex-offset="5" layout="column">
+                            <isteven-multi-select
+                                    input-model="inputLogPaths"
+                                    output-model="logPaths"
+                                    button-label="logpath"
+                                    item-label="logpath"
+                                    tick-property="ticked"
+                                    helper-elements="all none filter"
+                                    max-height="200px"
+                                    translation="multiConfig"
+                                    max-labels="1"
+                            >
+                            </isteven-multi-select>
 
+                        </div>
                     </div>
-                </div>
                 </div>
                 <!--查询时间范围-->
                 <div layout="row" layout-wrap class="form-group form-group-select">
@@ -101,57 +102,62 @@
                             </select>
                         </div>
                     </div>
-                        <div data-ng-show="timeRange === 'other'" flex="30" flex-offset="5">
-                            <label flex>起始日期 <span class="text-danger">* </span></label>
-                            <datetimepicker
-                                    min-date="minDate" hour-step="hourStep"
-                                    minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
-                                    date-format="yyyy-MM-dd" date-options="dateOptions"
-                                    readonly-date="false"
-                                    show-spinners="false"
-                                    readonly-time="false"
-                                    current-text="今天"
-                                    clear-text="清除"
-                                    close-text="关闭"
-                                    mousewheel="false"
-                                    date-disabled="isDisableGteDate(date, mode)">
-                            </datetimepicker>
+                    <div data-ng-show="timeRange === 'other'" flex="30" flex-offset="5">
+                        <label flex>起始日期 <span class="text-danger">* </span></label>
+                        <datetimepicker
+                                min-date="minDate" hour-step="hourStep"
+                                minute-step="minuteStep" ng-model="gte" show-meridian="showMeridian"
+                                date-format="yyyy-MM-dd" date-options="dateOptions"
+                                readonly-date="false"
+                                show-spinners="false"
+                                readonly-time="false"
+                                current-text="今天"
+                                clear-text="清除"
+                                close-text="关闭"
+                                mousewheel="false"
+                                date-disabled="isDisableGteDate(date, mode)">
+                        </datetimepicker>
+                    </div>
+                    <div data-ng-show="timeRange === 'other'" flex="30" flex-offset="5">
+                        <label flex>截止日期 <span class="text-danger">* </span></label>
+                        <datetimepicker
+                                min-date="minDate" hour-step="hourStep"
+                                minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
+                                date-format="yyyy-MM-dd" date-options="dateOptions"
+                                readonly-date="false"
+                                show-spinners="false"
+                                readonly-time="false"
+                                current-text="今天"
+                                clear-text="清除"
+                                close-text="关闭"
+                                mousewheel="false"
+                                date-disabled="isDisablelteDate(date, mode)">
+                        </datetimepicker>
+                    </div>
+                    <div flex="60" flex-offset="5">
+                        <div layout="row"  layout-align="start center">
+                            <md-button data-ng-click="getLog()" class="md-button md-raised"
+                                       data-ng-disabled="staticForm.$invalid">查询
+                            </md-button>
+                            <md-button target="_blank"
+                                       ng-disabled="!clusterlogs.logSize"
+                                       ng-href="{/clusterlogs.downloadHref/}"
+                                       ng-hide="showContextUI"
+                                       ng-class="{'md-primary': clusterlogs.logSize, 'md-raised': !clusterlogs.logSize}"
+                                       data-demo-disable>导出日志
+                            </md-button>
+                            <md-button target="_blank"
+                                       ng-disabled="!clusterlogs.logSize"
+                                       ng-href="{/contextlogs.downloadHref/}"
+                                       ng-show="showContextUI"
+                                       ng-class="{'md-primary': clusterlogs.logSize, 'md-raised': !clusterlogs.logSize}"
+                                       data-demo-disable>导出日志
+                            </md-button>
+                            <span class="text-warning"
+                                data-ng-show="clusterlogs.logSize && clusterlogs.logSize > logDownloadToplimit">日志记录过大，只能导出前{/logDownloadToplimit/}条
+                            </span>
                         </div>
-                        <div data-ng-show="timeRange === 'other'" flex="30" flex-offset="5">
-                            <label flex>截止日期 <span class="text-danger">* </span></label>
-                            <datetimepicker
-                                    min-date="minDate" hour-step="hourStep"
-                                    minute-step="minuteStep" ng-model="lte" show-meridian="showMeridian"
-                                    date-format="yyyy-MM-dd" date-options="dateOptions"
-                                    readonly-date="false"
-                                    show-spinners="false"
-                                    readonly-time="false"
-                                    current-text="今天"
-                                    clear-text="清除"
-                                    close-text="关闭"
-                                    mousewheel="false"
-                                    date-disabled="isDisablelteDate(date, mode)">
-                            </datetimepicker>
-                        </div>
-                        <div flex="30" flex-offset="5" layout-align="start center">
-                            <div layout="row">
-                        <md-button data-ng-click="getLog()" class="md-button md-raised" data-ng-disabled="staticForm.$invalid">查询</md-button>
-                        <md-button target="_blank"
-                                    ng-disabled="!clusterlogs.logs.length"
-                                   ng-href="{/clusterlogs.downloadHref/}"
-                                   ng-hide="showContextUI"
-                                   ng-class="{'md-primary': clusterlogs.logs.length, 'md-raised': !clusterlogs.logs.length}"
-                                   data-demo-disable>导出日志</md-button>
-                        <md-button target="_blank"
-                                    ng-disabled="!clusterlogs.logs.length"
-                                   ng-href="{/contextlogs.downloadHref/}"
-                                   ng-show="showContextUI"
-                                   ng-class="{'md-primary': clusterlogs.logs.length, 'md-raised': !clusterlogs.logs.length}"
-                                   data-demo-disable>导出日志</md-button>
-                    <span class="text-warning"
-                          data-ng-show="clusterlogs.logs.length && clusterlogs.logs.length>logDownloadToplimit">(日志记录过大，只能导出前{/logDownloadToplimit/}条)</span>
-                            </div>
-                            </div>
+                    </div>
                 </div>
                 <!-- 查询 -->
 
@@ -194,6 +200,6 @@
 
 
         </div>
-</section>
+    </section>
 </div>
 
