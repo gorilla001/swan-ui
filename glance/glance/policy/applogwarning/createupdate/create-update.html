@@ -25,26 +25,13 @@
                     <div flex="50" layout="column">
                         <div flex="none">
                             <md-select data-ng-model="createLogWarningCtrl.app"
-                                       data-required="required" aria-label="createapp"
-                                       md-on-close="createLogWarningCtrl.getInstance(createLogWarningCtrl.app.cid, createLogWarningCtrl.app.id)">
+                                       data-required="required" aria-label="createapp">
                                 <md-option ng-repeat="app in createLogWarningCtrl.apps" ng-value="app">{/app.name/}</md-option>
                             </md-select>
                         </div>
                     </div>
                     <div flex></div>
                 </div>
-
-                <!--<div layout="row" layout-align="end start" class="form-group form-group-select">-->
-                    <!--<label flex="15">应用实例</label>-->
-                    <!--<div flex="50" layout="column">-->
-                        <!--<div flex="none">-->
-                            <!--<md-select data-ng-model="createLogWarningCtrl.instanceSelect" multiple aria-label="instance" >-->
-                                <!--<md-option ng-repeat="instance in createLogWarningCtrl.instances" ng-value="instance.Ip">{/instance.Ip/}</md-option>-->
-                            <!--</md-select>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div flex></div>-->
-                <!--</div>-->
 
                 <div layout="row" layout-align="end start" class="form-group form-group-input">
                     <label flex="15">监控关键字</label>
