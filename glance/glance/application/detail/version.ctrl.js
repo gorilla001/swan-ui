@@ -13,7 +13,6 @@
         self.table = mdTable.createTable('app.detail.version');
 
         self.versions = [];
-        self.upCanary = upCanary;
 
         self.cancelDeploy = function () {
             appservice.stopDeploy({}, $stateParams.cluster_id, $stateParams.app_id)
@@ -59,10 +58,6 @@
                         }
                     }
                 );
-        }
-
-        function upCanary(versions) {
-            appcurd.upCanary(versions)
         }
     }
 })();

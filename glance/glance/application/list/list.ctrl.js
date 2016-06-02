@@ -52,5 +52,12 @@
         self.upContainerModal = function (ev, clusterId, appId, instanceNum) {
             appcurd.updateContainer(ev, instanceNum, clusterId, appId);
         };
+
+        /*
+         创建灰度
+         */
+        self.createCanary = function (ev, clusterId, appId, formData) {
+            appcurd.createCanary(ev, formData, clusterId, appId);
+        };
     }
 })();

@@ -34,9 +34,10 @@
                            $filter,
                            clusterCurd) {
         var self = this;
-        var canary = $stateParams.canary;
 
-        self.existPorts = {};
+        self.existPorts = {
+            outerPorts: []
+        };
         self.target = target;
 
         self.cluster;
@@ -79,8 +80,7 @@
                 forceImage: false,
                 network: app.network,
                 logPaths: app.logPaths,
-                parameters: app.parameters,
-                canary: !!canary
+                parameters: app.parameters
             };
             if (!self.form.logPaths) {
                 self.form.logPaths = [];

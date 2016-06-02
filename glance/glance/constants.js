@@ -356,7 +356,10 @@ BACKEND_URL = {
         cron: 'api/v3/crons/$scale_id',
         scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id',
         changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight',
-        taskappExtend: 'api/v3/scales'
+        taskappExtend: 'api/v3/scales',
+        canary: "api/v3/clusters/$cluster_id/apps/$app_id/canary/$version_id",
+        canarys: "api/v3/clusters/$cluster_id/apps/$app_id/canary",
+        canaryStatus: "api/v3/clusters/$cluster_id/apps/$app_id/canary/status"
     },
     user: {
         groups: 'api/v3/groups',

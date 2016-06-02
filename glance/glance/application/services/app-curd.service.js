@@ -15,8 +15,12 @@
             undo: undo,
             updateContainer: updateContainer,
             redeploy: redeploy,
-            upCanary: upCanary,
-
+            createCanary: createCanary,
+            deleteCanary: deleteCanary,
+            updateContainerCanary: updateContainerCanary,
+            stopCanary: stopCanary,
+            startCanary: startCanary,
+            changeWeight: changeWeight
         };
 
         function stop(data, clusterId, appId) {
@@ -57,7 +61,7 @@
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
                 appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
-                    $state.reload();
+                    $state.go('app.detail.canary',{cluster_id: clusterId, app_id: appId});
                 });
             });
         }
@@ -69,17 +73,56 @@
                 })
         }
 
-        // 权重
-        function upCanary(versions) {
-            
-            upCanaryModal.open(versions).then(function (versions) {
-                var weight = {};
-                versions.forEach(function(value) {
-                    weight[value.versionId] = value.weight;
+        function createCanary(ev, formData, clusterId, appId){
+            formModal.open('/glance/application/modals/create-canary.html',ev,
+                {dataName: 'form', initData: formData}).then(function (formData) {
+                var data = formData;
+
+                appservice.createCanary(data, clusterId, appId).then(function (data) {
+                    $state.reload();
                 });
+            });
+        }
+
+        function deleteCanary(clusterId, appId, versionId) {
+            confirmModal.open("是否确认删除该灰度版本？").then(function () {
+                appservice.deleteCanary(clusterId, appId, versionId)
+                    .then(function (data) {
+                        $state.reload()
+                    })
+            });
+        }
+
+        function updateContainerCanary(ev, curInsNmu, clusterId, appId) {
+            formModal.open('/glance/application/modals/up-container.html',ev,
+                {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
+                var data = {instances: instanceNum};
+                appservice.updateContainerCanary(data, clusterId, appId, versionId).then(function (data) {
+                    $state.reload();
+                });
+            });
+        }
+
+        function stopCanary(data, clusterId, appId, versionId){
+            appservice.stopCanary(data, clusterId, appId, versionId)
+                .then(function (data) {
+                    $state.reload();
+                })
+        }
+
+        function startCanary(data, clusterId, appId, versionId){
+            appservice.startCanary(data, clusterId, appId, versionId)
+                .then(function (data) {
+                    $state.reload();
+                })
+        }
+
+        function changeWeight(versions) {
+
+            upCanaryModal.open(versions).then(function (weights) {
                 var data = {
-                    "id": $stateParams.app_id,
-                    "versions": weight
+                    id: parseInt($stateParams.app_id),
+                    versions: weights
                 };
                 appservice.changeWeight($stateParams.cluster_id, $stateParams.app_id, data)
             });

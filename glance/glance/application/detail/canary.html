@@ -1,0 +1,73 @@
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>版本号</th>
+            <th md-column>权重</th>
+            <th md-column>实例个数</th>
+            <th md-column>状态</th>
+            <th md-column>更新时间</th>
+            <th md-column>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="canary in canaryCtrl.canaryList">
+            <td md-cell>
+                {/canary.versionId/}
+            </td>
+            <td md-cell>
+                {/canary.weight/}
+            </td>
+            <td md-cell>
+                {/canary.instances/}
+            </td>
+            <td md-cell>
+                {/canaryCtrl.CANARY_STATUS[canaryCtrl.canaryStatus[canary.id].status]/}
+            </td>
+            <td md-cell>
+                2016:3.23
+            </td>
+            <td md-cell>
+                <md-button aria-label="start" class="md-button md-raised"
+                           data-ng-click="canaryCtrl.start(canary.cid, canary.id, canary.versionId)"
+                           data-demo-disable>
+                    启动
+                </md-button>
+
+                <md-button aria-label="stop" class="md-button md-raised"
+                           data-ng-click="canaryCtrl.stop(canary.cid, canary.id, canary.versionId)"
+                           data-demo-disable>
+                    停止
+                </md-button>
+
+                <md-menu md-offset="0 -5">
+                    <md-button aria-label="appListMenu" class="md-button md-raised"
+                               ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    </md-button>
+                    <md-menu-content width="2">
+                        <md-menu-item>
+                            <md-button aria-label="upContainer"
+                                       data-ng-click="canaryCtrl.upContainer($event, canary.instances, canary.cid, canary.id)"
+                                       data-demo-disable>扩展
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="weight"
+                                       data-ng-click="canaryCtrl.changeWeight(canaryCtrl.canaryList)"
+                                       data-demo-disable>权重
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="delete"
+                                       data-ng-click="canaryCtrl.del(canary.cid, canary.id, canary.versionId)"
+                                       data-demo-disable>删除
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

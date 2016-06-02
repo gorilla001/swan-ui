@@ -1,0 +1,46 @@
+<md-dialog aria-label="select image">
+    <form name="volumesForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>新建灰度发布</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="formCtrl.cancel()"
+                           aria-label="cancel">
+                    <i class="fa fa-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width: 400px; max-height: 400px; min-height: 100px;">
+            <div layout="row" layout-align="end center" class="form-group form-group-input" layout-margin
+                 layout-padding>
+                <label flex="30">容器个数</label>
+                <div flex="60" layout="column">
+                    <div flex>
+                        <input type="number" class="form-input" name="containerNum" aria-label="containerNum"
+                               data-ng-model="formCtrl.form.instances" data-required min="1">
+                    </div>
+                    <p data-ng-show="volumesForm.containerNum.$error.required && !volumesForm.containerNum.$pristine"
+                       class="error-info help-info-bottom">
+                        <small>扩展数不能为空</small>
+                    </p>
+                    <p data-ng-show="volumesForm.containerNum.$error.min && !volumesForm.containerNum.$pristine"
+                       class="error-info help-info-bottom">
+                        <small>扩展数最小值为1</small>
+                    </p>
+                </div>
+                <div flex></div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="formCtrl.cancel()" aria-label="cancel">
+                取消
+            </md-button>
+            <md-button data-ng-disabled="volumesForm.$invalid" data-ng-click="formCtrl.ok()"
+                       aria-label="ok" style="margin-right:20px;">
+                确认
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
