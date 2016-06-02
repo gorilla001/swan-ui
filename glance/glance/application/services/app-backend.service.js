@@ -34,7 +34,8 @@
             listAppNodes: listAppNodes,
             changeWeight: changeWeight,
             getReqRate: getReqRate,
-            getAppMetics: getAppMetics
+            getAppMetics: getAppMetics,
+            getMonitor: getMonitor
 
         };
 
@@ -175,6 +176,10 @@
 
         function getAppMetics(clusterId, alias) {
             return gHttp.Resource('metrics.appmonit', {clusterID: clusterId, aliase: alias}).get({loading: ''})
+        }
+        
+        function getMonitor(clusterId, alias) {
+            return gHttp.Resource('metrics.monitor', {clusterID: clusterId, aliase: alias}).get({loading: ''})
         }
     }
 })();

@@ -67,8 +67,9 @@
 </div>
 
 <div id="req-rate-chart" style="width:100%;height:250px;"></div>
-<div data-ng-if="monitorAppCtrl.withGrafana !== 'GF_BASE_URL'" ng-repeat="metricUrl in monitorAppCtrl.appIframeUrls">
-    <iframe ng-src="{/metricUrl/}"
-            width="100%" height="250" frameborder="0" scrolling="no" style="overflow:hidden">
-    </iframe>
-</div>
+<div id="cpu-chart" style="width:100%;height:250px;"></div>
+<div id="mem-chart" style="width:100%;height:250px;"></div>
+<div id="disk-read-chart" style="width:100%;height:250px;"></div>
+<div id="disk-write-chart" style="width:100%;height:250px;"></div>
+<div id="network-send-chart" style="width:100%;height:250px;"></div>
+<div id="network-recevied-chart" style="width:100%;height:250px;"></div>

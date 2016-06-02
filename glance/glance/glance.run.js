@@ -6,6 +6,7 @@
     /*@ngInject*/
     function run($state, $rootScope) {
         $rootScope.$state = $state;
+        Math.average = average;
         $rootScope.Math = Math;
         setHomeUrl();
 
@@ -39,6 +40,16 @@
             } else {
                 $rootScope.HOME_URL = USER_URL;
             }
+        }
+        
+        function average(values) {
+            var sum = 0;
+            var count = 0;
+            angular.forEach(values, function(value) {
+                sum += value;
+                count ++;
+            })
+            return sum/count
         }
     }
 })();
