@@ -1,26 +1,7 @@
 <div layout="row" layout-align="end start">
 
-    <div flex="40" layout="row">
-
-        <div flex layout="column" layout-align="start center" class="cluster-charts-panel">
-            <div flex="40">
-                <div class="charts-panel">
-                    <piechart chart-used="monitorAppCtrl.cpuUsedCores"
-                              chart-total="monitorAppCtrl.cpuShareCores" radius="[57, 67]"
-                              use-color="#00BCD4" show-text="CPU占用" font-size="24" text-color="#596679"
-                              error-code="monitorAppCtrl.errorCode" status="detailAppCtrl.appStatus.status">
-                    </piechart>
-                </div>
-                <div class="info-panel">
-                    CPU 占用量<br>
-                    <div class="cluster-piechart-num">{/monitorAppCtrl.cpuUsedCores.toFixed(2)/}
-                        / {/monitorAppCtrl.cpuShareCores.toFixed(2)/}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div flex layout="column" layout-align="start center" class="cluster-charts-panel">
+    <div flex="20" layout="row">
+        <div flex layout="column" layout-align="start start" class="cluster-charts-panel">
             <div flex="40">
                 <div class="charts-panel">
                     <piechart chart-used="monitorAppCtrl.memoryUsed" chart-total="monitorAppCtrl.memoryTotal"
@@ -38,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div flex="55" flex-offset="5">
+    <div flex="75" flex-offset="5">
         <table class="table">
             <thead>
             <tr>
@@ -52,7 +33,7 @@
                 <td>{/appMonitor.app.appId/}</td>
                 <td style="width: 30%;">
                     <uib-progressbar class="progress-striped active" id="instanceCpu" type="info"
-                                     max="appMonitor.cpuShareCores" value="appMonitor.cpuUsedCores"><span>{/appMonitor.cpuUsedCores.toFixed(2)/} / {/appMonitor.cpuShareCores/}</span>
+                                     max="100" value="appMonitor.cpuUsedCores * 100"><span>{/appMonitor.cpuUsedCores * 100/} %</span>
                     </uib-progressbar>
                 </td>
                 <td style="width: 30%;">
