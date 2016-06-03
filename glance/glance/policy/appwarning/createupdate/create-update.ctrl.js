@@ -17,7 +17,7 @@
             emails: warning.emails || '',
             duration: warning.duration || '',
             times: warning.times || '',
-            enabled: warning.enabled || true, // Deprecated api
+            enabled: warning.enabled || 1, // Deprecated api
             triger: warning.triger || false,
             mininstance: warning.mininstance ||'',
             instance: warning.instance||''
