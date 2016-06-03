@@ -13,8 +13,9 @@
         self.WARNING_RULE = WARNING_RULE;
         self.table = mdTable.createTable('policy.tab.appwarning.warninglist');
         self.enableText = {
-            true: '启动',
-            false: '停止'
+            0: '停止',
+            1: '启动',
+            2: '不可用'
         };
         self.searchKeyWord = $stateParams.keywords || '';
 
