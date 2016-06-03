@@ -15,9 +15,8 @@
                 returnTo = "/index.html?timestamp="+new Date().getTime();
             }
             return authBackend.login(data, form).then(function (data) {
-                $cookies.remove('token', {domain: 'dataman-inc.net'});
-                $cookies.remove('token', {domain: 'shurenyun.com'});
-                $cookies.put('token', data.token);
+                $cookies.remove('token');
+                $cookies.put('token', data.token, {domain: DOMAIN});
                 redirect4Login(returnTo, data.token);
             });
         };
