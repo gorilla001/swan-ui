@@ -10,11 +10,16 @@
         activate();
 
         self.login = login;
-        
+        self.admin;
         
         function activate() {
             setNotice();
             $("[data-toggle='popover']").popover();
+            if (IS_OFF_LINE) {
+                self.admin = '管理员';
+            } else {
+                self.admin = '客服info@shurenyun.com'
+            }
         }
         
         function setNotice() {
