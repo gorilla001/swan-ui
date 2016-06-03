@@ -17,7 +17,7 @@ function glanceUser($cookies, $rootScope, glanceHttp, glanceWS, gHttp, utils) {
     var clear = function () {
         token = null;
         glanceWS.clear();
-        $cookies.remove("token");
+        $cookies.remove("token", {domain: DOMAIN});
     };
 
     return {

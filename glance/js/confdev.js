@@ -53,6 +53,9 @@ APP_CONFIG_SPE_URL = {
 //demo用户的邮箱地址
 DEMO_EMAIL = "DEMO_USER";
 
+//共享用户权限的域（保存cookies用）。
+DOMAIN = 'BODY_DOMAIN';
+
 (function() {
   if (RUNNING_ENV === 'dev' && AGENT_CONFIG.dmHost.slice(0, 5) === "LOCAL") {
     AGENT_CONFIG.dmHost = 'DM_HOST=ws://devstreaming.dataman-inc.net/';
