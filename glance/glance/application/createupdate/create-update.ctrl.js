@@ -49,7 +49,7 @@
                 name: '',
                 instances: 1,
                 volumes: [],
-                portMappings: [],
+                ports: [],
                 cpus: 0.1,
                 mem: 16,
                 cmd: '',
@@ -70,7 +70,7 @@
                 name: app.name,
                 instances: app.instances,
                 volumes: app.volumes,
-                portMappings: app.ports,
+                ports: app.ports,
                 cpus: app.cpus,
                 mem: app.mem,
                 cmd: app.cmd,
@@ -204,13 +204,13 @@
 
         // new 应用地址
         function listAppPort(curIndex) {
-            var appPort = self.form.portMappings.map(function (item, index) {
+            var appPort = self.form.ports.map(function (item, index) {
                 if (item.mapPort && curIndex !== index) {
                     return item.mapPort
                 }
             });
 
-            if(self.existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2){
+            if(self.existPorts.outerPorts.length && self.form.ports[curIndex].type == 2){
                 var concatAppPort = appPort.concat(self.existPorts.outerPorts);
                 return concatAppPort
             }
@@ -258,7 +258,7 @@
                     hostPath: '',
                     containerPath: ''
                 },
-                portMappings: {
+                ports: {
                     appPort: '',
                     protocol: '',
                     mapPort: '',

@@ -19,6 +19,10 @@
                         return false
                     }
 
+                    if (mapPort >= 6000 && mapPort <= 6999) {
+                        return false
+                    }
+
                     if (mapPort >= 10000 &&mapPort <= 20000) {
                         return false
                     }

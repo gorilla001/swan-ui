@@ -192,19 +192,18 @@
         }
 
         function updateContainerCanary(data, clusterId, appId, versionId) {
-            data.method = 'scale_canary';
-
+            data.method = 'scale';
             return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
         }
 
         function stopCanary(data, clusterId, appId, versionId) {
-            data.method = 'stop_canary';
+            data.method = 'stop';
 
             return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
         }
 
         function startCanary(data, clusterId, appId, versionId) {
-            data.method = 'start_canary';
+            data.method = 'start';
 
             return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
         }

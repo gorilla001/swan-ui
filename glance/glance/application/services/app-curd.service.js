@@ -61,7 +61,7 @@
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
                 appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
-                    $state.go('app.detail.canary',{cluster_id: clusterId, app_id: appId});
+                    $state.reload();
                 });
             });
         }
@@ -79,7 +79,7 @@
                 var data = formData;
 
                 appservice.createCanary(data, clusterId, appId).then(function (data) {
-                    $state.reload();
+                    $state.go('app.detail.canary',{cluster_id: clusterId, app_id: appId});
                 });
             });
         }
@@ -93,7 +93,7 @@
             });
         }
 
-        function updateContainerCanary(ev, curInsNmu, clusterId, appId) {
+        function updateContainerCanary(ev, curInsNmu, clusterId, appId, versionId) {
             formModal.open('/glance/application/modals/up-container.html',ev,
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
@@ -117,9 +117,9 @@
                 })
         }
 
-        function changeWeight(versions) {
+        function changeWeight(canaryObj) {
 
-            upCanaryModal.open(versions).then(function (weights) {
+            upCanaryModal.open(canaryObj).then(function (weights) {
                 var data = {
                     id: parseInt($stateParams.app_id),
                     versions: weights

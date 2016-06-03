@@ -22,29 +22,29 @@
         activate();
 
         function activate() {
-            self.canaryList = [
-                {
-                    id: 1,
-                    cid: 2,
-                    versionId: 1,
-                    weight: 30,
-                    instances: 1
-                },
-                {
-                    id: 2,
-                    cid: 2,
-                    versionId: 2,
-                    weight: 70,
-                    instances: 2
-                }
-            ];
-
-            self.canaryStatus = {
-                1: {status: 2},
-                2: {status: 3}
-            };
-            //listCanary();
-            //listCanaryStatus();
+            //self.canaryList = [
+            //    {
+            //        id: 1,
+            //        cid: 2,
+            //        versionId: 1,
+            //        weight: 30,
+            //        instances: 1
+            //    },
+            //    {
+            //        id: 2,
+            //        cid: 2,
+            //        versionId: 2,
+            //        weight: 70,
+            //        instances: 2
+            //    }
+            //];
+            //
+            //self.canaryStatus = {
+            //    1: {status: 2},
+            //    2: {status: 3}
+            //};
+            listCanary();
+            listCanaryStatus();
         }
 
         function listCanary() {
@@ -71,16 +71,16 @@
             appcurd.stopCanary(data, clusterId, appId, versionId)
         }
 
-        function upContainer(ev, instanceNum, clusterId, appId) {
-            appcurd.updateContainerCanary(ev, instanceNum, clusterId, appId)
+        function upContainer(ev, instanceNum, clusterId, appId, versionId) {
+            appcurd.updateContainerCanary(ev, instanceNum, clusterId, appId, versionId)
         }
 
         function del(clusterId, appId, versionId) {
             appcurd.deleteCanary(clusterId, appId, versionId)
         }
 
-        function changeWeight(versions) {
-            appcurd.changeWeight(versions)
+        function changeWeight(canaryObj) {
+            appcurd.changeWeight(canaryObj)
         }
 
 

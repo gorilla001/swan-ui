@@ -4,15 +4,16 @@
 
 <form class="form-horizontal" name="canaryForm">
     <div class="modal-body">
-        <div data-ng-repeat="weight in formCtrl.weights" class="form-group"
+        <div data-ng-repeat="canary in formCtrl.canaryObj" class="form-group"
              data-ng-class="{'has-error' : canaryForm['weight'+$index].$invalid}">
-            <label class="col-sm-4 control-label">灰度版本: {/weight.versionId/}</label>
+            <label class="col-sm-4 control-label">灰度版本: {/canary.Vid/}</label>
             <div class="col-sm-3" style="display:inline-block">
-                <input type="number" name="weight{/$index/}" class="form-control" data-ng-model="weight.weight" min="0"
+                <input type="number" name="weight{/$index/}" class="form-control" data-ng-model="canary.Weight" min="0" max="100"
                        required>
             </div>
             <div>
-                <p data-ng-show="canaryForm['weight'+$index].$error.min" class="help-block">权重不能小于0</p>
+                <p data-ng-show="canaryForm['weight'+$index].$error.min" class="help-block">权重不能小于 0</p>
+                <p data-ng-show="canaryForm['weight'+$index].$error.max" class="help-block">权重不能大于 100</p>
             </div>
         </div>
     </div>

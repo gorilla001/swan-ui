@@ -13,29 +13,36 @@
         <tbody md-body>
         <tr md-row ng-repeat="canary in canaryCtrl.canaryList">
             <td md-cell>
-                {/canary.versionId/}
+                {/canary.Vid/}
             </td>
             <td md-cell>
-                {/canary.weight/}
+                {/canary.Weight/}
             </td>
             <td md-cell>
-                {/canary.instances/}
+                <span data-ng-if="canaryCtrl.canaryStatus[canary.Vid].tasks && canaryCtrl.canaryStatus[canary.Vid].tasks != canaryCtrl.canaryStatus[canary.Vid].instances">
+                    {/canaryCtrl.canaryStatus[canary.Vid].tasks/}/{/canaryCtrl.canaryStatus[canary.Vid].instances/}
+                </span>
+                <span data-ng-if="canaryCtrl.canaryStatus[canary.Vid].tasks == canaryCtrl.canaryStatus[canary.Vid].instances">
+                    {/canaryCtrl.canaryStatus[canary.Vid].instances/}
+                </span>
             </td>
             <td md-cell>
-                {/canaryCtrl.CANARY_STATUS[canaryCtrl.canaryStatus[canary.id].status]/}
+                {/canaryCtrl.CANARY_STATUS[canaryCtrl.canaryStatus[canary.Vid].status]/}
             </td>
             <td md-cell>
-                2016:3.23
+                {/canary.Updated | date:"yyyy-MM-dd HH:mm:ss"/}
             </td>
             <td md-cell>
                 <md-button aria-label="start" class="md-button md-raised"
-                           data-ng-click="canaryCtrl.start(canary.cid, canary.id, canary.versionId)"
+                           data-ng-if="canaryCtrl.canaryStatus[canary.Vid].status == '3'"
+                           data-ng-click="canaryCtrl.start(canary.Cid, canary.Aid, canary.Vid)"
                            data-demo-disable>
                     启动
                 </md-button>
 
                 <md-button aria-label="stop" class="md-button md-raised"
-                           data-ng-click="canaryCtrl.stop(canary.cid, canary.id, canary.versionId)"
+                           data-ng-if="canaryCtrl.canaryStatus[canary.Vid].status != '3'"
+                           data-ng-click="canaryCtrl.stop(canary.Cid, canary.Aid, canary.Vid)"
                            data-demo-disable>
                     停止
                 </md-button>
@@ -48,7 +55,7 @@
                     <md-menu-content width="2">
                         <md-menu-item>
                             <md-button aria-label="upContainer"
-                                       data-ng-click="canaryCtrl.upContainer($event, canary.instances, canary.cid, canary.id)"
+                                       data-ng-click="canaryCtrl.upContainer($event, canary.Instances, canary.Cid, canary.Aid, canary.Vid)"
                                        data-demo-disable>扩展
                             </md-button>
                         </md-menu-item>
@@ -60,7 +67,7 @@
                         </md-menu-item>
                         <md-menu-item>
                             <md-button aria-label="delete"
-                                       data-ng-click="canaryCtrl.del(canary.cid, canary.id, canary.versionId)"
+                                       data-ng-click="canaryCtrl.del(canary.Cid, canary.Aid, canary.Vid)"
                                        data-demo-disable>删除
                             </md-button>
                         </md-menu-item>
@@ -70,4 +77,7 @@
         </tr>
         </tbody>
     </table>
+    <div class="alert alert-warning text-center" data-ng-if="!canaryCtrl.canaryList">
+        未查询到灰度版本
+    </div>
 </md-table-container>

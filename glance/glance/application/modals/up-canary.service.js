@@ -10,14 +10,14 @@
             open: open
         };
 
-        function open(weights) {
+        function open(canaryObj) {
             var modalInstance = $uibModal.open({
                 templateUrl: '/glance/application/modals/up-canary.html',
                 controller: UpCanaryCtrl,
                 controllerAs: 'formCtrl',
                 resolve: {
-                    weights: function () {
-                        return weights
+                    canaryObj: function () {
+                        return canaryObj
                     }
                 }
             });
@@ -26,12 +26,12 @@
         }
 
         /* @ngInject */
-        function UpCanaryCtrl($uibModalInstance, weights) {
+        function UpCanaryCtrl($uibModalInstance, canaryObj) {
             var self = this;
 
-            self.weights = weights;
+            self.canaryObj = canaryObj;
             self.ok = function () {
-                var result = weightFormat(self.weights);
+                var result = weightFormat(self.canaryObj);
 
                 $uibModalInstance.close(result)
             };
@@ -39,11 +39,11 @@
                 $uibModalInstance.dismiss('cancel');
             };
 
-            function weightFormat(weights){
+            function weightFormat(canaryObj){
                 var tmp = [];
-                tmp = weights.map(function(item, index){
+                tmp = canaryObj.map(function(item, index){
                     var obj = {};
-                    obj[item.versionId] = item.weight;
+                    obj[item.Vid] = item.weight;
                     return obj
                 });
 
