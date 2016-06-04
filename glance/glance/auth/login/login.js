@@ -32,13 +32,15 @@
         }
         
         function login() {
-            var returnTo = $stateParams.return_to;
-            authCurd.login(self.form, $scope.staticForm, returnTo)
-            .catch(function (res) {
-                if (res.code === MESSAGE_CODE.needActive) {
-                    $state.go('auth.needActive', {email: self.form.email});
-                }
-            })
+            if ($scope.staticForm.$valid) {
+                var returnTo = $stateParams.return_to;
+                authCurd.login(self.form, $scope.staticForm, returnTo)
+                .catch(function (res) {
+                    if (res.code === MESSAGE_CODE.needActive) {
+                        $state.go('auth.needActive', {email: self.form.email});
+                    }
+                })
+            }
         };
     }
 })();
