@@ -43,6 +43,7 @@
                                data-ui-sref="app.detail({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a></td>
                 <td md-cell>
                     {/listappctrl.APP_STATUS[groupAppsCtrl.appListStatus[app.id].status]/} {/app.status/}
+                    <p class="text-danger" data-ng-if="groupAppsCtrl.appListStatus[app.id].lastfailure">({/listappctrl.APP_FAIL_RESULT[groupAppsCtrl.appListStatus[app.id].lastfailure]/})</p>
                 </td>
                 <td md-cell>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                 <td md-cell>

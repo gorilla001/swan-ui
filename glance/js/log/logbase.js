@@ -69,10 +69,10 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
     };
 
     $scope.isDisableGteDate = function (curDate, mode) {
-        return curDate > $scope.lte;
+        return curDate > $scope.lte || curDate < (new Date() - 7 * 24 * 60 * 60 * 1000) || curDate > new Date();
     };
     $scope.isDisablelteDate = function (curDate, mode) {
-        return curDate < $scope.gte;
+        return curDate < $scope.gte || curDate < (new Date() - 7 * 24 * 60 * 60 * 1000) || curDate > new Date();
     };
     
     $scope.timeRange="3";
