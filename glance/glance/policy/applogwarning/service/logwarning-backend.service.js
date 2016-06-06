@@ -17,8 +17,8 @@
             restartLogPolicy: restartLogPolicy
         };
 
-        function createLogPolicy(data){
-            return gHttp.Resource('log.createLogPolicy').post(data);
+        function createLogPolicy(data, form){
+            return gHttp.Resource('log.createLogPolicy').post(data, {form: form});
         }
 
         function deletLogPolicy(logId){
@@ -37,8 +37,8 @@
             return gHttp.Resource('log.logPolicy', {log_id: logId}).get();
         }
         
-        function updateLogPolicy(data) {
-            return gHttp.Resource('log.updateLogPolicy').put(data);
+        function updateLogPolicy(data, form) {
+            return gHttp.Resource('log.updateLogPolicy').put(data, {form: form});
         }
 
         function stopLogPolicy(logId) {

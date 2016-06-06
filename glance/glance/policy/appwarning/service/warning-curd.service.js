@@ -23,8 +23,8 @@
             })
         }
 
-        function updateTask(data) {
-            return appWarningBackend.updateWarning(data);
+        function updateTask(data, form) {
+            return appWarningBackend.updateWarning(data, form);
         }
         
         function switchNotice(taskId, enable) {
