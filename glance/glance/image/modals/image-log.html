@@ -8,11 +8,11 @@
         </md-toolbar>
         <md-dialog-content>
             <div class="md-dialog-content">
-                <div class="alert alert-warning text-center" data-ng-show="imageLogCtrl.noLogsFlag">
+                <div class="alert alert-warning text-center" data-ng-show="!imageLogCtrl.log">
                     暂无日志
                 </div>
 
-                <pre class="modal-body" data-ng-hide="imageLogCtrl.noLogsFlag">{/imageLogCtrl.log/}</pre>
+                <pre class="modal-body" data-ng-show="imageLogCtrl.log">{/imageLogCtrl.log/}</pre>
             </div>
         </md-dialog-content>
     </form>
