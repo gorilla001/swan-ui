@@ -71,4 +71,4 @@ DOMAIN = 'BODY_DOMAIN';
 })();
 
 // licence是否开启
-IS_LICENCE_ON = LICENCE_ON; //set true or false;
+IS_LICENCE_ON = LICENCEON; //set true or false;
