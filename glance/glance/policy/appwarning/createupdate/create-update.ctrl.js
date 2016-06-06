@@ -4,7 +4,7 @@
         .controller('CreateWarningCtrl', CreateWarningCtrl);
 
     /* @ngInject */
-    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification) {
+    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification, $scope) {
         var self = this;
         self.target = target;
         self.app = {};
@@ -104,7 +104,7 @@
                 self.form.appalias = self.app.alias;
                 self.form.appname = self.app.name;
 
-                appWarningBackend.createWarning(self.form)
+                appWarningBackend.createWarning(self.form, $scope.warningForm)
                     .then(function (data) {
                         $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
                     }, function (res) {
@@ -114,7 +114,7 @@
                 self.form.id = parseInt($stateParams.task_id);
                     self.form.cid = parseInt(warning.cid);
 
-                warningCurd.updateTask(self.form)
+                warningCurd.updateTask(self.form, $scope.warningForm)
                     .then(function (data) {
                         Notification.success("更新成功");
                         $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1})

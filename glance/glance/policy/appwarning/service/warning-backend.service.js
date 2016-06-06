@@ -17,8 +17,8 @@
             warningAppExtend: warningAppExtend
         };
 
-        function createWarning(data) {
-            return gHttp.Resource('warning.tasks').post(data);
+        function createWarning(data, form) {
+            return gHttp.Resource('warning.tasks').post(data, {form: form});
         }
 
         function deleteWarning(taskId) {
@@ -29,8 +29,8 @@
             return gHttp.Resource('warning.tasks').get({params: params});
         }
 
-        function updateWarning(data) {
-            return gHttp.Resource('warning.tasks').put(data);
+        function updateWarning(data, form) {
+            return gHttp.Resource('warning.tasks').put(data, {form: form});
         }
 
         function patchWarning(taskId, method) {

@@ -65,7 +65,11 @@
                 if (options.form) {
                     promise.catch(function (data) {
                         if (data.code === MESSAGE_CODE.dataInvalid) {
-                            options.form.message_error_info = data.data;
+                            if(data.data){
+                                options.form.message_error_info = data.data;
+                            }else {
+                                Notification.error('参数错误');
+                            }
                         }
                         options.form.$setValidity("submit", true);
                     });
