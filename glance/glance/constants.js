@@ -3,7 +3,8 @@ MESSAGE_CODE = {
     dataInvalid: 10001,
     noExist: 10009,
     needActive: 11005,
-    needLicence: 11011
+    needLicence: 11011,
+    unknow: 10000
 };
 
 CODE_MESSAGE = {

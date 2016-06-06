@@ -119,14 +119,14 @@
                         deferred.reject(data);
                     }
                 }.bind(this)).error(function (data, status) {
-                    this._handleErrors(status);
+                    this._handleErrors(status, deferred);
                 }.bind(this));
 
                 return deferred.promise;
 
             };
 
-            Resource.prototype._handleErrors = function (status) {
+            Resource.prototype._handleErrors = function (status, deferred) {
                 if (status == 401) {
                     $cookies.remove('token');
                     utils.redirectLogin(true);
@@ -134,6 +134,7 @@
                     $state.go('404');
                 } else {
                     Notification.error("服务忙，请稍后再试");
+                    deferred.reject({code: MESSAGE_CODE.unknow})
                 }
             };
 
