@@ -10,6 +10,7 @@
             <md-tab label="修改密码" dm-tab-sref="user.password"></md-tab>
             <md-tab label="用户组管理" dm-tab-sref="user.groups"></md-tab>
             <md-tab label="资源计量" dm-tab-sref="user.billings"></md-tab>
+            <md-tab label="软件授权" dm-tab-sref="user.licence" ng-if="is_licence_on"></md-tab>
         </md-tabs>
         <md-content class="main-tab-content" data-ui-view></md-content>
     </section>

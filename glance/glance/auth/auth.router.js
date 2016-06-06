@@ -71,5 +71,10 @@
                 url: '/resetpassword/failed',
                 templateUrl: '/glance/auth/password/reset-password-failed.html'
             })
+            .state('auth.licence', {
+                url: '/licence',
+                templateUrl: '/glance/auth/licence/licence.html',
+                controller: 'LicenceCtrl as licenceCtrl'
+            });
     }
 })();

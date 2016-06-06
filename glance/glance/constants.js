@@ -2,7 +2,8 @@ MESSAGE_CODE = {
     success: 0,
     dataInvalid: 10001,
     noExist: 10009,
-    needActive: 11005
+    needActive: 11005,
+    needLicence: 11011
 };
 
 CODE_MESSAGE = {
@@ -16,6 +17,7 @@ CODE_MESSAGE = {
     11008: "没有验证手机号",
     11009: "已发送，请等待",
     11010: "验证码错误",
+    11011: "授权错误",
     14001: "应用不存在",
     14002: "应用历史版本id不存在",
     14003: "应用名称冲突",
@@ -394,5 +396,9 @@ BACKEND_URL = {
         deploy: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deploy',
         deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key',
         sse: 'api/v3/stacks/deployment_process'
+    },
+    
+    licence: {
+        licence: 'api/v3/licence'
     }
 };

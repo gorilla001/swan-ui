@@ -14,6 +14,8 @@
             forgotPassword: forgotPassword,
             sendNewPassword: sendNewPassword,
             sendActiveMail: sendActiveMail,
+            getLicenceInfo: getLicenceInfo,
+            validateLicence: validateLicence
         };
 
         //////////
@@ -45,6 +47,14 @@
         function sendActiveMail(email, form) {
             return gHttp.Resource('auth.sendActiveMail').post({email: email}, {form: form});
 
+        }
+
+        function getLicenceInfo() {
+            return gHttp.Resource('licence.licence').get();
+        }
+
+        function validateLicence(content) {
+            return gHttp.Resource('licence.licence').post({content: content});
         }
     }
 })();
