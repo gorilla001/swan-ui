@@ -15,8 +15,8 @@
             update: update
         };
 
-        function create(data, clusterId) {
-            return gHttp.Resource('stack.stacks', {cluster_id: clusterId}).post(data);
+        function create(data, clusterId, form) {
+            return gHttp.Resource('stack.stacks', {cluster_id: clusterId}).post(data, {form: form});
         }
 
         function deploy(clusterId, stackId) {
@@ -35,8 +35,8 @@
             return gHttp.Resource('stack.listStack').get({loading: loading});
         }
 
-        function update(data, clusterId, stackId) {
-            return gHttp.Resource('stack.stack', {cluster_id: clusterId, stack_id: stackId}).put(data);
+        function update(data, clusterId, stackId, form) {
+            return gHttp.Resource('stack.stack', {cluster_id: clusterId, stack_id: stackId}).put(data, {form: form});
         }
 
     }

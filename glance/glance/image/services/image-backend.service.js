@@ -26,8 +26,8 @@
             return gHttp.Resource('image.projects').get({params : params});
         }
 
-        function createProject(data) {
-            return gHttp.Resource('image.projects').post(data);
+        function createProject(data, form) {
+            return gHttp.Resource('image.projects').post(data, {form: form});
         }
 
         function deleteProject(projectId) {
@@ -38,8 +38,8 @@
             return gHttp.Resource('image.project', {project_id: projectId}).get({loading: loading});
         }
 
-        function updateProject(projectId, data) {
-            return gHttp.Resource('image.project', {project_id: projectId}).put(data);
+        function updateProject(projectId, data, form) {
+            return gHttp.Resource('image.project', {project_id: projectId}).put(data, {form: form});
         }
 
         function listProjectImages(projectId, loading) {

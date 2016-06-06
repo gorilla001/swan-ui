@@ -6,27 +6,14 @@
     angular.module('glance.app')
         .controller('CreateAppCtrl', CreateAppCtrl);
 
-    CreateAppCtrl.$inject = [
-        'appservice',
-        'Notification',
-        'multiSelectConfig',
-        'clusterBackendService',
-        'appLabelService',
-        '$state',
-        'target',
-        'app',
-        '$stateParams',
-        'selectImageModal',
-        '$filter',
-        'clusterCurd'
-    ];
-
+    /* @ngInject */
     function CreateAppCtrl(appservice,
                            Notification,
                            multiSelectConfig,
                            clusterBackendService,
                            appLabelService,
                            $state,
+                           $scope,
                            target,
                            app,
                            $stateParams,
@@ -286,7 +273,7 @@
 
         self.createApp = function () {
             setConstraints();
-            return appservice.createApp(self.form, self.form.cluster_id)
+            return appservice.createApp(self.form, self.form.cluster_id, $scope.staticForm)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
                     $state.go('app.detail.config', {cluster_id: self.form.cluster_id, app_id: data}, {reload: true});
@@ -296,7 +283,7 @@
         self.updateApp = function () {
             setConstraints();
             delete self.form.cluster_id;
-            return appservice.updateApp(self.form, app.cid, app.id)
+            return appservice.updateApp(self.form, app.cid, app.id, $scope.staticForm)
                 .then(function (data) {
                     $state.go('app.detail.version', {cluster_id: app.cid, app_id: app.id}, {reload: true});
                 });
