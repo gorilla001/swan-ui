@@ -69,7 +69,7 @@
         
         function monitorDataGetter(data) {
             var result = {};
-            result[data.instance + "-cpu"] = data.cpuUsed/data.cpuTotal*100;
+            result[data.instance + "-cpu"] = data.cpuUsed*100;
             result[data.instance + "-mem"] = data.memoryUsed/data.memoryTotal*100;
             result[data.instance + "-diskRead"] = data.diskReadRate;
             result[data.instance + "-diskWrite"] = data.diskWriteRate;
