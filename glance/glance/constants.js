@@ -365,6 +365,7 @@ BACKEND_URL = {
         projects: 'api/v3/projects',
         project: 'api/v3/projects/$project_id',
         projectImages: 'api/v3/projects/$project_id/builds',
+        projectImage: 'api/v3/projects/$project_id/builds/$build_num/1',
         projectApps: 'api/v3/projects/$project_id/apps',
         deleteImage: 'api/v3/projects/$project_id/images/$image_id',
         imageLog: 'api/v3/projects/$project_id/builds/$build_number/1/logs',

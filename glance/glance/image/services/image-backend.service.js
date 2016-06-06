@@ -14,12 +14,12 @@
             getProject: getProject,
             updateProject: updateProject,
             listProjectImages: listProjectImages,
+            getProjectImage: getProjectImage,
             listProjectApps: listProjectApps,
             buildImage: buildImage,
             deleteImage: deleteImage,
             getImageLog: getImageLog,
             manualBuild: manualBuild
-
         };
 
         function listProjects(params) {
@@ -45,6 +45,10 @@
         function listProjectImages(projectId, loading) {
             return gHttp.Resource('image.projectImages', {project_id: projectId}).get({loading: loading});
         }
+        
+        function getProjectImage(projectId, buildNumber) {
+            return gHttp.Resource("image.projectImage", {project_id: projectId, build_num: buildNumber}).get();
+        }
 
         function listProjectApps(projectId) {
             return gHttp.Resource('image.projectApps', {project_id: projectId}).get();
@@ -53,7 +57,7 @@
         function buildImage(projectId, data) {
             return gHttp.Resource('image.projectImages', {project_id: projectId}).post(data);
         }
-
+        
         function deleteImage(projectId, imageId) {
             return gHttp.Resource('image.deleteImage', {project_id: projectId, image_id: imageId}).delete();
         }
