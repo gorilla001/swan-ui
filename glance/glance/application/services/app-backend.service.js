@@ -47,12 +47,12 @@
             return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).get({params: params, loading: loading});
         }
 
-        function createApp(data, clusterId) {
-            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).post(data);
+        function createApp(data, clusterId, form) {
+            return gHttp.Resource('app.clusterApps', {cluster_id: clusterId}).post(data, {form: form});
         }
 
-        function updateApp(data, clusterId, appId) {
-            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).put(data);
+        function updateApp(data, clusterId, appId, form) {
+            return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).put(data, {form: form});
         }
 
         function deleteApp(clusterId, appId) {

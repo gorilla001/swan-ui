@@ -4,7 +4,7 @@
         .controller('ImageCreateCtrl', ImageCreateCtrl);
 
     /* @ngInject */
-    function ImageCreateCtrl(imageBackend, $rootScope, $state, imageBuildSetting, Notification) {
+    function ImageCreateCtrl(imageBackend, $rootScope, $scope, $state, imageBuildSetting, Notification) {
         var self = this;
         ///
         self.form = {
@@ -58,7 +58,7 @@
         }
 
         function createProject(fromData) {
-            imageBackend.createProject(fromData).then(function (data) {
+            imageBackend.createProject(fromData, $scope.staticForm).then(function (data) {
                 Notification.success('项目创建成功');
                 $state.go('image.detail.version',({projectId: data.id}))
             })

@@ -78,7 +78,7 @@
         }
 
         function create() {
-            layoutBackend.create(self.form, self.clusterId)
+            layoutBackend.create(self.form, self.clusterId, $scope.createApp)
                 .then(function (data) {
                     layoutBackend.deploy(self.clusterId, data.stackId)
                         .then(function (data) {
@@ -89,7 +89,7 @@
         }
 
         function update() {
-            layoutBackend.update(self.form, $stateParams.cluster_id, $stateParams.stack_id)
+            layoutBackend.update(self.form, $stateParams.cluster_id, $stateParams.stack_id, $scope.createApp)
                 .then(function (data) {
                     layoutBackend.deploy(self.clusterId, data.stackId)
                         .then(function (data) {
