@@ -55,6 +55,11 @@
                     }
                 }
             })
+            .state('user.licence', {
+                url: '/licence',
+                templateUrl: '/glance/user/licence/detail.html',
+                controller: 'LicenceDetailCtrl as licenceDetailCtrl'
+            })
     }
 
     /* @ngInject */

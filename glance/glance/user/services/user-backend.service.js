@@ -15,7 +15,9 @@
             sendInvitation: sendInvitation,
             deleteGroupUsers: deleteGroupUsers,
             joinInvitedGroup: joinInvitedGroup,
-            listBillings: listBillings
+            listBillings: listBillings,
+            getLicenceInfo: getLicenceInfo,
+            validateLicence: validateLicence
         };
 
         function listGroups(params, loading) {
@@ -52,6 +54,14 @@
 
         function listBillings(params) {
             return gHttp.Resource('billing.billings').get({params: params});
+        }
+
+        function getLicenceInfo() {
+            return gHttp.Resource('licence.licence').get();
+        }
+
+        function validateLicence(content) {
+            return gHttp.Resource('licence.licence').post({content: content});
         }
     }
 })();

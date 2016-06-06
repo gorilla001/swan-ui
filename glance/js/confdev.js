@@ -69,3 +69,6 @@ DOMAIN = 'BODY_DOMAIN';
       AGENT_CONFIG.installUrl = "https://coding.net/u/upccup/p/dm-agent-installer/git/raw/master/install-agent.sh";
   }
 })();
+
+// licence是否开启
+IS_LICENCE_ON = LICENCE_ON; //set true or false;

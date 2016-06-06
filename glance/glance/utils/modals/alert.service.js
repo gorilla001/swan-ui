@@ -18,7 +18,7 @@
                     .ok('确定')
                     .targetEvent(ev)
             if (content) {
-                alert.textContent(content);
+                alert.htmlContent(content);
             }
             var dialog = $mdDialog.show(alert);
             return dialog;

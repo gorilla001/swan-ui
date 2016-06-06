@@ -4,13 +4,14 @@
         .controller('LoginCtrl', LoginCtrl);
 
     /* @ngInject */
-    function LoginCtrl($state, $stateParams, $scope, authCurd, commonBackend) {
+    function LoginCtrl($state, $stateParams, $scope, authCurd, authBackend, commonBackend) {
         var self = this;
         self.form = {};
         activate();
 
         self.login = login;
         self.admin;
+        self.showLicence = false;
         
         function activate() {
             setNotice();
@@ -19,6 +20,9 @@
                 self.admin = '管理员';
             } else {
                 self.admin = '客服info@shurenyun.com'
+            }
+            if (IS_LICENCE_ON) {
+                getLicence();
             }
         }
         
@@ -30,16 +34,26 @@
                 }
             });
         }
+
+        function getLicence() {
+            authBackend.getLicenceInfo().then(function(data) {
+                if(!data.validation) {
+                    $state.go('auth.licence');
+                }
+            });
+        }
         
         function login() {
             if ($scope.staticForm.$valid) {
                 var returnTo = $stateParams.return_to;
                 authCurd.login(self.form, $scope.staticForm, returnTo)
-                .catch(function (res) {
-                    if (res.code === MESSAGE_CODE.needActive) {
-                        $state.go('auth.needActive', {email: self.form.email});
-                    }
-                })
+                    .catch(function (res) {
+                        if (res.code === MESSAGE_CODE.needActive) {
+                            $state.go('auth.needActive', {email: self.form.email});
+                        } else if (res.code === MESSAGE_CODE.needLicence) {
+                            $state.go('auth.licence');
+                        }
+                    })
             }
         };
     }
