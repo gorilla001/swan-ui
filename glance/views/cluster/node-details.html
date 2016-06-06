@@ -9,11 +9,14 @@
             <dt>主机状态</dt>
             <dd>
                 <i class="{/nodeStatusCls[statusMgr.nodes[node.id].status]/}" aria-hidden="true"></i>
+                <md-tooltip md-direction="top">
+                {/statName[statusMgr.nodes[node.id].status]/}
+                </md-tooltip>
             </dd>
             <dt>IP 地址</dt>
             <dd>{/ node.ip /}</dd>
             <dt>CPU</dt>
-            <dd>{/ nodeInfo.cpuNumber/}<span data-ng-show="nodeInfo.cpuNumber!=='未知'">核</span></dd>
+            <dd>{/ nodeInfo.cpuNumber/}<span data-ng-show="nodeInfo.cpuNumber!=='未知'" data-ng-if="nodeInfo.cpuNumber">核</span></dd>
             <dt>内存</dt>
             <dd>{/ unitConversion.convertMem(nodeInfo.memTotal).num /}{/unitConversion.convertMem(nodeInfo.memTotal).unit/}</dd>
           </dl>
@@ -31,7 +34,7 @@
             <dt>更新时间</dt>
             <dd>{/ node.updated_at /}</dd>
           </dl>
-          <dl>
+          <dl data-ng-if="selectedLabels && selectedLabels.length>0">
             <dt>主机标签</dt>
             <dd>
                 <span data-ng-repeat="label in selectedLabels" class="node-label">{/label.name/}</span>
@@ -79,6 +82,9 @@
         <ul layout="row" layout-align="start start" layout-wrap>
             <li flex="10" data-ng-repeat = "service in services">
                 <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
+                <md-tooltip md-direction="top">
+                    {/serviceStatName[statusMgr.nodes[node.id].services[service].status]/}
+                </md-tooltip>
                     <button class="btn"
                             data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
                             data-ng-click="repairService(service, 'restart')" data-demo-disable

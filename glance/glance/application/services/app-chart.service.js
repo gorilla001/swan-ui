@@ -16,7 +16,7 @@
                     return Math.round(data.time / 1000000000 / 60);
                 }
                 function dataGetter(data) {
-                    return {'请求数目': data.req};
+                    return {'请求数目': data.reqrate};
                 }
                 var chartData = lineChart.buildChartData(data, timeGetter, dataGetter);
                 lineChart.paint(chartData, domId, {
