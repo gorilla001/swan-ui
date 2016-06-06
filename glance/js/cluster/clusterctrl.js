@@ -23,6 +23,14 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
             unknow: '未知'
         };
     
+    $scope.serviceStatName = {};
+    $scope.serviceStatName[SERVICES_STATUS.running] = "运行正常";
+    $scope.serviceStatName[SERVICES_STATUS.failed] = "异常";
+    $scope.serviceStatName[SERVICES_STATUS.uninstalled] = "未安装";
+    $scope.serviceStatName[SERVICES_STATUS.uninstalling] = "卸载中";
+    $scope.serviceStatName[SERVICES_STATUS.installing] = "安装中";
+    $scope.serviceStatName[SERVICES_STATUS.pulling] = "拉取镜像中";
+    
     $scope.serviceStatusCls = {};
     $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
     $scope.serviceStatusCls[SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
