@@ -58,7 +58,8 @@
                     options.form.message_error_info = null;
 
                     options.ignoreCodes = options.ignoreCodes || [];
-                    options.ignoreCodes.push(MESSAGE_CODE.dataInvalid)
+                    options.ignoreCodes.push(MESSAGE_CODE.dataInvalid);
+                    options.form.$setValidity("submit", false);
                 }
                 var promise = this.req(method, options);
                 if (options.form) {
@@ -66,6 +67,7 @@
                         if (data.code === MESSAGE_CODE.dataInvalid) {
                             options.form.message_error_info = data.data;
                         }
+                        options.form.$setValidity("submit", true);
                     });
                 }
                 return promise;

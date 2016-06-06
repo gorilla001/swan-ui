@@ -1,6 +1,7 @@
 function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
     $scope.form = {
-        clusterType: '1_master'
+        clusterType: '1_master',
+        groupId: ""
     };
 
     $scope.groups = [];
@@ -13,12 +14,12 @@ function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
         })
     });
     $scope.createCluster = function (isAddNode) {
-        if (!$scope.form.groupId) {
-            delete $scope.form.groupId;
-        } else {
-            $scope.form.groupId = parseInt($scope.form.groupId)
+        var data = {name: $scope.form.name,
+                clusterType: $scope.form.clusterType}
+        if ($scope.form.groupId) {
+            data.groupId = parseInt($scope.form.groupId);
         }
-        gHttp.Resource('cluster.clusters').post($scope.form, {'form': $scope.staticForm}).then(function (data) {
+        gHttp.Resource('cluster.clusters').post(data, {'form': $scope.staticForm}).then(function (data) {
             if (isAddNode) {
                 $state.go('cluster.nodesource', {'clusterId': data.id});
             } else {
