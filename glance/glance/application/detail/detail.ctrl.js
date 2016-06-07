@@ -6,9 +6,8 @@
     angular.module('glance.app')
         .controller('DetailAppCtrl', DetailAppCtrl);
 
-    DetailAppCtrl.$inject = ['appInfo', 'appStatus', 'appcurd', 'appservice', '$scope', "$stateParams", "$timeout"];
-
-    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, $scope, $stateParams, $timeout) {
+    /* @ngInject */
+    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, $scope, $stateParams, timing, $q) {
         var self = this;
         
         self.APP_STATUS = APP_STATUS;
@@ -16,18 +15,22 @@
 
         self.appInfo = appInfo;
         self.appStatus = appStatus;
-
-        var refreshInterval = 5000;
-        var timeoutPromise = $timeout(refreshData, refreshInterval);
+        self.stop = stop;
+        self.start = start;
+        self.undo = undo;
+        self.delete = deleteApp;
+        self.upContainerModal = upContainerModal;
         
-        $scope.$on('$destroy', function () {
-            self.isDestroy = true;
-            $timeout.cancel(timeoutPromise);
-        });
+        activate();
+        
+        function activate() {
+            timing.start($scope, refreshData, 5000);
+        }
+        
         /*
          停止操作
          */
-        self.stop = function (clusterId, appId) {
+        function stop(clusterId, appId) {
             var data = {};
             appcurd.stop(data, clusterId, appId)
         };
@@ -35,7 +38,7 @@
         /*
          启动操作
          */
-        self.start = function (clusterId, appId) {
+        function start(clusterId, appId) {
             var data = {};
             appcurd.start(data, clusterId, appId)
         };
@@ -43,7 +46,7 @@
         /*
          恢复操作
          */
-        self.undo = function (clusterId, appId) {
+        function undo(clusterId, appId) {
             var data = {};
             appcurd.undo(data, clusterId, appId)
         };
@@ -51,29 +54,28 @@
         /*
          删除操作
          */
-        self.delete = function (clusterId, appId) {
+        function deleteApp(clusterId, appId) {
             appcurd.del(clusterId, appId)
         };
 
-        self.upContainerModal = function (ev, clusterId, appId, instanceNum) {
+        function upContainerModal(ev, clusterId, appId, instanceNum) {
             appcurd.updateContainer(ev, instanceNum, clusterId, appId);
         };
         
+        
         function refreshData() {
-            if (!self.isDestroy) {
-                appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
-                    self.appStatus = data;
-                    $scope.appStatus = data;
-                    appservice.getApp($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
-                        self.appInfo = data;
-                        $scope.appInfo = data;
-                    });
-                    $scope.$broadcast('refreshAppData');
-                    timeoutPromise = $timeout(refreshData, refreshInterval);
-                }).catch(function() {
-                    timeoutPromise = $timeout(refreshData, refreshInterval);
-                })
-            }
+            var deferred = $q.defer();
+            appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
+                self.appStatus = data;
+                $scope.appStatus = data;
+                appservice.getApp($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
+                    self.appInfo = data;
+                    $scope.appInfo = data;
+                    deferred.resolve();
+                });
+                $scope.$broadcast('refreshAppData');
+            });
+            return deferred.promise;
         }
 
     }
