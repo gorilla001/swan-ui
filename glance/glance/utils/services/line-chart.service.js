@@ -199,7 +199,7 @@
                         for (var i = 0, l = params.length; i < l; i++) {
                             var dataStr;
                             if (params[i].data != undefined) {
-                                dataStr = params[i].data + unit;
+                                dataStr = params[i].data + ' ' + unit;
                             } else {
                                 dataStr = "无数据";
                             }
