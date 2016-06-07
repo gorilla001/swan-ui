@@ -5,10 +5,8 @@
 
 
     /* @ngInject */
-    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, $timeout, imageBackend, $sce) {
+    function ImageDetailCtrl(project, imageCurd, $stateParams, $scope, timing, imageBackend, $sce) {
         var self = this;
-        var refreshInterval = 20000;
-        var timeoutPromise = $timeout(refreshData, refreshInterval);
 
         self.goToCreateApp = goToCreateApp;
 
@@ -16,6 +14,12 @@
         self.deleteProject = deleteProject;
         self.manualBuild = manualBuild;
         self.popoverContent = $sce.trustAsHtml('<div style="word-break: break-all">' + self.project.pubkey + '</div>');
+        
+        activate();
+        
+        function activate() {
+            timing.start($scope, refreshData, 20000);
+        }
 
         function deleteProject(ev) {
             imageCurd.deleteProjet($stateParams.projectId, ev)
@@ -26,16 +30,11 @@
         }
 
         function refreshData() {
-            if (!self.isDestroy) {
-                imageBackend.getProject($stateParams.projectId, '')
-                    .then(function(data){
-                        self.project = data;
-                        $scope.$broadcast('refreshImageData');
-                        timeoutPromise = $timeout(refreshData, refreshInterval);
-                    }, function(res){
-                        timeoutPromise = $timeout(refreshData, refreshInterval);
-                    })
-            }
+            return imageBackend.getProject($stateParams.projectId, '')
+                .then(function(data){
+                    self.project = data;
+                    $scope.$broadcast('refreshImageData');
+                })
         }
 
         function manualBuild() {
@@ -53,9 +52,5 @@
             imageCurd.manualBuild($stateParams.projectId, postData)
         }
 
-        $scope.$on('$destroy', function () {
-            self.isDestroy = true;
-            $timeout.cancel(timeoutPromise);
-        });
     }
 })();

@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl($timeout, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
+    function LayoutListCtrl(timing, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
         var self = this;
         var events = undefined;
 
@@ -26,12 +26,11 @@
         self.undoApp = undoApp;
         self.updateContainer = updateContainer;
 
-        var refreshInterval = 5000;
-        var timeoutPromise = $timeout(refreshData, refreshInterval);
 
         activate();
 
         function activate() {
+            timing.start($scope, refreshData, 5000);
             $scope.$on('$destroy', function () {
                 for(var key in self.timeoutPromises) {
                     $timeout.cancel(self.timeoutPromises[key]);
@@ -40,8 +39,6 @@
                     events.close();
                     events = undefined;
                 }
-                self.isDestroy = true;
-                $timeout.cancel(timeoutPromise);
             });
 
             Stream(function (data) {
@@ -188,14 +185,9 @@
 
         // 刷新应用状态
         function refreshData() {
-            if (!self.isDestroy) {
-                appservice.listAppsStatus().then(function (data) {
-                    self.appListStatus = data;
-                    timeoutPromise = $timeout(refreshData, refreshInterval);
-                }).catch(function() {
-                    timeoutPromise = $timeout(refreshData, refreshInterval);
-                })
-            }
+            return appservice.listAppsStatus().then(function (data) {
+                self.appListStatus = data;
+            })
         }
     }
 })();
