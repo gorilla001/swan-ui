@@ -48,7 +48,7 @@ section {
 .main {
     position: relative;
 
-    overflow-x: hidden;
+    overflow: hidden;
 
     height: 100%;
 }
@@ -127,7 +127,14 @@ section {
 .sidebar-main hr:nth-child(2n) {
     border-color: #3d495d;
 }
-
+.menu-sidebar
+{
+    overflow-y: hidden;
+}
+.menu-sidebar:hover
+{
+    overflow-y: auto;
+}
 .nav-main md-toolbar {
     height: 80px;
 
