@@ -57,7 +57,7 @@
         }
 
         function updateContainer(ev, curInsNmu, clusterId, appId) {
-            formModal.open('/glance/application/modals/up-container.html',ev,
+            formModal.open('/glance/application/modals/up-container.html', ev,
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
                 appservice.updateContainerNum(data, clusterId, appId).then(function (data) {
@@ -73,13 +73,13 @@
                 })
         }
 
-        function createCanary(ev, formData, clusterId, appId){
-            formModal.open('/glance/application/modals/create-canary.html',ev,
+        function createCanary(ev, formData, clusterId, appId) {
+            formModal.open('/glance/application/modals/create-canary.html', ev,
                 {dataName: 'form', initData: formData}).then(function (formData) {
                 var data = formData;
 
                 appservice.createCanary(data, clusterId, appId).then(function (data) {
-                    $state.go('app.detail.canary',{cluster_id: clusterId, app_id: appId});
+                    $state.go('app.detail.canary', {cluster_id: clusterId, app_id: appId});
                 });
             });
         }
@@ -94,7 +94,7 @@
         }
 
         function updateContainerCanary(ev, curInsNmu, clusterId, appId, versionId) {
-            formModal.open('/glance/application/modals/up-container.html',ev,
+            formModal.open('/glance/application/modals/up-container.html', ev,
                 {dataName: 'instanceNum', initData: curInsNmu}).then(function (instanceNum) {
                 var data = {instances: instanceNum};
                 appservice.updateContainerCanary(data, clusterId, appId, versionId).then(function (data) {
@@ -103,28 +103,31 @@
             });
         }
 
-        function stopCanary(data, clusterId, appId, versionId){
+        function stopCanary(data, clusterId, appId, versionId) {
             appservice.stopCanary(data, clusterId, appId, versionId)
                 .then(function (data) {
                     $state.reload();
                 })
         }
 
-        function startCanary(data, clusterId, appId, versionId){
+        function startCanary(data, clusterId, appId, versionId) {
             appservice.startCanary(data, clusterId, appId, versionId)
                 .then(function (data) {
                     $state.reload();
                 })
         }
 
-        function changeWeight(canaryObj) {
+        function changeWeight(ev, canaryObj) {
 
-            upCanaryModal.open(canaryObj).then(function (weights) {
+            upCanaryModal.open(ev, canaryObj).then(function (weights) {
                 var data = {
-                    id: parseInt($stateParams.app_id),
+                    id: $stateParams.app_id,
                     versions: weights
                 };
                 appservice.changeWeight($stateParams.cluster_id, $stateParams.app_id, data)
+                    .then(function(data){
+                        Notification.success('权重调整中')
+                    })
             });
         }
     }

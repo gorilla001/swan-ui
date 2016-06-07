@@ -16,7 +16,7 @@
                 {/canary.Vid/}
             </td>
             <td md-cell>
-                {/canary.Weight/}
+                {/canary.Weight/} %
             </td>
             <td md-cell>
                 <span data-ng-if="canaryCtrl.canaryStatus[canary.Vid].tasks && canaryCtrl.canaryStatus[canary.Vid].tasks != canaryCtrl.canaryStatus[canary.Vid].instances">
@@ -61,7 +61,7 @@
                         </md-menu-item>
                         <md-menu-item>
                             <md-button aria-label="weight"
-                                       data-ng-click="canaryCtrl.changeWeight(canaryCtrl.canaryList)"
+                                       data-ng-click="canaryCtrl.changeWeight($event, canaryCtrl.canaryList)"
                                        data-demo-disable>权重
                             </md-button>
                         </md-menu-item>

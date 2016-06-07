@@ -22,27 +22,6 @@
         activate();
 
         function activate() {
-            //self.canaryList = [
-            //    {
-            //        id: 1,
-            //        cid: 2,
-            //        versionId: 1,
-            //        weight: 30,
-            //        instances: 1
-            //    },
-            //    {
-            //        id: 2,
-            //        cid: 2,
-            //        versionId: 2,
-            //        weight: 70,
-            //        instances: 2
-            //    }
-            //];
-            //
-            //self.canaryStatus = {
-            //    1: {status: 2},
-            //    2: {status: 3}
-            //};
             listCanary();
             listCanaryStatus();
         }
@@ -79,8 +58,8 @@
             appcurd.deleteCanary(clusterId, appId, versionId)
         }
 
-        function changeWeight(canaryObj) {
-            appcurd.changeWeight(canaryObj)
+        function changeWeight(ev, canaryObj) {
+            appcurd.changeWeight(ev, canaryObj)
         }
 
 

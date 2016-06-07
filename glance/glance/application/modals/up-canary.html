@@ -1,28 +1,42 @@
-<div class="modal-header">
-    <h3 class="modal-title">修改权重</h3>
-</div>
-
-<form class="form-horizontal" name="canaryForm">
-    <div class="modal-body">
-        <div data-ng-repeat="canary in formCtrl.canaryObj" class="form-group"
-             data-ng-class="{'has-error' : canaryForm['weight'+$index].$invalid}">
-            <label class="col-sm-4 control-label">灰度版本: {/canary.Vid/}</label>
-            <div class="col-sm-3" style="display:inline-block">
-                <input type="number" name="weight{/$index/}" class="form-control" data-ng-model="canary.Weight" min="0" max="100"
-                       required>
+<md-dialog aria-label="weight form">
+    <form name="canaryForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>修改权重</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="formCtrl.cancel()"
+                           aria-label="cancel">
+                    <i class="fa fa-close"></i>
+                </md-button>
             </div>
-            <div>
-                <p data-ng-show="canaryForm['weight'+$index].$error.min" class="help-block">权重不能小于 0</p>
-                <p data-ng-show="canaryForm['weight'+$index].$error.max" class="help-block">权重不能大于 100</p>
+        </md-toolbar>
+        <md-dialog-content style="width: 600px; max-height: 400px; min-height: 100px;">
+            <div layout-margin
+                 layout-padding data-ng-repeat="canary in formCtrl.canaryObj">
+                <div flex="100" layout="column">
+                    <div flex>
+                        <md-slider-container layout="row" layout-align="start center">
+                            <span flex="20">版本号 <strong>{/canary.Vid/}</strong></span>
+                            <md-slider flex="65" min="0" max="100" ng-model="canary.Weight" aria-label="red"
+                                       id="red-slider" name="weight{/$index/}">
+                            </md-slider>
+                            <div flex-offset="5">{/canary.Weight/} %</div>
+                        </md-slider-container>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="formCtrl.cancel()" aria-label="cancel">
+                取消
+            </md-button>
+            <md-button data-ng-disabled="canaryForm.$invalidd" data-ng-click="formCtrl.ok()"
+                       aria-label="ok" style="margin-right:20px;">
+                确认
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
 
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" data-ng-disabled="canaryForm.$invalid"
-                data-ng-click="formCtrl.ok()">
-            确定
-        </button>
-        <button class="btn btn-default" type="button" data-ng-click="formCtrl.cancel()">取消</button>
-    </div>
-</form>
+

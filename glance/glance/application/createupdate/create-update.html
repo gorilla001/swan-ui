@@ -284,6 +284,8 @@
                                 <p>
                                     <small>以下端口范围不能使用:1~1024 (除 80 443), 5000~5100, 6000~6999, 10000~20000, 31000~32000</small>
                                     <br>
+                                    <small>以下端口可能与 Chrome 冲突: 6665~6669</small>
+                                    <br>
                                     <small data-ng-if="createAppCtrl.existPorts.outerPorts.length">以下端口已被占用: {/createAppCtrl.existPorts.outerPorts.toString()/}</small>
                                 </p>
                             </div>
