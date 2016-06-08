@@ -11,6 +11,7 @@
             <md-tab label="用户组管理" dm-tab-sref="user.groups"></md-tab>
             <md-tab label="资源计量" dm-tab-sref="user.billings"></md-tab>
             <md-tab label="软件授权" dm-tab-sref="user.licence" ng-if="is_licence_on"></md-tab>
+            <md-tab label="用户管理" dm-tab-sref="user.users" data-ng-if="isSuperuser"></md-tab>
         </md-tabs>
         <md-content class="main-tab-content" data-ui-view></md-content>
     </section>

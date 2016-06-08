@@ -1,0 +1,99 @@
+<div class="main-container">
+    <section class="main-section">
+       <header layout="row" layout-align="start center">
+            <h2 flex>新建用户</h2>
+        </header>
+        <div class="main-content">
+            <form name="staticForm">
+                <div layout="row" layout-align="start start" class="form-group form-group-input">
+                    <label flex="15">用户名称</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input" name="name"
+                                   aria-label="name"
+                                   data-ng-model="createUserCtrl.form.name"
+                                   data-required="required"
+                                   data-ng-maxlength="255"
+                                   data-ng-trim="true">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine">
+                            <small>用户名称不能为空</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.name.$error.pattern && !staticForm.name.$pristine">
+                            <small>用户名称不能包含空白符号</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.name.$error.maxlength && !staticForm.name.$pristine">
+                            <small>最大长度16个字符</small>
+                        </p>
+                        <p data-ng-show="staticForm.name.$pristine" class="error-info help-info-bottom">
+                            <small>{/ staticForm.message_error_info.name /}</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+                <div layout="row" layout-align="start start" class="form-group form-group-input">
+                    <label flex="15">邮箱</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="email" class="form-input" name="email"
+                                   aria-label="email"
+                                   data-ng-model="createUserCtrl.form.email"
+                                   data-required="required"
+                                   data-ng-trim="true">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.email.$error.required && !staticForm.email.$pristine">
+                            <small>邮箱不能为空</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.email.$error.pattern && !staticForm.email.$pristine">
+                            <small>邮箱不能包含空白符号</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.email.$error.email && !staticForm.email.$pristine">
+                            <small>邮箱格式不正确</small>
+                        </p>
+                        <p data-ng-show="staticForm.name.$pristine" class="error-info help-info-bottom">
+                            <small>{/ staticForm.message_error_info.email /}</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">密码</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="password" aria-label="password"
+                                   data-ng-model="createUserCtrl.form.password"
+                                   data-required="required"
+                                   data-dm-password>
+                        </div>
+                        <p class="error-info help-info-bottom"
+			   data-ng-show="staticForm.password.$error.dmPassword && staticForm.password.$dirty">
+			   <span>密码只能包含英文字母、数字、标点符号且必须包含大写字母，长度为8-16位。</span>
+                        </p>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.password.$error.required && !staticForm.password.$pristine">
+                            <small>密码不能为空</small>
+                        </p>
+                    </div>
+                </div>
+
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="createUserCtrl.createUser()"
+                                   data-ng-disabled="staticForm.$invalid" aria-label="create"
+                                   >添加
+                        </md-button>
+                        <md-button class="md-primary" data-ng-click="rootCtrl.goBack()">取 消</md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

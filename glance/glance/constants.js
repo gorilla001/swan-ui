@@ -20,6 +20,7 @@ CODE_MESSAGE = {
     11009: "已发送，请等待",
     11010: "验证码错误",
     11011: "授权错误",
+    11012: "用户已冻结",
     14001: "应用不存在",
     14002: "应用历史版本id不存在",
     14003: "应用名称冲突",
@@ -288,6 +289,17 @@ STACK_DEFAULT = {
     '  instances: 2'
 };
 
+USER_STATUS = {
+    running: "正常",
+    frozen: "冻结"
+}
+
+USER_TYPE = {
+	true: "管理员",
+	false: "成员",
+}
+
+
 BACKEND_URL = {
     auth: {
         auth: "api/v3/auth",
@@ -364,7 +376,9 @@ BACKEND_URL = {
         group: 'api/v3/groups/$group_id',
         groupMemberships: 'api/v3/groups/$group_id/memberships',
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships',
-        groupDemo: 'api/v3/groups/demo/mymemberships'
+        groupDemo: 'api/v3/groups/demo/mymemberships',
+        users: "api/v3/users",
+        user: "api/v3/user/$user_id",
     },
 
     billing: {

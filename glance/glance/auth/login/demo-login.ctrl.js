@@ -9,7 +9,7 @@
         activate();
 
         function activate() {
-            authCurd.login({'email': DEMO_EMAIL});
+            authCurd.login({'name': DEMO_EMAIL});
         };
     }
 })();
