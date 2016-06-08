@@ -102,13 +102,35 @@
                         <i class="fa fa-bars"></i>
                     </md-button>
                     <span flex></span>
-                    <md-button class="md-icon-button" aria-label="Favorite" data-ng-click="rootCtrl.togShowToolbarToolsOption()">
-                        <i class="fa fa-th"></i>
-                    </md-button>
+
+                    <md-menu>
+                        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+                            <i class="fa fa-th"></i>
+                        </md-button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('cluster.createcluster')">
+                                    新建集群
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('app.create')">
+                                    新建应用
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('image.create')">
+                                    新建镜像
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+
                     <md-button class="md-icon-button" aria-label="More" ng-click="rootCtrl.noticeNav.buildToggler()"
                                ng-hide="rootCtrl.noticeNav.isOpenNav()">
                         <i class="fa fa-bell"></i>
                     </md-button>
+
                     <md-menu>
                         <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
                             <i class="fa fa-user"></i>
@@ -129,19 +151,7 @@
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
-
-                    <ul class="md-toolbar-tools_option" data-ng-show="rootCtrl.isShowToolbarToolsOption">
-                        <div class="option-arrow"></div>
-                        <li class="create-cluster fa fa-server" data-ng-click="rootCtrl.goByToolbarToolsOption('cluster.createcluster')">
-                            <p>新建集群</p>
-                        </li>
-                        <li class="create-app fa fa-cube" data-ng-click="rootCtrl.goByToolbarToolsOption('app.create')">
-                            <p>新建应用</p>
-                        </li>
-                        <li class="create-image fa fa-cogs" data-ng-click="rootCtrl.goByToolbarToolsOption('image.create')">
-                            <p>新建镜像</p>
-                        </li>
-                    </ul>
+                    
                 </div>
             </md-toolbar>
         </nav>
