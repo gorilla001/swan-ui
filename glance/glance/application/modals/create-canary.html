@@ -11,6 +11,38 @@
             </div>
         </md-toolbar>
         <md-dialog-content style="width: 400px; max-height: 400px; min-height: 100px;">
+            <div layout="row" layout-align="end center" class="form-group form-group-input">
+                <label flex="15">镜像地址</label>
+                <div flex="50" layout="column">
+                    <div flex>
+                        <input type="text" class="form-input"
+                               name="imageName" aria-label="imageName"
+                               data-ng-model="formCtrl.form.imageName"
+                               data-required="required">
+                    </div>
+                    <p class="error-info help-info-bottom"
+                       data-ng-show="volumesForm.imageName.$error.required && !volumesForm.imageName.$pristine">
+                        <small>镜像地址不能为空</small>
+                    </p>
+                </div>
+            </div>
+
+            <div layout="row" layout-align="start center" class="form-group form-group-input">
+                <label flex="15">镜像版本</label>
+                <div flex="50" layout="column">
+                    <div flex>
+                        <input type="text" class="form-input"
+                               name="imageVersion" aria-label="imageName"
+                               data-ng-model="formCtrl.form.imageVersion"
+                               data-required="required">
+                    </div>
+                    <p class="error-info help-info-bottom"
+                       data-ng-show="volumesForm.imageVersion.$error.required && !volumesForm.imageVersion.$pristine">
+                        <small>镜像版本不能为空</small>
+                    </p>
+                </div>
+            </div>
+
             <div layout="row" layout-align="end center" class="form-group form-group-input" layout-margin
                  layout-padding>
                 <label flex="30">容器个数</label>
