@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl(timing, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
+    function LayoutListCtrl(timing, $timeout, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
         var self = this;
         var events = undefined;
 
