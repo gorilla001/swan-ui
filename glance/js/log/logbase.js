@@ -44,6 +44,7 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
 
     $scope.getNodePorts = function (appId, clusterId) {
         if (appId && clusterId) {
+            $scope.inputNodesInfo = [];
             appservice.listAppNodes(clusterId, appId, '').then(function(data){
                 $scope.nodes = data;
 
