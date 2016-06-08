@@ -26,6 +26,9 @@ USER_URL = "MARKET";
 //是否为线下环境
 IS_OFF_LINE = OFFLINE;  //set true or false
 
+//线下环境图片路径
+OFF_LINE_IMEGA_URL = "OFFLINEURL";
+
 /*
  * agent的配置
  * dmHost为streaming的地址（含协议，网络地址，端口）.

@@ -9,6 +9,10 @@
         {/fieldData.description/}
     </p>
 
+    <p data-ng-if="dyTextForm[fieldData.variable].$error.dyRange" class="help-info-bottom error-info">
+        端口范围不符合规定
+    </p>
+
     <p data-ng-if="dyTextForm[fieldData.variable].$error.dyPattern" class="help-info-bottom error-info">
         正则表达式未通过
     </p>
