@@ -368,7 +368,7 @@ BACKEND_URL = {
     },
 
     billing: {
-        billings: 'api/v3/billing/list'
+        billings: 'api/v3/billing'
     },
     
     image: {
