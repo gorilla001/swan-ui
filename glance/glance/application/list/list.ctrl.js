@@ -57,6 +57,8 @@
          创建灰度
          */
         self.createCanary = function (ev, clusterId, appId, formData) {
+            formData.portMappings = formData.ports;
+            delete formData.ports;
             appcurd.createCanary(ev, formData, clusterId, appId);
         };
     }
