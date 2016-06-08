@@ -260,14 +260,14 @@ STACK_STATUS = {
 
 STACK_DEFAULT = {
     DockerCompose: 'mysql:\n' +
-    '  image:  devregistry.dataman-inc.com:5000/library/mysql\n' +
+    '  image:  catalog.shurenyun.com/library/mysql\n' +
     '  restart: always\n' +
     '  ports:\n' +
     '    - "3306:3306"\n' +
     '  environment:\n' +
     '    MYSQL_ROOT_PASSWORD: foobar\n' +
     'wordpress:\n' +
-    '  image:  devregistry.dataman-inc.com:5000/library/wordpress\n' +
+    '  image:  catalog.shurenyun.com/library/wordpress\n' +
     '  restart: always\n' +
     '  ports:\n' +
     '    - "80:80"\n' +
