@@ -45,7 +45,8 @@
                       .cancel('不，再看看')
                       .targetEvent(ev)
                   ).then(function () {
-                      $window.open('/auth/register');
+                      var w = $window.open();
+                      w.location = '/auth/register';
                   });
         }
     }
