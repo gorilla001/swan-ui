@@ -30,67 +30,69 @@
 
 <body>
 <div layout="row" class="main" ng-cloak>
-    <aside class="sidebar-main" data-ng-class="{'sidebar-main_two' : rootCtrl.isShortMenu}">
+    <aside class="sidebar-main" data-ng-class="{'sidebar-main_two' : rootCtrl.isShortMenu}" layout="column">
         <div class="logo">
             <a href="#"><img src="pics/logo-white-full.svg" data-ng-show="!rootCtrl.isShortMenu"></a>
             <a href="#"><img src="pics/logo-white-small.jpg" data-ng-show="rootCtrl.isShortMenu"></a>
         </div>
-        <ul>
-            <li data-ui-sref-active="active" title="首页">
-                <md-button data-ui-sref="dashboard" data-ui-sref-opts="{inherit: false}">
-                    <i class="fa fa-tachometer"></i>
-                    首页
-                </md-button>
-            </li>
-            <li title="应用管理" data-ui-sref-active="active">
-                <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}"><i
-                        class="fa fa-cube"></i>应用管理
-                </md-button>
-            </li>
-            <li data-ui-sref-active="active" title="服务策略">
-                <md-button data-ui-sref="policy"
-                           data-ui-sref-opts="{inherit: false}"><i class="fa fa-clock-o"></i>服务策略
-                </md-button>
-            </li>
-            <li data-ui-sref-active="active" title="应用目录">
-                <md-button data-ui-sref="repository" data-ui-sref-opts="{inherit: false}"><i
-                        class="fa fa-shopping-cart"></i>应用目录
-                </md-button>
-            </li>
-            <li data-ui-sref-active="active" title="镜像构建">
-                <md-button data-ui-sref="image"
-                           data-ui-sref-opts="{inherit: false}"><i class="fa fa-cogs"></i>镜像构建
-                </md-button>
-            </li>
-            <li title="应用编排" data-ui-sref-active="active">
-                <md-button data-ui-sref="layout" data-ui-sref-opts="{reload: true, inherit: false}"><i
-                        class="fa fa-cubes"></i>应用编排
-                </md-button>
-            </li>
-            <li data-ui-sref-active="active" title="日志查询">
-                <md-button data-ui-sref="log" data-ui-sref-opts="{inherit: false}"><i
-                        class="fa fa-search"></i>日志查询
-                </md-button>
-            </li>
-            <li data-ui-sref-active="active" title="集群管理">
-                <md-button data-ui-sref="cluster" data-ui-sref-opts="{inherit: false}"><i
-                        class="fa fa-server"></i>集群管理
-                </md-button>
-            </li>
-        </ul>
-        <ul>
-            <li data-ng-if="!IS_OFF_FLAG">
-                <md-button ng-href="{/rootCtrl.userManualUrl/}" target="_blank"><i class="fa fa-book"></i>用户手册
-                </md-button>
-            </li>
-            <li data-ng-if="!IS_OFF_FLAG">
-                <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
-            </li>
-            <li data-ng-if="!IS_OFF_FLAG">
-                <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()" data-demo-disable><i class="fa fa-pencil-square-o"></i>工单反馈
-                </md-button>
-            </li>
-        </ul>
+        <div class="menu-sidebar" flex layout-align="space-between stretch" layout="column">
+            <ul>
+                <li data-ui-sref-active="active" title="首页">
+                    <md-button data-ui-sref="dashboard" data-ui-sref-opts="{inherit: false}">
+                        <i class="fa fa-tachometer"></i>
+                        首页
+                    </md-button>
+                </li>
+                <li title="应用管理" data-ui-sref-active="active">
+                    <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}"><i
+                            class="fa fa-cube"></i>应用管理
+                    </md-button>
+                </li>
+                <li data-ui-sref-active="active" title="服务策略">
+                    <md-button data-ui-sref="policy"
+                               data-ui-sref-opts="{inherit: false}"><i class="fa fa-clock-o"></i>服务策略
+                    </md-button>
+                </li>
+                <li data-ui-sref-active="active" title="应用目录">
+                    <md-button data-ui-sref="repository" data-ui-sref-opts="{inherit: false}"><i
+                            class="fa fa-shopping-cart"></i>应用目录
+                    </md-button>
+                </li>
+                <li data-ui-sref-active="active" title="镜像构建">
+                    <md-button data-ui-sref="image"
+                               data-ui-sref-opts="{inherit: false}"><i class="fa fa-cogs"></i>镜像构建
+                    </md-button>
+                </li>
+                <li title="应用编排" data-ui-sref-active="active">
+                    <md-button data-ui-sref="layout" data-ui-sref-opts="{reload: true, inherit: false}"><i
+                            class="fa fa-cubes"></i>应用编排
+                    </md-button>
+                </li>
+                <li data-ui-sref-active="active" title="日志查询">
+                    <md-button data-ui-sref="log" data-ui-sref-opts="{inherit: false}"><i
+                            class="fa fa-search"></i>日志查询
+                    </md-button>
+                </li>
+                <li data-ui-sref-active="active" title="集群管理">
+                    <md-button data-ui-sref="cluster" data-ui-sref-opts="{inherit: false}"><i
+                            class="fa fa-server"></i>集群管理
+                    </md-button>
+                </li>
+            </ul>
+            <ul>
+                <li data-ng-if="!IS_OFF_FLAG">
+                    <md-button ng-href="{/rootCtrl.userManualUrl/}" target="_blank"><i class="fa fa-book"></i>用户手册
+                    </md-button>
+                </li>
+                <li data-ng-if="!IS_OFF_FLAG">
+                    <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
+                </li>
+                <li data-ng-if="!IS_OFF_FLAG">
+                    <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()" data-demo-disable><i class="fa fa-pencil-square-o"></i>工单反馈
+                    </md-button>
+                </li>
+            </ul>
+        </div>
     </aside>
     <div layout="column" flex>
         <nav class="nav-main">
