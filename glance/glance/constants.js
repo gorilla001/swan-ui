@@ -327,18 +327,13 @@ BACKEND_URL = {
         subscribe: "streaming/glance/$token"
     },
     log: {
-        search: "es/index",
-        downloadSearch: "es/download/index/log",
-        searchContext: "es/context",
-        downloadContext: "es/download/context/log",
-        logPolicy: "es/alarm/$log_id",
-        createLogPolicy: "es/alarm/create",
-        updateLogPolicy: "es/alarm/update",
-        deleteLogPolicy: "es/alarm/delete/$log_id",
-        logPolicys: "es/alarm/list",
-        logPolicyEvents: "es/alarm/scheduler/history",
-        stopLogPolicy: "es/alarm/stop/$log_id",
-        restartLogPolicy: "es/alarm/restart/$log_id"
+        search: "api/v3/es/index",
+        downloadSearch: "api/v3/es/download/index",
+        searchContext: "api/v3/es/context",
+        downloadContext: "api/v3/es/download/context",
+        logPolicy: "api/v3/alarm/$log_id",
+        logPolicies: "api/v3/alarm",
+        logPolicyEvents: "api/v3/alarm/scheduler"
     },
     app: {
         userApps: 'api/v3/apps',

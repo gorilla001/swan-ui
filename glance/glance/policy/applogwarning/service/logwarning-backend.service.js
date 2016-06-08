@@ -18,15 +18,15 @@
         };
 
         function createLogPolicy(data, form){
-            return gHttp.Resource('log.createLogPolicy').post(data, {form: form});
+            return gHttp.Resource('log.logPolicies').post(data, {form: form});
         }
 
         function deletLogPolicy(logId){
-            return gHttp.Resource('log.deleteLogPolicy', ({log_id: logId})).delete();
+            return gHttp.Resource('log.logPolicy', ({log_id: logId})).delete();
         }
 
         function logPolicyList(params){
-            return gHttp.Resource('log.logPolicys').get({params: params});
+            return gHttp.Resource('log.logPolicies').get({params: params});
         }
 
         function logPolicyEvents(params){
@@ -38,15 +38,15 @@
         }
         
         function updateLogPolicy(data, form) {
-            return gHttp.Resource('log.updateLogPolicy').put(data, {form: form});
+            return gHttp.Resource('log.logPolicies').put(data, {form: form});
         }
 
         function stopLogPolicy(logId) {
-            return gHttp.Resource('log.stopLogPolicy', {log_id: logId}).put();
+            return gHttp.Resource('log.logPolicy', {log_id: logId}).patch({"method":"stop"});
         }
         
         function restartLogPolicy(logId) {
-            return gHttp.Resource('log.restartLogPolicy', {log_id: logId}).put();
+            return gHttp.Resource('log.logPolicy', {log_id: logId}).patch({"method":"restart"});
         }
     }
 })();
