@@ -26,7 +26,7 @@
                 }
             })
             .state('app.update', {
-                url: '/:cluster_id/:app_id/update?canary',
+                url: '/:cluster_id/:app_id/update',
                 templateUrl: '/glance/application/createupdate/create-update.html',
                 controller: 'CreateAppCtrl as createAppCtrl',
                 resolve: {
@@ -105,6 +105,11 @@
                 url: '/version',
                 templateUrl: '/glance/application/detail/version.html',
                 controller: 'VersionAppCtrl as versionAppCtrl'
+            })
+            .state('app.detail.canary', {
+                url: '/canary',
+                templateUrl: '/glance/application/detail/canary.html',
+                controller: 'CanaryCtrl as canaryCtrl'
             });
     }
 

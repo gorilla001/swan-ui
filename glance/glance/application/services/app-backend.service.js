@@ -32,11 +32,17 @@
             listClusterAllApps: listClusterAllApps,
             listAppPorts: listAppPorts,
             listAppNodes: listAppNodes,
-            changeWeight: changeWeight,
             getReqRate: getReqRate,
             getAppMetics: getAppMetics,
-            getMonitor: getMonitor
-
+            getMonitor: getMonitor,
+            createCanary: createCanary,
+            deleteCanary: deleteCanary,
+            updateContainerCanary: updateContainerCanary,
+            changeWeight: changeWeight,
+            stopCanary: stopCanary,
+            startCanary: startCanary,
+            listCanaryStatus: listCanaryStatus,
+            listCanary: listCanary
         };
 
         function listApps(params, loading) {
@@ -165,11 +171,6 @@
             return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading});
         }
 
-        // 修改权重
-        function changeWeight(clusterId, appId, data) {
-            return gHttp.Resource('app.changeWeight', {cluster_id: clusterId, app_id: appId}).post(data);
-        }
-
         function getReqRate(clusterId, alias) {
             return gHttp.Resource('metrics.reqRate', {cluster_id: clusterId, aliase: alias}).get();
         }
@@ -177,9 +178,48 @@
         function getAppMetics(clusterId, alias) {
             return gHttp.Resource('metrics.appmonit', {clusterID: clusterId, aliase: alias}).get({loading: ''})
         }
-        
+
         function getMonitor(clusterId, alias) {
             return gHttp.Resource('metrics.monitor', {clusterID: clusterId, aliase: alias}).get({loading: ''})
+        }
+
+        function createCanary(data, clusterId, appId) {
+            return gHttp.Resource('app.canarys', {cluster_id: clusterId, app_id: appId}).post(data);
+        }
+
+        function deleteCanary(clusterId, appId, versionId) {
+            return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).delete();
+        }
+
+        function updateContainerCanary(data, clusterId, appId, versionId) {
+            data.method = 'scale';
+            return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
+        }
+
+        function stopCanary(data, clusterId, appId, versionId) {
+            data.method = 'stop';
+
+            return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
+        }
+
+        function startCanary(data, clusterId, appId, versionId) {
+            data.method = 'start';
+
+            return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
+        }
+
+        function listCanaryStatus(clusterId, appId) {
+
+            return gHttp.Resource('app.canaryStatus', {cluster_id: clusterId, app_id: appId}).get();
+        }
+
+        function changeWeight(clusterId, appId, data) {
+            return gHttp.Resource('app.changeWeight', {cluster_id: clusterId, app_id: appId}).post(data);
+        }
+
+        function listCanary(clusterId, appId) {
+
+            return gHttp.Resource('app.canarys', {cluster_id: clusterId, app_id: appId}).get();
         }
     }
 })();

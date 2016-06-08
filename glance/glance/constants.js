@@ -35,6 +35,7 @@ CODE_MESSAGE = {
     14013: "应用组件不可用",
     14014: "权限错误",
     14016: "集群异常",
+    14017: "灰度发布已存在",
     15001: "数据库操作错误",
     15002: "参数错误",
     15003: "参数错误",
@@ -358,7 +359,10 @@ BACKEND_URL = {
         cron: 'api/v3/crons/$scale_id',
         scaleDetail: 'api/v3/clusters/$cluster_id/apps/$app_id/scale/$scale_id',
         changeWeight: 'api/v3/clusters/$cluster_id/apps/$app_id/weight',
-        taskappExtend: 'api/v3/scales'
+        taskappExtend: 'api/v3/scales',
+        canary: "api/v3/clusters/$cluster_id/apps/$app_id/canary/$version_id",
+        canarys: "api/v3/clusters/$cluster_id/apps/$app_id/canary",
+        canaryStatus: "api/v3/clusters/$cluster_id/apps/$app_id/canary/status"
     },
     user: {
         groups: 'api/v3/groups',

@@ -4,63 +4,58 @@
         .factory('upCanaryModal', upCanaryModal);
 
     /* @ngInject */
-    function upCanaryModal($uibModal) {
+    function upCanaryModal($mdDialog) {
 
         return {
             open: open
         };
 
-        function open(versions) {
-            var modalInstance = $uibModal.open({
+        function open(ev, canaryObj) {
+            var dialog = $mdDialog.show({
                 templateUrl: '/glance/application/modals/up-canary.html',
                 controller: UpCanaryCtrl,
                 controllerAs: 'formCtrl',
-                resolve: {
-                    versions: function () {
-                        return versions
-                    }
-                }
+                parent: angular.element(document.body),
+                clickOutsideToClose: true,
+                targetEvent: ev,
+                locals: {canaryObj: canaryObj}
             });
 
-            return modalInstance.result;
+            return dialog;
         }
 
         /* @ngInject */
-        function UpCanaryCtrl($uibModalInstance, versions, $scope) {
-
+        function UpCanaryCtrl($mdDialog, canaryObj) {
             var self = this;
 
-            self.total;
-            self.versions = getVersions(versions);
+            self.canaryObj = canaryObj.map(function(item, index){
+                var tmp = {
+                    Vid: item.Vid,
+                    Weight: item.Weight
+                };
+
+                return tmp
+            });
+
             self.ok = function () {
-                $uibModalInstance.close(self.versions)
+                var result = weightFormat(self.canaryObj);
+                $mdDialog.hide(result);
             };
             self.cancel = function () {
-                $uibModalInstance.dismiss('cancel');
+                $mdDialog.cancel();
             };
-            
-            $scope.$watch('formCtrl.versions', function (nval, oval) {
-                self.total = sumWeight();
-            }, true)
-            
-            function sumWeight() {
-                var total = 0;
-                angular.forEach(self.versions, function (version) {
-                    total += version.weight;
-                })
-                return total;
-            }
-            
-            function getVersions(versions) {
-                var tarVersions = [];
-                angular.forEach(versions, function (version) {
-                    if (version.canary == 1 || version.currentDeploy == 1) {
-                        tarVersions.push(version);
-                    }
-                });
-                return tarVersions;
-            }
 
+            function weightFormat(canaryObj) {
+                var tmp = {};
+                var lenght = canaryObj.length;
+
+                for (var index = 0; index < lenght; index++) {
+                    tmp[canaryObj[index].Vid] = canaryObj[index].Weight;
+                }
+
+                return tmp
+
+            }
         }
     }
 })();

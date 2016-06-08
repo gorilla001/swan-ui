@@ -12,11 +12,11 @@
     <dt>内存</dt>
     <dd>{/detailAppCtrl.appInfo.mem/} MB</dd>
     <dt>容器个数</dt>
-    <dd ng-if="detailAppCtrl.appInfo.tasks && detailAppCtrl.appInfo.tasks != detailAppCtrl.appInfo.instances">
-        {/detailAppCtrl.appInfo.tasks/}/{/detailAppCtrl.appInfo.instances/}<span
+    <dd ng-if="detailAppCtrl.appStatus.tasks && detailAppCtrl.appStatus.tasks != detailAppCtrl.appStatus.instances">
+        {/detailAppCtrl.appStatus.tasks/}/{/detailAppCtrl.appStatus.instances/}<span
             ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
-    <dd ng-if="!detailAppCtrl.appInfo.tasks || detailAppCtrl.appInfo.tasks == detailAppCtrl.appInfo.instances">
-        {/detailAppCtrl.appInfo.instances/}<span
+    <dd ng-if="!detailAppCtrl.appStatus.tasks || detailAppCtrl.appStatus.tasks == detailAppCtrl.appStatus.instances">
+        {/detailAppCtrl.appStatus.instances/}<span
             ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
     <dt>应用模式</dt>
     <dd>{/configAppCtrl.networkText[detailAppCtrl.appInfo.network]/}</dd>
