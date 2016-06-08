@@ -2,7 +2,7 @@
     <table md-table>
         <thead md-head>
         <tr md-row>
-            <th md-column>版本号</th>
+            <th md-column>镜像地址</th>
             <th md-column>权重</th>
             <th md-column>实例个数</th>
             <th md-column>状态</th>
@@ -13,7 +13,7 @@
         <tbody md-body>
         <tr md-row ng-repeat="canary in canaryCtrl.canaryList">
             <td md-cell>
-                {/canary.Vid/}
+                {/canary.Image/}:{/canary.Version/}
             </td>
             <td md-cell>
                 {/canary.Weight/} %
