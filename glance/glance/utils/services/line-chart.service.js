@@ -220,6 +220,9 @@
                     option.series.push(buildSerieStyle(name, values, style));
                 }
             })
+            if (option.series.length <= 0){
+                option.series.push(buildSerieStyle('', [undefined], style))
+            }
             return option;
         }
         
