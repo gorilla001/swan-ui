@@ -9,7 +9,6 @@
     /* @ngInject */
     function MonitorAppCtrl($scope, $sce, appservice, monitor, appChart) {
         var self = this;
-        self.withGrafana = GRAFANA_CONFIG.baseUrl;
         self.appMonitors = {};
 
         self.appInfo = $scope.detailAppCtrl.appInfo;
