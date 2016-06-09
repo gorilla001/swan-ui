@@ -39,11 +39,6 @@ AGENT_CONFIG = {
     installUrl: "AGENT_URL"
 };
 
-//grafana配置
-GRAFANA_CONFIG = {
-    baseUrl: "GF_BASE_URL",
-};
-
 /*
  * group：共享集群中的应用，映射端口使用的地址
  * demo：demo用户的应用，映射端口使用的地址
