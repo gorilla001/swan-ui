@@ -17,7 +17,7 @@
         self.appStatus = appStatus;
         self.stop = stop;
         self.start = start;
-        self.undo = undo;
+        self.redeploy = redeploy;
         self.delete = deleteApp;
         self.upContainerModal = upContainerModal;
         
@@ -33,7 +33,7 @@
         function stop(clusterId, appId) {
             var data = {};
             appcurd.stop(data, clusterId, appId)
-        };
+        }
 
         /*
          启动操作
@@ -41,26 +41,26 @@
         function start(clusterId, appId) {
             var data = {};
             appcurd.start(data, clusterId, appId)
-        };
+        }
 
         /*
          恢复操作
          */
-        function undo(clusterId, appId) {
+        function redeploy(clusterId, appId) {
             var data = {};
-            appcurd.undo(data, clusterId, appId)
-        };
+            appcurd.redeploy(data, clusterId, appId)
+        }
 
         /*
          删除操作
          */
         function deleteApp(clusterId, appId) {
             appcurd.del(clusterId, appId)
-        };
+        }
 
         function upContainerModal(ev, clusterId, appId, instanceNum) {
             appcurd.updateContainer(ev, instanceNum, clusterId, appId);
-        };
+        }
         
         
         function refreshData() {

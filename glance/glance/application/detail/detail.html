@@ -54,7 +54,7 @@
                         <md-button aria-label="undo" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '9'"
                                    data-demo-disable
-                                   data-ng-click="undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                                   data-ng-click="detailAppCtrl.redeploy(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
                             <md-tooltip md-direction="top">恢复</md-tooltip>
                             <i class="fa fa-medkit"></i>
                         </md-button>

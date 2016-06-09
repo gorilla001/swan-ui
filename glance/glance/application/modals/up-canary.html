@@ -13,16 +13,19 @@
         <md-dialog-content style="width: 600px; max-height: 400px; min-height: 100px;">
             <div layout-margin
                  layout-padding data-ng-repeat="canary in formCtrl.canaryObj">
-                <div flex="100" layout="column">
-                    <div flex>
+                <div flex="100" layout="row">
+                    <div flex="15">灰度版本:{/canary.Version/}</div>
+                    <div flex></div>
+                    <div flex="15">当前版本:{/canary.CurVersion/}</div>
+                </div>
+                <div flex="100">
                         <md-slider-container layout="row" layout-align="start center">
-                            <span flex="20">版本号 <strong>{/canary.Vid/}</strong></span>
-                            <md-slider flex="65" min="0" max="100" ng-model="canary.Weight" aria-label="red"
+                            <div flex="10">{/canary.Weight/} %</div>
+                            <md-slider flex="70" flex-offset="5" min="0" max="100" ng-model="canary.Weight" aria-label="red"
                                        id="red-slider" name="weight{/$index/}">
                             </md-slider>
-                            <div flex-offset="5">{/canary.Weight/} %</div>
+                            <div flex="10" flex-offset="5">{/100 - canary.Weight/} %</div>
                         </md-slider-container>
-                    </div>
                 </div>
             </div>
         </md-dialog-content>
