@@ -41,13 +41,8 @@
                             <input type="email" class="form-input" name="email"
                                    aria-label="email"
                                    data-ng-model="createUserCtrl.form.email"
-                                   data-required="required"
                                    data-ng-trim="true">
                         </div>
-                        <p class="error-info help-info-bottom"
-                           data-ng-show="staticForm.email.$error.required && !staticForm.email.$pristine">
-                            <small>邮箱不能为空</small>
-                        </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.email.$error.pattern && !staticForm.email.$pristine">
                             <small>邮箱不能包含空白符号</small>
