@@ -17,7 +17,14 @@
             joinInvitedGroup: joinInvitedGroup,
             listBillings: listBillings,
             getLicenceInfo: getLicenceInfo,
-            validateLicence: validateLicence
+            validateLicence: validateLicence,
+            createUser: createUser,
+            listUsers: listUsers,
+            deleteUser: deleteUser,
+            disableUser: disableUser,
+            enableUser: enableUser,
+            getUser: getUser,
+            updateUser: updateUser
         };
 
         function listGroups(params, loading) {
@@ -63,5 +70,34 @@
         function validateLicence(content) {
             return gHttp.Resource('licence.licence').post({content: content});
         }
+
+        function createUser(data, form) {
+            return gHttp.Resource('user.users').post(data, {form: form});
+        }
+
+        function listUsers(params, loading){
+            return gHttp.Resource('user.users').get({params: params, loading: loading});
+        }
+
+        function deleteUser(user_id){
+            return gHttp.Resource('user.user', {user_id: user_id}).delete();
+        }
+
+        function disableUser(user_id){
+            return gHttp.Resource('user.user', {user_id: user_id}).patch({'method': 'disable'});
+        }
+
+        function enableUser(user_id, data) {
+            return gHttp.Resource('user.user', {user_id: user_id}).patch({'method': 'enable'});
+        }
+        
+        function getUser(user_id) {
+            return gHttp.Resource('user.user', {user_id: user_id}).get();
+        }
+        
+        function updateUser(user_id, data, form) {
+            return gHttp.Resource('user.user', {user_id: user_id}).put(data, {form: form});
+        }
+
     }
 })();

@@ -60,11 +60,44 @@
                 templateUrl: '/glance/user/licence/detail.html',
                 controller: 'LicenceDetailCtrl as licenceDetailCtrl'
             })
+            .state('user.users', {
+                url: '/users?per_page&page',
+                templateUrl: '/glance/user/users/list.html',
+                controller: 'ListUserCtrl as listUserCtrl',
+                defaultParams: {
+                    per_page: 20,
+                    page: 1,
+                },
+                resolve: {
+                    users: listUsers
+                }
+            })
+            .state('createuser', {
+                url: '/users/create',
+                templateUrl: '/glance/user/users/create-user.html',
+                controller: 'CreateUserCtrl as createUserCtrl',
+            })
+            .state('updateuser', {
+                url: '/users/update/:user_id',
+                templateUrl: '/glance/user/users/update-user.html',
+                controller: 'UpdateUserCtrl as updateUserCtrl',
+            })
+            .state('resetuserpwd', {
+                url: '/users/resetpwd/:user_id',
+                templateUrl: '/glance/user/users/reset-pwd.html',
+                controller: 'ResetPwdCtrl as resetPwdCtrl',
+            })
+
     }
 
     /* @ngInject */
     function listGroups($stateParams, userBackend, utils) {
         return userBackend.listGroups(utils.encodeQueryParams($stateParams));
+    }
+    
+    /* @ngInject */
+    function listUsers($stateParams, userBackend, utils) {
+        return userBackend.listUsers(utils.encodeQueryParams($stateParams));
     }
 
     /* @ngInject */
