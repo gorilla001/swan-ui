@@ -27,7 +27,7 @@ USER_URL = "MARKET";
 IS_OFF_LINE = OFFLINE;  //set true or false
 
 //线下环境图片路径
-OFFLINE_IMEGA_URL = "OFFLINEURL";
+OFF_LINE_IMAGE_URL = "IMAGE_BASE_URL";
 
 /*
  * agent的配置
