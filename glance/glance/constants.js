@@ -379,7 +379,7 @@ BACKEND_URL = {
         groupMyMemberships: 'api/v3/groups/$group_id/mymemberships',
         groupDemo: 'api/v3/groups/demo/mymemberships',
         users: "api/v3/users",
-        user: "api/v3/user/$user_id",
+        user: "api/v3/users/$user_id",
     },
 
     billing: {
