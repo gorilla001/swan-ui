@@ -24,7 +24,7 @@
             <th md-column md-order-by="name">用户名称</th>
             <th md-column md-order-by="type">用户类型</th>
             <th md-column md-order-by="type">邮箱</th>
-            <th md-column md-order-by="updated">更新时间</th>
+            <th md-column md-order-by="updated">创建时间</th>
             <th md-column>操作</th>
         </tr>
         </thead>
@@ -36,7 +36,7 @@
             <td md-cell>{/user.name/}</td>
             <td md-cell>{/listUserCtrl.USER_TYPE[user.is_superuser]/}</td>
             <td md-cell>{/user.email/}</td>
-            <td md-cell>{/user.updated_at/}</td> 
+            <td md-cell>{/user.created_at/}</td> 
             <td md-cell>
                 <md-button aria-label="strp" class="md-button md-raised"
                            data-ng-click="listUserCtrl.enableUser(user.id)"
