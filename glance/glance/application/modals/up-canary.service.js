@@ -31,7 +31,9 @@
             self.canaryObj = canaryObj.map(function(item, index){
                 var tmp = {
                     Vid: item.Vid,
-                    Weight: item.Weight
+                    Weight: item.Weight,
+                    Version: item.Version,
+                    CurVersion: item.CurVersion
                 };
 
                 return tmp

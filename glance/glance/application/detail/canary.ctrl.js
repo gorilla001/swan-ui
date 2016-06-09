@@ -18,6 +18,7 @@
         self.del = del;
         self.upContainer = upContainer;
         self.changeWeight = changeWeight;
+        self.depoly = depoly;
 
         activate();
 
@@ -60,6 +61,10 @@
 
         function changeWeight(ev, canaryObj) {
             appcurd.changeWeight(ev, canaryObj)
+        }
+
+        function depoly(clusterId, appId, versionId){
+            appcurd.deployCanary(clusterId, appId, versionId)
         }
 
 

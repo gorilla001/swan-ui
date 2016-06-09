@@ -42,7 +42,8 @@
             stopCanary: stopCanary,
             startCanary: startCanary,
             listCanaryStatus: listCanaryStatus,
-            listCanary: listCanary
+            listCanary: listCanary,
+            deployCanary: deployCanary
         };
 
         function listApps(params, loading) {
@@ -101,7 +102,6 @@
 
         function stopScaling(data, clusterId, appId) {
             data.method = 'stop_scaling';
-
             return gHttp.Resource('app.clusterApp', {cluster_id: clusterId, app_id: appId}).patch(data);
         }
 
@@ -220,6 +220,12 @@
         function listCanary(clusterId, appId) {
 
             return gHttp.Resource('app.canarys', {cluster_id: clusterId, app_id: appId}).get();
+        }
+
+        function deployCanary(data, clusterId, appId, versionId) {
+            data.method = 'release';
+
+            return gHttp.Resource('app.canary', {cluster_id: clusterId, app_id: appId, version_id: versionId}).patch(data);
         }
     }
 })();

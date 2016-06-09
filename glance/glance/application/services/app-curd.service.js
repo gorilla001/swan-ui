@@ -20,7 +20,8 @@
             updateContainerCanary: updateContainerCanary,
             stopCanary: stopCanary,
             startCanary: startCanary,
-            changeWeight: changeWeight
+            changeWeight: changeWeight,
+            deployCanary: deployCanary
         };
 
         function stop(data, clusterId, appId) {
@@ -127,6 +128,16 @@
                 appservice.changeWeight($stateParams.cluster_id, $stateParams.app_id, data)
                     .then(function(data){
                         Notification.success('权重调整中')
+                    })
+            });
+        }
+
+        function deployCanary(clusterId, appId, versionId) {
+            confirmModal.open("是否确认部署该灰度版本为正式版本？").then(function () {
+                var data = {};
+                appservice.deployCanary(data, clusterId, appId, versionId)
+                    .then(function (data) {
+                        $state.reload()
                     })
             });
         }
