@@ -134,7 +134,10 @@
                 </div>
                 <!--没有主机的情况-->
                 <div data-ng-if="!cluster.amounts.total">
-                    <md-button data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})" class="md-primary">
+                    <md-button data-ui-sref="cluster.nodesource({clusterId:cluster.infos.id})" class="md-primary"
+                            data-dm-permit-click="1"
+                           data-dm-role="cluster.infos.group_role"
+                           data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
                         集群中没有主机，点击添加主机
                     </md-button>
                 </div>
