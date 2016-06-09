@@ -38,7 +38,7 @@
         <tr md-row md-select="group" ng-repeat-start="group in listGroupCtrl.groups">
             <td md-cell>
                 <h5>{/group.name/}</h5>
-                <p><em data-ng-show="group.role.id != 1">{/group.owner.email/}</em></p>
+                <p><em data-ng-show="group.role.id != 1">{/group.owner.name/}</em></p>
                 <p>{/group.description/}</p>
             </td>
             <td md-cell>
@@ -81,8 +81,8 @@
                         <div class="well well-sm">
                             <div class="input-group">
                                 <span class="input-group-addon">邀请用户</span>
-                                <input type="text" class="form-control" placeholder="mail1, mail2, ..."
-                                       data-ng-model="listGroupCtrl.emailsList[group.id]">
+                                <input type="text" class="form-control" placeholder="用户名1, 用户名2 ..."
+                                       data-ng-model="listGroupCtrl.usernamesList[group.id]">
                                     <span class="input-group-btn">
                                         <button class="btn btn-success" type="button"
                                                 data-ng-click="listGroupCtrl.sendInvitation(group.id)" data-demo-disable> 添加 </button>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-4 col-lg-3" data-ng-repeat="user in listGroupCtrl.groupUserMapping[group.id]">
                         <div class="well well-sm usergroup-user-card">
-                            <h5>{/user.user.email/}</h5>
+                            <h5>{/user.user.name/}</h5>
                             <div>
                                 <time>{/user.created_at | date:"yyyy-MM-dd HH:mm:ss"/}</time>
                                 <span class="label label-warning" data-ng-show="user.status=='not_join'">待加入</span>

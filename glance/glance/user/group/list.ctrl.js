@@ -22,7 +22,7 @@
             description: ''
         };
 
-        self.emailsList = {};
+        self.usernamesList = {};
 
         self.groupUserMapping = {};
 
@@ -30,7 +30,7 @@
         self.groups = groups.groups;
         self.count = groups.total;
         for(var g in self.groups) {
-            self.emailsList[self.groups[g].id] = '';
+            self.usernamesList[self.groups[g].id] = '';
             self.isCollapsedGroupMapping[self.groups[g].id] = true;
             self.isOpenInvite[self.groups[g].id] = false;
         }
@@ -78,46 +78,46 @@
 
         /* 发送邀请 */
         self.sendInvitation = function(groupId) {
-            var emailStr = self.emailsList[groupId].trim();
-            if(!emailStr) {
+            var usernameStr = self.usernamesList[groupId].trim();
+            if(!usernameStr) {
                 Notification.error('邮箱地址不能为空');
             } else {
-                var _emails = emailStr.split(',');
-                var emails = [];
-                for(var i=0; i < _emails.length; i++) {
-                    emails.push(_emails[i].trim());
+                var _usernames = usernameStr.split(',');
+                var usernames = [];
+                for(var i=0; i < _usernames.length; i++) {
+                    usernames.push(_usernames[i].trim());
                 }
-                userBackend.sendInvitation({emails: emails}, groupId).then(function(data) {
+                userBackend.sendInvitation({usernames: usernames}, groupId).then(function(data) {
                     /* TODO(mgniu): notification windows will be overlaped, this should be fixed */
-                    if(data.error_emails.length && data.invited_emails.length) {
+                    if(data.error_names.length && data.invited_names.length) {
                         var errMsg = '下列用户不存在:<br>';
-                        for (var i = 0; i < data.error_emails.length; i++) {
-                            errMsg += data.error_emails[i] + '<br>'
+                        for (var i = 0; i < data.error_names.length; i++) {
+                            errMsg += data.error_names[i] + '<br>'
                         }
                         Notification.warning(errMsg);
 
                         var notif = '下列用户已被邀请:<br>';
-                        for (var i = 0; i < data.invited_emails.length; i++) {
-                            notif += data.invited_emails[i] + '<br>'
+                        for (var i = 0; i < data.invited_names.length; i++) {
+                            notif += data.invited_names[i] + '<br>'
                         }
                         Notification.success(notif);
                     }else {
-                        if(data.error_emails.length){
+                        if(data.error_names.length){
                             var errMsg = '下列用户不存在:<br>';
-                            for (var i = 0; i < data.error_emails.length; i++) {
-                                errMsg += data.error_emails[i] + '<br>'
+                            for (var i = 0; i < data.error_names.length; i++) {
+                                errMsg += data.error_names[i] + '<br>'
                             }
                             Notification.warning(errMsg);
-                        }else if(data.invited_emails.length){
+                        }else if(data.invited_names.length){
                             var notif = '下列用户已被邀请:<br>';
-                            for (var i = 0; i < data.invited_emails.length; i++) {
-                                notif += data.invited_emails[i] + '<br>'
+                            for (var i = 0; i < data.invited_names.length; i++) {
+                                notif += data.invited_names[i] + '<br>'
                             }
                             Notification.success(notif);
                         }
                     }
                     if(data.need_send){
-                        Notification.success("邀请邮件发送成功");
+                        Notification.success("邀请成功");
                     }
                     self.showManagePanel(groupId);
                 });
