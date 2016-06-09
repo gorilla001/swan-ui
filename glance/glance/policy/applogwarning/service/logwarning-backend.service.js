@@ -14,7 +14,8 @@
             getLogPolicy: getLogPolicy,
             updateLogPolicy: updateLogPolicy,
             stopLogPolicy: stopLogPolicy,
-            restartLogPolicy: restartLogPolicy
+            restartLogPolicy: restartLogPolicy,
+            warningLogExtend: warningLogExtend
         };
 
         function createLogPolicy(data, form){
@@ -47,6 +48,11 @@
         
         function restartLogPolicy(logId) {
             return gHttp.Resource('log.logPolicy', {log_id: logId}).patch({"method":"restart"});
+        }
+
+        function warningLogExtend(params) {
+            params.scale_type = 1;
+            return gHttp.Resource('app.taskappExtend').get({params: params})
         }
     }
 })();

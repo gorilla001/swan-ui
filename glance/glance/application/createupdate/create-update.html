@@ -118,7 +118,8 @@
                     <div flex="30" layout="column">
                         <div flex>
                             <md-radio-group ng-model="createAppCtrl.form.network" layout="row"
-                                            data-required="required" aria-label="Network model">
+                                            data-required="required" aria-label="Network model"
+                                            ng-change="createAppCtrl.networkChange(createAppCtrl.form.network)">
                                 <md-radio-button value="BRIDGE" data-ng-disabled="createAppCtrl.isNetworkDisable"
                                                  class="md-accent" flex>网桥模式
                                 </md-radio-button>
@@ -185,7 +186,7 @@
                     </div>
                     <div flex flex-offset="5">
                         <md-checkbox data-ng-model="createAppCtrl.single" aria-label="single of containers"
-                                     data-ng-disabled="createAppCtrl.target==='update'">1容器 : 1主机
+                                     data-ng-disabled="createAppCtrl.target==='update' || createAppCtrl.disableSingle">1容器 : 1主机
                         </md-checkbox>
                     </div>
                 </div>

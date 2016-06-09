@@ -135,6 +135,18 @@
                 resolve: {
                     data: eventLogList
                 }
+            })
+            .state('policy.tab.applogwarning.logscaling', {
+                url: '/logscaling?per_page&page&order&keywords&sort_by',
+                templateUrl: '/glance/policy/applogwarning/scalingList/scalingList.html',
+                controller: 'WarnLogScalingCtrl as warnLogScalingCtrl',
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
+                },
+                resolve: {
+                    data: getScalingList
+                }
             });
 
     }
@@ -167,11 +179,6 @@
     }
 
     /* @ngInject */
-    function scaleList(appScalingBackend, utils, $stateParams) {
-        return appScalingBackend.scaleList(utils.encodeQueryParams($stateParams));
-    }
-
-    /* @ngInject */
     function logList(logWarningBackend, utils, $stateParams) {
         return logWarningBackend.logPolicyList(utils.encodeQueryParams($stateParams));
         //return {alarms: [{id:1, appname:'111',keyword: '1,23',ival: 60,gtnum:2,emails: '3@3.com',isnotice: false,createtime: '2016-05-09T14:33:48'}],count: 1}
@@ -181,5 +188,11 @@
     function eventLogList(logWarningBackend, utils, $stateParams) {
         return logWarningBackend.logPolicyEvents(utils.encodeQueryParams($stateParams));
         //return {events: [{jobid: 1,appname: 'my',ival: 60,exectime: '2016-05-09T14:33:48',keyword:'abc',resultnum:3}],count: 1}
+    }
+
+    /* @ngInject */
+    function getScalingList(logWarningBackend, utils, $stateParams) {
+        //return {ScaleHistory: [{strategyId: 1,appName: 'my',instances: 6,created: '2016-05-09T14:33:48',status:1}],Count: 1};
+        return logWarningBackend.warningLogExtend(utils.encodeQueryParams($stateParams));
     }
 })();

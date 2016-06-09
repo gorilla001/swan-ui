@@ -106,6 +106,7 @@
         self.listAppPort = listAppPort;
         self.listEnvs = listEnvs;
         self.listLogPath = listLogPath;
+        self.networkChange = networkChange;
 
         function refresClusterData(cluster_id, app_id) {
             if (!cluster_id) {
@@ -178,6 +179,15 @@
             setTick(self.multiSelect.selectedNodes, undefined);
         };
 
+        function networkChange(host) {
+            if (host === 'HOST') {
+                self.disableSingle = true;
+                self.single = true
+            }else{
+                self.disableSingle = false;
+            }
+        }
+
         // new 挂载点
         function listPath(curIndex) {
             var path = self.form.volumes.map(function (item, index) {
@@ -197,7 +207,7 @@
                 }
             });
 
-            if(self.existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2){
+            if (self.existPorts.outerPorts.length && self.form.portMappings[curIndex].type == 2) {
                 var concatAppPort = appPort.concat(self.existPorts.outerPorts);
                 return concatAppPort
             }

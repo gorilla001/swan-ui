@@ -46,6 +46,7 @@
         }
         
         function warningAppExtend(params) {
+            params.scale_type = 0;
             return gHttp.Resource('app.taskappExtend').get({params: params})
         }
     }
