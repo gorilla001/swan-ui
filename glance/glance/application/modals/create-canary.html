@@ -10,10 +10,10 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content style="width: 400px; max-height: 400px; min-height: 100px;">
-            <div layout="row" layout-align="end center" class="form-group form-group-input">
-                <label flex="15">镜像地址</label>
-                <div flex="50" layout="column">
+        <md-dialog-content style="width: 500px; max-height: 400px; min-height: 100px;" layout-padding layout-margin>
+            <div layout="row" layout-align="start start" class="form-group form-group-input">
+                <label flex="25">镜像地址</label>
+                <div flex="60" layout="column">
                     <div flex>
                         <input type="text" class="form-input"
                                name="imageName" aria-label="imageName"
@@ -27,9 +27,9 @@
                 </div>
             </div>
 
-            <div layout="row" layout-align="start center" class="form-group form-group-input">
-                <label flex="15">镜像版本</label>
-                <div flex="50" layout="column">
+            <div layout="row" layout-align="start start" class="form-group form-group-input">
+                <label flex="25">镜像版本</label>
+                <div flex="60" layout="column">
                     <div flex>
                         <input type="text" class="form-input"
                                name="imageVersion" aria-label="imageName"
@@ -43,9 +43,8 @@
                 </div>
             </div>
 
-            <div layout="row" layout-align="end center" class="form-group form-group-input" layout-margin
-                 layout-padding>
-                <label flex="30">容器个数</label>
+            <div layout="row" layout-align="start start" class="form-group form-group-input">
+                <label flex="25">容器个数</label>
                 <div flex="60" layout="column">
                     <div flex>
                         <input type="number" class="form-input" name="containerNum" aria-label="containerNum"
@@ -69,8 +68,8 @@
                 取消
             </md-button>
             <md-button data-ng-disabled="volumesForm.$invalid" data-ng-click="formCtrl.ok()"
-                       aria-label="ok" style="margin-right:20px;">
-                确认
+                       aria-label="ok">
+                新建
             </md-button>
         </md-dialog-actions>
     </form>
