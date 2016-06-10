@@ -47,7 +47,8 @@
                         <md-button aria-label="upcontainer" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
                                    data-demo-disable
-                                   data-ng-click="detailAppCtrl.upContainerModal($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)">
+                                   data-ng-click="detailAppCtrl.upContainerModal($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo.instances)"
+                                   data-ng-disabled="detailAppCtrl.appInfo.canary">
                             <md-tooltip md-direction="top">扩展</md-tooltip>
                             <i class="fa fa-expand"></i>
                         </md-button>
@@ -61,7 +62,8 @@
                         <md-button aria-label="update" class="md-fab md-raised md-mini"
                                     data-demo-disable
                                    data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
-                                   data-ui-sref="app.update({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})">
+                                   data-ui-sref="app.update({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})"
+                                   data-ng-disabled="detailAppCtrl.appInfo.canary">
                             <md-tooltip md-direction="top">更新</md-tooltip>
                             <i class="fa fa-repeat"></i>
                         </md-button>
