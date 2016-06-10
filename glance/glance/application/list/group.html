@@ -77,10 +77,9 @@
                         <md-menu-content width="2">
                             <md-menu-item>
                                 <md-button aria-label="upContainer"
-                                           ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2' && groupAppsCtrl.appListStatus[app.id].status != '3'"
+                                           ng-disabled="(groupAppsCtrl.appListStatus[app.id].status != '2' && groupAppsCtrl.appListStatus[app.id].status != '3')||app.canary"
                                            data-ng-click="listappctrl.upContainerModal($event, app.cid, app.id, app.instances)"
-                                           data-demo-disable
-                                           data-ng-disabled="app.canary">扩展
+                                           data-demo-disable>扩展
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item data-ng-show="myAppsCtrl.appListStatus[app.id].status == '6'">
