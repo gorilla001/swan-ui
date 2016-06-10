@@ -8,7 +8,7 @@
 
             <div class="form-group" ng-class="{'has-error': (staticForm.email.$invalid && staticForm.email.$dirty) || (staticForm.email.$pristine && staticForm.message_error_info.email)}">
                 <input type="email" placeholder="请输入您的邮箱" class="form-control input-first" data-required="required"
-                       name="email"
+                       name="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
                        ng-model="registerCtrl.registerForm.email">
                 <div class="prompt-box" style="display: block;"
                      data-ng-show="staticForm.email.$error.required && staticForm.email.$dirty">
@@ -16,7 +16,7 @@
                     <span>请输入您的邮箱</span>
                 </div>
                 <div class="prompt-box" style="display: block;"
-                     data-ng-show="staticForm.email.$error.email && staticForm.email.$dirty">
+                     data-ng-show="staticForm.email.$error.pattern && staticForm.email.$dirty">
                     <div class="arrow"></div>
                     <span>邮箱格式不正确</span>
                 </div>
