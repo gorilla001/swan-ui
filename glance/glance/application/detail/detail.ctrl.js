@@ -20,6 +20,7 @@
         self.redeploy = redeploy;
         self.delete = deleteApp;
         self.upContainerModal = upContainerModal;
+        self.createCanary = createCanary;
         
         activate();
         
@@ -58,8 +59,20 @@
             appcurd.del(clusterId, appId)
         }
 
+        /*
+         扩展操作
+         */
         function upContainerModal(ev, clusterId, appId, instanceNum) {
             appcurd.updateContainer(ev, instanceNum, clusterId, appId);
+        }
+
+        /*
+         新建灰度操作
+         */
+        function createCanary(ev, clusterId, appId, formData) {
+            formData.portMappings = formData.ports;
+            delete formData.ports;
+            appcurd.createCanary(ev, formData, clusterId, appId);
         }
         
         
