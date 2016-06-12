@@ -71,7 +71,6 @@
          */
         function createCanary(ev, clusterId, appId, formData) {
             formData.portMappings = formData.ports;
-            delete formData.ports;
             appcurd.createCanary(ev, formData, clusterId, appId);
         }
         
