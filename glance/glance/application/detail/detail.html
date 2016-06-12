@@ -60,12 +60,18 @@
                             <i class="fa fa-medkit"></i>
                         </md-button>
                         <md-button aria-label="update" class="md-fab md-raised md-mini"
-                                    data-demo-disable
+                                   data-demo-disable
                                    data-ng-show="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
                                    data-ui-sref="app.update({cluster_id:detailAppCtrl.appInfo.cid, app_id: detailAppCtrl.appInfo.id})"
                                    data-ng-disabled="detailAppCtrl.appInfo.canary">
                             <md-tooltip md-direction="top">更新</md-tooltip>
                             <i class="fa fa-repeat"></i>
+                        </md-button>
+                        <md-button aria-label="canary" class="md-fab md-raised md-mini"
+                                   data-demo-disable data-ng-click="detailAppCtrl.createCanary($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo)"
+                                   data-ng-disabled=" detailAppCtrl.appStatus.status != '2' || !detailAppCtrl.appInfo.ports.length || detailAppCtrl.appInfo.canary">
+                            <md-tooltip md-direction="top">新建灰度</md-tooltip>
+                            <i class="fa fa-adjust"></i>
                         </md-button>
                     </md-fab-actions>
                 </md-fab-speed-dial>
