@@ -103,6 +103,14 @@
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
+                                <md-button aria-label="update"
+                                           data-ng-disabled="app.canary"
+                                           data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})"
+                                           data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '2' || groupAppsCtrl.appListStatus[app.id].status == '3'">
+                                    更新
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
                                 <md-button aria-label="alert"
                                            data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2'"
                                            data-ui-sref="policy.tab.appwarning.warninglist({page:1, per_page:20, appalias: app.alias, keywords: app.name})">

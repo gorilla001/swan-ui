@@ -80,7 +80,7 @@
                 var data = formData;
 
                 appservice.createCanary(data, clusterId, appId).then(function (data) {
-                    $state.go('app.detail.canary', {cluster_id: clusterId, app_id: appId});
+                    $state.go('app.detail.canary', {cluster_id: clusterId, app_id: appId}, {reload: true});
                 });
             });
         }
