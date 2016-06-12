@@ -44,6 +44,12 @@
                             <md-tooltip md-direction="top">删除</md-tooltip>
                             <i class="fa fa-trash"></i>
                         </md-button>
+                        <md-button aria-label="undo" class="md-fab md-raised md-mini" data-demo-disable
+                                   data-ng-if="detailAppCtrl.appStatus.status == '6'"
+                                   data-ng-click="detailAppCtrl.undo(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
+                            <md-tooltip md-direction="top">撤销</md-tooltip>
+                            <i class="fa fa-arrow-left"></i>
+                        </md-button>
                         <md-button aria-label="upcontainer" class="md-fab md-raised md-mini"
                                    data-ng-if="detailAppCtrl.appStatus.status == '2' || detailAppCtrl.appStatus.status == '3'"
                                    data-demo-disable
@@ -53,7 +59,7 @@
                             <i class="fa fa-expand"></i>
                         </md-button>
                         <md-button aria-label="undo" class="md-fab md-raised md-mini"
-                                   data-ng-if="detailAppCtrl.appStatus.status == '9'"
+                                   ng-disabled="detailAppCtrl.appStatus.status != '9'"
                                    data-demo-disable
                                    data-ng-click="detailAppCtrl.redeploy(detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id)">
                             <md-tooltip md-direction="top">恢复</md-tooltip>
