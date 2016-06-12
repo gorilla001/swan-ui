@@ -21,6 +21,7 @@
         self.delete = deleteApp;
         self.upContainerModal = upContainerModal;
         self.createCanary = createCanary;
+        self.undo = undo;
         
         activate();
         
@@ -71,10 +72,16 @@
          */
         function createCanary(ev, clusterId, appId, formData) {
             formData.portMappings = formData.ports;
-            delete formData.ports;
             appcurd.createCanary(ev, formData, clusterId, appId);
         }
-        
+
+        /*
+         撤销操作
+         */
+        function undo(clusterId, appId){
+            var data = {};
+            appcurd.undo(data, clusterId, appId)
+        }
         
         function refreshData() {
             var deferred = $q.defer();

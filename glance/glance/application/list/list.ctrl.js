@@ -27,7 +27,7 @@
         };
 
         /*
-           恢复操作
+           撤销操作
          */
         self.undo = function (clusterId, appId) {
             var data = {};
@@ -42,7 +42,7 @@
         };
 
         /*
-           重新部署操作
+           恢复操作
          */
         self.redeploy = function (clusterId, appId) {
             var data = {};
