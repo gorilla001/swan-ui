@@ -10,8 +10,6 @@
     function WarnLogScalingCtrl(data, mdTable, $stateParams, $state) {
         var self = this;
 
-        console.log($state);
-
         self.scalingList = data.ScaleHistory;
         self.count = data.Count;
         self.WARNING_TYPE = WARNING_TYPE;
