@@ -115,7 +115,8 @@
                                 clear-text="清除"
                                 close-text="关闭"
                                 mousewheel="false"
-                                date-disabled="isDisableGteDate(date, mode)">
+                                date-disabled="isDisableGteDate(date, mode)"
+                                ng-required="timeRange === 'other'">
                         </datetimepicker>
                     </div>
                     <div data-ng-show="timeRange === 'other'" flex="30" flex-offset="5">
@@ -131,7 +132,8 @@
                                 clear-text="清除"
                                 close-text="关闭"
                                 mousewheel="false"
-                                date-disabled="isDisablelteDate(date, mode)">
+                                date-disabled="isDisablelteDate(date, mode)"
+                                ng-required="timeRange === 'other'">
                         </datetimepicker>
                     </div>
                     <div flex="60" flex-offset="5">
