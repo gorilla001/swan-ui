@@ -11,8 +11,9 @@
         self.searchKeyWord = $stateParams.keywords || '';
         self.table = mdTable.createTable('policy.tab.applogwarning.loglist');
         self.enableText = {
-            true: '启动',
-            false: '停止'
+            0: '停止',
+            1: '启动',
+            2: '不可用'
         };
 
         self.deleteLogPolicy = deleteLogPolicy;
@@ -32,8 +33,8 @@
             }, {reload: true});
         }
 
-        function switchNotice(logPolicy) {
-            logWarningCurd.switchNotice(logPolicy.id, logPolicy.isnotice)
+        function switchNotice(logId, isnotice) {
+            logWarningCurd.switchNotice(logId, isnotice)
                 .then(function (data) {
                     $state.reload();
                 });

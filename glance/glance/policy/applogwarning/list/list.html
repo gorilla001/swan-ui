@@ -17,7 +17,7 @@
             <th md-column>监控周期</th>
             <th md-column md-order-by="gtnum">出现次数</th>
             <th md-column md-order-by="emails">联系人</th>
-            <th md-column>启用</th>
+            <th md-column>状态</th>
             <th md-column md-order-by="createtime">更新时间</th>
             <th md-column>操作</th>
         </tr>
@@ -37,11 +37,11 @@
                     <md-button aria-label="Open demo menu" class="md-button md-raised" ng-click="$mdOpenMenu($event)"><i
                             class="fa fa-ellipsis-h" aria-hidden="true"></i></md-button>
                     <md-menu-content width="2">
-                        <md-menu-item ng-if="!item.isnotice">
-                            <md-button data-ng-click="logWarningListCtrl.switchNotice(item)" data-demo-disable>启动</md-button>
+                        <md-menu-item ng-if="item.isnotice == 0">
+                            <md-button data-ng-click="logWarningListCtrl.switchNotice(item.id, item.isnotice)" data-demo-disable>启动</md-button>
                         </md-menu-item>
-                        <md-menu-item ng-if="item.isnotice">
-                            <md-button data-ng-click="logWarningListCtrl.switchNotice(item)" data-demo-disable>停止</md-button>
+                        <md-menu-item ng-if="item.isnotice == 1">
+                            <md-button data-ng-click="logWarningListCtrl.switchNotice(item.id, item.isnotice)" data-demo-disable>停止</md-button>
                         </md-menu-item>
                         <md-menu-item>
                             <md-button data-ng-click="logWarningListCtrl.deleteLogPolicy(item.id, $event)" data-demo-disable>删除
