@@ -30,7 +30,7 @@
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
 
-        $rootScope.IS_OFF_FLAG = IS_OFF_LINE;
+        $rootScope.IS_OFF_LINE = IS_OFF_LINE;
         $rootScope.FRONTEND_MSG = FRONTEND_MSG;
         $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
         $rootScope.is_licence_on = IS_LICENCE_ON;
