@@ -295,7 +295,7 @@ glanceApp.directive('piechart', function () {
                                                         if (scope.total && scope.used) {
                                                             return (scope.used / scope.total * 100).toFixed(2) + '%'
                                                         } else if (scope.used == undefined || !scope.total) {
-                                                            return '异常'
+                                                            return '加载中'
                                                         } else {
                                                             return '0.00%'
                                                         }
