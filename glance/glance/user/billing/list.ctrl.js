@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function ListBillingCtrl($state, $stateParams, clusterBackendService, appservice, billings, apps, clusters, mdTable) {
+    function ListBillingCtrl($state, $stateParams, clusterBackend, appservice, billings, apps, clusters, mdTable) {
         var self = this;
 
         self.table = mdTable.createTable('user.billings');

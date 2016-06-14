@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     angular.module('glance.cluster')
-        .factory('clusterBackendService', clusterBackendService);
+        .factory('clusterBackend', clusterBackend);
 
-    clusterBackendService.$inject = ['gHttp'];
+    clusterBackend.$inject = ['gHttp'];
 
-    function clusterBackendService(gHttp) {
+    function clusterBackend(gHttp) {
         return {
             listClusters: listClusters,
             getCluster: getCluster,

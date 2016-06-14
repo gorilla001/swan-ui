@@ -10,7 +10,7 @@
     function CreateAppCtrl(appservice,
                            Notification,
                            multiSelectConfig,
-                           clusterBackendService,
+                           clusterBackend,
                            appLabelService,
                            $state,
                            $scope,
@@ -115,7 +115,7 @@
             appservice.listAppPorts(cluster_id, app_id).then(function (data) {
                 self.existPorts = data;
             });
-            return clusterBackendService.getCluster(cluster_id)
+            return clusterBackend.getCluster(cluster_id)
                 .then(function (cluster) {
                     self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
                     self.multiSelect.nodes = [];

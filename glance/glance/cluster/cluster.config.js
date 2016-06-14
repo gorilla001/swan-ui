@@ -3,8 +3,7 @@
     angular.module('glance.cluster')
         .config(configure);
 
-    configure.$inject = [];
-
+    /* @ngInject */
     function configure() {
        
     }

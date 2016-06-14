@@ -8,14 +8,14 @@
 
 
     /* @ngInject */
-    function clusterCurd(clusterBackendService) {
+    function clusterCurd(clusterBackend) {
         return {
             listClusterLables: listClusterLables
 
         };
 
         function listClusterLables() {
-            return clusterBackendService.listClusters()
+            return clusterBackend.listClusters()
                 .then(function (data) {
                     var clusters = [];
 

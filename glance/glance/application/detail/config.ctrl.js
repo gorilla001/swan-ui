@@ -6,9 +6,9 @@
     angular.module('glance.app')
         .controller('ConfigAppCtrl', ConfigAppCtrl);
 
-    ConfigAppCtrl.$inject = ['gHttp', '$scope', 'clusterBackendService', '$stateParams'];
+    ConfigAppCtrl.$inject = ['gHttp', '$scope', 'clusterBackend', '$stateParams'];
 
-    function ConfigAppCtrl(gHttp, $scope, clusterBackendService, $stateParams) {
+    function ConfigAppCtrl(gHttp, $scope, clusterBackend, $stateParams) {
         var self = this;
         ///
         self.listNodesIp = [];
@@ -41,7 +41,7 @@
         }
 
         function checkDemoGroup(){
-            clusterBackendService.getCluster($stateParams.cluster_id)
+            clusterBackend.getCluster($stateParams.cluster_id)
                 .then(function(data){
                     if(data.is_demo_group){
                         self.isGroupFlag = true;

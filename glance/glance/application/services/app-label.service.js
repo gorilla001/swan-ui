@@ -3,9 +3,9 @@
     angular.module('glance.app')
         .factory('appLabelService', appLabelService);
 
-    appLabelService.$inject = ['clusterBackendService'];
+    appLabelService.$inject = ['clusterBackend'];
 
-    function appLabelService(clusterBackendService) {
+    function appLabelService(clusterBackend) {
         return {
             listClusterLabels: listClusterLabels,
             listNodesByLabelIds: listNodesByLabelIds
@@ -30,7 +30,7 @@
         function  listNodesByLabelIds(selectedLables, clusterId) {
             var labelIds = collectIds(selectedLables);
             var labelIdsString = labelIds.join(',');
-            return clusterBackendService.listNodesByLabelIds(clusterId, labelIdsString);
+            return clusterBackend.listNodesByLabelIds(clusterId, labelIdsString);
         }
         
         //////////////
