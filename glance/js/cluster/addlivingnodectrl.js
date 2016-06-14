@@ -1,5 +1,4 @@
 function addLivingNodeCtrl(utils,$scope, $stateParams) {
-    utils.clickToCopy();
     $scope.isCollapsed = true;
     $scope.clusterId = $stateParams.clusterId;
 }

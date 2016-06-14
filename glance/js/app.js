@@ -26,7 +26,7 @@ var glanceApp = angular.module('glance',
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
     function ($stateProvider, $urlRouterProvider, $interpolateProvider, $locationProvider, NotificationProvider) {
         NotificationProvider.setOptions({
-            delay: 1000,
+            delay: 3000,
             positionX: 'right',
             positionY: 'top',
             replaceMessage: true,
