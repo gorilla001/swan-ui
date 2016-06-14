@@ -44,7 +44,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
                     $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
                 } else if (cluster.clusterStatus === CLUSTER_STATUS.abnormal) {
                     gHttp.Resource('cluster.cluster', {'cluster_id': cluster.infos.id}).patch({"method": "repair"}).then(function(){
-                        $state.go('cluster.clusterdetails.nodes', {clusterId: cluster.infos.id})
+                        $state.go('cluster.detail.nodes', {clusterId: cluster.infos.id})
                     });
                 }
             })

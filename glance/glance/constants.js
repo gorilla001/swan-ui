@@ -194,21 +194,34 @@ SUB_INFOTYPE = {
 };
 
 NODE_STATUS = {
-    running: "running",
-    terminated: "terminated",
-    failed: "failed",
-    installing: "installing",
-    initing: "initing",
-    upgrading: "upgrading",
-    repairing: "repairing",
-    abnormal: "abnormal"
+    running: "7_running",
+    terminated: "0_terminated",
+    failed: "2_failed",
+    installing: "4_installing",
+    initing: "6_initing",
+    upgrading: "5_upgrading",
+    repairing: "3_repairing",
+    abnormal: "1_abnormal"
+};
+
+NODE_STATUS_NAME = {
+    '7_running': '运行正常',
+    '0_terminated': '主机失联',
+    '2_failed': '主机异常',
+    '6_initing': '主机初始化中',
+    '5_upgrading': '主机升级中',
+    '1_abnormal': '主机预警',
+    '4_installing': '主机安装中',
+    '3_repairing': '主机修复中'
 };
 
 CLUSTER_STATUS = {
-    running: 'running',
-    installing: 'installing',
-    abnormal: 'abnormal',
-    unknow: 'unknow'
+    'new': '新集群',
+    'installing': '初始化中',
+    'failed': '异常',
+    'abnormal': '预警',
+    'running': '运行正常',
+    'upgrading': '升级中'
 };
 
 
@@ -320,15 +333,16 @@ BACKEND_URL = {
     cluster: {
         clusters: "api/v3/clusters",
         versions: "api/v3/clusters/versions",
-        cluster: "api/v3/clusters/$cluster_id",
+        cluster: "api/v4/clusters/$cluster_id",
         nodeId: "api/v3/clusters/$cluster_id/new_node_identifier",
         nodes: "api/v3/clusters/$cluster_id/nodes",
         node: "api/v3/clusters/$cluster_id/nodes/$node_id",
         nodeMonitor: "api/v3/clusters/$cluster_id/nodes/$node_id/metrics",
         service: "api/v3/clusters/$cluster_id/nodes/$node_id/services/$service_name",
-
         labels: "api/v3/labels",
-        nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels"
+        nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels",
+        oldversion: "api/v3/clusters/$cluster_id/oldversion_num",
+        nodesV4: "api/v4/clusters/$cluster_id/nodes"
     },
     metrics: {
         getClusterMonitor: "api/v3/clusters/$cluster_id/metrics",

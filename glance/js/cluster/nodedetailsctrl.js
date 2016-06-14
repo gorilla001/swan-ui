@@ -162,7 +162,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
         confirmModal.open(toast, ev).then(function () {
             gHttp.Resource('cluster.nodes', {"cluster_id": $stateParams.clusterId}).delete({'data': ids}).then(function () {
-                $state.go('cluster.clusterdetails.nodes', {'clusterId': $stateParams.clusterId});
+                $state.go('cluster.detail.nodes', {'clusterId': $stateParams.clusterId});
             });
         });
     };

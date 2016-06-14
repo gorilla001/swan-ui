@@ -9,7 +9,7 @@ function clusterNodesCtrl($scope, mdTable, $mdDialog, addLabelModal, $stateParam
     $scope.checkedNodeLabels = [];
     $scope.selected = [];
 
-    self.table = mdTable.createTable('cluster.clusterdetails.nodes');
+    self.table = mdTable.createTable('cluster.detail.nodes');
 
     $scope.refresh = function () {
         $state.reload("cluster.clusterdetails");

@@ -65,11 +65,10 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
         confirmModal.open('您确定要删除集群吗？', ev, content).then(function () {
             gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
                 Notification.success('集群删除成功');
-                $state.go('cluster.listclusters', null, {reload: true});
+                $state.go('cluster.list', null, {reload: true});
             });
         })
     };
-
 
     $scope.getClass = function(status) {
         var classes = {

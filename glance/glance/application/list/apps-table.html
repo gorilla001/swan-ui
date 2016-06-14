@@ -22,7 +22,8 @@
                    data-ng-model="appsTableCtrl.searchForm.keywords">
         </div>
         <button type="submit" class="btn btn-info" data-ng-click="appsTableCtrl.search()"
-                data-ng-disabled="searchForm.$invalid">搜索</button>
+                data-ng-disabled="searchForm.$invalid">搜索
+        </button>
     </form>
     <md-toolbar class="md-table-toolbar md-default" data-ng-if="appsTableCtrl.targets ==='my'">
         <div class="md-toolbar-tools">
@@ -52,14 +53,15 @@
                                data-ui-sref="app.detail({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a></td>
                 <td md-cell>
                     {/listappctrl.APP_STATUS[appsTableCtrl.appListStatus[app.id].status]/} {/app.status/}
-                    <p class="text-danger" data-ng-if="appsTableCtrl.appListStatus[app.id].lastfailure">({/listappctrl.APP_FAIL_RESULT[appsTableCtrl.appListStatus[app.id].lastfailure]/})</p>
+                    <p class="text-danger" data-ng-if="appsTableCtrl.appListStatus[app.id].lastfailure">
+                        ({/listappctrl.APP_FAIL_RESULT[appsTableCtrl.appListStatus[app.id].lastfailure]/})</p>
                 </td>
                 <td md-cell>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                 <td md-cell>
-                    <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
-                       ng-class="{'danger': appsTableCtrl.appListStatus[app.id].status == '10'}"> <img
-                            data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
-                            ng-show="appsTableCtrl.appListStatus[app.id].status == '10'">
+                    <a href="#" data-ui-sref="cluster.detail.nodes({clusterId:app.cid})"
+                       ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '10'}">
+                        <img data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
+                             ng-show="appsTableCtrl.appListStatus[app.id].status == '10'">
                         {/appsTableCtrl.clusterNameMap[app.cid]/}
                     </a>
                 </td>
@@ -115,7 +117,8 @@
                                            data-demo-disable>恢复
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item data-ng-show="appsTableCtrl.appListStatus[app.id].status == '2' || appsTableCtrl.appListStatus[app.id].status == '3'">
+                            <md-menu-item
+                                    data-ng-show="appsTableCtrl.appListStatus[app.id].status == '2' || appsTableCtrl.appListStatus[app.id].status == '3'">
                                 <md-button aria-label="update"
                                            data-ng-disabled="app.canary"
                                            data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})">
@@ -132,7 +135,8 @@
                             <md-menu-item>
                                 <md-button aria-label="canary"
                                            data-ng-click="listappctrl.createCanary($event, app.cid, app.id, app.instances)"
-                                           data-ng-disabled="appsTableCtrl.appListStatus[app.id].status !='2' || !app.ports.length || app.canary" data-demo-disable>
+                                           data-ng-disabled="appsTableCtrl.appListStatus[app.id].status !='2' || !app.ports.length || app.canary"
+                                           data-demo-disable>
                                     新建灰度
                                 </md-button>
                             </md-menu-item>
@@ -161,7 +165,8 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="alert alert-info">
                 <p>数人云 DCOS，是一款部署在公有云或者私有云（IDC）之上的应用运维软件，旨在帮助用户在云端快速建立并稳定运维一个高性能生产环境。 </p>
-                <p>通过数人云，用户可以快速整合不同环境下的主机资源，部署海量应用。通过领先的 Mesos 和 Docker 技术，数人云可以为用户的业务系统带来高可用的服务质量，快速的性能伸缩，高效的资源利用以及便捷的可视化管理和监控；同时，数人云保证用户的服务资源和数据完全为用户私有可控。 </p>
+                <p>通过数人云，用户可以快速整合不同环境下的主机资源，部署海量应用。通过领先的 Mesos 和 Docker
+                    技术，数人云可以为用户的业务系统带来高可用的服务质量，快速的性能伸缩，高效的资源利用以及便捷的可视化管理和监控；同时，数人云保证用户的服务资源和数据完全为用户私有可控。 </p>
                 <p class="text-center">
                     <br>
                     <a data-ui-sref="user.groups" class="btn btn-success" data-demo-disable>新建用户组</a>
