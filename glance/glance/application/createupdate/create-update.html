@@ -426,7 +426,7 @@
                                 <ng-form name="logPathForm" layout="row" layout-align="start center">
                                     <input type="text" flex="40" data-ng-model="createAppCtrl.form.logPaths[$index]"
                                            name="path" data-required="required"
-                                           data-ng-pattern="/^[^\u4e00-\u9fa5]*$/"
+                                           data-ng-pattern="/^\/[^\u4e00-\u9fa5]*[^\/]$/"
                                            samename data-name-list="createAppCtrl.listLogPath" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
@@ -440,7 +440,7 @@
                                 <p data-ng-if="logPathForm.path.$error.required && !logPathForm.path.$pristine"
                                    class="help-info-bottom error-info">不能为空</p>
                                 <p data-ng-if="logPathForm.path.$error.pattern && !logPathForm.path.$pristine"
-                                   class="help-info-bottom error-info">路径不能包含中文</p>
+                                   class="help-info-bottom error-info">路径格式不正确(路径不能包含中文且必须为绝对路径)</p>
                             </div>
                         </div>
                     </div>
