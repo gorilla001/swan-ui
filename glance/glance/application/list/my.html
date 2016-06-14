@@ -40,6 +40,7 @@
             <td md-cell>
                 <span ng-show="myAppsCtrl.appListStatus[app.id].tasks != undefined && myAppsCtrl.appListStatus[app.id].tasks != app.instances">{/myAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
                 <span ng-show="myAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+                <span data-ng-if="app.canary">(灰度实例: {/app.canaryInstances/})</span>
             </td>
             <td md-cell>
                 <md-button aria-label="strp" class="md-button md-raised"

@@ -7,7 +7,7 @@
         .controller('GroupAppsCtrl', GroupAppsCtrl);
 
     /* @ngInject */
-    function GroupAppsCtrl(clusters, groups, status, mdTable, $stateParams, $scope, timing, $q, apps, $state, utils, appservice) {
+    function GroupAppsCtrl(clusters, groups, status, mdTable, $stateParams, $scope, timing, $q, apps, $state, utils, appservice, userBackend) {
         var self = this;
         var appListReloadInterval = 5000;
 
@@ -22,6 +22,8 @@
         self.count = apps.Count;
         self.searchForm.keywords = $stateParams.keywords;
         self.APP_STATUS = APP_STATUS;
+        self.groupUserMap = {};
+
 
         self.search = search;
         self.groupChange = groupChange;
@@ -29,6 +31,9 @@
         activate();
 
         function activate() {
+            if($stateParams.groupId){
+                getGroupIdUsers();
+            }
             angular.forEach(groups.groups, function (group) {
                 if (group.role.id === 1) {
                     self.groups.push(group);
@@ -111,6 +116,17 @@
             }
 
             return params;
+        }
+
+        function getGroupIdUsers(){
+            userBackend.listGroupUser($stateParams.groupId)
+                .then(function(data){
+                    if(data && data.length){
+                        angular.forEach(data, function(item, index){
+                            self.groupUserMap[item.user.id] = item.user.name
+                        });
+                    }
+                })
         }
     }
 })();

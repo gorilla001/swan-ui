@@ -33,6 +33,7 @@
                 <th md-column><span>当前状态</span></th>
                 <th md-column md-order-by="updated">更新时间</th>
                 <th md-column>所属集群</th>
+                <th md-column>所属用户</th>
                 <th md-column md-order-by="instances">容器个数</th>
                 <th md-column>操作</th>
             </tr>
@@ -55,8 +56,12 @@
                     </a>
                 </td>
                 <td md-cell>
+                    {/groupAppsCtrl.groupUserMap[app.uid]/}
+                </td>
+                <td md-cell>
                     <span ng-show="groupAppsCtrl.appListStatus[app.id].tasks != undefined && groupAppsCtrl.appListStatus[app.id].tasks != app.instances">{/groupAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
                     <span ng-show="groupAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+                    <span data-ng-if="app.canary">(灰度实例: {/app.canaryInstances/})</span>
                 </td>
                 <td md-cell>
                     <md-button aria-label="strp" class="md-button md-raised"
@@ -102,11 +107,10 @@
                                            data-demo-disable>恢复
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item>
+                            <md-menu-item data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '2' || groupAppsCtrl.appListStatus[app.id].status == '3'">
                                 <md-button aria-label="update"
                                            data-ng-disabled="app.canary"
-                                           data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})"
-                                           data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '2' || groupAppsCtrl.appListStatus[app.id].status == '3'">
+                                           data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})">
                                     更新
                                 </md-button>
                             </md-menu-item>
