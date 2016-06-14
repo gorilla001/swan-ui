@@ -14,7 +14,7 @@
             <div flex="50" layout="column">
               <div flex>
                 <input type="text" 
-                       class="form-input form-control"
+                       class="form-input"
                        name="name"
                        data-ng-model="form.name"
                        data-ng-disabled="afterCopy">
@@ -46,7 +46,7 @@
                  </code>
                 </dt>
                 <dd>
-                  <md-button class="md-button md-primary copy" data-clipboard-target="install-docker-code">
+                  <md-button class="md-button md-primary copy" data-dm-copy="install-docker-code">
                     <i class="fa fa-clone"></i> 点击复制代码
                   </md-button>
                 </dd>
@@ -60,7 +60,7 @@
                   </code>
                 </dt>
                 <dd>
-                  <md-button class="md-button md-primary copy" data-clipboard-target="code" data-ng-click="clickToCopy()" data-demo-disable>
+                  <md-button class="md-button md-primary copy" data-ng-click="clickToCopy()" data-dm-copy="code" data-demo-disable>
                     <i class="fa fa-clone"></i> 点击生成命令并复制
                   </md-button>
                 </dd>

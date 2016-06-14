@@ -7,25 +7,9 @@
     function utils(Notification, $rootScope) {
         return {
             buildFullURL: buildFullURL,
-            clickToCopy: clickToCopy,
             encodeQueryParams: encodeQueryParams,
             redirectLogin: redirectLogin
         };
-        
-        function clickToCopy(className) {
-            if (!className) {
-                className = ".copy";
-            }
-            $(className).each(function () {
-                var clip = new ZeroClipboard($(this), {
-                    moviePath: "/bower_components/zeroclipboard/dist/ZeroClipboard.swf"
-                });
-                clip.on("aftercopy", function (event) {
-                    Notification.success('复制成功');
-                });
-            });
-        };
-
 
         function getUrlTemplate(name) {
             var confs = name.split('.');
