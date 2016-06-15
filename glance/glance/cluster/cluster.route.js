@@ -93,6 +93,6 @@
 
     /* @ngInject */
     function listNodes($stateParams, clusterBackend, utils) {
-        return clusterBackend.listNodes(utils.encodeQueryParams($stateParams), $stateParams.clusterId);
+        return clusterBackend.listNodes($stateParams.clusterId, utils.encodeQueryParams($stateParams));
     }
 })();

@@ -3,8 +3,7 @@
     angular.module('glance.cluster')
         .factory('clusterBackend', clusterBackend);
 
-    clusterBackend.$inject = ['gHttp'];
-
+    /* @ngInject*/
     function clusterBackend(gHttp) {
         return {
             listClusters: listClusters,
@@ -32,8 +31,8 @@
             return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({params: params});
         }
 
-        function listNodes(params, clusterId, loading) {
-            return gHttp.Resource('cluster.nodesV4', {cluster_id: clusterId}).get({params: params, "loading": loading});
+        function listNodes(clusterId, params, loading) {
+            return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({params: params, "loading": loading});
         }
 
         function deleteCluster(clusterId){

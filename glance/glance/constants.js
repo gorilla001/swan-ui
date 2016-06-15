@@ -335,14 +335,13 @@ BACKEND_URL = {
         versions: "api/v3/clusters/versions",
         cluster: "api/v4/clusters/$cluster_id",
         nodeId: "api/v3/clusters/$cluster_id/new_node_identifier",
-        nodes: "api/v3/clusters/$cluster_id/nodes",
+        nodes: "api/v4/clusters/$cluster_id/nodes",
         node: "api/v3/clusters/$cluster_id/nodes/$node_id",
         nodeMonitor: "api/v3/clusters/$cluster_id/nodes/$node_id/metrics",
         service: "api/v3/clusters/$cluster_id/nodes/$node_id/services/$service_name",
         labels: "api/v3/labels",
         nodesLabels: "api/v3/clusters/$cluster_id/nodes/labels",
-        oldversion: "api/v3/clusters/$cluster_id/oldversion_num",
-        nodesV4: "api/v4/clusters/$cluster_id/nodes"
+        oldversion: "api/v3/clusters/$cluster_id/oldversion_num"
     },
     metrics: {
         getClusterMonitor: "api/v3/clusters/$cluster_id/metrics",

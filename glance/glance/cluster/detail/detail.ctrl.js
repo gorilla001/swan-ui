@@ -13,9 +13,7 @@
         self.CLUSTER_STATUS = CLUSTER_STATUS;
 
         self.cluster = clusterDetail;
-        self.nodeTotal = sumNodeTotal(self.cluster.node_nums).reduce(function (previousValue, currentValue) {
-            return previousValue + currentValue
-        });
+        self.nodeTotal = sumNodeTotal(self.cluster.node_nums);
 
         self.deleteCluster = deleteCluster;
 
@@ -23,13 +21,12 @@
             clusterCurd.deleteCluster(clusterId, ev)
         }
 
-        function sumNodeTotal(object) {
-            var values = [];
-            for (var property in object) {
-                values.push(object[property])
-            }
-
-            return values
+        function sumNodeTotal(nodeNums) {
+            var total = 0;
+            angular.forEach(nodeNums, function (value){
+                total += value;
+            })
+            return total;
         }
     }
 })();

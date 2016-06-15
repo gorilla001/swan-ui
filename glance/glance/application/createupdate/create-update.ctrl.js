@@ -117,10 +117,7 @@
             });
             return clusterBackend.getCluster(cluster_id)
                 .then(function (cluster) {
-                    self.multiSelect.labels = appLabelService.listClusterLabels(cluster.nodes);
-                    self.multiSelect.nodes = [];
                     self.cluster = cluster;
-                    setMultiSelect(cluster.nodes, cluster.cluster_type);
                     if (cluster.group_name) {
                         self.clusterName = cluster.group_name + ":" + cluster.name;
                     } else {
@@ -135,6 +132,12 @@
                         self.isNetworkDisable = false;
                         self.isDockerArgDisable = false;
                     }
+                    clusterBackend.listNodes(cluster_id).then(function (data) {
+                        var nodes = data.nodes;
+                        self.multiSelect.labels = appLabelService.listClusterLabels(nodes);
+                        self.multiSelect.nodes = [];
+                        setMultiSelect(nodes, cluster.cluster_type);
+                    })
                 });
         }
 
@@ -316,7 +319,8 @@
 
         function listNodesBySelectedLabels() {
             return appLabelService.listNodesByLabelIds(self.multiSelect.selectedLabels, self.form.cluster_id)
-                .then(function (nodes) {
+                .then(function (data) {
+                    var nodes = data.nodes;
                     self.multiSelect.nodes = [];
                     self.multiSelect.selectedNodes = [];
                     angular.forEach(nodes, function (node) {
