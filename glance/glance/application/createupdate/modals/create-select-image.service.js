@@ -38,7 +38,7 @@
                 {name: 'Wordpress', image: 'index.shurenyun.com/wordpress:4.4', url: 'http://doc.shurenyun.com/practice/wordpress.html'},
                 {name: 'redis', image: 'index.shurenyun.com/redis:3', url: ''},
                 {name: 'nginx', image: 'index.shurenyun.com/nginx:1.9', url: ''},
-                {name: 'jenkins', image: 'index.shurenyun.com/centos7/mesos-0.23.0-jdk8-jenkins1.628-m:customer.v0.1', url: 'http://doc.shurenyun.com/practice/jenkins.html'},
+                {name: 'jenkins', image: 'index.shurenyun.com/centos7/mesos-0.23.0-jdk8-jenkins1.628-master:customer.v0.1', url: 'http://doc.shurenyun.com/practice/jenkins.html'},
                 {name: 'haproxy', image: 'index.shurenyun.com/haproxy:1.6', url: ''}
             ];
 
