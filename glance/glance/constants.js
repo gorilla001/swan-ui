@@ -98,7 +98,7 @@ CODE_MESSAGE = {
 };
 
 WS_CODE = {
-        token_invalide: 4051
+    token_invalide: 4051
 };
 
 FRONTEND_MSG = {
@@ -215,6 +215,21 @@ NODE_STATUS_NAME = {
     '3_repairing': '主机修复中'
 };
 
+SERVICE_NAME = {
+    master: '主控组件',
+    marathon: '应用调度组件',
+    zookeeper: 'Zookeeper',
+    exhibitor: 'ZK监控组件',
+    slave: '节点组件',
+    cadvisor: '监控组件',
+    logcollection: '日志收集组件',
+    bamboo: '服务发现监控组件',
+    haproxy: '服务发现代理组件',
+    chronos: '定时任务组件',
+    docker: 'Docker',
+    agent: 'Agent'
+};
+
 CLUSTER_STATUS = {
     'new': '新集群',
     'installing': '初始化中',
@@ -309,8 +324,8 @@ USER_STATUS = {
 }
 
 USER_TYPE = {
-	true: "管理员",
-	false: "成员",
+    true: "管理员",
+    false: "成员",
 }
 
 
@@ -398,7 +413,7 @@ BACKEND_URL = {
     billing: {
         billings: 'api/v3/billing'
     },
-    
+
     image: {
         projects: 'api/v3/projects',
         project: 'api/v3/projects/$project_id',
@@ -433,7 +448,7 @@ BACKEND_URL = {
         deployment: 'api/v3/clusters/$cluster_id/stacks/$stack_id/deployment/$key',
         sse: 'api/v3/stacks/deployment_process'
     },
-    
+
     licence: {
         licence: 'api/v3/licence'
     }

@@ -10,14 +10,14 @@
     <div class="md-toolbar-tools">
         <div flex></div>
         <div class="btn-group btn-dropdown-info md-toolbar-tools"
-             data-ng-show="!statusMgr.nodeStatusCount[clusterDetailCtrl.cluster.id]['upgrading'] && statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].total"
+             data-ng-show="clusterNodesCtrl.updateInfo.node"
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm"
                     data-demo-disable
                     data-dm-permit-click="1"
                     data-dm-role="clusterDetailCtrl.cluster.group_role"
                     data-dm-permit-msg="FRONTEND_MSG.no_group_admin">升级服务
-                <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id].total"></span>
+                <span class="badge" data-ng-bind="clusterNodesCtrl.updateInfo.node"></span>
             </button>
             <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -25,16 +25,18 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-                <li data-ng-repeat="(name, _) in statusMgr.nodeOldVersionCount[cluster.id].widgets">
-                    {/getServiceLabel(name)/}
-                    <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[cluster.id][name]"></span>
+                <li data-ng-repeat="(name, num) in clusterNodesCtrl.updateInfo" ng-if="name != 'node'">
+                    {/clusterNodesCtrl.SERVICE_NAME[name]/}
+                    <span class="badge" data-ng-bind="num"></span>
                 </li>
             </ul>
         </div>
         <div class="btn-group btn-dropdown-info md-toolbar-tools"
-             data-ng-show="statusMgr.nodeStatusCount[clusterDetailCtrl.cluster.id]['upgrading']" style="padding: 0 10px">
+             data-ng-show="statusMgr.nodeStatusCount[clusterDetailCtrl.cluster.id]['upgrading']"
+             style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中
-                <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].total"></span>
+                <span class="badge"
+                      data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].total"></span>
             </button>
             <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -44,7 +46,8 @@
             <ul class="dropdown-menu">
                 <li data-ng-repeat="(name, _) in statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].widgets">
                     {/getServiceLabel(name)/}
-                    <span class="badge" data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id][name]"></span>
+                    <span class="badge"
+                          data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id][name]"></span>
                 </li>
             </ul>
         </div>

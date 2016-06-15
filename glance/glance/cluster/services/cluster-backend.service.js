@@ -10,7 +10,8 @@
             getCluster: getCluster,
             listNodesByLabelIds: listNodesByLabelIds,
             listNodes: listNodes,
-            deleteCluster: deleteCluster
+            deleteCluster: deleteCluster,
+            getOldVersionNums: getOldVersionNums
         };
 
         ////////////
@@ -35,10 +36,12 @@
             return gHttp.Resource('cluster.nodes', {cluster_id: clusterId}).get({params: params, "loading": loading});
         }
 
-        function deleteCluster(clusterId){
+        function deleteCluster(clusterId) {
             return gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete();
         }
 
-
+        function getOldVersionNums(clusterId) {
+            return gHttp.Resource('cluster.oldversion', {cluster_id: clusterId}).get();
+        }
     }
 })();
