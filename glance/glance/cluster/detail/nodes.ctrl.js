@@ -7,7 +7,7 @@
         .controller('ClusterNodesCtrl', ClusterNodesCtrl);
 
     /* @ngInject */
-    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend) {
+    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope) {
         var self = this;
 
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
@@ -40,5 +40,14 @@
 
                 })
         }
+
+        //监听主机状态 websocket
+        $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+            angular.forEach(self.nodes, function(item, index){
+                if(item.id == data.nodeId){
+                    item.status = data.status
+                }
+            });
+        })
     }
 })();

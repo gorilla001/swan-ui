@@ -25,7 +25,7 @@
             var total = 0;
             angular.forEach(nodeNums, function (value){
                 total += value;
-            })
+            });
             return total;
         }
     }
