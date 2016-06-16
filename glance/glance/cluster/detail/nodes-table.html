@@ -13,6 +13,7 @@
              data-ng-show="clusterNodesCtrl.updateInfo.node"
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm"
+                    data-ng-click="clusterNodesCtrl.upgradeNode(clusterDetailCtrl.cluster.id)"
                     data-demo-disable
                     data-dm-permit-click="1"
                     data-dm-role="clusterDetailCtrl.cluster.group_role"

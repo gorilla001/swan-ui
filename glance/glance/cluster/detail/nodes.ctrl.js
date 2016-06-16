@@ -19,6 +19,8 @@
         self.count = nodes.total;
         self.updateInfo = {};
 
+        self.upgradeNode = upgradeNode;
+
         activate();
 
         function activate() {
@@ -29,6 +31,13 @@
             clusterBackend.getOldVersionNums($stateParams.clusterId)
                 .then(function (data) {
                     self.updateInfo = data;
+                })
+        }
+
+        function upgradeNode(clusterId){
+            clusterBackend.upgradeNode(clusterId)
+                .then(function(data){
+
                 })
         }
     }
