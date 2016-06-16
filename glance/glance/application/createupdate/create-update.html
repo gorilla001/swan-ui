@@ -258,11 +258,13 @@
                                 <ng-form name="volumes" layout="row" layout-align="start center">
                                     <input type="text" placeholder="主机路径" name="hostPath" flex="40" data-ng-model="volume.hostPath"
                                            data-required="required"
-                                           data-ng-pattern="/^\/[\w//\-]*\.{0,1}?[^\/\W]*$/">
+                                           data-ng-maxlength="256"
+                                           data-ng-pattern="/^\/[\w//\-]*\.{0,1}?\w*[^\/]$/">
                                     <input type="text" placeholder="容器路径" flex-offset="5" flex="40" name="containerPath"
                                            data-ng-model="volume.containerPath" data-required="required"
                                            samename data-name-list="createAppCtrl.listPath" data-name-index="$index"
-                                           data-ng-pattern="/^\/[\w//\-]*\.{0,1}?[^\/\W]*$/">
+                                           data-ng-maxlength="256"
+                                           data-ng-pattern="/^\/[\w//\-]{0,256}?\.{0,1}?\w{0,256}?[^\/]$/">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
                                                    data-ng-click="createAppCtrl.deleteConfig($index, 'volumes')">
@@ -281,9 +283,12 @@
                                    class="help-info-bottom error-info">容器路径不能为空</p>
                                 <p data-ng-if="volumes.containerPath.$error.pattern && !volumes.containerPath.$pristine"
                                    class="help-info-bottom error-info">容器路径格式不正确(路径不能包含中文且必须为绝对路径)</p>
-
+                                <p class="error-info help-info-bottom"
+                                   data-ng-if="volumes.containerPath.$error.maxlength || volumes.hostPath.$error.maxlength">
+                                    <small>路径长度不能超过256个字符</small>
+                                </p>
                             </div>
-                        </div>
+                        </div>if
                     </div>
 
                     <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
@@ -437,7 +442,8 @@
                                 <ng-form name="logPathForm" layout="row" layout-align="start center">
                                     <input type="text" flex="40" data-ng-model="createAppCtrl.form.logPaths[$index]"
                                            name="path" data-required="required"
-                                           data-ng-pattern="/^\/[\w//\-]*\.{0,1}?[^\/\W]*$/"
+                                           data-ng-pattern="/^\/[\w//\-]*\.{0,1}?\w*[^\/]$/"
+                                           data-ng-maxlength="256"
                                            samename data-name-list="createAppCtrl.listLogPath" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
@@ -452,6 +458,10 @@
                                    class="help-info-bottom error-info">不能为空</p>
                                 <p data-ng-if="logPathForm.path.$error.pattern && !logPathForm.path.$pristine"
                                    class="help-info-bottom error-info">路径格式不正确(路径不能包含中文且必须为绝对路径)</p>
+                                <p class="error-info help-info-bottom"
+                                   data-ng-if="logPathForm.path.$error.maxlength">
+                                    <small>路径长度不能超过256个字符</small>
+                                </p>
                             </div>
                         </div>
                     </div>
