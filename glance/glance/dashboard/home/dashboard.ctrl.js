@@ -53,33 +53,19 @@
         }
 
         function collectClusterList(clusters) {
-            var clusterList = {};
-            var cluster;
-            for (var i = 0; i < clusters.length; i++) {
-                cluster = clusters[i];
-
-                if (cluster.nodes.length) {
-
-                    clusterList[cluster.id] = {
-                        id: cluster.id,
-                        name: cluster.name,
-                        nodes: cluster.nodes,
-                        appMonitors: [],
-                        masMetrics: {}
-                    };
-                }
-
-                for (var j = 0; j < cluster.nodes.length; j++) {
-                    self.statusMgr.addNode(cluster.id, cluster.nodes[j]);
-                }
-            }
-            self.statusMgr.startListen($scope);
-            return clusterList;
+            angular.forEach(clusters, function (cluster) {
+                cluster.appMonitors = [];
+                cluster.masMetrics = [];
+                angular.forEach(cluster.nodes, function (node){
+                    self.statusMgr.addNode(cluster.id, node);
+                })
+            })
+            return clusters;
         }
 
         // 应用下拉展示
-        function dropShow(clusterId) {
-            self.clusterList[clusterId].dropFlag = !self.clusterList[clusterId].dropFlag;
+        function dropShow(index) {
+            self.clusterList[index].dropFlag = !self.clusterList[index].dropFlag;
         }
     }
 })();
