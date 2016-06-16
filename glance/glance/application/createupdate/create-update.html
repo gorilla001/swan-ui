@@ -258,11 +258,11 @@
                                 <ng-form name="volumes" layout="row" layout-align="start center">
                                     <input type="text" placeholder="主机路径" name="hostPath" flex="40" data-ng-model="volume.hostPath"
                                            data-required="required"
-                                           data-ng-pattern="/^\/[\w]*[^\/]$/">
+                                           data-ng-pattern="/^\/[\w//\.]*[^\/\W]$/">
                                     <input type="text" placeholder="容器路径" flex-offset="5" flex="40" name="containerPath"
                                            data-ng-model="volume.containerPath" data-required="required"
                                            samename data-name-list="createAppCtrl.listPath" data-name-index="$index"
-                                           data-ng-pattern="/^\/[^\u4e00-\u9fa5]*[^\/]$/">
+                                           data-ng-pattern="/^\/[\w//\.]*[^\/\W]$/">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
                                                    data-ng-click="createAppCtrl.deleteConfig($index, 'volumes')">
@@ -437,7 +437,7 @@
                                 <ng-form name="logPathForm" layout="row" layout-align="start center">
                                     <input type="text" flex="40" data-ng-model="createAppCtrl.form.logPaths[$index]"
                                            name="path" data-required="required"
-                                           data-ng-pattern="/^\/[\w]*[^\/]$/"
+                                           data-ng-pattern="/^\/[\w//\.]*[^\/\W]$/"
                                            samename data-name-list="createAppCtrl.listLogPath" data-name-index="$index">
                                     <div flex-offset="5" flex>
                                         <md-button class="md-icon-button md-accent" aria-label="delete"
