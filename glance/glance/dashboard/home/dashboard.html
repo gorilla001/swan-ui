@@ -1,22 +1,22 @@
 <div class="main-content app-layout" id="dashboard"
-     ng-repeat="(clusterId, cluster) in dashboardCtrl.clusterList track by clusterId">
+     ng-repeat="cluster in dashboardCtrl.clusterList">
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:clusterId})">{/cluster.name/}</a>
+                <h2><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.id})">{/cluster.name/}</a>
                 </h2>
                 <dl>
                     <dt><i class="fa fa-heartbeat "></i> 正常主机</dt>
-                    <dd class="text-success">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].running || 0/}</dd>
+                    <dd class="text-success">{/dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].running || 0/}</dd>
                     <dt><i class="fa fa-chain-broken"></i> 失联主机</dt>
-                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].terminated || 0/}</dd>
+                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].terminated || 0/}</dd>
                     <dt><i class="fa fa-exclamation-triangle "></i>预警主机</dt>
-                    <dd class="text-warning">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].abnormal || 0/}</dd>
+                    <dd class="text-warning">{/dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].abnormal || 0/}</dd>
                     <dt><i class="fa fa-bomb "></i>异常主机</dt>
-                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[clusterId].failed || 0/}</dd>
+                    <dd class="text-danger">{/dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].failed || 0/}</dd>
                     <dt><i class="fa fa-cog "></i> 其他主机</dt>
                     <dd class="text-info">
-                        {/(dashboardCtrl.statusMgr.nodeStatusCount[clusterId].installing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].upgrading+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].initing+dashboardCtrl.statusMgr.nodeStatusCount[clusterId].repairing)
+                        {/(dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].installing+dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].upgrading+dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].initing+dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].repairing)
                         || 0/}
                     </dd>
 
@@ -60,7 +60,7 @@
             </div>
             <div flex="40">
                 <div class="fold-panel mCustomScrollbar"
-                     data-ng-class="{'dropShow':dashboardCtrl.clusterList[clusterId].dropFlag}"
+                     data-ng-class="{'dropShow':cluster.dropFlag}"
                      data-mcs-theme="dark">
                     <div ng-repeat="appMon in cluster.appMonitors" class="appGroup">
                         <dl layout="row" layout-align="start center" class="app-charts-panel">
@@ -89,8 +89,8 @@
                     </div>
                 </div>
                 <div class="btn-folding-v" data-ng-if="cluster.appMonitors.length > 2">
-                    <a href="#" data-ng-click="dashboardCtrl.dropShow(clusterId)">
-                        <i class="fa" data-ng-class="{'fa-chevron-down':!dashboardCtrl.clusterList[clusterId].dropFlag, 'fa-chevron-up': dashboardCtrl.clusterList[clusterId].dropFlag}"></i>
+                    <a href="#" data-ng-click="dashboardCtrl.dropShow($index)">
+                        <i class="fa" data-ng-class="{'fa-chevron-down':!cluster.dropFlag, 'fa-chevron-up': cluster.dropFlag}"></i>
                     </a>
                 </div>
             </div>
