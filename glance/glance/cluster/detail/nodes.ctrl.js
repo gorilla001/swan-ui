@@ -7,7 +7,7 @@
         .controller('ClusterNodesCtrl', ClusterNodesCtrl);
 
     /* @ngInject */
-    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, $state) {
+    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, tearLabelDialog, $state) {
         var self = this;
 
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
@@ -21,6 +21,7 @@
 
         self.upgradeNode = upgradeNode;
         self.showAddLabelDialog = showAddLabelDialog;
+        self.showTearLabelDialog = showTearLabelDialog;
 
         activate();
 
@@ -46,22 +47,46 @@
             addLabelDialog.open(ev)
                 .then(function (selectLabels) {
                     var obj = {};
-                    var selectNodes= [];
 
                     if (selectLabels.length) {
-                        angular.forEach(self.selected, function (item, index) {
-                            selectNodes.push(item.id)
-                        });
 
                         obj.labels = selectLabels;
-                        obj.nodes = selectNodes;
+                        obj.nodes = formatSelectNodes(self.selected);
 
                         clusterBackend.attachLabel(obj, $stateParams.clusterId)
-                            .then(function(data){
+                            .then(function (data) {
                                 $state.reload();
                             })
                     }
                 })
+        }
+
+        function showTearLabelDialog(ev, selectNodes) {
+            tearLabelDialog.open(ev, selectNodes)
+                .then(function (unSelectLabels) {
+                    var obj = {};
+
+                    if (unSelectLabels.length) {
+                        obj.labels = unSelectLabels;
+                        obj.nodes = formatSelectNodes(self.selected);
+
+                        clusterBackend.tearLabel(obj, $stateParams.clusterId)
+                            .then(function (data) {
+                                $state.reload();
+                            })
+                    }
+
+                })
+        }
+
+        function formatSelectNodes(selectNodes) {
+            var selectNodesTemp = [];
+
+            angular.forEach(selectNodes, function (item, index) {
+                selectNodesTemp.push(item.id)
+            });
+
+            return selectNodesTemp
         }
 
         //监听主机状态 websocket

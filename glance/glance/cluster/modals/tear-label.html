@@ -1,0 +1,30 @@
+<md-dialog style="min-width:500px;box-shadow:none;border-radius:10px">
+    <md-dialog-content>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">撕标签</h4>
+            </div>
+
+            <div class="modal-body">
+                <ul class="modal-tag">
+                    <li data-ng-repeat="label in tearLabelCtrl.labels">
+                        <span class="tag" data-ng-click="label.tearFlag = !label.tearFlag"
+                              ng-class="{selected: !label.tearFlag}">
+                          {/label.name/}
+                          <em class="line-left"></em>
+                          <em class="line-right"></em>
+                        </span>
+                    </li>
+                </ul>
+                <p data-ng-show="!tearLabelCtrl.labels.length">所选主机尚无标签</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        data-ng-click="tearLabelCtrl.ok()">完成
+                </button>
+                <button type="button" class="btn btn-default" data-ng-click="tearLabelCtrl.cancel()">取消</button>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>
