@@ -10,7 +10,10 @@
                 数人云是通过重启各组件快速恢复相应服务的。若仍有服务重启失效，需要去往主机详情页面重置该服务。修复过程大概需要一分钟。</p>
             <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
             <ul>
-                <li data-ng-repeat="node in cluster.problemNodes">
+                <li data-ng-repeat="ip in cluster.needMasterIps">
+                     需要添加ip为{/ip/}的主机，作为master
+                </li>
+                <li data-ng-repeat="node in cluster.problemNodes" data-ng-if="cluster.needMasterIps.length <= 0">
                     <a href="#"
                        data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.infos.id})">{/node.name/}
                         &nbsp; [{/node.ip/}]</a>
