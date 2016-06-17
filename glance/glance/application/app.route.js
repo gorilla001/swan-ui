@@ -44,8 +44,8 @@
             })
             .state('app.list.my', {
                 url: '/my?per_page&page&order&keywords&sort_by',
-                templateUrl: '/glance/application/list/my.html',
-                controller: 'MyAppsCtrl as myAppsCtrl',
+                templateUrl: '/glance/application/list/apps-table.html',
+                controller: 'AppsTableCtrl as appsTableCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -53,13 +53,19 @@
                 resolve: {
                     clusters: listClusters,
                     apps: listApp,
-                    status: getAppsStatus
-                }
+                    groups: function () {
+                        return null;
+                    },
+                    status: getAppsStatus,
+                    target: function () {
+                        return 'my'
+                    }
+               }
             })
             .state('app.list.group', {
                 url: '/group?per_page&page&order&keywords&sort_by&clusterId&groupId',
-                templateUrl: '/glance/application/list/group.html',
-                controller: 'GroupAppsCtrl as groupAppsCtrl',
+                templateUrl: '/glance/application/list/apps-table.html',
+                controller: 'AppsTableCtrl as appsTableCtrl',
                 defaultParams: {
                     per_page: 20,
                     page: 1
@@ -68,7 +74,10 @@
                     clusters: listClusters,
                     groups: listGroups,
                     status: getAppsStatus,
-                    apps: listGroupApp
+                    apps: listGroupApp,
+                    target: function () {
+                        return 'group'
+                    }
                 }
             })
             .state('app.detail', {

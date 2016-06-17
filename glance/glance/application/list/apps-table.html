@@ -1,78 +1,86 @@
-<div data-ng-if='groupAppsCtrl.groups.length !== 0'>
-    <form class="form-inline search-container" name="searchForm">
+<div data-ng-if="appsTableCtrl.groups.length !== 0 && appsTableCtrl.targets === 'group'||appsTableCtrl.targets ==='my'">
+    <form class="form-inline search-container" name="searchForm" data-ng-if="appsTableCtrl.targets ==='group'">
         <div class="form-group">
             <select class="form-control"
-                    data-ng-model="groupAppsCtrl.searchForm.groupId"
-                    data-ng-options="group.id as group.name for group in groupAppsCtrl.groups"
+                    data-ng-model="appsTableCtrl.searchForm.groupId"
+                    data-ng-options="group.id as group.name for group in appsTableCtrl.groups"
                     data-required="required"
-                    data-ng-change="groupAppsCtrl.groupChange()">
-                    <option value="">--- 选择搜索的用户组 ---</option>
+                    data-ng-change="appsTableCtrl.groupChange()">
+                <option value="">--- 选择搜索的用户组 ---</option>
             </select>
         </div>
         <div class="form-group">
             <select class="form-control"
-                data-ng-model="groupAppsCtrl.searchForm.clusterId"
-                data-ng-options="cluster.id as cluster.name for cluster in groupAppsCtrl.clusters"
-                data-required="required">
+                    data-ng-model="appsTableCtrl.searchForm.clusterId"
+                    data-ng-options="cluster.id as cluster.name for cluster in appsTableCtrl.clusters"
+                    data-required="required">
                 <option value="">--- 选择搜索的集群 ---</option>
             </select>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" placeholder="输入应用名称进行搜索" 
-                data-ng-model="groupAppsCtrl.searchForm.keywords">
+            <input type="text" class="form-control" placeholder="输入应用名称进行搜索"
+                   data-ng-model="appsTableCtrl.searchForm.keywords">
         </div>
-        <button type="submit" class="btn btn-info" data-ng-click="groupAppsCtrl.search()" 
-            data-ng-disabled="searchForm.$invalid">搜索</button>
+        <button type="submit" class="btn btn-info" data-ng-click="appsTableCtrl.search()"
+                data-ng-disabled="searchForm.$invalid">搜索</button>
     </form>
+    <md-toolbar class="md-table-toolbar md-default" data-ng-if="appsTableCtrl.targets ==='my'">
+        <div class="md-toolbar-tools">
+            <form flex name="filter.form">
+                <input type="text" ng-model="appsTableCtrl.filter" placeholder="搜索"
+                       my-enter="appsTableCtrl.table.doSearch(appsTableCtrl.filter)">
+            </form>
+        </div>
+    </md-toolbar>
     <md-table-container>
         <table md-table>
-            <thead md-head md-order="groupAppsCtrl.table.query.order"
-                   md-on-reorder="groupAppsCtrl.table.getOrder">
+            <thead md-head md-order="appsTableCtrl.table.query.order"
+                   md-on-reorder="appsTableCtrl.table.getOrder">
             <tr md-row>
                 <th md-column md-order-by="name"><span>应用名称</span></th>
                 <th md-column><span>当前状态</span></th>
                 <th md-column md-order-by="updated">更新时间</th>
                 <th md-column>所属集群</th>
-                <th md-column>所属用户</th>
+                <th md-column data-ng-if="appsTableCtrl.targets === 'group'">所属用户</th>
                 <th md-column md-order-by="instances">容器个数</th>
                 <th md-column>操作</th>
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="app in groupAppsCtrl.applist">
+            <tr md-row ng-repeat="app in appsTableCtrl.applist">
                 <td md-cell><a href="#"
                                data-ui-sref="app.detail({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a></td>
                 <td md-cell>
-                    {/listappctrl.APP_STATUS[groupAppsCtrl.appListStatus[app.id].status]/} {/app.status/}
-                    <p class="text-danger" data-ng-if="groupAppsCtrl.appListStatus[app.id].lastfailure">({/listappctrl.APP_FAIL_RESULT[groupAppsCtrl.appListStatus[app.id].lastfailure]/})</p>
+                    {/listappctrl.APP_STATUS[appsTableCtrl.appListStatus[app.id].status]/} {/app.status/}
+                    <p class="text-danger" data-ng-if="appsTableCtrl.appListStatus[app.id].lastfailure">({/listappctrl.APP_FAIL_RESULT[appsTableCtrl.appListStatus[app.id].lastfailure]/})</p>
                 </td>
                 <td md-cell>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                 <td md-cell>
                     <a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:app.cid})"
-                       ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '10'}"> <img
+                       ng-class="{'danger': appsTableCtrl.appListStatus[app.id].status == '10'}"> <img
                             data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
-                            ng-show="groupAppsCtrl.appListStatus[app.id].status == '10'">
-                        {/groupAppsCtrl.clusterNameMap[app.cid]/}
+                            ng-show="appsTableCtrl.appListStatus[app.id].status == '10'">
+                        {/appsTableCtrl.clusterNameMap[app.cid]/}
                     </a>
                 </td>
-                <td md-cell>
-                    {/groupAppsCtrl.groupUserMap[app.uid]/}
+                <td md-cell data-ng-if="appsTableCtrl.targets === 'group'">
+                    {/appsTableCtrl.groupUserMap[app.uid]/}
                 </td>
                 <td md-cell>
-                    <span ng-show="groupAppsCtrl.appListStatus[app.id].tasks != undefined && groupAppsCtrl.appListStatus[app.id].tasks != app.instances">{/groupAppsCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
-                    <span ng-show="groupAppsCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
+                    <span ng-show="appsTableCtrl.appListStatus[app.id].tasks != undefined && appsTableCtrl.appListStatus[app.id].tasks != app.instances">{/appsTableCtrl.appListStatus[app.id].tasks/}/{/app.instances/}</span>
+                    <span ng-show="appsTableCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
                     <span data-ng-if="app.canary">(灰度实例: {/app.canaryInstances/})</span>
                 </td>
                 <td md-cell>
                     <md-button aria-label="strp" class="md-button md-raised"
-                               data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2'"
+                               data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '2'"
                                data-ng-click="listappctrl.stop(app.cid, app.id)"
-                               data-ng-show="groupAppsCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+                               data-ng-show="appsTableCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
                     </md-button>
                     <md-button aria-label="start" class="md-button md-raised"
-                               data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '3'"
+                               data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '3'"
                                data-ng-click="listappctrl.start(app.cid, app.id)"
-                               data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+                               data-ng-show="appsTableCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
                     </md-button>
                     <md-menu md-offset="0 -5">
                         <md-button aria-label="appListMenu" class="md-button md-raised"
@@ -82,7 +90,7 @@
                         <md-menu-content width="2">
                             <md-menu-item>
                                 <md-button aria-label="upContainer"
-                                           ng-disabled="(groupAppsCtrl.appListStatus[app.id].status != '2' && groupAppsCtrl.appListStatus[app.id].status != '3')||app.canary"
+                                           ng-disabled="(appsTableCtrl.appListStatus[app.id].status != '2' && appsTableCtrl.appListStatus[app.id].status != '3')||app.canary"
                                            data-ng-click="listappctrl.upContainerModal($event, app.cid, app.id, app.instances)"
                                            data-demo-disable>扩展
                                 </md-button>
@@ -95,19 +103,19 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button aria-label="delete"
-                                           ng-disabled="groupAppsCtrl.appListStatus[app.id].status == '5' || groupAppsCtrl.appListStatus[app.id].status == 'undefined'"
+                                           ng-disabled="appsTableCtrl.appListStatus[app.id].status == '5' || appsTableCtrl.appListStatus[app.id].status == 'undefined'"
                                            data-ng-click="listappctrl.delete(app.cid, app.id, 'app.list.group')"
                                            data-demo-disable>删除
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button aria-label="redeploy"
-                                           ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '9'"
+                                           ng-disabled="appsTableCtrl.appListStatus[app.id].status != '9'"
                                            data-ng-click="listappctrl.redeploy(app.cid, app.id)"
                                            data-demo-disable>恢复
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item data-ng-show="groupAppsCtrl.appListStatus[app.id].status == '2' || groupAppsCtrl.appListStatus[app.id].status == '3'">
+                            <md-menu-item data-ng-show="appsTableCtrl.appListStatus[app.id].status == '2' || appsTableCtrl.appListStatus[app.id].status == '3'">
                                 <md-button aria-label="update"
                                            data-ng-disabled="app.canary"
                                            data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})">
@@ -116,7 +124,7 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button aria-label="alert"
-                                           data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status != '2'"
+                                           data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '2'"
                                            data-ui-sref="policy.tab.appwarning.warninglist({page:1, per_page:20, appalias: app.alias, keywords: app.name})">
                                     告警策略
                                 </md-button>
@@ -124,7 +132,7 @@
                             <md-menu-item>
                                 <md-button aria-label="canary"
                                            data-ng-click="listappctrl.createCanary($event, app.cid, app.id, app.instances)"
-                                           data-ng-disabled="groupAppsCtrl.appListStatus[app.id].status !='2' || !app.ports.length || app.canary" data-demo-disable>
+                                           data-ng-disabled="appsTableCtrl.appListStatus[app.id].status !='2' || !app.ports.length || app.canary" data-demo-disable>
                                     新建灰度
                                 </md-button>
                             </md-menu-item>
@@ -134,21 +142,21 @@
             </tr>
             </tbody>
         </table>
-        <div class="alert alert-warning text-center" data-ng-if="!groupAppsCtrl.applist.length">
+        <div class="alert alert-warning text-center" data-ng-if="!appsTableCtrl.applist.length">
             未查询到应用数据
         </div>
     </md-table-container>
 
     <md-table-pagination
-            md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="groupAppsCtrl.table.query.limit"
+            md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="appsTableCtrl.table.query.limit"
             md-limit-options="[20, 50, 100]"
-            md-page="groupAppsCtrl.table.query.page" md-total="{/groupAppsCtrl.count/}"
-            md-on-paginate="groupAppsCtrl.table.getPage" md-page-select></md-table-pagination>
-    <div class="alert alert-warning text-center" data-ng-show="groupAppsCtrl.showNothtingAlert">
+            md-page="appsTableCtrl.table.query.page" md-total="{/appsTableCtrl.count/}"
+            md-on-paginate="appsTableCtrl.table.getPage" md-page-select></md-table-pagination>
+    <div class="alert alert-warning text-center" data-ng-show="appsTableCtrl.showNothtingAlert">
         未查询到应用数据
     </div>
 </div>
-<div data-ng-if='groupAppsCtrl.groups.length === 0'>
+<div data-ng-if="appsTableCtrl.targets ==='group' && appsTableCtrl.group.length === 0">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="alert alert-info">
