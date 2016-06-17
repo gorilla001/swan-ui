@@ -11,10 +11,23 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         '3_masters': 4,
         '5_masters': 6
     };
+    
+    NODE_STATUS = {
+            running: "running",
+            terminated: "terminated",
+            failed: "failed",
+            installing: "installing",
+            initing: "initing",
+            upgrading: "upgrading",
+            repairing: "repairing",
+            abnormal: "abnormal"
+        };
 
     var repairPromise;
 
     $scope.statusMgr = new ClusterStatusMgr();
+    
+    $scope.CLUSTER_STATUS = CLUSTER_STATUS;
     
     $scope.listCluster = function () {
         gHttp.Resource("cluster.clusters").get().then(function (data) {
@@ -40,12 +53,16 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
     $scope.showProblemTips = function (cluster, ev) {
         if (cluster.problemTips) {
             clusterProblemTipModal.open(cluster, ev).then(function () {
-                if (cluster.clusterStatus === CLUSTER_STATUS.installing) {
+                if (cluster.infos.status === "new") {
                     $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
-                } else if (cluster.clusterStatus === CLUSTER_STATUS.abnormal) {
-                    gHttp.Resource('cluster.cluster', {'cluster_id': cluster.infos.id}).patch({"method": "repair"}).then(function(){
-                        $state.go('cluster.clusterdetails.nodes', {clusterId: cluster.infos.id})
-                    });
+                } else if (cluster.infos.status === "failed" || cluster.infos.status === "abnormal") {
+                    if (cluster.needMasterIps.length > 0) {
+                        $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
+                    } else {
+                        gHttp.Resource('cluster.cluster', {'cluster_id': cluster.infos.id}).patch({"method": "repair"}).then(function(){
+                            $state.go('cluster.detail.nodes', {clusterId: cluster.infos.id})
+                        });
+                    }
                 }
             })
         }
@@ -144,8 +161,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         var clusterBasicData = {
             infos: {},
             amounts: {},
-            problemNodes: [],
-            clusterStatus: ''
+            problemNodes: []
         };
         clusterBasicData.infos = getClusterBasicInfos(cluster);
         var nodes = cluster.nodes;
@@ -154,15 +170,40 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
         var masters = nodesWithRoleAndStatus.masters;
         var slaves = nodesWithRoleAndStatus.slaves;
-        var clusterStatus = getClusterStatus(masters, slaves, nodes, cluster.cluster_type);
-        clusterBasicData.clusterStatus = clusterStatus;
-        var problemTips = setProblemTips(clusterStatus, cluster.cluster_type, nodes.length);
+        var problemTips = setProblemTips(cluster.status, cluster.cluster_type, nodes.length);
 
         if (problemTips) {
             clusterBasicData.problemTips = problemTips;
-            clusterBasicData.problemNodes = getProblemNodes(masters, slaves, clusterStatus);
+            clusterBasicData.problemNodes = getProblemNodes(masters, slaves, cluster.status);
+            clusterBasicData.needMasterIps = getNeedMasterIps(masters, cluster);
+            if (clusterBasicData.needMasterIps.length > 0) {
+                problemTips.firstButtonText = "添加主机";
+            }
         }
         return clusterBasicData;
+    }
+    
+    function getNeedMasterIps(masters, cluster) {
+        var needMasterIps = [];
+        angular.forEach(cluster.master_ips, function (masterIp) {
+            var isExist = false;
+            for (var i=0; i<masters.length; i++) {
+                var nodes = masters[i];
+                for (var j=0; j<nodes.length; j++) {
+                    if (nodes[j].ip === masterIp) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (isExist) {
+                    break;
+                }
+            }
+            if (!isExist) {
+                needMasterIps.push(masterIp);
+            }
+        });
+        return needMasterIps;
     }
 
     function getClusterNodesData(cluster, clickedStatus) {
@@ -216,162 +257,43 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         return classes;
     }
 
-    function getClusterStatus(masters, slaves, nodes, clusterType) {
-        var status;
-        if(!nodes.length) {
-            return;
-        }
-
-        if (isClusterUnknow(masters, slaves)) {
-            return CLUSTER_STATUS.unknow;
-        }
-
-        var needServices = getClusterNeedServices(nodes);
-        var masterServices = needServices.masterServices;
-        var slaveServices = needServices.slaveServices;
-
-        if (isClusterRunning(masterServices, slaveServices, clusterType)) {
-            status = CLUSTER_STATUS.running;
-        } else if (isCusterInstalling(masterServices, slaveServices, clusterType)) {
-            status = CLUSTER_STATUS.installing;
-        } else {
-            status = CLUSTER_STATUS.abnormal;
-        }
-        return status;
-    }
-
-    function isClusterUnknow(masters, slaves) {
-        var isUnknow = false;
-        if (masters[NODE_STATUS.terminated].length) {
-            isUnknow = true;
-        } else if (slaves[NODE_STATUS.terminated].length){
-            var slavesAmount = 0;
-            angular.forEach(slaves, function(value, key) {
-                slavesAmount += value.length;
-            });
-            isUnknow = Boolean(slaves[NODE_STATUS.terminated].length === slavesAmount);
-        }
-        return isUnknow;
-    }
-
-    function isClusterRunning(masterServices, slaveServices, clusterType) {
-        var isRunning = false;
-        var status = [NODE_STATUS.running];
-
-        var runningMasterAmount = calStatusAmount(masterServices, status);
-        if (runningMasterAmount === clusterTypes[clusterType]) {
-            if (calStatusAmount(slaveServices, status) >= 1) {
-                isRunning = true;
-            }
-        }
-        return isRunning;
-    }
-
-    function isCusterInstalling(masterServices, slaveServices, clusterType) {
-        var isInstalling = false;
-        var status = [SERVICES_STATUS.running, SERVICES_STATUS.failed];
-        var totalMaster = calStatusAmount(masterServices, status);
-        var totalSlave = calStatusAmount(slaveServices, status);
-        return Boolean((totalMaster < clusterTypes[clusterType]) || (totalSlave === 0));
-    }
-
-    function getClusterNeedServices(nodes) {
-        var clusterNeedServices = {
-            masterServices: [],
-            slaveServices: []
-        };
-        var needServices = {};
-        var i;
-        var node;
-        
-        for (i = 0; i < nodes.length; i ++) {
-            node = nodes[i];
-            needServices = getNodeNeedServices(node.services);
-            clusterNeedServices.masterServices.push(needServices.master);
-            clusterNeedServices.slaveServices.push(needServices.slave);
-        }
-        return clusterNeedServices;
-    }
-
-    function getNodeNeedServices(services) {
-        var nodeNeedServices = {
-            'master': {},
-            'slave': {}
-        };
-        var names = Object.keys(nodeNeedServices);
-        var service;
-        var breakAmount = 0;
-        for (var i = 0; i < services.length; i++) {
-            service = services[i];
-            
-            if (names.indexOf(service.name) > -1) {
-                nodeNeedServices[service.name] = service;
-                breakAmount += 1;
-            }
-            if (breakAmount === names.length) {
-                break;
-            }
-        }
-        return nodeNeedServices;
-    }
-
-            
-    function calStatusAmount(services, status) {
-        var amount = 0;
-        for (var i = 0; i < services.length; i++) {
-            service = services[i];
-            amount += (status.indexOf(service.status) > -1 ? 1 : 0);
-        }
-        return amount;
-    }
 
     function setProblemTips(clusterStatus, clusterType, nodesAmount) {
-        if (!clusterStatus || (clusterStatus === CLUSTER_STATUS.running)) {
-            return;
-        }
         var tips = {};
         var needNumber = clusterLeastNodesNumber[clusterType] - nodesAmount;
-        var installingHeadText;
-        if (needNumber <= 0) {
-            installingHeadText = '集群初始化中';
-        } else {
-            installingHeadText = '集群初始化中，还需添加 ' +  needNumber + ' 台主机';
-        }
 
-        tips[CLUSTER_STATUS.installing] = {
-            headText: installingHeadText,
-            paragraphText: '以下主机初始化中',
+        tips['new'] = {
+            headText: '集群还需添加 ' +  needNumber + ' 台主机',
             firstButtonText: '继续添加主机',
             secondButtonText: '关闭'
         };
-        tips[CLUSTER_STATUS.abnormal] = {
+        tips['failed'] = {
             headText: '集群无法正常工作',
             paragraphText: '以下主机出现问题，致使集群无法正常工作。',
             firstButtonText: '尝试自动修复',
             secondButtonText: '知道了'
         };
-        tips[CLUSTER_STATUS.unknow] = {
-            headText: '集群状态未知',
-            paragraphText: '以下主机不能正常工作，请连接主机查看。',
-            firstButtonText: '知道了'
-        };
+        tips['abnormal'] = {
+                headText: '集群可以正常工作，但存在异常服务',
+                paragraphText: '以下主机出现问题。',
+                firstButtonText: '尝试自动修复',
+                secondButtonText: '知道了'
+            };
         return tips[clusterStatus];
     }
 
     function getProblemNodes(masters, slaves, clusterStatus) {
         var problemNodes = [];
-        var nodeTypes = [masters, slaves];
-        var problemStatus = [];
-        if (clusterStatus === CLUSTER_STATUS.installing) {
-            problemStatus = [NODE_STATUS.installing];
-        } else {
-            problemStatus = [NODE_STATUS.terminated, NODE_STATUS.failed, NODE_STATUS.installing, NODE_STATUS.abnormal];
-        }
-        angular.forEach(nodeTypes, function(type, typeIndex) {
-            angular.forEach(problemStatus, function(status, statusIndex) {
-                problemNodes = problemNodes.concat(type[status]);
-            });
-        });
+        angular.forEach(masters, function(nodes, status){
+            if (status !== 'running') {
+                problemNodes = problemNodes.concat(nodes);
+            }
+        })
+        angular.forEach(slaves, function(nodes, status){
+            if (status !== 'running') {
+                problemNodes = problemNodes.concat(nodes);
+            }
+        })
         return problemNodes;
     }
 

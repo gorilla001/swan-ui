@@ -131,7 +131,7 @@
     }
 
     /* @ngInject */
-    function listClusters(clusterBackendService) {
-        return clusterBackendService.listClusters();
+    function listClusters(clusterBackend) {
+        return clusterBackend.listClusters();
     }
 })();

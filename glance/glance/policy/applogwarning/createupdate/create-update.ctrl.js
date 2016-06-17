@@ -4,7 +4,7 @@
         .controller('CreateLogWarningCtrl', CreateLogWarningCtrl);
 
     /* @ngInject */
-    function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackendService,
+    function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackend,
                                   Notification, target, logPolicy, $scope) {
         var self = this;
         var clusters = [];
@@ -40,7 +40,7 @@
         }
 
         function listCluster() {
-            clusterBackendService.listClusters()
+            clusterBackend.listClusters()
                 .then(function (data) {
                     angular.forEach(data, function (cluster, index) {
                         if (cluster.group_id) {

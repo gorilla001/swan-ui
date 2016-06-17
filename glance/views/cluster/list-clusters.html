@@ -13,7 +13,7 @@
                 <h2>
                     <span data-ng-if="!cluster.amounts.total">{/ cluster.infos.name /}</span>
                     <a data-ng-if="cluster.amounts.total"
-                       data-ui-sref="cluster.clusterdetails.nodes({clusterId:cluster.infos.id})">
+                       data-ui-sref="cluster.detail({clusterId:cluster.infos.id})">
                         {/cluster.infos.name /}
                     </a>
                 </h2>
@@ -24,10 +24,10 @@
                     <dd data-ng-if="cluster.infos.updated_at">{/ cluster.infos.updated_at /}</dd>
                     <dt data-ng-if="cluster.infos.group_name">用户组</dt>
                     <dd data-ng-if="cluster.infos.group_name"> {/cluster.infos.group_name/}</dd>
-                    <dt data-ng-if="cluster.clusterStatus">集群状态</dt>
+                    <dt>集群状态</dt>
                     <dd>
-                        <span data-ng-if="!cluster.problemTips">{/clusterStatName[cluster.clusterStatus]/}</span>
-                        <a href="#" data-ng-click="showProblemTips(cluster, $event)" data-ng-if="cluster.problemTips">{/clusterStatName[cluster.clusterStatus]/}</a>
+                        <span data-ng-if="!cluster.problemTips">{/CLUSTER_STATUS[cluster.infos.status]/}</span>
+                        <a href="#" data-ng-click="showProblemTips(cluster, $event)" data-ng-if="cluster.problemTips">{/CLUSTER_STATUS[cluster.infos.status]/}</a>
                     </dd>
                 </dl>
                 <dl class="hostList">

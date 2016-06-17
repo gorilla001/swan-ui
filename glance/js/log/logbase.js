@@ -3,9 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackendService'];
+logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackend'];
 
-function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackendService) {
+function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackend) {
     $scope.showContextUI = false;
     $scope.logDownloadToplimit = LOG.logDownloadToplimit;
     var clusterIdTemp;
@@ -22,7 +22,7 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
 
     $scope.listCluster = function () {
 
-        clusterBackendService.listClusters()
+        clusterBackend.listClusters()
             .then(function (clusters) {
                 angular.forEach(clusters, function (cluster, index) {
                     if (cluster.group_id) {

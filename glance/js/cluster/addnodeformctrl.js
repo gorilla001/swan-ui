@@ -33,7 +33,7 @@ function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labe
                 'clusterId':$stateParams.clusterId
             });
         } else {
-            $state.go('cluster.clusterdetails.nodes', {
+            $state.go('cluster.detail.nodes', {
                 'clusterId':$stateParams.clusterId
             });
         }

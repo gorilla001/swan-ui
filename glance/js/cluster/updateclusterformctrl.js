@@ -5,7 +5,7 @@ function updateClusterFormCtrl($scope, $state, $stateParams, gHttp) {
     $scope.updateCluster = function() {
         gHttp.Resource('cluster.cluster', {'cluster_id': $stateParams.clusterId}).
             put($scope.form, {'form': $scope.staticForm}).then(function () {
-                $state.go("cluster.clusterdetails.nodes", {"clusterId": $stateParams.clusterId});
+                $state.go("cluster.detail.nodes", {"clusterId": $stateParams.clusterId});
             })
     };
 

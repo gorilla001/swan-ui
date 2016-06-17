@@ -28,7 +28,7 @@
                                 <dt>更新时间</dt>
                                 <dd>{/stack.updated | date:"yyyy-MM-dd HH:mm"/}</dd>
                                 <dt>所属集群</dt>
-                                <dd><a href="#" data-ui-sref="cluster.clusterdetails.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
+                                <dd><a href="#" data-ui-sref="cluster.detail.nodes({clusterId:stack.Cid})">{/layoutListCtrl.clusterNameMap[stack.Cid]/}</a>
                                 </dd>
                                 <dt data-ng-show="stack.deploymentMessage">部署信息</dt>
                                 <dd class="text-info"

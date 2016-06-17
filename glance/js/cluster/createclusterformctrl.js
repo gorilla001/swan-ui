@@ -23,7 +23,7 @@ function createClusterFormCtrl($scope, $state, gHttp, userBackend) {
             if (isAddNode) {
                 $state.go('cluster.nodesource', {'clusterId': data.id});
             } else {
-                $state.go('cluster.clusterdetails.nodes', {clusterId: data.id});
+                $state.go('cluster.detail.nodes', {clusterId: data.id});
             }
         })
     };
