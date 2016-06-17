@@ -1,6 +1,17 @@
 /*global glanceApp, getNodeInfo, addMetricData*/
 function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildCharts, monitor, $state, ClusterStatusMgr, labelService, Notification, confirmModal) {
     'use strict';
+
+    $scope.nodeStatusCls = {
+        'running': "fa fa-heartbeat text-success",
+        'terminated': "fa fa-chain-broken text-danger",
+        'failed': "fa fa-bomb text-danger",
+        'abnormal': "fa fa-exclamation-triangle text-warning",
+        'installing': "fa fa-cog text-normal",
+        'initing': "fa fa-cog text-normal",
+        'upgrading': "fa fa-cog text-normal",
+        'repairing': "fa fa-cog text-normal"
+    };
     
     var circles=$("#btn-folding-v"), homepage_module=$("#homepage_module");
     circles.click(function(){
