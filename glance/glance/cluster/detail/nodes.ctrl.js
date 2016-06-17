@@ -7,7 +7,7 @@
         .controller('ClusterNodesCtrl', ClusterNodesCtrl);
 
     /* @ngInject */
-    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, tearLabelDialog, $state) {
+    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, tearLabelDialog, $state, clusterCurd) {
         var self = this;
 
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
@@ -20,6 +20,7 @@
         self.updateInfo = {};
 
         self.upgradeNode = upgradeNode;
+        self.deletNodes = deletNodes;
         self.showAddLabelDialog = showAddLabelDialog;
         self.showTearLabelDialog = showTearLabelDialog;
 
@@ -41,6 +42,10 @@
                 .then(function (data) {
 
                 })
+        }
+
+        function deletNodes(ev, selectNodes){
+            clusterCurd.deletNodes($stateParams.clusterId, selectNodes, ev)
         }
 
         function showAddLabelDialog(ev) {

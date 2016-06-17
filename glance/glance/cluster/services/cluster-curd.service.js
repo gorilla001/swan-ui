@@ -8,11 +8,11 @@
 
 
     /* @ngInject */
-    function clusterCurd(clusterBackend, confirmModal) {
+    function clusterCurd(clusterBackend, confirmModal, $state) {
         return {
             listClusterLables: listClusterLables,
-            deleteCluster: deleteCluster
-
+            deleteCluster: deleteCluster,
+            deletNodes: deletNodes
         };
 
         function listClusterLables() {
@@ -42,6 +42,27 @@
                             $state.go('cluster.list', null, {reload: true});
                         });
                 })
+
+        }
+
+        function deletNodes(clusterId, selectNodes, ev) {
+            var toast = "您确定要移除主机吗？";
+            var nodeIds = [];
+
+            for (var i = 0; i < selectNodes.length; i++) {
+                nodeIds.push(selectNodes[i].id);
+                if (selectNodes[i].role == 'master') {
+                    toast = "您所删除的主机中包含 Master,删除后会引起故障，是否继续删除？";
+                }
+            }
+
+            confirmModal.open(toast, ev)
+                .then(function () {
+                    clusterBackend.deleteNodes(clusterId, nodeIds)
+                        .then(function (data) {
+                            $state.reload()
+                        })
+                });
 
         }
 

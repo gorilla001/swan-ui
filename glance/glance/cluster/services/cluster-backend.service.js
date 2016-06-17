@@ -13,6 +13,7 @@
             deleteCluster: deleteCluster,
             getOldVersionNums: getOldVersionNums,
             upgradeNode: upgradeNode,
+            deleteNodes: deleteNodes,
             deleteLabel: deleteLabel,
             listLabels: listLabels,
             createLabel: createLabel,
@@ -52,6 +53,10 @@
 
         function upgradeNode(clusterId) {
             return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({method: 'upgrade'});
+        }
+
+        function deleteNodes(clusterId, data) {
+            return gHttp.Resource('cluster.nodes', {'cluster_id': clusterId}).delete({'data': data});
         }
 
         function deleteLabel(data) {
