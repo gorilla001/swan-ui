@@ -7,7 +7,7 @@
         .controller('ClusterNodesCtrl', ClusterNodesCtrl);
 
     /* @ngInject */
-    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope) {
+    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, $state) {
         var self = this;
 
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
@@ -20,6 +20,7 @@
         self.updateInfo = {};
 
         self.upgradeNode = upgradeNode;
+        self.showAddLabelDialog = showAddLabelDialog;
 
         activate();
 
@@ -34,17 +35,39 @@
                 })
         }
 
-        function upgradeNode(clusterId){
+        function upgradeNode(clusterId) {
             clusterBackend.upgradeNode(clusterId)
-                .then(function(data){
+                .then(function (data) {
 
+                })
+        }
+
+        function showAddLabelDialog(ev) {
+            addLabelDialog.open(ev)
+                .then(function (selectLabels) {
+                    var obj = {};
+                    var selectNodes= [];
+
+                    if (selectLabels.length) {
+                        angular.forEach(self.selected, function (item, index) {
+                            selectNodes.push(item.id)
+                        });
+
+                        obj.labels = selectLabels;
+                        obj.nodes = selectNodes;
+
+                        clusterBackend.attachLabel(obj, $stateParams.clusterId)
+                            .then(function(data){
+                                $state.reload();
+                            })
+                    }
                 })
         }
 
         //监听主机状态 websocket
         $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
-            angular.forEach(self.nodes, function(item, index){
-                if(item.id == data.nodeId){
+            angular.forEach(self.nodes, function (item, index) {
+                if (item.id == data.nodeId) {
                     item.status = data.status
                 }
             });

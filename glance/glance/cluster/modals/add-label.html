@@ -1,0 +1,58 @@
+<md-dialog style="min-width:500px;box-shadow:none;border-radius:10px">
+    <md-dialog-content>
+        <div class="modal-content" role="document">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">贴标签</h4>
+            </div>
+
+            <div class="modal-body">
+                <ul class="modal-tag">
+                    <li data-ng-repeat="label in addLabelCtrl.labels">
+                        <span class="tag" data-ng-click="label.selectFlag = !label.selectFlag"
+                              ng-class="{selected: label.selectFlag}">
+                          {/label.name/}
+                          <em class="line-left"></em>
+                          <em class="line-right"></em>
+                        </span>
+                        <a href="#" data-ng-hide="label.selectFlag"
+                           data-ng-click="addLabelCtrl.deleteLabel(label.id, $index)">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </li>
+                </ul>
+
+                <form class="form-inline panel-create-tag" name="labelForm.label">
+
+                    <div class="form-group"
+                         data-ng-class="{'has-error' : labelForm.label.newLabelName.$dirty && labelForm.label.newLabelName.$invalid}">
+                        <div>
+                            <input type="text" class="form-control input-sm"
+                                   placeholder="标签名称" name="newLabelName"
+                                   data-ng-model="addLabelCtrl.labelName" data-ng-trim="true"
+                                   data-required="required" data-ng-pattern="/^[A-Za-z0-9-]{1,}$/"
+                                   dm-check-include="addLabelCtrl.labelArray"/>
+                            <button type="submit" class="btn btn-sm btn-success"
+                                    data-ng-click="addLabelCtrl.createLabel(addLabelCtrl.labelName)"
+                                    data-ng-disabled="labelForm.label.newLabelName.$invalid">新建标签
+                            </button>
+                        </div>
+                        <p data-ng-show="labelForm.label.newLabelName.$error.dmCheckInclude"
+                           class="help-block text-left">
+                            <small>标签名已存在</small>
+                        </p>
+                        <p data-ng-show="labelForm.label.newLabelName.$error.pattern" class="help-block text-left">
+                            <small>标签名只可包含数字、字母或横线。</small>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        data-ng-click="addLabelCtrl.ok()">完成
+                </button>
+                <button type="button" class="btn btn-default" data-ng-click="addLabelCtrl.cancel()">取消</button>
+            </div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

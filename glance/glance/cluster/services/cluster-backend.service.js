@@ -12,7 +12,12 @@
             listNodes: listNodes,
             deleteCluster: deleteCluster,
             getOldVersionNums: getOldVersionNums,
-            upgradeNode: upgradeNode
+            upgradeNode: upgradeNode,
+            deleteLabel: deleteLabel,
+            listLabels: listLabels,
+            createLabel: createLabel,
+            tearLabel: tearLabel,
+            attachLabel: attachLabel
         };
 
         ////////////
@@ -46,7 +51,27 @@
         }
 
         function upgradeNode(clusterId) {
-            return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({'method': 'upgrade'});
+            return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).patch({method: 'upgrade'});
+        }
+
+        function deleteLabel(data) {
+            return gHttp.Resource('cluster.labels').delete({"data": data})
+        }
+
+        function listLabels() {
+            return gHttp.Resource('cluster.labels').get()
+        }
+
+        function createLabel(data) {
+            return gHttp.Resource('cluster.labels').post({name: data})
+        }
+
+        function tearLabel(data, clusterId) {
+            return gHttp.Resource('cluster.nodesLabels', {'cluster_id': clusterId}).delete({'data': data})
+        }
+
+        function attachLabel(data, clusterId) {
+            return gHttp.Resource('cluster.nodesLabels', {'cluster_id': clusterId}).post(data)
         }
     }
 })();
