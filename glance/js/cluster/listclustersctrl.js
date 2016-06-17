@@ -187,8 +187,8 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         var needMasterIps = [];
         angular.forEach(cluster.master_ips, function (masterIp) {
             var isExist = false;
-            for (var i=0; i<masters.length; i++) {
-                var nodes = masters[i];
+            for (var status in masters) {
+                var nodes = masters[status];
                 for (var j=0; j<nodes.length; j++) {
                     if (nodes[j].ip === masterIp) {
                         isExist = true;
