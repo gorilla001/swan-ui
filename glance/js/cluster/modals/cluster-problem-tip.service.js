@@ -32,7 +32,6 @@
             };
 
             $scope.cancel = function () {
-                console.log(11111)
                 $mdDialog.cancel();
             };
         }
