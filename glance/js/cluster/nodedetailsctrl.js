@@ -235,7 +235,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
     // 主机导航
     (function listNodesIds() {
-        gHttp.Resource('cluster.cluster', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
+        gHttp.Resource('cluster.nodes', {cluster_id: $stateParams.clusterId}).get().then(function (data) {
             var nodes = data.nodes;
             if (nodes.length > 1) {
                 getPreAndNextNodeIds(nodes, $stateParams.nodeId);
