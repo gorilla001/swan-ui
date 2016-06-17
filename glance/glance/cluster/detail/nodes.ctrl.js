@@ -12,6 +12,8 @@
 
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
         self.SERVICE_NAME = SERVICE_NAME;
+        self.CLUSTER_STATUS = CLUSTER_STATUS;
+
         self.selected = [];
         self.table = mdTable.createTable('cluster.detail.nodes');
         self.searchKeyWord = $stateParams.keywords || '';
@@ -31,20 +33,19 @@
         }
 
         function checkUpdate() {
-            clusterBackend.getOldVersionNums($stateParams.clusterId)
+            return clusterBackend.getOldVersionNums($stateParams.clusterId)
                 .then(function (data) {
                     self.updateInfo = data;
+                    return self.updateInfo;
                 })
         }
 
         function upgradeNode(clusterId) {
+            self.upgrageFail = false;
             clusterBackend.upgradeNode(clusterId)
-                .then(function (data) {
-
-                })
         }
 
-        function deletNodes(ev, selectNodes){
+        function deletNodes(ev, selectNodes) {
             clusterCurd.deletNodes($stateParams.clusterId, selectNodes, ev)
         }
 
@@ -101,6 +102,13 @@
                     item.status = data.status
                 }
             });
-        })
+        });
+
+        $scope.$on('upgradeComplete', function (event, data) {
+            checkUpdate()
+                .then(function (data) {
+                    self.upgrageFail = !!data.node;
+                });
+        });
     }
 })();

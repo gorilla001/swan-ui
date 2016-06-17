@@ -26,7 +26,7 @@
                 <md-button class="md-fab md-mini"
                            data-toggle="modal"
                            data-demo-disable
-                           data-ng-click="clusterDetailCtrl.deleteCluster($event,clusterDetailCtrl.cluster.id)"
+                           data-ng-click="clusterDetailCtrl.deleteCluster(clusterDetailCtrl.cluster.id, $event)"
                            data-dm-permit-click="1"
                            data-dm-role="clusterDetailCtrl.cluster.group_role"
                            data-dm-permit-msg="FRONTEND_MSG.no_group_admin"

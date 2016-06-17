@@ -10,7 +10,7 @@
     <div class="md-toolbar-tools">
         <div flex></div>
         <div class="btn-group btn-dropdown-info md-toolbar-tools"
-             data-ng-show="clusterNodesCtrl.updateInfo.node"
+             data-ng-show="clusterNodesCtrl.updateInfo.node && clusterDetailCtrl.cluster.status != 'upgrading'"
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm"
                     data-ng-click="clusterNodesCtrl.upgradeNode(clusterDetailCtrl.cluster.id)"
@@ -33,24 +33,11 @@
             </ul>
         </div>
         <div class="btn-group btn-dropdown-info md-toolbar-tools"
-             data-ng-show="statusMgr.nodeStatusCount[clusterDetailCtrl.cluster.id]['upgrading']"
+             data-ng-show="clusterDetailCtrl.cluster.status == 'upgrading'"
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm" disabled="disabled">升级中
-                <span class="badge"
-                      data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].total"></span>
+                <span class="badge"></span>
             </button>
-            <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu">
-                <li data-ng-repeat="(name, _) in statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id].widgets">
-                    {/getServiceLabel(name)/}
-                    <span class="badge"
-                          data-ng-bind="statusMgr.nodeOldVersionCount[clusterDetailCtrl.cluster.id][name]"></span>
-                </li>
-            </ul>
         </div>
         <md-button md-direction="left" data-ng-click="$state.reload()">刷新</md-button>
         <md-button data-ui-sref="cluster.nodesource({clusterId:clusterDetailCtrl.cluster.id})"

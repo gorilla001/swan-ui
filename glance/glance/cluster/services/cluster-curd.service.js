@@ -8,7 +8,7 @@
 
 
     /* @ngInject */
-    function clusterCurd(clusterBackend, confirmModal, $state) {
+    function clusterCurd(clusterBackend, confirmModal, $state, Notification) {
         return {
             listClusterLables: listClusterLables,
             deleteCluster: deleteCluster,

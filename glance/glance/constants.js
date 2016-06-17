@@ -190,7 +190,8 @@ SUB_INFOTYPE = {
     nodeStatus: "NodeStatus",
     nodeMetric: "NodeMetric",
     serviceStatus: "ServiceStatus",
-    agentUpgradeFailed: "AgentUpgradeFailed"
+    agentUpgradeFailed: "AgentUpgradeFailed",
+    clusterStatus: "ClusterStatus"
 };
 
 NODE_STATUS = {
