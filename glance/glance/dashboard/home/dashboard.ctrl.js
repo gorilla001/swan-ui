@@ -53,14 +53,18 @@
         }
 
         function collectClusterList(clusters) {
+            var newClusters = [];
             angular.forEach(clusters, function (cluster) {
-                cluster.appMonitors = [];
-                cluster.masMetrics = [];
-                angular.forEach(cluster.nodes, function (node){
-                    self.statusMgr.addNode(cluster.id, node);
-                })
+                if (cluster.nodes.length > 0) {
+                    cluster.appMonitors = [];
+                    cluster.masMetrics = [];
+                    angular.forEach(cluster.nodes, function (node){
+                        self.statusMgr.addNode(cluster.id, node);
+                    });
+                    newClusters.push(cluster)
+                }
             })
-            return clusters;
+            return newClusters;
         }
 
         // 应用下拉展示
