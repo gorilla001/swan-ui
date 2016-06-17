@@ -96,7 +96,7 @@
         <tr md-row md-select="node" ng-repeat="node in clusterNodesCtrl.nodes">
             <td md-cell class="agent-version">
                   <span><a data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:clusterDetailCtrl.cluster.id})">{/node.name/}</a>
-                      <em class="label label-danger" data-ng-show="upgradeFailedNodes[node.id]">
+                      <em class="label label-danger" data-ng-show="clusterNodesCtrl.upgradeFailed[node.id]">
                           升级失败
                       </em>
                   </span>

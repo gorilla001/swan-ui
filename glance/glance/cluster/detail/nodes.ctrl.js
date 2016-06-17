@@ -41,7 +41,10 @@
         }
 
         function upgradeNode(clusterId) {
+            //reset some flags
             self.upgrageFail = false;
+            self.upgradeFailed = {};
+
             clusterBackend.upgradeNode(clusterId)
         }
 
@@ -102,6 +105,12 @@
                     item.status = data.status
                 }
             });
+        });
+
+        //监听升级失败 websocket
+        $scope.$on(SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+            self.upgradeFailed = {};
+            self.upgradeFailed[data.nodeId] = true;
         });
 
         $scope.$on('upgradeComplete', function (event, data) {
