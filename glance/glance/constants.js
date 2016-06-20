@@ -280,6 +280,12 @@ WARNING_RULE = {
     '<': '小于'
 };
 
+WARNING_LEVEL = {
+    info: '普通',
+    warn: '重要',
+    crit: '紧急'
+};
+
 STACK_STATUS = {
     pending: '尚未部署',
     deploying: '部署进行',
