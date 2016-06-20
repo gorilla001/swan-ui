@@ -14,7 +14,7 @@
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm"
                     data-ng-click="clusterNodesCtrl.upgradeNode(clusterDetailCtrl.cluster.id)"
-                    data-ng-disabled="clusterDetailCtrl.nodeTotal !== clusterDetailCtrl.cluster.node_nums['0_terminated']"
+                    data-ng-disabled="clusterDetailCtrl.nodeTotal === clusterDetailCtrl.cluster.node_nums['0_terminated']"
                     data-demo-disable
                     data-dm-permit-click="1"
                     data-dm-role="clusterDetailCtrl.cluster.group_role"
@@ -22,7 +22,7 @@
                 <span class="badge" data-ng-bind="clusterNodesCtrl.updateInfo.node"></span>
             </button>
             <button type="button" class="btn btn-warning btn-sm dropdown-toggle" data-toggle="dropdown"
-                    data-ng-disabled="clusterDetailCtrl.nodeTotal !== clusterDetailCtrl.cluster.node_nums['0_terminated']"
+                    data-ng-disabled="clusterDetailCtrl.nodeTotal === clusterDetailCtrl.cluster.node_nums['0_terminated']"
                     aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
