@@ -30,7 +30,8 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
     $scope.serviceStatName[SERVICES_STATUS.uninstalling] = "卸载中";
     $scope.serviceStatName[SERVICES_STATUS.installing] = "安装中";
     $scope.serviceStatName[SERVICES_STATUS.pulling] = "拉取镜像中";
-    
+    $scope.serviceStatName[SERVICES_STATUS.restarting] = "重启中";
+
     $scope.serviceStatusCls = {};
     $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
     $scope.serviceStatusCls[SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
@@ -38,7 +39,8 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
     $scope.serviceStatusCls[SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
     $scope.serviceStatusCls[SERVICES_STATUS.installing] = "fa fa-cog text-normal";
     $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-cog text-normal";
-    
+    $scope.serviceStatusCls[SERVICES_STATUS.restarting] = "fa fa-cog text-normal";
+
     $scope.getServiceLabel = function(serviceName) {
         var labels = {
             master: '主控组件',

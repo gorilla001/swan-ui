@@ -247,7 +247,8 @@ SERVICES_STATUS = {
     failed: 'failed',
     uninstalled: 'uninstalled',
     uninstalling: "uninstalling",
-    pulling: "pulling"
+    pulling: "pulling",
+    restarting: "restarting"
 };
 
 LOG = {
