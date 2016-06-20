@@ -61,8 +61,8 @@
                     <a href="#" data-ui-sref="cluster.detail.nodes({clusterId:app.cid})"
                        ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '10'}">
                         <img data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
-                             ng-show="appsTableCtrl.appListStatus[app.id].status == '10'">
-                        {/appsTableCtrl.clusterNameMap[app.cid]/}
+                             ng-show="appsTableCtrl.clusterInforMap[app.cid].status == 'failed'">
+                        {/appsTableCtrl.clusterInforMap[app.cid].name/}
                     </a>
                 </td>
                 <td md-cell data-ng-if="appsTableCtrl.targets === 'group'">

@@ -8,8 +8,7 @@
         var self = this;
         self.targets = target;
         var appListReloadInterval = 5000;
-
-        self.clusterNameMap = listClusterMap(clusters);
+        self.clusterInforMap = listClusterMap(clusters);
         if(self.targets === 'my') {
             self.table = mdTable.createTable('app.list.my');
             self.applist = apps.App;
@@ -51,12 +50,16 @@
          获取集群名
          */
         function listClusterMap(clusters) {
-            var clusterNameMap = {};
+            var clusterMap = {};
             angular.forEach(clusters, function (cluster) {
-                clusterNameMap[cluster.id] = cluster.name;
+                clusterMap[cluster.id] = {
+                    name:cluster.name,
+                    status:cluster.status
+                };
             });
-            return clusterNameMap
+            return clusterMap;
         }
+
 
         function myReloadApps() {
             var deferred = $q.defer();
