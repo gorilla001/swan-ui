@@ -25,7 +25,8 @@
             appname: alarm.appname,
             scaling: alarm.scaling || false,
             mins: alarm.mins || '',
-            maxs: alarm.maxs|| ''
+            maxs: alarm.maxs|| '',
+            level: alarm.level || 'info'
         };
         self.submit = submit;
         self.getAppList= getAppList;

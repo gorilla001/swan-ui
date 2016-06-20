@@ -45,6 +45,7 @@
                     </div>
                     <div flex></div>
                 </div>
+
                 <div layout="row" layout-align="end start" class="form-group form-group-input">
                     <label flex="15">监控周期</label>
                     <div flex="50" layout="column">
@@ -64,6 +65,21 @@
                         </p>
                     </div>
                     <div flex><span class="form-input-addon">分钟</span></div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">告警级别</label>
+                    <div flex="50" layout="column">
+                        <md-input-container>
+                            <md-select data-ng-model="createLogWarningCtrl.form.level" aria-label="level"
+                                       data-required="required" name="level">
+                                <md-option value="info">普通</md-option>
+                                <md-option value="warn">重要</md-option>
+                                <md-option value="crit">紧急</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
                     <div flex></div>
                 </div>
 
