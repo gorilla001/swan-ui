@@ -81,9 +81,9 @@
     <div class="homepage_module" id="homepage_module" data-ng-class="{showDropDown: showMore}">
         <ul layout="row" layout-align="start start" layout-wrap>
             <li flex="10" data-ng-repeat = "service in services">
-                <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status]/}">
+                <span class="{/serviceStatusCls[statusMgr.nodes[node.id].services[service].status || 'uninstalled']/}">
                 <md-tooltip md-direction="top">
-                    {/serviceStatName[statusMgr.nodes[node.id].services[service].status]/}
+                    {/serviceStatName[statusMgr.nodes[node.id].services[service].status || 'uninstalled']/}
                 </md-tooltip>
                     <button class="btn"
                             data-ng-show="statusMgr.nodes[node.id].status!=='terminated'"
