@@ -80,7 +80,9 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         }
         services.push("logcollection");
 
-        if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 ) || $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled") {
+        if (($scope.node.cluster.master_ips && $scope.node.cluster.master_ips.indexOf($scope.node.ip) == 0 )
+            || ($scope.statusMgr.nodes[$scope.node.id].services["chronos"]
+            && $scope.statusMgr.nodes[$scope.node.id].services["chronos"].status != "uninstalled")) {
             services.push("chronos");
         }
         $scope.services = services;
