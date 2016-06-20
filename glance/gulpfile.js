@@ -188,8 +188,23 @@ gulp.task('template-min-layout', ['template-min-policy'], function () {
         .pipe(gulp.dest('build/js/'));
 });
 
+//cluster
+gulp.task('template-min-cluster', ['template-min-layout'], function () {
+    return gulp.src('glance/cluster/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlCluster.js', {
+            module: 'glance.cluster',
+            root: '/glance/cluster'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
+
 // views html to js
-gulp.task('template-min', ['template-min-layout'], function () {
+gulp.task('template-min', ['template-min-cluster'], function () {
     return gulp.src('views/**/*.html')
         .pipe(minifyHtml({
             empty: true,
