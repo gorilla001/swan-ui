@@ -7,7 +7,7 @@
             </div>
         </header>
         <div class="main-content">
-            <form name="warningForm" data-ng-submit="createWarningCtrl.submit()">
+            <form name="warningForm" data-ng-submit="createWarningCtrl.submit($event)">
                 <div layout="row" layout-align="end start" class="form-group form-group-input"
                      data-ng-if="createWarningCtrl.target === 'update'">
                     <label flex="15">应用名称</label>

@@ -4,7 +4,7 @@
         .controller('CreateWarningCtrl', CreateWarningCtrl);
 
     /* @ngInject */
-    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification, $scope) {
+    function CreateWarningCtrl(appWarningBackend, appservice, target, $state, warning, warningCurd, $stateParams, Notification, $scope, repeatModal) {
         var self = this;
         self.target = target;
         self.app = {};
@@ -19,8 +19,8 @@
             times: warning.times || '',
             enabled: warning.enabled || 1, // Deprecated api
             triger: warning.triger || false,
-            mininstance: warning.mininstance ||'',
-            instance: warning.instance||'',
+            mininstance: warning.mininstance || '',
+            instance: warning.instance || '',
             level: warning.level || 'info'
         };
 
@@ -92,11 +92,11 @@
                 })
         }
 
-        function submit() {
+        function submit(ev) {
             self.form.threshold = (self.form.metric === 'CpuUsedCores' ? self.form.threshold / 100 : self.form.threshold).toString();
             self.form.appid = self.app.id || warning.appid || 0;
             self.form.cid = self.app.cid || parseInt(warning.cid) || '';
-            if(!self.form.triger){
+            if (!self.form.triger) {
                 delete self.form.instance;
                 delete self.form.mininstance;
             }
@@ -110,10 +110,20 @@
                         $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1}, {reload: true})
                     }, function (res) {
                         self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
+
+                        //if the policy is existence, should be pop a modal to notice user
+                        if (res.code == 18002) {
+                            var policyId = res.data.id;
+                            repeatModal.open(ev)
+                                .then(function (data) {
+                                    $state.go('policy.WarningUpdate', {task_id: policyId});
+                                });
+                        }
+
                     })
             } else {
                 self.form.id = parseInt($stateParams.task_id);
-                    self.form.cid = parseInt(warning.cid);
+                self.form.cid = parseInt(warning.cid);
 
                 warningCurd.updateTask(self.form, $scope.warningForm)
                     .then(function (data) {
@@ -121,6 +131,15 @@
                         $state.go('policy.tab.appwarning.warninglist', {per_page: 20, page: 1})
                     }, function (res) {
                         self.form.threshold = self.form.metric === 'CpuUsedCores' ? self.form.threshold * 100 : self.form.threshold;
+
+                        //if the policy is existence, should be pop a modal to notice user
+                        if (res.code == 18002) {
+                            var policyId = res.data.id;
+                            repeatModal.open(ev)
+                                .then(function (data) {
+                                    $state.go('policy.WarningUpdate', {task_id: policyId});
+                                });
+                        }
                     });
             }
         }

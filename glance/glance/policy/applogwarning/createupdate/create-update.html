@@ -2,7 +2,8 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2>新建日志告警策略</h2>
+                <h2 data-ng-if="createLogWarningCtrl.target === 'create'">新建日志告警策略</h2>
+                <h2 data-ng-if="createLogWarningCtrl.target === 'update'">更新日志告警策略</h2>
             </div>
         </header>
         <div class="main-content">
@@ -159,12 +160,12 @@
                         <md-button class="md-raised md-primary"
                                    data-demo-disable
                                    data-ng-if="createLogWarningCtrl.target === 'create'"
-                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-click="createLogWarningCtrl.submit($event)"
                                    data-ng-disabled="logwarningForm.$invalid">创 建</md-button>
                         <md-button class="md-raised md-primary"
                                     data-demo-disable
                                    data-ng-if="createLogWarningCtrl.target === 'update'"
-                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-click="createLogWarningCtrl.submit($event)"
                                    data-ng-disabled="logwarningForm.$invalid">更 新</md-button>
                     </div>
                     <md-button class="md-primary" data-ng-click="rootCtrl.goBack()">取 消</md-button>
