@@ -2,7 +2,8 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2>新建日志告警策略</h2>
+                <h2 data-ng-if="createLogWarningCtrl.target === 'create'">新建日志告警策略</h2>
+                <h2 data-ng-if="createLogWarningCtrl.target === 'update'">更新日志告警策略</h2>
             </div>
         </header>
         <div class="main-content">
@@ -45,6 +46,7 @@
                     </div>
                     <div flex></div>
                 </div>
+
                 <div layout="row" layout-align="end start" class="form-group form-group-input">
                     <label flex="15">监控周期</label>
                     <div flex="50" layout="column">
@@ -64,6 +66,21 @@
                         </p>
                     </div>
                     <div flex><span class="form-input-addon">分钟</span></div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">告警级别</label>
+                    <div flex="50" layout="column">
+                        <md-input-container>
+                            <md-select data-ng-model="createLogWarningCtrl.form.level" aria-label="level"
+                                       data-required="required" name="level">
+                                <md-option value="info">普通</md-option>
+                                <md-option value="warn">重要</md-option>
+                                <md-option value="crit">紧急</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
                     <div flex></div>
                 </div>
 
@@ -143,12 +160,12 @@
                         <md-button class="md-raised md-primary"
                                    data-demo-disable
                                    data-ng-if="createLogWarningCtrl.target === 'create'"
-                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-click="createLogWarningCtrl.submit($event)"
                                    data-ng-disabled="logwarningForm.$invalid">创 建</md-button>
                         <md-button class="md-raised md-primary"
                                     data-demo-disable
                                    data-ng-if="createLogWarningCtrl.target === 'update'"
-                                   data-ng-click="createLogWarningCtrl.submit()"
+                                   data-ng-click="createLogWarningCtrl.submit($event)"
                                    data-ng-disabled="logwarningForm.$invalid">更 新</md-button>
                     </div>
                     <md-button class="md-primary" data-ng-click="rootCtrl.goBack()">取 消</md-button>

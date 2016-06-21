@@ -7,6 +7,7 @@
     function EventLogListCtrl(data, mdTable, $state, $stateParams) {
         var self = this;
 
+        self.WARNING_LEVEL = WARNING_LEVEL;
         self.eventLogList = data.events;
         self.count = data.count;
         self.searchKeyWord = $stateParams.keywords || '';

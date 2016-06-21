@@ -19,7 +19,7 @@
         };
 
         function createLogPolicy(data, form){
-            return gHttp.Resource('log.logPolicies').post(data, {form: form});
+            return gHttp.Resource('log.logPolicies').post(data, {form: form, ignoreCodes: [17018]});
         }
 
         function deletLogPolicy(logId){
@@ -39,7 +39,7 @@
         }
         
         function updateLogPolicy(data, form) {
-            return gHttp.Resource('log.logPolicies').put(data, {form: form});
+            return gHttp.Resource('log.logPolicies').put(data, {form: form, ignoreCodes: [17018]});
         }
 
         function stopLogPolicy(logId) {

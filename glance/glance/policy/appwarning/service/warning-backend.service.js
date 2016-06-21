@@ -18,7 +18,7 @@
         };
 
         function createWarning(data, form) {
-            return gHttp.Resource('warning.tasks').post(data, {form: form});
+            return gHttp.Resource('warning.tasks').post(data, {form: form, ignoreCodes: [18002]});
         }
 
         function deleteWarning(taskId) {
@@ -30,7 +30,7 @@
         }
 
         function updateWarning(data, form) {
-            return gHttp.Resource('warning.tasks').put(data, {form: form});
+            return gHttp.Resource('warning.tasks').put(data, {form: form, ignoreCodes: [18002]});
         }
 
         function patchWarning(taskId, method) {

@@ -13,6 +13,7 @@
         <tr md-row>
             <th md-column><span>策略 ID</span></th>
             <th md-column><span>应用名称</span></th>
+            <th md-column>级别</th>
             <th md-column>告警时间</th>
             <th md-column>实例</th>
             <th md-column>实际值</th>
@@ -23,6 +24,7 @@
         <tr md-row ng-repeat="item in warningEventCtrl.warningEvents">
             <td md-cell>{/item.taskid/}</td>
             <td md-cell>{/item.appname/}</td>
+            <td md-cell>{/warningEventCtrl.WARNING_LEVEL[item.level]/}</td>
             <td md-cell>
                 {/item.alerttime | date:"yyyy-MM-dd HH:mm:ss"/}
             </td>

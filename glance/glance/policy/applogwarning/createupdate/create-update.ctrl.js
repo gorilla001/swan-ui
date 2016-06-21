@@ -5,7 +5,7 @@
 
     /* @ngInject */
     function CreateLogWarningCtrl(appservice, $state, logWarningBackend, clusterBackend,
-                                  Notification, target, logPolicy, $scope) {
+                                  Notification, target, logPolicy, $scope, repeatModal) {
         var self = this;
         var clusters = [];
         var clusterMapping = [];
@@ -25,10 +25,11 @@
             appname: alarm.appname,
             scaling: alarm.scaling || false,
             mins: alarm.mins || '',
-            maxs: alarm.maxs|| ''
+            maxs: alarm.maxs || '',
+            level: alarm.level || 'info'
         };
         self.submit = submit;
-        self.getAppList= getAppList;
+        self.getAppList = getAppList;
         ////
 
         activate();
@@ -60,8 +61,8 @@
                 })
         }
 
-        function submit() {
-            if(!self.form.scaling){
+        function submit(ev) {
+            if (!self.form.scaling) {
                 delete self.form.mins;
                 delete self.form.maxs;
             }
@@ -72,10 +73,22 @@
                 self.form.appname = self.app.name;
                 self.form.appid = self.app.id;
                 self.form.clusterid = self.app.cid;
+
                 logWarningBackend.createLogPolicy(self.form, $scope.logwarningForm)
                     .then(function (data) {
                         Notification.success('日志告警创建成功');
                         $state.go('policy.tab.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
+                    }, function (res) {
+
+                        //if the policy is existence, should be pop a modal to notice user
+                        if (res.code == 17018) {
+                            var policyId = res.data.alarm.id;
+                            repeatModal.open(ev)
+                                .then(function (data) {
+                                    $state.go('policy.policyLogWarningUpdate', {log_id: policyId});
+                                });
+                        }
+
                     })
             } else {
                 self.form.id = parseInt(alarm.id);
@@ -83,6 +96,17 @@
                     .then(function (data) {
                         Notification.success('日志告警更新成功');
                         $state.go('policy.tab.applogwarning.loglist', {per_page: 20, page: 1}, {reload: true})
+                    }, function (res) {
+
+                        //if the policy is existence, should be pop a modal to notice user
+                        if (res.code == 17018) {
+                            var policyId = res.data.alarm.id;
+                            repeatModal.open(ev)
+                                .then(function (data) {
+                                    $state.go('policy.policyLogWarningUpdate', {log_id: policyId});
+                                });
+                        }
+
                     });
             }
         }
