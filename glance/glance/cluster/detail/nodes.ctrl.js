@@ -100,6 +100,15 @@
 
         //监听主机状态 websocket
         $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+
+            //when node status is change, you should be check the cluster.node_nums['0_terminated'],
+            //to control the cluster upgrade button disable/enable
+            clusterBackend.getCluster($stateParams.clusterId)
+                .then(function (data) {
+                    $scope.clusterDetailCtrl.cluster = data;
+
+                });
+
             angular.forEach(self.nodes, function (item, index) {
                 if (item.id == data.nodeId) {
                     item.status = data.status
