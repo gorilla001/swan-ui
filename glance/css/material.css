@@ -906,3 +906,6 @@ md-tabs-canvas, md-content {
 footer-content, md-toolbar {
     box-shadow: none;
 }
+.md-datepicker-input-mask {
+    width: auto;
+}
