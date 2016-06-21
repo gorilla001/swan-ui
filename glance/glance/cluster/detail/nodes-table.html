@@ -13,7 +13,7 @@
              data-ng-show="clusterNodesCtrl.updateInfo.node && clusterDetailCtrl.cluster.status != 'upgrading'"
              style="padding: 0 10px">
             <button type="button" class="btn btn-warning btn-sm"
-                    data-ng-click="clusterNodesCtrl.upgradeNode(clusterDetailCtrl.cluster.id)"
+                    data-ng-click="clusterNodesCtrl.upgradeNode(clusterDetailCtrl.cluster.id); clusterDetailCtrl.cluster.status = 'upgrading'"
                     data-ng-disabled="clusterDetailCtrl.nodeTotal === clusterDetailCtrl.cluster.node_nums['0_terminated']"
                     data-demo-disable
                     data-dm-permit-click="1"
