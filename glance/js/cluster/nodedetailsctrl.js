@@ -54,7 +54,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
             node_id: $stateParams.nodeId
         }).get().then(function (data) {
             $scope.node = data;
-            $scope.isMasterFlag = $scope.getIsMaster($scope.node);
+            $scope.isMasterFlag = $scope.getIsMaster($scope.node, $scope.node.cluster);
             if ($scope.isMasterFlag) {
                 $scope.node.role = "MASTER";
             } else {

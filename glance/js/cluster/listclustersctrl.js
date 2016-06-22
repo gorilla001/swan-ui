@@ -165,7 +165,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         };
         clusterBasicData.infos = getClusterBasicInfos(cluster);
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr, cluster);
 
         clusterBasicData.amounts = countNodesAmount(nodesWithRoleAndStatus);
         var masters = nodesWithRoleAndStatus.masters;
@@ -214,7 +214,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
             selectedClasses: {}
         };
         var nodes = cluster.nodes;
-        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr);
+        var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus(nodes, cluster.id, $scope.statusMgr, cluster);
         cluster.hiddenStatuses = cluster.hiddenStatuses? cluster.hiddenStatuses: [];
         var filteredNodes = filterNodes(nodesWithRoleAndStatus, cluster, clickedStatus);
         var allShowSlaves = getAllShowSlaves(filteredNodes.slaves);
