@@ -80,8 +80,12 @@
             Notification.success("申请试用成功");
         }
 
-        function goBack() {
-            $window.history.length > 2 ? $window.history.back() : $state.go('dashboard.home');
+        function goBack(state) {
+            if(state){
+                $state.go(state);
+            }else{
+                $window.history.length > 2 ? $window.history.back() : $state.go('dashboard.home');
+            }
         }
 
         function getNotice() {
