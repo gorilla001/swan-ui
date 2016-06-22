@@ -372,7 +372,8 @@ BACKEND_URL = {
         getClusterMonitor: "api/v3/clusters/$cluster_id/metrics",
         appmonit: "api/v3/clusters/$clusterID/apps/$aliase/metrics",
         reqRate: "api/v3/clusters/$cluster_id/apps/$aliase/session",
-        monitor: "api/v3/clusters/$clusterID/apps/$aliase/monitor"
+        monitor: "api/v3/clusters/$clusterID/apps/$aliase/monitor",
+        nodeAppList: "api/v3/clusters/$cluster_id/ip/$node_ip/instance"
     },
     ws: {
         subscribe: "streaming/glance/$token"

@@ -12,18 +12,18 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         'upgrading': "fa fa-cog text-normal",
         'repairing': "fa fa-cog text-normal"
     };
-    
-    var circles=$("#btn-folding-v"), homepage_module=$("#homepage_module");
-    circles.click(function(){
+
+    var circles = $("#btn-folding-v"), homepage_module = $("#homepage_module");
+    circles.click(function () {
         if (homepage_module.height() == '120') {
             homepage_module.height('240');
             circles.children('span').removeClass('fa-chevron-down').addClass('fa-chevron-up');
-        }else{
+        } else {
             homepage_module.height('120');
             circles.children('span').removeClass('fa-chevron-up').addClass('fa-chevron-down');
         }
     });
-    
+
     $scope.node = {};
     $scope.showCharts = false;
     $scope.showPageNav = false;
@@ -41,7 +41,7 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.labelForm = {};
 
     $scope.nodeInfo = {};
-    
+
     $scope.services = [];
     $scope.showMore = false;
 
@@ -49,24 +49,29 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
 
     $scope.statusMgr = new ClusterStatusMgr();
     $scope.getCurNode = function () {
-        gHttp.Resource('cluster.node', {cluster_id: $stateParams.clusterId,node_id: $stateParams.nodeId}).
-            get().then(function (data) {
-                $scope.node = data;
-                $scope.isMasterFlag = $scope.getIsMaster($scope.node);
-                if ($scope.isMasterFlag) {
-                    $scope.node.role = "MASTER";
-                } else {
-                    $scope.node.role = "SLAVE"
-                }
-                $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
-                $scope.statusMgr.startListen($scope);
-                
-                createServiceViews();
-                
-                $scope.selectedLabels = labelService.formatNodeLabels(data.node_labels);
-            });
+        gHttp.Resource('cluster.node', {
+            cluster_id: $stateParams.clusterId,
+            node_id: $stateParams.nodeId
+        }).get().then(function (data) {
+            $scope.node = data;
+            $scope.isMasterFlag = $scope.getIsMaster($scope.node);
+            if ($scope.isMasterFlag) {
+                $scope.node.role = "MASTER";
+            } else {
+                $scope.node.role = "SLAVE"
+            }
+            $scope.statusMgr.addNode($stateParams.clusterId, $scope.node);
+            $scope.statusMgr.startListen($scope);
+
+            createServiceViews();
+            getNodeAppList($scope.node.ip);
+
+            $scope.selectedLabels = labelService.formatNodeLabels(data.node_labels);
+        });
     };
+
     $scope.getCurNode();
+    getClusterApps();
 
     function createServiceViews() {
         var services = ["docker"];
@@ -99,7 +104,10 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
     $scope.unitConversion = unitConversion;
 
     $scope.getNodeMetricData = function (nodeId) {
-        gHttp.Resource('cluster.nodeMonitor', {cluster_id: $stateParams.clusterId,node_id: nodeId}).get().then(function (data) {
+        gHttp.Resource('cluster.nodeMonitor', {
+            cluster_id: $stateParams.clusterId,
+            node_id: nodeId
+        }).get().then(function (data) {
             setDefalutNodeInfos();
 
             if (data.length) {
@@ -232,18 +240,20 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
             labels: labelIds
         };
 
-        return gHttp.Resource('cluster.node', {'cluster_id': $stateParams.clusterId, "node_id": $stateParams.nodeId}).
-            put(putData).catch(function (data) {
-                Notification.error(data.data.labels);
-            })
+        return gHttp.Resource('cluster.node', {
+            'cluster_id': $stateParams.clusterId,
+            "node_id": $stateParams.nodeId
+        }).put(putData).catch(function (data) {
+            Notification.error(data.data.labels);
+        })
     }
 
     function updateNodeLabels() {
-        gHttp.Resource('cluster.node', {'cluster_id': $stateParams.clusterId,'node_id': $stateParams.nodeId})
+        gHttp.Resource('cluster.node', {'cluster_id': $stateParams.clusterId, 'node_id': $stateParams.nodeId})
             .get().then(function (data) {
-                $scope.selectedLabels = labelService.formatNodeLabels(data);
-                $scope.changeLabels();
-            });
+            $scope.selectedLabels = labelService.formatNodeLabels(data);
+            $scope.changeLabels();
+        });
     }
 
     // 主机导航
@@ -294,6 +304,25 @@ function nodeDetailsCtrl($scope, $stateParams, gHttp, unitConversion, buildChart
         }
     }
 
+    function getNodeAppList(nodeIp) {
+        gHttp.Resource('metrics.nodeAppList', {cluster_id: $stateParams.clusterId, node_ip: nodeIp}).get()
+            .then(function (data) {
+                $scope.appList = data;
+            })
+    }
+
+    function getClusterApps() {
+        gHttp.Resource('app.clusterApps', {cluster_id: $stateParams.clusterId}).get()
+            .then(function (data) {
+                $scope.clusterApps = data.App;
+                $scope.appsNameMap = {};
+                if($scope.clusterApps.length){
+                    $scope.clusterApps.reduce(function (pre, cur) {
+                        return $scope.appsNameMap[cur.alias] = cur.name;
+                    })
+                }
+            })
+    }
 }
 
 nodeDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'unitConversion', 'buildCharts', 'monitor', '$state', "ClusterStatusMgr", 'labelService', 'Notification', 'confirmModal'];
