@@ -27,7 +27,7 @@ function clusterDetailsCtrl($scope, $stateParams, gHttp, Notification, ClusterSt
 
 
             $scope.currentPage = 1;
-            var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr);
+            var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr, $scope.cluster);
 
             $scope.statusMgr.startListen($scope);
             $scope.$on(SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
