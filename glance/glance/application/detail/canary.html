@@ -60,18 +60,20 @@
                     <md-menu-content width="2">
                         <md-menu-item>
                             <md-button aria-label="upContainer"
-                                       data-ng-click="canaryCtrl.upContainer($event, canary.Instances, canary.Cid, canary.Aid, canary.Vid)"
+                                       data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status != 2"
+                                       data-ng-click="canaryCtrl.upContainer($event, canaryCtrl.canaryStatus[canary.Vid].instances, canary.Cid, canary.Aid, canary.Vid)"
                                        data-demo-disable>扩展
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
                             <md-button aria-label="weight"
+                                       data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status != 2"
                                        data-ng-click="canaryCtrl.changeWeight($event, canaryCtrl.canaryList)"
                                        data-demo-disable>权重
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button aria-label="delete"
+                            <md-button aria-label="deploy"
                                        data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status != '2'"
                                        data-ng-click="canaryCtrl.depoly(canary.Cid, canary.Aid, canary.Vid)"
                                        data-demo-disable>正式部署
