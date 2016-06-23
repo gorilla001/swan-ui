@@ -86,6 +86,8 @@
                             repeatModal.open(ev)
                                 .then(function (data) {
                                     $state.go('policy.policyLogWarningUpdate', {log_id: policyId});
+                                }, function (res) {
+                                    $state.go('policy.tab.applogwarning.loglist');
                                 });
                         }
 
@@ -104,6 +106,8 @@
                             repeatModal.open(ev)
                                 .then(function (data) {
                                     $state.go('policy.policyLogWarningUpdate', {log_id: policyId});
+                                }, function (res) {
+                                    $state.go('policy.tab.applogwarning.loglist');
                                 });
                         }
 

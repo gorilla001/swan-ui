@@ -117,6 +117,8 @@
                             repeatModal.open(ev)
                                 .then(function (data) {
                                     $state.go('policy.WarningUpdate', {task_id: policyId});
+                                }, function (res) {
+                                    $state.go('policy.tab.appwarning.warninglist');
                                 });
                         }
 
@@ -138,6 +140,8 @@
                             repeatModal.open(ev)
                                 .then(function (data) {
                                     $state.go('policy.WarningUpdate', {task_id: policyId});
+                                }, function (res) {
+                                    $state.go('policy.tab.appwarning.warninglist');
                                 });
                         }
                     });
