@@ -92,18 +92,18 @@
         self.getNodeMetricData = function (nodeId) {
             clusterBackend.getNodeMetricData($stateParams.clusterId, nodeId)
                 .then(function (data) {
-                setDefalutNodeInfos();
+                    setDefalutNodeInfos();
 
-                if (data.length) {
-                    self.nodeInfo = getNodeInfo(data[0]);
-                }
-                $('.charts').show();
-                self.showCharts = true;
-                var chartsData = monitor.httpMonitor.getChartsData(data);
-                buildCharts.lineCharts(chartsData, self.DOMs);
+                    if (data.length) {
+                        self.nodeInfo = getNodeInfo(data[0]);
+                    }
+                    $('.charts').show();
+                    self.showCharts = true;
+                    var chartsData = monitor.httpMonitor.getChartsData(data);
+                    buildCharts.lineCharts(chartsData, self.DOMs);
 
-                addMetricData(data);
-            });
+                    addMetricData(data);
+                });
         };
 
         self.getNodeMetricData($stateParams.nodeId);
@@ -168,9 +168,9 @@
 
             confirmModal.open(toast, ev).then(function () {
                 clusterBackend.deleteNodes($stateParams.clusterId, ids)
-                .then(function () {
-                    $state.go('cluster.detail.nodes', {'clusterId': $stateParams.clusterId});
-                });
+                    .then(function () {
+                        $state.go('cluster.detail.nodes', {'clusterId': $stateParams.clusterId});
+                    });
             });
         };
 
@@ -179,7 +179,7 @@
                 serviceName = self.serviceRepairInfo.serviceName;
                 method = self.serviceRepairInfo.method;
             }
-            clusterBackend.repairService($stateParams.clusterId,$stateParams.nodeId, serviceName,method)
+            clusterBackend.repairService($stateParams.clusterId, $stateParams.nodeId, serviceName, method)
         };
 
 
@@ -226,27 +226,27 @@
 
             return clusterBackend.changeLables($stateParams.clusterId, $stateParams.nodeId, putData)
                 .catch(function (data) {
-                Notification.error(data.data.labels);
-            })
+                    Notification.error(data.data.labels);
+                })
         }
 
         function updateNodeLabels() {
             clusterBackend.getCurNode($stateParams.clusterId, $stateParams.nodeId)
                 .then(function (data) {
-                self.selectedLabels = labelService.formatNodeLabels(data);
-                self.changeLabels();
-            });
+                    self.selectedLabels = labelService.formatNodeLabels(data);
+                    self.changeLabels();
+                });
         }
 
         // 主机导航
         (function listNodesIds() {
             clusterBackend.listNodesIds($stateParams.clusterId)
                 .then(function (data) {
-                var nodes = data.nodes;
-                if (nodes.length > 1) {
-                    getPreAndNextNodeIds(nodes, $stateParams.nodeId);
-                }
-            })
+                    var nodes = data.nodes;
+                    if (nodes.length > 1) {
+                        getPreAndNextNodeIds(nodes, $stateParams.nodeId);
+                    }
+                })
         })();
 
         self.goPreNode = function () {
@@ -302,11 +302,9 @@
             .then(function (data) {
                 self.clusterApps = data.App;
                 self.appsNameMap = {};
-                if (self.clusterApps.length) {
-                    self.clusterApps.reduce(function (pre, cur) {
-                        return self.appsNameMap[cur.alias] = cur.name;
-                    })
-                }
+                angular.forEach(self.clusterApps, function (item, index) {
+                    self.appsNameMap[item.alias] = item.name;
+                });
             })
     }
 
