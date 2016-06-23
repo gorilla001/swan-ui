@@ -47,7 +47,7 @@
             clusterBackend.getCurNode($stateParams.clusterId, $stateParams.nodeId)
                 .then(function (data) {
                     self.node = data;
-                    $scope.isMasterFlag = $scope.getIsMaster(self.node, self.node.cluster);
+                    $scope.isMasterFlag = $scope.getIsMaster(self.node);
                     if ($scope.isMasterFlag) {
                         self.node.role = "MASTER";
                     } else {

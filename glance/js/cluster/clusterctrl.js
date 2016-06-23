@@ -79,8 +79,8 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
         return classes[status] ? classes[status] : 'text-danger';
     };
 
-    $scope.getIsMaster = function(node, cluster) {
-        return !(cluster.master_ips && cluster.master_ips.length) || node.role === 'master';
+    $scope.getIsMaster = function(node) {
+        return node.role === 'master';
     };
 
     $scope.concatObjtoArr = function(obj) {
@@ -107,7 +107,7 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
         angular.forEach(nodes, function(node, index) {
             statusMgr.addNode(clusterId, node);
             node.nodeStatus = statusMgr.nodes[node.id].status;
-            $scope.getIsMaster(node, clusterInfo)? cluster.masters[node.nodeStatus].push(node) : cluster.slaves[node.nodeStatus].push(node);
+            $scope.getIsMaster(node)? cluster.masters[node.nodeStatus].push(node) : cluster.slaves[node.nodeStatus].push(node);
         });
         return cluster;
     };
