@@ -37,7 +37,9 @@
         /*
            删除操作
          */
-        self.delete = function (clusterId, appId, state) {
+        self.delete = function (clusterId, appId, target) {
+            var state;
+            state = target == 'my' ? 'app.list.my': 'app.list.group';
             appcurd.del(clusterId, appId, state);
         };
 

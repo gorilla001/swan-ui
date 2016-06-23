@@ -106,7 +106,7 @@
                             <md-menu-item>
                                 <md-button aria-label="delete"
                                            ng-disabled="appsTableCtrl.appListStatus[app.id].status == '5' || appsTableCtrl.appListStatus[app.id].status == 'undefined'"
-                                           data-ng-click="listappctrl.delete(app.cid, app.id, 'app.list.group')"
+                                           data-ng-click="listappctrl.delete(app.cid, app.id, appsTableCtrl.targets)"
                                            data-demo-disable>删除
                                 </md-button>
                             </md-menu-item>
