@@ -76,8 +76,8 @@
             })
             .state('cluster.nodedetails', {
                 url: '/:clusterId/node/:nodeId',
-                templateUrl: '/views/cluster/node-details.html',
-                controller: 'nodeDetailsCtrl'
+                templateUrl: '/glance/cluster/nodedetail/node-details.html',
+                controller: 'NodeDetailsCtrl as nodeDetailsCtrl'
             })
             .state('cluster.updatenode', {
                 url: '/:clusterId/node/:nodeId/update?name',
