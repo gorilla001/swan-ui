@@ -3,7 +3,7 @@
     <section class="main-section">
         <header layout="row" layout-align="end start">
             <div class="info" flex>
-                <h2><a href="#" data-ui-sref="cluster.detail.nodes({clusterId:clusterId})">{/cluster.name/}</a></h2>
+                <h2><a href="#" data-ui-sref="cluster.detail.nodes({clusterId:cluster.id})">{/cluster.name/}</a></h2>
                 <dl>
                     <dt><i class="fa fa-heartbeat "></i> 正常主机</dt>
                     <dd class="text-success">{/dashboardCtrl.statusMgr.nodeStatusCount[cluster.id].running || 0/}</dd>
