@@ -9,7 +9,7 @@
                 <dd>
                     <i class="{/nodeDetailsCtrl.nodeStatusCls[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}" aria-hidden="true"></i>
                     <md-tooltip md-direction="top">
-                        {/nodeDetailsCtrl.statName[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}
+                        {/statName[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}
                     </md-tooltip>
                 </dd>
                 <dt>IP 地址</dt>
@@ -55,7 +55,7 @@
                     编辑主机
                 </md-tooltip>
             </md-button>
-            <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="nodeDetailsCtrl.deleNode(node.id, $event)"
+            <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="nodeDetailsCtrl.deleNode(nodeDetailsCtrl.node.id, $event)"
                        data-demo-disable
                        data-dm-permit-click="1"
                        data-dm-role="nodeDetailsCtrl.node.cluster.group_role"
