@@ -134,7 +134,7 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button aria-label="canary"
-                                           data-ng-click="listappctrl.createCanary($event, app.cid, app.id, app.instances)"
+                                           data-ng-click="listappctrl.createCanary($event, app.cid, app.id, app)"
                                            data-ng-disabled="appsTableCtrl.appListStatus[app.id].status !='2' || !app.ports.length || app.canary"
                                            data-demo-disable>
                                     新建灰度
