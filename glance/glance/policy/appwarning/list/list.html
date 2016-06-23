@@ -14,8 +14,8 @@
             <th md-column md-order-by="id"><span>策略 ID</span></th>
             <th md-column md-order-by="appname"><span>应用名称</span></th>
             <th md-column>规则</th>
-            <th md-column>周期</th>
             <th md-column>级别</th>
+            <th md-column>周期</th>
             <th md-column>阈值</th>
             <th md-column md-order-by="emails">联系人</th>
             <th md-column>状态</th>
@@ -38,8 +38,8 @@
                 item.metric === 'NetworkReceviedByteRate' || item.metric === 'NetworkSentByteRate'">B/s</span>
                 <span data-ng-if="item.metric === 'reqrate'">次</span>
             </td>
-            <td md-cell>{/item.duration/} 分钟</td>
             <td md-cell>{/warningListCtrl.WARNING_LEVEL[item.level]/}</td>
+            <td md-cell>{/item.duration/} 分钟</td>
             <td md-cell>{/item.times/} 次</td>
             <td md-cell>{/item.emails || '无'/}</td>
             <td md-cell>{/warningListCtrl.enableText[item.enabled]/}</td>
