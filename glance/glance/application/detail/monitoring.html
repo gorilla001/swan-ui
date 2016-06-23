@@ -12,8 +12,8 @@
                 </div>
                 <div class="info-panel">
                     内存占用量<br>
-                    <div class="cluster-piechart-num">{/monitorAppCtrl.memoryUsed.toFixed(2)/}
-                        / {/monitorAppCtrl.memoryTotal.toFixed(2)/}
+                    <div class="cluster-piechart-num">{/monitorAppCtrl.memoryUsed.toFixed(2) | currency: '' :0/}
+                        / {/monitorAppCtrl.memoryTotal.toFixed(2) | currency: '' :0/}
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 </td>
                 <td style="width: 30%;">
                     <uib-progressbar class="progress-striped active" id="instanceMem" type="success"
-                                     max="appMonitor.memoryTotal" value="appMonitor.memoryUsed"><span>{/appMonitor.memoryUsed/} / {/appMonitor.memoryTotal/}</span>
+                                     max="appMonitor.memoryTotal" value="appMonitor.memoryUsed"><span>{/appMonitor.memoryUsed | currency: '' :0/} / {/appMonitor.memoryTotal | currency: '' :0/}</span>
                     </uib-progressbar>
                 </td>
             </tr>

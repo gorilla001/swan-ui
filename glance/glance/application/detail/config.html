@@ -10,7 +10,7 @@
     <dt>CPU</dt>
     <dd>{/detailAppCtrl.appInfo.cpus/}</dd>
     <dt>内存</dt>
-    <dd>{/detailAppCtrl.appInfo.mem/} MB</dd>
+    <dd>{/detailAppCtrl.appInfo.mem | currency: '' :0/} MB</dd>
     <dt>容器个数</dt>
     <dd ng-if="detailAppCtrl.appStatus.tasks && detailAppCtrl.appStatus.tasks != detailAppCtrl.appStatus.instances">
         {/detailAppCtrl.appStatus.tasks/}/{/detailAppCtrl.appStatus.instances/}<span
