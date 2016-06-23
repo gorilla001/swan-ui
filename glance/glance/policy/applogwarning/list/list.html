@@ -13,8 +13,8 @@
         <tr md-row>
             <th md-column md-order-by="id"><span>策略 ID</span></th>
             <th md-column md-order-by="appname"><span>应用名称</span></th>
-            <th md-column>级别</th>
             <th md-column md-order-by="keyword">监控关键字</th>
+            <th md-column>级别</th>
             <th md-column>监控周期</th>
             <th md-column md-order-by="gtnum">出现次数</th>
             <th md-column md-order-by="emails">联系人</th>
@@ -27,8 +27,8 @@
         <tr md-row ng-repeat="item in logWarningListCtrl.logWarningList">
             <td md-cell>{/item.id/}</td>
             <td md-cell>{/item.appname/}</td>
-            <td md-cell>{/logWarningListCtrl.WARNING_LEVEL[item.level]/}</td>
             <td md-cell>{/item.keyword/}</td>
+            <td md-cell>{/logWarningListCtrl.WARNING_LEVEL[item.level]/}</td>
             <td md-cell>{/item.ival/} 分钟</td>
             <td md-cell>{/item.gtnum/} 次</td>
             <td md-cell>{/item.emails || '无'/}</td>
