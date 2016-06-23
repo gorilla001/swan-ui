@@ -51,7 +51,7 @@
                     <div class="info-panel" data-ng-if="cluster.masMetrics.memTotal">
                         内存占用量<br>
                         <div class="cluster-piechart-num">
-                            {/cluster.masMetrics.memUsed/}
+                            {/cluster.masMetrics.memUsed | currency: '' :0/}
                             / {/cluster.masMetrics.memTotal | currency: '' :0/} MB
                         </div>
                     </div>
