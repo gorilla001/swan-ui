@@ -48,11 +48,7 @@
                 .then(function (data) {
                     self.node = data;
                     $scope.isMasterFlag = $scope.getIsMaster(self.node);
-                    if ($scope.isMasterFlag) {
-                        self.node.role = "MASTER";
-                    } else {
-                        self.node.role = "SLAVE";
-                    }
+                    self.node.role = $scope.getNodeType(self.node, self.node.cluster);
                     self.statusMgr.addNode($stateParams.clusterId, self.node);
                     self.statusMgr.startListen($scope);
                     createServiceViews();
