@@ -40,6 +40,8 @@
         self.services = [];
         self.showMore = false;
 
+        self.listNodeApps = listNodeApps;
+
         $('.charts').hide();
 
         self.statusMgr = new ClusterStatusMgr();
@@ -56,11 +58,12 @@
                     self.statusMgr.addNode($stateParams.clusterId, self.node);
                     self.statusMgr.startListen($scope);
                     createServiceViews();
-                    getNodeAppList(self.node.ip);
                     self.selectedLabels = labelService.formatNodeLabels(data.node_labels);
                 });
         };
+
         self.getCurNode();
+
         function createServiceViews() {
             var services = ["docker"];
             if ($scope.isMasterFlag) {
@@ -290,22 +293,21 @@
             }
         }
 
-        function getNodeAppList(nodeIp) {
+        function listNodeApps(nodeIp) {
             clusterBackend.getNodeAppList($stateParams.clusterId, nodeIp)
                 .then(function (data) {
                     self.appList = data;
+                });
+
+            clusterBackend.getClusterApps($stateParams.clusterId)
+                .then(function (data) {
+                    self.clusterApps = data.App;
+                    self.appsNameMap = {};
+                    angular.forEach(self.clusterApps, function (item, index) {
+                        self.appsNameMap[item.alias] = item.name;
+                    });
                 })
         }
-
-
-        clusterBackend.getClusterApps($stateParams.clusterId)
-            .then(function (data) {
-                self.clusterApps = data.App;
-                self.appsNameMap = {};
-                angular.forEach(self.clusterApps, function (item, index) {
-                    self.appsNameMap[item.alias] = item.name;
-                });
-            })
     }
 
 })();

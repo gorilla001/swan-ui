@@ -150,7 +150,7 @@
                 </div>
             </div>
         </md-tab>
-        <md-tab label="主机应用">
+        <md-tab label="主机应用" md-on-select="nodeDetailsCtrl.listNodeApps(nodeDetailsCtrl.node.ip)">
             <md-content class="md-padding main-tab-content">
                 <md-table-container>
                     <table md-table>
@@ -169,8 +169,8 @@
                             <td md-cell>{/nodeDetailsCtrl.appsNameMap[app.appname]/}</td>
                             <td md-cell>{/app.instance/}</td>
                             <td md-cell>运行中</td>
-                            <td md-cell>{/app.cpuUsed * 100/} %</td>
-                            <td md-cell>{/app.memoryUsed/} MB</td>
+                            <td md-cell>{/app.cpuUsed.toFixed(4) * 100/} %</td>
+                            <td md-cell>{/app.memoryUsed | currency: '' :0/} MB</td>
                             <td md-cell>{/app.startTime / 1000000 | date: 'yyyy-MM-dd HH:mm'/}</td>
                         </tr>
                         </tbody>
