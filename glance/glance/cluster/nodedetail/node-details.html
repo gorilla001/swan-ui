@@ -169,7 +169,7 @@
                             <td md-cell>{/nodeDetailsCtrl.appsNameMap[app.appname]/}</td>
                             <td md-cell>{/app.instance/}</td>
                             <td md-cell>运行中</td>
-                            <td md-cell>{/app.cpuUsed.toFixed(4) * 100/} %</td>
+                            <td md-cell>{/(app.cpuUsed * 100).toFixed(2)/} %</td>
                             <td md-cell>{/app.memoryUsed | currency: '' :0/} MB</td>
                             <td md-cell>{/app.startTime / 1000000 | date: 'yyyy-MM-dd HH:mm'/}</td>
                         </tr>
