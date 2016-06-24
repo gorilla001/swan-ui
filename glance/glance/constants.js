@@ -385,7 +385,7 @@ BACKEND_URL = {
         downloadContext: "api/v3/es/download/context",
         logPolicy: "api/v3/alarm/$log_id",
         logPolicies: "api/v3/alarm",
-        logPolicyEvents: "api/v3/alarm"
+        logPolicyEvents: "api/v3/alarms"
     },
     app: {
         userApps: 'api/v3/apps',
