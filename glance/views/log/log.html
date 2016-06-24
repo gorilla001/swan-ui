@@ -30,8 +30,16 @@
                         <div flex flex-offset="5" layout="column">
                             <md-input-container>
                                 <md-select data-ng-model="app" aria-label="clusters-select"
-                                           data-required="required" ng-change="getNodePorts(app.id,clusterId)">
-                                    <md-option ng-value="option" data-ng-repeat="option in options">{/option.name/}
+                                           data-required="required" ng-change="getNodePorts(app.id,clusterId)"
+                                           data-md-container-class="selectdemoSelectHeader">
+                                    <md-select-header class="demo-select-header">
+                                        <input ng-model="searchKey" type="search" id="searchKey"
+                                               aria-label="search app name"
+                                               class="demo-header-searchbox">
+                                    </md-select-header>
+                                    <md-option ng-value="option"
+                                               data-ng-repeat="option in options | filter: {name: searchKey}">
+                                        {/option.name/}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
@@ -137,7 +145,7 @@
                         </datetimepicker>
                     </div>
                     <div flex="60" flex-offset="5">
-                        <div layout="row"  layout-align="start center">
+                        <div layout="row" layout-align="start center">
                             <md-button data-ng-click="getLog()" class="md-button md-raised"
                                        data-ng-disabled="staticForm.$invalid">查询
                             </md-button>
@@ -156,7 +164,7 @@
                                        data-demo-disable>导出日志
                             </md-button>
                             <span class="text-warning"
-                                data-ng-show="clusterlogs.logSize && clusterlogs.logSize > logDownloadToplimit">日志记录过大，只能导出前{/logDownloadToplimit/}条
+                                  data-ng-show="clusterlogs.logSize && clusterlogs.logSize > logDownloadToplimit">日志记录过大，只能导出前{/logDownloadToplimit/}条
                             </span>
                         </div>
                     </div>
