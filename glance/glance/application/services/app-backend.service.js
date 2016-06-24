@@ -168,7 +168,7 @@
         }
 
         function listAppNodes(clusterId, appId, loading) {
-            return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading, ignoreCodes: 14404});
+            return gHttp.Resource('app.appNodes', {cluster_id: clusterId, app_id: appId}).get({'loading': loading, ignoreCodes: [14404]});
         }
 
         function getReqRate(clusterId, alias) {

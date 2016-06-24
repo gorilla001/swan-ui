@@ -3,9 +3,9 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackend'];
+logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackend', '$element'];
 
-function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackend) {
+function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackend, $element) {
     $scope.showContextUI = false;
     $scope.logDownloadToplimit = LOG.logDownloadToplimit;
     var clusterIdTemp;
@@ -182,4 +182,9 @@ function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, apps
         });
         return values;
     }
+
+    //stopPropagation for id:searchKey
+    $element.find('#searchKey').on('keydown', function(ev) {
+        ev.stopPropagation();
+    });
 }
