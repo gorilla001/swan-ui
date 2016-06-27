@@ -104,7 +104,7 @@
                   </span>
             </td>
             <td md-cell>
-                <span class="bg-primary">{/getIsMaster(node) ? 'MASTER': 'SLAVE'/}</span>
+                <span class="bg-primary">{/getNodeType(node, clusterDetailCtrl.cluster)/}</span>
             </td>
             <td md-cell>
                 <span style="margin-left:2px" class="bg-primary" data-ng-repeat="nodeLabel in node.node_labels">{/ nodeLabel.label.name /}</span>
