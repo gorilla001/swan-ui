@@ -4,7 +4,8 @@
             <h2>{/ nodeDetailsCtrl.node.name /}</h2>
             <dl>
                 <dt>主机类型</dt>
-                <dd>{/nodeDetailsCtrl.node.role/}</dd>
+                <dd data-ng-if="nodeDetailsCtrl.node.role">{/nodeDetailsCtrl.node.role.toUpperCase()/}</dd>
+                <dd data-ng-if="!nodeDetailsCtrl.node.role">未确定</dd>
                 <dt>主机状态</dt>
                 <dd>
                     <i class="{/nodeDetailsCtrl.nodeStatusCls[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}" aria-hidden="true"></i>

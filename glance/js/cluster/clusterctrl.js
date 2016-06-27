@@ -83,18 +83,6 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
         return node.role === 'master';
     };
 
-    $scope.getNodeType = function(node, cluster) {
-        var nodeType = '';
-        if(cluster.status === 'new') {
-            nodeType = '未知';
-        } else if(node.role === 'master') {
-            nodeType = 'MASTER';
-        } else {
-            nodeType = 'SLAVE';
-        }
-        return nodeType;
-    };
-
     $scope.concatObjtoArr = function(obj) {
         var arr = [];
         $.each(obj, function(key, val) {
