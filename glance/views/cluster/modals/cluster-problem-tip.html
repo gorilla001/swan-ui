@@ -6,14 +6,17 @@
     </md-toolbar>
     <md-dialog-content>
         <div class="md-dialog-content">
-            <p data-ng-show="'abnormal' === cluster.clusterStatus">
+            <p data-ng-show="('abnormal' === cluster.infos.status || 'failed' === cluster.infos.status) && cluster.needMasterIps.length <= 0 &&!cluster.isNeedSlave">
                 数人云是通过重启各组件快速恢复相应服务的。若仍有服务重启失效，需要去往主机详情页面重置该服务。修复过程大概需要一分钟。</p>
-            <p data-ng-show="cluster.problemNodes.length">{/cluster.problemTips.paragraphText/}</p>
+            <p data-ng-show="cluster.problemNodes.length && !cluster.isNeedSlave && cluster.needMasterIps.length <= 0">{/cluster.problemTips.paragraphText/}</p>
             <ul>
                 <li data-ng-repeat="ip in cluster.needMasterIps">
                      需要添加ip为{/ip/}的主机，作为master
                 </li>
-                <li data-ng-repeat="node in cluster.problemNodes" data-ng-if="cluster.needMasterIps.length <= 0">
+                <li data-ng-if="cluster.isNeedSlave && cluster.needMasterIps.length <= 0">
+                    需要添加至少一台主机作为slave
+                </li>
+                <li data-ng-repeat="node in cluster.problemNodes" data-ng-if="cluster.needMasterIps.length <= 0 && cluster.infos.status!='new' && !cluster.isNeedSlave">
                     <a href="#"
                        data-ui-sref="cluster.nodedetails({nodeId:node.id, clusterId:cluster.infos.id})">{/node.name/}
                         &nbsp; [{/node.ip/}]</a>

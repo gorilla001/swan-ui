@@ -56,7 +56,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
                 if (cluster.infos.status === "new") {
                     $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
                 } else if (cluster.infos.status === "failed" || cluster.infos.status === "abnormal") {
-                    if (cluster.needMasterIps.length > 0) {
+                    if (cluster.needMasterIps.length > 0 || cluster.isNeedSlave) {
                         $state.go('cluster.nodesource', {clusterId: cluster.infos.id});
                     } else {
                         gHttp.Resource('cluster.cluster', {'cluster_id': cluster.infos.id}).patch({"method": "repair"}).then(function(){
@@ -176,8 +176,10 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
             clusterBasicData.problemTips = problemTips;
             clusterBasicData.problemNodes = getProblemNodes(masters, slaves, cluster.status);
             clusterBasicData.needMasterIps = getNeedMasterIps(masters, cluster);
-            if (clusterBasicData.needMasterIps.length > 0) {
+            clusterBasicData.isNeedSlave = isNeedSlave(slaves, cluster);
+            if (clusterBasicData.needMasterIps.length > 0 || clusterBasicData.isNeedSlave) {
                 problemTips.firstButtonText = "添加主机";
+                problemTips.paragraphText = "";
             }
         }
         return clusterBasicData;
@@ -204,6 +206,19 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
             }
         });
         return needMasterIps;
+    }
+    
+    function isNeedSlave(slaves, cluster) {
+        var flag = true;
+        if (cluster.clusterType!=='1_master') {
+            for (var status in slaves) {
+                if (slaves[status].length > 0) {
+                    flag = false;
+                    break;
+                }
+            }
+        }
+        return flag;
     }
 
     function getClusterNodesData(cluster, clickedStatus) {
