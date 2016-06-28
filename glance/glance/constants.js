@@ -320,12 +320,12 @@ STACK_DEFAULT = {
     SryunCompose: 'mysql:\n' +
     '  cpu: 0.1\n' +
     '  mem: 168\n' +
-    '  instances: 2\n' +
+    '  instances: 1\n' +
     '\n' +
     'wordpress:\n' +
     '  cpu: 0.1\n' +
     '  mem: 168\n' +
-    '  instances: 2'
+    '  instances: 1'
 };
 
 USER_STATUS = {
