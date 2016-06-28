@@ -104,7 +104,8 @@
                   </span>
             </td>
             <td md-cell>
-                <span class="bg-primary">{/getNodeType(node, clusterDetailCtrl.cluster)/}</span>
+                <span class="bg-primary" data-ng-if="node.role">{/node.role.toUpperCase()/}</span>
+                <span class="bg-primary" data-ng-if="!node.role">未确定</span>
             </td>
             <td md-cell>
                 <span style="margin-left:2px" class="bg-primary" data-ng-repeat="nodeLabel in node.node_labels">{/ nodeLabel.label.name /}</span>

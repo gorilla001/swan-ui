@@ -49,8 +49,6 @@
             clusterBackend.getCurNode($stateParams.clusterId, $stateParams.nodeId)
                 .then(function (data) {
                     self.node = data;
-                    $scope.isMasterFlag = $scope.getIsMaster(self.node);
-                    self.node.role = $scope.getNodeType(self.node, self.node.cluster);
                     self.statusMgr.addNode($stateParams.clusterId, self.node);
                     self.statusMgr.startListen($scope);
                     createServiceViews();
@@ -62,15 +60,15 @@
 
         function createServiceViews() {
             var services = ["docker"];
-            if ($scope.isMasterFlag) {
+            if (self.node.role === 'master') {
                 services.push("master", "marathon", "zookeeper", "exhibitor");
                 if (self.node.cluster.cluster_type == '1_master') {
                     services.push("slave", "cadvisor", "bamboo", "haproxy");
                 }
-            } else {
-                services.push("slave", "cadvisor", "bamboo", "haproxy");
+                services.push("logcollection");
+            } else if (self.node.role === 'slave'){
+                services.push("slave", "cadvisor", "bamboo", "haproxy", "logcollection");
             }
-            services.push("logcollection");
             if ((self.node.cluster.master_ips && self.node.cluster.master_ips.indexOf(self.node.ip) == 0 ) ||
                 (self.statusMgr.nodes[self.node.id].services["chronos"] && self.statusMgr.nodes[self.node.id].services["chronos"].status != "uninstalled")) {
                 services.push("chronos");
