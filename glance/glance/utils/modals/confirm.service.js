@@ -18,7 +18,7 @@
             .ok('确定')
             .cancel('取消');
             if (content) {
-                confirm.textContent(content);
+                confirm.htmlContent(content);
             }
             var dialog = $mdDialog.show(confirm);
             return dialog

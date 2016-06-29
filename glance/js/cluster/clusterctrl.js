@@ -1,7 +1,7 @@
 //clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);
 /* ngInject */
-function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
+function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservice, $mdDialog) {
     $scope.clusterNames = [];
     $scope.allLabels = [];
 
@@ -62,14 +62,35 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal) {
         }
     };
 
-    $scope.deleteCluster = function(clusterId, ev) {
-        var content = '删除集群将在您的主机上一并清除：数人云管理组件，通过数人云下发部署的应用及其未持久化的数据'
-        confirmModal.open('您确定要删除集群吗？', ev, content).then(function () {
-            gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
-                Notification.success('集群删除成功');
-                $state.go('cluster.list', null, {reload: true});
-            });
-        })
+    $scope.deleteCluster = function(clusterId, ev, nodeTotal) {
+        appservice.listClusterApps({}, clusterId).then(function(data) {
+            var content;
+            if (data.Count > 0) {
+                content = '集群中还有' + data.Count + '个应用而无法删除,请先删除应用';
+                var confirm = $mdDialog.confirm()
+                    .clickOutsideToClose(true)
+                    .title('无法删除集群')
+                    .targetEvent(ev)
+                    .ok('去看看应用')
+                    .cancel('取消').textContent(content);
+                var dialog = $mdDialog.show(confirm);
+                dialog.then(function() {
+                    $state.go('app');
+                });
+            } else {
+                if(nodeTotal > 0) {
+                    content = '集群中还有' + nodeTotal + '台主机，删除集群将同时清除这些主机上的数人云各组件。<br>'
+                        + '此操作不可恢复，请慎重选择！'
+                }
+                confirmModal.open('您确定要删除集群吗？', ev, content)
+                    .then(function () {
+                        gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).delete().then(function () {
+                            Notification.success('集群删除成功');
+                            $state.go('cluster.list', null, {reload: true});
+                        });
+                    })
+            }
+        });
     };
 
     $scope.getClass = function(status) {
