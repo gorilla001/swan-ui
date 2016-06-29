@@ -18,7 +18,7 @@
         self.deleteCluster = deleteCluster;
 
         function deleteCluster(clusterId, ev) {
-            clusterCurd.deleteCluster(clusterId, ev)
+            clusterCurd.deleteCluster(clusterId, ev, self.nodeTotal)
         }
 
         function sumNodeTotal(nodeNums) {
