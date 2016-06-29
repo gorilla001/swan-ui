@@ -4,7 +4,7 @@
         .factory('appChart', appChart);
 
     /* @ngInject */
-    function appChart(appservice, lineChart) {
+    function appChart(appservice, lineChart, barChart, $filter) {
         return {
             paintReqRateChart: paintReqRateChart,
             paintMonitorCharts: paintMonitorCharts
@@ -13,17 +13,20 @@
         function paintReqRateChart(clusterId, appAlias, domId) {
             appservice.getReqRate(clusterId, appAlias).then(function (data) {
                 function timeGetter(data){
-                    return Math.round(data.time / 1000000000 / 60);
+                    var milliSeconds = Math.round(data.time / 1000000);
+                    var d = new Date();
+                    d.setTime(milliSeconds);
+                    return $filter('date')(d, 'HH:mm:ss');
                 }
                 function dataGetter(data) {
-                    return {'请求数目': data.reqrate};
+                    return data.reqrate;
                 }
-                var chartData = lineChart.buildChartData(data, timeGetter, dataGetter);
-                lineChart.paint(chartData, domId, {
+                var chartData = barChart.buildChartData(data, timeGetter, dataGetter);
+                barChart.paint(chartData, domId, {
                     title: '请求数监控',
                     subtitle: '一小时内变化',
-                    unit: 'count/s'
-                })
+                    unit: 'req/s'
+                }, '请求数', 1)
             });
             
         }

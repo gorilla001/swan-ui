@@ -4,7 +4,7 @@
         .factory('lineChart', lineChart);
 
     /* @ngInject */
-    function lineChart() {
+    function lineChart($filter) {
         return {
             buildChartData: buildChartData,
             paint: paint
@@ -95,15 +95,7 @@
             var milliSeconds = time * 60 * 1000;
             var d = new Date();
             d.setTime(milliSeconds);
-            var hour = d.getHours();
-            var min = d.getMinutes();
-            if (hour < 10) {
-                hour = '0' + hour;
-            }
-            if(min < 10) {
-                min = '0' + min;
-            }
-            return hour + ':' + min;
+            return $filter('date')(d, 'HH:mm');
         };
         
         function reverseChartData(chartData) {
