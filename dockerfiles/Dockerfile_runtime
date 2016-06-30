@@ -8,9 +8,9 @@ RUN rm -rf /usr/share/nginx/html/* && \
 
 RUN rm -rf /etc/nginx/certs
 
-COPY update.sh /
+COPY frontend/dockerfiles/update.sh /
 
-COPY entrypoint.sh /
+COPY frontend/dockerfiles/entrypoint.sh /
 
 WORKDIR /
 
