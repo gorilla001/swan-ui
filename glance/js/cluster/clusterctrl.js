@@ -38,7 +38,7 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservi
     $scope.serviceStatusCls[SERVICES_STATUS.uninstalled] = "fa fa-chain-broken text-warning";
     $scope.serviceStatusCls[SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
     $scope.serviceStatusCls[SERVICES_STATUS.installing] = "fa fa-cog text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-download text-normal";
     $scope.serviceStatusCls[SERVICES_STATUS.restarting] = "fa fa-cog text-normal";
 
     $scope.getServiceLabel = function(serviceName) {
