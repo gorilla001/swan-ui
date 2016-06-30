@@ -15,7 +15,6 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservi
         installing: '主机安装中',
         repairing: '主机修复中'
     };
-    
     $scope.clusterStatName = {
             running: '运行正常',
             installing: '初始化中',

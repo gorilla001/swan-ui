@@ -8,28 +8,30 @@
                 <dd data-ng-if="!nodeDetailsCtrl.node.role">未确定</dd>
                 <dt>主机状态</dt>
                 <dd>
-                    <i class="{/nodeDetailsCtrl.nodeStatusCls[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}" aria-hidden="true"></i>
+                    <i class="{/nodeStatusCls[nodeDetailsCtrl.node.status]/}" aria-hidden="true"></i>
                     <md-tooltip md-direction="top">
-                        {/statName[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status]/}
+                        {/nodeDetailsCtrl.NODE_STATUS_NAME[nodeDetailsCtrl.node.status]/}
                     </md-tooltip>
                 </dd>
                 <dt>IP 地址</dt>
                 <dd>{/ nodeDetailsCtrl.node.ip /}</dd>
                 <dt>CPU</dt>
-                <dd>{/ nodeDetailsCtrl.nodeInfo.cpuNumber/}<span data-ng-show="nodeDetailsCtrl.nodeInfo.cpuNumber!=='未知'"
-                                                 data-ng-if="nodeDetailsCtrl.nodeInfo.cpuNumber">核</span></dd>
+                <dd>{/ nodeDetailsCtrl.node.cpuNumber/}<span
+                        data-ng-show="nodeDetailsCtrl.node.cpuNumber!=='未知'"
+                        data-ng-if="nodeDetailsCtrl.node.cpuNumber">核</span></dd>
                 <dt>内存</dt>
-                <dd>{/ nodeDetailsCtrl.unitConversion.convertMem(nodeDetailsCtrl.nodeInfo.memTotal).num
-                    /}{/nodeDetailsCtrl.unitConversion.convertMem(nodeDetailsCtrl.nodeInfo.memTotal).unit/}
+                <dd>{/ nodeDetailsCtrl.unitConversion.convertMem(nodeDetailsCtrl.node.memTotal).num
+                    /}{/nodeDetailsCtrl.unitConversion.convertMem(nodeDetailsCtrl.node.memTotal).unit/}
                 </dd>
             </dl>
             <dl>
                 <dt>所属集群</dt>
-                <dd><a data-ui-sref="cluster.detail.nodes({clusterId:nodeDetailsCtrl.node.cluster.id})">{/ nodeDetailsCtrl.node.cluster.name /}</a></dd>
+                <dd><a data-ui-sref="cluster.detail.nodes({clusterId:nodeDetailsCtrl.node.cluster.id})">{/
+                    nodeDetailsCtrl.node.cluster.name /}</a></dd>
                 <dt>系统版本</dt>
-                <dd>{/ nodeDetailsCtrl.nodeInfo.osVersion /}</dd>
+                <dd>{/ nodeDetailsCtrl.node.osVersion /}</dd>
                 <dt>Agent 版本</dt>
-                <dd>{/ nodeDetailsCtrl.nodeInfo.agentVersion /}</dd>
+                <dd>{/ nodeDetailsCtrl.node.agentVersion /}</dd>
             </dl>
             <dl>
                 <dt>创建时间</dt>
@@ -37,10 +39,11 @@
                 <dt>更新时间</dt>
                 <dd>{/ nodeDetailsCtrl.node.updated_at /}</dd>
             </dl>
-            <dl data-ng-if="nodeDetailsCtrl.selectedLabels && nodeDetailsCtrl.selectedLabels.length>0">
+            <dl data-ng-if="nodeDetailsCtrl.node.node_labels">
                 <dt>主机标签</dt>
                 <dd>
-                    <span data-ng-repeat="label in nodeDetailsCtrl.selectedLabels" class="node-label">{/ label.name/}</span>
+                    <span data-ng-repeat="index in nodeDetailsCtrl.node.node_labels"
+                          class="node-label">{/ index.label.name/}</span>
                 </dd>
             </dl>
         </div>
@@ -56,7 +59,8 @@
                     编辑主机
                 </md-tooltip>
             </md-button>
-            <md-button class="md-fab md-mini" aria-label="删除主机" data-ng-click="nodeDetailsCtrl.deleNode(nodeDetailsCtrl.node.id, $event)"
+            <md-button class="md-fab md-mini" aria-label="删除主机"
+                       data-ng-click="nodeDetailsCtrl.deleNode(nodeDetailsCtrl.node.id, $event)"
                        data-demo-disable
                        data-dm-permit-click="1"
                        data-dm-role="nodeDetailsCtrl.node.cluster.group_role"
@@ -66,14 +70,16 @@
                     删除主机
                 </md-tooltip>
             </md-button>
-            <md-button class="md-fab md-mini" aria-label="上一台主机" data-ng-click="nodeDetailsCtrl.goPreNode()"
+            <md-button class="md-fab md-mini" aria-label="上一台主机"
+                       data-ng-click="$state.go('cluster.nodedetails', {clusterId: nodeDetailsCtrl.node.cluster.id, nodeId: nodeDetailsCtrl.preNodeId}, {reload: true})"
                        data-ng-disabled="nodeDetailsCtrl.disablePreNav">
                 <i class="fa fa-angle-left" aria-hidden="true"></i>
                 <md-tooltip md-direction="top">
                     上一台主机
                 </md-tooltip>
             </md-button>
-            <md-button class="md-fab md-mini" aria-label="下一台主机" data-ng-click="nodeDetailsCtrl.goNextNode()"
+            <md-button class="md-fab md-mini" aria-label="下一台主机"
+                       data-ng-click=" $state.go('cluster.nodedetails', {clusterId: nodeDetailsCtrl.node.cluster.id, nodeId: nodeDetailsCtrl.nextNodeId}, {reload: true})"
                        data-ng-disabled="nodeDetailsCtrl.disableNextNav">
                 <i class="fa fa-angle-right" aria-hidden="true"></i>
                 <md-tooltip md-direction="top">
@@ -86,22 +92,23 @@
     <md-tabs md-dynamic-height md-border-bottom>
         <md-tab label="主机监控">
             <div class="homepage_bottom main-content">
-                <div class="homepage_module" id="homepage_module" data-ng-class="{showDropDown: nodeDetailsCtrl.showMore}">
+                <div class="homepage_module" id="homepage_module"
+                     data-ng-class="{showDropDown: nodeDetailsCtrl.showMore}">
                     <ul layout="row" layout-align="start start" layout-wrap>
                         <li flex="10" data-ng-repeat="service in nodeDetailsCtrl.services">
-                <span class="{/serviceStatusCls[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].services[service].status || 'uninstalled']/}">
+                <span class="{/serviceStatusCls[service.status || 'uninstalled']/}">
                 <md-tooltip md-direction="top">
-                    {/serviceStatName[nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].services[service].status || 'uninstalled']/}
+                    {/serviceStatName[ service.status || 'uninstalled']/}
                 </md-tooltip>
                     <button class="btn"
-                            data-ng-show="nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status!=='terminated'"
-                            data-ng-click="nodeDetailsCtrl.repairService(service, 'restart')" data-demo-disable
+                            data-ng-show="service.status!=='terminated'"
+                            data-ng-click="nodeDetailsCtrl.repairService(service.name, 'restart')" data-demo-disable
                             data-dm-permit-click="1"
                             data-dm-role="nodeDetailsCtrl.node.cluster.group_role"
                             data-dm-permit-msg="FRONTEND_MSG.no_group_admin"
-                            data-ng-if="service === 'docker'">重启</button>
-                    <md-menu data-ng-if="service !== 'docker' && nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].services[service].status=='failed' &&
-                        ['running', 'failed', 'abnormal'].indexOf(nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].status) >= 0">
+                            data-ng-if="service.name === 'docker'">重启</button>
+                    <md-menu data-ng-if="service.name !== 'docker' && service.status == nodeDetailsCtrl.NODE_STATUS.failed &&
+                        [nodeDetailsCtrl.NODE_STATUS.running, nodeDetailsCtrl.NODE_STATUS.failed, nodeDetailsCtrl.NODE_STATUS.abnormal].indexOf(nodeDetailsCtrl.node.status) >= 0">
                         <button class="btn" aria-label="More" ng-click="$mdOpenMenu($event)"
                                 data-demo-disable
                                 data-dm-permit-click="1"
@@ -111,21 +118,24 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button data-ng-click="nodeDetailsCtrl.repairService(service, 'restart')">重启</md-button>
+                                <md-button
+                                        data-ng-click="nodeDetailsCtrl.repairService(service.name, 'restart')">重启</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button data-ng-click="nodeDetailsCtrl.repairService(service, 'reset')">重置</md-button>
+                                <md-button
+                                        data-ng-click="nodeDetailsCtrl.repairService(service.name, 'reset')">重置</md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
                 </span>
-                            <h5>{/getServiceLabel(service)/}</h5>
-                            <p>{/nodeDetailsCtrl.statusMgr.nodes[nodeDetailsCtrl.node.id].services[service].version/}</p>
+                            <h5>{/getServiceLabel(service.name)/}</h5>
+                            <p>{/service.version/}</p>
                         </li>
                     </ul>
                 </div>
                 <div class="btn-folding-v" data-ng-show="nodeDetailsCtrl.services.length > 10">
-                    <a href="#"><i class="fa" data-ng-class="{'fa-chevron-down': !nodeDetailsCtrl.showMore, 'fa-chevron-up': nodeDetailsCtrl.showMore }"
+                    <a href="#"><i class="fa"
+                                   data-ng-class="{'fa-chevron-down': !nodeDetailsCtrl.showMore, 'fa-chevron-up': nodeDetailsCtrl.showMore }"
                                    data-ng-click="nodeDetailsCtrl.showMore = !nodeDetailsCtrl.showMore"></i></a>
                 </div>
                 <div layout="row" layout-align="start start" layout-margin class="homepage_view">
