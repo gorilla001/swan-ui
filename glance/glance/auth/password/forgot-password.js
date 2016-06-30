@@ -12,10 +12,13 @@
         var self = this;
         self.sendEmail = sendEmail;
 
-         function sendEmail () {
-            authBackend.forgotPassword(self.forgot, $scope.staticForm).then(function (data) {
-                $state.go('auth.forgotSuccess',{email:self.forgot.email});
-            });
+        function sendEmail () {
+            $scope.staticForm.email.$setDirty();
+            if ($scope.staticForm.$valid) {
+                authBackend.forgotPassword(self.forgot, $scope.staticForm).then(function (data) {
+                    $state.go('auth.forgotSuccess',{email:self.forgot.email});
+                });
+            }
         }
 
     }
