@@ -45,7 +45,12 @@
             confirmModal.open("是否确认删除应用？").then(function () {
                 appservice.deleteApp(clusterId, appId)
                     .then(function (data) {
-                        $state.go(state, null, {reload: true});
+                        if(state === 'app.list.group'){
+                            $state.reload();
+                        }else{
+                            $state.go(state, null, {reload: true});
+
+                        }
                     })
             });
         }
