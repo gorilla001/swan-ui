@@ -9,7 +9,9 @@ RUN rm -rf /usr/share/nginx/html/* && \
 RUN rm -rf /etc/nginx/certs
 
 COPY update.sh /
+
 COPY entrypoint.sh /
+
 WORKDIR /
 
 ENTRYPOINT ["./entrypoint.sh"]
