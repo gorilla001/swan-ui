@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #frontend
-sed -i "s#APIURL#$FRONTEND_DASHBOARD#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
+sed -i "s#APIURL#$FRONTEND_APIURL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#MARKET#$FRONTEND_MARKET#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#STREAMING#$FRONTEND_STREAMING#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#ENVIRONMENT#$FRONTEND_ENVIRONMENT#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
@@ -14,6 +14,8 @@ sed -i "s#GROUP_URL#$FRONTEND_GROUP_URL#g" /usr/share/nginx/html/dashboard.shure
 sed -i "s#DEMO_URL#$FRONTEND_DEMO_URL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#DEMO_USER#$FRONTEND_DEMO_USER#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#OFF_LINE_IMAGE_URL#$FRONTEND_OFF_LINE_IMAGE_URL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
+sed -i "s#LOCAL_DM_HOST#$FRONTEND_LOCAL_DM_HOST#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
+sed -i "s#AGENT_URL#$FRONTEND_AGENT_URL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 
 #nginx
 sed -i "s#NGINX_USER#$NGINX_USER#g" /etc/nginx/nginx.conf
