@@ -7,4 +7,4 @@ fi
 # set js config
 cd / && ./update.sh
 # run nginx
-nginx
+nginx -g "daemon off;"
