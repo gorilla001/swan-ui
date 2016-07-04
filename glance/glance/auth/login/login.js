@@ -44,6 +44,8 @@
         }
         
         function login() {
+            $scope.staticForm.username.$setDirty();
+            $scope.staticForm.password.$setDirty();
             if ($scope.staticForm.$valid) {
                 var returnTo = $stateParams.return_to;
                 authCurd.login(self.form, $scope.staticForm, returnTo)

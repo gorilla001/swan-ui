@@ -10,7 +10,7 @@ function glanceWS($rootScope, ngSocket, utils, monitor) {
         }
         ws = ngSocket(url);
         ws._onCloseHandler = function (event) {
-            if (event.code != WS_CODE.token_invalide) {
+            if (ws && event.code != WS_CODE.token_invalide) {
                 ws.reconnect();
             }
         };
