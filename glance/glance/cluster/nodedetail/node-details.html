@@ -39,7 +39,7 @@
                 <dt>更新时间</dt>
                 <dd>{/ nodeDetailsCtrl.node.updated_at /}</dd>
             </dl>
-            <dl data-ng-if="nodeDetailsCtrl.node.node_labels">
+            <dl data-ng-if="nodeDetailsCtrl.node.node_labels.length">
                 <dt>主机标签</dt>
                 <dd>
                     <span data-ng-repeat="index in nodeDetailsCtrl.node.node_labels"
