@@ -65,10 +65,6 @@
                 label: '>'
             },
             {
-                name: '等于',
-                label: '=='
-            },
-            {
                 name: '小于',
                 label: '<'
             }
