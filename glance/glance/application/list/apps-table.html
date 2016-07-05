@@ -77,12 +77,12 @@
                     <md-button aria-label="strp" class="md-button md-raised"
                                data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '2'"
                                data-ng-click="listappctrl.stop(app.cid, app.id)"
-                               data-ng-show="appsTableCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
+                               data-ng-if="appsTableCtrl.appListStatus[app.id].status!='3'" data-demo-disable>停止
                     </md-button>
                     <md-button aria-label="start" class="md-button md-raised"
                                data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '3'"
                                data-ng-click="listappctrl.start(app.cid, app.id)"
-                               data-ng-show="appsTableCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
+                               data-ng-if="appsTableCtrl.appListStatus[app.id].status == '3'" data-demo-disable>启动
                     </md-button>
                     <md-menu md-offset="0 -5">
                         <md-button aria-label="appListMenu" class="md-button md-raised"
@@ -97,8 +97,9 @@
                                            data-demo-disable>扩展
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item data-ng-show="myAppsCtrl.appListStatus[app.id].status == '6'">
+                            <md-menu-item>
                                 <md-button aria-label="undo"
+                                           data-ng-disabled="myAppsCtrl.appListStatus[app.id].status != '6'"
                                            data-ng-click="listappctrl.undo(app.cid, app.id)"
                                            data-demo-disable>撤销
                                 </md-button>
@@ -117,10 +118,9 @@
                                            data-demo-disable>恢复
                                 </md-button>
                             </md-menu-item>
-                            <md-menu-item
-                                    data-ng-show="appsTableCtrl.appListStatus[app.id].status == '2' || appsTableCtrl.appListStatus[app.id].status == '3'">
+                            <md-menu-item>
                                 <md-button aria-label="update"
-                                           data-ng-disabled="app.canary"
+                                           data-ng-disabled="app.canary || (appsTableCtrl.appListStatus[app.id].status != '2' && appsTableCtrl.appListStatus[app.id].status != '3')"
                                            data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})">
                                     更新
                                 </md-button>
