@@ -176,6 +176,16 @@
                     });
                 })
         }
-    }
 
+        $scope.$on(SUB_INFOTYPE.nodeStatus, function(event, data) {
+            self.node.status = data.status;
+        });
+        $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+            angular.forEach(self.node.services, function(val, key) {
+               if(data.hasOwnProperty(val.name)) {
+                    val.status = data[val.name].status;
+                }
+            });
+        });
+    }
 })();
