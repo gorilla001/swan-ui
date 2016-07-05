@@ -109,32 +109,31 @@
                 $http(req).success(function (data) {
                     if (data.code === MESSAGE_CODE.success) {
                         deferred.resolve(data.data);
-                    } else if (data.code === MESSAGE_CODE.noExist) {
-                        $state.go('404');
                     } else {
-                        if (!this.options.ignoreCodes.includes(data.code) && CODE_MESSAGE[data.code]) {
-                            Notification.error(CODE_MESSAGE[data.code]);
-                        }
-
-                        deferred.reject(data);
+                        this._handleErrors(status, data, deferred);
                     }
                 }.bind(this)).error(function (data, status) {
-                    this._handleErrors(status, deferred);
+                    this._handleErrors(status, data, deferred);
                 }.bind(this));
 
                 return deferred.promise;
 
             };
 
-            Resource.prototype._handleErrors = function (status, deferred) {
+            Resource.prototype._handleErrors = function (status, data, deferred) {
+                if (status == 500 || !data || !angular.isObject(data)) {
+                    data = {code: MESSAGE_CODE.unknow};
+                }
                 if (status == 401) {
                     $cookies.remove('token');
                     utils.redirectLogin(true);
-                } else if (status == 404) {
+                } else if (status == 404 || data.code === MESSAGE_CODE.noExist) {
                     $state.go('404');
                 } else {
-                    Notification.error("服务忙，请稍后再试");
-                    deferred.reject({code: MESSAGE_CODE.unknow})
+                    if (!this.options.ignoreCodes.includes(data.code) && CODE_MESSAGE[data.code]) {
+                        Notification.error(CODE_MESSAGE[data.code]);
+                    }
+                    deferred.reject(data)
                 }
             };
 
