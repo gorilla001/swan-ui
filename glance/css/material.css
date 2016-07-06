@@ -938,3 +938,8 @@ footer-content, md-toolbar {
 .selectdemoSelectHeader md-content._md {
     max-height: 240px;
 }
+
+.form-group-textarea textarea:disabled {
+    background: #CCC;
+    border: none;
+}
