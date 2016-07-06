@@ -64,7 +64,7 @@ DOMAIN = 'BODY_DOMAIN';
   }
   
   if (!AGENT_CONFIG.installUrl || AGENT_CONFIG.installUrl.slice(0, 5) === 'AGENT') {
-      AGENT_CONFIG.installUrl = "https://coding.net/u/upccup/p/dm-agent-installer/git/raw/master/install-agent.sh";
+      AGENT_CONFIG.installUrl = "https://coding.net/u/upccup/p/dm-agent-installer/git/raw/"+RUNNING_ENV+"/install-agent.sh";
   }
 })();
 

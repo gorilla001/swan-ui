@@ -42,11 +42,9 @@
 
             // 监控状态
             $scope.$on(SUB_INFOTYPE.nodeStatus, function(event, data) {
-                consoel.log(data)
                 self.node.status = data.status;
             });
             $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
-                console.log(data)
                 angular.forEach(self.node.services, function(val, key) {
                     if(data[val.name]) {
                         val.status = data[val.name].status;
