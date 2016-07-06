@@ -26,15 +26,16 @@
     </div>
 
     <div layout="row" layout-align="end start" class="form-group form-group-checkbox"
-         data-ng-show="imageDetailSettingCtrl.form.active">
+         data-ng-if="imageDetailSettingCtrl.form.active">
         <label flex="15">自动构建</label>
         <div flex="50" layout="column">
             <div layout="row">
                 <md-checkbox flex="30" data-ng-model="imageDetailSettingCtrl.tag" aria-label="tag-checkbox"
-                             ng-change="imageDetailSettingCtrl.triggerRules(imageDetailSettingCtrl.tag)">Tag 更新
+                             data-ng-hide="imageDetailSettingCtrl.form.repoType === 1"
+                             ng-change="imageDetailSettingCtrl.countTrigType()">Tag 更新
                 </md-checkbox>
                 <md-checkbox flex="30" data-ng-model="imageDetailSettingCtrl.branch" aria-label="branch-checkbox"
-                             ng-change="imageDetailSettingCtrl.triggerRules(imageDetailSettingCtrl.branch)">代码分支更新
+                             ng-change="imageDetailSettingCtrl.countTrigType()">代码分支更新
                 </md-checkbox>
             </div>
             <p class="help-info-bottom">当代码仓库发生左边的操作时会触发镜像构建。</p>
@@ -45,7 +46,7 @@
     <div layout="row" class="form-footer-button">
         <div flex-offset="15">
             <md-button class="md-raised md-primary" aria-label="submit"
-                       ng-disabled="staticForm.$invalid || imageDetailSettingCtrl.triggerCount == 0"
+                       ng-disabled="staticForm.$invalid || (imageDetailSettingCtrl.form.active && (!imageDetailSettingCtrl.tag && !imageDetailSettingCtrl.branch))"
                        data-ng-click="imageDetailSettingCtrl.saveSetting(imageDetailSettingCtrl.form)" data-demo-disable>保 存
             </md-button>
             <md-button data-ng-click="rootCtrl.goBack()">取 消</md-button>
