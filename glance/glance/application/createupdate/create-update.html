@@ -16,7 +16,7 @@
                                    data-ng-model="createAppCtrl.form.name"
                                    data-required="required"
                                    data-ng-pattern="/^\S*$/"
-                                   data-ng-maxlength="16"
+                                   data-ng-maxlength="12"
                                    data-ng-trim="true"
                                    data-samename
                                    data-name-list="createAppCtrl.appNames"
@@ -36,7 +36,7 @@
                         </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine">
-                            <small>最大长度 16 个字符</small>
+                            <small>最大长度 12 个字符</small>
                         </p>
                     </div>
                     <div flex></div>
