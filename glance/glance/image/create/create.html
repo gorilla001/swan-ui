@@ -28,6 +28,23 @@
                     <div flex></div>
                 </div>
 
+                <div layout="row" layout-align="end center" class="form-group form-group-radio">
+                    <label flex="15">代码源</label>
+                    <div flex="30" layout="column">
+                        <div flex>
+                            <md-radio-group ng-model="imageCreateCtrl.form.repoType" layout="row"
+                                            data-required="required" aria-label="Network model"
+                                            ng-change="imageCreateCtrl.modeChange(imageCreateCtrl.form.repoType)">
+                                <md-radio-button ng-value="0" class="md-accent" flex>Git
+                                </md-radio-button>
+                                <md-radio-button ng-value="1" class="md-accent" flex>SVN
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
                 <div layout="row" layout-align="end start" class="form-group form-group-input">
                     <label flex="15">代码地址</label>
                     <div flex="50" layout="column">
@@ -39,6 +56,22 @@
                             Github、Bitbucket、Coding、Gitlab 私有代码仓库构建您需要手动添加部署公钥，具体操作请
                             <a href="http://doc.shurenyun.com/function/create_img.html"
                                target="_blank">查看手册</a></p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end start" class="form-group form-group-input">
+                    <label flex="15">分支名称</label>
+                    <div flex="50" layout="column">
+                        <div flex="none"
+                             data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
+                            <input type="text" class="form-input" data-required="required" name="branchName"
+                                   data-ng-model="imageCreateCtrl.form.branch">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine">
+                            <small>分支名称不能为空</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
@@ -65,22 +98,6 @@
                                 <small>镜像名称名称不规范</small>
                             </p>
                         </div>
-                    </div>
-                    <div flex></div>
-                </div>
-
-                <div layout="row" layout-align="end start" class="form-group form-group-input">
-                    <label flex="15">分支名称</label>
-                    <div flex="50" layout="column">
-                        <div flex="none"
-                             data-ng-class="{ 'has-error' : staticForm.branchName.$invalid && !staticForm.branchName.$pristine}">
-                            <input type="text" class="form-input" data-required="required" name="branchName"
-                                   data-ng-model="imageCreateCtrl.form.branch">
-                        </div>
-                        <p class="error-info help-info-bottom"
-                           data-ng-show="staticForm.branchName.$error.required && !staticForm.branchName.$pristine">
-                            <small>分支名称不能为空</small>
-                        </p>
                     </div>
                     <div flex></div>
                 </div>
@@ -133,11 +150,12 @@
                     <div flex="50" layout="column">
                         <div layout="row">
                             <md-checkbox flex="30" data-ng-model="imageCreateCtrl.tag"
-                                         ng-change="imageCreateCtrl.triggerRules(imageCreateCtrl.tag)">
+                                         data-ng-hide="imageCreateCtrl.form.repoType === imageCreateCtrl.SVN"
+                                         ng-change="imageCreateCtrl.countTrigType()">
                                 Tag 更新
                             </md-checkbox>
                             <md-checkbox flex="30" data-ng-model="imageCreateCtrl.branch"
-                                         ng-change="imageCreateCtrl.triggerRules(imageCreateCtrl.branch)">
+                                         ng-change="imageCreateCtrl.countTrigType()">
                                 代码分支更新
                             </md-checkbox>
                         </div>
@@ -149,7 +167,7 @@
                 <div layout="row" class="form-footer-button">
                     <div flex-offset="15">
                         <md-button class="md-raised md-primary" data-demo-disable
-                                   ng-disabled="staticForm.$invalid || (imageCreateCtrl.form.active && imageCreateCtrl.triggerCount == 0)"
+                                   ng-disabled="staticForm.$invalid || (imageCreateCtrl.form.active && (!imageCreateCtrl.tag && !imageCreateCtrl.branch))"
                                    data-ng-click="imageCreateCtrl.createProject(imageCreateCtrl.form)">开始创建
                         </md-button>
                         <md-button data-ng-click="rootCtrl.goBack()">取 消</md-button>
