@@ -35,7 +35,7 @@
                             <small>应用名已存在</small>
                         </p>
                         <p class="error-info help-info-bottom"
-                           data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine">
+                           data-ng-show="staticForm.appName.$error.maxlength && (createAppCtrl.target==='update' || !staticForm.appName.$pristine)">
                             <small>最大长度 12 个字符</small>
                         </p>
                     </div>
