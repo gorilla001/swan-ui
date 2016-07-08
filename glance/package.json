@@ -46,8 +46,8 @@
     "protractor": "^3.0.0"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js",
-    "test-single": "./node_modules/karma/bin/karma start karma.conf.js --single-run",
+    "test": "karma start karma.conf.js",
+    "test-single": "karma start karma.conf.js --single-run",
     "update-webdriver": "webdriver-manager update",
     "start": "http-server -a 127.0.0.1 -p 9876 -c-1"
   }
