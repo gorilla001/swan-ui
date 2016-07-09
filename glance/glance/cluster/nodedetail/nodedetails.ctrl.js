@@ -27,6 +27,7 @@
         // 主机状态
         self.NODE_STATUS_NAME = NODE_STATUS_NAME;
         self.NODE_STATUS = NODE_STATUS;
+        self.SERVICES_STATUS = SERVICES_STATUS;
 
         self.listNodeApps = listNodeApps;
         self.unitConversion = unitConversion;
