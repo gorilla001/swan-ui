@@ -3,7 +3,6 @@
         <div flex="70" layout="column">
             <div flex>
           <textarea class="form-group-textarea"
-                    data-ng-if="imageDetailBriefCtrl.projectInfo.description"
                     data-ng-disabled="imageDetailBriefCtrl.readOnly"
                     data-ng-model="imageDetailBriefCtrl.brief"></textarea>
             </div>
@@ -13,8 +12,8 @@
     <div layout="row" class="form-footer-button">
         <div>
             <md-button class="md-raised md-primary"
-                       data-ng-if="imageDetailBriefCtrl.readOnly && imageDetailBriefCtrl.projectInfo.description"
-                       data-ng-click="imageDetailBriefCtrl.readOnly = !imageDetailBriefCtrl.readOnly">编译
+                       data-ng-if="imageDetailBriefCtrl.readOnly"
+                       data-ng-click="imageDetailBriefCtrl.readOnly = !imageDetailBriefCtrl.readOnly">编辑
             </md-button>
             <md-button class="md-raised md-primary" data-ng-if="!imageDetailBriefCtrl.readOnly"
                        data-ng-click="imageDetailBriefCtrl.updateBrief()">更新
@@ -26,5 +25,3 @@
         </div>
     </div>
 </form>
-
-<div class="alert alert-warning text-center" data-ng-hide="imageDetailBriefCtrl.projectInfo.description">无说明</div>
