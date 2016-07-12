@@ -442,7 +442,8 @@ BACKEND_URL = {
         repository: 'api/v3/repositories/$project_name/$repository_name',
         repositoryTags: 'api/v3/repositories/$project_name/$repository_name/tags',
         repositoryCategories: 'api/v3/repositories/categories',
-        deployRepo: 'api/v3/repositories/$project_name/$repository_name/apps'
+        deployRepo: 'api/v3/repositories/$project_name/$repository_name/apps',
+        image: '$icon'
     },
 
     warning: {

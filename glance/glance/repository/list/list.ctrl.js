@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function RepoListCtrl(repoBackend) {
+    function RepoListCtrl(repoBackend, utils) {
         var self = this;
 
         self.repositories = [];
@@ -13,6 +13,7 @@
         self.repoImageBaseUrl = IMAGE_BASE_URL[RUNNING_ENV];
         self.OFF_LINE_IMAGE_URL = OFF_LINE_IMAGE_URL + 'app_catalog_icons/';
         self.filterCategory = filterCategory;
+        self.buildFullURL = utils.buildFullURL;
         ////
 
         activate();

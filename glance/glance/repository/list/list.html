@@ -8,8 +8,9 @@
         <div class="main-content">
             <div layout="row" layout-wrap>
                 <md-card flex="18" data-ng-repeat="repository in repoListCtrl.repositories">
-                    <img data-ng-if="!IS_OFF_LINE" ng-src="{/repoListCtrl.repoImageBaseUrl/}api/v3/repositories/icons/{/repository.name/}/{/repository.name/}.png" class="md-card-image" alt="Washed Out">
-                    <img data-ng-if="IS_OFF_LINE" ng-src="api/v3/repositories/icons/{/repository.name/}/{/repository.name/}.png" class="md-card-image" alt="Washed Out">
+                    <img data-ng-if="!IS_OFF_LINE && !repository.icon" ng-src="{/repoListCtrl.repoImageBaseUrl/}{/repository.name/}.png" class="md-card-image" alt="Washed Out">
+                    <img data-ng-if="IS_OFF_LINE && !repository.icon" ng-src="{/repoListCtrl.OFFLINE_IMEGA_URL/}{/repository.name/}.png" class="md-card-image" alt="Washed Out">
+                    <img data-ng-if="repository.icon" ng-src="{/repoListCtrl.buildFullURL('repo.image', {icon: repository.icon})/}" class="md-card-image" alt="Washed Out">
                     <md-card-title>
                         <md-card-title-text>
                             <span class="md-headline">{/repository.name/}</span>
