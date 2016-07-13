@@ -210,13 +210,15 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
     
     function isNeedSlave(slaves, cluster) {
         var flag = true;
-        if (cluster.clusterType!=='1_master') {
+        if (cluster.cluster_type!=='1_master') {
             for (var status in slaves) {
                 if (slaves[status].length > 0) {
                     flag = false;
                     break;
                 }
             }
+        } else {
+            flag = false;
         }
         return flag;
     }
