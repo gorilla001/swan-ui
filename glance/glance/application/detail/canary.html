@@ -40,6 +40,7 @@
                 <md-button aria-label="start" class="md-button md-raised"
                            data-ng-if="canaryCtrl.canaryStatus[canary.Vid].status == '3'"
                            data-ng-click="canaryCtrl.start(canary.Cid, canary.Aid, canary.Vid)"
+                           data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status !='3'"
                            data-demo-disable>
                     启动
                 </md-button>
@@ -47,7 +48,7 @@
                 <md-button aria-label="stop" class="md-button md-raised"
                            data-ng-if="canaryCtrl.canaryStatus[canary.Vid].status != '3'"
                            data-ng-click="canaryCtrl.stop(canary.Cid, canary.Aid, canary.Vid)"
-                           data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status == 1||canaryCtrl.canaryStatus[canary.Vid].status ==6"
+                           data-ng-disabled="canaryCtrl.canaryStatus[canary.Vid].status != '2'"
                            data-demo-disable>
                     停止
                 </md-button>
