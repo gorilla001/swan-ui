@@ -21,15 +21,12 @@
                            $filter,
                            clusterCurd) {
         var self = this;
-
         self.existPorts = {
             outerPorts: []
         };
         self.target = target;
 
         self.cluster;
-
-
         if (self.target === 'create') {
             self.form = {
                 cluster_id: '',
@@ -260,7 +257,7 @@
                 },
                 portMappings: {
                     appPort: '',
-                    protocol: '',
+                    protocol: 1,
                     mapPort: '',
                     type: 2,
                     isUri: 0,

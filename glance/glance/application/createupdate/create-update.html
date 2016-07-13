@@ -4,7 +4,6 @@
             <h2 flex data-ng-if="createAppCtrl.target==='create'">新建应用</h2>
             <h2 flex data-ng-if="createAppCtrl.target==='update'">应用更新</h2>
         </header>
-
         <div class="main-content">
             <form name="staticForm">
                 <div layout="row" layout-align="start start" class="form-group form-group-input">
@@ -317,7 +316,7 @@
                                                        aria-label="select protocol">
                                                 <md-option
                                                         ng-repeat="(index,protocolType) in createAppCtrl.APP_PROTOCOL_TYPE"
-                                                        ng-value="protocolType.value" ng-selected="index == 0">
+                                                        ng-value="protocolType.value">
                                                     {/protocolType.name/}
                                                 </md-option>
                                             </md-select>
