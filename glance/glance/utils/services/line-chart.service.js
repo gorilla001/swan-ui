@@ -25,7 +25,7 @@
             }
             var chartData = {y: {}, x: []};
             var curTime;
-            if (!data) {
+            if (!data || data.length<=0) {
                 curTime = Math.round((new Date()).getTime()/1000/60);
                 data = [];
             } else {
