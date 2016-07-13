@@ -12,7 +12,7 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
         '5_masters': 6
     };
     
-    NODE_STATUS = {
+    var NODE_STATUS = {
             running: "running",
             terminated: "terminated",
             failed: "failed",
