@@ -48,6 +48,7 @@
                 angular.forEach(self.node.services, function(val, key) {
                     if(data[val.name]) {
                         val.status = data[val.name].status;
+                        val.version = data[val.name].version;
                     }
                 });
             });
