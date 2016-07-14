@@ -70,7 +70,6 @@
                 self.form.logPaths = [];
             }
             refresClusterData(app.cid, app.id).then(function () {
-                setSelectNodes(app.iplist);
             });
             self.single = app.unique;
             self.isNetworkDisable = true;
@@ -134,7 +133,11 @@
                         self.multiSelect.labels = appLabelService.listClusterLabels(nodes);
                         self.multiSelect.nodes = [];
                         setMultiSelect(nodes, cluster.cluster_type);
+                        if(self.target != 'create') {
+                            setSelectNodes(app.iplist);
+                        }
                     })
+
                 });
         }
 
