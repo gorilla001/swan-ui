@@ -29,7 +29,6 @@
         self.NODE_STATUS = NODE_STATUS;
         self.SERVICES_STATUS = SERVICES_STATUS;
 
-        self.listNodeApps = listNodeApps;
         self.unitConversion = unitConversion;
 
         self.deleNode = deleNode;
@@ -172,23 +171,7 @@
                 self.nextNodeId = nodes[currentNodeIndex + 1].id;
             }
         }
-
-        // 主机应用
-        function listNodeApps(nodeIp) {
-            clusterBackend.getNodeAppList($stateParams.clusterId, nodeIp)
-                .then(function (data) {
-                    self.appList = data;
-                });
-
-            clusterBackend.getClusterApps($stateParams.clusterId)
-                .then(function (data) {
-                    self.clusterApps = data.App;
-                    self.appsNameMap = {};
-                    angular.forEach(self.clusterApps, function (item, index) {
-                        self.appsNameMap[item.alias] = item.name;
-                    });
-                })
-        }
+        
 
     }
 })();

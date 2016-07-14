@@ -89,8 +89,6 @@
         </div>
     </header>
     <!--点击加载更多组件-->
-    <md-tabs md-dynamic-height md-border-bottom>
-        <md-tab label="主机监控">
             <div class="homepage_bottom main-content">
                 <div class="homepage_module" id="homepage_module"
                      data-ng-class="{showDropDown: nodeDetailsCtrl.showMore}">
@@ -160,37 +158,4 @@
                     </div>
                 </div>
             </div>
-        </md-tab>
-        <md-tab label="主机应用" md-on-select="nodeDetailsCtrl.listNodeApps(nodeDetailsCtrl.node.ip)">
-            <md-content class="md-padding main-tab-content">
-                <md-table-container>
-                    <table md-table>
-                        <thead md-head>
-                        <tr md-row>
-                            <th md-column>应用名称</th>
-                            <th md-column>实例</th>
-                            <th md-column>状态</th>
-                            <th md-column>CPU</th>
-                            <th md-column>内存</th>
-                            <th md-column>创建时间</th>
-                        </tr>
-                        </thead>
-                        <tbody md-body>
-                        <tr md-row ng-repeat="app in nodeDetailsCtrl.appList | orderBy: '-startTime'">
-                            <td md-cell>{/nodeDetailsCtrl.appsNameMap[app.appname]/}</td>
-                            <td md-cell>{/app.instance/}</td>
-                            <td md-cell>运行中</td>
-                            <td md-cell>{/(app.cpuUsed * 100).toFixed(2)/} %</td>
-                            <td md-cell>{/app.memoryUsed | currency: '' :0/} MB</td>
-                            <td md-cell>{/app.startTime / 1000000 | date: 'yyyy-MM-dd HH:mm'/}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </md-table-container>
-                <div class="alert alert-warning text-center" data-ng-show="!nodeDetailsCtrl.appList">
-                    未查询到主机下的应用
-                </div>
-            </md-content>
-        </md-tab>
-    </md-tabs>
 </section>
