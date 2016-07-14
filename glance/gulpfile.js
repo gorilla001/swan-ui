@@ -189,7 +189,7 @@ gulp.task('template-min-policy', ['template-min-repo'], function () {
 // });
 
 //cluster
-gulp.task('template-min-cluster', ['template-min-layout'], function () {
+gulp.task('template-min-cluster', ['template-min-policy'], function () {
     return gulp.src('glance/cluster/**/*.html')
         .pipe(minifyHtml({
             empty: true,
