@@ -175,8 +175,8 @@ IMAGE_TRIGGER_TYPE = {
 
 APP_EVENTS_TYPE = {
     status_update_event: "实例状态更新",
-    deployment_success: "部署成功",
-    deployment_failed: "部署失败",
+    deployment_success: "操作成功",
+    deployment_failed: "操作失败",
     deployment_step_success: "部署操作成功",
     deployment_step_failure: "部署操作失败",
     AppOperation: "应用操作",
