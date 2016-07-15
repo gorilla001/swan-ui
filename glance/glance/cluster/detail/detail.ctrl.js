@@ -31,11 +31,13 @@
 
         //监听集群状态 websocket
         $scope.$on(SUB_INFOTYPE.clusterStatus, function (event, data) {
-            if (self.cluster.status === 'upgrading' && data.status !== 'upgrading') {
-                $scope.$broadcast('upgradeComplete');
+            if (data.clusterId === self.cluster.id) {
+                if (self.cluster.status === 'upgrading' && data.status !== 'upgrading') {
+                    $scope.$broadcast('upgradeComplete');
+                }
+                
+                self.cluster.status = data.status;
             }
-
-            self.cluster.status = data.status;
         })
     }
 })();
