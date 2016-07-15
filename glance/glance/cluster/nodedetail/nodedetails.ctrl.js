@@ -42,15 +42,19 @@
 
             // 监控状态
             $scope.$on(SUB_INFOTYPE.nodeStatus, function(event, data) {
-                self.node.status = data.status;
+                if($stateParams.nodeId == data.nodeId) {
+                    self.node.status = data.status;
+                }
             });
             $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
-                angular.forEach(self.node.services, function(val, key) {
-                    if(data[val.name]) {
-                        val.status = data[val.name].status;
-                        val.version = data[val.name].version;
-                    }
-                });
+                if($stateParams.nodeId == data.nodeId) {
+                    angular.forEach(self.node.services, function(val, key) {
+                        if(data[val.name]) {
+                            val.status = data[val.name].status;
+                            val.version = data[val.name].version;
+                        }
+                    });
+                }
             });
         }
 
