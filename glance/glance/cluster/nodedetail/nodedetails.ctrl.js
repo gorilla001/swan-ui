@@ -29,27 +29,28 @@
         self.NODE_STATUS = NODE_STATUS;
         self.SERVICES_STATUS = SERVICES_STATUS;
 
+        self.listNodeApps = listNodeApps;
         self.unitConversion = unitConversion;
 
         self.deleNode = deleNode;
         self.repairService = repairService;
 
-        activate ();
+        activate();
         function activate() {
             getCurNode();
             getNodeMetricData($stateParams.nodeId);
             listNodesIds();
 
             // 监控状态
-            $scope.$on(SUB_INFOTYPE.nodeStatus, function(event, data) {
-                if($stateParams.nodeId == data.nodeId) {
+            $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+                if ($stateParams.nodeId == data.nodeId) {
                     self.node.status = data.status;
                 }
             });
             $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
-                if($stateParams.nodeId == data.nodeId) {
-                    angular.forEach(self.node.services, function(val, key) {
-                        if(data[val.name]) {
+                if ($stateParams.nodeId == data.nodeId) {
+                    angular.forEach(self.node.services, function (val, key) {
+                        if (data[val.name]) {
                             val.status = data[val.name].status;
                             val.version = data[val.name].version;
                         }
@@ -115,7 +116,7 @@
             self.node['osVersion'] = data['osVersion'] || "未知";
             self.node['agentVersion'] = data['agentVersion'] || "未知";
             self.node['memTotal'] = data['memTotal'] || "未知";
-            self.node['cpuNumber'] = angular.isArray(data.cpuPercent) ? data.cpuPercent.length: "未知";
+            self.node['cpuNumber'] = angular.isArray(data.cpuPercent) ? data.cpuPercent.length : "未知";
         }
 
         function deleNode(id, ev) {
@@ -176,7 +177,23 @@
                 self.nextNodeId = nodes[currentNodeIndex + 1].id;
             }
         }
-        
+
+        // 主机应用
+        function listNodeApps(nodeIp) {
+            clusterBackend.getNodeAppList($stateParams.clusterId, nodeIp)
+                .then(function (data) {
+                    self.appList = data;
+                });
+
+            clusterBackend.getClusterApps($stateParams.clusterId)
+                .then(function (data) {
+                    self.clusterApps = data.App;
+                    self.appsNameMap = {};
+                    angular.forEach(self.clusterApps, function (item, index) {
+                        self.appsNameMap[item.alias] = item.name;
+                    });
+                })
+        }
 
     }
 })();
