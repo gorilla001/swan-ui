@@ -25,7 +25,9 @@
 
         function activate() {
             initMonitor();
-            appChart.paintReqRateChart(self.appInfo.cid, self.appInfo.alias, 'req-rate-chart');
+            if(self.appInfo.ports.length > 0) {
+                appChart.paintReqRateChart(self.appInfo.cid, self.appInfo.alias, 'req-rate-chart');
+            }
             appChart.paintMonitorCharts(self.appInfo.cid, self.appInfo.alias, {
                 cpu: 'cpu-chart',
                 mem: 'mem-chart',
