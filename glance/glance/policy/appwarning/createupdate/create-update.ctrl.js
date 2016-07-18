@@ -19,11 +19,10 @@
             times: warning.times || '',
             enabled: warning.enabled || 1, // Deprecated api
             triger: warning.triger || false,
-            mininstance: warning.mininstance || '',
-            instance: warning.instance || '',
+            mininstance: warning.mininstance,
+            instance: warning.instance,
             level: warning.level || 'info'
         };
-
         if (self.target === 'update' && warning.metric === 'CpuUsedCores') {
             self.form.threshold = self.form.threshold * 100
         }
