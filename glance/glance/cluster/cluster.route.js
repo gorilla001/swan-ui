@@ -51,8 +51,11 @@
             })
             .state('cluster.updatecluster', {
                 url: '/:clusterId/update?name',
-                templateUrl: '/views/cluster/update-cluster.html',
-                controller: 'updateClusterCtrl'
+                templateUrl: '/glance/cluster/update/update-cluster.html',
+                controller: 'UpdateClusterCtrl as updateClusterCtrl',
+                resolve: {
+                    clusterDetail: getCluster
+                }
             })
             .state('cluster.nodesource', {
                 url: '/:clusterId/nodesource',
