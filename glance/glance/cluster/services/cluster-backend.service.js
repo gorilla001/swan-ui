@@ -25,7 +25,8 @@
             getNodeMetricData:getNodeMetricData,
             listNodesIds:listNodesIds,
             repairService:repairService,
-            changeLables: changeLables
+            changeLables: changeLables,
+            changeCluster: changeCluster
         };
 
         ////////////
@@ -36,6 +37,10 @@
 
         function getCluster(clusterId) {
             return gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get();
+        }
+
+        function changeCluster(clusterId, putData) {
+            return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).put(putData);
         }
 
         function listNodesByLabelIds(clusterId, labelIdsString) {
