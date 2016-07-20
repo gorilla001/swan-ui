@@ -20,6 +20,10 @@
                                    data-ng-model="imageCreateCtrl.form.name">
                         </div>
                         <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.projectName.$error.samename">
+                            <small>项目名称已存在</small>
+                        </p>
+                        <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.projectName.$error.required && !staticForm.projectName.$pristine">
                             <small>项目名称不能为空</small>
                         </p>

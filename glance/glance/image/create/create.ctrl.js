@@ -62,7 +62,6 @@
         }
 
         function createProject(fromData) {
-            console.log(fromData)
             imageBackend.createProject(fromData, $scope.staticForm).then(function (data) {
                 Notification.success('项目创建成功');
                 $state.go('image.detail.version', ({projectId: data.id}))
