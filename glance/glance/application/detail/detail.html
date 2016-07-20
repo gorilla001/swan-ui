@@ -67,12 +67,12 @@
                             <md-tooltip md-direction="top">更新</md-tooltip>
                             <i class="fa fa-repeat"></i>
                         </md-button>
-                        <md-button aria-label="canary" class="md-fab md-raised md-mini" data-demo-disable
+                        <!--<md-button aria-label="canary" class="md-fab md-raised md-mini" data-demo-disable
                                    data-ng-click="detailAppCtrl.createCanary($event, detailAppCtrl.appInfo.cid, detailAppCtrl.appInfo.id, detailAppCtrl.appInfo)"
                                    data-ng-disabled=" detailAppCtrl.appStatus.status != '2' || !detailAppCtrl.appInfo.ports.length || detailAppCtrl.appInfo.canary">
                             <md-tooltip md-direction="top">新建灰度</md-tooltip>
                             <i class="fa fa-adjust"></i>
-                        </md-button>
+                        </md-button>-->
                     </md-fab-actions>
                 </md-fab-speed-dial>
             </div>
@@ -84,7 +84,7 @@
                 <md-tab label="监控" dm-tab-sref="app.detail.monitoring"></md-tab>
                 <md-tab label="实例" dm-tab-sref="app.detail.instance"></md-tab>
                 <md-tab label="事件" dm-tab-sref="app.detail.event"></md-tab>
-                <md-tab label="灰度发布" dm-tab-sref="app.detail.canary"></md-tab>
+                <!--<md-tab label="灰度发布" dm-tab-sref="app.detail.canary"></md-tab>-->
             </md-tabs>
             <md-content class="md-padding main-tab-content" ui-view>
             </md-content>

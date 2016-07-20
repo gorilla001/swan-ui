@@ -13,8 +13,8 @@
                 {/appversion.imageVersion/}
                 <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span><span
                     data-ng-show="appversion.status === 0">[正在部署中]</span>
-                <span data-ng-show="appversion.status === 2">[配置不可用]</span><span class="bg-warning"
-                                                                                 data-ng-show="appversion.canary">[灰度发布]</span>
+                <span data-ng-show="appversion.status === 2">[配置不可用]</span><!--<span class="bg-warning"
+                                                                                 data-ng-show="appversion.canary">[灰度发布]</span>-->
             </td>
             <td md-cell>
                 {/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}
