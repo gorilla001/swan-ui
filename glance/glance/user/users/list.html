@@ -18,10 +18,10 @@
         <tbody md-body>
         <tr md-row md-select="user" ng-repeat="user in listUserCtrl.users">
             <td md-cell>
-                {/listUserCtrl.USER_STATUS[user.status]/}
+                {/USER_STATUS[user.status]/}
             </td>
             <td md-cell>{/user.name/}</td>
-            <td md-cell>{/listUserCtrl.USER_TYPE[user.is_superuser]/}</td>
+            <td md-cell>{/USER_TYPE[user.is_superuser]/}</td>
             <td md-cell>{/user.email/}</td>
             <td md-cell>{/user.created_at/}</td> 
             <td md-cell>

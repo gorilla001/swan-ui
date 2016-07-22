@@ -6,17 +6,7 @@
     /* @ngInject */
     function RootCtrl($rootScope, $document, $state, glanceUser, $window, commonBackend, Notification, joinDemoGroupModal, mdSideNav, utils) {
         var self = this;
-
-        $rootScope.nodeStatusCls = {};
-        $rootScope.nodeStatusCls[NODE_STATUS.running] = "fa fa-heartbeat text-success";
-        $rootScope.nodeStatusCls[NODE_STATUS.terminated] = "fa fa-chain-broken text-danger";
-        $rootScope.nodeStatusCls[NODE_STATUS.failed] = "fa fa-bomb text-danger";
-        $rootScope.nodeStatusCls[NODE_STATUS.abnormal] = "fa fa-exclamation-triangle text-warning";
-        $rootScope.nodeStatusCls[NODE_STATUS.installing] = "fa fa-cog text-normal";
-        $rootScope.nodeStatusCls[NODE_STATUS.initing] = "fa fa-cog text-normal";
-        $rootScope.nodeStatusCls[NODE_STATUS.upgrading] = "fa fa-cog text-normal";
-        $rootScope.nodeStatusCls[NODE_STATUS.repairing] = "fa fa-cog text-normal";
-
+        
         self.noticeNav = mdSideNav.createSideNav('noticeNav');
         self.linkToCS = linkToCS;
         self.logout = logout;
@@ -29,12 +19,12 @@
         self.isShowToolbarToolsOption = false;
         self.userManualUrl = "http://doc.shurenyun.com";
         self.noticeHtml = null;
+        
 
         $rootScope.IS_OFF_LINE = IS_OFF_LINE;
-        $rootScope.FRONTEND_MSG = FRONTEND_MSG;
-        $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
+        $rootScope.phoneCodeResendExpire = $rootScope.SMS.phoneCodeResendExpire;
         $rootScope.is_licence_on = IS_LICENCE_ON;
-
+        
         activate();
 
         function activate() {

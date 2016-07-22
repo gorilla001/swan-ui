@@ -3,9 +3,9 @@
     angular.module('glance')
         .factory('clusterStatus', clusterStatus);
 
-    clusterStatus.$inject = [];
+    clusterStatus.$inject = ['$rootScope'];
 
-    function clusterStatus() {
+    function clusterStatus($rootScope) {
       return {
           getClusterStatus: getClusterStatus,
           updateClusterStatus: updateClusterStatus
@@ -25,14 +25,14 @@
           var clusterServices = listClusterServices(nodes);
 
           if(isClusterUnknow(nodes)) {
-              return CLUSTER_STATUS.unknow;
+              return $rootScope.CLUSTER_STATUS.unknow;
           } else if (isClusterRunning(clusterServices, clusterType, clusterTypes)) {
-              return CLUSTER_STATUS.running;
+              return $rootScope.CLUSTER_STATUS.running;
           } else if (isClusterInstalling(clusterServices, clusterType, clusterTypes)) {
-              return CLUSTER_STATUS.installing;
+              return $rootScope.CLUSTER_STATUS.installing;
           }
 
-          return CLUSTER_STATUS.abnormal;
+          return $rootScope.CLUSTER_STATUS.abnormal;
       }
 
       function updateClusterStatus(data, clusters) {
@@ -52,7 +52,7 @@
       }
 
       function isClusterRunning(clusterServices, clusterType, clusterTypes) {
-          var status = [NODE_STATUS.running];
+          var status = [$rootScope.NODE_STATUS.running];
           var runningMasterAmount = calServicesByStatus(clusterServices.master, status);
           if (runningMasterAmount === clusterTypes[clusterType]) {
               if (calServicesByStatus(clusterServices.slave, status) >= 1) {
@@ -71,7 +71,7 @@
       }
 
       function isClusterInstalling(clusterServices, clusterType, clusterTypes) {
-          var statuses = [SERVICES_STATUS.running, SERVICES_STATUS.failed];
+          var statuses = [$rootScope.SERVICES_STATUS.running, $rootScope.SERVICES_STATUS.failed];
           var masterAmount = calServicesByStatus(clusterServices.master, statuses);
           var slaveAmount = calServicesByStatus(clusterServices.slave, statuses);
           return Boolean((masterAmount < clusterTypes[clusterType]) || (slaveAmount === 0));
@@ -145,13 +145,13 @@
           var status;
           var rawStatus = node.status;
           var installingStatuses = 
-            [NODE_STATUS.installing, NODE_STATUS.initing, NODE_STATUS.uninstalling];
+            [$rootScope.NODE_STATUS.installing, $rootScope.NODE_STATUS.initing, $rootScope.NODE_STATUS.uninstalling];
 
           if (installingStatuses.indexOf(rawStatus) > -1) {
-              status = NODE_STATUS.installing;
-          } else if (rawStatus === NODE_STATUS.running) {
-              if (getServiceStatus(node)  === SERVICES_STATUS.failed) {
-                  status = NODE_STATUS.failed;
+              status = $rootScope.NODE_STATUS.installing;
+          } else if (rawStatus === $rootScope.NODE_STATUS.running) {
+              if (getServiceStatus(node)  === $rootScope.$rootScope.SERVICES_STATUS.failed) {
+                  status = $rootScope.NODE_STATUS.failed;
               }
           }
           return status ? status : rawStatus;
@@ -163,18 +163,18 @@
           var service;
           for (var i = 0; i < node.services.length; i++) {
               service = node.services[i];
-              if (service.status === SERVICES_STATUS.installing) {
-                  return SERVICES_STATUS.installing;
+              if (service.status === $rootScope.SERVICES_STATUS.installing) {
+                  return $rootScope.SERVICES_STATUS.installing;
               } else if (
-                  service.status == SERVICES_STATUS.failed || 
-                  service.status == SERVICES_STATUS.uninstalled
+                  service.status == $rootScope.SERVICES_STATUS.failed || 
+                  service.status == $rootScope.SERVICES_STATUS.uninstalled
               ) {
                   if (checkServices.indexOf(service.name) > -1) {
-                      return SERVICES_STATUS.failed;
+                      return $rootScope.SERVICES_STATUS.failed;
                   }
               }
           }
-          return SERVICES_STATUS.running;
+          return $rootScope.SERVICES_STATUS.running;
       }
 
       function searchIndex(key, keyValue, values) {
@@ -199,8 +199,8 @@
                   } else {
                       index = searchIndex('name', key, node.services);
                       serviceStatus = data[key].status;
-                      if(serviceStatus === SERVICES_STATUS.uninstalling) {
-                          serviceStatus = SERVICES_STATUS.installing;
+                      if(serviceStatus === $rootScope.SERVICES_STATUS.uninstalling) {
+                          serviceStatus = $rootScope.SERVICES_STATUS.installing;
                       }
                       node.services[index].status = serviceStatus;
                       node.services[index].version = data[key].version;

@@ -29,7 +29,7 @@
             </button>
             <ul class="dropdown-menu">
                 <li data-ng-repeat="(name, num) in clusterNodesCtrl.updateInfo" ng-if="name != 'node'">
-                    {/clusterNodesCtrl.SERVICE_NAME[name]/}
+                    {/SERVICE_NAME[name]/}
                     <span class="badge" data-ng-bind="num"></span>
                 </li>
             </ul>
@@ -114,7 +114,7 @@
                 {/node.ip/}
             </td>
             <td md-cell>
-                <i class="{/nodeStatusCls[node.status]/}" aria-hidden="true"></i>{/clusterNodesCtrl.NODE_STATUS_NAME[node.status]/}
+                <i class="{/nodeStatusCls[node.status]/}" aria-hidden="true"></i>{/NODE_STATUS_NAME[node.status]/}
             </td>
             <td md-cell>
                 <span>{/node.agent_version/}</span>

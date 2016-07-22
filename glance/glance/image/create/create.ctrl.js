@@ -13,7 +13,7 @@
         self.form = {
             name: "",
             repoUri: "",
-            triggerType: IMAGE_TRIGGER_TYPE.SELECT_TAG,
+            triggerType: $rootScope.IMAGE_TRIGGER_TYPE.SELECT_TAG,
             active: true,
             period: 5,
             description: "",
@@ -70,11 +70,11 @@
 
         function countTrigType() {
             if (self.tag && self.branch) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_ALL
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_ALL
             } else if (self.tag) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_TAG
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_TAG
             } else if (self.branch) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_BRANCH
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_BRANCH
             }
         }
 

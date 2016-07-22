@@ -5,7 +5,7 @@
     angular.module('glance.cluster').controller('NodeDetailsCtrl', NodeDetailsCtrl);
 
     /*@ngInject*/
-    function NodeDetailsCtrl($scope, $stateParams, unitConversion, buildCharts, monitor, $state, confirmModal, clusterBackend) {
+    function NodeDetailsCtrl($scope, $rootScope, $stateParams, unitConversion, buildCharts, monitor, $state, confirmModal, clusterBackend) {
         'use strict';
         var self = this;
 
@@ -25,9 +25,6 @@
             netio: 'node-netio-chart'
         };
         // 主机状态
-        self.NODE_STATUS_NAME = NODE_STATUS_NAME;
-        self.NODE_STATUS = NODE_STATUS;
-        self.SERVICES_STATUS = SERVICES_STATUS;
 
         self.listNodeApps = listNodeApps;
         self.unitConversion = unitConversion;
@@ -42,12 +39,12 @@
             listNodesIds();
 
             // 监控状态
-            $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
                 if ($stateParams.nodeId == data.nodeId) {
                     self.node.status = data.status;
                 }
             });
-            $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+            $rootScope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
                 if ($stateParams.nodeId == data.nodeId) {
                     angular.forEach(self.node.services, function (val, key) {
                         if (data[val.name]) {
@@ -96,7 +93,7 @@
         function addMetricData(data) {
             var nodesData, maxNodesNumber, nodeInfo, chartsData, wsTime, chartsTime;
             nodesData = data;
-            $scope.$on(SUB_INFOTYPE.nodeMetric, function (event, data) {
+            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeMetric, function (event, data) {
                 if (data.nodeId == $stateParams.nodeId) {
                     maxNodesNumber = 180;
 

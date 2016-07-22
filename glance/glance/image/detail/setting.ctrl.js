@@ -4,7 +4,7 @@
         .controller('ImageDetailSettingCtrl', ImageDetailSettingCtrl);
 
     /* @ngInject */
-    function ImageDetailSettingCtrl(project, imageBackend, Notification) {
+    function ImageDetailSettingCtrl($rootScope, project, imageBackend, Notification) {
         var self = this;
 
         self.projectInfo = project;
@@ -34,19 +34,19 @@
             }
         ];
 
-        self.tag = (self.projectInfo.triggerType == IMAGE_TRIGGER_TYPE.SELECT_TAG) || (self.projectInfo.triggerType == IMAGE_TRIGGER_TYPE.SELECT_ALL);
-        self.branch = (self.projectInfo.triggerType == IMAGE_TRIGGER_TYPE.SELECT_BRANCH) || (self.projectInfo.triggerType == IMAGE_TRIGGER_TYPE.SELECT_ALL);
+        self.tag = (self.projectInfo.triggerType == $rootScope.IMAGE_TRIGGER_TYPE.SELECT_TAG) || (self.projectInfo.triggerType == $rootScope.IMAGE_TRIGGER_TYPE.SELECT_ALL);
+        self.branch = (self.projectInfo.triggerType == $rootScope.IMAGE_TRIGGER_TYPE.SELECT_BRANCH) || (self.projectInfo.triggerType == $rootScope.IMAGE_TRIGGER_TYPE.SELECT_ALL);
 
         self.saveSetting = saveSetting;
         self.countTrigType = countTrigType;
 
         function countTrigType() {
             if (self.tag && self.branch) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_ALL
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_ALL
             } else if (self.tag) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_TAG
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_TAG
             } else if (self.branch) {
-                self.form.triggerType = IMAGE_TRIGGER_TYPE.SELECT_BRANCH
+                self.form.triggerType = $rootScope.IMAGE_TRIGGER_TYPE.SELECT_BRANCH
             }
         }
 

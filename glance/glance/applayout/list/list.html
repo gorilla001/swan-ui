@@ -24,7 +24,7 @@
                             <h3>{/stack.name/}</h3>
                             <dl class="list-dl-row">
                                 <dt>状态</dt>
-                                <dd>{/layoutListCtrl.stackTypeText[stack.status]/}</i></dd>
+                                <dd>{/STACK_STATUS[stack.status]/}</i></dd>
                                 <dt>更新时间</dt>
                                 <dd>{/stack.updated | date:"yyyy-MM-dd HH:mm"/}</dd>
                                 <dt>所属集群</dt>
@@ -93,7 +93,7 @@
                                 <td md-cell>{/app.Name/}
                                 </td>
                                 <td md-cell>
-                                    {/layoutListCtrl.APP_STATUS[layoutListCtrl.appListStatus[app.Id].status]/}
+                                    {/APP_STATUS[layoutListCtrl.appListStatus[app.Id].status]/}
                                 </td>
                                 <td md-cell data-ng-if="app.Id">{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
                                 <td md-cell data-ng-if="!app.Id">---- -- --</td>

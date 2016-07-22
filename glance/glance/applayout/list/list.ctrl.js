@@ -11,8 +11,6 @@
 
         self.clusterNameMap = listClusterMap(clusters);
         self.stacks = data.Stacks;
-        self.stackTypeText = STACK_STATUS;
-        self.APP_STATUS = APP_STATUS;
         self.openFlag = {};
         self.appList = {};
         self.sseMsgStatus = {};

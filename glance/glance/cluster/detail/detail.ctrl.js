@@ -7,10 +7,9 @@
         .controller('ClusterDetailCtrl', ClusterDetailCtrl);
 
     /* @ngInject */
-    function ClusterDetailCtrl(clusterDetail, clusterCurd, $scope) {
+    function ClusterDetailCtrl(clusterDetail, clusterCurd, $scope, $rootScope) {
         var self = this;
-
-        self.CLUSTER_STATUS = CLUSTER_STATUS;
+        
 
         self.cluster = clusterDetail;
         self.nodeTotal = sumNodeTotal(self.cluster.node_nums);
@@ -30,7 +29,7 @@
         }
 
         //监听集群状态 websocket
-        $scope.$on(SUB_INFOTYPE.clusterStatus, function (event, data) {
+        $rootScope.$on($rootScope.SUB_INFOTYPE.clusterStatus, function (event, data) {
             if (data.clusterId === self.cluster.id) {
                 if (self.cluster.status === 'upgrading' && data.status !== 'upgrading') {
                     $scope.$broadcast('upgradeComplete');

@@ -6,9 +6,8 @@
     angular.module('glance.dashboard').controller('DashboardCtrl', DashboardCtrl);
 
     /* @ngInject */
-    function DashboardCtrl($scope, ClusterStatusMgr, dashboardBackend, glanceHttp) {
+    function DashboardCtrl($scope, ClusterStatusMgr,dashboardBackend, glanceHttp) {
         var self = this;
-
         self.statusMgr = new ClusterStatusMgr();
         // 是否展示app下拉
         self.dropStatus = false;
@@ -58,7 +57,7 @@
                 if (cluster.nodes.length > 0) {
                     cluster.appMonitors = [];
                     cluster.masMetrics = [];
-                    angular.forEach(cluster.nodes, function (node){
+                    angular.forEach(cluster.nodes, function (node) {
                         self.statusMgr.addNode(cluster.id, node);
                     });
                     newClusters.push(cluster)

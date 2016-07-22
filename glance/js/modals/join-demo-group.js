@@ -71,7 +71,7 @@
                     $rootScope.phoneCodeResendExpire--;
                     if ($rootScope.phoneCodeResendExpire <= 0) {
                         cancelSMSInterval();
-                        $rootScope.phoneCodeResendExpire = SMS.phoneCodeResendExpire;
+                        $rootScope.phoneCodeResendExpire = $rootScope.SMS.phoneCodeResendExpire;
                         self.canResendSMS = true;
                         self.sendButtonText = "发送验证码"
                     } else {

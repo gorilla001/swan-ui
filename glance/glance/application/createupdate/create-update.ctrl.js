@@ -77,7 +77,6 @@
 
         self.appNames = [];
         self.clusters = [];
-        self.APP_PROTOCOL_TYPE = APP_PROTOCOL_TYPE;
         self.showAdvanceContent = false;
 
         listApps();

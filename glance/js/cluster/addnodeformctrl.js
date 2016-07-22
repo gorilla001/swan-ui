@@ -1,4 +1,4 @@
-function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labelService, addNodeLabelModal) {
+function addNodeFormCtrl($scope, $rootScope, $state, $stateParams, gHttp, Notification, labelService, addNodeLabelModal) {
     
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
@@ -21,7 +21,7 @@ function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labe
     $scope.dockerScript = 'curl -sSL https://get.docker.com/ | sh';
     $scope.msgstate = "等待主机链接......";
 
-    $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+    $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
       if(data['nodeId'] == $scope.nodeId && data['status'] != 'terminated') {
         $scope.isConected = true;
         $scope.msgstate = '主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。';

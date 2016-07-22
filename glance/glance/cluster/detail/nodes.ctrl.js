@@ -7,12 +7,9 @@
         .controller('ClusterNodesCtrl', ClusterNodesCtrl);
 
     /* @ngInject */
-    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, tearLabelDialog, $state, clusterCurd) {
+    function ClusterNodesCtrl(mdTable, nodes, $stateParams, clusterBackend, $scope, addLabelDialog, tearLabelDialog,$rootScope, $state, clusterCurd) {
         var self = this;
-
-        self.NODE_STATUS_NAME = NODE_STATUS_NAME;
-        self.SERVICE_NAME = SERVICE_NAME;
-        self.CLUSTER_STATUS = CLUSTER_STATUS;
+        
 
         self.selected = [];
         self.table = mdTable.createTable('cluster.detail.nodes');
@@ -31,16 +28,16 @@
         function activate() {
             checkUpdate();
             //监听主机状态 websocket
-            $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
                 if (data.clusterId == $stateParams.clusterId) {
                     //when node status is change, you should be check the cluster.node_nums['0_terminated'],
                     //to control the cluster upgrade button disable/enable
                     clusterBackend.getCluster($stateParams.clusterId)
                     .then(function (data) {
                         $scope.clusterDetailCtrl.cluster = data;
-                        
+
                     });
-                    
+
                     angular.forEach(self.nodes, function (item, index) {
                         if (item.id == data.nodeId) {
                             item.status = data.status
@@ -50,7 +47,7 @@
             });
 
             //监听升级失败 websocket
-            $scope.$on(SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+            $rootScope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
                 self.upgradeFailed[data.nodeId] = true;
             });
 

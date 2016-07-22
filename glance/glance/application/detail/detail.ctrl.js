@@ -10,8 +10,6 @@
     function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, $scope, $stateParams, timing, $q) {
         var self = this;
         
-        self.APP_STATUS = APP_STATUS;
-        self.APP_FAIL_RESULT = APP_FAIL_RESULT;
 
         self.appInfo = appInfo;
         self.appStatus = appStatus;

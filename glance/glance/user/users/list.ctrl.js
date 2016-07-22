@@ -11,9 +11,7 @@
         self.table = mdTable.createTable('user.users');
 
         self.users = [];
-
-        self.USER_STATUS = USER_STATUS;
-        self.USER_TYPE = USER_TYPE;
+        
         
         self.table = mdTable.createTable('user.users');
         self.users = users.users;

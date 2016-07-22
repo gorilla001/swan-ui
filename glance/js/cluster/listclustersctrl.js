@@ -27,7 +27,6 @@ function listClustersCtrl($scope, $state, Notification, ClusterStatusMgr, $timeo
 
     $scope.statusMgr = new ClusterStatusMgr();
     
-    $scope.CLUSTER_STATUS = CLUSTER_STATUS;
     
     $scope.listCluster = function () {
         gHttp.Resource("cluster.clusters").get().then(function (data) {
