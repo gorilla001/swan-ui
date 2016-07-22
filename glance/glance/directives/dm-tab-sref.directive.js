@@ -16,7 +16,12 @@
             elem.on('click', function () {
                 $state.go(sref, null, {reload: true});
             });
-
+            scope.$on('$stateChangeSuccess',
+                function (event, toState, toParams, fromState, fromParams) {
+                    if ($state.includes(sref)) {
+                            tabsCtrl.selectedIndex = elem.index();
+                    }
+                });
         }
     }
 })();
