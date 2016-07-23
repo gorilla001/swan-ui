@@ -18,7 +18,7 @@ function addNodeFormCtrl($scope, $state, $stateParams, gHttp, Notification, labe
       id: $scope.nodeId,
       labels: []
     };
-    $scope.dockerScript = 'curl -sSL https://get.docker.com/ | sh';
+    $scope.dockerScript = 'curl -sSL http://get.shurenyun.com/install-agent.sh | sh';
     $scope.msgstate = "等待主机链接......";
 
     $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
