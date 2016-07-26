@@ -12,8 +12,6 @@
 
         self.scalingList = data.ScaleHistory;
         self.count = data.Count;
-        self.WARNING_TYPE = WARNING_TYPE;
-        self.WARNING_RULE = WARNING_RULE;
         self.table = mdTable.createTable('policy.tab.appwarning.warningscaling');
         self.searchKeyWord = $stateParams.keywords || '';
 

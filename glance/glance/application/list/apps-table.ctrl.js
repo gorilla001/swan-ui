@@ -27,7 +27,6 @@
             self.applist = apps.App;
             self.count = apps.Count;
             self.searchForm.keywords = $stateParams.keywords;
-            self.APP_STATUS = APP_STATUS;
             self.groupUserMap = {};
 
 

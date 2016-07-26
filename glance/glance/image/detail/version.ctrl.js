@@ -7,7 +7,6 @@
     /* @ngInject */
     function ImageDetailVersionCtrl(imageBackend, $state, imageLogModal, $stateParams, imageCurd, $scope, mdTable) {
         var self = this;
-        self.IMAGE_STATUS = IMAGE_STATUS;
         self.table = mdTable.createTable('image.detail.version');
         self.goToCreateApp = goToCreateApp;
 

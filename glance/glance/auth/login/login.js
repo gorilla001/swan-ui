@@ -4,7 +4,7 @@
         .controller('LoginCtrl', LoginCtrl);
 
     /* @ngInject */
-    function LoginCtrl($state, $stateParams, $scope, authCurd, authBackend, commonBackend) {
+    function LoginCtrl($state, $stateParams, $scope, authCurd, authBackend, commonBackend, $rootScope) {
         var self = this;
         self.form = {};
         activate();
@@ -50,9 +50,9 @@
                 var returnTo = $stateParams.return_to;
                 authCurd.login(self.form, $scope.staticForm, returnTo)
                     .catch(function (res) {
-                        if (res.code === MESSAGE_CODE.needActive) {
+                        if (res.code === $rootScope.MESSAGE_CODE.needActive) {
                             $state.go('auth.needActive', {email: self.form.email});
-                        } else if (res.code === MESSAGE_CODE.needLicence) {
+                        } else if (res.code === $rootScope.MESSAGE_CODE.needLicence) {
                             $state.go('auth.licence');
                         }
                     })

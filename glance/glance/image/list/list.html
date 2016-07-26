@@ -47,7 +47,7 @@
                             'text-info': project.status == 'running' || project.status == 'pending'}" data-ng-hide="project.status == 'pending' && !project.active">
                                 <i class="fa" data-ng-class="{'fa-times-circle': project.status == 'failure' || project.status == 'error', 'fa-check-circle': project.status == 'success',
                                 'fa-spinner': project.status == 'running' || project.status == 'pending', 'fa-spin': project.status == 'running' || project.status == 'pending'}"></i>
-                                {/imageListCtrl.IMAGE_STATUS[project.status]/}
+                                {/IMAGE_STATUS[project.status]/}
                             </span>
 
                             <span data-ng-if="project.status == 'pending' && !project.active">未开始</span>

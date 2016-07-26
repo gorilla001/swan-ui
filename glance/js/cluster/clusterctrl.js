@@ -1,7 +1,7 @@
 //clusterCtrl.$inject = ['$scope', '$state', 'gHttp', 'Notification'];
 glanceApp.controller('clusterCtrl', clusterCtrl);
 /* ngInject */
-function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservice, $mdDialog) {
+function clusterCtrl($scope, $rootScope, $state, gHttp, Notification, confirmModal, appservice, $mdDialog) {
     $scope.clusterNames = [];
     $scope.allLabels = [];
 
@@ -23,22 +23,22 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservi
         };
     
     $scope.serviceStatName = {};
-    $scope.serviceStatName[SERVICES_STATUS.running] = "运行正常";
-    $scope.serviceStatName[SERVICES_STATUS.failed] = "异常";
-    $scope.serviceStatName[SERVICES_STATUS.uninstalled] = "未安装";
-    $scope.serviceStatName[SERVICES_STATUS.uninstalling] = "卸载中";
-    $scope.serviceStatName[SERVICES_STATUS.installing] = "安装中";
-    $scope.serviceStatName[SERVICES_STATUS.pulling] = "拉取镜像中";
-    $scope.serviceStatName[SERVICES_STATUS.restarting] = "重启中";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.running] = "运行正常";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.failed] = "异常";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.uninstalled] = "未安装";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.uninstalling] = "卸载中";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.installing] = "安装中";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.pulling] = "拉取镜像中";
+    $scope.serviceStatName[$rootScope.SERVICES_STATUS.restarting] = "重启中";
 
     $scope.serviceStatusCls = {};
-    $scope.serviceStatusCls[SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
-    $scope.serviceStatusCls[SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
-    $scope.serviceStatusCls[SERVICES_STATUS.uninstalled] = "fa fa-chain-broken text-warning";
-    $scope.serviceStatusCls[SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.installing] = "fa fa-cog text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.pulling] = "fa fa-download text-normal";
-    $scope.serviceStatusCls[SERVICES_STATUS.restarting] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.running] = "fa fa-heartbeat text-success";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.failed] = "fa fa-bomb text-danger";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.uninstalled] = "fa fa-chain-broken text-warning";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.uninstalling] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.installing] = "fa fa-cog text-normal";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.pulling] = "fa fa-download text-normal";
+    $scope.serviceStatusCls[$rootScope.SERVICES_STATUS.restarting] = "fa fa-cog text-normal";
 
     $scope.getServiceLabel = function(serviceName) {
         var labels = {
@@ -117,7 +117,7 @@ function clusterCtrl($scope, $state, gHttp, Notification, confirmModal, appservi
             slaves: {}
         };
 
-        var nodeStatuses = Object.keys(NODE_STATUS);
+        var nodeStatuses = Object.keys($rootScope.NODE_STATUS);
         angular.forEach(cluster, function(nodes, role) {
             angular.forEach(nodeStatuses, function(status, index) {
                 cluster[role][status] = [];

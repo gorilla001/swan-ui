@@ -4,7 +4,7 @@
         .controller('LayoutCreateCtrl', LayoutCreateCtrl);
 
     /* @ngInject */
-    function LayoutCreateCtrl($timeout, $scope, $state, Notification, clusterCurd, layoutBackend, target, stack, $stateParams) {
+    function LayoutCreateCtrl($timeout, $scope, $rootScope, $state, Notification, clusterCurd, layoutBackend, target, stack, $stateParams) {
         var self = this;
 
         var yamlForm = {
@@ -19,8 +19,8 @@
 
         self.form = {
             name: stack.name || "",
-            marathonConfig: stack.marathonConfig || STACK_DEFAULT.SryunCompose || "",
-            compose: stack.compose || STACK_DEFAULT.DockerCompose || ""
+            marathonConfig: stack.marathonConfig || $rootScope.STACK_DEFAULT.SryunCompose || "",
+            compose: stack.compose || $rootScope.STACK_DEFAULT.DockerCompose || ""
         };
         self.errorInfo = {
             compose: '',

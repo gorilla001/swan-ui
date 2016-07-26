@@ -10,7 +10,7 @@
                 <dd>
                     <i class="{/nodeStatusCls[nodeDetailsCtrl.node.status]/}" aria-hidden="true"></i>
                     <md-tooltip md-direction="top">
-                        {/nodeDetailsCtrl.NODE_STATUS_NAME[nodeDetailsCtrl.node.status]/}
+                        {/NODE_STATUS_NAME[nodeDetailsCtrl.node.status]/}
                     </md-tooltip>
                 </dd>
                 <dt>IP 地址</dt>
@@ -107,8 +107,8 @@
                             data-dm-role="nodeDetailsCtrl.node.cluster.group_role"
                             data-dm-permit-msg="FRONTEND_MSG.no_group_admin"
                             data-ng-if="service.name === 'docker'">重启</button>
-                    <md-menu data-ng-if="service.name !== 'docker' && service.status == nodeDetailsCtrl.SERVICES_STATUS.failed &&
-                        [nodeDetailsCtrl.NODE_STATUS.running, nodeDetailsCtrl.NODE_STATUS.failed, nodeDetailsCtrl.NODE_STATUS.abnormal].indexOf(nodeDetailsCtrl.node.status) >= 0">
+                    <md-menu data-ng-if="service.name !== 'docker' && service.status == SERVICES_STATUS.failed &&
+                        [NODE_STATUS.running, NODE_STATUS.failed, NODE_STATUS.abnormal].indexOf(nodeDetailsCtrl.node.status) >= 0">
                         <button class="btn" aria-label="More" ng-click="$mdOpenMenu($event)"
                                 data-demo-disable
                                 data-dm-permit-click="1"

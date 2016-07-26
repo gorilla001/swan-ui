@@ -21,7 +21,7 @@
                         'text-info': image.status == 'running' || image.status == 'pending'}">
                             <i class="fa" data-ng-class="{'fa-times-circle': image.status == 'failure' || image.status == 'error', 'fa-check-circle': image.status == 'success',
                             'fa-spinner': image.status == 'running' || image.status == 'pending', 'fa-spin': image.status == 'running' || image.status == 'pending'}"></i>
-                            {/imageDetailVersionCtrl.IMAGE_STATUS[image.status]/}
+                            {/IMAGE_STATUS[image.status]/}
                 </span>
             </td>
             <td md-cell>{/image.branch/}</td>

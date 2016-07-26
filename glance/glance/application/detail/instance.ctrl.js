@@ -12,7 +12,6 @@
 
         self.instances = [];
         self.table = mdTable.createTable('app.detail.instance');
-        self.APP_INS_STATUS = APP_INS_STATUS;
         
         refreshInstances();
         

@@ -9,7 +9,6 @@
     /* @ngInject */
     function CanaryCtrl(appservice, $stateParams, $scope, appcurd) {
         var self = this;
-        self.CANARY_STATUS = APP_STATUS;
         self.canaryList = [];
 
         /////

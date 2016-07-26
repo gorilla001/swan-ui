@@ -9,9 +9,6 @@
 
         self.warningList = data.tasks;
         self.count = data.count;
-        self.WARNING_TYPE = WARNING_TYPE;
-        self.WARNING_RULE = WARNING_RULE;
-        self.WARNING_LEVEL = WARNING_LEVEL;
         self.table = mdTable.createTable('policy.tab.appwarning.warninglist');
         self.enableText = {
             0: '停止',

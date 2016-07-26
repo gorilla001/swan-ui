@@ -8,8 +8,8 @@
                     <dd>{/detailAppCtrl.appInfo.update | date:"yyyy-MM-dd HH:mm:ss"/}</dd>
                     <dt>应用状态</dt>
                     <dd>
-                        {/detailAppCtrl.APP_STATUS[detailAppCtrl.appStatus.status]/}
-                        <span class="text-danger" data-ng-if="detailAppCtrl.appStatus.lastfailure">({/detailAppCtrl.APP_FAIL_RESULT[detailAppCtrl.appStatus.lastfailure]/})</span>
+                        {/APP_STATUS[detailAppCtrl.appStatus.status]/}
+                        <span class="text-danger" data-ng-if="detailAppCtrl.appStatus.lastfailure">({/APP_FAIL_RESULT[detailAppCtrl.appStatus.lastfailure]/})</span>
                     </dd>
                 </dl>
             </div>

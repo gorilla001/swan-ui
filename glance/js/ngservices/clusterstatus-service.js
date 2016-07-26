@@ -3,7 +3,8 @@
     
     angular.module('glance').factory('ClusterStatusMgr', clusterStatusMgr);
     
-    function clusterStatusMgr() {
+    /* @ngInject */
+    function clusterStatusMgr($rootScope) {
     
         function ClusterStatusMgr(latesetVersion) {
             this.clusters = {};
@@ -22,21 +23,21 @@
             }
             for (var serviceName in this.nodes[nodeId].services) {
                 var serviceStatus = this.nodes[nodeId].services[serviceName].status;
-                if (serviceStatus == SERVICES_STATUS.installing || serviceStatus == SERVICES_STATUS.pulling) {
-                    return SERVICES_STATUS.installing;
-                } else if (serviceStatus == SERVICES_STATUS.failed || serviceStatus == SERVICES_STATUS.uninstalled){
+                if (serviceStatus == $rootScope.SERVICES_STATUS.installing || serviceStatus == $rootScope.SERVICES_STATUS.pulling) {
+                    return $rootScope.SERVICES_STATUS.installing;
+                } else if (serviceStatus == $rootScope.SERVICES_STATUS.failed || serviceStatus == $rootScope.SERVICES_STATUS.uninstalled){
                     if (checkServices.indexOf(serviceName) > -1) {
-                        return SERVICES_STATUS.failed;
+                        return $rootScope.SERVICES_STATUS.failed;
                     }
                 }
             }
-            return SERVICES_STATUS.running;
+            return $rootScope.SERVICES_STATUS.running;
         }
         
         ClusterStatusMgr.prototype.updateServiceStatus = function(nodeId, serviceName, service) {
             if (this.nodes[nodeId]) {
                 if (service.status == 'uninstalling'){
-                    service.status = SERVICES_STATUS.installing;
+                    service.status = $rootScope.SERVICES_STATUS.installing;
                 }
                 this.nodes[nodeId]['services'][serviceName] = {'status': service.status};
                 if (service.version) {

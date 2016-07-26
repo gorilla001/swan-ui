@@ -6,8 +6,7 @@
     /* @ngInject */
     function LogWarningListCtrl(data, mdTable, $state, $stateParams, logWarningCurd) {
         var self = this;
-
-        self.WARNING_LEVEL = WARNING_LEVEL;
+        
         self.logWarningList = data.alarms;
         self.searchKeyWord = $stateParams.keywords || '';
         self.table = mdTable.createTable('policy.tab.applogwarning.loglist');

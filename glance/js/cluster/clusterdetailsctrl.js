@@ -1,4 +1,4 @@
-function clusterDetailsCtrl($scope, $stateParams, gHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
+function clusterDetailsCtrl($scope, $rootScope, $stateParams, gHttp, Notification, ClusterStatusMgr, clusterStatus, labelService) {
     'use strict';
 
     var clusterStatusTexts = {
@@ -29,8 +29,8 @@ function clusterDetailsCtrl($scope, $stateParams, gHttp, Notification, ClusterSt
             $scope.currentPage = 1;
             var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr, $scope.cluster);
 
-            $scope.statusMgr.startListen($scope);
-            $scope.$on(SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+            $scope.statusMgr.startListen($rootScope);
+            $rootScope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
                 if (!$scope.upgradeFailedNodes) {
                     $scope.upgradeFailedNodes = {};
                 }
@@ -72,12 +72,12 @@ function clusterDetailsCtrl($scope, $stateParams, gHttp, Notification, ClusterSt
     };
 
     function listen2UpdateClusterStatus() {
-        $scope.$on(SUB_INFOTYPE.nodeStatus, function (event, data) {
+        $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
             clusterStatus.updateClusterStatus(data, [$scope.cluster]);
             updateClusterStatus();
         });
 
-        $scope.$on(SUB_INFOTYPE.serviceStatus, function (event, data) {
+        $rootScope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
             clusterStatus.updateClusterStatus(data, [$scope.cluster]);
             updateClusterStatus();
         });

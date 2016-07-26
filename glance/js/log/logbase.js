@@ -3,11 +3,11 @@
  */
 glanceApp.controller("logBaseCtrl", logBaseCtrl);
 
-logBaseCtrl.$inject = ['$scope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackend', '$element'];
+logBaseCtrl.$inject = ['$scope','$rootScope', 'LogLoader', '$timeout', 'multiSelectConfig', 'gHttp', 'appservice', 'clusterBackend', '$element'];
 
-function logBaseCtrl($scope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackend, $element) {
+function logBaseCtrl($scope, $rootScope, LogLoader, $timeout, multiSelectConfig, gHttp, appservice, clusterBackend, $element) {
     $scope.showContextUI = false;
-    $scope.logDownloadToplimit = LOG.logDownloadToplimit;
+    $scope.logDownloadToplimit = $rootScope.LOG.logDownloadToplimit;
     var clusterIdTemp;
 
     $scope.multiConfig = multiSelectConfig.setMultiConfig("全部选择", "清空", "恢复", "查询匹配词", "ALL");
