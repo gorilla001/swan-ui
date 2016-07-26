@@ -24,7 +24,13 @@
             disableUser: disableUser,
             enableUser: enableUser,
             getUser: getUser,
-            updateUser: updateUser
+            updateUser: updateUser,
+            listRegistries: listRegistries,
+            createRegistry: createRegistry,
+            deleteRegistry: deleteRegistry,
+            getRegistry: getRegistry,
+            updateRegistry: updateRegistry,
+            getRegistryByAddress: getRegistryByAddress
         };
 
         function listGroups(params, loading) {
@@ -99,5 +105,28 @@
             return gHttp.Resource('user.user', {user_id: user_id}).put(data, {form: form});
         }
 
+        function listRegistries(params, loading) {
+            return gHttp.Resource('registry.registries').get({params: params, loading: loading});
+        }
+
+        function getRegistry(registryId) {
+            return gHttp.Resource('registry.registry', {registry_id: registryId}).get();
+        }
+        
+        function getRegistryByAddress(address) {
+            return gHttp.Resource('registry.address', {address: address}).get();
+        }
+
+        function createRegistry(data) {
+            return gHttp.Resource('registry.registries').post(data);
+        }
+
+        function updateRegistry(registryId, data) {
+            return gHttp.Resource('registry.registry', {registry_id: registryId}).put(data);
+        }
+
+        function deleteRegistry(registryId) {
+            return gHttp.Resource('registry.registry', {registry_id: registryId}).delete();
+        }
     }
 })();

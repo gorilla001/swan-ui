@@ -1,0 +1,42 @@
+<md-button class="md-raised md-primary" aria-label="create registry" data-ui-sref="createregistry">
+    新建仓库
+</md-button>
+<md-table-container>
+    <table md-table>
+        <thead md-head md-order="listRegistryCtrl.table.query.order"
+               md-on-reorder="listRegistryCtrl.table.getOrder">
+        <tr md-row>
+            <th md-column>地址</th>
+            <th md-column>用户名</th>
+            <th md-column>更新时间</th>
+            <th md-column>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row md-select="registry" ng-repeat="registry in listRegistryCtrl.registries">
+            <td md-cell>{/registry.address/}</td>
+            <td md-cell>{/registry.username/}</td>
+            <td md-cell>{/registry.updated_at/}</td>
+            <td md-cell>
+                <md-button aria-label="start" class="md-button md-raised"
+                           data-ng-click="listRegistryCtrl.goEditRegistry(registry.id)">
+                    编辑
+                </md-button>
+                <md-button aria-label="start" class="md-button md-raised"
+                           data-ng-click="listRegistryCtrl.deleteRegistry(registry.id)">
+                    删除
+                </md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-show="!listRegistryCtrl.registries.length">
+        未查询到仓库
+    </div>
+</md-table-container>
+
+<md-table-pagination
+        md-label="{page: '页:', rowsPerPage: '每页:', of: 'of'}" md-limit="listRegistryCtrl.table.query.limit"
+        md-limit-options="[20, 50, 100]"
+        md-page="listRegistryCtrl.table.query.page" md-total="{/listRegistryCtrl.count/}"
+        md-on-paginate="listRegistryCtrl.table.getPage" md-page-select></md-table-pagination>

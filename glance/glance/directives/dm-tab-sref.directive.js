@@ -19,7 +19,7 @@
             scope.$on('$stateChangeSuccess',
                 function (event, toState, toParams, fromState, fromParams) {
                     if ($state.includes(sref)) {
-                            tabsCtrl.selectedIndex = elem.index();
+                        tabsCtrl.selectedIndex = elem.index();
                     }
                 });
         }

@@ -114,7 +114,7 @@
                 url: '/version',
                 templateUrl: '/glance/application/detail/version.html',
                 controller: 'VersionAppCtrl as versionAppCtrl'
-            })
+            });
             // .state('app.detail.canary', {
             //     url: '/canary',
             //     templateUrl: '/glance/application/detail/canary.html',
