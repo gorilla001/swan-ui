@@ -459,6 +459,12 @@
 
             licence: {
                 licence: 'api/v3/licence'
+            },
+
+            registry: {
+                registries: 'api/v3/registries',
+                registry: 'api/v3/registries/$registry_id',
+                address: 'api/v3/registries/address/$address'
             }
         };
         

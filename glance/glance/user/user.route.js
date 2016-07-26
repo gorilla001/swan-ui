@@ -87,7 +87,42 @@
                 templateUrl: '/glance/user/users/reset-pwd.html',
                 controller: 'ResetPwdCtrl as resetPwdCtrl',
             })
-
+            .state('user.registries', {
+                url: '/registries?per_page&page',
+                templateUrl: '/glance/user/registry/list.html',
+                controller: 'ListRegistryCtrl as listRegistryCtrl',
+                resolve: {
+                    registries: listRegistries
+                },
+                defaultParams: {
+                    per_page: 20,
+                    page: 1
+                }
+            })
+            .state('createregistry', {
+                url: '/registries/create',
+                templateUrl: '/glance/user/registry/create-update.html',
+                controller: 'CreateRegistryCtrl as createRegistryCtrl',
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    registry: function () {
+                        return null
+                    }
+                }
+            })
+            .state('updateregistry', {
+                url: '/registries/:registry_id/update',
+                templateUrl: '/glance/user/registry/create-update.html',
+                controller: 'CreateRegistryCtrl as createRegistryCtrl',
+                resolve: {
+                    target: function () {
+                        return 'update'
+                    },
+                    registry: getRegistry
+                }
+            })
     }
 
     /* @ngInject */
@@ -133,5 +168,15 @@
     /* @ngInject */
     function listClusters(clusterBackend) {
         return clusterBackend.listClusters();
+    }
+
+    /* @ngInject */
+    function listRegistries(userBackend) {
+        return userBackend.listRegistries();
+    }
+
+    /* @ngInject */
+    function getRegistry(userBackend, $stateParams) {
+        return userBackend.getRegistry($stateParams.registry_id);
     }
 })();

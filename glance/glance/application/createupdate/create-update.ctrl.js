@@ -19,7 +19,8 @@
                            $stateParams,
                            selectImageModal,
                            $filter,
-                           clusterCurd) {
+                           clusterCurd,
+                           userBackend) {
         var self = this;
         self.existPorts = {
             outerPorts: []
@@ -27,6 +28,7 @@
         self.target = target;
 
         self.cluster;
+        self.registries;
         if (self.target === 'create') {
             self.form = {
                 cluster_id: '',
@@ -44,7 +46,8 @@
                 network: 'BRIDGE',
                 constraints: [],
                 logPaths: [],
-                parameters: []
+                parameters: [],
+                customRegistry: false
             };
             self.isNetworkDisable = false;
             self.isDockerArgDisable = false;
@@ -64,7 +67,8 @@
                 forceImage: false,
                 network: app.network,
                 logPaths: app.logPaths,
-                parameters: app.parameters
+                parameters: app.parameters,
+                customRegistry: false
             };
             if (!self.form.logPaths) {
                 self.form.logPaths = [];
@@ -81,6 +85,7 @@
 
         listApps();
         listClusters();
+        listRegistries();
 
         self.multiSelect = {
             labels: [],
@@ -283,8 +288,19 @@
             self.form[configName].splice(index, 1);
         };
 
+        function setCustomRegistry() {
+            for(var i=0; i < self.registries.length; i++) {
+                var registry = self.registries[i];
+                if(registry.address == self.form.imageName.split('/', 1)) {
+                    self.form.customRegistry = true;
+                    return;
+                }
+            }
+        }
+
         self.createApp = function () {
             setConstraints();
+            setCustomRegistry();
             return appservice.createApp(self.form, self.form.cluster_id, $scope.staticForm)
                 .then(function (data) {
                     Notification.success('应用' + self.form.name + '创建中！');
@@ -294,6 +310,7 @@
 
         self.updateApp = function () {
             setConstraints();
+            setCustomRegistry();
             delete self.form.cluster_id;
             return appservice.updateApp(self.form, app.cid, app.id, $scope.staticForm)
                 .then(function (data) {
@@ -313,6 +330,12 @@
         function listClusters() {
             clusterCurd.listClusterLables().then(function (data) {
                 self.clusters = data
+            });
+        }
+
+        function listRegistries() {
+            userBackend.listRegistries().then(function(data) {
+                self.registries = data.registries;
             });
         }
 
