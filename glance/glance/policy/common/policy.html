@@ -5,16 +5,23 @@
                 <h2>服务策略</h2>
             </div>
             <div layout-align="end center" class="operation">
-                <md-button aria-label="create appwarning" class="md-fab md-mini"
-                           data-ui-sref="policy.WarningCreate">
-                    <md-tooltip md-direction="top">创建应用告警</md-tooltip>
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </md-button>
-                <md-button aria-label="create logwarning" class="md-fab md-mini"
-                           data-ui-sref="policy.policyLogWarningCreate">
-                    <md-tooltip md-direction="top">创建日志告警</md-tooltip>
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </md-button>
+                <md-menu>
+                    <md-button class="md-fab md-mini" aria-label="More" ng-click="$mdOpenMenu($event)">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item>
+                            <md-button data-ui-sref="policy.WarningCreate" aria-label="create appwarning">
+                                创建应用告警
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button data-ui-sref="policy.policyLogWarningCreate" aria-label="create logwarning">
+                                创建日志告警
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </div>
         </header>
         <md-content>
