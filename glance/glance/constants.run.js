@@ -113,7 +113,7 @@
             no_group_admin: "对不起，您不是用户组管理员，不能进行此操作!"
         };
         $rootScope.APP_STATUS = {
-            'undefined': "未知",
+            'undefined': "加载中",
             '1': "部署中",
             '2': "运行中",
             '3': "已停止",

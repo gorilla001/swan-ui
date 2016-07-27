@@ -52,7 +52,7 @@
                 <td md-cell><a href="#"
                                data-ui-sref="app.detail({cluster_id: app.cid ,app_id: app.id})">{/app.name/}</a></td>
                 <td md-cell>
-                    {/APP_STATUS[appsTableCtrl.appListStatus[app.id].status]/} {/app.status/}
+                    {/APP_STATUS[appsTableCtrl.appListStatus[app.id].status]/}
                     <p class="text-danger" data-ng-if="appsTableCtrl.appListStatus[app.id].lastfailure">
                         ({/APP_FAIL_RESULT[appsTableCtrl.appListStatus[app.id].lastfailure]/})</p>
                 </td>
