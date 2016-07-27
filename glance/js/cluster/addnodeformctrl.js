@@ -1,13 +1,10 @@
 function addNodeFormCtrl($scope, $rootScope, $state, $stateParams, gHttp, Notification, labelService, addNodeLabelModal) {
-    
     $scope.clusterId = $stateParams.clusterId;
     $scope.nodeId = $stateParams.nodeId;
-
     $scope.selectedLabels = [];
     $scope.unselectedLabels = [];
     $scope.allLabelNames = [];
     $scope.labelForm = {};
-    
     $scope.node = {
             cluster: {group_role: ''}
          }
@@ -20,8 +17,7 @@ function addNodeFormCtrl($scope, $rootScope, $state, $stateParams, gHttp, Notifi
     };
     $scope.dockerScript = 'curl -sSL http://get.shurenyun.com/install-agent.sh | sh';
     $scope.msgstate = "等待主机链接......";
-
-    $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
+    $scope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
       if(data['nodeId'] == $scope.nodeId && data['status'] != 'terminated') {
         $scope.isConected = true;
         $scope.msgstate = '主机连接成功，系统初始化中，这可能需要一段时间，您可以离开本页面去执行其他操作。';
@@ -93,5 +89,5 @@ function addNodeFormCtrl($scope, $rootScope, $state, $stateParams, gHttp, Notifi
     };
 }
 
-addNodeFormCtrl.$inject = ['$scope', '$state', '$stateParams', 'gHttp', 'Notification', 'labelService', 'addNodeLabelModal'];
+addNodeFormCtrl.$inject = ['$scope','$rootScope','$state', '$stateParams', 'gHttp', 'Notification', 'labelService', 'addNodeLabelModal'];
 glanceApp.controller('addNodeFormCtrl', addNodeFormCtrl);

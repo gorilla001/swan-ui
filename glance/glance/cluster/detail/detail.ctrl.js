@@ -29,7 +29,7 @@
         }
 
         //监听集群状态 websocket
-        $rootScope.$on($rootScope.SUB_INFOTYPE.clusterStatus, function (event, data) {
+        $scope.$on($rootScope.SUB_INFOTYPE.clusterStatus, function (event, data) {
             if (data.clusterId === self.cluster.id) {
                 if (self.cluster.status === 'upgrading' && data.status !== 'upgrading') {
                     $scope.$broadcast('upgradeComplete');

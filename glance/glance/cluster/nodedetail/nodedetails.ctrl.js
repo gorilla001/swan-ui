@@ -39,12 +39,12 @@
             listNodesIds();
 
             // 监控状态
-            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
+            $scope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
                 if ($stateParams.nodeId == data.nodeId) {
                     self.node.status = data.status;
                 }
             });
-            $rootScope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
+            $scope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
                 if ($stateParams.nodeId == data.nodeId) {
                     angular.forEach(self.node.services, function (val, key) {
                         if (data[val.name]) {
@@ -93,7 +93,7 @@
         function addMetricData(data) {
             var nodesData, maxNodesNumber, nodeInfo, chartsData, wsTime, chartsTime;
             nodesData = data;
-            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeMetric, function (event, data) {
+            $scope.$on($rootScope.SUB_INFOTYPE.nodeMetric, function (event, data) {
                 if (data.nodeId == $stateParams.nodeId) {
                     maxNodesNumber = 180;
 
