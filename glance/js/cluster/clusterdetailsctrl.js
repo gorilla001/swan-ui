@@ -29,8 +29,8 @@ function clusterDetailsCtrl($scope, $rootScope, $stateParams, gHttp, Notificatio
             $scope.currentPage = 1;
             var nodesWithRoleAndStatus = $scope.groupNodesByRoleAndStatus($scope.cluster.nodes, $scope.cluster.id, $scope.statusMgr, $scope.cluster);
 
-            $scope.statusMgr.startListen($rootScope);
-            $rootScope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+            $scope.statusMgr.startListen($scope);
+            $scope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
                 if (!$scope.upgradeFailedNodes) {
                     $scope.upgradeFailedNodes = {};
                 }
@@ -72,12 +72,12 @@ function clusterDetailsCtrl($scope, $rootScope, $stateParams, gHttp, Notificatio
     };
 
     function listen2UpdateClusterStatus() {
-        $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
+        $scope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
             clusterStatus.updateClusterStatus(data, [$scope.cluster]);
             updateClusterStatus();
         });
 
-        $rootScope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
+        $scope.$on($rootScope.SUB_INFOTYPE.serviceStatus, function (event, data) {
             clusterStatus.updateClusterStatus(data, [$scope.cluster]);
             updateClusterStatus();
         });
@@ -109,5 +109,5 @@ function clusterDetailsCtrl($scope, $rootScope, $stateParams, gHttp, Notificatio
     }
 }
 
-clusterDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
+clusterDetailsCtrl.$inject = ['$scope', '$rootScope','$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
 glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);

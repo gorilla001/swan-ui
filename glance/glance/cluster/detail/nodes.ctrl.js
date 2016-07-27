@@ -28,7 +28,7 @@
         function activate() {
             checkUpdate();
             //监听主机状态 websocket
-            $rootScope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
+            $scope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
                 if (data.clusterId == $stateParams.clusterId) {
                     //when node status is change, you should be check the cluster.node_nums['0_terminated'],
                     //to control the cluster upgrade button disable/enable
@@ -47,7 +47,7 @@
             });
 
             //监听升级失败 websocket
-            $rootScope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
+            $scope.$on($rootScope.SUB_INFOTYPE.agentUpgradeFailed, function (event, data) {
                 self.upgradeFailed[data.nodeId] = true;
             });
 
