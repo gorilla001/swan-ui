@@ -51,12 +51,10 @@
                     page: 1
                 },
                 resolve: {
-                    clusters: listClusters,
                     apps: listApp,
                     groups: function () {
                         return null;
                     },
-                    status: getAppsStatus,
                     target: function () {
                         return 'my'
                     }
@@ -71,9 +69,7 @@
                     page: 1
                 },
                 resolve: {
-                    clusters: listClusters,
                     groups: listGroups,
-                    status: getAppsStatus,
                     apps: listGroupApp,
                     target: function () {
                         return 'group'
@@ -86,8 +82,7 @@
                 controller: 'DetailAppCtrl as detailAppCtrl',
                 targetState: 'config',
                 resolve: {
-                    appInfo: getAppInfo,
-                    appStatus: getAppStatus
+                    appInfo: getAppInfo
                 }
             })
             .state('app.detail.instance', {
@@ -122,10 +117,6 @@
             // });
     }
 
-    /* @ngInject */
-    function listClusters(gHttp) {
-        return gHttp.Resource('cluster.clusters').get()
-    }
 
     /* @ngInject */
     function listGroups(userBackend) {
@@ -137,20 +128,12 @@
         return appservice.getApp($stateParams.cluster_id, $stateParams.app_id)
     }
 
-    /* @ngInject */
-    function getAppStatus(appservice, $stateParams) {
-        return appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id)
-    }
 
     /* @ngInject */
     function listApp($stateParams, appservice, utils) {
         return appservice.listApps(utils.encodeQueryParams($stateParams))
     }
-
-    /* @ngInject */
-    function getAppsStatus(appservice, $stateParams) {
-        return appservice.listAppsStatus({cid: $stateParams.clusterId});
-    }
+    
 
     /* @ngInject */
     function listGroupApp(appservice, $stateParams, utils) {

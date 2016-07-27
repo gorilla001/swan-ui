@@ -43,9 +43,8 @@
             startCanary: startCanary,
             listCanaryStatus: listCanaryStatus,
             listCanary: listCanary,
-            deployCanary: deployCanary
+            deployCanary: deployCanary,
         };
-
         function listApps(params, loading) {
             return gHttp.Resource('app.userApps').get({params: params, "loading": loading});
         }
@@ -139,8 +138,8 @@
             }).delete();
         }
 
-        function listAppsStatus(params) {
-            return gHttp.Resource('app.appsStatus').get({params: params, loading: ""});
+        function listAppsStatus(params, loading) {
+            return gHttp.Resource('app.appsStatus').get({params: params, loading: loading});
         }
 
         function getAppStatus(cluserId, appId, loading) {

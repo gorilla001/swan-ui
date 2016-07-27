@@ -4,22 +4,19 @@
         .controller('AppsTableCtrl', AppsTableCtrl);
 
     /* @ngInject */
-    function AppsTableCtrl(clusters, groups, status, mdTable, $stateParams, $scope, timing, $q, apps, $state, utils, appservice, userBackend, target) {
+    function AppsTableCtrl( groups, mdTable, $stateParams, $scope, timing, $q, apps, $state, utils, appservice, clusterBackend, userBackend, target) {
         var self = this;
         self.targets = target;
         var appListReloadInterval = 5000;
-        self.clusterInforMap = listClusterMap(clusters);
         if(self.targets === 'my') {
             self.table = mdTable.createTable('app.list.my');
             self.applist = apps.App;
             self.count = apps.Count;
-            self.appListStatus = status;
             self.filter = $stateParams.keywords;
 
             myActivate();
         } else {
             self.table = mdTable.createTable('app.list.group');
-            self.appListStatus = status;
 
             self.searchForm = {};
             self.clusters = [];
@@ -28,8 +25,6 @@
             self.count = apps.Count;
             self.searchForm.keywords = $stateParams.keywords;
             self.groupUserMap = {};
-
-
             self.search = search;
             self.groupChange = groupChange;
 
@@ -42,7 +37,17 @@
 
 
         function myActivate() {
-            timing.start($scope, myReloadApps, appListReloadInterval)
+            clusterBackend.listClusters().then(function (data) {
+                self.clusterInforMap = listClusterMap(data);
+            });
+            appservice.listAppsStatus($stateParams.clusterId).then(function(data){
+                // success
+                self.appListStatus = data;
+                timing.start($scope, myReloadApps, appListReloadInterval)
+            }, function () {
+                // error
+                timing.start($scope, myReloadApps, appListReloadInterval)
+            });
         }
 
         /*
@@ -78,6 +83,23 @@
 
         
         function groupActivate() {
+            clusterBackend.listClusters().then(function (data) {
+                self.clusterInforMap = listClusterMap(data);
+            });
+            appservice.listAppsStatus($stateParams.clusterId).then(function(data){
+                // successs
+                self.appListStatus = data;
+                if ($stateParams.groupId && $stateParams.clusterId) {
+                    initToolbar();
+                    timing.start($scope, groupReloadApps, appListReloadInterval)
+                }
+            }, function () {
+                // error
+                if ($stateParams.groupId && $stateParams.clusterId) {
+                    initToolbar();
+                    timing.start($scope, groupReloadApps, appListReloadInterval)
+                }
+            });
             if($stateParams.groupId){
                 getGroupIdUsers();
             }
@@ -87,11 +109,6 @@
                 }
             });
 
-            if ($stateParams.groupId && $stateParams.clusterId) {
-                initToolbar();
-                timing.start($scope, groupReloadApps, appListReloadInterval)
-
-            }
         }
 
         function groupReloadApps() {

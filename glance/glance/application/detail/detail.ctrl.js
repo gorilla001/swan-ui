@@ -7,12 +7,11 @@
         .controller('DetailAppCtrl', DetailAppCtrl);
 
     /* @ngInject */
-    function DetailAppCtrl(appInfo, appStatus, appcurd, appservice, $scope, $stateParams, timing, $q) {
+    function DetailAppCtrl(appInfo, appcurd, appservice, $scope, $stateParams, timing, $q) {
         var self = this;
         
 
         self.appInfo = appInfo;
-        self.appStatus = appStatus;
         self.stop = stop;
         self.start = start;
         self.redeploy = redeploy;
@@ -24,7 +23,12 @@
         activate();
         
         function activate() {
-            timing.start($scope, refreshData, 5000);
+            appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id).then(function(data) {
+                self.appStatus = data;
+                timing.start($scope, refreshData, 5000);
+            }, function (data) {
+                timing.start($scope, refreshData, 5000);
+            });
         }
         
         /*
