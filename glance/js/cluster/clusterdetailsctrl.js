@@ -109,5 +109,5 @@ function clusterDetailsCtrl($scope, $rootScope, $stateParams, gHttp, Notificatio
     }
 }
 
-clusterDetailsCtrl.$inject = ['$scope', '$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
+clusterDetailsCtrl.$inject = ['$scope', '$rootScope','$stateParams', 'gHttp', 'Notification', 'ClusterStatusMgr', 'clusterStatus', 'labelService'];
 glanceApp.controller('clusterDetailsCtrl', clusterDetailsCtrl);
