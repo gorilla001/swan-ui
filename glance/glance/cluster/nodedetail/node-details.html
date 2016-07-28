@@ -135,9 +135,9 @@
                     </ul>
                 </div>
                 <div class="btn-folding-v" data-ng-show="nodeDetailsCtrl.services.length > 10">
-                    <a href="#"><i class="fa"
+                    <a href="#" data-ng-click="nodeDetailsCtrl.showMore = !nodeDetailsCtrl.showMore"><i class="fa"
                                    data-ng-class="{'fa-chevron-down': !nodeDetailsCtrl.showMore, 'fa-chevron-up': nodeDetailsCtrl.showMore }"
-                                   data-ng-click="nodeDetailsCtrl.showMore = !nodeDetailsCtrl.showMore"></i></a>
+                    ></i></a>
                 </div>
                 <div layout="row" layout-align="start start" layout-margin class="homepage_view">
                     <div flex layout-padding>
