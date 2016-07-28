@@ -64,7 +64,8 @@
                        data-demo-disable
                        data-dm-permit-click="1"
                        data-dm-role="nodeDetailsCtrl.node.cluster.group_role"
-                       data-dm-permit-msg="FRONTEND_MSG.no_group_admin">
+                       data-dm-permit-msg="FRONTEND_MSG.no_group_admin"
+                       data-ng-disabled="['failed', 'abnormal', 'running', 'new'].indexOf(nodeDetailsCtrl.node.cluster.status) < 0">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                 <md-tooltip md-direction="top">
                     删除主机
