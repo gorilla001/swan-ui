@@ -105,6 +105,11 @@
                 templateUrl: '/glance/application/detail/event.html',
                 controller: 'EventAppCtrl as eventAppCtrl'
             })
+            .state('app.detail.debug', {
+                url: '/debug',
+                templateUrl: '/glance/application/detail/debug.html',
+                controller: 'DebugAppCtrl as debugAppCtrl'
+            })
             .state('app.detail.version', {
                 url: '/version',
                 templateUrl: '/glance/application/detail/version.html',

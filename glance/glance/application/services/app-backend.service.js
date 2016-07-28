@@ -44,6 +44,8 @@
             listCanaryStatus: listCanaryStatus,
             listCanary: listCanary,
             deployCanary: deployCanary,
+            listAppDebug : listAppDebug
+
         };
         function listApps(params, loading) {
             return gHttp.Resource('app.userApps').get({params: params, "loading": loading});
@@ -148,6 +150,10 @@
 
         function listAppInstances(cluserId, appId, loading) {
             return gHttp.Resource('app.appTask', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
+        }
+
+        function listAppDebug(cluserId, appId, loading) {
+            return gHttp.Resource('app.appDebug', {cluster_id: cluserId, app_id: appId}).get({'loading': loading});
         }
 
         function listClusterAllApps(cluserId) {
