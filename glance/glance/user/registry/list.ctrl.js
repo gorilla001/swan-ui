@@ -4,7 +4,7 @@
         .controller('ListRegistryCtrl', ListRegistryCtrl);
 
     /* @ngInject */
-    function ListRegistryCtrl($state, mdTable, userBackend, registries) {
+    function ListRegistryCtrl($state, mdTable, confirmModal, userBackend, registries) {
         var self = this;
 
         self.table = mdTable.createTable('user.registries');
@@ -14,9 +14,11 @@
         self.deleteRegistry = deleteRegistry;
         self.goEditRegistry = goEditRegistry;
         
-        function deleteRegistry(registryId) {
-            userBackend.deleteRegistry(registryId).then(function() {
-                $state.reload();
+        function deleteRegistry(registryId, ev) {
+            confirmModal.open("确定删除仓库?", ev).then(function () {
+                userBackend.deleteRegistry(registryId).then(function() {
+                    $state.reload();
+                });
             });
         }
 
