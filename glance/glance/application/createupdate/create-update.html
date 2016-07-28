@@ -160,8 +160,9 @@
                             </md-slider>
                         </div>
                     </div>
-                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem | currency: '' :0/} <span
-                            style="font-size: 12px;">MB</span></div>
+                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem | currency: ''
+                        :0/} <span
+                                style="font-size: 12px;">MB</span></div>
                 </div>
 
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
@@ -185,7 +186,8 @@
                     </div>
                     <div flex flex-offset="5">
                         <md-checkbox data-ng-model="createAppCtrl.single" aria-label="single of containers"
-                                     data-ng-disabled="createAppCtrl.target==='update' || createAppCtrl.disableSingle">1容器 : 1主机
+                                     data-ng-disabled="createAppCtrl.target==='update' || createAppCtrl.disableSingle">
+                            1容器 : 1主机
                         </md-checkbox>
                     </div>
                 </div>
@@ -255,7 +257,8 @@
                             <div class="add-row-container"
                                  data-ng-repeat="volume in createAppCtrl.form.volumes track by $index">
                                 <ng-form name="volumes" layout="row" layout-align="start center">
-                                    <input type="text" placeholder="主机路径" name="hostPath" flex="40" data-ng-model="volume.hostPath"
+                                    <input type="text" placeholder="主机路径" name="hostPath" flex="40"
+                                           data-ng-model="volume.hostPath"
                                            data-required="required"
                                            data-ng-maxlength="256"
                                            data-ng-pattern="/^\/[\w//\-\.]*\w*[^\/]$/">
@@ -298,11 +301,15 @@
                                            aria-label="add"><i class="fa fa-plus"></i> 添加应用地址
                                 </md-button>
                                 <p>
-                                    <small>以下端口范围不能使用:1~1024 (除 80 443), 5000~5100, 6000~6999, 10000~20000, 31000~32000</small>
+                                    <small>以下端口范围不能使用:1~1024 (除 80 443), 5000~5100, 6000~6999, 10000~20000,
+                                        31000~32000
+                                    </small>
                                     <br>
                                     <small>以下端口可能与 Chrome 冲突: 6665~6669</small>
                                     <br>
-                                    <small data-ng-if="createAppCtrl.existPorts.outerPorts.length">以下端口已被占用: {/createAppCtrl.existPorts.outerPorts.toString()/}</small>
+                                    <small data-ng-if="createAppCtrl.existPorts.outerPorts.length">以下端口已被占用:
+                                        {/createAppCtrl.existPorts.outerPorts.toString()/}
+                                    </small>
                                 </p>
                             </div>
                             <div class="add-row-container"
@@ -461,6 +468,108 @@
                                    data-ng-if="logPathForm.path.$error.maxlength">
                                     <small>路径长度不能超过256个字符</small>
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--healthChecks-->
+                    <div layout="row" layout-align="start start" class="form-group form-group-input form-group-addrow">
+                        <label flex="15">健康检查</label>
+                        <div flex="60" layout="column">
+                            <div flex>
+                                <md-button class="md-primary"
+                                           aria-label="Add mountpoints"
+                                           data-ng-click="createAppCtrl.addConfig('healthChecks')">
+                                    <i class="fa fa-plus"></i>
+                                    添加健康检查
+                                </md-button>
+                            </div>
+                            <div class="add-row-container"
+                                 data-ng-repeat="healthCheck in createAppCtrl.form.healthChecks track by $index">
+                                <ng-form name="healthCheckForm">
+                                    <div layout="row" layout-align="start center" layout-padding>
+                                        <div flex="10">协议</div>
+                                        <div flex="30">
+                                            <md-input-container>
+                                                <md-select ng-model="healthCheck.protocol" data-required="required"
+                                                           aria-label="select protocol">
+                                                    <md-option
+                                                            ng-repeat="(index,protocolType) in APP_PROTOCOL_TYPE"
+                                                            ng-value="protocolType.name">
+                                                        {/protocolType.name/}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div flex-offset="55" flex="5">
+                                            <md-button class="md-icon-button md-accent" aria-label="delete"
+                                                       data-ng-click="createAppCtrl.deleteConfig($index, 'healthChecks')">
+                                                <i class="fa fa-trash"></i>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                    <div layout="row" layout-align="start center" layout-padding
+                                         ng-show="healthCheck.protocol =='HTTP'">
+                                        <div flex="65">
+                                            <small>路径</small>
+                                            <input type="text" name="healthPath"
+                                                   ng-model="healthCheck.path">
+                                        </div>
+                                        <div flex></div>
+                                    </div>
+                                    <p class="error-info help-info-bottom"
+                                       data-ng-show="(healthCheckForm.healthPath.$error.required && !healthCheckForm.healthPath.$pristine) && healthCheck.protocol =='HTTP' ">
+                                        <small>路径不能为空</small>
+                                    </p>
+                                    <div layout="row" layout-align="start start" layout-padding>
+                                        <div flex="25">
+                                            <small>宽限时间</small>
+                                            <input type="number" min="0" ng-model="healthCheck.gracePeriodSeconds">
+                                        </div>
+                                        <span class="form-input-addon" flex="5">秒</span>
+                                        <div flex-offset="5" flex="25">
+                                            <small>检查间隔</small>
+                                            <input type="number" min="0" ng-model="healthCheck.intervalSeconds">
+                                        </div>
+                                        <span class="form-input-addon" flex="5">秒</span>
+                                        <div flex-offset="5" flex="25">
+                                            <small>检查超时</small>
+                                            <input type="number" min="0" ng-model="healthCheck.timeoutSeconds">
+                                        </div>
+                                        <span class="form-input-addon" flex="5">秒</span>
+                                    </div>
+                                    <div layout="row" layout-align="start start" layout-padding>
+                                        <div flex="30">
+                                            <small>最多持续失败次数</small>
+                                            <input type="number" min="0" ng-model="healthCheck.maxConsecutiveFailures">
+                                        </div>
+                                        <div flex-offset="5" flex="30">
+                                            <small ng-if=" (healthCheck.portIndex && createAppCtrl.target==='update') || createAppCtrl.ifPortIndex">端口组索引</small>
+                                            <input ng-if=" (healthCheck.portIndex && createAppCtrl.target==='update') || createAppCtrl.ifPortIndex" type="number" min="0" ng-model="healthCheck.portIndex">
+                                            <small ng-if="(healthCheck.port && createAppCtrl.target==='update') ||!createAppCtrl.ifPortIndex">端口号</small>
+                                            <input ng-if="(healthCheck.port && createAppCtrl.target==='update') ||!createAppCtrl.ifPortIndex" type="number" min="0"  ng-model="healthCheck.port">
+                                        </div>
+                                        <div flex="30" flex-offset="5">
+                                            <md-input-container>
+                                                <md-select ng-model="createAppCtrl.ifPortIndex" data-required="required"
+                                                           aria-label="select protocol">
+                                                    <md-option
+                                                            ng-repeat="(index,protocolType) in createAppCtrl.portType"
+                                                            ng-value="protocolType.value">
+                                                        {/protocolType.name/}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div layout="row" layout-align="start start" ng-show="healthCheck.protocol =='HTTP'"
+                                         layout-padding>
+                                        <md-checkbox aria-label="ignoreHTTP" flex="5" type="checkbox"
+                                                     ng-true-value="true" ng-false-value="false"
+                                                     ng-model="healthCheck.ignoreHttp1xx">
+                                        </md-checkbox>
+                                        <p flex>HTTP返回状态码在100~199为健康。</p>
+                                    </div>
+                                </ng-form>
                             </div>
                         </div>
                     </div>

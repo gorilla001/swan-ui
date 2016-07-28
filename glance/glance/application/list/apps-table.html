@@ -44,6 +44,7 @@
                 <th md-column>所属集群</th>
                 <th md-column data-ng-if="appsTableCtrl.targets === 'group'">所属用户</th>
                 <th md-column md-order-by="instances">容器个数</th>
+                <th md-column>健康状态</th>
                 <th md-column>操作</th>
             </tr>
             </thead>
@@ -73,6 +74,13 @@
                     <span ng-show="appsTableCtrl.appListStatus[app.id].tasks == app.instances">{/app.instances/}</span>
                     <!--<span data-ng-if="app.canary">(灰度实例: {/app.canaryInstances/})</span>-->
                 </td>
+                <td md-cell>
+                    <span>{/app.health/}健康</span>
+                    <span>{/app.unhealth/}不健康</span>
+                    <span>{/app.unknown/}未知</span>
+                </td>
+
+
                 <td md-cell>
                     <md-button aria-label="strp" class="md-button md-raised"
                                data-ng-disabled="appsTableCtrl.appListStatus[app.id].status != '2'"
