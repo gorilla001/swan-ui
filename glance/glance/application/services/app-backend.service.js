@@ -44,8 +44,8 @@
             listCanaryStatus: listCanaryStatus,
             listCanary: listCanary,
             deployCanary: deployCanary,
-            listAppDebug : listAppDebug
-
+            listAppDebug : listAppDebug,
+            hasDeploymentIds: hasDeploymentIds
         };
         function listApps(params, loading) {
             return gHttp.Resource('app.userApps').get({params: params, "loading": loading});
@@ -130,6 +130,10 @@
         function listAppVersions(params, clusterId, appId, loading) {
             return gHttp.Resource('app.appVersions', {cluster_id: clusterId, app_id: appId})
                 .get({params: params, 'loading': loading});
+        }
+
+        function hasDeploymentIds(clusterId, appId) {
+            return gHttp.Resource('app.hasDeploymentIds', {cluster_id: clusterId, app_id: appId}).get();
         }
 
         function deleteAppVersion(clusterId, appId, versionId) {

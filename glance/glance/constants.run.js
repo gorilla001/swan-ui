@@ -392,6 +392,7 @@
                 appEvent: 'api/v3/clusters/$cluster_id/apps/$app_id/events',
                 appVersions: 'api/v3/clusters/$cluster_id/apps/$app_id/versions',
                 appDebug: 'api/v3/clusters/$cluster_id/apps/$app_id/debug',
+                hasDeploymentIds: 'api/v3/clusters/$cluster_id/apps/$app_id/hasDeploymentIds',
                 appVersion: 'api/v3/clusters/$cluster_id/apps/$app_id/versions/$version_id',
                 appsStatus: "api/v3/apps/status",
                 appStatus: "api/v3/clusters/$cluster_id/apps/$app_id/status",

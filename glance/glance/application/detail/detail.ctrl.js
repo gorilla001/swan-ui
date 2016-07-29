@@ -21,7 +21,11 @@
         self.undo = undo;
         
         activate();
-        
+        $scope.$on('refreshAppStatus',function () {
+            appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id, '').then(function (data) {
+                self.appStatus = data;
+            });
+        });
         function activate() {
             appservice.getAppStatus($stateParams.cluster_id, $stateParams.app_id).then(function(data) {
                 self.appStatus = data;
