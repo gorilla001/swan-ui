@@ -9,11 +9,7 @@
     /* @ngInject */
     function VersionAppCtrl($scope, mdTable, $stateParams, Notification, confirmModal, appservice, appcurd) {
         var self = this;
-
-        self.table = mdTable.createTable('app.detail.version');
-
         self.versions = [];
-
         self.cancelDeploy = function () {
             appservice.stopDeploy({}, $stateParams.cluster_id, $stateParams.app_id)
                 .then(function (data) {
@@ -26,6 +22,7 @@
 
         self.verisonDeploy = function (versionId) {
             appservice.updateVersion({versionId: versionId}, $stateParams.cluster_id, $stateParams.app_id).then(function (data) {
+                $scope.$emit('refreshAppStatus');
                 getImageVersions()
             });
         };
@@ -43,10 +40,12 @@
 
         function activate() {
             getImageVersions();
+            hasDeploymentIds();
         }
 
         $scope.$on('refreshAppData', function () {
-            getImageVersions(false);
+            hasDeploymentIds();
+            getImageVersions(false)
         });
 
         function getImageVersions(loading) {
@@ -54,10 +53,15 @@
                 .then(function (data) {
                         if (data && data.length !== 0) {
                             self.versions = data;
-                            self.count = self.versions.length;
                         }
                     }
                 );
+        }
+
+        function hasDeploymentIds() {
+            appservice.hasDeploymentIds($stateParams.cluster_id, $stateParams.app_id).then(function(data){
+                self.ifCancelDeploy = data;
+            })
         }
     }
 })();

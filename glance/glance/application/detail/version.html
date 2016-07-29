@@ -10,28 +10,25 @@
         <tbody md-body>
         <tr md-row ng-repeat="appversion in versionAppCtrl.versions">
             <td md-cell>
-                {/appversion.imageVersion/}
-                <span class="bg-primary" data-ng-show="appversion.currentDeploy">[当前部署版本]</span><span
-                    data-ng-show="appversion.status === 0">[正在部署中]</span>
-                <span data-ng-show="appversion.status === 2">[配置不可用]</span><!--<span class="bg-warning"
-                                                                                 data-ng-show="appversion.canary">[灰度发布]</span>-->
+                {/appversion.imageName/}:{/appversion.imageVersion/}
+                <span class="bg-primary" data-ng-show="$first">[当前部署版本]</span>
             </td>
             <td md-cell>
-                {/appversion.latestUpdated | date:"yyyy-MM-dd HH:mm:ss"/}
+                {/appversion.update | date:"yyyy-MM-dd HH:mm:ss"/}
             </td>
             <td md-cell>
                 <md-button aria-label="deploy" class="md-button md-raised"
-                           data-ng-show="!appversion.currentDeploy && appversion.status == 1 && !appversion.canary"
+                           data-ng-show="!$first"
                            data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" data-demo-disable>
                     部署
                 </md-button>
                 <md-button aria-label="cancel" class="md-button md-raised"
-                           data-ng-show="appversion.status === 0"
+                           data-ng-show="versionAppCtrl.ifCancelDeploy && $first"
                            data-ng-click="versionAppCtrl.cancelDeploy()" data-demo-disable>
                     撤销
                 </md-button>
                 <md-button aria-label="delete" class="md-button md-raised"
-                           data-ng-show="!appversion.currentDeploy && appversion.status != 0"
+                           data-ng-show="!$first"
                            data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId, $event)" data-demo-disable>
                     删除
                 </md-button>
