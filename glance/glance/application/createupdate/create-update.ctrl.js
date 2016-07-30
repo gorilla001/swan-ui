@@ -26,6 +26,11 @@
             outerPorts: []
         };
         self.target = target;
+        self.portType =[
+            {value:1, name:'端口组索引'},
+            {value:0, name:'端口号'}
+        ];
+        self.ifPortIndex =1;
 
         self.cluster;
         self.registries;
@@ -46,6 +51,7 @@
                 network: 'BRIDGE',
                 constraints: [],
                 logPaths: [],
+                healthChecks: [],
                 parameters: [],
                 customRegistry: false
             };
@@ -67,6 +73,7 @@
                 forceImage: false,
                 network: app.network,
                 logPaths: app.logPaths,
+                healthChecks: app.healthChecks,
                 parameters: app.parameters,
                 customRegistry: false
             };
@@ -278,7 +285,15 @@
                     key: '',
                     value: ''
                 },
-                logPaths: ''
+                logPaths: '',
+                healthChecks: {
+                    protocol: "TCP",
+                    gracePeriodSeconds:'',
+                    intervalSeconds: '',
+                    portIndex: '',
+                    timeoutSeconds: '',
+                    maxConsecutiveFailures: ''
+                }
 
             };
             self.form[configName].push(config[configName]);
@@ -297,7 +312,6 @@
                 }
             }
         }
-
         self.createApp = function () {
             setConstraints();
             setCustomRegistry();
