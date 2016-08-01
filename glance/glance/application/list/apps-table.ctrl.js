@@ -16,11 +16,11 @@
 
             myActivate();
         } else {
+            var clusterArray = [];
             self.table = mdTable.createTable('app.list.group');
 
             self.searchForm = {};
             self.clusters = [];
-            self.clusterArray = [];
             self.groups = [];
             self.applist = apps.App;
             self.count = apps.Count;
@@ -85,20 +85,19 @@
         
         function groupActivate() {
             clusterBackend.listClusters().then(function (data) {
-                self.clusterArray = data;
+                clusterArray = data;
                 self.clusterInforMap = listClusterMap(data);
+                initToolbar();
             });
             appservice.listAppsStatus($stateParams.clusterId).then(function(data){
                 // successs
                 self.appListStatus = data;
                 if ($stateParams.groupId && $stateParams.clusterId) {
-                    initToolbar();
                     timing.start($scope, groupReloadApps, appListReloadInterval)
                 }
             }, function () {
                 // error
                 if ($stateParams.groupId && $stateParams.clusterId) {
-                    initToolbar();
                     timing.start($scope, groupReloadApps, appListReloadInterval)
                 }
             });
@@ -139,7 +138,7 @@
 
         function groupChange() {
             self.clusters = [];
-            angular.forEach(self.clusterArray, function (cluster) {
+            angular.forEach(clusterArray, function (cluster) {
                 if (cluster.group_id === self.searchForm.groupId) {
                     self.clusters.push(cluster);
                 }
