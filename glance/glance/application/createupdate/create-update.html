@@ -520,7 +520,7 @@
                                        data-ng-show="(healthCheckForm.healthPath.$error.required && !healthCheckForm.healthPath.$pristine) && healthCheck.protocol =='HTTP' ">
                                         <small>路径不能为空</small>
                                     </p>
-                                    <div layout="row" layout-align="start start" layout-padding>
+                                    <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="25">
                                             <small>宽限时间</small>
                                             <input type="number" min="0" ng-model="healthCheck.gracePeriodSeconds">
@@ -537,7 +537,7 @@
                                         </div>
                                         <span class="form-input-addon" flex="5">秒</span>
                                     </div>
-                                    <div layout="row" layout-align="start start" layout-padding>
+                                    <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="30">
                                             <small>最多持续失败次数</small>
                                             <input type="number" min="0" ng-model="healthCheck.maxConsecutiveFailures">
