@@ -2275,3 +2275,12 @@ rzslider .rz-bar.rz-selection {
     padding: 4px 0;
 
 }
+
+/* 健康检查条*/
+.appHealthBar {
+    height: 10px;
+    width:80px;
+    background: #898d98;
+    border-radius: 10px;
+    position:relative;
+}
