@@ -9,7 +9,7 @@
     /* @ngInject */
     function InstanceAppCtrl($scope, mdTable, $stateParams, appservice) {
         var self = this;
-
+        self.appInfo = $scope.detailAppCtrl.appInfo;
         self.instances = [];
         self.table = mdTable.createTable('app.detail.instance');
         
