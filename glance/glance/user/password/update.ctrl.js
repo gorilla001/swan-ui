@@ -4,7 +4,7 @@
         .controller('UpdatePasswordCtrl', UpdatePasswordCtrl);
 
     /* @ngInject */
-    function UpdatePasswordCtrl($scope, Notification, gHttp){
+    function UpdatePasswordCtrl($scope, Notification, gHttp, $state){
         
         var self = this;
         self.form = {
@@ -15,6 +15,7 @@
 
         self.modifyPassword = function(){
             gHttp.Resource("auth.password").put(self.form).then(function () {
+                $state.reload(true)
                 Notification.success('密码修改成功！');
                 self.form = {
                     old_password: '',
