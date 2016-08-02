@@ -47,7 +47,8 @@
         }
         
         function updateRegistry() {
-            return userBackend.updateRegistry($stateParams.registry_id, self.form)
+            var sendForm = {username: self.form.username, password: self.form.password};
+            return userBackend.updateRegistry($stateParams.registry_id, sendForm)
                 .then(function (data) {
                     Notification.success('仓库' + self.form.address + '编辑成功！');
                     $state.go('user.registries', {reload: true});

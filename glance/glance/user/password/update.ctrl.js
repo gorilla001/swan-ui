@@ -14,7 +14,7 @@
         };
 
         self.modifyPassword = function(){
-            gHttp.Resource("auth.password").put(self.form).then(function () {
+            gHttp.Resource("auth.password").put(self.form, {form: $scope.staticForm}).then(function () {
                 $state.reload(true)
                 Notification.success('密码修改成功！');
                 self.form = {
