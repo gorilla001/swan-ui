@@ -23,7 +23,8 @@
         self.verisonDeploy = function (versionId) {
             appservice.updateVersion({versionId: versionId}, $stateParams.cluster_id, $stateParams.app_id).then(function (data) {
                 $scope.$emit('refreshAppStatus');
-                getImageVersions()
+                getImageVersions();
+                hasDeploymentIds();
             });
         };
 
