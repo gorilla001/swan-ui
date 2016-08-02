@@ -12,7 +12,7 @@
 
         self.scalingList = data.ScaleHistory;
         self.count = data.Count;
-        self.table = mdTable.createTable('policy.tab.appwarning.logscaling');
+        self.table = mdTable.createTable('policy.tab.applogwarning.logscaling');
         self.searchKeyWord = $stateParams.keywords || '';
 
         self.doSearch = doSearch;
