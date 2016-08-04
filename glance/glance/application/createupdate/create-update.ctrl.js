@@ -58,6 +58,13 @@
             self.isNetworkDisable = false;
             self.isDockerArgDisable = false;
         } else {
+            angular.forEach(app.healthChecks, function(value, key) {
+               if(value.port) {
+                   value.ifPortIndex = 0;
+               } else {
+                   value.ifPortIndex = 1;
+               }
+            });
             self.form = {
                 cluster_id: app.cid,
                 name: app.name,
@@ -292,7 +299,8 @@
                     intervalSeconds: '',
                     portIndex: '',
                     timeoutSeconds: '',
-                    maxConsecutiveFailures: ''
+                    maxConsecutiveFailures: '',
+                    ifPortIndex: 1
                 }
 
             };
