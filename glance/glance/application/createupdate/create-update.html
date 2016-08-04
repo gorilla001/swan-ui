@@ -485,6 +485,8 @@
                             </div>
                             <div class="add-row-container"
                                  data-ng-repeat="healthCheck in createAppCtrl.form.healthChecks track by $index">
+                                <h4>健康检查{/$index + 1/} - {/healthCheck.protocol/}</h4>
+                                <hr/>
                                 <ng-form name="healthCheckForm">
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="10">协议</div>
@@ -543,17 +545,18 @@
                                             <input type="number" min="0" ng-model="healthCheck.maxConsecutiveFailures">
                                         </div>
                                         <div flex-offset="5" flex="30">
-                                            <small ng-if=" (healthCheck.portIndex && createAppCtrl.target==='update') || createAppCtrl.ifPortIndex">端口组索引</small>
-                                            <input ng-if=" (healthCheck.portIndex && createAppCtrl.target==='update') || createAppCtrl.ifPortIndex" type="number" min="0" ng-model="healthCheck.portIndex">
-                                            <small ng-if="(healthCheck.port && createAppCtrl.target==='update') ||!createAppCtrl.ifPortIndex">端口号</small>
-                                            <input ng-if="(healthCheck.port && createAppCtrl.target==='update') ||!createAppCtrl.ifPortIndex" type="number" min="0"  ng-model="healthCheck.port">
+                                            <small ng-if="healthCheck.ifPortIndex">端口组索引</small>
+                                            <input ng-if="healthCheck.ifPortIndex" type="number" min="0" ng-model="healthCheck.portIndex">
+                                            <small ng-if="!healthCheck.ifPortIndex">端口号</small>
+                                            <input ng-if="!healthCheck.ifPortIndex" type="number" min="0"  ng-model="healthCheck.port">
                                         </div>
                                         <div flex="30" flex-offset="5">
+                                            <small>端口类型</small>
                                             <md-input-container>
-                                                <md-select ng-model="createAppCtrl.ifPortIndex" data-required="required"
+                                                <md-select ng-model="healthCheck.ifPortIndex"
                                                            aria-label="select protocol">
                                                     <md-option
-                                                            ng-repeat="(index,protocolType) in createAppCtrl.portType"
+                                                            ng-repeat="(index, protocolType) in createAppCtrl.portType"
                                                             ng-value="protocolType.value">
                                                         {/protocolType.name/}
                                                     </md-option>
