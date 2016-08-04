@@ -133,7 +133,7 @@
         }
 
         function hasDeploymentIds(clusterId, appId) {
-            return gHttp.Resource('app.hasDeploymentIds', {cluster_id: clusterId, app_id: appId}).get();
+            return gHttp.Resource('app.hasDeploymentIds', {cluster_id: clusterId, app_id: appId}).get({'ignoreCodes':['14019']});
         }
 
         function deleteAppVersion(clusterId, appId, versionId) {
