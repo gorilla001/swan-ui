@@ -14,7 +14,7 @@
                            <input name="name" type="text" data-required="required"
                                   max="25" class="form-input" data-ng-model="updateClusterCtrl.form.name">
                            <p data-ng-show="infoForm.name.$error.required && !infoForm.name.$pristine" class="help-block">集群名不能为空</p>
-                           <p data-ng-show="infoForm.name.$pristine" class="help-block">{/staticForm.message_error_info["name"]/}</p>
+                           <p data-ng-show="infoForm.name.$pristine" class="help-block">{/infoForm.message_error_info["name"]/}</p>
                        </div>
                    </div>
                    <div flex></div>
