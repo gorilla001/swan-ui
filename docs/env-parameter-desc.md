@@ -26,6 +26,8 @@
   + FRONTEND_LOCAL_DM_HOST=LOCAL_DM_HOST
 - agent的安装脚本路径
   + FRONTEND_AGENT_URL=AGENT_URL
+- docker的安装脚本路径
+  + FRONTEND_DOCKER_INSTALL_SCRIPT=DOCKER_INSTALL_SCRIPT
 - nginx 启动用户
   + NGINX_USER=nginx
 - nginx worker 角色的进程个数
