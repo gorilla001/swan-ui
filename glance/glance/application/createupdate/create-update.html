@@ -15,7 +15,7 @@
                                    data-ng-model="createAppCtrl.form.name"
                                    data-required="required"
                                    data-ng-pattern="/^\S*$/"
-                                   data-ng-maxlength="12"
+                                   data-ng-maxlength="16"
                                    data-ng-trim="true"
                                    data-samename
                                    data-name-list="createAppCtrl.appNames"
@@ -34,8 +34,8 @@
                             <small>应用名已存在</small>
                         </p>
                         <p class="error-info help-info-bottom"
-                           data-ng-show="staticForm.appName.$error.maxlength && (createAppCtrl.target==='update' || !staticForm.appName.$pristine)">
-                            <small>最大长度 12 个字符</small>
+                           data-ng-show="staticForm.appName.$error.maxlength && !staticForm.appName.$pristine">
+                            <small>最大长度 16 个字符</small>
                         </p>
                     </div>
                     <div flex></div>
