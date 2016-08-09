@@ -15,7 +15,7 @@ function addNodeFormCtrl($scope, $rootScope, $state, $stateParams, gHttp, Notifi
       id: $scope.nodeId,
       labels: []
     };
-    $scope.dockerScript = 'curl -sSL http://get.shurenyun.com/install-agent.sh | sh';
+    $scope.dockerScript = 'curl -sSL ' + INSTALL_DOCKER_SCRIPT + ' | sh';
     $scope.msgstate = "等待主机链接......";
     $scope.$on($rootScope.SUB_INFOTYPE.nodeStatus, function (event, data) {
       if(data['nodeId'] == $scope.nodeId && data['status'] != 'terminated') {

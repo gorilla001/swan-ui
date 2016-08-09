@@ -39,6 +39,7 @@ AGENT_CONFIG = {
     installUrl: "AGENT_URL"
 };
 
+INSTALL_DOCKER_SCRIPT = "DOCKER_INSTALL_SCRIPT"
 /*
  * group：共享集群中的应用，映射端口使用的地址
  * demo：demo用户的应用，映射端口使用的地址
