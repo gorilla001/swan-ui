@@ -485,8 +485,7 @@
                             </div>
                             <div class="add-row-container"
                                  data-ng-repeat="healthCheck in createAppCtrl.form.healthChecks track by $index">
-                                <h4>健康检查{/$index + 1/} - {/healthCheck.protocol/}</h4>
-                                <hr/>
+                                <h5>健康检查{/$index + 1/} - {/healthCheck.protocol/}</h5>
                                 <ng-form name="healthCheckForm">
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="10">协议</div>
@@ -510,45 +509,69 @@
                                         </div>
                                     </div>
                                     <div layout="row" layout-align="start center" layout-padding
-                                         ng-show="healthCheck.protocol =='HTTP'">
+                                         ng-if="healthCheck.protocol =='HTTP'">
                                         <div flex="65">
                                             <small>路径</small>
-                                            <input type="text" name="healthPath"
-                                                   ng-model="healthCheck.path">
+                                            <input type="text" name="healthPath" ng-model="healthCheck.path" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="(healthCheckForm.healthPath.$error.required && !healthCheckForm.healthPath.$pristine) && healthCheck.protocol =='HTTP' ">
+                                                <small>路径不能为空</small>
+                                            </p>
                                         </div>
                                         <div flex></div>
                                     </div>
-                                    <p class="error-info help-info-bottom"
-                                       data-ng-show="(healthCheckForm.healthPath.$error.required && !healthCheckForm.healthPath.$pristine) && healthCheck.protocol =='HTTP' ">
-                                        <small>路径不能为空</small>
-                                    </p>
+
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="25">
                                             <small>宽限时间</small>
-                                            <input type="number" min="0" ng-model="healthCheck.gracePeriodSeconds">
+                                            <input type="number" min="0" name="gracePeriodSeconds" ng-model="healthCheck.gracePeriodSeconds" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.gracePeriodSeconds.$error.required && !healthCheckForm.gracePeriodSeconds.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                         </div>
                                         <span class="form-input-addon" flex="5">秒</span>
                                         <div flex-offset="5" flex="25">
                                             <small>检查间隔</small>
-                                            <input type="number" min="0" ng-model="healthCheck.intervalSeconds">
+                                            <input type="number" min="0" name="intervalSeconds" ng-model="healthCheck.intervalSeconds" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.intervalSeconds.$error.required && !healthCheckForm.intervalSeconds.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                         </div>
                                         <span class="form-input-addon" flex="5">秒</span>
                                         <div flex-offset="5" flex="25">
                                             <small>检查超时</small>
-                                            <input type="number" min="0" ng-model="healthCheck.timeoutSeconds">
+                                            <input type="number" min="0" name="timeoutSeconds" ng-model="healthCheck.timeoutSeconds" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.timeoutSeconds.$error.required && !healthCheckForm.timeoutSeconds.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                         </div>
                                         <span class="form-input-addon" flex="5">秒</span>
                                     </div>
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="30">
                                             <small>最多持续失败次数</small>
-                                            <input type="number" min="0" ng-model="healthCheck.maxConsecutiveFailures">
+                                            <input type="number" min="0" name="maxConsecutiveFailures" ng-model="healthCheck.maxConsecutiveFailures" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.maxConsecutiveFailures.$error.required && !healthCheckForm.maxConsecutiveFailures.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                         </div>
                                         <div flex-offset="5" flex="30">
                                             <small ng-if="healthCheck.ifPortIndex">端口组索引</small>
-                                            <input ng-if="healthCheck.ifPortIndex" type="number" min="0" ng-model="healthCheck.portIndex">
+                                            <input ng-if="healthCheck.ifPortIndex" type="number" name="portIndex" min="0" ng-model="healthCheck.portIndex" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.portIndex.$error.required && !healthCheckForm.portIndex.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                             <small ng-if="!healthCheck.ifPortIndex">端口号</small>
-                                            <input ng-if="!healthCheck.ifPortIndex" type="number" min="0"  ng-model="healthCheck.port">
+                                            <input ng-if="!healthCheck.ifPortIndex" name="port" type="number" min="0"  ng-model="healthCheck.port" data-required="required">
+                                            <p class="error-info help-info-bottom"
+                                               data-ng-if="healthCheckForm.port.$error.required && !healthCheckForm.port.$pristine">
+                                                <small>不能为空且为非负数</small>
+                                            </p>
                                         </div>
                                         <div flex="30" flex-offset="5">
                                             <small>端口类型</small>
@@ -570,7 +593,7 @@
                                                      ng-true-value="true" ng-false-value="false"
                                                      ng-model="healthCheck.ignoreHttp1xx">
                                         </md-checkbox>
-                                        <p flex>HTTP返回状态码在100~199为健康。</p>
+                                        <p flex>忽略HTTP返回码100~199</p>
                                     </div>
                                 </ng-form>
                             </div>
