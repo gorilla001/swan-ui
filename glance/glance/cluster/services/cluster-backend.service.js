@@ -39,8 +39,8 @@
             return gHttp.Resource('cluster.cluster', {cluster_id: clusterId}).get();
         }
 
-        function changeCluster(clusterId, putData) {
-            return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).put(putData);
+        function changeCluster(clusterId, putData, form) {
+            return gHttp.Resource('cluster.cluster', {'cluster_id': clusterId}).put(putData, {"form": form});
         }
 
         function listNodesByLabelIds(clusterId, labelIdsString) {

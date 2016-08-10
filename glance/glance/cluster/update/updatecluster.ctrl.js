@@ -4,7 +4,7 @@
     angular.module('glance.cluster').controller('UpdateClusterCtrl', UpdateClusterCtrl);
 
     /*@ngInject*/
-    function UpdateClusterCtrl($state, $stateParams, gHttp, userBackend,
+    function UpdateClusterCtrl($state, $stateParams, $scope, userBackend,
                                clusterBackend, clusterDetail) {
         var self = this;
 
@@ -39,7 +39,7 @@
                 form.group_id = self.form.groupId;
             }
             if(Object.keys(form).length) {
-                clusterBackend.changeCluster($stateParams.clusterId, form).then(function() {
+                clusterBackend.changeCluster($stateParams.clusterId, form, $scope.infoForm).then(function() {
                     $state.go("cluster.detail.nodes", {"clusterId": $stateParams.clusterId});
                 })
             } else {
