@@ -70,7 +70,7 @@
                     {/appsTableCtrl.groupUserMap[app.uid]/}
                 </td>
                 <td md-cell>
-                    <span ng-show="appsTableCtrl.appListStatus[app.id].tasks != undefined && appsTableCtrl.appListStatus[app.id].tasks != app.instances">{/appsTableCtrl.appListStatus[app.id].tasks/}/{/appsTableCtrl.appListStatus[app.id].instances/}</span>
+                    <span ng-show="appsTableCtrl.appListStatus[app.id].tasks != undefined && appsTableCtrl.appListStatus[app.id].tasks != appsTableCtrl.appListStatus[app.id].instances">{/appsTableCtrl.appListStatus[app.id].tasks/}/{/appsTableCtrl.appListStatus[app.id].instances/}</span>
                     <span ng-show="appsTableCtrl.appListStatus[app.id].tasks == appsTableCtrl.appListStatus[app.id].instances">{/appsTableCtrl.appListStatus[app.id].instances/}</span>
                     <!--<span data-ng-if="app.canary">(灰度实例: {/app.canaryInstances/})</span>-->
                 </td>
