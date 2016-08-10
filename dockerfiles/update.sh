@@ -16,6 +16,7 @@ sed -i "s#DEMO_USER#$FRONTEND_DEMO_USER#g" /usr/share/nginx/html/dashboard.shure
 sed -i "s#IMAGE_BASE_URL#$FRONTEND_IMAGE_BASE_URL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#LOCAL_DM_HOST#$FRONTEND_LOCAL_DM_HOST#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 sed -i "s#AGENT_URL#$FRONTEND_AGENT_URL#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
+sed -i "s#DOCKER_INSTALL_SCRIPT#$FRONTEND_DOCKER_INSTALL_SCRIPT#g" /usr/share/nginx/html/dashboard.shurenyun.com/js/confdev.js
 
 #nginx
 sed -i "s#NGINX_USER#$NGINX_USER#g" /etc/nginx/nginx.conf

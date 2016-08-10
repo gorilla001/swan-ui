@@ -174,22 +174,22 @@ gulp.task('template-min-policy', ['template-min-repo'], function () {
 });
 
 //applayout
-// gulp.task('template-min-layout', ['template-min-policy'], function () {
-//     return gulp.src('glance/applayout/**/*.html')
-//         .pipe(minifyHtml({
-//             empty: true,
-//             spare: true,
-//             quotes: true
-//         }))
-//         .pipe(angularTemplatecache('templateCacheHtmlAppLayout.js', {
-//             module: 'glance.layout',
-//             root: '/glance/applayout'
-//         }))
-//         .pipe(gulp.dest('build/js/'));
-// });
+gulp.task('template-min-layout', ['template-min-policy'], function () {
+    return gulp.src('glance/applayout/**/*.html')
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(angularTemplatecache('templateCacheHtmlAppLayout.js', {
+            module: 'glance.layout',
+            root: '/glance/applayout'
+        }))
+        .pipe(gulp.dest('build/js/'));
+});
 
 //cluster
-gulp.task('template-min-cluster', ['template-min-policy'], function () {
+gulp.task('template-min-cluster', ['template-min-layout'], function () {
     return gulp.src('glance/cluster/**/*.html')
         .pipe(minifyHtml({
             empty: true,

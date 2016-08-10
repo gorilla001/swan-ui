@@ -291,14 +291,6 @@
             warn: '重要',
             crit: '紧急'
         };
-        $rootScope.STACK_STATUS = {
-            pending: '尚未部署',
-            deploying: '部署进行',
-            deploy_fail: '部署失败',
-            running: '运行正常',
-            stopped: '应用停止',
-            unhealthy: '应用故障'
-        };
         $rootScope.STACK_DEFAULT = {
             DockerCompose: 'mysql:\n' +
             '  image:  catalog.shurenyun.com/library/mysql\n' +

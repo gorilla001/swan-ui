@@ -19,6 +19,7 @@ var glanceApp = angular.module('glance',
         'glance.repository',
         'glance.policy',
         'ngMaterial',
+        'glance.layout',
         'glance.dashboard'
     ]);
 
