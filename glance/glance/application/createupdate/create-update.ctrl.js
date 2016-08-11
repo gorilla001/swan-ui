@@ -303,7 +303,7 @@
                     portIndex: '',
                     timeoutSeconds: '',
                     maxConsecutiveFailures: '',
-                    ifPortIndex: 1
+                    ifPortIndex: 0
                 }
 
             };
