@@ -524,6 +524,11 @@
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="25">
                                             <small>宽限时间</small>
+                                            <i class="fa fa-question-circle" style="cursor: pointer">
+                                                <md-tooltip md-direction="top">
+                                                    在这一时间段内，健康检查返回的失败结果将被忽略，即允许健康检查失败的时间间隔。
+                                                </md-tooltip>
+                                            </i>
                                             <input type="number" min="0" name="gracePeriodSeconds" ng-model="healthCheck.gracePeriodSeconds" data-required="required">
                                             <p class="error-info help-info-bottom"
                                                data-ng-if="healthCheckForm.gracePeriodSeconds.$error.required && !healthCheckForm.gracePeriodSeconds.$pristine">
@@ -533,6 +538,11 @@
                                         <span class="form-input-addon" flex="5">秒</span>
                                         <div flex-offset="5" flex="25">
                                             <small>检查间隔</small>
+                                            <i class="fa fa-question-circle" style="cursor: pointer">
+                                                <md-tooltip md-direction="top">
+                                                    两次健康检查之间的时间间隔。
+                                                </md-tooltip>
+                                            </i>
                                             <input type="number" min="0" name="intervalSeconds" ng-model="healthCheck.intervalSeconds" data-required="required">
                                             <p class="error-info help-info-bottom"
                                                data-ng-if="healthCheckForm.intervalSeconds.$error.required && !healthCheckForm.intervalSeconds.$pristine">
@@ -542,6 +552,11 @@
                                         <span class="form-input-addon" flex="5">秒</span>
                                         <div flex-offset="5" flex="25">
                                             <small>检查超时</small>
+                                            <i class="fa fa-question-circle" style="cursor: pointer">
+                                                <md-tooltip md-direction="top">
+                                                    如果健康检查的返回结果超过这个时间即认为此次健康检查结果为不健康，而无论最终的返回结果是健康或不健康。
+                                                </md-tooltip>
+                                            </i>
                                             <input type="number" min="0" name="timeoutSeconds" ng-model="healthCheck.timeoutSeconds" data-required="required">
                                             <p class="error-info help-info-bottom"
                                                data-ng-if="healthCheckForm.timeoutSeconds.$error.required && !healthCheckForm.timeoutSeconds.$pristine">
@@ -553,6 +568,11 @@
                                     <div layout="row" layout-align="start center" layout-padding>
                                         <div flex="30">
                                             <small>最多持续失败次数</small>
+                                            <i class="fa fa-question-circle" style="cursor: pointer">
+                                                <md-tooltip md-direction="top">
+                                                    设置该参数后，如果一个实例的健康检查连续不健康的次数达到该参数，该实例将被停止。但如果该参数设为0，健康检查获取不健康返回时并不会停止实例。
+                                                </md-tooltip>
+                                            </i>
                                             <input type="number" min="0" name="maxConsecutiveFailures" ng-model="healthCheck.maxConsecutiveFailures" data-required="required">
                                             <p class="error-info help-info-bottom"
                                                data-ng-if="healthCheckForm.maxConsecutiveFailures.$error.required && !healthCheckForm.maxConsecutiveFailures.$pristine">
