@@ -42,7 +42,7 @@
             if (!state) {
                 state = 'app.list.my';
             }
-            confirmModal.open("是否确认删除应用？").then(function () {
+            confirmModal.open("是否确认删除应用？(删除应用时，如果有告警策略，也会一并被删除!)").then(function () {
                 appservice.deleteApp(clusterId, appId)
                     .then(function (data) {
                         if(state === 'app.list.group'){
