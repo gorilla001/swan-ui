@@ -132,6 +132,9 @@
             return clusterBackend.getCluster(cluster_id)
                 .then(function (cluster) {
                     self.cluster = cluster;
+                    if(self.cluster.status =='failed') {
+                        Notification.error('集群异常');
+                    }
                     if (cluster.group_name) {
                         self.clusterName = cluster.group_name + ":" + cluster.name;
                     } else {
