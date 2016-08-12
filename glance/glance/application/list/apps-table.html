@@ -124,15 +124,8 @@
                                 </md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button aria-label="redeploy"
-                                           ng-disabled="appsTableCtrl.appListStatus[app.id].status != '9'"
-                                           data-ng-click="listappctrl.redeploy(app.cid, app.id)"
-                                           data-demo-disable>恢复
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
                                 <md-button aria-label="update"
-                                           data-ng-disabled="app.canary || (appsTableCtrl.appListStatus[app.id].status != '2' && appsTableCtrl.appListStatus[app.id].status != '3')"
+                                           data-ng-disabled="(appsTableCtrl.appListStatus[app.id].status != '2' && appsTableCtrl.appListStatus[app.id].status != '3') && appsTableCtrl.appListStatus[app.id].status != '1'"
                                            data-ui-sref="app.update({cluster_id: app.cid, app_id: app.id})">
                                     更新
                                 </md-button>

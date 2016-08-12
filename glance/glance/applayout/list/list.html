@@ -23,6 +23,8 @@
                         <div class="info" flex>
                             <h3>{/stack.name/}</h3>
                             <dl class="list-dl-row">
+                                <dt>状态</dt>
+                                <dd>{/STACK_STATUS[stack.status]/}</i></dd>
                                 <dt>更新时间</dt>
                                 <dd>{/stack.updated | date:"yyyy-MM-dd HH:mm"/}</dd>
                                 <dt>所属集群</dt>
@@ -60,6 +62,12 @@
                                 </md-button>
                                 <md-menu-content width="2">
                                     <md-menu-item>
+                                        <md-button aria-label="edit" data-demo-disable data-ng-disabled="stack.status == 'running'"
+                                                   data-ng-click="layoutListCtrl.deploy(stack.Cid,stack.Id)">
+                                            恢复
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
                                         <md-button aria-label="edit" data-demo-disable
                                                    data-ui-sref="layout.update({cluster_id: stack.Cid, stack_id:stack.Id})">
                                             详情
@@ -91,7 +99,7 @@
                                 <td md-cell>{/app.Name/}
                                 </td>
                                 <td md-cell>
-                                    {/APP_STATUS[layoutListCtrl.appListStatus[app.Id].status]/}
+                                    {/APP_STATUS[app.Status]/}
                                 </td>
                                 <td md-cell data-ng-if="app.Id">{/app.Updated | date:"yyyy-MM-dd HH:mm"/}</td>
                                 <td md-cell data-ng-if="!app.Id">---- -- --</td>
@@ -176,7 +184,6 @@
                 </li>
             </ul>
         </div>
-
         <footer></footer>
         <section>
         </section>

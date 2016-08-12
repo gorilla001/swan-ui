@@ -5,7 +5,7 @@
 
 
     /* @ngInject */
-    function LayoutListCtrl(timing, $timeout, $rootScope, $scope, data, layoutBackend, utils, clusters, layoutCurd, appservice) {
+    function LayoutListCtrl(timing, $timeout, $rootScope, $scope, data, $state, layoutBackend, utils, clusters, layoutCurd, appservice) {
         var self = this;
         var events = undefined;
 
@@ -23,12 +23,13 @@
         self.deleteApp = deleteApp;
         self.undoApp = undoApp;
         self.updateContainer = updateContainer;
+        self.deploy = deploy;
 
 
         activate();
 
         function activate() {
-            timing.start($scope, refreshData, 5000);
+            timing.start($scope, refreshlistStacks, 5000);
             $scope.$on('$destroy', function () {
                 for(var key in self.timeoutPromises) {
                     $timeout.cancel(self.timeoutPromises[key]);
@@ -113,10 +114,6 @@
                         Array.prototype.unshift.apply(applications, notExistedApps);
                     }
                     self.appList[stackId] = applications;
-                    appservice.listAppsStatus()
-                        .then(function (data) {
-                            self.appListStatus = data;
-                        });
                     self.openFlag[stackId] = true;
                 })
             } else {
@@ -182,10 +179,17 @@
         }
 
         // 刷新应用状态
-        function refreshData() {
-            return appservice.listAppsStatus().then(function (data) {
-                self.appListStatus = data;
+        function refreshlistStacks() {
+            return layoutBackend.list().then(function (data) {
+                self.stacks = data.Stacks;
             })
+        }
+        // 恢复
+        function deploy(cluster_id, stack_id) {
+            layoutBackend.deploy(cluster_id, stack_id)
+                .then(function (data) {
+                    $state.go('layout.list')
+                });
         }
     }
 })();
