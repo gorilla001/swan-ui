@@ -131,7 +131,7 @@
         $rootScope.APP_FAIL_RESULT = {
             0: '正常',
             1: '镜像拉取失败',
-            2: '容器启动失败'
+            2: '容器启动失败或健康检查未通过'
         };
         $rootScope.APP_INS_STATUS = {
             '1': "运行中",
