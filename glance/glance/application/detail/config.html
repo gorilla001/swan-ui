@@ -80,6 +80,40 @@
     </table>
 </md-table-container>
 
+<h2 data-ng-if="detailAppCtrl.appInfo.healthChecks.length">健康检查</h2>
+<md-table-container ng-show="detailAppCtrl.appInfo.healthChecks.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>协议</span></th>
+            <th md-column><span>路径</span></th>
+            <th md-column><span>宽限时间</span></th>
+            <th md-column>检查间隔</th>
+            <th md-column>检查超时</th>
+            <th md-column>最多持续失败次数</th>
+            <th md-column>端口号</th>
+            <th md-column>端口索引</th>
+            <th md-column>忽略HTTP100~199状态码</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="healthinfo in detailAppCtrl.appInfo.healthChecks">
+            <td md-cell>{/healthinfo.protocol/}</td>
+            <td md-cell>{/healthinfo.path/}</td>
+            <td md-cell>{/healthinfo.gracePeriodSeconds/}</td>
+            <td md-cell>{/healthinfo.intervalSeconds/}</td>
+            <td md-cell>{/healthinfo.timeoutSeconds/}</td>
+            <td md-cell>{/healthinfo.maxConsecutiveFailures/}</td>
+            <td md-cell>{/healthinfo.port/}</td>
+            <td md-cell>{/healthinfo.portIndex/}</td>
+            <td md-cell data-ng-if="healthinfo.protocol =='HTTP'">{/healthinfo.ignoreHttp1xx ? '是': '否'/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+
+
 <h2 data-ng-if="detailAppCtrl.appInfo.envs.length">环境变量</h2>
 <md-table-container data-ng-if="detailAppCtrl.appInfo.envs.length">
     <table md-table>
