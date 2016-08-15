@@ -221,7 +221,7 @@
 
         $rootScope.nodeStatusCls = {};
         $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.running] = "fa fa-heartbeat text-success";
-        $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.terminated] = "fa fa-chain-broken text-danger";
+        $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.terminated] = "fa fa-chain-broken text-muted";
         $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.failed] = "fa fa-bomb text-danger";
         $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.abnormal] = "fa fa-exclamation-triangle text-warning";
         $rootScope.nodeStatusCls[$rootScope.NODE_STATUS.installing] = "fa fa-cog text-normal";
