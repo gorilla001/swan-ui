@@ -60,7 +60,7 @@
                 <td md-cell>{/app.update | date:"yyyy-MM-dd HH:mm:ss"/}</td>
                 <td md-cell>
                     <a href="#" data-ui-sref="cluster.detail.nodes({clusterId:app.cid})"
-                       ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '10'}">
+                       ng-class="{'danger': groupAppsCtrl.appListStatus[app.id].status == '9'}">
                         <img data-ng-src="../pics/ico-applist-cluster-failed.png" width="16"
                              ng-show="appsTableCtrl.clusterInforMap[app.cid].status == 'failed'">
                         {/appsTableCtrl.clusterInforMap[app.cid].name/}
