@@ -16,7 +16,7 @@
         refreshInstances();
         
         $scope.$on('refreshAppData', function() {
-            if($scope.detailAppCtrl.appStatus.status != 9  && $scope.detailAppCtrl.appStatus.status != 10){
+            if($scope.detailAppCtrl.appStatus.status != 9){
                 refreshInstances("");
             }
         });
