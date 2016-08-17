@@ -105,7 +105,7 @@
                             <md-menu-item>
                                 <md-button aria-label="upContainer"
                                            ng-disabled="(appsTableCtrl.appListStatus[app.id].status != '2' && appsTableCtrl.appListStatus[app.id].status != '3')||app.canary"
-                                           data-ng-click="listappctrl.upContainerModal($event, app.cid, app.id, app.instances)"
+                                           data-ng-click="listappctrl.upContainerModal($event, app.cid, app.id, appsTableCtrl.appListStatus[app.id].instances)"
                                            data-demo-disable>扩展
                                 </md-button>
                             </md-menu-item>
