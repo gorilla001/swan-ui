@@ -1,0 +1,58 @@
+<div class="main-content app-layout">
+    <section class="main-section">
+        <header layout="row" layout-align="end start">
+            <div class="info" flex>
+                <h2>应用管理</h2>
+            </div>
+            <div layout-align="end center" class="operation">
+                <md-button class="md-fab md-mini" aria-label="Crete App" data-ui-sref="app.create">
+                    <md-tooltip md-direction="top">创建应用</md-tooltip>
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </md-button>
+            </div>
+        </header>
+	<md-content>
+		<md-table-container>
+        		<table md-table>
+            			<thead md-head md-order="appsTableCtrl.table.query.order"
+                   		md-on-reorder="appsTableCtrl.table.getOrder">
+            			<tr md-row>
+                    			<th md-column md-order-by="name"><span>应用名称</span></th>
+                    			<th md-column><span>当前状态</span></th>
+                    			<th md-column md-order-by="updated">更新时间</th>
+                    			<th md-column>所属集群</th>
+                    			<th md-column data-ng-if="appsTableCtrl.targets === 'group'">所属用户</th>
+                    			<th md-column md-order-by="instances">容器个数</th>
+                    			<th md-column>健康状态</th>
+                    			<th md-column>操作</th>
+            			</tr>
+            			</thead>
+            			<tbody md-body>
+            				<tr md-row ng-repeat="app in appsTableCtrl.applist">
+                				<td md-cell>
+							<a href="#"
+                               				data-ui-sref="app.detail(app_id: app.id})">{/app.name/}
+							</a>
+						</td>
+                				<td md-cell>
+                				</td>
+                				<td md-cell>
+                    					<md-button aria-label="strp" class="md-button md-raised"
+                    					           data-ng-disabled=""
+                    					           data-ng-click="listappctrl.stop(app.id)"
+                    					           >编辑
+                    					</md-button>
+                    					<md-button aria-label="start" class="md-button md-raised"
+                    					           data-ng-disabled=""
+                    					           data-ng-click="listappctrl.start(app.id)"
+                    					           data-ng-if="" data-demo-disable>删除
+                    					</md-button>
+                				</td>
+            				</tr>
+            			</tbody>
+        		</table>
+    		</md-table-container>
+         	<md-content class="md-padding main-tab-content" data-ui-view></md-content>
+        </md-content>
+    </section>
+</div>

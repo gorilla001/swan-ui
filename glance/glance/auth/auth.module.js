@@ -1,4 +1,4 @@
 (function () {
     'use strict';
-    angular.module('glance.auth', ['ngCookies', 'ui.router', 'ngSanitize', 'glance.utils', 'glance.common']);
+    angular.module('glance.auth', ['ngCookies', 'ui.router', 'ngSanitize', 'glance.utils']);
 })();

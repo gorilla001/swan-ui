@@ -40,7 +40,6 @@
     "commit": "c76b837cacc69de6b86a0781db31a9bb7a193875"
   },
   "_source": "https://github.com/nodeca/js-yaml.git",
-  "_target": "^3.6.1",
-  "_originalSource": "js-yaml",
-  "_direct": true
+  "_target": "~3.6.1",
+  "_originalSource": "js-yaml"
 }

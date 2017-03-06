@@ -54,7 +54,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         
         return $http(req).success(function (data) {
             stopLoading(loading);
-            if (data && (data.code == undefined || data.code === $rootScope.MESSAGE_CODE.success)) {
+            if (data) {
                 if(callback) {
                     callback(data);
                 }
@@ -107,7 +107,7 @@ function glanceHttp($http, $state, $rootScope, utils, Notification) {
         myScope.staticForm.$setPristine();
         myScope.message_error_info = {};
         ajaxBase(method, url, myScope.form, undefined, callback, function(data, status){
-            if(data && data.code === $rootScope.MESSAGE_CODE.dataInvalid) {
+            if(data) {
                 myScope.message_error_info = data.errors;
             } else if (errorCallback) {
                 errorCallback(data, status);

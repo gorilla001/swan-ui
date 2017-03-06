@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="glance" data-ng-controller="RootCtrl as rootCtrl">
+<html data-ng-app="glance">
 <head>
     <meta charset="utf-8">
     <title>数人云</title>
@@ -42,142 +42,17 @@
                         <i class="fa fa-tachometer"></i>
                         首页
                     </md-button>
-                </li>
+		</li>
                 <li title="应用管理" data-ui-sref-active="active">
-                    <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}"><i
-                            class="fa fa-cube"></i>应用管理
-                    </md-button>
-                </li>
-                <li data-ui-sref-active="active" title="服务策略">
-                    <md-button data-ui-sref="policy"
-                               data-ui-sref-opts="{inherit: false}"><i class="fa fa-clock-o"></i>服务策略
-                    </md-button>
-                </li>
-                <li data-ui-sref-active="active" title="应用目录">
-                    <md-button data-ui-sref="repository" data-ui-sref-opts="{inherit: false}"><i
-                            class="fa fa-shopping-cart"></i>应用目录
-                    </md-button>
-                </li>
-                <li data-ui-sref-active="active" title="镜像构建">
-                    <md-button data-ui-sref="image"
-                               data-ui-sref-opts="{inherit: false}"><i class="fa fa-cogs"></i>镜像构建
-                    </md-button>
-                </li>
-                <li title="应用编排" data-ui-sref-active="active">
-                    <md-button data-ui-sref="layout" data-ui-sref-opts="{reload: true, inherit: false}"><i
-                            class="fa fa-cubes"></i>应用编排
-                    </md-button>
-                </li>
-                <li data-ui-sref-active="active" title="日志查询">
-                    <md-button data-ui-sref="log" data-ui-sref-opts="{inherit: false}"><i
-                            class="fa fa-search"></i>日志查询
-                    </md-button>
-                </li>
-                <li data-ui-sref-active="active" title="集群管理">
-                    <md-button data-ui-sref="cluster" data-ui-sref-opts="{inherit: false}"><i
-                            class="fa fa-server"></i>集群管理
-                    </md-button>
-                </li>
-            </ul>
-            <ul>
-                <li data-ng-if="!IS_OFF_LINE">
-                    <md-button ng-href="{/rootCtrl.userManualUrl/}" target="_blank"><i class="fa fa-book"></i>用户手册
-                    </md-button>
-                </li>
-                <li data-ng-if="!IS_OFF_LINE">
-                    <md-button href="http://open.shurenyun.com" target="_blank"><i class="fa fa-coffee"></i>数人社区</md-button>
-                </li>
-                <li data-ng-if="!IS_OFF_LINE">
-                    <md-button ng-href="#" data-ng-click="rootCtrl.linkToCS()" data-demo-disable><i class="fa fa-pencil-square-o"></i>工单反馈
+                    <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}">
+			<i class="fa fa-cube"></i>应用管理
                     </md-button>
                 </li>
             </ul>
         </div>
     </aside>
-    <div layout="column" flex>
-        <nav class="nav-main">
-            <md-toolbar>
-                <div class="md-toolbar-tools">
-                    <md-button class="md-icon-button" aria-label="Settings" data-ng-click="rootCtrl.togShortMenu()">
-                        <i class="fa fa-bars"></i>
-                    </md-button>
-                    <span flex></span>
-
-                    <md-menu>
-                        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                            <i class="fa fa-th"></i>
-                        </md-button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('cluster.createcluster')">
-                                    新建集群
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('app.create')">
-                                    新建应用
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button data-ng-click="rootCtrl.goByToolbarToolsOption('image.create')">
-                                    新建镜像
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-
-                    <md-button class="md-icon-button" aria-label="More" ng-click="rootCtrl.noticeNav.buildToggler()"
-                               ng-hide="rootCtrl.noticeNav.isOpenNav()">
-                        <i class="fa fa-bell"></i>
-                    </md-button>
-
-                    <md-menu>
-                        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-                            <i class="fa fa-user"></i>
-                            <md-tooltip md-direction="bottom">{/userName/}</md-tooltip>
-                        </md-button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button data-ui-sref="user.groups">
-                                    <md-icon md-svg-src="pics/ic_people.svg" aria-label="ic_people "></md-icon>
-                                    用户中心
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button data-ng-click="rootCtrl.logout()">
-                                    <md-icon md-svg-src="pics/ic_power_settings.svg" aria-label="ic_power_settings "></md-icon>
-                                    退出
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
-            </md-toolbar>
-        </nav>
-        <div class="main-container" flex data-ui-view></div>
-    </div>
-
-    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="noticeNav">
-        <md-toolbar class="md-theme-light">
-            <h1 class="md-toolbar-tools">公告栏</h1>
-        </md-toolbar>
-        <md-content layout-padding>
-            <div>
-                <md-content>
-                    <div data-ng-if="!rootCtrl.noticeHtml">暂无公告</div>
-                    <div data-ng-bind-html="rootCtrl.noticeHtml"></div>
-                </md-content>
-            </div>
-        </md-content>
-    </md-sidenav>
+    <div class="main-container" flex data-ui-view></div>
 </div>
-<div class="tab-rb-feedback ng-hide" style="bottom: 76px;" ng-show="notInDemoGroup && demoGroupId">
-    <a href="#" data-ng-click="rootCtrl.openJoinDemoGroupModal()" data-demo-disable>
-        <i class="glyphicon glyphicon-gift"></i>
-        <em>试用</em>
-    </a>
-</div>
-
 
 <!-- GrowingIO -->
 <script type='text/javascript'>
@@ -244,115 +119,36 @@
 <script src="glance/utils/modals/alert.service.js" type="text/javascript"></script>
 <script src="glance/utils/modals/form.service.js" type="text/javascript"></script>
 
-<script src="glance/common/common.module.js" type="text/javascript"></script>
-<script src="glance/common/services/common-backend.service.js" type="text/javascript"></script>
-
-<script src="glance/cluster/cluster.module.js" type="text/javascript"></script>
-<script src="glance/cluster/cluster.config.js" type="text/javascript"></script>
-<script src="glance/cluster/cluster.route.js" type="text/javascript"></script>
-<script src="glance/cluster/services/cluster-backend.service.js" type="text/javascript"></script>
-<script src="glance/cluster/services/cluster-curd.service.js" type="text/javascript"></script>
-<script src="glance/cluster/modals/add-label.service.js" type="text/javascript"></script>
-<script src="glance/cluster/modals/tear-label.service.js" type="text/javascript"></script>
-<script src="glance/cluster/detail/detail.ctrl.js" type="text/javascript"></script>
-<script src="glance/cluster/detail/nodes.ctrl.js" type="text/javascript"></script>
-<script src="glance/cluster/nodedetail/nodedetails.ctrl.js" type="text/javascript"></script>
-<script src="glance/cluster/update/updatecluster.ctrl.js" type="text/javascript"></script>
-
-<script src="glance/application/app.module.js" type="text/javascript"></script>
-<script src="glance/application/app.config.js" type="text/javascript"></script>
-<script src="glance/application/app.route.js" type="text/javascript"></script>
-<script src="glance/application/directives/app-port-range-validator.directive.js" type="text/javascript"></script>
-<script src="glance/application/directives/dm-healthy-bar.directive.js" type="text/javascript"></script>
-<script src="glance/application/directives/app-name-limit.directive.js" type="text/javascript"></script>
-<script src="glance/application/services/app-backend.service.js" type="text/javascript"></script>
-<script src="glance/application/services/app-curd.service.js" type="text/javascript"></script>
-<script src="glance/application/services/app-label.service.js" type="text/javascript"></script>
-<script src="glance/application/services/app-chart.service.js" type="text/javascript"></script>
-<script src="glance/application/modals/up-canary.service.js" type="text/javascript"></script>
-<script src="glance/application/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/createupdate/modals/create-port.service.js" type="text/javascript"></script>
-<script src="glance/application/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
-<script src="glance/application/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/list/apps-table.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/detail.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/config.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/event.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/instance.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/monitoring.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/version.ctrl.js" type="text/javascript"></script>
-<script src="glance/application/detail/debug.ctrl.js" type="text/javascript"></script>
-<!--<script src="glance/application/detail/canary.ctrl.js" type="text/javascript"></script>-->
-
-<script src="glance/user/user.module.js" type="text/javascript"></script>
-<script src="glance/user/user.config.js" type="text/javascript"></script>
-<script src="glance/user/user.route.js" type="text/javascript"></script>
-<script src="glance/user/center.ctrl.js" type="text/javascript"></script>
-<script src="glance/user/group/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/user/password/update.ctrl.js" type="text/javascript"></script>
-<script src="glance/user/billing/list.ctrl.js" type = "text/javascript"></script>
-<script src="glance/user/licence/detail.ctrl.js" type="text/javascript"></script>
-<script src="glance/user/licence/modals/new-licence.service.js" type="text/javascript"></script>
-<script src="glance/user/users/list.ctrl.js" type = text/javascript></script>
-<script src="glance/user/users/create-user.ctrl.js" type = text/javascript></script>
-<script src="glance/user/users/update-user.ctrl.js" type = text/javascript></script>
-<script src="glance/user/users/reset-pwd.ctrl.js" type = text/javascript></script>
-<script src="glance/user/registry/list.ctrl.js" type = "text/javascript"></script>
-<script src="glance/user/registry/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/user/services/user-backend.service.js"></script>
-
-<script src="glance/image/image.module.js" type="text/javascript"></script>
-<script src="glance/image/image.config.js" type="text/javascript"></script>
-<script src="glance/image/image.route.js" type="text/javascript"></script>
-<script src="glance/image/services/image-backend.service.js" type="text/javascript"></script>
-<script src="glance/image/services/image-curd-service.js" type="text/javascript"></script>
-<script src="glance/image/modals/image-log.service.js" type="text/javascript"></script>
-<script src="glance/filter/project-url.filter.js" type="text/javascript"></script>
-<script src="glance/image/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/image/create/create.ctrl.js" type="text/javascript"></script>
-<script src="glance/image/detail/detail.ctrl.js" type="text/javascript"></script>
-<script src="glance/image/detail/version.ctrl.js" type="text/javascript"></script>
-<script src="glance/image/detail/brief.ctrl.js" type="text/javascript"></script>
-<script src="glance/image/detail/setting.ctrl.js" type="text/javascript"></script>
-
-<script src="glance/repository/repo.module.js" type="text/javascript"></script>
-<script src="glance/repository/repo.config.js" type="text/javascript"></script>
-<script src="glance/repository/repo.route.js" type="text/javascript"></script>
-<script src="glance/repository/services/repo-backend.service.js" type="text/javascript"></script>
-<script src="glance/repository/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/repository/detail/detail.ctrl.js" type="text/javascript"></script>
-
-<script src="glance/policy/policy.module.js" type="text/javascript"></script>
-<script src="glance/policy/policy.config.js" type="text/javascript"></script>
-<script src="glance/policy/policy.route.js" type="text/javascript"></script>
-<script src="glance/policy/common/modal/repeat-alert.service.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/service/warning-backend.service.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/service/warning-curd.service.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/event/event.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/appwarning/scalingList/scalingList.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/service/logwarning-backend.service.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/service/logwarning-curd.service.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/event/event.ctrl.js" type="text/javascript"></script>
-<script src="glance/policy/applogwarning/scalingList/scalingList.ctrl.js" type="text/javascript"></script>
-
-<script src="glance/applayout/layout.module.js" type="text/javascript"></script>
-<script src="glance/applayout/layout.config.js" type="text/javascript"></script>
-<script src="glance/applayout/layout.route.js" type="text/javascript"></script>
-<script src="glance/applayout/services/layout-backend.service.js" type="text/javascript"></script>
-<script src="glance/applayout/services/layout-curd-service.js" type="text/javascript"></script>
-<script src="glance/applayout/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/applayout/list/list.ctrl.js" type="text/javascript"></script>
-
+<script src="glance/items/app.module.js" type="text/javascript"></script>
+<script src="glance/items/app.config.js" type="text/javascript"></script>
+<script src="glance/items/app.route.js" type="text/javascript"></script>
+<script src="glance/items/directives/app-port-range-validator.directive.js" type="text/javascript"></script>
+<script src="glance/items/directives/dm-healthy-bar.directive.js" type="text/javascript"></script>
+<script src="glance/items/directives/app-name-limit.directive.js" type="text/javascript"></script>
+<script src="glance/items/services/app-backend.service.js" type="text/javascript"></script>
+<script src="glance/items/services/app-curd.service.js" type="text/javascript"></script>
+<script src="glance/items/services/app-label.service.js" type="text/javascript"></script>
+<script src="glance/items/services/app-chart.service.js" type="text/javascript"></script>
+<script src="glance/items/modals/up-canary.service.js" type="text/javascript"></script>
+<script src="glance/items/createupdate/create-update.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/createupdate/modals/create-port.service.js" type="text/javascript"></script>
+<script src="glance/items/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
+<script src="glance/items/list/list.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/list/apps-table.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/detail.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/config.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/event.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/instance.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/monitoring.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/version.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/detail/debug.ctrl.js" type="text/javascript"></script>
+<!--<script src="glance/items/detail/canary.ctrl.js" type="text/javascript"></script>-->
 
 <script src="glance/dashboard/dashboard.module.js" type="text/javascript"></script>
 <script src="glance/dashboard/dashboard.config.js" type="text/javascript"></script>
 <script src="glance/dashboard/dashboard.route.js" type="text/javascript"></script>
 <script src="glance/dashboard/services/dashboard-backend.service.js" type="text/javascript"></script>
-<script src="glance/dashboard/home/dashboard.ctrl.js" type="text/javascript"></script>
+<script src="glance/dashboard/dashboard.ctrl.js" type="text/javascript"></script>
 
 <!--endbuild-->
 
@@ -373,21 +169,6 @@
 <script src="js/ngservices/multi-select-service.js" type="text/javascript"></script>
 <script src="js/ngservices/model-open.js" type="text/javascript"></script>
 <script src="js/ngservices/label-service.js" type="text/javascript"></script>
-<script src="js/cluster/clusterctrl.js" type="text/javascript"></script>
-<script src="js/cluster/listclustersctrl.js" type="text/javascript"></script>
-<script src="js/cluster/clusterdetailsctrl.js" type="text/javascript"></script>
-<script src="js/cluster/clusterdetailsnodectrl.js" type="text/javascript"></script>
-<script src="js/cluster/clusterdetailslogctrl.js" type="text/javascript"></script>
-<script src="js/cluster/clusterdetailsmonitorctrl.js" type="text/javascript"></script>
-<script src="js/cluster/createclusterctrl.js" type="text/javascript"></script>
-<script src="js/cluster/createclusterformctrl.js" type="text/javascript"></script>
-<script src="js/cluster/addnodectrl.js" type="text/javascript"></script>
-<script src="js/cluster/addlivingnodectrl.js" type="text/javascript"></script>
-<script src="js/cluster/iaasCtrl.js" type="text/javascript"></script>
-<script src="js/cluster/addnodeformctrl.js" type="text/javascript"></script>
-<script src="js/cluster/updatenodectrl.js" type="text/javascript"></script>
-<script src="js/cluster/updatenodeformctrl.js" type="text/javascript"></script>
-<script src="js/cluster/modals/cluster-problem-tip.service.js" type="text/javascript"></script>
 <script src="js/log/logbase.js" type="text/javascript"></script>
 <script src="js/modals/join-demo-group.js" type="text/javascript"></script>
 <script src="js/modals/add.label.js" type="text/javascript"></script>
@@ -407,7 +188,6 @@
 <script src="glance/directives/dm-no-equal.directive.js" type="text/javascript"></script>
 <script src="glance/directives/dm-password.js" type="text/javascript"></script>
 <script src="glance/glance.run.js" type="text/javascript"></script>
-<script src="glance/rootctrl.js" type="text/javascript"></script>
 <!--endbuild-->
 
 <!--build:js js/template.js-->
@@ -418,7 +198,6 @@
 
 <!-- baidu -->
 <script>
-    if (RUNNING_ENV === "prod") {
         var _hmt = _hmt || [];
         (function () {
             var hm = document.createElement("script");
@@ -426,7 +205,6 @@
             var s = document.getElementsByTagName("script")[0];
             s.parentNode.insertBefore(hm, s);
         })();
-    }
 </script>
 
 </body>

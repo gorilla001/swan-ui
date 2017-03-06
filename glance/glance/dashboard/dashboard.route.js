@@ -9,12 +9,7 @@
         $stateProvider
             .state('dashboard', {
                 url: '/dashboard',
-                template: '<ui-view/>',
-                targetState: 'home'
-            })
-            .state('dashboard.home', {
-                url: '/home',
-                templateUrl: '/glance/dashboard/home/dashboard.html',
+                templateUrl: '/glance/dashboard/dashboard.html',
                 controller: 'DashboardCtrl as dashboardCtrl'
             });
     }
