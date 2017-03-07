@@ -1,0 +1,34 @@
+<section class="info-view" layout="column" layout-align="center" layout-padding data-ng-if="debugAppCtrl.debug">
+    <div class="info" layout="row">
+        <h3>Last Task Failure</h3>
+    </div>
+    <dl layout="row">
+        <dt flex="10">TaskId</dt>
+        <dd flex="90">{/debugAppCtrl.debug.TaskId/}</dd>
+    </dl>
+    <dl layout="row">
+        <dt flex="10">State</dt>
+        <dd flex="90">{/debugAppCtrl.debug.State/}</dd>
+    </dl>
+    <dl layout="row">
+        <dt flex="10">Message</dt>
+        <dd flex="90">{/debugAppCtrl.debug.Message/}</dd>
+    </dl>
+    <dl layout="row">
+        <dt flex="10">Host</dt>
+        <dd flex="90">{/debugAppCtrl.debug.Host/}</dd>
+    </dl>
+    <dl layout="row">
+        <dt flex="10">Timestamp</dt>
+        <dd flex="90">{/debugAppCtrl.debug.Timestamp/}</dd>
+    </dl>
+    <dl layout="row">
+        <dt flex="10">Version</dt>
+        <dd flex="90">{/debugAppCtrl.debug.Version/}</dd>
+    </dl>
+
+</section>
+<div class="alert alert-warning text-center" data-ng-if="!debugAppCtrl.debug">
+    This app does not have failed tasks
+</div>
+

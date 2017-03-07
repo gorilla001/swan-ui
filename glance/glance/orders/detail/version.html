@@ -1,0 +1,39 @@
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>镜像地址</th>
+            <th md-column>最新更新时间</th>
+            <th md-column>操作</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="appversion in versionAppCtrl.versions">
+            <td md-cell>
+                {/appversion.imageName/}:{/appversion.imageVersion/}
+                <span class="bg-primary" data-ng-show="$first">[当前部署版本]</span>
+            </td>
+            <td md-cell>
+                {/appversion.update | date:"yyyy-MM-dd HH:mm:ss"/}
+            </td>
+            <td md-cell>
+                <md-button aria-label="deploy" class="md-button md-raised"
+                           data-ng-show="!$first"
+                           data-ng-click="versionAppCtrl.verisonDeploy(appversion.versionId)" data-demo-disable>
+                    部署
+                </md-button>
+                <md-button aria-label="cancel" class="md-button md-raised"
+                           data-ng-show="versionAppCtrl.ifCancelDeploy && $first"
+                           data-ng-click="versionAppCtrl.cancelDeploy()" data-demo-disable>
+                    撤销
+                </md-button>
+                <md-button aria-label="delete" class="md-button md-raised"
+                           data-ng-show="!$first"
+                           data-ng-click="versionAppCtrl.deleteVersion(appversion.versionId, $event)" data-demo-disable>
+                    删除
+                </md-button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

@@ -13,7 +13,20 @@
 		resolve: {
 			apps: listItems,
 		},
-            });
+            })
+	    .state('app.create', {
+                url: '/new',
+                templateUrl: '/glance/items/createupdate/create-update.html',
+                controller: 'CreateAppCtrl as createAppCtrl',
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    app: function () {
+                        return null
+                    }
+                }
+            }); 
     }
 
     /* @ngInject */
