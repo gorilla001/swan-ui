@@ -1,0 +1,69 @@
+<div layout="row" layout-align="end start">
+
+    <div flex="20" layout="row">
+        <div flex layout="column" layout-align="start start" class="cluster-charts-panel">
+            <div flex="40">
+                <div class="charts-panel">
+                    <piechart chart-used="monitorAppCtrl.memoryUsed" chart-total="monitorAppCtrl.memoryTotal"
+                              radius="[57, 67]"
+                              use-color="#00BCD4" show-text="内存占用" font-size="24" text-color="#596679"
+                              error-code="monitorAppCtrl.errorCode" status="detailAppCtrl.appStatus.status">
+                    </piechart>
+                </div>
+                <div class="info-panel">
+                    内存占用量<br>
+                    <div class="cluster-piechart-num">{/monitorAppCtrl.memoryUsed.toFixed(2) | currency: '' :0/}
+                        / {/monitorAppCtrl.memoryTotal.toFixed(2) | currency: '' :0/}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div flex="75" flex-offset="5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>容器</th>
+                <th>CPU 使用量</th>
+                <th>内存使用量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, appMonitor) in monitorAppCtrl.appMonitors">
+                <td>{/appMonitor.app.appId/}</td>
+                <td style="width: 30%;">
+                    <uib-progressbar class="progress-striped active" id="instanceCpu" type="info"
+                                     max="100" value="(appMonitor.cpuUsedCores * 100).toFixed(2)"><span>{/(appMonitor.cpuUsedCores  * 100).toFixed(2)/} %</span>
+                    </uib-progressbar>
+                </td>
+                <td style="width: 30%;">
+                    <uib-progressbar class="progress-striped active" id="instanceMem" type="success"
+                                     max="appMonitor.memoryTotal" value="appMonitor.memoryUsed"><span>{/appMonitor.memoryUsed | currency: '' :0/} / {/appMonitor.memoryTotal | currency: '' :0/}</span>
+                    </uib-progressbar>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="cpu-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="mem-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="disk-read-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="disk-write-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div data-ng-if="monitorAppCtrl.appInfo.ports.length > 0" layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="req-rate-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="network-send-chart" style="width:100%;height:350px;"></div></div>
+</div>
+<div layout="row" layout-align="start start" layout-margin class="homepage_view">
+    <div flex layout-padding><div id="network-recevied-chart" style="width:100%;height:350px;"></div></div>
+</div>

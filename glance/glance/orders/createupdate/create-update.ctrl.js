@@ -4,20 +4,24 @@
 (function () {
     'use strict';
     angular.module('glance.app')
-        .controller('CreateAppCtrl', CreateAppCtrl);
+        .controller('CreateOrderCtrl', CreateOrderCtrl);
 
     /* @ngInject */
-    function CreateAppCtrl(appservice,
+    function CreateOrderCtrl(appservice,
                            Notification,
                            multiSelectConfig,
+                           clusterBackend,
+                           appLabelService,
                            $state,
                            $scope,
                            target,
                            app,
                            $stateParams,
                            selectImageModal,
-                           $filter) {
-        /*var self = this;
+                           $filter,
+                           clusterCurd,
+                           userBackend) {
+        var self = this;
         self.existPorts = {
             outerPorts: []
         };
@@ -30,34 +34,72 @@
 
         self.cluster;
         self.registries;
-        self.form = {
-            cluster_id: '',
-            name: '',
-            instances: 1,
-            volumes: [],
-            portMappings: [],
-            cpus: 0.1,
-            mem: 16,
-            cmd: '',
-            envs: [],
-            imageName: $stateParams.url ? decodeURIComponent($stateParams.url) : '',
-            imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
-            forceImage: false,
-            network: 'BRIDGE',
-            constraints: [],
-            logPaths: [],
-            healthChecks: [],
-            parameters: [],
-            customRegistry: false
-        };
-        self.isNetworkDisable = false;
-        self.isDockerArgDisable = false;
-        
+        if (self.target === 'create') {
+            self.form = {
+                cluster_id: '',
+                name: '',
+                instances: 1,
+                volumes: [],
+                portMappings: [],
+                cpus: 0.1,
+                mem: 16,
+                cmd: '',
+                envs: [],
+                imageName: $stateParams.url ? decodeURIComponent($stateParams.url) : '',
+                imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
+                forceImage: false,
+                network: 'BRIDGE',
+                constraints: [],
+                logPaths: [],
+                healthChecks: [],
+                parameters: [],
+                customRegistry: false
+            };
+            self.isNetworkDisable = false;
+            self.isDockerArgDisable = false;
+        } else {
+            angular.forEach(app.healthChecks, function(value, key) {
+               if(value.port) {
+                   value.ifPortIndex = 0;
+               } else {
+                   value.ifPortIndex = 1;
+               }
+            });
+            self.form = {
+                cluster_id: app.cid,
+                name: app.name,
+                instances: app.instances,
+                volumes: app.volumes,
+                portMappings: app.ports,
+                cpus: app.cpus,
+                mem: app.mem,
+                cmd: app.cmd,
+                envs: app.envs,
+                imageName: app.imageName,
+                imageVersion: app.imageVersion,
+                forceImage: false,
+                network: app.network,
+                logPaths: app.logPaths,
+                healthChecks: app.healthChecks,
+                parameters: app.parameters,
+                customRegistry: false
+            };
+            if (!self.form.logPaths) {
+                self.form.logPaths = [];
+            }
+            refresClusterData(app.cid, app.id).then(function () {
+            });
+            self.single = app.unique;
+            self.isNetworkDisable = true;
+        }
+
         self.appNames = [];
         self.clusters = [];
         self.showAdvanceContent = false;
 
         listApps();
+        listClusters();
+        listRegistries();
 
         self.multiSelect = {
             labels: [],
@@ -72,12 +114,53 @@
             }
         };
 
+        self.refresClusterData = refresClusterData;
         self.openImageModal = openImageModal;
         self.listPath = listPath;
         self.listAppPort = listAppPort;
         self.listEnvs = listEnvs;
         self.listLogPath = listLogPath;
         self.networkChange = networkChange;
+
+        function refresClusterData(cluster_id, app_id) {
+            if (!cluster_id) {
+                cluster_id = self.form.cluster_id;
+            }
+            appservice.listAppPorts(cluster_id, app_id).then(function (data) {
+                self.existPorts = data;
+            });
+            return clusterBackend.getCluster(cluster_id)
+                .then(function (cluster) {
+                    self.cluster = cluster;
+                    if(self.cluster.status =='failed') {
+                        Notification.error('集群异常');
+                    }
+                    if (cluster.group_name) {
+                        self.clusterName = cluster.group_name + ":" + cluster.name;
+                    } else {
+                        self.clusterName = cluster.name;
+                    }
+                    if (cluster.is_demo_group) {
+                        self.form.network = 'BRIDGE';
+                        self.isNetworkDisable = true;
+                        self.isDockerArgDisable = true;
+                        self.form.parameters = [];
+                    } else if (target === 'create') {
+                        self.isNetworkDisable = false;
+                        self.isDockerArgDisable = false;
+                    }
+                    clusterBackend.listNodes(cluster_id).then(function (data) {
+                        var nodes = data.nodes;
+                        self.multiSelect.labels = appLabelService.listClusterLabels(nodes);
+                        self.multiSelect.nodes = [];
+                        setMultiSelect(nodes, cluster.cluster_type);
+                        if(self.target != 'create') {
+                            setSelectNodes(app.iplist);
+                        }
+                    })
+
+                });
+        }
 
         function setMultiSelect(nodes, cluster_type) {
             for (var i = 0; i < nodes.length; i++) {
@@ -270,9 +353,15 @@
         }
 
         function listClusters() {
+            clusterCurd.listClusterLables().then(function (data) {
+                self.clusters = data
+            });
         }
 
         function listRegistries() {
+            userBackend.listRegistries().then(function(data) {
+                self.registries = data.registries;
+            });
         }
 
         function listNodesBySelectedLabels() {
@@ -344,6 +433,5 @@
             });
         }
 
-	*/
     }
 })();

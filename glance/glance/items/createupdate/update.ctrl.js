@@ -10,14 +10,17 @@
     function CreateAppCtrl(appservice,
                            Notification,
                            multiSelectConfig,
+                           appLabelService,
                            $state,
                            $scope,
                            target,
                            app,
                            $stateParams,
                            selectImageModal,
-                           $filter) {
-        /*var self = this;
+                           $filter,
+                           clusterCurd,
+                           userBackend) {
+        var self = this;
         self.existPorts = {
             outerPorts: []
         };
@@ -30,34 +33,72 @@
 
         self.cluster;
         self.registries;
-        self.form = {
-            cluster_id: '',
-            name: '',
-            instances: 1,
-            volumes: [],
-            portMappings: [],
-            cpus: 0.1,
-            mem: 16,
-            cmd: '',
-            envs: [],
-            imageName: $stateParams.url ? decodeURIComponent($stateParams.url) : '',
-            imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
-            forceImage: false,
-            network: 'BRIDGE',
-            constraints: [],
-            logPaths: [],
-            healthChecks: [],
-            parameters: [],
-            customRegistry: false
-        };
-        self.isNetworkDisable = false;
-        self.isDockerArgDisable = false;
-        
+        if (self.target === 'create') {
+            self.form = {
+                cluster_id: '',
+                name: '',
+                instances: 1,
+                volumes: [],
+                portMappings: [],
+                cpus: 0.1,
+                mem: 16,
+                cmd: '',
+                envs: [],
+                imageName: $stateParams.url ? decodeURIComponent($stateParams.url) : '',
+                imageVersion: $stateParams.version ? decodeURIComponent($stateParams.version) : '',
+                forceImage: false,
+                network: 'BRIDGE',
+                constraints: [],
+                logPaths: [],
+                healthChecks: [],
+                parameters: [],
+                customRegistry: false
+            };
+            self.isNetworkDisable = false;
+            self.isDockerArgDisable = false;
+        } else {
+            angular.forEach(app.healthChecks, function(value, key) {
+               if(value.port) {
+                   value.ifPortIndex = 0;
+               } else {
+                   value.ifPortIndex = 1;
+               }
+            });
+            self.form = {
+                cluster_id: app.cid,
+                name: app.name,
+                instances: app.instances,
+                volumes: app.volumes,
+                portMappings: app.ports,
+                cpus: app.cpus,
+                mem: app.mem,
+                cmd: app.cmd,
+                envs: app.envs,
+                imageName: app.imageName,
+                imageVersion: app.imageVersion,
+                forceImage: false,
+                network: app.network,
+                logPaths: app.logPaths,
+                healthChecks: app.healthChecks,
+                parameters: app.parameters,
+                customRegistry: false
+            };
+            if (!self.form.logPaths) {
+                self.form.logPaths = [];
+            }
+            refresClusterData(app.cid, app.id).then(function () {
+            });
+            self.single = app.unique;
+            self.isNetworkDisable = true;
+        }
+
         self.appNames = [];
         self.clusters = [];
         self.showAdvanceContent = false;
 
         listApps();
+        listClusters();
+        listRegistries();
 
         self.multiSelect = {
             labels: [],
@@ -270,9 +311,15 @@
         }
 
         function listClusters() {
+            clusterCurd.listClusterLables().then(function (data) {
+                self.clusters = data
+            });
         }
 
         function listRegistries() {
+            userBackend.listRegistries().then(function(data) {
+                self.registries = data.registries;
+            });
         }
 
         function listNodesBySelectedLabels() {
@@ -344,6 +391,5 @@
             });
         }
 
-	*/
     }
 })();

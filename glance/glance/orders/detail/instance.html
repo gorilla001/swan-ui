@@ -1,0 +1,24 @@
+<md-table-container>
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column>实例名称</th>
+            <th md-column ng-if="instanceAppCtrl.appInfo.healthChecks.length > 0">健康状态</th>
+            <th md-column >状态</th>
+            <th md-column>启动时间</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="instance in instanceAppCtrl.instances">
+            <td md-cell>实例{/$index + 1/} ({/instance.taskId/}) <span data-ng-if="instance.canary">(灰度版本)</span></td>
+            <td md-cell ng-if="instanceAppCtrl.appInfo.healthChecks.length > 0"><span ng-if="instance.health">健康</span><span ng-if="!instance.health">不健康</span></td>
+            <td md-cell>{/APP_INS_STATUS[instance.taskStatus]/}</td>
+            <td md-cell data-ng-if="instance.startTime!=='0001-01-01T00:00:00Z'">{/instance.startTime | date:"yyyy-MM-dd HH:mm:ss"/}</td>
+            <td md-cell data-ng-if="instance.startTime==='0001-01-01T00:00:00Z'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-warning text-center" data-ng-if="!instanceAppCtrl.instances.length">
+        未查询到实例信息
+    </div>
+</md-table-container>

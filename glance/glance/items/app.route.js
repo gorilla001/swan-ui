@@ -8,12 +8,30 @@
         $stateProvider
             .state('app', {
                 url: '/apps',
+                template: '<ui-view/>',
+                targetState: 'list'
+            })
+            .state('app.list', {
+                url: '/list',
                 templateUrl: '/glance/items/list/list.html',
                 controller: 'ListAppCtrl as listappctrl',
-		resolve: {
-			apps: listItems,
-		},
-            });
+                resolve: {
+                    apps: listItems,
+                },
+            })
+	    .state('app.create', {
+                url: '/new',
+                templateUrl: '/glance/items/create/create.html',
+                controller: 'CreateAppCtrl as createAppCtrl',
+                resolve: {
+                    target: function () {
+                        return 'create'
+                    },
+                    app: function () {
+                        return null
+                    }
+                }
+            }); 
     }
 
     /* @ngInject */

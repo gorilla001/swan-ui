@@ -1,0 +1,172 @@
+<dl class="list-dl-row">
+    <dt>镜像地址</dt>
+    <dd>{/detailAppCtrl.appInfo.imageName/}
+        <span data-ng-show="detailAppCtrl.appInfo.forceImage">(强制拉取镜像)</span>
+    </dd>
+    <dt>镜像版本</dt>
+    <dd>{/detailAppCtrl.appInfo.imageVersion/}</dd>
+</dl>
+<dl class="list-dl-row">
+    <dt>CPU</dt>
+    <dd>{/detailAppCtrl.appInfo.cpus/}</dd>
+    <dt>内存</dt>
+    <dd>{/detailAppCtrl.appInfo.mem | currency: '' :0/} MB</dd>
+    <dt>容器个数</dt>
+    <dd ng-if="detailAppCtrl.appStatus.tasks && detailAppCtrl.appStatus.tasks != detailAppCtrl.appStatus.instances">
+        {/detailAppCtrl.appStatus.tasks/}/{/detailAppCtrl.appStatus.instances/}<span
+            ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
+    <dd ng-if="!detailAppCtrl.appStatus.tasks || detailAppCtrl.appStatus.tasks == detailAppCtrl.appStatus.instances">
+        {/detailAppCtrl.appStatus.instances/}<span
+            ng-show="detailAppCtrl.appInfo.unique"> (每台主机只能运行一个当前容器应用)</span></dd>
+    <dt>应用模式</dt>
+    <dd>{/configAppCtrl.networkText[detailAppCtrl.appInfo.network]/}</dd>
+</dl>
+<dl class="list-dl-row">
+    <dt ng-if="detailAppCtrl.appInfo.iplist.length">所在主机地址</dt>
+    <dd ng-if="detailAppCtrl.appInfo.iplist.length"><span
+            ng-repeat="ip in detailAppCtrl.appInfo.iplist">{/ip/} &nbsp; </span></dd>
+</dl>
+
+<h2 data-ng-if="detailAppCtrl.appInfo.volumes.length">挂载路径</h2>
+<md-table-container ng-show="detailAppCtrl.appInfo.volumes.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>主机路径</span></th>
+            <th md-column><span>容器路径</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="volumeInfo in detailAppCtrl.appInfo.volumes">
+            <td md-cell>{/volumeInfo.hostPath/}</td>
+            <td md-cell>{/volumeInfo.containerPath/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<h2 data-ng-if="detailAppCtrl.appInfo.ports.length">应用地址</h2>
+<md-table-container ng-show="detailAppCtrl.appInfo.ports.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>应用端口</span></th>
+            <th md-column><span>协议</span></th>
+            <th md-column>地址</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="portInfo in detailAppCtrl.appInfo.ports">
+            <td md-cell>{/portInfo.appPort/}</td>
+            <td md-cell>{/configAppCtrl.protocolType[portInfo.protocol]/}</td>
+            <td md-cell>
+                <p ng-repeat="nodeIp in configAppCtrl.listNodesIp"
+                   data-ng-hide="portInfo.uri || configAppCtrl.isGroupFlag || isDemo">
+                    <span data-ng-show="portInfo.protocol == 2">http://</span>{/nodeIp/}:{/portInfo.mapPort/}
+                </p>
+
+                <p data-ng-show="configAppCtrl.isGroupFlag && !portInfo.uri">
+                    <span data-ng-show="portInfo.protocol == 2">http://</span>{/configAppCtrl.specialUrl.group/}:{/portInfo.mapPort/}
+                </p>
+
+                <p data-ng-show="isDemo && !portInfo.uri && !configAppCtrl.isGroupFlag">
+                    <span data-ng-show="portInfo.protocol == 2">http://</span>{/configAppCtrl.specialUrl.demo/}:{/portInfo.mapPort/}
+                </p>
+
+                <p data-ng-show="portInfo.uri">http://{/portInfo.uri/}</p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<h2 data-ng-if="detailAppCtrl.appInfo.healthChecks.length">健康检查</h2>
+<md-table-container ng-show="detailAppCtrl.appInfo.healthChecks.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>协议</span></th>
+            <th md-column><span>路径</span></th>
+            <th md-column><span>宽限时间</span></th>
+            <th md-column>检查间隔</th>
+            <th md-column>检查超时</th>
+            <th md-column>最多持续失败次数</th>
+            <th md-column>端口号</th>
+            <th md-column>端口索引</th>
+            <th md-column>忽略HTTP100~199状态码</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="healthinfo in detailAppCtrl.appInfo.healthChecks">
+            <td md-cell>{/healthinfo.protocol/}</td>
+            <td md-cell>{/healthinfo.path/}</td>
+            <td md-cell>{/healthinfo.gracePeriodSeconds/}</td>
+            <td md-cell>{/healthinfo.intervalSeconds/}</td>
+            <td md-cell>{/healthinfo.timeoutSeconds/}</td>
+            <td md-cell>{/healthinfo.maxConsecutiveFailures/}</td>
+            <td md-cell>{/healthinfo.port/}</td>
+            <td md-cell>{/healthinfo.portIndex/}</td>
+            <td md-cell data-ng-if="healthinfo.protocol =='HTTP'">{/healthinfo.ignoreHttp1xx ? '是': '否'/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+
+
+<h2 data-ng-if="detailAppCtrl.appInfo.envs.length">环境变量</h2>
+<md-table-container data-ng-if="detailAppCtrl.appInfo.envs.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>KEY</span></th>
+            <th md-column><span>VALUE</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="envInfo  in  detailAppCtrl.appInfo.envs | orderBy: 'key'">
+            <td md-cell>{/envInfo.key/}</td>
+            <td md-cell>{/envInfo.value/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<h2 data-ng-if=" detailAppCtrl.appInfo.parameters.length">Docker 参数</h2>
+<md-table-container data-ng-if=" detailAppCtrl.appInfo.parameters.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>KEY</span></th>
+            <th md-column><span>VALUE</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="parameter  in  detailAppCtrl.appInfo.parameters | orderBy: 'key'">
+            <td md-cell>{/parameter.key/}</td>
+            <td md-cell>{/parameter.value/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<h2 data-ng-if="detailAppCtrl.appInfo.logPaths.length">日志目录</h2>
+<md-table-container data-ng-if="detailAppCtrl.appInfo.logPaths.length">
+    <table md-table>
+        <thead md-head>
+        <tr md-row>
+            <th md-column><span>目录</span></th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="logPath  in  detailAppCtrl.appInfo.logPaths">
+            <td md-cell>{/logPath/}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
+<h2 data-ng-if="detailAppCtrl.appInfo.cmd">启动命令</h2>
+<dl data-ng-if="detailAppCtrl.appInfo.cmd">
+    <dd>{/ detailAppCtrl.appInfo.cmd/}</dd>
+</dl>
