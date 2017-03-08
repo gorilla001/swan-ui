@@ -14,6 +14,7 @@ var glanceApp = angular.module('glance',
         'glance.utils',
         'glance.app',
         'ngMaterial',
+	'lfNgMdFileInput',
         'glance.dashboard'
     ]);
 
@@ -39,7 +40,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
             });
 
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
