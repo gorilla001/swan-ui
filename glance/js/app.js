@@ -11,10 +11,11 @@ var glanceApp = angular.module('glance',
         'ui.bootstrap.datetimepicker',
         'ui-notification',
         'ngTable',
-        'glance.utils',
+        'glance.dashboard',
         'glance.app',
+	'glance.order',
+        'glance.utils',
         'ngMaterial',
-        'glance.dashboard'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
@@ -28,7 +29,11 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
             startRight: 260
         });
 
-        $urlRouterProvider.otherwise('/dashboard');
+        $urlRouterProvider.otherwise(function ($injector) {
+            var $state = $injector.get('$state');
+            $state.go('dashboard');
+        });
+
         $stateProvider
             .state('404', {
                 views: {
@@ -38,8 +43,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
                 }
             });
 
-
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
 
         $interpolateProvider.startSymbol('{/');
         $interpolateProvider.endSymbol('/}');
