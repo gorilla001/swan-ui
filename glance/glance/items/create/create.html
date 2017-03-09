@@ -3,7 +3,7 @@
         <div class="main-content">
             <form name="staticForm">
                 <div layout="row" layout-align="start start" class="form-group form-group-input">
-                    <label flex="15">应用名称</label>
+                    <label flex="15">商品名称</label>
                     <div flex="50" layout="column">
                         <div flex>
                             <input type="text" class="form-input" name="appName"
@@ -14,20 +14,19 @@
                                    data-ng-trim="true"
                                    data-samename
                                    data-name-list="createAppCtrl.appNames"
-                                   data-ng-disabled="createAppCtrl.target==='update'"
                                    app-name-limit>
                         </div>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.appName.$error.required && !staticForm.appName.$pristine">
-                            <small>应用名称不能为空</small>
+                            <small>商品名称不能为空</small>
                         </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.appName.$error.pattern && !staticForm.appName.$pristine">
-                            <small>应用名称不能包含空白符号</small>
+                            <small>商品名称不能包含空白符号</small>
                         </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.appName.$error.samename">
-                            <small>应用名已存在</small>
+                            <small>商品名称已存在</small>
                         </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.appName.$error.appNameLimit && !staticForm.appName.$pristine">
@@ -36,38 +35,22 @@
                     </div>
                     <div flex></div>
                 </div>
-
-                <div layout="row" layout-align="end center" class="form-group form-group-select"
-                     data-ng-if="createAppCtrl.target==='create'">
-                    <label flex="15">选择集群</label>
-                    <div flex="50" layout="column">
-                        <md-input-container>
-                            <md-select data-ng-model="createAppCtrl.form.cluster_id" data-required="required"
-                                       aria-label="selectCluster"
-                                       data-ng-change="createAppCtrl.refresClusterData()">
-                                <md-option ng-repeat="cluster in createAppCtrl.clusters" ng-value="cluster.id">
-                                    {/cluster.name/}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                    </div>
-                    <div flex></div>
-                </div>
-
-                <div layout="row" layout-align="end center" class="form-group form-group-input"
-                     data-ng-if="createAppCtrl.target==='update'">
-                    <label flex="15">所属集群</label>
+		<div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">商品图片</label>
                     <div flex="50" layout="column">
                         <div flex>
-                            <input type="text" class="form-input" name="clusterName" aria-label="updateCluster"
-                                   ng-model="createAppCtrl.clusterName" ng-disabled="true">
+				<lf-ng-md-file-input lf-files='files' multiple preview> </lf-ng-md-file-input>
                         </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.imageName.$error.required && !staticForm.imageName.$pristine">
+                            <small>镜像地址不能为空</small>
+                        </p>
                     </div>
                     <div flex></div>
                 </div>
 
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
-                    <label flex="15">镜像地址</label>
+                    <label flex="15">商品描述</label>
                     <div flex="50" layout="column">
                         <div flex>
                             <input type="text" class="form-input"
@@ -80,16 +63,11 @@
                             <small>镜像地址不能为空</small>
                         </p>
                     </div>
-                    <div flex flex-offset="5">
-                        <md-button class="md-icon-button md-accent" aria-label="openImageModal"
-                                   data-ng-click="createAppCtrl.openImageModal($event)">
-                            <i class="fa fa-plus"></i>
-                        </md-button>
-                    </div>
+                    <div flex></div>
                 </div>
 
                 <div layout="row" layout-align="start center" class="form-group form-group-input">
-                    <label flex="15">镜像版本</label>
+                    <label flex="15">商品价格</label>
                     <div flex="50" layout="column">
                         <div flex>
                             <input type="text" class="form-input"
@@ -99,70 +77,13 @@
                         </div>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.imageVersion.$error.required && !staticForm.imageVersion.$pristine">
-                            <small>镜像版本不能为空</small>
+                            <small>价格不能为空</small>
                         </p>
-                    </div>
-                    <div flex flex-offset="5">
-                        <md-checkbox data-ng-model="createAppCtrl.form.forceImage">强制拉取镜像</md-checkbox>
-                    </div>
-
-                </div>
-
-                <div layout="row" layout-align="end center" class="form-group form-group-radio">
-                    <label flex="15">网络模式</label>
-                    <div flex="30" layout="column">
-                        <div flex>
-                            <md-radio-group ng-model="createAppCtrl.form.network" layout="row"
-                                            data-required="required" aria-label="Network model"
-                                            ng-change="createAppCtrl.networkChange(createAppCtrl.form.network)">
-                                <md-radio-button value="BRIDGE" data-ng-disabled="createAppCtrl.isNetworkDisable"
-                                                 class="md-accent" flex>网桥模式
-                                </md-radio-button>
-                                <md-radio-button value="HOST" data-ng-disabled="createAppCtrl.isNetworkDisable"
-                                                 class="md-accent"
-                                                 flex>HOST 模式
-                                </md-radio-button>
-                            </md-radio-group>
-                        </div>
                     </div>
                     <div flex></div>
                 </div>
-
-                <div layout="row" layout-align="end center" class="form-group form-group-radio">
-                    <label flex="15">容器规格</label>
-                    <div flex="50" layout="column">
-                        <div layout="row" layout-align="start center">
-                            <div flex="15">
-                                <span class="md-body-1">CPU 权重</span>
-                            </div>
-                            <md-slider flex md-discrete class="md-accent" data-ng-model="createAppCtrl.form.cpus"
-                                       step="0.1" min="0.1"
-                                       max="1" aria-label="cpus">
-                            </md-slider>
-                        </div>
-                    </div>
-                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.cpus/}</div>
-                </div>
-
-                <div layout="row" layout-align="end center" class="form-group form-group-radio">
-                    <label flex="15"></label>
-                    <div flex="50" layout="column">
-                        <div layout="row" layout-align="start center">
-                            <div flex="15">
-                                <span class="md-body-1">内存</span>
-                            </div>
-                            <md-slider flex class="md-accent" data-ng-model="createAppCtrl.form.mem" min="16" max="8192"
-                                       aria-label="mem">
-                            </md-slider>
-                        </div>
-                    </div>
-                    <div flex style="font-size: 24px; margin-left: 12px;">{/createAppCtrl.form.mem | currency: ''
-                        :0/} <span
-                                style="font-size: 12px;">MB</span></div>
-                </div>
-
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
-                    <label flex="15">容器个数</label>
+                    <label flex="15">商品产地</label>
                     <div flex="50" layout="column">
                         <div flex>
                             <input type="number" class="form-input"
@@ -173,19 +94,14 @@
                         </div>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.instances.$error.min && !staticForm.instances.$pristine">
-                            <small>容器个数不小于 1</small>
+                            <small>产地不能为空</small>
                         </p>
                         <p class="error-info help-info-bottom"
                            data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
                             <small>容器个数不能为空</small>
                         </p>
                     </div>
-                    <div flex flex-offset="5">
-                        <md-checkbox data-ng-model="createAppCtrl.single" aria-label="single of containers"
-                                     data-ng-disabled="createAppCtrl.target==='update' || createAppCtrl.disableSingle">
-                            1容器 : 1主机
-                        </md-checkbox>
-                    </div>
+                    <div flex></div>
                 </div>
 
                 <div layout="row" class="form-footer-button">

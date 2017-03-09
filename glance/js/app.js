@@ -16,6 +16,8 @@ var glanceApp = angular.module('glance',
 	'glance.order',
         'glance.utils',
         'ngMaterial',
+	'lfNgMdFileInput',
+        'glance.dashboard'
     ]);
 
 glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider', '$locationProvider','NotificationProvider',
