@@ -1,0 +1,43 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Delete Stategy	
+            </div>
+        </header>
+
+        <div class="main-content">
+            <form name="staticForm">
+                <div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">Duration</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="duration" aria-label="duration"
+                                   data-ng-model="updateAppCtrl.form.cpus"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.duration.$error.required && !staticForm.duration.$pristine">
+                            <small>Duration must not be empty</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+		<div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="updateAppCtrl.update()"
+                                   data-ng-disabled="staticForm.$invalid" aria-label="update"
+                                   >Delete
+                        </md-button>
+                    </div>
+		    <div flex-offset="30">
+                        <md-button class="md-raised md-primary" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="updateAppCtrl.cancel()">Cancel</md-button>
+		    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

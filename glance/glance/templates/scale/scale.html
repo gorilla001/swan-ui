@@ -1,0 +1,43 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Scale up/down	
+            </div>
+        </header>
+
+        <div class="main-content">
+            <form name="staticForm">
+		<div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">Instances</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="instances" aria-label="instances"
+                                   data-ng-model="scaleAppCtrl.form.instances"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.instances.$error.required && !staticForm.instances.$pristine">
+                            <small>Instances must not be empty</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="scaleAppCtrl.scale()"
+                                   data-ng-disabled="staticForm.$invalid && !scaleAppCtrl.scale" aria-label="scale"
+                                   >OK
+                        </md-button>
+                    </div>
+		    <div flex-offset="30">
+                        <md-button class="md-raised md-primary" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="scaleAppCtrl.cancel()">Cancel</md-button>
+		    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

@@ -431,8 +431,8 @@ table.md-table {
 }
 
 table.md-table td.md-cell {
-    font-size: 12px;
-    line-height: 14px;
+    font-size: 14px;
+    line-height: 5px;
 
     padding: 20px 10px !important;
 
@@ -942,4 +942,8 @@ footer-content, md-toolbar {
 .form-group-textarea textarea:disabled {
     background: #CCC;
     border: none;
+}
+
+.md-button {
+	text-transform: none;
 }

@@ -1,10 +1,10 @@
 (function () {
     'use strict';
     angular.module('glance.app')
-        .controller('ListAppCtrl', ListAppCtrl);
+        .controller('ListTmplCtrl', ListTmplCtrl);
 
     /* @ngInject */
-    function ListAppCtrl(appcurd, appservice, $state) {
+    function ListTmplCtrl(appcurd, appservice, $state) {
         var self = this;
 	self.apps = [];
 	self.totalApps = 0;

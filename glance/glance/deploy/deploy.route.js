@@ -31,12 +31,6 @@
 		templateUrl: '/glance/items/create/env.html',
 		controller: 'CreateAppCtrl as createAppCtrl',
 	    })
-	    .state('app.parameters', {
-		url: "/new/parameters",
-		templateUrl: '/glance/items/create/parameters.html',
-		controller: 'CreateAppCtrl as createAppCtrl',
-	    })
-
 	    .state('app.detail', {
 		url: '/:app_id',
                 templateUrl: '/glance/items/detail/detail.html',
@@ -67,16 +61,6 @@
                 templateUrl: '/glance/items/scale/scale.html',
 		controller: 'ScaleAppCtrl as scaleAppCtrl',
 	    })
-	    .state('app.clone', {
-		url: "//:app_id/clone",
-                templateUrl: '/glance/items/clone/clone.html',
-		controller: 'CloneAppCtrl as cloneAppCtrl',
-	    })
-            .state('app.template', {
-                url: '/list',
-                templateUrl: '/glance/items/list/list.html',
-                controller: 'ListAppCtrl as listappctrl',
-            })
 	    ; 
     }
 })();

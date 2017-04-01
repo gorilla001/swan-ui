@@ -104,7 +104,7 @@
                 }
                 var deferred = $q.defer();
                 $http(req).success(function (data) {
-                        this._handleErrors(status, data, deferred);
+			deferred.resolve(data);
                 }.bind(this)).error(function (data, status) {
                     this._handleErrors(status, data, deferred);
                 }.bind(this));

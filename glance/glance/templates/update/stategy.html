@@ -1,0 +1,61 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Update Stategy	
+            </div>
+        </header>
+
+        <div class="main-content">
+            <form name="staticForm">
+                <div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">Step</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="step" aria-label="cpu"
+                                   data-ng-model="updateAppCtrl.stategy.step"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.step.$error.required && !staticForm.step.$pristine">
+                            <small>Step must not be empty</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+		<div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">Duration</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="duration" aria-label="duration"
+                                   data-ng-model="updateAppCtrl.stategy.duration"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.duration.$error.required && !staticForm.duration.$pristine">
+                            <small>Duration must not be empty</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="updateAppCtrl.update()"
+                                   data-ng-disabled="staticForm.$invalid" aria-label="update"
+                                   >Update
+                        </md-button>
+                    </div>
+		    <div flex-offset="30">
+                        <md-button class="md-raised md-primary" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="updateAppCtrl.cancel()">Cancel</md-button>
+		    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

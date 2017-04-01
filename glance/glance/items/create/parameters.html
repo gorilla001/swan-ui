@@ -1,0 +1,73 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Envs
+            </div>
+	</header>
+        <div class="main-content2">
+	    <form layout="column">
+		    <div class="side-nav" layout="column">
+            <ul layout="column" class="layout-column">
+		    <li title="applications">
+			<md-button data-ui-sref=""> 
+			General
+                    </md-button>
+                </li>
+                <li title="deploy" data-ui-sref-active="active">
+			<md-button data-ui-sref=""> 
+	        	Parameters	
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+	        	Ports	
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+	        	Constraints	
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+	        	Health Check	
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+			Envs
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+		        Volumes	
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+		        Uris 
+                    </md-button>
+		</li>
+                <li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+		        Labels 
+                    </md-button>
+		</li>
+	    </ul>
+		    </div>
+
+	    </form>
+		
+
+	</div>
+        <div layout="row" class="form-footer-button">
+		    <div style="margin-right: 10px;">
+                        <md-button class="md-raised md-accent" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="createAppCtrl.createApp()">Create</md-button>
+		    </div>
+                </div>
+
+    </section>
+</div>
+

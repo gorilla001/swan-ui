@@ -1,0 +1,105 @@
+.form-group-input input[type='text'], .form-group-input input[type='number'], .form-group-input input[type='password'] {
+    font-size: 15px;
+    line-height: 14px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 18px;
+    color: #354052;
+    border: none; 
+}
+
+.form-group-input input[type='text']:focus
+.form-group-input input[type='number']:hover
+.form-group-input input[type='number']:focus
+.form-group-input input[type='password']:hover
+.form-group-input input[type='password']:focus
+.form-group-textarea textarea:hover
+.form-group-textarea textarea:focus {
+    border-color: none;
+}
+.form-group-input input[type='text']:focus {
+    border-color: none;
+}
+
+.sidebar-main {
+	    width: 100%;
+	    height: 50px;
+    }
+    .layout-column {
+	        -webkit-flex-direction: column;
+		    -ms-flex-direction: column;
+		        flex-direction: column;
+		}
+
+.layout-row {
+	    -webkit-flex-direction: row;
+	        -ms-flex-direction: row;
+		    flex-direction: row;
+}
+
+.sidebar-main ul {
+	    margin: 0;
+    }
+
+.sidebar-main li.active a {
+	    color: #fff;
+	        border-left: none; 
+		    border-radius: 0;
+		        background-color: #303949;
+	        border-bottom: 3px solid #2196f3;
+		}
+		.sidebar-main li a {
+			height: 50px;
+			width: 120px;
+			padding-left: 15px;
+		}
+		/*.layout-row {
+			    -webkit-box-orient: horizontal;
+			        -webkit-box-direction: normal;
+				    -webkit-flex-direction: row;
+				        flex-direction: row;
+				}*/
+
+	.sidebar-main .logo {
+		    width: 150px;
+		    height: 50px;
+		    border-bottom:none; 
+		    margin-right:0px;
+		    box-shadow:none;
+	    }
+
+	    .sidebar-main .logo img {
+		        width: 150px;
+			height: 50px;
+			    margin-top: 0;
+			        opacity: 0.5;
+			}
+			.form-group {
+				margin-bottom: 20px;
+			}
+			body .main-container{
+		}
+		.main-content2 {
+			    padding: 0px;
+			        background-color: #ecf2f6;
+			}
+			.side-nav {
+				border-right: 1px solid #dadcde;
+				width:150px;
+			}
+			.side-nav ul li a {
+				width: 150px;
+				border-radius: 0px;
+				margin: 0px;
+				height: 50px;
+			}
+			.side-nav li a:focus {
+	        		border-bottom: 3px solid #2196f3;
+			}
+			.md-create {
+				background-color: #29a7be!important;
+				border-radius: 0px;
+				cursor: pointer;
+			}

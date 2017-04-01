@@ -1,0 +1,31 @@
+<div layout="column">
+    <div layout="row" layout-algin="space-around start" layout-wrap>
+        <div class="panel panel-chart" flex>
+            <nvd3 options="nodeInstanceStatsCtrl.chartOptions.cpuOptions"
+                  data="nodeInstanceStatsCtrl.chartOptions.cpuData" api="nodeInstanceStatsCtrl.cpuChartApi"
+                  config="{deepWatchData: false, deepWatchOptions:false}"
+                  id="instance-stats-cpu"></nvd3>
+        </div>
+        <div class="panel panel-chart" flex>
+            <nvd3 options="nodeInstanceStatsCtrl.chartOptions.memOptions"
+                  data="nodeInstanceStatsCtrl.chartOptions.memData" api="nodeInstanceStatsCtrl.memChartApi"
+                  config="{deepWatchData: false, deepWatchOptions:false}"
+                  id="instance-stats-memory"></nvd3>
+        </div>
+    </div>
+
+    <div layout="row" layout-algin="space-around start" layout-wrap>
+        <div class="panel panel-chart" flex>
+            <nvd3 options="nodeInstanceStatsCtrl.chartOptions.networkOptions"
+                  data="nodeInstanceStatsCtrl.chartOptions.networkData" api="nodeInstanceStatsCtrl.networkChartApi"
+                  config="{deepWatchData: false, deepWatchOptions:false}"
+                  id="instance-stats-network"></nvd3>
+        </div>
+        <div class="panel panel-chart" flex>
+            <nvd3 options="nodeInstanceStatsCtrl.chartOptions.diskOptions"
+                  data="nodeInstanceStatsCtrl.chartOptions.diskData" api="nodeInstanceStatsCtrl.diskChartApi"
+                  config="{deepWatchData: false, deepWatchOptions:false}"
+                  id="instance-stats-diskIO"></nvd3>
+        </div>
+    </div>
+</div>

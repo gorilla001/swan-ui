@@ -1,0 +1,128 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Health Check	
+            </div>
+	</header>
+
+        <div class="main-content">
+            <form name="staticForm">
+                <div layout="row" layout-align="start start" class="form-group form-group-input">
+                    <label flex="15">Protocol</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input" name="protocol"
+                                   aria-label="protocol"
+				   data-ng-model="createAppCtrl.form.healthChecks.protocol">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+		<div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">Path</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="path" aria-label="path"
+						data-ng-model="createAppCtrl.form.healthChecks.path">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">PortName</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="portName" aria-label="portName"
+					       data-ng-model="createAppCtrl.form.healthChecks.portName">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+                <div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">DelaySeconds</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="delaySeconds" aria-label="delaySeconds"
+						 data-ng-model="createAppCtrl.form.healthChecks.delaySeconds">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+		<div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">GracePeriodSeconds</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="gracePeriodSeconds" aria-label="gracePeriodSeconds"
+						  data-ng-model="createAppCtrl.form.healthChecks.gracePeriodSeconds">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+		<div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">IntervalSeconds</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="intervalSeconds" aria-label="intervalSeconds"
+                                   data-ng-model="createAppCtrl.form.healthChecks.intervalSeconds"
+				   data-min="1">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+
+		<div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">TimeoutSeconds</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="timeoutSeconds" aria-label="timeoutSeconds"
+                                   data-ng-model="createAppCtrl.form.healthChecks.timeoutSeconds">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+		<div layout="row" layout-align="end center" class="form-group form-group-input">
+                    <label flex="15">ConsecutiveFailures</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="number" class="form-input"
+                                   name="consecutiveFailures" aria-label="consecutiveFailures"
+                                   data-ng-model="createAppCtrl.form.healthChecks.consecutiveFailures">
+                        </div>
+                    </div>
+                    <div flex></div>
+                </div>
+		<div layout="row" class="form-footer-button">
+		    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ui-sref="rootCtl.goBack()"
+                                   aria-label="previous"
+                                   >Previous
+                        </md-button>
+                    </div>
+
+                    <div flex-offset="10">
+                        <md-button class="md-raised md-primary" data-ui-sref="app.env()"
+                                   aria-label="next2"
+                                   >Next
+                        </md-button>
+                    </div>
+		    <div flex-offset="10">
+                        <md-button class="md-raised md-accent" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="createAppCtrl.createApp()">Create</md-button>
+		    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </section>
+</div>

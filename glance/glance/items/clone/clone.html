@@ -1,0 +1,43 @@
+<div class="main-container">
+    <section class="main-section">
+	<header layout="row" layout-align="end start">
+            <div layout-align="end center" class="operation">
+		Clone	
+            </div>
+        </header>
+
+        <div class="main-content">
+            <form name="staticForm">
+		<div layout="row" layout-align="start center" class="form-group form-group-input">
+                    <label flex="15">Name</label>
+                    <div flex="50" layout="column">
+                        <div flex>
+                            <input type="text" class="form-input"
+                                   name="name" aria-label="name"
+                                   data-ng-model="cloneAppCtrl.appName"
+                                   data-required="required">
+                        </div>
+                        <p class="error-info help-info-bottom"
+                           data-ng-show="staticForm.name.$error.required && !staticForm.name.$pristine">
+                            <small>Name must not be empty</small>
+                        </p>
+                    </div>
+                    <div flex></div>
+                </div>
+                <div layout="row" class="form-footer-button">
+                    <div flex-offset="15">
+                        <md-button class="md-raised md-primary" data-ng-click="cloneAppCtrl.clone()"
+                                   data-ng-disabled="staticForm.$invalid" aria-label="clone"
+                                   >Clone
+                        </md-button>
+                    </div>
+		    <div flex-offset="30">
+                        <md-button class="md-raised md-primary" data-ng-disabled="staticForm.$invalid"
+				data-ng-click="cloneAppCtrl.cancel()">Cancel</md-button>
+		    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

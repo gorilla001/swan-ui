@@ -2,7 +2,7 @@
 <html data-ng-app="glance">
 <head>
     <meta charset="utf-8">
-    <title>数人云</title>
+    <title>swan</title>
     <base href="/">
     <!--build:css css/style.css-->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/shurenyun.css">
     <link rel="stylesheet" type="text/css" href="css/material.css">
+    <link rel="stylesheet" type="text/css" href="css/custom.css">
     <!--endbuild-->
     <link rel="shortcut icon" type="image/x-icon" href="pics/favicon.ico"/>
 
@@ -32,32 +33,30 @@
 </head>
 
 <body>
-<div layout="row" class="main" ng-cloak>
-    <aside class="sidebar-main" data-ng-class="{'sidebar-main_two' : rootCtrl.isShortMenu}" layout="column">
+<div layout="column" class="main layout-column" ng-cloak>
+    <aside class="sidebar-main" layout="row">
         <div class="logo">
-            <a href="#"><img src="pics/logo-white-full.svg" data-ng-show="!rootCtrl.isShortMenu"></a>
-            <a href="#"><img src="pics/logo-white-small.jpg" data-ng-show="rootCtrl.isShortMenu"></a>
+		<label style="font-size: 15px; color: #fff; margin-top: 15px;">SWAN</label>
         </div>
-        <div class="menu-sidebar" flex layout-align="space-between stretch" layout="column">
-            <ul>
-                <li data-ui-sref-active="active" title="首页">
-                    <md-button data-ui-sref="dashboard" data-ui-sref-opts="{inherit: false}">
-                        <i class="fa fa-tachometer"></i>
-                        首页
-                    </md-button>
-		</li>
-                <li title="应用管理" data-ui-sref-active="active">
-                    <md-button data-ui-sref="app" data-ui-sref-opts="{inherit: false}">
-			<i class="fa fa-cube"></i>应用管理
+        <div class="menu-sidebar" flex layout-align="space-between stretch" layout="row">
+            <ul layout="row" class="layout-row">
+                <li title="applications" data-ui-sref-active="active">
+                    <md-button data-ui-sref="app.list" data-ui-sref-opts="{inherit: false}">
+	        	Applications
                     </md-button>
                 </li>
-                <li title="镜像管理" data-ui-sref-active="active">
-                    <md-button data-ui-sref="order" data-ui-sref-opts="{inherit: false}">
-			<i class="fa fa-cube"></i>镜像管理
+                <!--<li title="deploy" data-ui-sref-active="active">
+                    <md-button data-ui-sref="app.create" data-ui-sref-opts="{inherit: false}">
+	        	Deploy	
                     </md-button>
-                </li>
-            </ul>
-        </div>
+		</li>-->
+                <!--<li title="templates" data-ui-sref-active="active">
+                    <md-button data-ui-sref="template.list" data-ui-sref-opts="{inherit: false}">
+	        	Templates	
+                    </md-button>
+		</li>-->
+	    </ul>
+	</div>
     </aside>
     <div class="main-container" flex data-ui-view></div>
 </div>
@@ -138,12 +137,14 @@
 <script src="glance/items/services/app-label.service.js" type="text/javascript"></script>
 <script src="glance/items/services/app-chart.service.js" type="text/javascript"></script>
 <script src="glance/items/modals/up-canary.service.js" type="text/javascript"></script>
+
 <script src="glance/items/create/create.ctrl.js" type="text/javascript"></script>
-<script src="glance/items/createupdate/modals/create-port.service.js" type="text/javascript"></script>
-<script src="glance/items/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
+<script src="glance/items/update/update.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/scale/scale.ctrl.js" type="text/javascript"></script>
 <script src="glance/items/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/items/list/apps-table.ctrl.js" type="text/javascript"></script>
 <script src="glance/items/detail/detail.ctrl.js" type="text/javascript"></script>
+<script src="glance/items/clone/clone.ctrl.js" type="text/javascript"></script>
+
 <script src="glance/items/detail/config.ctrl.js" type="text/javascript"></script>
 <script src="glance/items/detail/event.ctrl.js" type="text/javascript"></script>
 <script src="glance/items/detail/instance.ctrl.js" type="text/javascript"></script>
@@ -152,29 +153,13 @@
 <script src="glance/items/detail/debug.ctrl.js" type="text/javascript"></script>
 <!--<script src="glance/items/detail/canary.ctrl.js" type="text/javascript"></script>-->
 
-<script src="glance/orders/order.module.js" type="text/javascript"></script>
-<script src="glance/orders/order.config.js" type="text/javascript"></script>
-<script src="glance/orders/order.route.js" type="text/javascript"></script>
-<script src="glance/orders/directives/app-port-range-validator.directive.js" type="text/javascript"></script>
-<script src="glance/orders/directives/dm-healthy-bar.directive.js" type="text/javascript"></script>
-<script src="glance/orders/directives/app-name-limit.directive.js" type="text/javascript"></script>
-<script src="glance/orders/services/app-backend.service.js" type="text/javascript"></script>
-<script src="glance/orders/services/app-curd.service.js" type="text/javascript"></script>
-<script src="glance/orders/services/app-label.service.js" type="text/javascript"></script>
-<script src="glance/orders/services/app-chart.service.js" type="text/javascript"></script>
-<script src="glance/orders/modals/up-canary.service.js" type="text/javascript"></script>
-<script src="glance/orders/createupdate/create-update.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/createupdate/modals/create-port.service.js" type="text/javascript"></script>
-<script src="glance/orders/createupdate/modals/create-select-image.service.js" type="text/javascript"></script>
-<script src="glance/orders/list/list.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/list/apps-table.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/detail.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/config.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/event.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/instance.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/monitoring.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/version.ctrl.js" type="text/javascript"></script>
-<script src="glance/orders/detail/debug.ctrl.js" type="text/javascript"></script>
+<script src="glance/templates/template.module.js" type="text/javascript"></script>
+<!--<script src="glance/templates/template.config.js" type="text/javascript"></script>
+<script src="glance/templates/template.route.js" type="text/javascript"></script>
+<script src="glance/templates/create/template.ctrl.js" type="text/javascript"></script>
+<script src="glance/templates/update/template.ctrl.js" type="text/javascript"></script>
+<script src="glance/templates/list/template.ctrl.js" type="text/javascript"></script>
+<script src="glance/templates/detail/template.ctrl.js" type="text/javascript"></script> -->
 
 <script src="glance/dashboard/dashboard.module.js" type="text/javascript"></script>
 <script src="glance/dashboard/dashboard.config.js" type="text/javascript"></script>
