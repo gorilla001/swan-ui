@@ -33,7 +33,7 @@ glanceApp.config(['$stateProvider', '$urlRouterProvider', '$interpolateProvider'
 
         $urlRouterProvider.otherwise(function ($injector) {
             var $state = $injector.get('$state');
-            $state.go('dashboard');
+            $state.go('app.list');
         });
 
         $stateProvider

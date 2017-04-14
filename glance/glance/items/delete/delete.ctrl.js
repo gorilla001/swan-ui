@@ -4,10 +4,10 @@
 (function () {
     'use strict';
     angular.module('glance.app')
-        .controller('UpdateAppCtrl', UpdateAppCtrl);
+        .controller('DeleteAppCtrl', DeleteAppCtrl);
 
     /* @ngInject */
-    function UpdateAppCtrl(appservice,
+    function DeleteAppCtrl(appservice,
                            Notification,
                            $state,
                            $scope,
@@ -24,8 +24,6 @@
 	});
 
 	self.update = function() {
-		console.log(self.form);
-		console.log($stateParams.app_id);
 		appservice.updateApp($stateParams.app_id, self.form, $scope.staticForm).then(
 				function(data) {
 					$state.go('app.list', {reload: true});

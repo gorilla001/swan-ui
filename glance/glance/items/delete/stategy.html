@@ -9,7 +9,7 @@
         <div class="main-content">
             <form name="staticForm">
                 <div layout="row" layout-align="end center" class="form-group form-group-input">
-                    <label flex="15">Duration</label>
+                    <label flex="15">GracePeriod</label>
                     <div flex="50" layout="column">
                         <div flex>
                             <input type="number" class="form-input"
@@ -26,7 +26,7 @@
                 </div>
 		<div layout="row" class="form-footer-button">
                     <div flex-offset="15">
-                        <md-button class="md-raised md-primary" data-ng-click="updateAppCtrl.update()"
+                        <md-button class="md-raised md-primary" data-ng-click="deleteAppCtrl.delete()"
                                    data-ng-disabled="staticForm.$invalid" aria-label="update"
                                    >Delete
                         </md-button>

@@ -11,6 +11,10 @@
 	self.running = 0;
 	self.creating = 0;
 	self.failed=0;
+
+	self.stateMap = {
+		"normal" : "running",
+	}
         
 	appservice.listApps().then(function(data){
 		self.apps = data
@@ -29,11 +33,11 @@
 	});
 
 	self.delete = function(appId) {
-		return appservice.deleteApp(appId).then(function(data){
-			$state.go('app.list');
-			$state.reload();
-		});
-		//$state.go('app.deleteStategy', {'app_id': appId});
+		//return appservice.deleteApp(appId).then(function(data){
+		//	$state.go('app.list');
+		//	$state.reload();
+		//});
+		$state.go('app.deleteStategy', {'app_id': appId});
 	};
 
 	self.update = function(appId) {

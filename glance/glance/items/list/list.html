@@ -24,7 +24,6 @@
             			<tr md-row>
                     			<th md-column md-order-by="name"><span>Name</span></th>
                     			<th md-column><span>Instances</span></th>
-                    			<th md-column>RunAS</th>
                     			<th md-column>Cluster</th>
                     			<th md-column>State</th>
                     			<th md-column md-order-by="instances">Created</th>
@@ -43,13 +42,10 @@
                                			    {/app.instances/}
 						</td>
 						<td md-cell>
-                               			    {/app.runAs/}
-						</td>
-						<td md-cell>
                                			    {/app.clusterID/}
 						</td>
 						<td md-cell>
-                               			    {/app.state/}
+                               			    {/listappctrl.stateMap[app.state]/}
 						</td>
 						<td md-cell>
                                			    {/app.created | date:'yyyy-MM-dd HH:MM:ss'/}
