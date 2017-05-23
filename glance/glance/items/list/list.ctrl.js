@@ -14,6 +14,7 @@
 
 	self.stateMap = {
 		"normal" : "running",
+		"creating": "creating",
 	}
         
 	appservice.listApps().then(function(data){
@@ -33,11 +34,11 @@
 	});
 
 	self.delete = function(appId) {
-		//return appservice.deleteApp(appId).then(function(data){
-		//	$state.go('app.list');
-		//	$state.reload();
-		//});
-		$state.go('app.deleteStategy', {'app_id': appId});
+		return appservice.deleteApp(appId).then(function(data){
+			$state.go('app.list');
+			$state.reload();
+		});
+		//$state.go('app.deleteStategy', {'app_id': appId});
 	};
 
 	self.update = function(appId) {
