@@ -12,9 +12,9 @@
             <th md-column>CPUs</th>
             <th md-column>Memory</th>
             <th md-column>Image</th>
-            <th md-column>Status</th>
             <th md-column>Healthy</th>
-	    <th md-column>Agent</th>
+	    <th md-column>Host</th>
+            <th md-column>Status</th>
             <th md-column>Created</th>
         </tr>
         </thead>
@@ -24,9 +24,9 @@
             <td md-cell>{/task.cpu/}</td>
             <td md-cell>{/task.mem/}</td>
             <td md-cell>{/task.image/}</td>
-            <td md-cell>{/detailAppCtrl.stateMap[task.status]/}</td>
             <td md-cell>{/task.healthy/}</td>
 	    <td md-cell>{/task.agentHostname/}</td>
+            <td md-cell>{/detailAppCtrl.stateMap[task.status]/}</td>
             <td md-cell>{/task.created | date:'yyyy-MM-dd HH:MM:ss'/}</td>
         </tr>
         </tbody>

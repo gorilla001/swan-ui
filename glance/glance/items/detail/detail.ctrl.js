@@ -14,6 +14,7 @@
 	self.stateMap = {
 		'slot_task_pending_offer': 'pending',
 		'slot_task_running': 'running',
+		'slot_task_failed': 'failed',
 	}
 	appservice.getApp($stateParams.app_id).then(function(data){
 		self.tasks = data.tasks;
