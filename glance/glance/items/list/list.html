@@ -61,7 +61,6 @@
 								<!--<md-icon md-menu-origin md-svg-icon="call:phone"></md-icon>-->
 								<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
 							</md-button>
-
                         				<md-menu-content width="1">
                             				    <md-menu-item>
 						    	    	<md-button aria-label="strp" class="md-button md-raised"
@@ -85,6 +84,51 @@
                             				    </md-menu-item>
 							</md-menu-content>
 						    </md-menu>
+							<md-menu-bar>
+          						    <md-menu>
+            							<button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+	    							    	<i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+            							</button>
+            							<md-menu-content width="2">
+              							    <md-menu-item>
+              							      <md-button ng-click="ctrl.sampleAction('share', $event)">
+              							       scale 
+              							      </md-button>
+              							    </md-menu-item>
+								    <md-menu-item>
+									<md-menu>
+									    <md-button ng-click="$mdMenu.open()">update</md-button>
+                  							    <md-menu-content width="1">
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                    	                                                        <md-menu-item>
+			                                                            <md-button ng-click="">name</md-button>
+                                                                                </md-menu-item>
+                  							    </md-menu-content>
+									</md-menu>
+								    </md-menu-item> 
+								</md-menu-content>
+                					    </md-menu>
+							</md-menu-bar>
 						</td>
             				</tr>
             			</tbody>
